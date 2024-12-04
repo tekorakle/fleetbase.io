@@ -82,7 +82,7 @@ The sitemap generation is configured in the `astro.config.mjs` file. Here, you n
 ```javascript
 // src/config.ts
 export const SITE: Site = {
-  website: 'https://nebula-astro.tailwindawesome.com', // replace this with your deployed domain
+  website: 'https://fleetbase.io', // replace this with your deployed domain
   // ... other site properties
 }
 ```

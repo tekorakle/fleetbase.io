@@ -11,12 +11,12 @@ import facebook from './images/logos/facebook.svg'
 import oracle from './images/logos/oracle.svg'
 
 export const SITE: Site = {
-  website: 'https://nebula-astro.tailwindawesome.com', // replace this with your deployed domain
-  author: 'Rodrigo Aguilar',
+  website: 'https://fleetbase.io', // replace this with your deployed domain
+  author: 'Shiv Thakker',
   description:
-    "Unlock the potential of remote work with Nebula's advanced collaboration ecosystem. Designed for modern teams, Nebula streamlines communication, simplifies projects, and secures your data.",
-  title: 'Nebula',
-  ogImage: 'nebula-og.png',
+    "Open Source Modular Logistics OS",
+  title: 'Fleetbase',
+  ogImage: 'fleetbase_icon.png',
 }
 
 export const SOCIALS: SocialObjects = [

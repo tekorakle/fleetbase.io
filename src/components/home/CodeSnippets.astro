@@ -3,6 +3,7 @@ import StarField from '@components/shared/StarField.astro'
 import { Image } from 'astro:assets'
 import { Icon } from 'astro-icon/components'
 import { Code } from 'astro:components'
+import Button from '@components/shared/Button.astro'
 
 import spaceSpotlight from '@images/space-spotlight.png'
 import cosmicButterfly from '@images/cosmic-butterfly-2.svg'
@@ -26,9 +27,9 @@ function leftpad(str, len, ch) {
 
 const features = [
   {
-    title: 'Real-time collaboration',
+    title: 'Implement Fleetbase',
     description:
-      'Seasonal latte black java dark blue fair grounds barista black origin french caffeine body. ',
+      'Populate the form below to implement Fleetbase on your own servers, custom branded and pointed to your own domain. ',
     icon: 'heroicons:clock-20-solid',
     active: true,
     codeBlocks: [
@@ -43,9 +44,9 @@ const features = [
     ],
   },
   {
-    title: 'Customize your stack',
+    title: 'Join SAAS',
     description:
-      'Seasonal latte black java dark blue fair grounds barista black origin french caffeine body. ',
+      'Join our SAAS platform and get started immediatly using our hosted version of Fleetbase.',
     icon: 'heroicons:rectangle-stack-20-solid',
     active: false,
     codeBlocks: [
@@ -59,10 +60,11 @@ const features = [
       },
     ],
   },
+
   {
-    title: 'Port to any environment',
+    title: 'Custom Features / Extensions',
     description:
-      'Seasonal latte black java dark blue fair grounds barista black origin french caffeine body. ',
+      'Found some features we dont currently have? Populate the below form with your requirements and our team will get back to you.',
     icon: 'heroicons:computer-desktop-20-solid',
     active: false,
     codeBlocks: [
@@ -77,9 +79,9 @@ const features = [
     ],
   },
   {
-    title: 'Integrate modern tools',
+    title: 'Custom License',
     description:
-      'Seasonal latte black java dark blue fair grounds barista black origin french caffeine body. ',
+      'Fleetbase is available as standard under the AGPL License. Need a custome one? Contact us.',
     icon: 'heroicons:squares-plus-20-solid',
     active: false,
     codeBlocks: [
@@ -124,23 +126,23 @@ const features = [
           class="inline-flex w-max rounded-full bg-zinc-950/[.01] shadow-inner-blur"
         >
           <div
-            class="flex h-full w-full items-center space-x-2 rounded-full border border-violet-200/[.06] px-4 py-1.5"
+            class="flex h-full w-full items-center space-x-2 rounded-full border border-blue-200/[.06] px-4 py-1.5"
           >
             <Icon
               name="heroicons:presentation-chart-line-16-solid"
-              class="h-4 w-4 text-violet-200"
+              class="h-4 w-4 text-blue-200"
             />
             <span
-              class="text-sm font-medium text-violet-100 drop-shadow-[-12px_-4px_6px_rgba(237,233,254,0.2)]"
+              class="text-sm font-medium text-blue-100 drop-shadow-[-12px_-4px_6px_rgba(237,233,254,0.2)]"
             >
-              Productivity enhancing tools
+              The future is open source
             </span>
           </div>
         </div>
         <h1
-          class="mt-5 text-4xl font-bold leading-extratight text-violet-100 xl:text-[2.75rem] xl:leading-extratight"
+          class="mt-5 text-4xl font-bold leading-extratight text-blue-100 xl:text-[2.75rem] xl:leading-extratight"
         >
-          Foundational building blocks for seamless collaboration
+          Supporting the open source logistics community
         </h1>
 
         {/*  Text content */}
@@ -148,18 +150,17 @@ const features = [
           <p
             class="text-lg leading-8 text-zinc-300 lg:text-[17px] xl:text-lg xl:leading-8"
           >
-            That robust shop as rich siphon in organic french so acerbic
-            plunger. Au foam strong irish press go body and sugar kopi viennese
-            percolator beans coffee.
+            Fleetbase' goal is resolve the 'build vs buy' debate. Adopting our
+            open source technology for your company means you have full control
+            of data and code, all whilst saving on high developement fees and
+            timelines.
           </p>
           <p
             class="mt-8 text-lg leading-8 text-zinc-300 lg:text-[17px] lg:leading-8 xl:text-lg xl:leading-8"
           >
-            Doppio sugar seasonal in café sugar ut at robust eu percolator shop.
-            Kopi est espresso bar to carajillo trifecta robust sit foam viennese
-            aromatic variety. Trade panna robust robust trade chicory con
-            acerbic that skinny. Latte acerbic a brewed acerbic arabica body and
-            iced plunger saucer wings crema.
+            We are here to support developers and logistics companies alike. If
+            you dont have technical resources you can use our SAAS platform, or
+            select one of the support packages below.
           </p>
         </div>
 
@@ -179,7 +180,7 @@ const features = [
                   <div class="flex items-center space-x-2">
                     <Icon
                       name={feature.icon}
-                      class="h-[17px] w-[17px] text-violet-50 lg:h-4 lg:w-4 xl:h-[17px] xl:w-[17px]"
+                      class="h-[17px] w-[17px] text-blue-50 lg:h-4 lg:w-4 xl:h-[17px] xl:w-[17px]"
                     />
                     <h3 class="text-[17px] font-semibold text-white lg:text-base xl:text-[17px]">
                       {feature.title}
@@ -209,7 +210,7 @@ const features = [
               >
                 <div class="flex min-h-[805px] flex-col justify-center space-y-10">
                   {feature.codeBlocks.map((codeBlock) => (
-                    <li class="relative w-full rounded-2xl border border-violet-200/[.08] bg-white/[.01] p-2 shadow-inner-blur">
+                    <li class="relative w-full rounded-2xl border border-blue-200/[.08] bg-white/[.01] p-2 shadow-inner-blur">
                       <div class="absolute -bottom-20 -left-48 -right-16 -top-40">
                         <Image
                           src={cosmicButterfly}
@@ -219,13 +220,13 @@ const features = [
                       </div>
 
                       <div class="relative h-full w-full rounded-lg bg-[#292D3E]/[0.93] shadow-inner-blur backdrop-blur">
-                        <div class="flex h-full flex-col rounded-lg border border-violet-200/[.06]">
+                        <div class="flex h-full flex-col rounded-lg border border-blue-200/[.06]">
                           <div class="flex items-center space-x-1.5 rounded-tl-lg rounded-tr-lg bg-zinc-700/25 px-4 py-3 shadow-inner-blur-no-border">
-                            <span class="h-2 w-2 rounded-full bg-violet-50/25" />
-                            <span class="h-2 w-2 rounded-full bg-violet-50/25" />
-                            <span class="h-2 w-2 rounded-full bg-violet-50/25" />
+                            <span class="h-2 w-2 rounded-full bg-blue-50/25" />
+                            <span class="h-2 w-2 rounded-full bg-blue-50/25" />
+                            <span class="h-2 w-2 rounded-full bg-blue-50/25" />
                           </div>
-                          <div class="h-full rounded-b-lg border-t border-violet-200/[.06]">
+                          <div class="h-full rounded-b-lg border-t border-blue-200/[.06]">
                             <Code
                               lang="js"
                               code={codeBlock.code}
