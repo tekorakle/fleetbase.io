@@ -22,33 +22,33 @@ export const SITE: Site = {
 export const SOCIALS: SocialObjects = [
   {
     name: 'twitter',
-    href: '#',
-    label: 'See what’s new',
-    ariaLabel: 'Follow on Twitter',
+    href: 'https://twitter.com/fleetbase_io?lang=en',
+    label: '',
+    ariaLabel: '',
   },
   {
     name: 'github',
-    href: '#',
-    label: 'See how it’s done',
-    ariaLabel: 'Follow on Github',
+    href: 'https://github.com/fleetbase/fleetbase',
+    label: '',
+    ariaLabel: '',
   },
   {
     name: 'youtube',
-    href: '#',
-    label: 'Watch tutorials',
-    ariaLabel: 'Follow on Youtube',
+    href: 'https://www.youtube.com/@fleetbase',
+    label: '',
+    ariaLabel: '',
   },
   {
     name: 'discord',
-    href: '#',
-    label: 'Talk to us',
-    ariaLabel: 'Join our Discord',
+    href: 'https://discord.gg/HnTqQ6zAVn',
+    label: '',
+    ariaLabel: '',
   },
   {
     name: 'instagram',
-    href: '#',
-    label: 'Life at Nebula',
-    ariaLabel: 'Follow on Instagram',
+    href: 'https://www.instagram.com/fleetbase/',
+    label: '',
+    ariaLabel: '',
   },
 ]
 

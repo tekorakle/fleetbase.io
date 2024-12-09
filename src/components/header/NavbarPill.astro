@@ -9,37 +9,40 @@ import logo from '@images/logo.png'
 import logoIcon from '@images/logo-icon.png'
 
 const pages = [
-  { label: 'Home', href: '/', icon: 'heroicons:home-16-solid' },
-  { label: 'About', href: '/about', icon: 'heroicons:users-16-solid' },
-  {
-    label: 'Pricing',
-    href: '/pricing',
-    icon: 'heroicons:credit-card-16-solid',
-  },
+  { label: 'Blog', href: '/,' },
+  { label: 'Newsletter', href: '/' },
+  { label: 'User Guides', href: '/' },
   {
     label: 'Contact',
     href: '/contact',
-    icon: 'heroicons:envelope-open-16-solid',
   },
-  {
-    label: 'Sign in',
-    href: '/signin',
-    icon: 'heroicons:user-circle-16-solid',
-  },
-  { label: 'Sign up', href: '/signup', icon: 'heroicons:user-plus-16-solid' },
-  {
-    label: 'Password reset',
-    href: 'password-reset',
-    icon: 'heroicons:lock-open-16-solid',
-  },
-  { label: '404', href: '/404', icon: 'heroicons:exclamation-circle-16-solid' },
+  // { label: 'About', href: '/about', icon: 'heroicons:users-16-solid' },
+  // {
+  //   label: 'Pricing',
+  //   href: '/pricing',
+  //   icon: 'heroicons:credit-card-16-solid',},
+  // {
+  // {
+  //   label: 'Sign in',
+  //   href: '/signin',
+  //   icon: 'heroicons:user-circle-16-solid',
+  // },
+  // { label: 'Sign up', href: '/signup', icon: 'heroicons:user-plus-16-solid' },
+  // {
+  //   label: 'Password reset',
+  //   href: 'password-reset',
+  //   icon: 'heroicons:lock-open-16-solid',
+  // },
+  // { label: '404', href: '/404', icon: 'heroicons:exclamation-circle-16-solid' },
 ]
 
 const links = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
+  { label: 'Products', href: '/products' },
+  // { label: 'About', href: '/about' },
+  { label: 'Docs', href: 'https://docs.fleetbase.io/' },
   { label: 'Pricing', href: '/pricing' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Services', href: '/services' },
+  // { label: 'Contact', href: '/contact' },
 ]
 
 const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
@@ -201,7 +204,7 @@ const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
         :aria-expanded="pagesDropdownOpen"
         x-ref="pagesDropdownButton"
       >
-        <span>Pages</span>
+        <span>Resources</span>
 
         <Icon
           name="heroicons:chevron-down-16-solid"
@@ -232,7 +235,8 @@ const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
       <Button
         id="nav-cta"
         class="-mr-px ml-3 hidden rounded-full after:rounded-full"
-        href="/signup"
+        href="https://console.fleetbase.io"
+        target="_blank"
         size="sm"
         x-ref="navCta"
         x-show="showButton"
