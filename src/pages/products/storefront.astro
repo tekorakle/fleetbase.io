@@ -12,21 +12,10 @@ import Divider from '@components/shared/Divider.astro'
 import { SITE } from '@config'
 ---
 
-<RootLayout
-  title={`Fleetbase - Open Source Modular Logistics Platform | ${SITE.title}`}
->
+<RootLayout title={`Storefront - Open Source TMS | ${SITE.title}`}>
   <HeroContainer>
-    <HomeHero />
+    <StorefrontFeatures />
+    <Divider />
+    <Footer />
   </HeroContainer>
-  <Divider />
-  <BentoGridSection />
-  <Divider />
-  <CodeSnippets />
-  <Divider />
-  <Features />
-  <Divider />
-  <Integrations />
-  <Testimonials />
-  <Divider />
-  <Footer />
 </RootLayout>

@@ -19,13 +19,13 @@ const navigation = [
     icon: 'nucleo/browser-18',
     label: 'Products',
     links: [
-      { name: 'FleetOps (TMS)', href: '#' },
-      { name: 'Storefront', href: '#' },
-      { name: 'Inventory', href: '#' },
-      { name: 'On Demand App', href: '#' },
-      { name: 'Driver App', href: '#' },
-      { name: 'Customer Portal', href: '#', new: true },
-      { name: 'WMS', href: '#', new: true },
+      { name: 'FleetOps (TMS)', href: '/products/fleetops' },
+      { name: 'Storefront', href: '/products/storefront' },
+      { name: 'Inventory', href: '/products/inventory' },
+      { name: 'On Demand App', href: '/products/ondemand' },
+      { name: 'Driver App', href: '/products/driver-app' },
+      { name: 'Customer Portal', href: '/products/customer-portal', new: true },
+      { name: 'WMS', href: '/products/wms', new: true },
     ],
   },
   {
@@ -34,10 +34,10 @@ const navigation = [
     links: [
       { name: 'Login', href: '/https://console.fleetbase.io' },
       { name: 'Sign Up', href: '/https://console.fleetbase.io/onboard' },
-      { name: 'Pricing', href: '#/pricing' },
-      { name: 'Services', href: '#/services' },
-      { name: 'Contact', href: '#/contact' },
-      { name: 'Partners', href: '#/partners' },
+      { name: 'Pricing', href: '/pricing' },
+      { name: 'Services', href: '/company/services' },
+      { name: 'Contact', href: '/company/contact' },
+      { name: 'Partners', href: '/company/partners' },
     ],
   },
   {
@@ -46,7 +46,7 @@ const navigation = [
     links: [
       { name: 'Github', href: 'https://github.com/fleetbase/fleetbase' },
       { name: 'Discord', href: 'https://discord.gg/HnTqQ6zAVn' },
-      { name: 'Changelog', href: '#/changelog', new: true },
+      { name: 'Changelog', href: '/developers/changelog', new: true },
       { name: 'API Docs', href: 'https://docs.fleetbase.io/' },
       {
         name: 'Extensions',
@@ -65,7 +65,7 @@ const navigation = [
         href: 'https://docs.fleetbase.io/category/guides',
       },
       { name: 'Documentation', href: 'https://docs.fleetbase.io/' },
-      { name: 'Use Cases', href: '#/usecases' },
+      { name: 'Use Cases', href: '/resources/use-cases' },
       { name: 'Support', href: 'hello@fleetbase.io' },
     ],
   },
@@ -73,9 +73,9 @@ const navigation = [
     icon: 'nucleo/scale-18',
     label: 'Legal',
     links: [
-      { name: 'Terms Of Use', href: '#' },
-      { name: 'Privacy', href: '#' },
-      { name: 'Licenses', href: '#' },
+      { name: 'Terms Of Use', href: '/legal/terms' },
+      { name: 'Privacy', href: '/legal/privacy' },
+      { name: 'Licenses', href: '/legal/licenses' },
     ],
   },
 ]

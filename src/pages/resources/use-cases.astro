@@ -10,13 +10,23 @@ import Testimonials from '@components/home/Testimonials.astro'
 import Footer from '@components/shared/Footer.astro'
 import Divider from '@components/shared/Divider.astro'
 import { SITE } from '@config'
-import FleetopsFeatures from '@components/products/fleetops-features.astro'
 ---
 
-<RootLayout title={`FleetOps - Open Source TMS | ${SITE.title}`}>
+<RootLayout
+  title={`Fleetbase - Open Source Modular Logistics Platform | ${SITE.title}`}
+>
   <HeroContainer>
-    <FleetopsFeatures />
-    <Divider />
-    <Footer />
+    <HomeHero />
   </HeroContainer>
+  <Divider />
+  <BentoGridSection />
+  <Divider />
+  <CodeSnippets />
+  <Divider />
+  <Features />
+  <Divider />
+  <Integrations />
+  <Testimonials />
+  <Divider />
+  <Footer />
 </RootLayout>
