@@ -11,75 +11,74 @@ import spaceSpotlight from '@images/space-spotlight.png'
 const features = [
   {
     icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'Headless E-Commerce',
+    title: 'Order Creation',
     description:
-      'Storefront is a headless e-commerce service integrated with Fleetbase, offering developers API-first control over products, carts, categories, customers, and checkout flows.',
+      'Enable customers to create and submit orders seamlessly through a user-friendly interface.',
   },
   {
-    icon: 'heroicons:presentation-chart-line-solid',
-    title: 'Customizable Shopping Experience',
+    icon: 'heroicons:credit-card-solid',
+    title: 'Payments Integration',
     description:
-      'Built as an open-source hyperlocal shopping app, Storefront is fully customizable and can be adapted for personal or commercial projects, giving complete freedom over the user experience.',
+      'Allow customers to securely pay for their orders directly through the portal, with support for integrated payment gateways.',
   },
+  {
+    icon: 'heroicons:map-solid',
+    title: 'Real-Time Order Tracking',
+    description:
+      'Provide customers with real-time tracking of their orders, enhancing transparency and trust.',
+  },
+  {
+    icon: 'heroicons:check-circle-solid',
+    title: 'Easy Installation',
+    description:
+      'Available as an extension that can be installed on Fleetbase’s SaaS or private Fleetbase instances.',
+  },
+  {
+    icon: 'heroicons:globe-alt-solid',
+    title: 'Cross-Platform Accessibility',
+    description:
+      'Accessible via both web and mobile platforms, ensuring convenience for your customers.',
+  },
+  {
+    icon: 'heroicons:user-circle-solid',
+    title: 'Customer Management',
+    description:
+      'Empowers customers to manage their accounts, view order history, and update information effortlessly.',
+  },
+  {
+    icon: 'heroicons:chart-bar-solid',
+    title: 'Dashboard Insights',
+    description:
+      'Includes a dashboard for customers to review their active orders, payments, and shipment statuses in one place.',
+  },
+  {
+    icon: 'heroicons:sparkles-solid',
+    title: 'Customizable Branding',
+    description:
+      'Fully customizable to reflect your company’s branding, ensuring a seamless customer experience.',
+  },
+  // {
+  //   "icon": "heroicons:document-solid",
+  //   "title": "Invoices & Receipts",
+  //   "description": "Customers can download invoices and receipts for completed orders directly from the portal."
+  // },
   {
     icon: 'heroicons:shield-check-solid',
-    title: 'Mobile App Built with React Native',
+    title: 'Secure Data Handling',
     description:
-      'The mobile version of Storefront, developed with React Native, provides a robust starting point for React Native developers to create tailored e-commerce solutions.',
+      'Built with security in mind, ensuring customer data and payment information are protected at all times.',
+  },
+  {
+    icon: 'heroicons:sparkles-solid',
+    title: 'Multi-Tenant Support',
+    description:
+      'Designed for use by logistics companies on Fleetbase SaaS or private instances, catering to multiple customers simultaneously.',
   },
   {
     icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Web Application',
+    title: 'Real-Time Notifications',
     description:
-      'Access Storefront through its web version, providing a seamless shopping experience and management capabilities for stores and customers.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Order & Customer Management',
-    description:
-      'The Storefront dashboard offers tools to manage all orders, customers, and stores efficiently, alongside insights into your current earnings.',
-  },
-  {
-    icon: 'heroicons:chart-pie-solid',
-    title: 'Earnings Dashboard',
-    description:
-      'Track revenue and earnings in real-time with intuitive analytics to monitor your e-commerce success.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Hyperlocal Focus',
-    description:
-      'Ideal for hyperlocal shopping experiences, enabling businesses to cater to localized audiences with tailored services.',
-  },
-  {
-    icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'API-First Integration',
-    description:
-      'Storefront’s API-driven design allows seamless integration with other Fleetbase services, ensuring a unified ecosystem for logistics and e-commerce.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Custom Checkout Flows',
-    description:
-      'Design personalized checkout experiences with API control, enhancing the shopping journey and increasing customer satisfaction.',
-  },
-  {
-    icon: 'heroicons:shield-check-solid',
-    title: 'Developer-Friendly Architecture',
-    description:
-      'Built with extensibility in mind, Storefront empowers developers with tools to quickly build and deploy scalable e-commerce solutions.',
-  },
-  {
-    icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Real-Time Updates',
-    description:
-      'Keep customers and store managers updated with real-time order statuses, notifications, and more.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Category & Product Management',
-    description:
-      'Organize and manage your inventory efficiently with robust tools for product and category management.',
+      'Keep customers informed with automated notifications for order updates and payment confirmations.',
   },
 ]
 ---
@@ -91,21 +90,20 @@ const features = [
       <h1
         class="max-w-5xl text-center text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight"
       >
-        Headless E-commerce
+        Customer Portal
         <span class="relative inline-block text-nowrap">
           <span
             class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent"
           >
-            Mobile & Web App
+            Extension
           </span>
           <span class="absolute -top-px left-0 -z-10 text-blue-300"
-            >Mobile & Web App</span
+            >Extension</span
           >
         </span>
       </h1>
       <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
-        Storefront is a headless e-commerce service which functions as an
-        extension within Fleetbase.
+        Extendable Customer Portal for Fleetbase.
       </p>
     </div>
 

@@ -1,4 +1,4 @@
----
+<!-- ---
 import Container from '@components/shared/Container.astro'
 import StarField from '@components/shared/StarField.astro'
 import { Image } from 'astro:assets'
@@ -7,7 +7,7 @@ import { Icon } from 'astro-icon/components'
 import spaceSpotlight from '@images/space-spotlight.png'
 import longGradient from '@images/long-gradient.png'
 
-type Plan = 'starter' | 'pro' | 'enterprise'
+type Plan = 'selfHosted' | 'cloud' | 'fullyDeployed'
 
 type FeaturePlans = {
   [key in Plan]: boolean | string | number
@@ -26,223 +26,97 @@ type Category = {
 
 const pricingTableData: Category[] = [
   {
-    category: 'Collaboration & Communication',
-    icon: 'nucleo/team-16',
+    category: 'Core Features',
+    icon: 'nucleo/magic-wand-16',
     features: [
       {
-        name: 'Video Conferencing',
+        name: 'Host Infrastructure',
         plans: {
-          starter: 'Up to 10 hrs/month',
-          pro: 'Unlimited',
-          enterprise: 'Unlimited',
+          selfHosted: 'Your Own Servers',
+          cloud: 'Fleetbase Cloud',
+          fullyDeployed: 'AWS/GCP/On-Prem',
         },
       },
       {
-        name: 'Team Workspace',
+        name: 'Cost',
         plans: {
-          starter: 'Up to 5',
-          pro: 'Unlimited',
-          enterprise: 'Unlimited',
+          selfHosted: '$0',
+          cloud: '$200/month',
+          fullyDeployed: '$3750 one-time',
         },
       },
       {
-        name: 'File Storage',
+        name: 'User/Driver Limits',
         plans: {
-          starter: '5 GB',
-          pro: '50 GB',
-          enterprise: '1 TB',
-        },
-      },
-      {
-        name: 'Collaboration History',
-        plans: {
-          starter: '30 days',
-          pro: '1 year',
-          enterprise: 'Unlimited',
-        },
-      },
-      {
-        name: 'Instant Messaging',
-        plans: {
-          starter: true,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Guest Access',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
+          selfHosted: 'Unlimited',
+          cloud: 'Unlimited',
+          fullyDeployed: 'Unlimited',
         },
       },
     ],
   },
   {
-    category: 'Project Management & Workflow',
-    icon: 'nucleo/roadmap-16',
+    category: 'Support & Maintenance',
+    icon: 'nucleo/magic-wand-16',
     features: [
       {
-        name: 'Custom Workflow Templates',
+        name: 'Community Support',
         plans: {
-          starter: false,
-          pro: 'Up to 10',
-          enterprise: 'Unlimited',
+          selfHosted: true,
+          cloud: true,
+          fullyDeployed: false,
         },
       },
       {
-        name: 'Reporting and Analytics',
+        name: 'Priority Support',
         plans: {
-          starter: 'Basic',
-          pro: 'Advanced',
-          enterprise: 'Customizable',
+          selfHosted: false,
+          cloud: true,
+          fullyDeployed: true,
         },
       },
       {
-        name: 'Task Assignment',
+        name: 'Managed Updates',
         plans: {
-          starter: true,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Gantt Charts',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Time Tracking',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Automated Workflow Triggers',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
+          selfHosted: false,
+          cloud: true,
+          fullyDeployed: true,
         },
       },
     ],
   },
   {
-    category: 'Security & Compliance',
-    icon: 'nucleo/padlock-unlocked-16',
+    category: 'Deployment Features',
+    icon: 'nucleo/magic-wand-16',
     features: [
       {
-        name: 'Audit Logs',
+        name: 'Custom Configuration',
         plans: {
-          starter: false,
-          pro: '6 months',
-          enterprise: 'Unlimited',
+          selfHosted: false,
+          cloud: false,
+          fullyDeployed: true,
         },
       },
       {
-        name: 'Data Encryption',
+        name: 'Scalability',
         plans: {
-          starter: true,
-          pro: true,
-          enterprise: true,
+          selfHosted: 'Dependent on your servers',
+          cloud: 'Scalable',
+          fullyDeployed: 'Customizable',
         },
       },
       {
-        name: 'Two-Factor Authentication (2FA)',
+        name: 'Integration Assistance',
         plans: {
-          starter: true,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Compliance Reporting',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Role-Based Access Control',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'API Security',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-    ],
-  },
-  {
-    category: 'Integration & Extensibility',
-    icon: 'nucleo/algorithm-16',
-    features: [
-      {
-        name: 'API Access',
-        plans: {
-          starter: 'Limited',
-          pro: 'Full access',
-          enterprise: 'Full access',
-        },
-      },
-      {
-        name: 'Marketplace Access',
-        plans: {
-          starter: 'Basic',
-          pro: 'Full access',
-          enterprise: 'Full access',
-        },
-      },
-      {
-        name: 'Third-Party App Integrations',
-        plans: {
-          starter: 3,
-          pro: 10,
-          enterprise: 'Unlimited',
-        },
-      },
-      {
-        name: 'Webhooks',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'SDK Access',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
-        },
-      },
-      {
-        name: 'Custom Integrations',
-        plans: {
-          starter: false,
-          pro: true,
-          enterprise: true,
+          selfHosted: false,
+          cloud: false,
+          fullyDeployed: true,
         },
       },
     ],
   },
 ]
-const planLabels: Plan[] = ['starter', 'pro', 'enterprise']
+const planLabels: Plan[] = ['selfHosted', 'cloud', 'fullyDeployed']
 ---
 
 <section
@@ -324,15 +198,15 @@ const planLabels: Plan[] = ['starter', 'pro', 'enterprise']
                     {planLabels.map((planLabel) => (
                       <th
                         scope="col"
-                        class:list={[
+                        class:list=[
                           'flex-1 text-nowrap px-3 py-6 text-center text-sm font-semibold',
-                          planLabel === 'pro'
+                          planLabel === 'cloud'
                             ? 'text-violet-400'
                             : 'text-zinc-300',
-                        ]}
+                        ]
                       >
-                        {planLabel.charAt(0).toUpperCase() + planLabel.slice(1)}{' '}
-                        plan
+                        {planLabel.charAt(0).toUpperCase() + planLabel.slice(1).replace(/([A-Z])/g, ' $1')}{' '}
+                        Plan
                       </th>
                     ))}
                   </tr>
@@ -345,23 +219,23 @@ const planLabels: Plan[] = ['starter', 'pro', 'enterprise']
                       </td>
                       {planLabels.map((plan, planIndex) => (
                         <td
-                          class:list={[
+                          class:list=[
                             'relative flex-1 justify-center whitespace-nowrap px-4 py-5 text-center text-sm leading-4 text-zinc-200 before:absolute before:inset-y-0 before:left-0 before:h-full before:w-px before:bg-gradient-to-b after:absolute after:left-[0.5px] after:top-1/2 after:h-3.5 after:w-px after:-translate-y-1/2 after:translate-x-[-0.5px] after:bg-gradient-to-b after:from-violet-200/10 after:via-violet-300/20 after:to-violet-200/10 sm:py-6',
                             (3 * rowIndex + planIndex) % 2
                               ? 'before:from-violet-200/[0.025] before:to-violet-200/[0.08]'
                               : 'before:from-violet-200/[0.08] before:to-violet-200/[0.025]',
-                          ]}
+                          ]
                         >
                           {typeof feature.plans[plan] === 'boolean'
                             ? feature.plans[plan] && (
                                 <Icon
                                   name="nucleo/o-check-16"
-                                  class:list={[
+                                  class:list=[
                                     'mx-auto h-3 w-3 shrink-0',
-                                    plan === 'pro'
+                                    plan === 'cloud'
                                       ? 'text-violet-400'
                                       : 'text-violet-100',
-                                  ]}
+                                  ]
                                 />
                               )
                             : feature.plans[plan]}
@@ -378,3 +252,4 @@ const planLabels: Plan[] = ['starter', 'pro', 'enterprise']
     </div>
   </Container>
 </section>
+ -->

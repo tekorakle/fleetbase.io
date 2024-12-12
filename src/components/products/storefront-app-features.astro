@@ -11,75 +11,99 @@ import spaceSpotlight from '@images/space-spotlight.png'
 const features = [
   {
     icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'Headless E-Commerce',
+    title: 'Interface Configuration',
     description:
-      'Storefront is a headless e-commerce service integrated with Fleetbase, offering developers API-first control over products, carts, categories, customers, and checkout flows.',
+      'Customize the design and functionality of the Storefront App, from background images and colors to input positioning, directly through the configuration file.',
   },
   {
-    icon: 'heroicons:presentation-chart-line-solid',
-    title: 'Customizable Shopping Experience',
+    icon: 'heroicons:language-solid',
+    title: 'Internationalization & Translations',
     description:
-      'Built as an open-source hyperlocal shopping app, Storefront is fully customizable and can be adapted for personal or commercial projects, giving complete freedom over the user experience.',
+      'Built-in support for multiple languages and localization, allowing customers to view the app in their preferred language with translations easily added to the system.',
   },
   {
-    icon: 'heroicons:shield-check-solid',
-    title: 'Mobile App Built with React Native',
+    icon: 'heroicons:credit-card-solid',
+    title: 'Payment Gateways',
     description:
-      'The mobile version of Storefront, developed with React Native, provides a robust starting point for React Native developers to create tailored e-commerce solutions.',
+      'Supports payment processing through Stripe, with plans to integrate additional payment gateways in the near future.',
   },
   {
-    icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Web Application',
+    icon: 'heroicons:map-solid',
+    title: 'Store Locations',
     description:
-      'Access Storefront through its web version, providing a seamless shopping experience and management capabilities for stores and customers.',
+      'Manage multiple store locations with unique operating hours and geolocation for hyperlocal shopping experiences.',
   },
   {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Order & Customer Management',
+    icon: 'heroicons:clock-solid',
+    title: 'Store Hours',
     description:
-      'The Storefront dashboard offers tools to manage all orders, customers, and stores efficiently, alongside insights into your current earnings.',
+      'Set and manage store operating hours for each location to provide accurate availability to customers.',
   },
   {
-    icon: 'heroicons:chart-pie-solid',
-    title: 'Earnings Dashboard',
+    icon: 'heroicons:user-group-solid',
+    title: 'Multi-Vendor Support',
     description:
-      'Track revenue and earnings in real-time with intuitive analytics to monitor your e-commerce success.',
+      'Create and manage multi-vendor marketplaces using networks, enabling collaborative e-commerce ecosystems.',
   },
   {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Hyperlocal Focus',
+    icon: 'heroicons:shopping-cart-solid',
+    title: 'Cart Functionality',
     description:
-      'Ideal for hyperlocal shopping experiences, enabling businesses to cater to localized audiences with tailored services.',
+      'Comprehensive cart management with options to add, remove, update items, and calculate delivery quotes based on custom service rates.',
   },
   {
-    icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'API-First Integration',
+    icon: 'heroicons:check-circle-solid',
+    title: 'Checkout Flow',
     description:
-      'Storefront’s API-driven design allows seamless integration with other Fleetbase services, ensuring a unified ecosystem for logistics and e-commerce.',
+      'Streamlined checkout process with token-based order creation and integration with payment gateways.',
   },
   {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Custom Checkout Flows',
+    icon: 'heroicons:user-circle-solid',
+    title: 'Customer Authentication',
     description:
-      'Design personalized checkout experiences with API control, enhancing the shopping journey and increasing customer satisfaction.',
+      'Includes 2FA and seamless onboarding processes for customer account creation and login.',
   },
   {
-    icon: 'heroicons:shield-check-solid',
-    title: 'Developer-Friendly Architecture',
+    icon: 'heroicons:currency-dollar-solid',
+    title: 'Delivery & Service Rates',
     description:
-      'Built with extensibility in mind, Storefront empowers developers with tools to quickly build and deploy scalable e-commerce solutions.',
+      'Define custom delivery quotes based on location, cart, and time-based rules to provide accurate pricing at checkout.',
   },
   {
-    icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Real-Time Updates',
+    icon: 'heroicons:document-solid',
+    title: 'Orders Management',
     description:
-      'Keep customers and store managers updated with real-time order statuses, notifications, and more.',
+      'Handle incoming orders with options for manual or automated acceptance and assignment to drivers.',
   },
   {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Category & Product Management',
+    icon: 'heroicons:truck-solid',
+    title: 'Driver/Agent App Integration',
     description:
-      'Organize and manage your inventory efficiently with robust tools for product and category management.',
+      'Seamless integration with the Fleetbase Navigator app for drivers to manage and complete orders, including proof of delivery options.',
+  },
+  {
+    icon: 'heroicons:photo-solid',
+    title: 'Proof of Delivery',
+    description:
+      'Supports QR code, signature, and upcoming photo verification methods for secure and verifiable order completion.',
+  },
+  {
+    icon: 'heroicons:chart-bar-solid',
+    title: 'Analytics & Insights',
+    description:
+      'Monitor store performance, track order statuses, and analyze revenue using the Storefront dashboard.',
+  },
+  {
+    icon: 'heroicons:server-solid',
+    title: 'SDK & API Support',
+    description:
+      'Leverage the Fleetbase Storefront SDK for advanced customizations and integrations using API-driven methods.',
+  },
+  {
+    icon: 'heroicons:map-solid',
+    title: 'Roadmap Enhancements',
+    description:
+      'Upcoming features include global state management, marketplace views, and integrations with Shopify and WooCommerce.',
   },
 ]
 ---
@@ -91,21 +115,21 @@ const features = [
       <h1
         class="max-w-5xl text-center text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight"
       >
-        Headless E-commerce
+        OnDemand Delivery & Services
         <span class="relative inline-block text-nowrap">
           <span
             class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent"
           >
-            Mobile & Web App
+            Mobile App
           </span>
           <span class="absolute -top-px left-0 -z-10 text-blue-300"
-            >Mobile & Web App</span
+            >Mobile App</span
           >
         </span>
       </h1>
       <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
-        Storefront is a headless e-commerce service which functions as an
-        extension within Fleetbase.
+        Open source ecommerce mobile app for on-demand orders. Setup ecommerce
+        marketplace or shop.
       </p>
     </div>
 
