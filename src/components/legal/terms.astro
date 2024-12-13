@@ -1,0 +1,579 @@
+---
+import Container from '@components/shared/Container.astro'
+import StarField from '@components/shared/StarField.astro'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+
+import cosmicButterfly from '@images/cosmic-butterfly.png'
+import spaceSpotlight from '@images/space-spotlight.png'
+import photo01 from '@images/employee-insta-photo-01.jpeg'
+import photo02 from '@images/employee-insta-photo-02.jpeg'
+import photo03 from '@images/employee-insta-photo-03.jpeg'
+import photo04 from '@images/employee-insta-photo-04.jpeg'
+import photo05 from '@images/employee-insta-photo-05.jpeg'
+import photo06 from '@images/employee-insta-photo-06.jpeg'
+import photo07 from '@images/employee-insta-photo-07.jpeg'
+import photo08 from '@images/employee-insta-photo-08.jpeg'
+
+const careerBenefits = [
+  {
+    title: 'Remote Flexibility',
+    icon: 'nucleo/globe-pin-32-colored',
+    description: 'Work from home, a cafe, or even under the stars.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.025] md:after:from-transparent after:to-violet-200/[0.075] md:after:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Wellness Programs',
+    icon: 'nucleo/heartbeat-32-colored',
+    description: 'Enjoy health coverage and mental wellness benefits.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.075] after:to-violet-200/[0.15] lg:after:to-violet-200/[0.25] md:after:via-violet-200/[0.25] md:after:to-violet-200/[0.125] lg:after:via-violet-200/[0.1875] before:content-[""] before:hidden sm:before:block before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.01] before:to-violet-200/[0.075] md:before:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Professional Growth',
+    icon: 'nucleo/bulb-32-colored',
+    description: 'Courses and networks that boost your career.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r lg:after:from-violet-200/[0.25] lg:after:to-violet-200/[0.125] after:from-violet-200/[0.15] after:to-violet-200/[0.075] md:after:from-violet-200/[0.125] md:after:to-transparent before:md:block before:hidden before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.015] lg:before:to-violet-200/[0.25] before:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Vacation Policy',
+    icon: 'nucleo/palm-tree-32-colored',
+    description: 'Recharge with over 1 month of vacation a year.',
+    borderClassName:
+      'md:hidden before:hidden before:sm:block lg:block after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.075] after:to-violet-200/[0.025] lg:after:from-violet-200/[0.125] lg:after:to-transparent before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b md:before:from-violet-200/[.01] md:before:to-violet-200/[0.125] before:from-violet-200/[0.075] before:to-violet-200/[0.025]',
+  },
+  {
+    title: 'Gear Allowance',
+    icon: 'nucleo/computer-gear-32-colored',
+    description: 'We’ll send you the latest technology wherever.',
+    borderClassName:
+      'after:hidden md:after:block after:content-[""] after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full before:content-[""] before:absolute before:sm:hidden before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-gradient-to-r before:from-violet-200/[0.025] before:to-violet-200/[0.075]',
+  },
+  {
+    title: 'Company Retreats',
+    icon: 'nucleo/mountain-32-colored',
+    description: 'All-expenses-paid retreats that blend work and play.',
+    borderClassName:
+      'before:content-[""] before:hidden before:sm:block before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b lg:before:from-violet-200/[.125] before:from-violet-200/[.025] before:to-violet-200/[.15] md:before:from-violet-200/[.25] md:before:to-violet-200/[0.01] after:content-[""] after:hidden md:after:block after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full',
+  },
+  {
+    title: 'Family Leave',
+    icon: 'nucleo/baby-stroller-32-colored',
+    description: 'Extended maternity and paternity leave options',
+    borderClassName:
+      'hidden lg:block before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.125] before:to-violet-200/[0.01] after:content-[""] after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full',
+  },
+]
+
+const employeeInstaPhotos = [
+  {
+    image: photo01,
+    alt: 'Two friends taking a selfie at a restaurant',
+    username: '@sara_and_jane',
+    caption: 'Besties night out! 🥂',
+    countryFlag: 'usa',
+    location: 'New York, USA',
+  },
+  {
+    image: photo02,
+    alt: 'Dinner party with friends',
+    username: '@VeronicaReardon',
+    caption: 'Lisbon crew enjoying a nice dinner together!',
+    countryFlag: 'portugal',
+    location: 'Lisbon, Portugal',
+  },
+  {
+    image: photo03,
+    alt: 'Man working on laptop in a cafe',
+    username: '@dev_daniel',
+    caption: 'Remote work with a perfect cup of coffee ☕',
+    countryFlag: 'usa',
+    location: 'San Francisco, USA',
+  },
+  {
+    image: photo04,
+    alt: 'Three friends jumping with hot air balloons in the background',
+    username: '@adventure_girls',
+    caption: 'Ballooning adventures! 🎈',
+    countryFlag: 'turkey',
+    location: 'Cappadocia, Turkey',
+  },
+  {
+    image: photo05,
+    alt: 'Woman working at home with a dog by her side',
+    username: '@urban_nature',
+    caption: 'Work from home vibes 🌿',
+    countryFlag: 'usa',
+    location: 'Brooklyn, USA',
+  },
+  {
+    image: photo06,
+    alt: 'Yoga session in the park at sunset',
+    username: '@yogi_life',
+    caption: 'Finding peace in the sunset 🌅',
+    countryFlag: 'australia',
+    location: 'Sydney, Australia',
+  },
+  {
+    image: photo07,
+    alt: 'Man working on a laptop in an outdoor setting',
+    username: '@nomad_coder',
+    caption: 'Work from anywhere 🌍',
+    countryFlag: 'greece',
+    location: 'Santorini, Greece',
+  },
+  {
+    image: photo08,
+    alt: 'Woman using her phone with a beach view',
+    username: '@coastal_life',
+    caption: 'Ocean view office 🌊',
+    countryFlag: 'new-zealand',
+    location: 'Auckland, New Zealand',
+  },
+]
+---
+
+<section class="relative overflow-hidden pb-16 pt-20 sm:pb-20 sm:pt-24">
+  <Container>
+    {/* Text content */}
+    <div class="relative flex flex-col items-center">
+      <h1
+        class="max-w-4xl text-center text-4xl font-bold leading-extratight text-violet-100 sm:text-5xl sm:leading-extratight"
+      >
+        Fleetbase Terms & Conditions
+      </h1>
+      <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
+        1. APPLICATION OF TERMS 1.1 These Terms apply to your use of the Service
+        (as that term is defined below). By setting up an account and using the
+        Service:performing obligations in the course of or in connection with
+        our provision of the goods and/or services requested by you;verifying
+        your identity; 1.2 If you do not agree to these Terms, you are not
+        authorised to access and use the Service, and you must immediately stop
+        doing so. 2. CHANGES 2.1 We may change these Terms at any time by
+        notifying you of the change by email or by posting a notice on the
+        Website. Unless stated otherwise, any change takes effect from the date
+        set out in the notice. You are responsible for ensuring you are familiar
+        with the latest Terms. By continuing to access and use the Service from
+        the date on which the Terms are changed, you agree to be bound by the
+        changed Terms. 2.2 These Terms were last updated on 8th April 2021.
+        3.INTERPRETATION In these Terms: Fleetbase Software means the software
+        owned by us (and our licensors) that is used to provide the
+        Service.Confidential Information means any information that is not
+        public knowledge and that is obtained from the other party in the course
+        of, or in connection with, the provision and use of the Service. Our
+        Confidential Information includes Intellectual Property owned by us (or
+        our licensors), including the Fleetbase Software. Your Confidential
+        Information includes the Data.Data means all data, content, and
+        information (including personal information) owned, held, used or
+        created by you or on your behalf that is stored using, or inputted into,
+        the Service. Fees means the applicable fees set out on our pricing page
+        on the Website at https://fleetbase.io/pricing or as agreed otherwise in
+        writing between you and us, as may be updated from time to time in
+        accordance with clause 7.6. Force Majeure means an event that is beyond
+        the reasonable control of a party, excluding: ▲ an event to the extent
+        that it could have been avoided by a party taking reasonable steps or
+        reasonable care; or ▲ a lack of funds for any reason. Including and
+        similar words do not imply any limit. Objectionable includes being
+        objectionable, defamatory, obscene, harassing, threatening, harmful, or
+        unlawful in any way.a person includes an individual, a body corporate,
+        an association of persons (whether corporate or not), a trust, a
+        government department, or any other entity.personal information means
+        information about an identifiable, living person, and includes personal
+        data, personally identifiable information and equivalent information
+        under applicable privacy and data protection laws.personnel includes
+        officers, employees, contractors and agents, but a reference to your
+        personnel does not include us. Service means the service having the core
+        functionality described on the Website, as the Website is updated from
+        time to time. Start Date means the date that you set up an account /
+        first access or use the Service. Terms means these terms titled SaaS
+        terms of use. Underlying Systems means the Fleetbase Software, IT
+        solutions, systems and networks (including software and hardware) used
+        to provide the Service, including any third party solutions, systems and
+        networks. We, us or our means Fleetbase Pte Ltd, company number
+        201817513D , a company incorporated in Singapore whose registered office
+        is at 7 Temasek Boulevard#12-07 Suntec Tower OneSingapore 038987.
+        Website means the internet site at https://fleetbase.io , or such other
+        site notified to you by us. Year means a 12-month period starting on the
+        Start Date or the anniversary of that date.You or your means you or, if
+        clause 1.1b applies, both you and the other person on whose behalf you
+        are acting. Words in the singular include the plural and vice versa.A
+        reference to a statute includes references to regulations, orders or
+        notices made under or in connection with the statute or regulations and
+        all amendments, replacements or other changes to any of them. 4.
+        PROVISION OF THE SERVICE 4.1 We must use reasonable efforts to provide
+        the Service:in accordance with these Terms and Singapore law;exercising
+        reasonable care, skill and diligence; andusing suitably skilled,
+        experienced and qualified personnel. 4.2 Our provision of the Service to
+        you is non-exclusive. Nothing in these Terms prevents us from providing
+        the Service to any other person. 4.3 Subject to clause 4.4, We must use
+        reasonable efforts to ensure the Service is available on a 24/7 basis.
+        However, it is possible that on occasion the Service may be unavailable
+        to permit maintenance or other development activity to take place, or in
+        the event of Force Majeure. We must use reasonable efforts to publish on
+        the Website and / or notify you by email, advance details of any
+        unavailability. 4.4 Through the use of web services and APIs, the
+        Service interoperates with a range of third party service features. We
+        do not make any warranty or representation on the availability of those
+        features. Without limiting the previous sentence, if a third party
+        feature provider ceases to provide that feature or ceases to make that
+        feature available on reasonable terms, we may cease to make available
+        that feature to you. To avoid doubt, if we exercise our right to cease
+        the availability of a third party feature, you are not entitled to any
+        refund, discount or other compensation. 5. YOUR OBLIGATIONS 5.1 You and
+        your personnel must::use the Service in accordance with these Terms
+        solely for:your own internal business purposes; andlawful purposes
+        and:not resell or make available the Service to any third party, or
+        otherwise commercially exploit the Service. 5.2 When accessing the
+        Service, you and your personnel must:not impersonate another person or
+        misrepresent authorisation to act on behalf of others or us;correctly
+        identify the sender of all electronic transmissions;not attempt to
+        undermine the security or integrity of the Underlying Systems;not use,
+        or misuse, the Service in any way which may impair the functionality of
+        the Underlying Systems or impair the ability of any other user to use
+        the Service;not attempt to view, access or copy any material or data
+        other than:that which you are authorised to access; andneither use the
+        Service in a manner, nor transmit, input or store any Data, that
+        breaches any third party right (including Intellectual Property Rights
+        and privacy rights) or is Objectionable, incorrect or misleading. 5.3 A
+        breach of any of these Terms by your personnel is deemed to be a breach
+        of these Terms by you. 5.4 You are responsible for procuring all
+        licences, authorisations and consents required for you and your
+        personnel to use the Service, including to use, store and input Data
+        into, and process and distribute Data through, the Service. 6. DATA 6.1
+        You acknowledge that:we may require access to the Data to exercise our
+        rights and perform our obligations under these Terms; andto the extent
+        that this is necessary but subject to clause 9, we may authorise a
+        member or members of our personnel to access the Data for this purpose.
+        6.2 You must arrange all consents and approvals that are necessary for
+        us to access the Data as described in clause 6.1. 6.3 You acknowledge
+        and agree that we may:use Data and information about your and your end
+        users’ use of the Service to generate anonymised and aggregated
+        statistical and analytical data (Analytical Data); anduse Analytical
+        Data for our internal research and product development purposes and to
+        conduct statistical analysis and identify trends and insights; andsupply
+        Analytical Data to third parties;our rights under clause 6.3a above will
+        survive termination or expiry of these Terms; andtitle to, and all
+        Intellectual Property Rights in, Analytical Data is and remains our
+        property. 6.4 You acknowledge and agree that to the extent Data contains
+        personal information, in collecting, holding and processing that
+        information through the Service, we are acting as your agent and/or as a
+        data processor for the purposes of applicable privacy and data
+        protection laws. You must obtain all necessary consents from the
+        relevant individual to enable us to collect, use, hold and process that
+        information in accordance with these Terms. 6.5 While we will take
+        standard industry measures to back up all Data stored using the Service,
+        you agree to keep a separate back-up copy of all Data uploaded by you
+        onto the Service. 6.6 You indemnify us against any liability, claim,
+        proceeding, cost, expense (including the actual legal fees charged by
+        our solicitors) and loss of any kind arising from any actual or alleged
+        claim by a third party that any Data infringes the rights of that third
+        party (including Intellectual Property Rights and privacy rights) or
+        that the Data is Objectionable, incorrect or misleading. 7. FEES 7.1 You
+        must pay us the Fees 7.2 We will provide you with invoices on a monthly
+        basis prior to the due date for payment. 7.3 The Fees exclude any
+        applicable goods and services, value-added, sales or other similar tax,
+        which you may be required to pay on taxable supplies. 7.4 You must pay
+        the Feesby the 20th of the month following the date of
+        invoiceelectronically in cleared funds without any set off or
+        deduction.> 7.5 We may charge interest on overdue amounts. Interest will
+        be calculated from the due date to the date of payment (both inclusive)
+        at an annual percentage rate equal to the corporate overdraft reference
+        rate (monthly charging cycle) applied by our primary trading bank as at
+        the due date (or, if our primary trading bank ceases to quote that rate,
+        then the rate which in the opinion of the bank is equivalent to that
+        rate in respect of similar overdraft accommodation expressed as a
+        percentage) plus 2% per annum. 7.6 We may increase the Fees by giving at
+        least 30 days’ notice. If you do not wish to pay the increased Fees, you
+        may terminate these Terms and your right to access and use the Service
+        on no less than 10 days’ notice, provided the notice is received by us
+        before the effective date of the Fee increase. If you do not terminate
+        these Terms and your right to access and use the Service in accordance
+        with this clause, you are deemed to have accepted the increased Fees.
+        8.INTELLECTUAL PROPERTY 8.1 Subject to clause 8.2, title to, and all
+        Intellectual Property Rights in, the Service, the Website, and all
+        Underlying Systems is and remains our property (and our licensors’
+        property). You must not contest or dispute that ownership, or the
+        validity of those Intellectual Property Rights.8.2 Title to, and all
+        Intellectual Property Rights in, the Data (as between the parties)
+        remains your property. You grant us a worldwide, non-exclusive, fully
+        paid up, transferable, irrevocable licence to use, store, copy, modify,
+        make available and communicate the Data for any purpose in connection
+        with the exercise of our rights and performance of our obligations in
+        accordance with these Terms. 8.3 To the extent not owned by us, you
+        grant us a royalty-free, transferable, irrevocable and perpetual licence
+        to use for our own business purposes any know-how, techniques, ideas,
+        methodologies, and similar Intellectual Property used by us in the
+        provision of the Service. 8.4 If you provide us with ideas, comments or
+        suggestions relating to the Service or Underlying Systems (together
+        feedback)all Intellectual Property Rights in that feedback, and anything
+        created as a result of that feedback (including new material,
+        enhancements, modifications or derivative works), are owned solely by
+        us; andwe may use or disclose the feedback for any purpose. 8.5 You
+        acknowledge that the Service may link to third party websites or feeds
+        that are connected or relevant to the Service. Any link from the Service
+        does not imply that we endorse, approve or recommend, or have
+        responsibility for, those websites or feeds or their content or
+        operators. To the maximum extent permitted by law, we exclude all
+        responsibility or liability for those websites or feeds.
+        9.CONFIDENTIALITY 9.1 Each party must, unless it has the prior written
+        consent of the other party:keep confidential at all times the
+        Confidential Information of the other party;effect and maintain adequate
+        security measures to safeguard the other party’s Confidential
+        Information from unauthorised access or use; anddisclose the other
+        party’s Confidential Information to its personnel or professional
+        advisors on a need to know basis only and, in that case, ensure that any
+        personnel or professional advisor to whom it discloses the other party’s
+        Confidential Information is aware of, and complies with, clauses 9.1a
+        and 9.1b. 9.2 The obligation of confidentiality in clause 9.1 does not
+        apply to any disclosure or use of Confidential Information:for the
+        purpose of performing a party’s obligations, or exercising a party’s
+        rights, under these Terms;required by law (including under the rules of
+        any stock exchange);which is publicly available through no fault of the
+        recipient of the Confidential Information or its personnel;which was
+        rightfully received by a party from a third party without restriction
+        and without breach of any obligation of confidentiality; orby us if
+        required as part of a bona fide sale of our business (assets or shares,
+        whether in whole or in part) to a third party, provided that we enter
+        into a confidentiality agreement with the third party on terms no less
+        restrictive than this clause 9. 10. WARRANTIES 10.1 Each party warrants
+        that it has full power and authority to enter into, and perform its
+        obligations under, these Terms. 10.2 To the maximum extent permitted by
+        law:our warranties are limited to those set out in these Terms, and all
+        other conditions, guarantees or warranties whether expressed or implied
+        by statute or otherwise are expressly excluded and, to the extent that
+        they cannot be excluded, liability for them is limited to SGD 1,000.00;
+        andwe make no representation concerning the quality of the Service and
+        do not promise that the Service will:meet your requirements or be
+        suitable for a particular purpose , including that the use of the
+        Service will fulfil or meet any statutory role or responsibility you may
+        have; or .be secure, free of viruses or other harmful code,
+        uninterrupted or error free. 10.3 You agree and represent that you are
+        acquiring the Service, and accepting these Terms, for the purpose of
+        trade. The parties agree that:to the maximum extent permissible by law,
+        any applicable consumer protection law does not apply to the supply of
+        the Service or these Terms; andit is fair and reasonable that the
+        parties are bound by this clause 10.3. Where legislation or rule of law
+        implies into these Terms a condition or warranty that cannot be excluded
+        or modified by contract, the condition or warranty is deemed to be
+        included in these Terms. However, our liability for any breach of that
+        condition or warranty is limited, at our option, to:supplying the
+        Service again; and/orpaying the costs of having the Service supplied
+        again. 11. LIABILITY 11.1 Our maximum aggregate liability under or in
+        connection with these Terms or relating to the Service, whether in
+        contract, tort (including negligence), breach of statutory duty or
+        otherwise, must not in any Year exceed an amount equal to the Fees paid
+        by you relating to the Service in the previous Year (which in the first
+        Year is deemed to be the total Fees paid by you from the Start Date to
+        the date of the first event giving rise to liability). The cap in this
+        clause 11.1 includes the cap set out in clause 10.2a. 11.2 Neither party
+        is liable to the other under or in connection with these Terms or the
+        Service for any:loss of profit, revenue, savings, business, use, data
+        (including Data), and/or goodwill; orconsequential, indirect, incidental
+        or special damage or loss of any kind.: 11.3 Clauses 11.1 and 11.2 do
+        not apply to limit our liability under or in connection with these Terms
+        for: personal injury or death; fraud or wilful misconduct; or a for
+        those matters stated in clause 11.3a to 11.3c. 11.5 Neither party will
+        be responsible, liable, or held to be in breach of these Terms for any
+        failure to perform its obligations under these Terms or otherwise, to
+        the extent that the failure is caused by the other party failing to
+        comply with its obligations under these Terms, or by the negligence or
+        misconduct of the other party or its personnel. 11.6 Each party must
+        take reasonable steps to mitigate any loss or damage, cost or expense it
+        may suffer or incur arising out of anything done or not done by the
+        other party under or in connection with these Terms or the Service. 12.
+        TERM, TERMINATION AND SUSPENSION 12.1 Unless terminated under this
+        clause 12, these Terms and your right to access and use the
+        Service:starts on the Start Date; andcontinues until a party gives at
+        least 30 days notice that these Terms and your access to and use of the
+        Service will terminate on the expiry of that notice. 12.2 Subject to
+        clause 7.6, if the subscription option you have selected includes a
+        minimum initial term, the earliest date for termination under clause
+        12.1 will be the expiry of that initial term. 12.3 Either party may, by
+        notice to the other party, immediately terminate these Terms and your
+        right to access and use the Service if the other party:breaches any
+        material provision of these Terms and the breach is not:remedied within
+        10 days of the receipt of a notice from the first party requiring it to
+        remedy the breach; orcapable of being remedied; or.becomes insolvent,
+        liquidated or bankrupt, has an administrator, receiver, liquidator,
+        statutory manager, mortgagee’s or chargee’s agent appointed, becomes
+        subject to any form of insolvency action or external administration, or
+        ceases to continue business for any reason. 12.4 You may terminate these
+        Terms and your right to access and use the Service in accordance with
+        clause 7.6.. 12.5 Termination of these Terms does not affect either
+        party’s rights and obligations that accrued before that termination.
+        12.6 On termination of these Terms, you must pay all Fees for the
+        provision of the Service prior to that termination. 12.7 No compensation
+        is payable by us to you as a result of termination of these Terms for
+        whatever reason, and you will not be entitled to a refund of any Fees
+        that you have already paid. 12.8 Except to the extent that a party has
+        ongoing rights to use Confidential Information, at the other party’s
+        request following termination of these Terms but subject to clause 12.9,
+        a party must promptly return to the other party or destroy all
+        Confidential Information of the other party that is in the first party’s
+        possession or control.12.9 At any time prior to one month after the date
+        of termination, you may request:a copy of any Data stored using the
+        Service, provided that you pay our reasonable costs of providing that
+        copy. On receipt of that request, we must provide a copy of the Data in
+        a common electronic form. We do not warrant that the format of the Data
+        will be compatible with any software; and/ordeletion of the Data stored
+        using the Service, in which case we must use reasonable efforts to
+        promptly delete that Data.To avoid doubt, we are not required to comply
+        with clause 12.9a to the extent that you have previously requested
+        deletion of the Data.12.10 Without limiting any other right or remedy
+        available to us, we may restrict or suspend your access to and use of
+        the Service and/or delete, edit or remove the relevant Data if we
+        consider that you or any of your personnel have:undermined, or attempted
+        to undermine, the security or integrity of the Service or any Underlying
+        Systems;used, or attempted to use, the Service:for improper purposes;
+        orin a manner, other than for normal operational purposes, that
+        materially reduces the operational performance of the
+        Service;transmitted, inputted or stored any Data that breaches or may
+        breach these Terms or any third party right (including Intellectual
+        Property Rights and privacy rights), or that is or may be Objectionable,
+        incorrect or misleading; orotherwise materially breached these Terms.
+        13. GENERAL1 3.1 Neither party is liable to the other for any failure to
+        perform its obligations under these Terms to the extent caused by Force
+        Majeure. 13.2 No person other than you and us has any right to a benefit
+        under, or to enforce, these Terms. 13.3 For us to waive a right under
+        these Terms, that waiver must be in writing and signed by us. 13.4
+        Subject to clause 6.4, we are your independent contractor, and no other
+        relationship (e.g. joint venture, agency, trust or partnership) exists
+        under these Terms. 13.5 If we need to contact you, we may do so by email
+        or by posting a notice on the Website. You agree that this satisfies all
+        legal requirements in relation to written communications. You may give
+        notice to us under or in connection with these Terms by emailing
+        hello@fletbase.io. 13.6 These Terms, and any dispute relating to these
+        Terms or the Service, are governed by and must be interpreted in
+        accordance with the law of Singapore. Each party submits to the
+        non-exclusive jurisdiction of the Courts of Singapore in relation to any
+        dispute connected with these Terms or the Service 13.7 Clauses which, by
+        their nature, are intended to survive termination of these Terms,
+        including clauses 6.7, 8, 9, 11, 12.5 to 12.9 and 13.6, continue in
+        force. 13.8 If any part or provision of these Terms is or becomes
+        illegal, unenforceable, or invalid, that part or provision is deemed to
+        be modified to the extent required to remedy the illegality,
+        unenforceability or invalidity. If modification is not possible, the
+        part or provision must be treated for all purposes as severed from these
+        Terms. The remainder of these Terms will be binding on you. 13.9 Subject
+        to clauses 2.1 and 7.6, any variation to these Terms must be in writing
+        and signed by both parties. 13.10 These Terms set out everything agreed
+        by the parties relating to the Service, and supersede and cancel
+        anything discussed, exchanged or agreed prior to the Start Date. The
+        parties have not relied on any representation, warranty or agreement
+        relating to the Service that is not expressly set out in these Terms,
+        and no such representation, warranty or agreement has any effect from
+        the Start Date. Without limiting the previous sentence, the parties
+        agree that it is fair and reasonable that the parties are bound by this
+        clause 13.10. 13.11 You may not assign, novate, subcontract or transfer
+        any right or obligation under these Terms without our prior written
+        consent, that consent not to be unreasonably withheld. You remain liable
+        for your obligations under these Terms despite any approved assignment,
+        subcontracting or transfer.
+      </p>
+    </div>
+
+    <!-- {/* Benefits */}
+    <div class="relative mt-12 sm:mt-18">
+      <div
+        class="absolute -left-56 -right-56 -top-80 sm:-left-64 sm:-right-64 lg:top-[-500px]"
+      >
+        <Image
+          src={spaceSpotlight}
+          alt=""
+          class="-z-10 h-full w-full object-cover opacity-45"
+          widths={[420, 768, 1152]}
+          sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (min-width: 768px) 1152px`}
+        />
+      </div>
+
+      <div class="relative mt-8 flex flex-wrap items-stretch justify-center">
+        {
+          careerBenefits.map((benefit) => (
+            <div
+              class:list={[
+                "group relative w-full bg-gradient-to-b after:absolute after:content-[''] sm:w-1/2 md:w-1/3 lg:w-1/4",
+                benefit.borderClassName,
+              ]}
+            >
+              <div class="relative h-full w-full overflow-hidden">
+                <div
+                  class="absolute inset-0 opacity-0 duration-300 ease-in-out group-hover:opacity-100"
+                  aria-hidden="true"
+                >
+                  <StarField density="high" maxRadius={1.75} minRadius={1} />
+                </div>
+                <div class="hover-gradient absolute inset-0 -z-10 bg-gradient-to-b from-[#575EFF]/30 to-[#E478FF]/30 opacity-0 blur-4xl duration-300 ease-in-out group-hover:opacity-100" />
+                <div class="relative z-10 flex h-full w-full flex-1 flex-col justify-center px-4 py-5 sm:px-5 sm:py-6 lg:py-7 xl:p-8">
+                  <Icon
+                    name={benefit.icon}
+                    class="h-6 w-6 text-zinc-300 sm:h-7 sm:w-7 xl:h-8 xl:w-8"
+                  />
+
+                  <h4 class="mt-5 text-base font-bold text-violet-50 xl:mt-6 xl:text-lg">
+                    {benefit.title}
+                  </h4>
+                  <p class="mt-1 line-clamp-2 text-base text-zinc-300 xl:text-lg">
+                    {benefit.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        } -->
+  </Container>
+</section>
+
+{/* Images */}
+<div class="mx-2.5 mt-14 flex sm:mt-16 lg:mt-20">
+  <div
+    class="mx-2.5 flex w-max animate-infiniteScroll items-center justify-center [--_infinite-scroll-duration:80s]"
+  >
+    <!-- {
+        [...Array(2)].map((_) => (
+          <div class="flex w-1/2 justify-around">
+            {employeeInstaPhotos.map((photo) => (
+              <div class="relative mx-2.5 aspect-[4/5] w-60 flex-shrink-0 rounded-2xl border border-violet-200/[.08] bg-white/[.01] p-2 shadow-inner-blur sm:w-64 md:w-72 lg:w-80 xl:w-96">
+                <div class="absolute -bottom-16 -left-20 -right-20 -top-24 -z-50 md:-bottom-20 md:-left-24 md:-right-24 md:-top-32 lg:-left-32 lg:-right-32 lg:-top-44">
+                  <Image
+                    src={cosmicButterfly}
+                    alt=""
+                    class="h-full w-full -rotate-6 opacity-25"
+                  />
+                </div>
+
+                <Image
+                  src={photo.image}
+                  alt=""
+                  class="relative h-full w-full rounded-lg object-cover mix-blend-luminosity"
+                />
+
+                <div class="absolute right-4 top-4 inline-flex w-max rounded-full bg-zinc-950/70 shadow-inner-blur">
+                  <div class="flex h-full w-full items-center space-x-2 rounded-full border border-violet-200/[.06] px-3.5 py-1.5">
+                    <Icon
+                      name={`nucleo/flags/${photo.countryFlag}`}
+                      class="h-3 w-3 text-violet-200"
+                    />
+                    <span class="text-xs font-medium leading-none text-violet-100 drop-shadow-[-12px_-4px_6px_rgba(237,233,254,0.2)]">
+                      {photo.location}
+                    </span>
+                  </div>
+                </div>
+                <div class="absolute inset-x-2 bottom-2 rounded-b-lg bg-gradient-to-b from-violet-950/10 via-violet-950/40 to-violet-950/55">
+                  <div class="px-4 py-8 md:px-5 lg:px-6 xl:px-8">
+                    <p class="text-lg font-bold text-white md:text-xl lg:text-2xl">
+                      {photo.username}
+                    </p>
+                    <p class="mt-1.5 text-base text-zinc-100 md:text-[17px] lg:text-lg">
+                      {photo.caption}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))
+      } -->
+  </div>
+</div>

@@ -1,0 +1,437 @@
+---
+import Container from '@components/shared/Container.astro'
+import StarField from '@components/shared/StarField.astro'
+import { Icon } from 'astro-icon/components'
+import { Image } from 'astro:assets'
+
+import cosmicButterfly from '@images/cosmic-butterfly.png'
+import spaceSpotlight from '@images/space-spotlight.png'
+import photo01 from '@images/employee-insta-photo-01.jpeg'
+import photo02 from '@images/employee-insta-photo-02.jpeg'
+import photo03 from '@images/employee-insta-photo-03.jpeg'
+import photo04 from '@images/employee-insta-photo-04.jpeg'
+import photo05 from '@images/employee-insta-photo-05.jpeg'
+import photo06 from '@images/employee-insta-photo-06.jpeg'
+import photo07 from '@images/employee-insta-photo-07.jpeg'
+import photo08 from '@images/employee-insta-photo-08.jpeg'
+
+const careerBenefits = [
+  {
+    title: 'Remote Flexibility',
+    icon: 'nucleo/globe-pin-32-colored',
+    description: 'Work from home, a cafe, or even under the stars.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.025] md:after:from-transparent after:to-violet-200/[0.075] md:after:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Wellness Programs',
+    icon: 'nucleo/heartbeat-32-colored',
+    description: 'Enjoy health coverage and mental wellness benefits.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.075] after:to-violet-200/[0.15] lg:after:to-violet-200/[0.25] md:after:via-violet-200/[0.25] md:after:to-violet-200/[0.125] lg:after:via-violet-200/[0.1875] before:content-[""] before:hidden sm:before:block before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.01] before:to-violet-200/[0.075] md:before:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Professional Growth',
+    icon: 'nucleo/bulb-32-colored',
+    description: 'Courses and networks that boost your career.',
+    borderClassName:
+      'after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r lg:after:from-violet-200/[0.25] lg:after:to-violet-200/[0.125] after:from-violet-200/[0.15] after:to-violet-200/[0.075] md:after:from-violet-200/[0.125] md:after:to-transparent before:md:block before:hidden before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.015] lg:before:to-violet-200/[0.25] before:to-violet-200/[0.125]',
+  },
+  {
+    title: 'Vacation Policy',
+    icon: 'nucleo/palm-tree-32-colored',
+    description: 'Recharge with over 1 month of vacation a year.',
+    borderClassName:
+      'md:hidden before:hidden before:sm:block lg:block after:inset-x-0 after:bottom-0 after:h-px after:w-full after:bg-gradient-to-r after:from-violet-200/[0.075] after:to-violet-200/[0.025] lg:after:from-violet-200/[0.125] lg:after:to-transparent before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b md:before:from-violet-200/[.01] md:before:to-violet-200/[0.125] before:from-violet-200/[0.075] before:to-violet-200/[0.025]',
+  },
+  {
+    title: 'Gear Allowance',
+    icon: 'nucleo/computer-gear-32-colored',
+    description: 'We’ll send you the latest technology wherever.',
+    borderClassName:
+      'after:hidden md:after:block after:content-[""] after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full before:content-[""] before:absolute before:sm:hidden before:inset-x-0 before:bottom-0 before:h-px before:w-full before:bg-gradient-to-r before:from-violet-200/[0.025] before:to-violet-200/[0.075]',
+  },
+  {
+    title: 'Company Retreats',
+    icon: 'nucleo/mountain-32-colored',
+    description: 'All-expenses-paid retreats that blend work and play.',
+    borderClassName:
+      'before:content-[""] before:hidden before:sm:block before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b lg:before:from-violet-200/[.125] before:from-violet-200/[.025] before:to-violet-200/[.15] md:before:from-violet-200/[.25] md:before:to-violet-200/[0.01] after:content-[""] after:hidden md:after:block after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full',
+  },
+  {
+    title: 'Family Leave',
+    icon: 'nucleo/baby-stroller-32-colored',
+    description: 'Extended maternity and paternity leave options',
+    borderClassName:
+      'hidden lg:block before:content-[""] before:absolute before:left-0 before:h-full before:w-px before:bg-gradient-to-b before:from-violet-200/[.125] before:to-violet-200/[0.01] after:content-[""] after:absolute after:w-1.5 after:h-1.5 after:bg-violet-200 after:top-[-3.5px] after:left-1/2 after:translate-x-[-2.5px] after:rounded-full',
+  },
+]
+
+const employeeInstaPhotos = [
+  {
+    image: photo01,
+    alt: 'Two friends taking a selfie at a restaurant',
+    username: '@sara_and_jane',
+    caption: 'Besties night out! 🥂',
+    countryFlag: 'usa',
+    location: 'New York, USA',
+  },
+  {
+    image: photo02,
+    alt: 'Dinner party with friends',
+    username: '@VeronicaReardon',
+    caption: 'Lisbon crew enjoying a nice dinner together!',
+    countryFlag: 'portugal',
+    location: 'Lisbon, Portugal',
+  },
+  {
+    image: photo03,
+    alt: 'Man working on laptop in a cafe',
+    username: '@dev_daniel',
+    caption: 'Remote work with a perfect cup of coffee ☕',
+    countryFlag: 'usa',
+    location: 'San Francisco, USA',
+  },
+  {
+    image: photo04,
+    alt: 'Three friends jumping with hot air balloons in the background',
+    username: '@adventure_girls',
+    caption: 'Ballooning adventures! 🎈',
+    countryFlag: 'turkey',
+    location: 'Cappadocia, Turkey',
+  },
+  {
+    image: photo05,
+    alt: 'Woman working at home with a dog by her side',
+    username: '@urban_nature',
+    caption: 'Work from home vibes 🌿',
+    countryFlag: 'usa',
+    location: 'Brooklyn, USA',
+  },
+  {
+    image: photo06,
+    alt: 'Yoga session in the park at sunset',
+    username: '@yogi_life',
+    caption: 'Finding peace in the sunset 🌅',
+    countryFlag: 'australia',
+    location: 'Sydney, Australia',
+  },
+  {
+    image: photo07,
+    alt: 'Man working on a laptop in an outdoor setting',
+    username: '@nomad_coder',
+    caption: 'Work from anywhere 🌍',
+    countryFlag: 'greece',
+    location: 'Santorini, Greece',
+  },
+  {
+    image: photo08,
+    alt: 'Woman using her phone with a beach view',
+    username: '@coastal_life',
+    caption: 'Ocean view office 🌊',
+    countryFlag: 'new-zealand',
+    location: 'Auckland, New Zealand',
+  },
+]
+---
+
+<section class="relative overflow-hidden pb-16 pt-20 sm:pb-20 sm:pt-24">
+  <Container>
+    {/* Text content */}
+    <div class="relative flex flex-col items-center">
+      <h1
+        class="max-w-4xl text-center text-4xl font-bold leading-extratight text-violet-100 sm:text-5xl sm:leading-extratight"
+      >
+        Fleetbase Privacy Policy
+      </h1>
+      <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
+        PRIVACY POLICY ‍ This Privacy Policy (“Notice”) sets out the basis which
+        Fleetbase Pte Ltd or its related corporations and/or affiliates (“we”,
+        “us”, or “our”) may collect, use, disclose or otherwise process personal
+        data of our customers in accordance with the Personal Data Protection
+        Act (“PDPA”).This Notice applies to personal data in our possession or
+        under our control, including personal data in the possession of
+        organisations which we have engaged to collect, use, disclose or process
+        personal data for our purposes. PERSONAL DATA As used in this Notice:
+        “customer” means an individual who (a) has contacted us through any
+        means to find out more about any goods or services we provide including,
+        or (b) may, or has, entered into a contract with us for the supply of
+        any goods or services by us, including the use of the Fleetbase website,
+        Fleetbase Console and Fleetbase Navigator Mobile App; and“personal data”
+        means data, whether true or not, about a customer who can be identified:
+        (a) from that data; or (b) from that data and other information to which
+        we have or are likely to have access.Depending on the nature of your
+        interaction with us, some examples of personal data which we may collect
+        from you include your name and identification information such as your
+        contact information such as your name, company name, company type,
+        address, email address, telephone number, location data and financial
+        information such as credit card numbers, debit card numbers or bank
+        account information.Other terms used in this Notice shall have the
+        meanings given to them in the PDPA (where the context so permits).
+        COLLECTION, USE AND DISCLOSURE OF PERSONAL DATA We generally do not
+        collect your personal data unless (a) it is provided to us voluntarily
+        by you directly or via a third party who has been duly authorised by you
+        to disclose your personal data to us (your “authorised representative”)
+        after (i) you (or your authorised representative) have been notified of
+        the purposes for which the data is collected, and (ii) you (or your
+        authorised representative) have provided written consent to the
+        collection and usage of your personal data for those purposes, or (b)
+        collection and use of personal data without consent is permitted or
+        required by the PDPA or other laws. We shall seek your consent before
+        collecting any additional personal data and before using your personal
+        data for a purpose which has not been notified to you (except where
+        permitted or authorised by law).When you use the Fleetbase Services, we
+        collect information about the services you use and how you use
+        them.Usage Information. We collect information about your interactions
+        with Fleetbase Services.Location Information. When you use certain
+        features of Fleetbase Services, we may collect different types of
+        information about your general location (e.g. for example IP address,
+        zip code) or more specific location information (e.g. for example
+        precise location from your mobile GPS), providing user consent, this
+        will be tracked even when the user is not using actively using the app.
+        Most mobile devices allow you to control or disable the use of location
+        services for applications in the device’s settings menu.Log Data. The
+        cookies in the app will automatically collect log information when you
+        use the Fleetbase Platform, even if you have not created an Fleetbase
+        Account or logged in. That information includes, among other things:
+        details about how you’ve used the Fleetbase Platform (including links to
+        third party applications), IP address, access times, hardware and
+        software information, device information, device event information
+        (e.g., crashes, browser type), and the page you’ve viewed or engaged
+        with before or after using the Fleetbase Platform.Transaction
+        Information. We collect information related to your transactions on the
+        Fleetbase Platform, including the date and time, amounts charged, and
+        other related transaction details.Cookies and Similar Technologies. We
+        use cookies and other similar technologies, such as web beacons, pixels,
+        and mobile identifiers. We may also allow our business partners to use
+        these tracking technologies on the Fleetbase Platform, or engage others
+        to facilitate these tracking technologies. While you may disable the
+        usage of cookies through your browser settings, we do not change our
+        practices in response to a “Do Not Track” signal in the HTTP header from
+        your browser or mobile application.We may collect and use your personal
+        data for any or all of the following purposes:performing obligations in
+        the course of or in connection with our provision of the goods and/or
+        services requested by you; verifying your identity; responding to,
+        handling, and processing queries, requests, applications, complaints,
+        and feedback from you; managing your relationship with us; processing
+        payment or credit transactions; sending your marketing information about
+        our goods or services including notifying you of our marketing events,
+        initiatives and promotions, lucky draws, membership and rewards schemes
+        and other promotions; complying with any applicable Singapore laws,
+        regulations, codes of practice, guidelines, or rules, or to assist in
+        law enforcement and investigations conducted by any governmental and/or
+        regulatory authority; any other purposes for which you have provided the
+        information; transmitting to any unaffiliated third parties including
+        our third party service providers and agents, and relevant governmental
+        and/or regulatory authorities, whether in Singapore or abroad, for the
+        aforementioned purposes; and any other incidental business purposes
+        related to or in connection with the above. We may disclose your
+        personal data:where such disclosure is required for performing
+        obligations in the course of or in connection with our provision of the
+        goods or services requested by you; or to third party service providers,
+        agents and other organisations we have engaged to perform any of the
+        functions listed in clause 5 above for us. The purposes listed in the
+        above clauses may continue to apply even in situations where your
+        relationship with us (for example, pursuant to a contract) has been
+        terminated or altered in any way, for a reasonable period thereafter
+        (including, where applicable, a period to enable us to enforce our
+        rights under any contract with you). WITHDRAWING YOUR CONSENT The
+        consent that you provide for the collection, use and disclosure of your
+        personal data will remain valid until such time it is being withdrawn by
+        you in writing. You may withdraw consent and request us to stop using
+        and/or disclosing your personal data for any or all of the purposes
+        listed above by submitting your request in writing or via email to our
+        Data Protection Officer at the contact details provided below.Upon
+        receipt of your written request to withdraw your consent, we may require
+        reasonable time (depending on the complexity of the request and its
+        impact on our relationship with you) for your request to be processed
+        and for us to notify you of the consequences of us acceding to the same,
+        including any legal consequences which may affect your rights and
+        liabilities to us.Whilst we respect your decision to withdraw your
+        consent, please note that depending on the nature and scope of your
+        request, we may not be in a position to continue providing our goods or
+        services to you and we shall, in such circumstances, notify you before
+        completing the processing of your request. Should you decide to cancel
+        your withdrawal of consent, please inform us in writing in the manner
+        described in clause 8 above.Please note that withdrawing consent does
+        not affect our right to continue to collect, use and disclose personal
+        data where such collection, use and disclose without consent is
+        permitted or required under applicable Singapore laws.If you wish to
+        make (a) an access request for access to a copy of the personal data
+        which we hold about you or information about the ways in which we use or
+        disclose your personal data, or (b) a correction request to correct or
+        update any of your personal data which we hold about you, you may submit
+        your request in writing or via email to our Data Protection Officer at
+        the contact details provided below.Please note that a reasonable fee may
+        be charged for an access request. If so, we will inform you of the fee
+        before processing your request.We will respond to your request as soon
+        as reasonably possible. Should we not be able to respond to your request
+        within thirty (30) days after receiving your request, we will inform you
+        in writing within thirty (30) days of the time by which we will be able
+        to respond to your request. If we are unable to provide you with any
+        personal data or to make a correction requested by you, we shall
+        generally inform you of the reasons why we are unable to do so (except
+        where we are not required to do so under the PDPA). PROTECTION OF
+        PERSONAL DATA To safeguard your personal data from unauthorised access,
+        collection, use, disclosure, copying, modification, disposal or similar
+        risks, we have introduced appropriate administrative, physical and
+        technical measures such as up-to-date anti-virus protection, encryption
+        and the use of privacy filters to secure all storage and transmission of
+        personal data by us, and disclosing personal data both internally and to
+        our authorised third party service providers and agents only on a
+        need-to-know basis.You should be aware, however, that no method of
+        transmission over the Internet or method of electronic storage is
+        completely secure. While security cannot be guaranteed, we strive to
+        protect the security of your information and are constantly reviewing
+        and enhancing our information security measures.. ACCURACY OF PERSONAL
+        DATA We generally rely on personal data provided by you (or your
+        authorised representative). In order to ensure that your personal data
+        is current, complete and accurate, please update us if there are changes
+        to your personal data by informing our Data Protection Officer in
+        writing or via email at the contact details provided below. RETENTION OF
+        PERSONAL DATA We may retain your personal data for as long as it is
+        necessary to fulfil the purpose for which it was collected, or as
+        required or permitted by applicable Singapore laws.We will cease to
+        retain your personal data, or remove the means by which the data can be
+        associated with you, as soon as it is reasonable to assume that such
+        retention no longer serves the purpose for which the personal data was
+        collected, and is no longer necessary for legal or business purposes.
+        Where applicable, Fleetbase Pte Ltd shall also instruct all third
+        parties to whom it has disclosed personal data for the purposes of this
+        Agreement to return to Fleetbase Pte Ltd or delete, such personal data.
+        TRANSFERS OF PERSONAL DATA OUTSIDE OF SINGAPORE We generally do not
+        transfer your personal data to countries outside of Singapore. However,
+        if we do so, we will obtain your consent for the transfer to be made and
+        we will take steps to ensure that your personal data continues to
+        receive a standard of protection that is at least comparable to that
+        provided under the PDPA. NOTICE AMENDMENTS We may update, amend,
+        supplement or modify this Policy from time-to-time by posting a new
+        version on our website. We will make available the updated Policy on our
+        Website. All communications, transactions and dealings with us shall be
+        subject to the latest version of this Policy in force at the time. OUR
+        USE OF COOKIES By using our website with your browser settings adjusted
+        to accept cookies you consent to our use of cookies and other tools to
+        provide the products and services available on our website.Cookies are
+        small text files that may be placed on your web browser when you visit
+        our website. Cookies allow your browser to remember some specific
+        information which the web server can later retrieve and use. We do not
+        use cookies to store any personal information that could be read or
+        understood by others. DATA PROTECTION OFFICER You may contact our Data
+        Protection Officer if you have any enquiries or feedback on our personal
+        data protection policies and procedures, or if you wish to make any
+        request, in the following manner: Attn: Shiv Thakker:
+        hello@fleetbase.io, 7 Temasek Boulevard#12-07 Suntec Tower OneSingapore
+        038987, +65 9780 3731. EFFECT OF NOTICE AND CHANGES TO NOTICE This
+        Notice applies in conjunction with any other notices, contractual
+        clauses and consent clauses that apply in relation to the collection,
+        use and disclosure of your personal data by us.We may revise this Notice
+        from time to time without any prior notice. You may determine if any
+        such revision has taken place by referring to the date on which this
+        Notice was last updated. Your continued use of our services constitutes
+        your acknowledgement and acceptance of such changes
+      </p>
+    </div>
+
+    <!-- {/* Benefits */}
+    <div class="relative mt-12 sm:mt-18">
+      <div
+        class="absolute -left-56 -right-56 -top-80 sm:-left-64 sm:-right-64 lg:top-[-500px]"
+      >
+        <Image
+          src={spaceSpotlight}
+          alt=""
+          class="-z-10 h-full w-full object-cover opacity-45"
+          widths={[420, 768, 1152]}
+          sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (min-width: 768px) 1152px`}
+        />
+      </div>
+
+      <div class="relative mt-8 flex flex-wrap items-stretch justify-center">
+        {
+          careerBenefits.map((benefit) => (
+            <div
+              class:list={[
+                "group relative w-full bg-gradient-to-b after:absolute after:content-[''] sm:w-1/2 md:w-1/3 lg:w-1/4",
+                benefit.borderClassName,
+              ]}
+            >
+              <div class="relative h-full w-full overflow-hidden">
+                <div
+                  class="absolute inset-0 opacity-0 duration-300 ease-in-out group-hover:opacity-100"
+                  aria-hidden="true"
+                >
+                  <StarField density="high" maxRadius={1.75} minRadius={1} />
+                </div>
+                <div class="hover-gradient absolute inset-0 -z-10 bg-gradient-to-b from-[#575EFF]/30 to-[#E478FF]/30 opacity-0 blur-4xl duration-300 ease-in-out group-hover:opacity-100" />
+                <div class="relative z-10 flex h-full w-full flex-1 flex-col justify-center px-4 py-5 sm:px-5 sm:py-6 lg:py-7 xl:p-8">
+                  <Icon
+                    name={benefit.icon}
+                    class="h-6 w-6 text-zinc-300 sm:h-7 sm:w-7 xl:h-8 xl:w-8"
+                  />
+
+                  <h4 class="mt-5 text-base font-bold text-violet-50 xl:mt-6 xl:text-lg">
+                    {benefit.title}
+                  </h4>
+                  <p class="mt-1 line-clamp-2 text-base text-zinc-300 xl:text-lg">
+                    {benefit.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))
+        } -->
+  </Container>
+</section>
+
+{/* Images */}
+<div class="mx-2.5 mt-14 flex sm:mt-16 lg:mt-20">
+  <div
+    class="mx-2.5 flex w-max animate-infiniteScroll items-center justify-center [--_infinite-scroll-duration:80s]"
+  >
+    <!-- {
+        [...Array(2)].map((_) => (
+          <div class="flex w-1/2 justify-around">
+            {employeeInstaPhotos.map((photo) => (
+              <div class="relative mx-2.5 aspect-[4/5] w-60 flex-shrink-0 rounded-2xl border border-violet-200/[.08] bg-white/[.01] p-2 shadow-inner-blur sm:w-64 md:w-72 lg:w-80 xl:w-96">
+                <div class="absolute -bottom-16 -left-20 -right-20 -top-24 -z-50 md:-bottom-20 md:-left-24 md:-right-24 md:-top-32 lg:-left-32 lg:-right-32 lg:-top-44">
+                  <Image
+                    src={cosmicButterfly}
+                    alt=""
+                    class="h-full w-full -rotate-6 opacity-25"
+                  />
+                </div>
+
+                <Image
+                  src={photo.image}
+                  alt=""
+                  class="relative h-full w-full rounded-lg object-cover mix-blend-luminosity"
+                />
+
+                <div class="absolute right-4 top-4 inline-flex w-max rounded-full bg-zinc-950/70 shadow-inner-blur">
+                  <div class="flex h-full w-full items-center space-x-2 rounded-full border border-violet-200/[.06] px-3.5 py-1.5">
+                    <Icon
+                      name={`nucleo/flags/${photo.countryFlag}`}
+                      class="h-3 w-3 text-violet-200"
+                    />
+                    <span class="text-xs font-medium leading-none text-violet-100 drop-shadow-[-12px_-4px_6px_rgba(237,233,254,0.2)]">
+                      {photo.location}
+                    </span>
+                  </div>
+                </div>
+                <div class="absolute inset-x-2 bottom-2 rounded-b-lg bg-gradient-to-b from-violet-950/10 via-violet-950/40 to-violet-950/55">
+                  <div class="px-4 py-8 md:px-5 lg:px-6 xl:px-8">
+                    <p class="text-lg font-bold text-white md:text-xl lg:text-2xl">
+                      {photo.username}
+                    </p>
+                    <p class="mt-1.5 text-base text-zinc-100 md:text-[17px] lg:text-lg">
+                      {photo.caption}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ))
+      } -->
+  </div>
+</div>

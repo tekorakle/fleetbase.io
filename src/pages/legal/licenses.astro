@@ -1,8 +1,8 @@
 ---
 import RootLayout from '@layouts/RootLayout.astro'
 import HeroContainer from '@components/shared/HeroContainer.astro'
-import PricingHero from '@components/pricing/PricingHero.astro'
-import PricingTable from '@components/pricing/PricingTable.astro'
+import LicenseFaq from '@components/legal/license-faq.astro'
+import LicenseLinks from '@components/legal/license-links.astro'
 import Faq from '@components/shared/Faq.astro'
 import Footer from '@components/shared/Footer.astro'
 import Divider from '@components/shared/Divider.astro'
@@ -16,13 +16,11 @@ import { SITE } from '@config'
   <HeroContainer
     starField={false}
     bgGradientClassName="opacity-60 lg:opacity-90 xl:opacity-100"
-  >
-    <PricingHero />
-  </HeroContainer>
+  />
   <Divider />
-  <PricingTable />
+  <LicenseLinks />
   <Divider />
-  <Faq />
+  <LicenseFaq />
   <Divider />
   <Footer />
 </RootLayout>
