@@ -9,40 +9,19 @@ import logo from '@images/logo.png'
 import logoIcon from '@images/logo-icon.png'
 
 const pages = [
-  { label: 'Blog', href: '/,' },
-  { label: 'Newsletter', href: '/' },
-  { label: 'User Guides', href: 'https://docs.fleetbase.io/category/guides' },
-  {
-    label: 'Contact',
-    href: '/company/contact',
-  },
-  // { label: 'About', href: '/about', icon: 'heroicons:users-16-solid' },
-  // {
-  //   label: 'Pricing',
-  //   href: '/pricing',
-  //   icon: 'heroicons:credit-card-16-solid',},
-  // {
-  // {
-  //   label: 'Sign in',
-  //   href: '/signin',
-  //   icon: 'heroicons:user-circle-16-solid',
-  // },
-  // { label: 'Sign up', href: '/signup', icon: 'heroicons:user-plus-16-solid' },
-  // {
-  //   label: 'Password reset',
-  //   href: 'password-reset',
-  //   icon: 'heroicons:lock-open-16-solid',
-  // },
-  // { label: '404', href: '/404', icon: 'heroicons:exclamation-circle-16-solid' },
+  { label: 'FleetOps (TMS)', href: '/products/fleetops' },
+  { label: 'Storefront', href: '/products/storefront' },
+  { label: 'Inventory', href: '/products/inventory' },
+  { label: 'Driver App', href: '/products/driver-app' },
+  { label: 'OnDemand App', href: '/products/storefront-app' },
+  { label: 'Customer Portal', href: '/products/customer-portal' },
 ]
 
 const links = [
-  { label: 'Products', href: '/products/main' },
-  // { label: 'About', href: '/about' },
   { label: 'Docs', href: 'https://docs.fleetbase.io/' },
   { label: 'Pricing', href: '/company/pricing' },
   { label: 'Services', href: '/company/services' },
-  // { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/company/contact' },
 ]
 
 const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
@@ -204,7 +183,7 @@ const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
         :aria-expanded="pagesDropdownOpen"
         x-ref="pagesDropdownButton"
       >
-        <span>Resources</span>
+        <span>Products</span>
 
         <Icon
           name="heroicons:chevron-down-16-solid"
