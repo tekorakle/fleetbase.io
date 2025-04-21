@@ -9,25 +9,25 @@ import spaceSpotlight from '@images/space-spotlight.png'
 
 const features = [
   {
-    icon: 'heroicons:users-solid',
+    icon: 'heroicons:squares-plus-solid',
     title: 'Customizable Dashboard',
     description:
-      'Centralized console for managing your logistics operations, integrations, and users.',
+      'Customize dashboard with drag and drop resizable widgets so that you can view key data and metrics your way.',
   },
   {
-    icon: 'heroicons:cursor-arrow-ripple-solid',
+    icon: 'heroicons:map-solid',
     title: 'Navigator App',
     description:
-      'End-to-end transport management system for real-time driver management and operations oversight.',
+      'Driver app with real-time tracking, order management, navigation, chat and fuel and issue report management.',
   },
   {
-    icon: 'heroicons:presentation-chart-line-solid',
+    icon: 'heroicons:puzzle-piece-solid',
     title: 'Extensions',
     description:
       'Expand Fleetbase with installable modules and custom integrations through the open Extensions Marketplace.',
   },
   {
-    icon: 'heroicons:chat-bubble-left-right-solid',
+    icon: 'heroicons:users-solid',
     title: 'Customer Portal',
     description:
       'Empower customers with a self-service portal for placing orders, tracking deliveries, and managing interactions.',
@@ -110,12 +110,14 @@ const features = [
       {
         features.map((feature) => (
           <div>
-            <Icon
-              name={feature.icon}
-              class="-mt-0.5 mr-1.5 inline h-5 w-5 shrink-0 text-blue-400 sm:h-[21px] sm:w-[21px]"
-            />
+            <div class="flex flex-row items-center text-[17px] leading-7 text-zinc-300 md:text-lg md:leading-8">
+              <Icon
+                name={feature.icon}
+                class="-mt-2 mr-1.5 inline h-5 w-5 shrink-0 text-blue-400 sm:h-[21px] sm:w-[21px]"
+              />
+              <div class="font-semibold text-white mb-2">{feature.title}</div>
+            </div>
             <p class="inline text-[17px] leading-7 text-zinc-300 md:text-lg md:leading-8">
-              <span class="font-semibold text-white">{feature.title}</span>{' '}
               <p class="text-white">{feature.description}</p>
             </p>
           </div>
