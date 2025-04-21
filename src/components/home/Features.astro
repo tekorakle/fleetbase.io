@@ -3,8 +3,7 @@ import Container from '@components/shared/Container.astro'
 import StarField from '@components/shared/StarField.astro'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-
-import graphic from '@images/fleetops-console.png'
+import graphic from '@images/screenshots/activity-flow.png'
 import cosmicButterfly from '@images/cosmic-butterfly.png'
 import spaceSpotlight from '@images/space-spotlight.png'
 
@@ -97,10 +96,10 @@ const features = [
 
       <Image
         src={graphic}
-        alt="Collaboration interface with user profile images"
+        alt="Create dynamic event-driven order workflows with logic"
         widths={[420, 768, 1024, graphic.width]}
         sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (min-width: 1024px) ${graphic.width}px`}
-        class="relative h-auto w-full rounded-lg"
+        class="relative h-auto w-full rounded-lg drop-shadow-lg border border-gray-800 border-solid"
       />
     </div>
 

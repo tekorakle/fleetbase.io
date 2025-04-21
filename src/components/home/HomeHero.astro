@@ -9,8 +9,8 @@ import { CLIENTS } from '@config'
 
 import consoleScreenshots from '@images/console-screenshots.png'
 import cosmicButterfly from '@images/cosmic-butterfly.png'
-import fleetbaseBrowserScreenshotDark from '@images/fleetbase-browser-screen-dark.png'
-import fleetbaseBrowserScreenshotLight from '@images/fleetbase-browser-screen-light.png'
+import orderViewDark from '@images/screenshots/order-view-dark.png'
+import orderViewLight from '@images/screenshots/order-view-light.png'
 ---
 
 <Container class="gap-16 pb-16 pt-20 sm:pb-20 lg:pt-28">
@@ -154,7 +154,7 @@ import fleetbaseBrowserScreenshotLight from '@images/fleetbase-browser-screen-li
       />
     </div>
 
-    <ImageCompareSlider height="760px" beforeImage={fleetbaseBrowserScreenshotDark.src} afterImage={fleetbaseBrowserScreenshotLight.src} />
+    <ImageCompareSlider height="800px" beforeImage={orderViewDark.src} afterImage={orderViewLight.src} beforeImageClass="drop-shadow-lg" afterImageClass="drop-shadow-lg" beforeImageStyle="border-radius: 12px;" afterImageStyle="border-radius: 12px;" />
   </div>
 
   {/* Social proof */}
