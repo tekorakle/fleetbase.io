@@ -1,18 +1,23 @@
 import type { Site, SocialObjects, Clients } from './types'
-import dailyNews from './images/logos/daily-news.svg'
-import netflix from './images/logos/netflix.svg'
-import github from './images/logos/github.svg'
-import tinder from './images/logos/tinder.svg'
-import apple from './images/logos/apple.svg'
-import ticketmaster from './images/logos/ticketmaster.svg'
-import amazon from './images/logos/amazon.svg'
-import stripe from './images/logos/stripe.svg'
-import facebook from './images/logos/facebook.svg'
-import oracle from './images/logos/oracle.svg'
+import aws from './images/logos/aws.png'
+import azure from './images/logos/azure.png'
+import flespi from './images/logos/flespi.png'
+import github from './images/logos/github.png'
+import google from './images/logos/google.png'
+import lalamove from './images/logos/lalamove.png'
+import osrm from './images/logos/osrm.png'
+import stripe from './images/logos/stripe.png'
+import twilio from './images/logos/twilio.png'
+import valhalla from './images/logos/valhalla.png'
+import vroom from './images/logos/vroom.png'
+import sentry from './images/logos/sentry.png'
+import sendgrid from './images/logos/sendgrid.png'
+import mailgun from './images/logos/mailgun.png'
+import ember from './images/logos/ember.png'
 
 export const SITE: Site = {
-  website: 'https://fleetbase.io', // replace this with your deployed domain
-  author: 'Shiv Thakker',
+  website: 'https://fleetbase.io',
+  author: 'Fleetbase Pte Ltd',
   description:
     "Open Source Modular Logistics OS",
   title: 'Fleetbase',
@@ -53,14 +58,19 @@ export const SOCIALS: SocialObjects = [
 ]
 
 export const CLIENTS: Clients = [
-  { name: 'Daily News', logo: dailyNews },
-  { name: 'Netflix', logo: netflix },
-  { name: 'Github', logo: github },
-  { name: 'Tinder', logo: tinder },
-  { name: 'Facebook', logo: facebook },
-  { name: 'Ticketmaster', logo: ticketmaster },
-  { name: 'Amazon', logo: amazon },
-  { name: 'Stripe', logo: stripe },
-  { name: 'Apple', logo: apple },
-  { name: 'Oracle', logo: oracle },
+  { name: 'Amazon Web Services', logo: aws, width: 75 },
+  { name: 'Microsoft Azure', logo: azure, width: 140 },
+  { name: 'Ember.js', logo: ember, width: 100 },
+  { name: 'Flespi', logo: flespi, width: 100 },
+  { name: 'Github', logo: github, width: 100 },
+  { name: 'Google Cloud', logo: google, width: 150 },
+  { name: 'Lalamove', logo: lalamove, width: 130 },
+  { name: 'OSRM', logo: osrm, width: 100 },
+  { name: 'Stripe', logo: stripe, width: 80 },
+  { name: 'Twilio', logo: twilio, width: 100 },
+  { name: 'Valhalla', logo: valhalla, width: 70 },
+  { name: 'VROOM', logo: vroom, width: 130 },
+  { name: 'Sendgrid', logo: sendgrid, width: 130 },
+  { name: 'Sentry', logo: sentry, width: 130 },
+  { name: 'Mailgun', logo: mailgun, width: 100 },
 ]

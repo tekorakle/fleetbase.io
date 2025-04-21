@@ -1,12 +1,16 @@
 ---
 import Container from '@components/shared/Container.astro'
 import Button from '@components/shared/Button.astro'
+// import ImageCompareSlider from '@components/shared/ImageCompareSlider.jsx'
+import ImageCompareSlider from '@components/shared/ImageCompareSlider.astro';
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
 import { CLIENTS } from '@config'
 
 import consoleScreenshots from '@images/console-screenshots.png'
 import cosmicButterfly from '@images/cosmic-butterfly.png'
+import fleetbaseBrowserScreenshotDark from '@images/fleetbase-browser-screen-dark.png'
+import fleetbaseBrowserScreenshotLight from '@images/fleetbase-browser-screen-light.png'
 ---
 
 <Container class="gap-16 pb-16 pt-20 sm:pb-20 lg:pt-28">
@@ -36,31 +40,30 @@ import cosmicButterfly from '@images/cosmic-butterfly.png'
       <h1
         class="mt-5 max-w-5xl text-center text-[2.75rem] font-bold leading-[1.125] text-blue-100 sm:text-5xl sm:leading-[1.125] md:text-6xl md:leading-[1.125] lg:text-[64px]"
       >
-        Modular Open Source
+        Modular Logistics OS
         <span class="relative inline-block text-nowrap">
           <span
             class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent"
           >
-            Logistics OS
+            Plan, Optimize, Track, Scale
           </span>
           <span class="absolute -top-px left-0 -z-10 text-blue-300"
-            >Logistics OS</span
+            >Plan, Optimize, Track, Scale</span
           >
         </span>
       </h1>
       <p
-        class="mt-5 max-w-xl text-center text-[17px] leading-8 text-zinc-200 sm:text-lg sm:leading-8"
+        class="mt-5 max-w-3xl text-center text-[17px] leading-8 text-zinc-200 sm:text-lg sm:leading-8"
       >
-        All-in-one platform to manage, optimize, and scale your logistics
-        operations seamlessly.
+        Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Create dynamic workflows, custom fields, and logic to match your operations. Manage planning and optimization to real-time tracking, all in one system.
       </p>
       <div class="mt-8 flex items-center justify-center space-x-3 sm:space-x-5">
         <Button
           id="top-cta"
-          href="https://console.fleetbase.io"
+          href="https://console.fleetbase.io/onboard"
           target="_blank"
         >
-          Get started
+          Get Started
         </Button>
         <Button
           variant="tertiary"
@@ -75,7 +78,7 @@ import cosmicButterfly from '@images/cosmic-butterfly.png'
               size={20}
               class="text-blue-50"
             /></span -->
-          <span>Contact Sales</span>
+          <span>Talk to an Expert</span>
         </Button>
       </div>
     </div>
@@ -151,23 +154,17 @@ import cosmicButterfly from '@images/cosmic-butterfly.png'
       />
     </div>
 
-    <Image
-      src={consoleScreenshots}
-      alt="App screenshot"
-      widths={[420, 768, 1024, consoleScreenshots.width]}
-      sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (min-width: 1024px) ${consoleScreenshots.width}px`}
-      class="relative h-auto w-full rounded-lg"
-    />
+    <ImageCompareSlider height="760px" beforeImage={fleetbaseBrowserScreenshotDark.src} afterImage={fleetbaseBrowserScreenshotLight.src} />
   </div>
 
-  <!-- {/* Social proof */}
+  {/* Social proof */}
   <div
     class="relative mx-auto mt-20 max-w-5xl overflow-hidden sm:mt-24 sm:px-10 lg:mt-28"
   >
     <p
       class="text-center text-[13px] font-bold uppercase tracking-wide text-blue-50/80 sm:text-sm sm:font-extrabold sm:tracking-wider"
     >
-      Trusted by innovative companies worldwide
+      Fleetbase partners and integrations
     </p>
 
     {/* Logos */}
@@ -185,6 +182,7 @@ import cosmicButterfly from '@images/cosmic-butterfly.png'
                   src={client.logo}
                   alt={client.name}
                   class="mx-3 scale-90 sm:mx-6 sm:scale-100"
+                  width={client.width ?? 100}
                 />
               ))}
             </div>
@@ -192,5 +190,5 @@ import cosmicButterfly from '@images/cosmic-butterfly.png'
         }
       </div>
     </div>
-  </div> -->
+  </div>
 </Container>

@@ -1,0 +1,148 @@
+---
+const {
+	beforeImage,
+	afterImage,
+	beforeAlt = 'Before',
+	afterAlt = 'After',
+	height = '700px',
+} = Astro.props
+---
+
+<style>
+	.image-compare-container {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		height: 700px;
+		overflow: hidden;
+		user-select: none;
+	}
+
+	.image-compare-container img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		pointer-events: none;
+	}
+
+	.image-compare-after,
+	.image-compare-before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+	}
+
+	.image-compare-before {
+		clip-path: inset(0 50% 0 0);
+		z-index: 2;
+	}
+
+	.image-compare-handle {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		width: 4px;
+		background: #111;
+		z-index: 3;
+		cursor: ew-resize;
+	}
+
+	.image-compare-handle::before {
+		content: none; /* remove the pseudo element */
+	}
+
+	/* New content-based handle circle */
+	.arrow-wrapper {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		border: 2px solid white;
+		background-color: rgba(0, 0, 0, 0.7);
+		backdrop-filter: blur(6px);
+		box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0 13px;
+		box-sizing: border-box;
+	}
+
+	/* Arrow triangles */
+	.arrow {
+		width: 0;
+		height: 0;
+		border-top: 8px solid transparent;
+		border-bottom: 8px solid transparent;
+	}
+
+	.arrow-left {
+		border-right: 10px solid white;
+	}
+
+	.arrow-right {
+		border-left: 10px solid white;
+	}
+</style>
+
+<div
+	class="image-compare-container"
+	is:load
+	id="compare-container"
+	style={`height: ${height}`}
+>
+	<img src={afterImage} alt={afterAlt} class="image-compare-after" />
+	<img
+		src={beforeImage}
+		alt={beforeAlt}
+		class="image-compare-before"
+		id="compare-before"
+	/>
+	<div class="image-compare-handle" id="compare-handle">
+		<div class="arrow-wrapper">
+			<div class="arrow arrow-left"></div>
+			<div class="arrow arrow-right"></div>
+		</div>
+	</div>
+
+	<script type="module">
+		const container = document.getElementById('compare-container')
+		const beforeImage = document.getElementById('compare-before')
+		const handle = document.getElementById('compare-handle')
+
+		const updatePosition = (clientX) => {
+			const bounds = container.getBoundingClientRect()
+			let x = clientX - bounds.left
+			x = Math.max(0, Math.min(x, bounds.width))
+			const percent = (x / bounds.width) * 100
+
+			beforeImage.style.clipPath = `inset(0 ${100 - percent}% 0 0)`
+			handle.style.left = `${percent}%`
+		}
+
+		const onPointerMove = (e) => {
+			updatePosition(e.clientX)
+		}
+
+		const onPointerUp = () => {
+			window.removeEventListener('pointermove', onPointerMove)
+			window.removeEventListener('pointerup', onPointerUp)
+		}
+
+		const onPointerDown = (e) => {
+			e.preventDefault()
+			updatePosition(e.clientX)
+			window.addEventListener('pointermove', onPointerMove)
+			window.addEventListener('pointerup', onPointerUp)
+		}
+
+		handle.addEventListener('pointerdown', onPointerDown)
+	</script>
+</div>

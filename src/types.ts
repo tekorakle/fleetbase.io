@@ -42,4 +42,5 @@ export type SocialMedia =
 export type Clients = {
   name: string
   logo: ImageMetadata
+  width: number
 }[]

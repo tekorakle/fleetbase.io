@@ -11,58 +11,28 @@ import spaceSpotlight from '@images/space-spotlight.png'
 const features = [
   {
     icon: 'heroicons:users-solid',
-    title: 'Console.',
+    title: 'Customizable Dashboard',
     description:
-      'Centralised console for managing your logistics operations, integrations and users.',
+      'Centralized console for managing your logistics operations, integrations, and users.',
   },
   {
     icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'TMS.',
+    title: 'Navigator App',
     description:
-      'End to end transport management system for logistics operations management and overview.',
-  },
-  {
-    icon: 'heroicons:shield-check-solid',
-    title: 'Driver App.',
-    description:
-      'Open source driver app integrated into your TMS. Drivers can manage jobs, tracking and electronic POD.',
+      'End-to-end transport management system for real-time driver management and operations oversight.',
   },
   {
     icon: 'heroicons:presentation-chart-line-solid',
-    title: 'Storefront App.',
+    title: 'Extensions',
     description:
-      'Customer ordering app, multi vendor, multi location. Ideal for any last mile delivery or on demand service.',
+      'Expand Fleetbase with installable modules and custom integrations through the open Extensions Marketplace.',
   },
   {
     icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Developer Console.',
+    title: 'Customer Portal',
     description:
-      'Easy to use developer console which provides API usage metrics, and never miss a beat with event and request logs.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Route Optimisation.',
-    description:
-      'Advanced, modern routing engine. Optimize routes for orders and save time & cost.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Integrations.',
-    description:
-      'Once click installs for 3rd party extensions and integrations.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Customer Portal.',
-    description:
-      'Have a centralised location for your customers to book, pay for and track orders.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Billing Extension.',
-    description:
-      'Turn Fleetbase into your own SAAS platform. Charge other companies to use your Fleetbase instance.',
-  },
+      'Empower customers with a self-service portal for placing orders, tracking deliveries, and managing interactions.',
+  }
 ]
 ---
 
@@ -71,9 +41,9 @@ const features = [
     {/* Text content */}
     <div class="relative flex flex-col items-center">
       <h1
-        class="max-w-5xl text-center text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight"
+        class="max-w-5xl text-left text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight"
       >
-        Run All Scale Logistics Operations,
+        Create dynamic order workflows
         <span class="relative inline-block text-nowrap">
           <span
             class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent"
@@ -85,9 +55,11 @@ const features = [
           >
         </span>
       </h1>
-      <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
-        Everything you need to manage your fleet, run logistics operations and
-        gain insight into your data.
+      <p class="mt-5 max-w-5xl text-left text-lg leading-8 text-zinc-200">
+        Fleetbase Order Configs give you full control over how orders are structured, processed, and fulfilled. Easily create custom fields and inputs to capture the data that matters most to your operations. 
+      </p>
+      <p class="mt-5 max-w-5xl text-left text-lg leading-8 text-zinc-200">
+        Build dynamic activity flows with powerful logic and event triggers to automate processes. Define and manage your own entities, like container types or specialized goods, to match your exact business needs. With Fleetbase, your order management adapts to your workflows—not the other way around.
       </p>
     </div>
 
@@ -134,7 +106,7 @@ const features = [
 
     {/* Features */}
     <div
-      class="relative mx-auto mt-10 grid max-w-lg grid-cols-1 gap-x-6 gap-y-5 sm:mt-16 sm:max-w-2xl sm:grid-cols-2 sm:gap-y-9 md:mt-18 lg:mx-0 lg:max-w-none lg:grid-cols-3"
+      class="relative mx-auto mt-10 grid max-w-lg grid-cols-1 gap-x-6 gap-y-5 sm:mt-16 sm:max-w-2xl sm:grid-cols-2 sm:gap-y-9 md:mt-18 lg:mx-0 lg:max-w-none lg:grid-cols-4"
     >
       {
         features.map((feature) => (
@@ -145,7 +117,7 @@ const features = [
             />
             <p class="inline text-[17px] leading-7 text-zinc-300 md:text-lg md:leading-8">
               <span class="font-semibold text-white">{feature.title}</span>{' '}
-              {feature.description}
+              <p class="text-white">{feature.description}</p>
             </p>
           </div>
         ))
