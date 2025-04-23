@@ -1,0 +1,131 @@
+---
+import { Icon } from 'astro-icon/components'
+import { Code } from 'astro:components'
+
+const {
+    features,
+    initialIndex = 0,
+    height = 700,
+    wrapperClass = '',
+    uid = `cb-${Math.random().toString(36).substring(2, 9)}`
+} = Astro.props;
+---
+
+<section data-uid={uid} class={`relative flex flex-col lg:flex-row overflow-hidden bg-zinc-900 ${wrapperClass} h-[${height}px]`}>
+    <div id={`${uid}-features-data`} class="hidden">
+        {JSON.stringify(features)}
+    </div>
+
+    <!-- Sidebar -->
+    <div id={`${uid}-sidebar`} class="flex flex-col w-full h-full max-w-md pr-3 space-y-2">
+        {features.map((feature, index) => (
+            <div
+                class={`feature-item border rounded-lg px-4 py-3 cursor-pointer transition-all ${index === initialIndex ? 'bg-zinc-800 border-blue-400 flex-1' : 'border-zinc-700'}`}
+                data-index={index}
+            >
+                <div class="flex items-center space-x-2">
+                    <Icon name={feature.icon} class="h-5 w-5 text-green-300" />
+                    <h3 class="text-md text-white truncate">{feature.title}</h3>
+                </div>
+                {index === initialIndex && (
+                    <p class="feature-description mt-2 text-zinc-300 text-sm">
+                        {feature.description}
+                    </p>
+                )}
+            </div>
+        ))}
+    </div>
+
+    <!-- Code Blocks -->
+    <div class="flex-1 h-full pl-3">
+        <div class="relative w-full h-full rounded-lg border border-blue-300/[0.08] bg-[#292D3E]/[0.93] shadow-inner-blur backdrop-blur">
+            <div class="flex flex-col rounded-lg h-full">
+                <!-- Header with file path -->
+                <div class="flex items-center justify-between rounded-t-lg bg-zinc-700/25 px-4 py-3 shadow-inner-blur-no-border">
+                    <div class="flex space-x-2">
+                        <span class="h-2 w-2 rounded-full bg-red-400" />
+                        <span class="h-2 w-2 rounded-full bg-yellow-400" />
+                        <span class="h-2 w-2 rounded-full bg-green-400" />
+                    </div>
+                    <div id={`${uid}-feature-filepath`} class="text-xs text-zinc-300 font-mono truncate">
+                        {features[initialIndex].filepath.join(' > ')}
+                    </div>
+                </div>
+
+                <!-- Code Blocks Container -->
+                <div id={`${uid}-code-blocks-container`} class="h-full rounded-b-lg p-5 overflow-y-auto relative">
+                    {features.map((feature, index) => (
+                        <div
+                            class:list={[
+                                'code-block absolute inset-0 transition-opacity',
+                                index === initialIndex ? 'opacity-100 visible' : 'opacity-0 invisible',
+                            ]}
+                            data-index={index}
+                        >
+                            <Code
+                                lang={feature.codeBlocks[0].language}
+                                code={feature.codeBlocks[0].code}
+                                theme="material-theme-palenight"
+                                class="text-sm p-2"
+                            />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="module">
+    document.querySelectorAll('[data-uid]').forEach((section) => {
+        if (section.dataset.initialized === 'true') return;
+        section.dataset.initialized = 'true';
+
+        const uid = section.getAttribute('data-uid');
+        const features = JSON.parse(section.querySelector(`#${uid}-features-data`).textContent);
+        const featureItems = section.querySelectorAll('.feature-item');
+        const codeBlocks = section.querySelectorAll('.code-block');
+        const filepath = section.querySelector(`#${uid}-feature-filepath`);
+
+        function selectFeature(index) {
+            featureItems.forEach((item, idx) => {
+                if (idx === index) {
+                    item.classList.add('bg-zinc-800', 'border-blue-400', 'flex-1');
+                    const desc = item.querySelector('.feature-description');
+                    if (!desc) {
+                        const p = document.createElement('p');
+                        p.className = 'feature-description mt-2 text-zinc-300 text-sm';
+                        p.textContent = features[idx].description;
+                        item.appendChild(p);
+                    }
+                } else {
+                    item.classList.remove('bg-zinc-800', 'border-blue-400', 'flex-1');
+                    item.classList.add('border-zinc-700');
+                    const desc = item.querySelector('.feature-description');
+                    if (desc) desc.remove();
+                }
+            });
+
+            if (filepath) {
+                filepath.textContent = features[index].filepath.join(' > ');
+            }
+
+            codeBlocks.forEach((block, idx) => {
+                if (idx === index) {
+                    block.classList.remove('opacity-0', 'invisible');
+                    block.classList.add('opacity-100', 'visible');
+                } else {
+                    block.classList.remove('opacity-100', 'visible');
+                    block.classList.add('opacity-0', 'invisible');
+                }
+            });
+        }
+
+        featureItems.forEach((item) => {
+            item.addEventListener('click', () => {
+                const index = parseInt(item.dataset.index, 10);
+                selectFeature(index);
+            });
+        });
+    });
+</script>

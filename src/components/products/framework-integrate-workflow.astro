@@ -1,0 +1,151 @@
+---
+import Container from '@components/shared/Container.astro'
+import CodeFeatures from '@components/shared/CodeFeatures.astro'
+import { Icon } from 'astro-icon/components'
+
+const features = [
+	{
+		title: 'Define your extension engine',
+		description:
+			'An extension engine is the entry point to a Fleetbase extension and handles the initial boot of the extension. This is where you can register new menu items, UI components, dashboard widgets, and event hooks. You also have access to the app container, the extension engine container itself, and the universe service, which can be used to resolve services—allowing you to build business logic involving Fleetbase core modules, third-party systems, or custom systems.',
+		icon: 'heroicons:play-circle-solid',
+        filepath: ['addon', 'engine.js'],
+		codeBlocks: [
+			{
+				language: 'javascript',
+				code: `import Engine from '@ember/engine';
+import loadInitializers from 'ember-load-initializers';
+import Resolver from 'ember-resolver';
+import config from './config/environment';
+import services from '@fleetbase/ember-core/exports/services';
+
+const { modulePrefix } = config;
+const externalRoutes = ['console', 'extensions'];
+
+export default class CommerceIntegrationEngine extends Engine {
+    modulePrefix = modulePrefix;
+    Resolver = Resolver;
+    dependencies = {
+        services,
+        externalRoutes,
+    };
+    setupExtension = function (app, engine, universe) {}
+}
+`,
+			},
+		],
+	},
+	{
+		title: 'Define your extension service',
+		description:
+			'A Service in Fleetbase is an Ember.js object that persists for the lifetime of the application and is designed to encapsulate reusable logic, state, and functionality across your extension. Services are ideal for composing business logic, managing integration workflows, or coordinating side effects such as syncing data with external systems. By defining services, you can centralize complex operations, keep your components lean, and build more maintainable and testable extensions.',
+        icon: 'heroicons:play-circle-solid',
+        filepath: ['addon', 'services', 'commerce.js'],
+		codeBlocks: [
+			{
+				language: 'javascript',
+				code: `import Service, { inject as service } from '@ember/service';
+import { debug } from '@ember/debug';
+import { task } from 'ember-concurrency';
+
+export default class CommerceService extends Service {
+    @service fetch;
+
+    @task *syncOrder(order) {
+        try {
+            const commerceOrder = this.fetch.post('sync-order', { 
+                order: order.id 
+            });
+            return commerceOrder;
+        } catch (err) {
+            debug('Error syncing order with commerce service:', err);
+        }
+    }
+}
+`,
+			},
+		],
+	},
+	{
+		title: 'Implement order creation hook with service',
+		description:
+			'The universe service provides a centralized way to register hooks and implement event-driven logic within your Fleetbase extension. By registering hooks through the universe, you can listen for and respond to specific events emitted by core Fleetbase modules—such as order lifecycle changes, entity updates, or system actions. This enables your extension to react to events in real time and execute custom logic, such as triggering side effects, syncing data to external systems, or modifying internal state. Hooks can be used to extend workflows, integrate third-party services, or automate operational processes across the Fleetbase ecosystem.',
+        icon: 'heroicons:play-circle-solid',
+        filepath: ['addon', 'engine.js'],
+		codeBlocks: [
+			{
+				language: 'javascript',
+				code: `import Engine from '@ember/engine';
+import loadInitializers from 'ember-load-initializers';
+import Resolver from 'ember-resolver';
+import config from './config/environment';
+import services from '@fleetbase/ember-core/exports/services';
+
+const { modulePrefix } = config;
+const externalRoutes = ['console', 'extensions'];
+
+export default class CommerceIntegrationEngine extends Engine {
+    modulePrefix = modulePrefix;
+    Resolver = Resolver;
+    dependencies = {
+        services,
+        externalRoutes,
+    };
+    setupExtension = function (app, engine, universe) {
+        const commerceService = engine.lookup('service:commerce');
+        universe.registerHook('fleet-ops.order.created', (order) => {
+            commerceService.syncOrder.perform(order);
+        });
+    }
+}
+`,
+			},
+		],
+	},
+]
+---
+
+<section class="relative overflow-hidden">
+	<Container class="pb-16 pt-20 sm:pb-20 sm:pt-24 lg:pb-24">
+		<div>
+			<div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
+				<div class="flex flex-col justify-end">
+					<div>
+						<div
+							class="inline-flex w-max rounded-full bg-zinc-950/[.01] shadow-inner-blur"
+						>
+							<div
+								class="flex h-full w-full items-center space-x-2 rounded-full border border-blue-200/[.06] px-4 py-1.5"
+							>
+								<Icon
+									name="heroicons:presentation-chart-line-16-solid"
+									class="h-4 w-4 text-blue-200"
+								/>
+								<span
+									class="text-sm font-medium text-blue-100 drop-shadow-[-12px_-4px_6px_rgba(237,233,254,0.2)]"
+								>
+									Workflows
+								</span>
+							</div>
+						</div>
+						<div class="mt-4">
+                            <h2
+                                class="text-wrap text-left text-3xl font-semibold leading-extratight text-blue-100 sm:text-4xl sm:leading-extratight"
+                            >
+                                Orchestrate actions accross extensions with Universe
+                            </h2>
+                        </div>
+					</div>
+				</div>
+				<div class="space-y-4">
+					<p class="text-blue-100">Traditional logistics systems often require external integrations, separate services, or complex middleware just to implement custom features. This adds overhead, increases complexity, and leads to slower deployments and fragile workflows.</p>
+					<p class="text-blue-100">With Fleetbase, you get a powerful, extensible logistics framework that’s built for customization from day one.</p>
+					<p class="text-blue-100">Our dynamic operating system and extension architecture let you build, extend, and deploy tailored logistics solutions natively—without the hacks. Focus on optimizing your operations and delivering what makes your logistics business unique. Fleetbase handles the foundation.</p>
+				</div>
+			</div>
+		</div>
+		<div>
+			<CodeFeatures features={features} wrapperClass="py-14" />
+		</div>
+	</Container>
+</section>
