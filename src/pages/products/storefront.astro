@@ -1,24 +1,135 @@
 ---
 import RootLayout from '@layouts/RootLayout.astro'
 import HeroContainer from '@components/shared/HeroContainer.astro'
-import HomeHero from '@components/home/HomeHero.astro'
-import BentoGridSection from '@components/home/BentoGridSection.astro'
-import CodeSnippets from '@components/home/CodeSnippets.astro'
-import Integrations from '@components/home/Integrations.astro'
-import StorefrontFeatures from '@components/products/storefront-features.astro'
-import Testimonials from '@components/home/Testimonials.astro'
 import Footer from '@components/shared/Footer.astro'
 import Divider from '@components/shared/Divider.astro'
 import { SITE } from '@config'
+import StorefrontHero from '@components/products/storefront-hero.astro'
+import StorefrontFeature from '@components/products/storefront-feature.astro'
+import { Image } from 'astro:assets'
+import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-edit-zoom.png'
 ---
 
 <RootLayout
-  title={`Storefront | ${SITE.title}`}
-  description="Open source headless eccommerce extension for marketplace and on demand delivery"
+	title={`${SITE.title} - Framework`}
+	description="Storefront by Fleetbase is a logistics-first, headless ecommerce platform designed for hyperlocal commerce — power real-time inventory, delivery, and order tracking for food, retail, and on-demand services"
 >
-  <HeroContainer>
-    <StorefrontFeatures />
-    <Divider />
-    <Footer />
-  </HeroContainer>
+	<HeroContainer>
+		<StorefrontHero />
+	</HeroContainer>
+	<Divider />
+	<StorefrontFeature
+		title={['Inventory Made Easy —', 'Powered by Pallet']}
+		description="Storefront integrates seamlessly with Fleetbase’s Pallet extension to give you complete inventory control across your stores, food trucks, or dark stores."
+		points={[
+			'Real-time inventory sync via Pallet backend',
+			'Manage SKUs, stock levels, batches, and expiry dates',
+			'Visual interface for tracking and updating stock',
+			'Location-aware inventory availability',
+		]}
+		image={inventoryGraphic}
+		imageBackground={true}
+		imageBackgroundHeight={600}
+		imageScale={2.9}
+	/>
+	<Divider />
+	<StorefrontFeature
+		title="Smarter Delivery with Zones"
+		description="Define geographic zones for hyperlocal delivery, and let Storefront automatically apply dynamic pricing and time estimates based on distance and demand."
+		points={[
+			'Draw and assign delivery zones visually',
+			'Set pricing per zone, distance, or store',
+			'Zone-level delivery ETAs and rules',
+		]}
+		image={{
+			src: '/images/screenshots/storefront-zones.png',
+			alt: 'Delivery zones UI',
+		}}
+	/>
+	<Divider />
+	<StorefrontFeature
+		title="Launch Your Own App — Instantly"
+		description="Give your customers a fully-branded mobile experience with ordering, notifications, and tracking — powered by Fleetbase’s native mobile stack."
+		points={[
+			'Branded iOS/Android app ready to deploy',
+			'Order tracking, push notifications, and payments',
+			'Perfect for restaurants, grocers, and delivery shops',
+		]}
+		image={{
+			src: '/images/screenshots/storefront-mobile.png',
+			alt: 'Customer app UI',
+		}}
+	/>
+	<Divider />
+	<StorefrontFeature
+		title="Global-Ready with i18n and Multi-Currency"
+		description="Storefront is built for any market — support multiple languages and currencies with full translation of the interface, products, and order flows."
+		points={[
+			'Translate all frontend and app text with ease',
+			'Full product catalog translation support',
+			'Multi-currency pricing and Stripe integration',
+			'Locale detection and currency switching',
+		]}
+		image={{
+			src: '/images/screenshots/storefront-i18n.png',
+			alt: 'Language and currency options UI',
+		}}
+	/>
+	<Divider />
+	<StorefrontFeature
+		title="Location-Based Catalogs for Food Trucks"
+		description="Assign unique menus to food trucks or locations, with location-aware product visibility and availability logic."
+		points={[
+			'Create menus as catalogs and assign them to trucks',
+			'Menus auto-load based on truck location',
+			'Ideal for rotating food truck schedules',
+		]}
+		image={{
+			src: '/images/screenshots/storefront-catalogs.png',
+			alt: 'Catalog to location mapping UI',
+		}}
+	/>
+	<Divider />
+	<section class="border-t border-zinc-800 bg-zinc-950 py-24">
+		<div class="container mx-auto px-6 text-center">
+			<h2 class="mb-4 text-3xl font-bold text-blue-100 sm:text-4xl">
+				Storefront in the Wild
+			</h2>
+			<p class="mx-auto mb-10 max-w-3xl text-lg text-zinc-400">
+				Trusted by forward-thinking businesses — from urban food trucks to
+				high-volume local marketplaces. See how others are using Storefront to
+				launch fast, manage smarter, and deliver faster.
+			</p>
+
+			<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow">
+					<img
+						src="/images/customers/truckmate.png"
+						alt="TruckMate App"
+						class="mb-3 rounded"
+					/>
+					<h3 class="text-xl font-semibold text-white">TruckMate</h3>
+					<p class="text-sm text-zinc-400">
+						Food truck marketplace with real-time location menus and native
+						ordering app.
+					</p>
+				</div>
+				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow">
+					<img
+						src="/images/customers/neighborhoodgrocer.png"
+						alt="Neighborhood Grocer"
+						class="mb-3 rounded"
+					/>
+					<h3 class="text-xl font-semibold text-white">Neighborhood Grocer</h3>
+					<p class="text-sm text-zinc-400">
+						Hyperlocal grocery delivery with inventory synced from Pallet and
+						custom POS integration.
+					</p>
+				</div>
+				<!-- Add more customer showcases here -->
+			</div>
+		</div>
+	</section>
+	<Divider />
+	<Footer />
 </RootLayout>
