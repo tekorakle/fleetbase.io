@@ -3,165 +3,206 @@ import Container from '@components/shared/Container.astro'
 import StarField from '@components/shared/StarField.astro'
 import { Icon } from 'astro-icon/components'
 import { Image } from 'astro:assets'
-
-import graphic from '@images/navigator2.png'
-import cosmicButterfly from '@images/cosmic-butterfly.png'
-import spaceSpotlight from '@images/space-spotlight.png'
+import navigatorImage from '@images/navigator.png'
+import trackingImage from '@images/route-optimization.png'
+import podImage from '@images/order-config.png'
+import chatImage from '@images/service-rates.png'
 
 const features = [
   {
-    icon: 'heroicons:cursor-arrow-ripple-solid',
-    title: 'Open Source & Fully Customizable',
-    description:
-      'Fleetbase Navigator is an open-source navigation and order management app for drivers and agents, fully customizable to meet your specific operational needs.',
+    title: 'Live Tracking & Order Overview',
+    summary: 'Get a real-time view of your driver’s location, status, and activity.',
+    points: [
+      'Live GPS tracking with coordinate visibility',
+      'Online / Offline driver status',
+      'Current speed display and trip duration',
+      'Overview of active and assigned orders',
+    ],
+    image: navigatorImage,
   },
   {
-    icon: 'heroicons:qr-code-solid',
-    title: 'QR Code Scanning',
-    description:
-      'Supports QR code scanning for seamless proof of delivery and order verification.',
+    title: 'Order Calendar & Proof of Delivery',
+    summary: 'View all orders in a calendar or list format, complete deliveries with built-in tools.',
+    points: [
+      'Full calendar view of all orders',
+      'Detailed view of each order including stops and instructions',
+      'Mark orders as completed with QR scan, e-signature, or manual update',
+      'Live sync of status updates with dispatcher console',
+    ],
+    image: podImage,
   },
   {
-    icon: 'heroicons:pencil-square-solid',
-    title: 'Digital Signatures',
-    description:
-      'Enables digital signature capture for secure and verifiable order completion.',
+    title: 'Issue & Fuel Reporting',
+    summary: 'Allow drivers to log real-time issues and submit operational reports on the go.',
+    points: [
+      'In-app issue tracker for reporting delivery or vehicle problems',
+      'Fuel usage reporting by location and date',
+      'Optional photo attachment for transparency',
+      'Automatic dispatch notification on report submission',
+    ],
+    image: trackingImage,
   },
   {
-    icon: 'heroicons:map-solid',
-    title: 'Routing & Navigation',
-    description:
-      'Provides efficient routing and turn-by-turn navigation for drivers and agents to optimize their journeys.',
+    title: 'Instant Communication',
+    summary: 'Stay connected with your drivers in real-time from anywhere.',
+    points: [
+      'Integrated chat module in the app',
+      'Supports WhatsApp, Telegram, and internal chat',
+      'Instant message sync with logistics team',
+      'Optional read receipts and message history',
+    ],
+    image: chatImage,
   },
   {
-    icon: 'heroicons:clock-solid',
-    title: 'Schedule View',
-    description:
-      'Offers a detailed schedule view to help drivers manage and organize their tasks for the day.',
+    title: 'Driver Profile & Account Management',
+    summary: 'Give drivers control over their personal and operational information.',
+    points: [
+      'Profile management and basic settings',
+      'View performance history and logs',
+      'Manage app preferences and language settings',
+      'Supports profile photo and contact updates',
+    ],
+    image: navigatorImage,
   },
   {
-    icon: 'heroicons:check-circle-solid',
-    title: 'Activity Updates',
-    description:
-      'Allows drivers to update order activities in real-time as they complete jobs.',
-  },
-  {
-    icon: 'heroicons:currency-dollar-solid',
-    title: 'Wallet Management',
-    description:
-      'Drivers can manage their wallet, view earnings, and track payments directly within the app.',
-  },
-  {
-    icon: 'heroicons:user-circle-solid',
-    title: 'Driver Earnings Overview',
-    description:
-      'Provides insights into daily, weekly, or monthly earnings to help drivers track their income.',
-  },
-  {
-    icon: 'heroicons:shield-check-solid',
-    title: 'Secure & Reliable',
-    description:
-      'Designed for reliability and security, ensuring smooth operations and data integrity for drivers and agents.',
-  },
-  {
-    icon: 'heroicons:chat-bubble-left-right-solid',
-    title: 'Real-Time Updates',
-    description:
-      'Syncs with the Fleetbase ecosystem in real-time, keeping orders, schedules, and activities up to date.',
-  },
-  {
-    icon: 'heroicons:sparkles-solid',
-    title: 'Cross-Platform Support',
-    description:
-      'Available on both iOS and Android, providing accessibility for drivers across multiple platforms.',
+    title: 'Push Notifications',
+    summary: 'Never miss a beat with live alerts and real-time updates.',
+    points: [
+      'Receive alerts for new tasks or reassigned deliveries',
+      'Delivery delay notifications',
+      'Automatic reminders for pending tasks',
+      'Custom push rules via Fleetbase Console',
+    ],
+    image: navigatorImage
   },
 ]
 ---
 
 <section class="relative overflow-hidden">
-  <Container class="pb-16 pt-20 sm:pb-20 sm:pt-24 lg:pb-24">
-    {/* Text content */}
-    <div class="relative flex flex-col items-center">
-      <h1
-        class="max-w-5xl text-center text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight"
-      >
-        Open Source<br />
+  <Container class="pb-16 pt-20 sm:pb-20 sm:pt-24 lg:pb-32">
+    <!-- Header -->
+    <div class="relative flex flex-col items-center text-center">
+      <h1 class="max-w-5xl text-4xl font-bold leading-extratight text-blue-100 sm:text-5xl sm:leading-extratight">
+        Fleetbase Navigator<br />
         <span class="relative inline-block text-nowrap">
-          <span
-            class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent"
-          >
-            Driver Mobile App
+          <span class="relative z-10 bg-gradient-to-b from-blue-400 via-blue-400 to-blue-500 bg-clip-text text-transparent">
+            Driver Companion App
           </span>
-          <span class="absolute -top-px left-0 -z-10 text-blue-300"
-            >Driver Mobile App</span
-          >
+          <span class="absolute -top-px left-0 -z-10 text-blue-300">
+            Driver Companion App
+          </span>
         </span>
       </h1>
-      <p class="mt-5 max-w-xl text-center text-lg leading-8 text-zinc-200">
-        Open source mobile app for drivers to manage, update and submit updates
-        for delivery orders.
+      <p class="mt-5 max-w-xl text-lg leading-8 text-zinc-200">
+        Built for operational efficiency and transparency, Navigator enables your drivers to execute deliveries with precision and real-time connectivity.
       </p>
+
+      <!-- App Store Links + White Label Button -->
+      <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a
+          href="https://apps.apple.com/us/app/fleetbase-navigator/id1554208255" 
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full border border-white px-5 py-2 text-sm font-semibold text-white hover:bg-white hover:text-black transition-all"
+        >
+        <Icon name="heroicons:device-phone-mobile-solid" class="h-5 w-5" />
+        Download on iOS
+        </a>
+
+        <a
+          href="https://play.google.com/store/apps/details?id=io.fleetbase.navigator&hl=en_SG"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full border border-white px-5 py-2 text-sm font-semibold text-white hover:bg-white hover:text-black transition-all"
+        >
+        <Icon name="heroicons:cpu-chip-solid" class="h-5 w-5" />
+        Download on Android
+
+        <a
+          href="https://tally.so/r/nrkVRM"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-pink-600 hover:bg-pink-700 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all"
+        >
+          <Icon name="heroicons:paint-brush" class="h-4 w-4" />
+          White Label Now
+        </a>
+      </div>
     </div>
 
-    {/* Graphic */}
-    <div
-      class="relative mt-10 w-full rounded-xl border border-blue-200/[.08] bg-white/[.01] p-1 shadow-inner-blur sm:mt-16 sm:rounded-2xl sm:p-2 lg:mt-18"
-    >
-      <div
-        class="absolute -left-56 -right-56 -top-80 -z-10 sm:-left-48 sm:-right-48 md:left-1/2 md:w-full md:max-w-6xl md:-translate-x-1/2 lg:-top-96"
-      >
-        <Image
-          src={spaceSpotlight}
-          alt=""
-          widths={[420, 768, 1152]}
-          sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (min-width: 768px) 1152px`}
-          class="h-full w-full object-contain"
-        />
+    <!-- Demo Video -->
+    <div class="mt-16 flex justify-center px-4 sm:px-6 lg:px-8" data-aos="zoom-in-up">
+      <div class="relative w-full max-w-6xl overflow-hidden rounded-3xl border border-zinc-700/40 bg-zinc-900/40 backdrop-blur-sm shadow-[0_20px_80px_rgba(0,0,0,0.3)] transition-transform hover:scale-[1.02] duration-300 ease-in-out">
+        <div class="aspect-video w-full">
+          <iframe
+            src="https://www.youtube.com/embed/_oAhj_uKWYk"
+            title="Fleetbase Navigator Demo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="w-full h-full rounded-3xl"
+          ></iframe>
+        </div>
+        <div class="absolute bottom-4 right-4 bg-blue-500 text-white text-xs uppercase tracking-wide px-3 py-1 rounded-full shadow-md">
+          Demo
+        </div>
       </div>
-      {/* Stars */}
-      <div
-        class="absolute -top-48 left-1/2 -z-10 h-56 w-full max-w-3xl -translate-x-1/2"
-        aria-hidden="true"
-      >
-        <StarField density="medium" maxRadius={2.25} />
-      </div>
-      <div class="absolute -bottom-96 -left-96 -right-96 top-0 -z-10">
-        <Image
-          src={cosmicButterfly}
-          alt=""
-          class="h-full w-full object-contain opacity-10"
-          widths={[420, 768, 1024]}
-          sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (min-width: 1024px) 1024px`}
-        />
-      </div>
-
-      <Image
-        src={graphic}
-        alt="Collaboration interface with user profile images"
-        widths={[420, 768, 1024, graphic.width]}
-        sizes={`(max-width: 420px) 420px, (max-width: 768px) 768px, (max-width: 1024px) 1024px, (min-width: 1024px) ${graphic.width}px`}
-        class="relative h-auto w-full rounded-lg"
-      />
     </div>
 
-    {/* Features */}
-    <div
-      class="relative mx-auto mt-10 grid max-w-lg grid-cols-1 gap-x-6 gap-y-5 sm:mt-16 sm:max-w-2xl sm:grid-cols-2 sm:gap-y-9 md:mt-18 lg:mx-0 lg:max-w-none lg:grid-cols-3"
-    >
-      {
-        features.map((feature) => (
-          <div>
-            <Icon
-              name={feature.icon}
-              class="-mt-0.5 mr-1.5 inline h-5 w-5 shrink-0 text-blue-400 sm:h-[21px] sm:w-[21px]"
-            />
-            <p class="inline text-[17px] leading-7 text-zinc-300 md:text-lg md:leading-8">
-              <span class="font-semibold text-white">{feature.title}</span>{' '}
-              {feature.description}
-            </p>
+    <!-- Feature Sections -->
+    {features.map((feature, index) => {
+      const isEven = index % 2 === 0
+      return (
+        <div
+          class={`relative mt-32 flex flex-col gap-10 lg:gap-20 ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}
+          data-aos="fade-up"
+        >
+          <!-- Feature Image -->
+          <div class="relative w-full lg:w-[65%]">
+            <div class="absolute -inset-4 z-[-1] blur-2xl opacity-20 rounded-3xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-600"></div>
+            <div class="rounded-2xl overflow-hidden border border-blue-200/[.08] bg-white/[.02] shadow-2xl hover:shadow-blue-500/30 transition-all duration-300">
+              <Image
+                src={feature.image}
+                alt={feature.title}
+                widths={[1280, 1600, 1920]}
+                sizes="(max-width: 768px) 100vw, 1280px"
+                class="w-full h-auto"
+              />
+            </div>
           </div>
-        ))
-      }
-    </div>
+
+          <!-- Feature Text -->
+          <div class="w-full lg:w-[35%] flex flex-col justify-center text-white bg-white/5 rounded-2xl p-6 shadow-lg border border-white/10 backdrop-blur-md">
+            <h3 class="text-2xl sm:text-3xl font-bold mb-4">{feature.title}</h3>
+            <p class="text-base text-zinc-300 mb-4">{feature.summary}</p>
+            <ul class="space-y-2 list-disc list-inside text-zinc-200 text-sm sm:text-base mb-6">
+              {feature.points.map(point => (
+                <li>{point}</li>
+              ))}
+            </ul>
+            <div class="flex flex-col sm:flex-row justify-start gap-4">
+              <a
+                href="https://console.fleetbase.io/auth"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full bg-blue-500 hover:bg-blue-600 px-5 py-2 text-sm font-semibold text-white shadow-md transition-all"
+              >
+                <Icon name="heroicons:rocket-launch-solid" class="h-4 w-4" />
+                Try Now
+              </a>
+              <a
+                href="https://github.com/fleetbase/navigator"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 rounded-full border border-white px-5 py-2 text-sm font-semibold text-white hover:bg-white hover:text-black transition-all"
+              >
+                <Icon name="heroicons:code-bracket-square" class="h-4 w-4" />
+                Explore Code
+              </a>
+            </div>
+          </div>
+        </div>
+      )
+    })}
   </Container>
 </section>
