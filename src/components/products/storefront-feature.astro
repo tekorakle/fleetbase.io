@@ -1,107 +1,81 @@
 ---
 const {
-	title,
-	description,
-	points = [],
-	image = null,
-	imagePosition = 'right',
-	imageBackground = false,
-	imageBackgroundHeight = 500,
-	imageFocus = 'top right',
-	imageScale = 1,
-	codeSnippet = null,
-	sectionClass = '',
-	containerClass = '',
+  title,
+  description,
+  points = [],
+  mediaType = 'image',
+  mediaPosition = 'right',
+  mediaHeight = 500,
+  mediaFocus = 'top right',
+  mediaScale = 1,
+  sectionClass = '',
+  containerClass = '',
+  codeSnippet = null,
+  image = null
 } = Astro.props
+
 const isArrayTitle = Array.isArray(title)
-const bgSize =
-	image && imageScale > 0
-		? `${image.width / imageScale}px ${image.height / imageScale}px`
-		: 'auto'
+const bgSize = image && mediaScale > 0
+  ? `${image.width / mediaScale}px ${image.height / mediaScale}px`
+  : 'auto'
 ---
 
-<section class=`border-b border-zinc-800 py-20 ${sectionClass}`>
-	<div
-		class=`container mx-auto flex flex-col items-center gap-12 px-6 lg:flex-row ${containerClass}`
-	>
-		{
-			image && imagePosition === 'left' && (
-				<div
-					class={`w-full lg:w-1/2 order-${imagePosition === 'left' ? '1' : '2'} shadow-sm lg:order-none`}
-				>
-					{image && imageBackground ? (
-						<div
-							class="w-full overflow-hidden rounded-xl border border-gray-700 bg-zinc-900 p-2 shadow-xl"
-							style={`height: ${imageBackgroundHeight}px; background-image: url(${image.src}); background-repeat: no-repeat; background-position: ${imageFocus}; background-size: ${bgSize};`}
-						/>
-					) : (
-						<img
-							src={image.src}
-							alt={image.alt}
-							class="rounded-xl border border-gray-800 shadow-lg"
-						/>
-					)}
-				</div>
-			)
-		}
+<section class={sectionClass}>
+  <div class={`container mx-auto flex flex-col items-center gap-12 px-6 lg:flex-row ${containerClass}`}>
+    {mediaPosition === 'left' && (
+      <div class="w-full lg:w-1/2 order-1 lg:order-none">
+        {
+          mediaType === 'custom'
+            ? <slot name="media" />
+            : mediaType === 'background'
+              ? <div class="w-full overflow-hidden rounded-xl border border-gray-700 bg-zinc-900 p-2 shadow-xl" style={`height: ${mediaHeight}px; background-image: url(${image?.src}); background-repeat: no-repeat; background-position: ${mediaFocus}; background-size: ${bgSize};`} />
+              : <img src={image?.src} alt={image?.alt} class="rounded-xl border border-gray-800 shadow-lg" />
+        }
+      </div>
+    )}
 
-		<div class="w-full lg:w-1/2">
-			<h2
-				class="mb-4 text-3xl font-bold leading-tight text-blue-100 sm:text-4xl"
-			>
-				{
-					isArrayTitle ? (
-						title.map((segment, i) =>
-							i % 2 === 0 ? (
-								<span>{segment}</span>
-							) : (
-								<span class="relative inline-block px-1">
-									<span class="relative z-10 bg-gradient-to-b from-blue-400 to-blue-500 bg-clip-text text-transparent">
-										{segment}
-									</span>
-									<span class="absolute -top-px left-0 -z-10 text-blue-300 opacity-10">
-										{segment}
-									</span>
-								</span>
-							)
-						)
-					) : (
-						<span>{title}</span>
-					)
-				}
-			</h2>
-			<p class="mb-6 text-lg text-zinc-300">{description}</p>
-			<ul class="mb-6 list-disc space-y-2 pl-5 text-zinc-100">
-				{points.map((point) => <li>{point}</li>)}
-			</ul>
-			{
-				codeSnippet && (
-					<div class="rounded-lg bg-black bg-opacity-50 px-4 py-2 font-mono text-sm text-green-500 shadow">
-						{codeSnippet}
-					</div>
-				)
-			}
-		</div>
+    <div class="w-full lg:w-1/2">
+      <h2 class="mb-4 text-3xl font-bold leading-tight text-blue-100 sm:text-4xl">
+        {
+          isArrayTitle
+            ? title.map((segment, i) =>
+                i % 2 === 0
+                  ? <span>{segment}</span>
+                  : <span class="relative inline-block px-1">
+                      <span class="relative z-10 bg-gradient-to-b from-blue-400 to-blue-500 bg-clip-text text-transparent">
+                        {segment}
+                      </span>
+                      <span class="absolute -top-px left-0 -z-10 text-blue-300 opacity-10">
+                        {segment}
+                      </span>
+                    </span>
+              )
+            : <span>{title}</span>
+        }
+      </h2>
+      <p class="mb-6 text-lg text-zinc-300">{description}</p>
+      <ul class="mb-6 list-disc space-y-2 pl-5 text-zinc-100">
+        {points.map((point) => <li>{point}</li>)}
+      </ul>
+      {
+        codeSnippet && (
+          <div class="rounded-lg bg-black bg-opacity-50 px-4 py-2 font-mono text-sm text-green-500 shadow">
+            {codeSnippet}
+          </div>
+        )
+      }
+    </div>
 
-		{
-			image && imagePosition === 'right' && (
-				<div
-					class={`w-full lg:w-1/2 order-${imagePosition === 'left' ? '1' : '2'} shadow-sm lg:order-none`}
-				>
-					{image && imageBackground ? (
-						<div
-							class="w-full overflow-hidden rounded-xl border border-gray-700 bg-zinc-900 p-2 shadow-xl"
-							style={`height: ${imageBackgroundHeight}px; background-image: url(${image.src}); background-repeat: no-repeat; background-position: ${imageFocus}; background-size: ${bgSize};`}
-						/>
-					) : (
-						<img
-							src={image.src}
-							alt={image.alt}
-							class="rounded-xl border border-gray-800 shadow-lg"
-						/>
-					)}
-				</div>
-			)
-		}
-	</div>
+    {mediaPosition === 'right' && (
+      <div class="w-full lg:w-1/2">
+        {
+          mediaType === 'custom'
+            ? <slot name="media" />
+            : mediaType === 'background'
+              ? <div class="w-full overflow-hidden rounded-xl border border-gray-700 bg-zinc-900 p-2 shadow-xl" style={`height: ${mediaHeight}px; background-image: url(${image?.src}); background-repeat: no-repeat; background-position: ${mediaFocus}; background-size: ${bgSize};`} />
+              : <img src={image?.src} alt={image?.alt} class="rounded-xl border border-gray-800 shadow-lg" />
+        }
+      </div>
+    )}
+  </div>
 </section>

@@ -6,8 +6,10 @@ import Divider from '@components/shared/Divider.astro'
 import { SITE } from '@config'
 import StorefrontHero from '@components/products/storefront-hero.astro'
 import StorefrontFeature from '@components/products/storefront-feature.astro'
-import { Image } from 'astro:assets'
 import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-edit-zoom.png'
+import zoneGraphic from '@images/screenshots/fleetops-screenshot-service-area.png'
+import addToCartAnimation from '@animations/storefront-app-add-to-cart.json'
+import LottiePlayer from '@components/shared/LottiePlayer.astro'
 ---
 
 <RootLayout
@@ -28,38 +30,52 @@ import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-
 			'Location-aware inventory availability',
 		]}
 		image={inventoryGraphic}
-		imageBackground={true}
-		imageBackgroundHeight={600}
-		imageScale={2.9}
+		mediaType="background"
+		mediaHeight={600}
+		mediaScale={2.9}
+    sectionClass="border-b border-zinc-800 py-20"
 	/>
 	<Divider />
 	<StorefrontFeature
-		title="Smarter Delivery with Zones"
-		description="Define geographic zones for hyperlocal delivery, and let Storefront automatically apply dynamic pricing and time estimates based on distance and demand."
+		title={['Smarter Delivery', 'with Fleet-Ops powered Zones']}
+		description="Define geographic zones and service rates for hyperlocal delivery via Fleet-Ops, and let Storefront automatically apply dynamic pricing and time estimates based on distance and demand."
 		points={[
 			'Draw and assign delivery zones visually',
 			'Set pricing per zone, distance, or store',
 			'Zone-level delivery ETAs and rules',
 		]}
-		image={{
-			src: '/images/screenshots/storefront-zones.png',
-			alt: 'Delivery zones UI',
-		}}
+		image={zoneGraphic}
+		mediaType="background"
+		mediaHeight={600}
+		mediaScale={2.9}
+		mediaFocus="center"
+		mediaPosition="left"
+    sectionClass="border-b border-zinc-800 py-20"
 	/>
 	<Divider />
 	<StorefrontFeature
-		title="Launch Your Own App — Instantly"
+		title={["Launch Your Own App", "— Instantly"]}
 		description="Give your customers a fully-branded mobile experience with ordering, notifications, and tracking — powered by Fleetbase’s native mobile stack."
 		points={[
 			'Branded iOS/Android app ready to deploy',
 			'Order tracking, push notifications, and payments',
 			'Perfect for restaurants, grocers, and delivery shops',
+			'Supports service scheduling, and multi-vender marketplace',
 		]}
-		image={{
-			src: '/images/screenshots/storefront-mobile.png',
-			alt: 'Customer app UI',
-		}}
-	/>
+		mediaType="custom"
+	>
+		<div slot="media" style="height: 500px; max-height: 500px;">
+      <LottiePlayer
+        id="storefront-app-add-to-cart"
+        animationData={addToCartAnimation}
+        width="500px"
+        height="500px"
+        loop={true}
+        autoplay={true}
+        speed={1.5}
+      />
+    </div>
+	</StorefrontFeature>
 	<Divider />
 	<StorefrontFeature
 		title="Global-Ready with i18n and Multi-Currency"
@@ -74,6 +90,7 @@ import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-
 			src: '/images/screenshots/storefront-i18n.png',
 			alt: 'Language and currency options UI',
 		}}
+    sectionClass="border-b border-zinc-800 py-20"
 	/>
 	<Divider />
 	<StorefrontFeature
@@ -88,6 +105,7 @@ import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-
 			src: '/images/screenshots/storefront-catalogs.png',
 			alt: 'Catalog to location mapping UI',
 		}}
+    sectionClass="border-b border-zinc-800 py-20"
 	/>
 	<Divider />
 	<section class="border-t border-zinc-800 bg-zinc-950 py-24">
