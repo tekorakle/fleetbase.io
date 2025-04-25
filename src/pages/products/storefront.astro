@@ -8,7 +8,8 @@ import StorefrontHero from '@components/products/storefront-hero.astro'
 import StorefrontFeature from '@components/products/storefront-feature.astro'
 import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-edit-zoom.png'
 import zoneGraphic from '@images/screenshots/fleetops-screenshot-service-area.png'
-import addToCartAnimation from '@animations/storefront-app-add-to-cart.json'
+import addToCartAnimation_webm from '@animations/storefront-app-add-to-cart.webm'
+import addToCartAnimation_mp4 from '@animations/storefront-app-add-to-cart.mp4'
 import LottiePlayer from '@components/shared/LottiePlayer.astro'
 ---
 
@@ -65,15 +66,10 @@ import LottiePlayer from '@components/shared/LottiePlayer.astro'
 		mediaType="custom"
 	>
 		<div slot="media" style="height: 500px; max-height: 500px;">
-      <LottiePlayer
-        id="storefront-app-add-to-cart"
-        animationData={addToCartAnimation}
-        width="500px"
-        height="500px"
-        loop={true}
-        autoplay={true}
-        speed={1.5}
-      />
+      <video autoplay loop muted playsinline style="background: none; height: 536px;">
+        <source src={addToCartAnimation_webm} type="video/webm" />
+        <source src={addToCartAnimation_mp4} type="video/mp4" />
+      </video>
     </div>
 	</StorefrontFeature>
 	<Divider />
