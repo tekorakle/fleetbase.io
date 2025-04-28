@@ -11,7 +11,8 @@ const {
   sectionClass = '',
   containerClass = '',
   codeSnippet = null,
-  image = null
+  image = null,
+  contentSectionClass = 'w-full lg:w-1/2'
 } = Astro.props
 
 const isArrayTitle = Array.isArray(title)
@@ -34,7 +35,7 @@ const bgSize = image && mediaScale > 0
       </div>
     )}
 
-    <div class="w-full lg:w-1/2">
+    <div class={contentSectionClass}>
       <h2 class="mb-4 text-3xl font-bold leading-tight text-blue-100 sm:text-4xl">
         {
           isArrayTitle
