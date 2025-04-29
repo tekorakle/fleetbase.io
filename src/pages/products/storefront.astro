@@ -6,6 +6,7 @@ import Divider from '@components/shared/Divider.astro'
 import Button from '@components/shared/Button.astro'
 import { SITE } from '@config'
 import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
 import StorefrontHero from '@components/products/storefront-hero.astro'
 import StorefrontFeature from '@components/products/storefront-feature.astro'
 import inventoryGraphic from '@images/screenshots/storefront-screenshot-product-edit-zoom.png'
@@ -114,7 +115,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 		]}
 		image={networkGraphic}
 		mediaType="background"
-    mediaFocus="center"
+		mediaFocus="center"
 		mediaHeight={600}
 		mediaScale={2.9}
 		sectionClass="border-b border-zinc-800 py-20"
@@ -176,14 +177,14 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 			</p>
 
 			<div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow">
+				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow relative">
 					<Image
 						src={oliMaxScreenshot}
 						alt="OLI Max - Moving truck shop of Ulaanbaatar"
 						class="h-auto w-full"
 					/>
 					<h3 class="text-xl font-semibold text-white">OLI Max</h3>
-					<div class="mt-3 space-y-2 text-left">
+					<div class="mt-3 mb-10 space-y-2 text-left">
 						<p class="text-sm text-zinc-400">
 							Ulaanbaatar’s first moving truck shop — browse local favorites,
 							order from nearby trucks, and track your delivery live from truck
@@ -194,7 +195,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 							delivery, all in one seamless experience.
 						</p>
 					</div>
-					<div class="mt-4 grid grid-cols-1 gap-2 lg:grid-cols-2">
+					<div class="absolute bottom-0 left-0 right-0 px-4 py-3 grid grid-cols-1 gap-2 lg:grid-cols-2">
 						<div class="">
 							<Button
 								href="https://apps.apple.com/us/app/oli-max/id6740000603"
@@ -203,6 +204,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 								size="sm"
 								class="w-full"
 							>
+								<Icon name="nucleo/apple-fill-32" class="mr-2 h-4 w-4" />
 								<span>App Store</span>
 							</Button>
 						</div>
@@ -214,19 +216,20 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 								size="sm"
 								class="w-full"
 							>
+								<Icon name="nucleo/google" class="mr-2 h-4 w-4" />
 								<span>Play Store</span>
 							</Button>
 						</div>
 					</div>
 				</div>
-				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow">
+				<div class="rounded-xl border border-gray-800 bg-zinc-900 p-4 shadow relative">
 					<Image
 						src={trueVeganScreenshot}
 						alt="True Vegan - by Chef Rahein"
 						class="h-auto w-full"
 					/>
 					<h3 class="text-xl font-semibold text-white">True Vegan</h3>
-					<div class="mt-3 space-y-2 text-left">
+					<div class="mt-3 mb-10 space-y-2 text-left">
 						<p class="text-sm text-zinc-400">
 							Founded by acclaimed vegan chef Rahein Jones, True Vegan lets
 							locals enjoy their favorite plant-based dishes anytime — with
@@ -234,7 +237,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 							through the app.
 						</p>
 					</div>
-					<div class="mt-4 grid grid-cols-1 gap-2 lg:grid-cols-2">
+					<div class="absolute bottom-0 left-0 right-0 px-4 py-3 grid grid-cols-1 gap-2 lg:grid-cols-2">
 						<div class="">
 							<Button
 								href="https://apps.apple.com/us/app/oli-max/id6740000603"
@@ -243,6 +246,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 								size="sm"
 								class="w-full"
 							>
+								<Icon name="nucleo/apple-fill-32" class="mr-2 h-4 w-4" />
 								<span>App Store</span>
 							</Button>
 						</div>
@@ -254,6 +258,7 @@ import foodTruckAnimation_mp4 from '@animations/storefront-food-truck.mp4'
 								size="sm"
 								class="w-full"
 							>
+								<Icon name="nucleo/google" class="mr-2 h-4 w-4" />
 								<span>Play Store</span>
 							</Button>
 						</div>
