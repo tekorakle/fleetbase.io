@@ -47,13 +47,13 @@ const navigation = [
 		label: 'Developers',
 		links: [
 			{ name: 'Github', href: 'https://github.com/fleetbase/fleetbase' },
-			{ name: 'Community: Discord', href: 'https://discord.gg/HnTqQ6zAVn' },
+			{ name: 'Discord', href: 'https://discord.gg/HnTqQ6zAVn' },
 			{
 				name: 'Changelog',
 				href: 'https://github.com/fleetbase/fleetbase/releases',
 				new: true,
 			},
-			{ name: 'API Documentation', href: 'https://docs.fleetbase.io/' },
+			{ name: 'API Documentation', href: 'https://docs.fleetbase.io/api' },
 		],
 	},
 	{
@@ -83,7 +83,7 @@ const navigation = [
 ]
 ---
 
-<section class:list={[cta && 'overflow-hidden']}>
+<section id="footer" class:list={[cta && 'overflow-hidden']}>
 	<div class="relative">
 		{cta && <FooterCTA />}
 

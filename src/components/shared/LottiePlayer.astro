@@ -1,6 +1,7 @@
 ---
 const {
 	id = 'lottie-player',
+	name,
 	src,
 	animationData = null,
 	width = '100%',
@@ -21,6 +22,7 @@ const {
 	class={className}
 	style={`width: ${width}; height: ${height}; ${style}`}
 	data-src={src}
+	data-name={name}
 	data-animation-data={JSON.stringify(animationData)}
 	data-loop={JSON.stringify(loop)}
 	data-autoplay={JSON.stringify(autoplay)}
@@ -36,6 +38,7 @@ const {
 	const container = document.getElementById('lottie-player-container');
 	const config = {
 		container,
+		name: container.dataset.name,
 		renderer: container.dataset.renderer,
 		loop: container.dataset.loop === 'true',
 		autoplay: container.dataset.autoplay === 'true',
