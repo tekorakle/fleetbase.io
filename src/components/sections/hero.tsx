@@ -15,33 +15,39 @@ export default function Hero() {
           <div className="flex max-w-3xl flex-1 flex-col items-start gap-5">
             <div className="flex items-center rounded-full border p-1 text-xs">
               <span className="bg-muted rounded-full px-3 py-1">
-                What&apos;s New?
+                Open Source
               </span>
-              <span className="px-3">Introducing Plasma 2.0</span>
+              <span className="px-3">⭐️ Star us on GitHub</span>
             </div>
 
             <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-              Local-first automation for{' '}
-              <span className="text-gradient">power users</span>
+              Modular Logistics OS{' '}
+              <span className="text-gradient">Plan, Optimize, Track, Scale</span>
             </h1>
 
             <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
-              Plasma is an open-source desktop app that lets you build and run
-              automations directly on your machine. No fluff just fast, visual
-              workflows powered by you.
+              Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Create dynamic workflows, custom fields, and logic to match your operations. Manage planning and optimization to real-time tracking, all in one system.
             </p>
           </div>
 
           {/* CTA Buttons */}
           <div className="space-y-3">
             <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45">Try it locally</Button>
+              <Button className="flex-1 md:min-w-45">Start Free Trial</Button>
               <Button className="flex-1 md:min-w-45" variant="outline">
                 View on Github
               </Button>
             </div>
+            <div className="flex gap-4.5">
+              <Button className="flex-1 md:min-w-45" variant="secondary">
+                Self Host
+              </Button>
+              <Button className="flex-1 md:min-w-45" variant="secondary">
+                Deploy On AWS
+              </Button>
+            </div>
             <div className="text-center text-sm">
-              2.4k stars · 500+ active installs
+              1.3k stars · Open source by design
             </div>
           </div>
         </div>
@@ -49,7 +55,7 @@ export default function Hero() {
         {/* Hero Image */}
         <Image
           src="/images/home/hero.webp"
-          alt="App screenshot"
+          alt="Fleetbase logistics platform screenshot"
           className="ring-foreground/5 mt-10 w-full rounded-xs shadow-2xl ring-6 invert md:mt-20 md:rounded-sm md:px-[1px] md:ring-16 lg:mt-30 dark:invert-0"
           width={1440}
           height={905}
@@ -61,7 +67,7 @@ export default function Hero() {
   );
 }
 
-// SVG Components
+// SVG Components - Updated with Fleetbase blue color scheme
 function GradientSVG({ ...props }: SVGProps) {
   return (
     <svg
@@ -107,8 +113,8 @@ function GradientSVG({ ...props }: SVGProps) {
           y2={1198.11}
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset={0} stopColor="#9D83E7" />
-          <stop offset={0.516} stopColor="#D445E7" />
+          <stop offset={0} stopColor="#5BA3E7" />
+          <stop offset={0.516} stopColor="#4A90E2" />
         </linearGradient>
         <linearGradient
           id="b"
@@ -118,8 +124,8 @@ function GradientSVG({ ...props }: SVGProps) {
           y2={1197.77}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#10CBF4" />
-          <stop offset={1} stopColor="#10CBF4" stopOpacity={0} />
+          <stop stopColor="#4A90E2" />
+          <stop offset={1} stopColor="#4A90E2" stopOpacity={0} />
         </linearGradient>
         <linearGradient
           id="c"
@@ -129,9 +135,9 @@ function GradientSVG({ ...props }: SVGProps) {
           y2={575.628}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#9259ED" />
-          <stop offset={0.514} stopColor="#CF54EE" />
-          <stop offset={1} stopColor="#FB8684" />
+          <stop stopColor="#4A90E2" />
+          <stop offset={0.514} stopColor="#5BA3E7" />
+          <stop offset={1} stopColor="#6BB5F0" />
         </linearGradient>
         <linearGradient
           id="d"
@@ -141,8 +147,8 @@ function GradientSVG({ ...props }: SVGProps) {
           y2={757.516}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#B956EE" />
-          <stop offset={1} stopColor="#9672FF" />
+          <stop stopColor="#5BA3E7" />
+          <stop offset={1} stopColor="#4A90E2" />
         </linearGradient>
         <linearGradient
           id="f"
@@ -152,9 +158,9 @@ function GradientSVG({ ...props }: SVGProps) {
           y2={477.618}
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#FB07FF" />
-          <stop offset={0.505} stopColor="#FF6847" />
-          <stop offset={1} stopColor="#FF474A" />
+          <stop stopColor="#5BA3E7" />
+          <stop offset={0.505} stopColor="#4A90E2" />
+          <stop offset={1} stopColor="#3D7DC2" />
         </linearGradient>
         <filter
           id="e"

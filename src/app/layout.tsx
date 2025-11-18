@@ -23,24 +23,24 @@ const azeretMono = Azeret_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Plasma - Modern Next.js Template',
-    template: '%s | Plasma',
+    default: 'Fleetbase | Open-Source Logistics Platform',
+    template: '%s | Fleetbase',
   },
   description:
-    'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+    'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
   keywords: [
-    'Next.js',
-    'React',
-    'JavaScript',
-    'TypeScript',
-    'TailwindCSS',
-    'Template',
-    'Shadcn/UI',
-    'Web Development',
+    'logistics',
+    'open-source',
+    'supply chain',
+    'fleet management',
+    'transportation',
+    'order management',
+    'route optimization',
+    'tracking',
   ],
-  authors: [{ name: 'Plasma - Shadcnblocks.com' }],
-  creator: 'Plasma - Shadcnblocks.com',
-  publisher: 'Plasma',
+  authors: [{ name: 'Fleetbase' }],
+  creator: 'Fleetbase',
+  publisher: 'Fleetbase',
   robots: {
     index: true,
     follow: true,
@@ -57,24 +57,24 @@ export const metadata: Metadata = {
     shortcut: [{ url: '/favicon/favicon.ico' }],
   },
   openGraph: {
-    title: 'Plasma - Modern Next.js Template',
+    title: 'Fleetbase | Open-Source Logistics Platform',
     description:
-      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
-    siteName: 'Plasma',
+      'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
+    siteName: 'Fleetbase',
     images: [
       {
         url: '/images/og-image.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Plasma - Modern Next.js Template',
+        alt: 'Fleetbase - Open-Source Logistics Platform',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Plasma - Modern Next.js Template',
+    title: 'Fleetbase | Open-Source Logistics Platform',
     description:
-      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+      'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
     images: ['/images/og-image.jpeg'],
     creator: '@shadcnblocks',
   },
