@@ -1,5 +1,29 @@
 'use client';
-import { Clock, Cpu } from 'lucide-react';
+import { 
+  Box, 
+  Truck, 
+  Smartphone, 
+  Store, 
+  Package, 
+  Shield, 
+  Boxes, 
+  Code, 
+  Webhook, 
+  BookOpen, 
+  Users, 
+  MessageSquare, 
+  FileText, 
+  Building2, 
+  Handshake, 
+  FileCheck, 
+  Mail,
+  Github,
+  Utensils,
+  ShoppingCart,
+  Heart,
+  Recycle,
+  Ship
+} from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -26,39 +50,263 @@ import { cn } from '@/lib/utils';
 
 export const NAV_LINKS = [
   {
-    label: 'Products',
-    href: '/product',
+    label: 'Platform',
+    href: '/platform',
     subitems: [
       {
-        label: 'Configurable Observability',
-        href: '/product',
-        description: 'This is a subtext that explains a part of the item',
-        icon: Clock,
+        label: 'Platform Overview',
+        href: '/platform',
+        description: 'A high-level look at the modular logistics OS.',
+        icon: Box,
       },
       {
-        label: 'Plasma AI',
-        href: '/product',
-        description: 'This is a subtext that explains a part of the item',
-        icon: Cpu,
+        label: 'FleetOps',
+        href: '/platform/fleetops',
+        description: 'Advanced fleet and order management.',
+        icon: Truck,
+      },
+      {
+        label: 'Navigator App',
+        href: '/platform/navigator',
+        description: 'The all-in-one mobile app for drivers.',
+        icon: Smartphone,
+      },
+      {
+        label: 'Storefront',
+        href: '/platform/storefront',
+        description: 'Headless e-commerce with last-mile & inventory integration.',
+        icon: Store,
+      },
+      {
+        label: 'Pallet',
+        href: '/platform/pallet',
+        description: 'Warehouse and inventory management.',
+        icon: Package,
+      },
+      {
+        label: 'Extensions Marketplace',
+        href: '/extensions',
+        description: 'Discover and install new features.',
+        icon: Boxes,
+      },
+      {
+        label: 'Developer Console',
+        href: '/developers/console',
+        description: 'Manage API keys, webhooks, and logs.',
+        icon: Code,
+      },
+      {
+        label: 'API & Integrations',
+        href: '/developers/api',
+        description: 'Connect Fleetbase to any system.',
+        icon: Webhook,
+      },
+      {
+        label: 'Mobile Apps',
+        href: '/platform/mobile',
+        description: 'Featuring the Navigator & Storefront apps.',
+        icon: Smartphone,
+      },
+      {
+        label: 'Security & Compliance',
+        href: '/platform/security',
+        description: 'Enterprise-grade security features.',
+        icon: Shield,
+      },
+    ],
+    megaMenu: true,
+  },
+  {
+    label: 'Solutions',
+    href: '/solutions',
+    subitems: [
+      {
+        label: 'Trucking & Haulage',
+        href: '/solutions/trucking',
+        description: 'Comprehensive fleet management for trucking operations.',
+        icon: Truck,
+      },
+      {
+        label: 'Food & Grocery Delivery',
+        href: '/solutions/food-delivery',
+        description: 'End-to-end solution for food delivery services.',
+        icon: Utensils,
+      },
+      {
+        label: 'Courier & Parcel Services',
+        href: '/solutions/courier-services',
+        description: 'Streamline your courier and parcel operations.',
+        icon: Package,
+      },
+      {
+        label: 'E-commerce & Retail',
+        href: '/solutions/ecommerce',
+        description: 'Power your retail logistics operations.',
+        icon: ShoppingCart,
+      },
+      {
+        label: 'Healthcare & Pharmacy',
+        href: '/solutions/healthcare',
+        description: 'Secure and compliant healthcare logistics.',
+        icon: Heart,
+      },
+      {
+        label: 'Waste & Recycling',
+        href: '/solutions/waste-management',
+        description: 'Optimize waste collection and recycling routes.',
+        icon: Recycle,
+      },
+      {
+        label: 'Container Operations',
+        href: '/solutions/container-operations',
+        description: 'Manage container logistics and tracking.',
+        icon: Ship,
+      },
+      {
+        label: 'Military & Government',
+        href: '/solutions/government',
+        description: 'Secure logistics for defense and government operations.',
+        icon: Shield,
+      },
+    ],
+    megaMenu: true,
+  },
+  {
+    label: 'Developers',
+    href: '/developers',
+    subitems: [
+      {
+        label: 'API Documentation',
+        href: '/docs/api',
+        description: 'Comprehensive reference for the Fleetbase API.',
+        icon: BookOpen,
+      },
+      {
+        label: 'SDKs & Libraries',
+        href: '/developers/sdks',
+        description: 'Official libraries for JS, PHP, Java, and more.',
+        icon: Code,
+      },
+      {
+        label: 'Developer Console',
+        href: '/developers/console',
+        description: 'Manage your API keys, webhooks, and logs.',
+        icon: Code,
+      },
+      {
+        label: 'Webhooks & Events',
+        href: '/docs/webhooks',
+        description: 'Build real-time integrations with webhooks.',
+        icon: Webhook,
+      },
+      {
+        label: 'Build an Extension',
+        href: '/developers/extensions',
+        description: 'Learn how to create and publish extensions.',
+        icon: Boxes,
+      },
+      {
+        label: 'GitHub Repository',
+        href: 'https://github.com/fleetbase/fleetbase',
+        description: 'Contribute to the open-source project.',
+        icon: Github,
+        external: true,
       },
     ],
   },
-  { label: 'Company', href: '/about' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Download', href: '/download' },
-  { label: 'Docs', href: '/docs' },
-  { label: 'Changelog', href: '/changelog' },
+  { 
+    label: 'Pricing', 
+    href: '/pricing' 
+  },
+  {
+    label: 'Resources',
+    href: '/resources',
+    subitems: [
+      {
+        label: 'Documentation',
+        href: '/docs',
+        description: 'The complete guide to using Fleetbase.',
+        icon: BookOpen,
+      },
+      {
+        label: 'Testimonials & Case Studies',
+        href: '/customers',
+        description: 'See how businesses succeed with Fleetbase.',
+        icon: Users,
+      },
+      {
+        label: 'Blog',
+        href: '/blog',
+        description: 'Industry insights, tutorials, and updates.',
+        icon: FileText,
+      },
+      {
+        label: 'Community (Discord)',
+        href: '/community',
+        description: 'Join the conversation with other users.',
+        icon: MessageSquare,
+      },
+      {
+        label: 'Support Services',
+        href: '/support-services',
+        description: 'Implementation, development, and enterprise support.',
+        icon: Handshake,
+      },
+      {
+        label: 'Changelog',
+        href: '/changelog',
+        description: 'Stay up-to-date with the latest changes.',
+        icon: FileText,
+      },
+    ],
+  },
+  {
+    label: 'Company',
+    href: '/company',
+    subitems: [
+      {
+        label: 'About Us',
+        href: '/company/about',
+        description: 'Our mission, vision, and team.',
+        icon: Building2,
+      },
+      {
+        label: 'Open Source Mission',
+        href: '/company/open-source',
+        description: 'Our commitment to open source software.',
+        icon: Github,
+      },
+      {
+        label: 'Partners',
+        href: '/partners',
+        description: 'Our network of integration and solution partners.',
+        icon: Handshake,
+      },
+      {
+        label: 'Licensing Options',
+        href: '/licensing',
+        description: 'Details on AGPL and commercial licenses.',
+        icon: FileCheck,
+      },
+      {
+        label: 'Contact Sales',
+        href: '/contact/sales',
+        description: 'Get in touch with our enterprise team.',
+        icon: Mail,
+      },
+    ],
+  },
 ];
 
 const ACTION_BUTTONS = [
-  { label: 'Log in', href: '/signin', variant: 'ghost' as const },
-  { label: 'Sign up', href: '/signup', variant: 'default' as const },
+  { label: 'GitHub', href: 'https://github.com/fleetbase/fleetbase', variant: 'ghost' as const, icon: Github, external: true },
+  { label: 'Start Free Trial', href: '/trial', variant: 'default' as const },
 ];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const hideNavbar = ['/signin', '/signup', '/otp', '/docs'].some((route) =>
+  const hideNavbar = ['/signin', '/signup', '/otp'].some((route) =>
     pathname.includes(route),
   );
 
@@ -100,12 +348,16 @@ const Navbar = () => {
                       {item.label}
                     </NavigationMenuTrigger>
                     <NavigationMenuContent className="">
-                      <ul className="grid w-[263px] gap-2">
+                      <ul className={cn(
+                        "gap-2",
+                        item.megaMenu ? "grid grid-cols-2 w-[600px]" : "grid w-[320px]"
+                      )}>
                         {item.subitems.map((subitem) => (
                           <li key={subitem.label}>
                             <NavigationMenuLink
                               href={subitem.href}
                               className="flex-row items-center gap-3 p-3"
+                              {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
                             >
                               <subitem.icon className="text-foreground size-5.5" />
                               <div className="flex flex-col gap-1">
@@ -148,7 +400,13 @@ const Navbar = () => {
               variant={button.variant}
               asChild
             >
-              <Link href={button.href}>{button.label}</Link>
+              <Link 
+                href={button.href}
+                {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
+              >
+                {button.icon && <button.icon className="size-4 mr-2" />}
+                {button.label}
+              </Link>
             </Button>
           ))}
         </div>
@@ -198,7 +456,7 @@ const Navbar = () => {
               : 'pointer-events-none translate-x-full opacity-0',
           )}
         >
-          <div className="container">
+          <div className="container overflow-y-auto">
             <NavigationMenu
               orientation="vertical"
               className="inline-block w-full max-w-none py-10"
@@ -224,6 +482,7 @@ const Navbar = () => {
                                     pathname === subitem.href &&
                                       'bg-accent font-semibold',
                                   )}
+                                  {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
                                 >
                                   <subitem.icon className="size-5.5" />
                                   <span className="">{subitem.label}</span>
@@ -259,7 +518,12 @@ const Navbar = () => {
                 asChild
                 className="h-12 flex-1 rounded-sm transition-all hover:scale-105"
               >
-                <Link href={button.href} onClick={() => setIsMenuOpen(false)}>
+                <Link 
+                  href={button.href} 
+                  onClick={() => setIsMenuOpen(false)}
+                  {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
+                >
+                  {button.icon && <button.icon className="size-4 mr-2" />}
                   {button.label}
                 </Link>
               </Button>
