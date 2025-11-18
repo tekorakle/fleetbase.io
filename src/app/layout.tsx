@@ -4,7 +4,7 @@ import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
 import { Azeret_Mono, Inter } from 'next/font/google';
 
-import Banner from '@/components/layout/banner';
+
 import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import { StyleGlideProvider } from '@/components/styleglide-provider';
@@ -116,7 +116,7 @@ export default function RootLayout({
               }}
             />
             <StyleGlideProvider />
-            <Banner url="https://www.shadcnblocks.com/template/plasma" />
+
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
