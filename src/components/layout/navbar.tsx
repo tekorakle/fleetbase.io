@@ -330,10 +330,10 @@ const Navbar = () => {
 
   return (
     <header className="lg:border-b">
-      <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-2">
-        <Logo className="w-47" />
+      <div className="relative z-50 container flex h-[var(--header-height)] items-center gap-4">
+        <Logo className="flex-shrink-0" />
 
-        <NavigationMenu viewport={false} className="hidden lg:block">
+        <NavigationMenu viewport={false} className="hidden lg:flex flex-1 justify-center">
           <NavigationMenuList className="gap-2 xl:gap-4">
             {NAV_LINKS.map((item) => (
               <NavigationMenuItem key={item.label}>
@@ -392,7 +392,7 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="hidden w-47 items-center justify-end gap-4 lg:flex">
+        <div className="hidden flex-shrink-0 items-center justify-end gap-3 lg:flex">
           <ThemeToggle />
           {ACTION_BUTTONS.map((button) => (
             <Button
