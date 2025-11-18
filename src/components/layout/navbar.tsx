@@ -330,7 +330,7 @@ const Navbar = () => {
 
   return (
     <header className="lg:border-b">
-      <div className="relative z-50 container flex h-[var(--header-height)] items-center gap-4">
+      <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
         <Logo className="flex-shrink-0" />
 
         <NavigationMenu viewport={false} className="hidden lg:flex flex-1 justify-center">
