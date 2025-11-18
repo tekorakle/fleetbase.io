@@ -2,7 +2,7 @@
 import { 
   Box, 
   Truck, 
-  Smartphone, 
+  Navigation, 
   Store, 
   Package, 
   Shield, 
@@ -22,7 +22,8 @@ import {
   ShoppingCart,
   Heart,
   Recycle,
-  Ship
+  Ship,
+  Smartphone
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -56,61 +57,61 @@ export const NAV_LINKS = [
       {
         label: 'Platform Overview',
         href: '/platform',
-        description: 'A high-level look at the modular logistics OS.',
+        description: 'Discover the modular logistics OS that powers operations at any scale.',
         icon: Box,
       },
       {
         label: 'FleetOps',
         href: '/platform/fleetops',
-        description: 'Advanced fleet and order management.',
+        description: 'Manage fleets, orders, and routes with real-time optimization and tracking.',
         icon: Truck,
       },
       {
         label: 'Navigator App',
         href: '/platform/navigator',
-        description: 'The all-in-one mobile app for drivers.',
-        icon: Smartphone,
+        description: 'Empower drivers with turn-by-turn navigation and real-time job updates.',
+        icon: Navigation,
       },
       {
         label: 'Storefront',
         href: '/platform/storefront',
-        description: 'Headless e-commerce with last-mile & inventory integration.',
+        description: 'Launch headless e-commerce with seamless delivery and inventory sync.',
         icon: Store,
       },
       {
         label: 'Pallet',
         href: '/platform/pallet',
-        description: 'Warehouse and inventory management.',
+        description: 'Control warehouse operations with smart inventory and fulfillment tools.',
         icon: Package,
       },
       {
         label: 'Extensions Marketplace',
         href: '/extensions',
-        description: 'Discover and install new features.',
+        description: 'Browse and install extensions to customize your logistics workflows.',
         icon: Boxes,
       },
       {
         label: 'Developer Console',
         href: '/developers/console',
-        description: 'Manage API keys, webhooks, and logs.',
+        description: 'Manage API keys, monitor webhooks, and debug integrations in real-time.',
         icon: Code,
       },
       {
         label: 'API & Integrations',
         href: '/developers/api',
-        description: 'Connect Fleetbase to any system.',
+        description: 'Connect Fleetbase to any system with our powerful REST API and SDKs.',
         icon: Webhook,
       },
       {
         label: 'Mobile Apps',
         href: '/platform/mobile',
-        description: 'Featuring the Navigator & Storefront apps.',
+        description: 'Native iOS and Android apps for drivers and customers on the go.',
         icon: Smartphone,
       },
       {
         label: 'Security & Compliance',
         href: '/platform/security',
-        description: 'Enterprise-grade security features.',
+        description: 'Enterprise-grade security with SOC 2, GDPR, and HIPAA compliance.',
         icon: Shield,
       },
     ],
@@ -123,49 +124,49 @@ export const NAV_LINKS = [
       {
         label: 'Trucking & Haulage',
         href: '/solutions/trucking',
-        description: 'Comprehensive fleet management for trucking operations.',
+        description: 'Optimize long-haul routes, manage assets, and track freight in real-time.',
         icon: Truck,
       },
       {
         label: 'Food & Grocery Delivery',
         href: '/solutions/food-delivery',
-        description: 'End-to-end solution for food delivery services.',
+        description: 'Power on-demand delivery with live tracking and temperature monitoring.',
         icon: Utensils,
       },
       {
         label: 'Courier & Parcel Services',
         href: '/solutions/courier-services',
-        description: 'Streamline your courier and parcel operations.',
+        description: 'Automate dispatch, proof of delivery, and last-mile optimization.',
         icon: Package,
       },
       {
         label: 'E-commerce & Retail',
         href: '/solutions/ecommerce',
-        description: 'Power your retail logistics operations.',
+        description: 'Sync inventory, fulfill orders, and delight customers with fast shipping.',
         icon: ShoppingCart,
       },
       {
         label: 'Healthcare & Pharmacy',
         href: '/solutions/healthcare',
-        description: 'Secure and compliant healthcare logistics.',
+        description: 'Deliver medical supplies securely with HIPAA-compliant logistics.',
         icon: Heart,
       },
       {
         label: 'Waste & Recycling',
         href: '/solutions/waste-management',
-        description: 'Optimize waste collection and recycling routes.',
+        description: 'Optimize collection routes and manage recycling operations efficiently.',
         icon: Recycle,
       },
       {
         label: 'Container Operations',
         href: '/solutions/container-operations',
-        description: 'Manage container logistics and tracking.',
+        description: 'Track containers from port to destination with real-time visibility.',
         icon: Ship,
       },
       {
         label: 'Military & Government',
         href: '/solutions/government',
-        description: 'Secure logistics for defense and government operations.',
+        description: 'Secure logistics for defense operations and battle management systems.',
         icon: Shield,
       },
     ],
@@ -178,37 +179,37 @@ export const NAV_LINKS = [
       {
         label: 'API Documentation',
         href: '/docs/api',
-        description: 'Comprehensive reference for the Fleetbase API.',
+        description: 'Comprehensive REST API reference with code examples and guides.',
         icon: BookOpen,
       },
       {
         label: 'SDKs & Libraries',
         href: '/developers/sdks',
-        description: 'Official libraries for JS, PHP, Java, and more.',
+        description: 'Official SDKs for JavaScript, PHP, Java, Python, and more languages.',
         icon: Code,
       },
       {
         label: 'Developer Console',
         href: '/developers/console',
-        description: 'Manage your API keys, webhooks, and logs.',
+        description: 'Manage API keys, monitor webhooks, and debug integrations in real-time.',
         icon: Code,
       },
       {
         label: 'Webhooks & Events',
         href: '/docs/webhooks',
-        description: 'Build real-time integrations with webhooks.',
+        description: 'Build real-time integrations with event-driven webhooks and callbacks.',
         icon: Webhook,
       },
       {
         label: 'Build an Extension',
         href: '/developers/extensions',
-        description: 'Learn how to create and publish extensions.',
+        description: 'Create custom extensions and publish them to the marketplace.',
         icon: Boxes,
       },
       {
         label: 'GitHub Repository',
         href: 'https://github.com/fleetbase/fleetbase',
-        description: 'Contribute to the open-source project.',
+        description: 'Contribute to the open-source project and join our community.',
         icon: Github,
         external: true,
       },
@@ -225,37 +226,37 @@ export const NAV_LINKS = [
       {
         label: 'Documentation',
         href: '/docs',
-        description: 'The complete guide to using Fleetbase.',
+        description: 'Complete guides, tutorials, and references for using Fleetbase.',
         icon: BookOpen,
       },
       {
         label: 'Testimonials & Case Studies',
         href: '/customers',
-        description: 'See how businesses succeed with Fleetbase.',
+        description: 'Real stories from businesses transforming logistics with Fleetbase.',
         icon: Users,
       },
       {
         label: 'Blog',
         href: '/blog',
-        description: 'Industry insights, tutorials, and updates.',
+        description: 'Industry insights, best practices, and product updates from our team.',
         icon: FileText,
       },
       {
         label: 'Community (Discord)',
         href: '/community',
-        description: 'Join the conversation with other users.',
+        description: 'Join our Discord server and connect with other Fleetbase users.',
         icon: MessageSquare,
       },
       {
         label: 'Support Services',
         href: '/support-services',
-        description: 'Implementation, development, and enterprise support.',
+        description: 'Professional implementation, development, and enterprise support options.',
         icon: Handshake,
       },
       {
         label: 'Changelog',
         href: '/changelog',
-        description: 'Stay up-to-date with the latest changes.',
+        description: 'Stay updated with the latest features, fixes, and improvements.',
         icon: FileText,
       },
     ],
@@ -267,31 +268,31 @@ export const NAV_LINKS = [
       {
         label: 'About Us',
         href: '/company/about',
-        description: 'Our mission, vision, and team.',
+        description: 'Learn about our mission to democratize logistics through open source.',
         icon: Building2,
       },
       {
         label: 'Open Source Mission',
         href: '/company/open-source',
-        description: 'Our commitment to open source software.',
+        description: 'Our commitment to building transparent, community-driven software.',
         icon: Github,
       },
       {
         label: 'Partners',
         href: '/partners',
-        description: 'Our network of integration and solution partners.',
+        description: 'Explore our network of integration partners and solution providers.',
         icon: Handshake,
       },
       {
         label: 'Licensing Options',
         href: '/licensing',
-        description: 'Details on AGPL and commercial licenses.',
+        description: 'Understand AGPL open source and commercial licensing for your needs.',
         icon: FileCheck,
       },
       {
         label: 'Contact Sales',
         href: '/contact/sales',
-        description: 'Get in touch with our enterprise team.',
+        description: 'Get in touch with our enterprise team for custom solutions.',
         icon: Mail,
       },
     ],
@@ -329,11 +330,11 @@ const Navbar = () => {
 
   return (
     <header className="lg:border-b">
-      <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
+      <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-2">
         <Logo className="w-47" />
 
         <NavigationMenu viewport={false} className="hidden lg:block">
-          <NavigationMenuList className="gap-4 xl:gap-8">
+          <NavigationMenuList className="gap-2 xl:gap-4">
             {NAV_LINKS.map((item) => (
               <NavigationMenuItem key={item.label}>
                 {item.subitems ? (
@@ -356,15 +357,15 @@ const Navbar = () => {
                           <li key={subitem.label}>
                             <NavigationMenuLink
                               href={subitem.href}
-                              className="flex-row items-center gap-3 p-3"
+                              className="flex-row items-start gap-3 p-3"
                               {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
                             >
-                              <subitem.icon className="text-foreground size-5.5" />
-                              <div className="flex flex-col gap-1">
-                                <div className="text-sm font-medium tracking-normal">
+                              <subitem.icon className="text-foreground size-5 mt-0.5 flex-shrink-0" />
+                              <div className="flex flex-col gap-1 min-h-[44px]">
+                                <div className="text-sm font-medium tracking-normal leading-tight">
                                   {subitem.label}
                                 </div>
-                                <div className="text-muted-foreground text-xs leading-snug">
+                                <div className="text-muted-foreground text-xs leading-snug line-clamp-2">
                                   {subitem.description}
                                 </div>
                               </div>
