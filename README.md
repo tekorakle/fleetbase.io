@@ -1,134 +1,118 @@
-# Nebula - Astro
+# Plasma NextJS Template
 
-Nebula - Astro is a modern, dark-themed SaaS template built using Tailwind CSS, Astro.js, Alpine.js, and TypeScript.
+Plasma NextJS Template is a premium template built by https://www.shadcnblocks.com
+
+- [Demo](https://plasma-nextjs-template.vercel.app/)
+- [Documentation](https://docs.shadcnblocks.com/templates/getting-started)
+
+## Screenshot
+
+![Plasma NextJS Template screenshot](./public/images/og-image.jpeg)
 
 ## Getting Started
 
-1. Unzip and open the folder of the theme with your editor of choice.
-2. Install dependencies:
-
 ```bash
-# Using npm
 npm install
-
-# Using yarn
-yarn install
-
-# Using pnpm
-pnpm install
-
-# Using bun
-bun install
 ```
-
-3. Run the development server:
 
 ```bash
-# Using npm
 npm run dev
-
-# Using yarn
-yarn dev
-
-# Using pnpm
-pnpm dev
-
-# Using bun
-bun dev
 ```
 
-4. The template should now be running on [http://localhost:4321](http://localhost:4321).
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Template Structure
+## Tech Stack
 
-```text
-/
-├── 📁public # Static assets (favicon, OG image)
-├── 📁src # Source files
-│ ├── 📁components # Reusable UI components
-│ ├── 📁layouts # Page layouts
-│ ├── 📁pages # Astro pages
-│ ├── 📁styles # Global styles
-│ ├── 📁scripts # Custom and vendor scripts
-│ ├── 📁images # Image assets
-│ ├── 📁icons # SVG icons
-│ ├── types.ts # TypeScript type definitions
-│ └── config.ts # Site configuration
-├── astro.config.mjs # Astro configuration
-├── tailwind.config.mjs # Tailwind CSS configuration
-└── tsconfig.json # TypeScript configuration
+- Nextjs 15 / App Router
+- Tailwind 4
+- shadcn/ui
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com)
+
+## Static Export Support
+
+This template is configured to support static export by default, making it easy to deploy on various platforms including Cloudflare Pages, GitHub Pages, and other static hosting providers.
+
+To build for static export:
+
+```bash
+npm run build
+# The output will be in the 'out' directory
 ```
 
-## Typescript
+## Search Configuration Fumadocs
 
-Nebula comes with full Typescript support, offering robust typing and advanced language features. Astro's built-in [support for TypeScript](https://docs.astro.build/en/guides/typescript/) allows for writing typescript directly in Astro components, with benefits such as error prevention at runtime and enhanced code understanding through type definition of components and props.
+### Default (Static Export Compatible)
 
-### Typescript configuration
+By default, this template uses **static search** which is compatible with static export. The search uses `staticGET` to generate search indexes at build time that are downloaded by the client when needed.
 
-You can find the Typescript configuration at the root of the project: `tsconfig.json`. Our setup follows Astro's guidelines for TypeScript integration, using one of Astro's extendable `tsconfig.json` templates. We've chosen the 'strict' template for its balance between strictness and flexibility, and because it is the template recommended by Astro.
+**How it works:**
 
-In the `tsconfig.json`, we also establish module path aliases, creating shortcuts for imports related to components, images, utility functions, and data, all pointing directly to the `/src` directory. This enables us to use succinct import statements like `import HomeHero from @components/home/HomeHero.astro`, streamlining file referencing and enhancing project readability.
+- Build time: Search indexes are generated using `staticGET`
+- Runtime: Client downloads indexes and uses Orama for client-side search
+- Both custom search and native Fumadocs search work with static data
+- Compatible with static export (`output: 'export'`)
 
-### Types Definition
+**Configuration:**
 
-In `src/types.ts`, we define global data types for the site, facilitating consistency and ease of use across various components and modules. This ensures that the data structures used throughout the site are uniform, making the code more maintainable and reducing potential for errors.
+The `RootProvider` in `src/app/layout.tsx` is configured to use static search by default:
 
-## Sitemap
-
-The template simplifies the creation of a sitemap, aiding search engines like Google in more efficiently crawling your site. We use `@astrojs/sitemap`, Astro's official integration, to automatically generate a sitemap during your project build, outlining all pages of your site.
-
-The sitemap generation is configured in the `astro.config.mjs` file. Here, you need to specify the deployment/site URL using the site property. Our template uses the `SITE.website` variable defined in the `src/config.ts` global configuration file for this purpose. Remember to update the website property in `src/config.ts` with your actual production website URL when deploying your site.
-
-```javascript
-// src/config.ts
-export const SITE: Site = {
-  website: 'https://fleetbase.io', // replace this with your deployed domain
-  // ... other site properties
-}
+```typescript
+<RootProvider
+  search={{
+    options: {
+      type: 'static',
+    },
+  }}
+>
 ```
 
-## Tailwind CSS
+This ensures both the custom docs overview search and the native Fumadocs search dialog (Cmd+K) use static mode.
 
-Tailwind CSS and its dependencies were installed using [Astro's official Tailwind integration](https://docs.astro.build/en/guides/integrations-guide/tailwind/). If you are not familiar with the Tailwind CSS framework, I would recommend checking out the [Tailwind documentation](https://tailwindcss.com/docs).
+### Optional: Server-Side Search (SSR)
 
-We've tried to minimize any custom CSS and only rely on Tailwind's utility classes and a few additional classes defined within the `tailwind.config.js` file. This template additionally uses 1 official Tailwind CSS plugin (`@tailwindcss/forms`).
+You can optionally enable server-side search. **Note: This will prevent static export.**
 
-## Site Configuration
+To enable server-side search:
 
-Global site settings, including SEO metadata, can be customized in `src/config.ts`.
+1. **Update the API route**: Replace the contents of `src/app/api/search/route.ts` with the server-side version from `route.example.ts`:
 
-## Layouts and Components
+   ```typescript
+   import { createFromSource } from 'fumadocs-core/search/server';
+   import { source } from '@/lib/source';
 
-Customize the layouts in `src/layouts`, and individual components in the `src/components` directory.
+   export const { GET } = createFromSource(source, {
+     language: 'english',
+   });
+   ```
 
-## Fonts
+2. **Update the search client**: In `src/components/docs/overview.tsx`, change the search configuration:
 
-Nebula uses the Geist Sans and Geist Mono fonts from Vercel. These are loaded via `@fontsource` packages.
+   ```typescript
+   // Remove the initOrama import and function, then update:
+   const { search, setSearch, query } = useDocsSearch({
+     type: 'fetch', // Changed from 'static'
+     // Remove initOrama parameter
+   });
+   ```
 
-## Icons
+3. **Update RootProvider**: In `src/app/layout.tsx`, remove the search options:
 
-The icons used for this theme are part of the [Hero Icons](https://heroicons.com/) set that is free to use and published under the [MIT License](https://github.com/tailwindlabs/heroicons/blob/master/LICENSE).
+   ```typescript
+   <RootProvider>{
+     /* Remove search configuration for server-side search */
+   };
+   ```
 
-Some of the examples in Nebula use [Nucleo App](https://nucleoapp.com/premium-icons) icons which we have acquired a license for. You are free to use the Nucleo icons included in this template on your projects, but if you are interested in using the rest of their premium icons you can buy a license on their [website](https://nucleoapp.com/).
+4. **Remove static export**: If you want to use server-side search, you cannot use static export. Remove any `output: 'export'` setting from `next.config.js`.
 
-This template uses [astro-icon](https://github.com/natemoo-re/astro-icon#readme) in order to make using these icons easier. It defines a straightforward Icon component for Astro that allows you to use custom SVG icons (sourced from the `src/icons` directory) or icons from common icon packs, powered by [Iconify](https://iconify.design/).
+### Trade-offs
 
-## Images
-
-All of the images used in the template are free to use and are either from [Unsplash](https://unsplash.com/), [Pexels](https://www.pexels.com/), or custom-made.
-
-## Deployment
-
-The easiest way to deploy your Astro site is either with [Vercel](https://vercel.com/) or [Netlify](https://www.netlify.com/). To learn more you can read Astro's official docs on [deploying with Vercel](https://docs.astro.build/en/guides/deploy/vercel/) or [deploying with Netlify](https://docs.astro.build/en/guides/deploy/netlify/)
-
-## License
-
-This site template is a commercial product and is licensed under the [Tailwind Awesome license](https://www.tailwindawesome.com/license).
-
-## Learn More
-
-To learn more about Astro, take a look at the following resources you can check their [official documentation](https://docs.astro.build) or jump into their [Discord server](https://astro.build/chat).
-
-## Additional Help
-
-If you need additional help setting up the template or have any questions, feel free to contact us at <rodrigo@tailwindawesome.com>.
+| Feature               | Static Search (Default)    | Server-Side Search      |
+| --------------------- | -------------------------- | ----------------------- |
+| Static Export         | ✅ Supported               | ❌ Not supported        |
+| Initial Load          | Slower (downloads indexes) | Faster                  |
+| Search Performance    | Good                       | Excellent               |
+| Hosting Compatibility | Any static host            | Requires Node.js server |
