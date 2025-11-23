@@ -107,13 +107,13 @@ export default function Hero() {
 
         {/* Hero Video */}
         <div className="mt-10 w-full md:mt-20 lg:mt-30">
-          <div className="relative aspect-video rounded-xs shadow-2xl ring-6 ring-foreground/5 md:rounded-sm md:ring-16 overflow-hidden">
+          <div className="relative aspect-video rounded-2xl shadow-2xl ring-6 ring-foreground/5 md:rounded-3xl md:ring-16 overflow-hidden">
             <video
               autoPlay
               loop
               muted
               playsInline
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain bg-background"
               poster="/fleetops-screenshot.png"
             >
               <source src="/fleetops-demo.mp4" type="video/mp4" />
