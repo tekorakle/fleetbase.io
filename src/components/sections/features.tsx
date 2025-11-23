@@ -92,10 +92,10 @@ const Features = ({ className }: { className?: string }) => {
         <div className="container flex flex-col justify-between gap-10 md:flex-row md:items-center">
           <div className="max-w-3xl space-y-3">
             <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-              Built to Fit Your Business
+              Orchestrate your entire logistics operation.
             </h2>
             <p className="text-muted-foreground max-w-xl text-lg leading-snug">
-              Flexible logistics software that adapts to your workflows. Customize everything, integrate with your existing tools, and scale as you grow.
+              Flexible logistics software that adapts to your operations. Customize everything, integrate with your existing tools, and scale as you grow.
             </p>
           </div>
           <div className="hidden gap-3 md:flex">
