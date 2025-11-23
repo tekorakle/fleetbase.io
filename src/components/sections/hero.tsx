@@ -70,7 +70,7 @@ export default function Hero() {
             {/* Secondary CTAs - Updated with Fleetbase blue styling */}
             <div className="flex gap-4.5">
               <Button 
-                className="flex-1 md:min-w-45 bg-[#4A90E2]/20 hover:bg-[#4A90E2]/30 text-[#4A90E2] border border-[#4A90E2]/50 shadow-sm dark:bg-[#4A90E2]/30 dark:hover:bg-[#4A90E2]/40 dark:text-[#5BA3E7] dark:border-[#4A90E2]/60 font-medium" 
+                className="flex-1 md:min-w-45 bg-[#4A90E2]/20 hover:bg-[#4A90E2]/30 text-[#2563EB] border border-[#4A90E2]/50 shadow-sm dark:bg-[#4A90E2]/30 dark:hover:bg-[#4A90E2]/40 dark:text-[#93C5FD] dark:border-[#4A90E2]/60 font-semibold" 
                 variant="secondary" 
                 asChild
               >
@@ -79,7 +79,7 @@ export default function Hero() {
                 </Link>
               </Button>
               <Button 
-                className="flex-1 md:min-w-45 bg-[#4A90E2]/20 hover:bg-[#4A90E2]/30 text-[#4A90E2] border border-[#4A90E2]/50 shadow-sm dark:bg-[#4A90E2]/30 dark:hover:bg-[#4A90E2]/40 dark:text-[#5BA3E7] dark:border-[#4A90E2]/60 font-medium" 
+                className="flex-1 md:min-w-45 bg-[#4A90E2]/20 hover:bg-[#4A90E2]/30 text-[#2563EB] border border-[#4A90E2]/50 shadow-sm dark:bg-[#4A90E2]/30 dark:hover:bg-[#4A90E2]/40 dark:text-[#93C5FD] dark:border-[#4A90E2]/60 font-semibold" 
                 variant="secondary" 
                 asChild
               >
