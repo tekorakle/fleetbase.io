@@ -12,76 +12,76 @@ import { cn } from '@/lib/utils';
 
 const ITEMS = [
   {
-    title: 'Know Where Everything Is, Instantly.',
+    title: 'Live Tracking',
     image: {
       src: '/images/home/features/1.webp',
       width: 198,
       height: 133,
     },
-    desc: 'Give your customers the real-time tracking they expect. See your entire fleet on a live map, anticipate delays before they happen, and reduce time-consuming "where\'s my order?" calls.',
+    desc: 'Real-time visibility of your entire fleet on a live map with location updates and ETAs.',
   },
   {
-    title: 'A System That Grows With You.',
+    title: 'Modular Extensions',
     image: {
       src: '/images/home/features/2.webp',
       width: 148,
       height: 124,
     },
-    desc: 'Start with what you need today and add new capabilities as you expand. Our modular design lets you add features like warehouse management or customer portals, so you only pay for what you use.',
+    desc: 'Add capabilities like warehouse management, customer portals, and more as you grow.',
   },
   {
-    title: 'Cut Fuel Costs & Deliver Faster.',
+    title: 'Route Optimization',
     image: {
       src: '/images/home/features/3.webp',
       width: 154,
       height: 99,
     },
-    desc: 'Automatically find the smartest routes for your fleet. Our system analyzes traffic, delivery windows, and vehicle capacity to create efficient schedules that save you money on fuel and labor.',
+    desc: 'Intelligent routing that considers traffic, delivery windows, and vehicle capacity.',
   },
   {
-    title: 'Your Business At a Glance.',
+    title: 'Custom Dashboards',
     image: {
       src: '/images/home/features/4.webp',
       width: 171,
       height: 120,
     },
-    desc: 'Get the answers you need, when you need them. Create dashboards that track your most important metrics—like cost-per-mile, on-time delivery rates, and fleet utilization—in one simple view.',
+    desc: 'Build dashboards to track your KPIs like cost-per-mile, on-time rates, and utilization.',
   },
   {
-    title: 'Connects With the Tools You Already Use.',
+    title: 'API & Integrations',
     image: {
       src: '/images/home/features/5.webp',
       width: 195,
       height: 74.6,
     },
-    desc: 'Fleetbase works seamlessly with your existing accounting, ERP, and customer management software. Eliminate double-entry and ensure your data is always in sync across your entire business.',
+    desc: 'Connect with your accounting, ERP, and management software via REST APIs and webhooks.',
   },
   {
-    title: 'Handle Any Job, No Matter How Complex.',
+    title: 'Dynamic Order Config',
     image: {
       src: '/images/home/features/6.webp',
       width: 148,
       height: 124,
     },
-    desc: 'Easily manage specialized orders with unique requirements. Set up custom fields, rules, and workflows to handle any job your customers throw at you, without needing expensive custom development.',
+    desc: 'Configure custom fields, validation rules, and workflows for any order type.',
   },
   {
-    title: 'Get Paid Faster & Reduce Disputes.',
+    title: 'Proof of Delivery',
     image: {
       src: '/images/home/features/7.webp',
       width: 186,
       height: 103,
     },
-    desc: 'Go paperless and confirm deliveries instantly. Drivers can capture signatures, photos, and notes on their mobile device, giving you an indisputable record that helps you invoice faster and resolve issues quickly.',
+    desc: 'Digital signatures, photos, and notes captured on mobile devices for instant confirmation.',
   },
   {
-    title: 'Uncover Hidden Profits in Your Operation.',
+    title: 'Advanced Reporting',
     image: {
       src: '/images/home/hero.webp',
       width: 186,
       height: 103,
     },
-    desc: 'Turn your operational data into a strategic advantage. Analyze performance trends, identify your most profitable routes and customers, and make data-driven decisions to improve your bottom line.',
+    desc: 'Analyze performance trends, route profitability, and operational metrics.',
   },
 ];
 
@@ -92,10 +92,10 @@ const Features = ({ className }: { className?: string }) => {
         <div className="container flex flex-col justify-between gap-10 md:flex-row md:items-center">
           <div className="max-w-3xl space-y-3">
             <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-              Logistics Software That Adapts to Your Business. Not the Other Way Around.
+              Built to Fit Your Business
             </h2>
             <p className="text-muted-foreground max-w-xl text-lg leading-snug">
-              Don't get locked into a rigid, one-size-fits-all system. Fleetbase is designed to fit your unique processes. Customize workflows, add new capabilities as you grow, and build the exact system your business needs to thrive.
+              Flexible logistics software that adapts to your workflows. Customize everything, integrate with your existing tools, and scale as you grow.
             </p>
           </div>
           <div className="hidden gap-3 md:flex">
