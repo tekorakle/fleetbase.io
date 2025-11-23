@@ -105,15 +105,27 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Hero Image */}
-        <Image
-          src="/images/home/hero.webp"
-          alt="Fleetbase logistics platform screenshot"
-          className="ring-foreground/5 mt-10 w-full rounded-xs shadow-2xl ring-6 invert md:mt-20 md:rounded-sm md:px-[1px] md:ring-16 lg:mt-30 dark:invert-0"
-          width={1440}
-          height={905}
-          priority
-        />
+        {/* Hero Video */}
+        <div className="mt-10 w-full md:mt-20 lg:mt-30">
+          <div className="relative aspect-video rounded-xs shadow-2xl ring-6 ring-foreground/5 md:rounded-sm md:ring-16 overflow-hidden">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+              poster="/fleetops-screenshot.png"
+            >
+              <source src="/fleetops-demo.mp4" type="video/mp4" />
+              {/* Fallback image if video doesn't load */}
+              <img 
+                src="/fleetops-screenshot.png" 
+                alt="Fleetbase FleetOps Dashboard showing live route tracking and order management"
+                className="w-full h-full object-cover"
+              />
+            </video>
+          </div>
+        </div>
         <GradientSVG className="absolute top-0 right-0 -z-10 origin-right scale-30 md:scale-50 lg:scale-100" />
       </div>
     </section>
