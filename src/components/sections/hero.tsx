@@ -1,7 +1,9 @@
 'use client';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import { ArrowRight, Github, Star } from 'lucide-react';
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
@@ -13,41 +15,77 @@ export default function Hero() {
       <div className="relative container">
         <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-center">
           <div className="flex max-w-3xl flex-1 flex-col items-start gap-5">
+            {/* Top badges */}
             <div className="flex items-center rounded-full border p-1 text-xs">
               <span className="bg-muted rounded-full px-3 py-1">
                 Open Source
               </span>
-              <span className="px-3">⭐️ Star us on GitHub</span>
+              <Link 
+                href="https://github.com/fleetbase/fleetbase" 
+                target="_blank"
+                className="px-3 hover:opacity-80 transition-opacity"
+              >
+                ⭐️ Star us on GitHub
+              </Link>
             </div>
 
+            {/* Headline */}
             <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-              Modular Logistics OS{' '}
-              <span className="text-gradient">Plan, Optimize, Track, Scale</span>
+              The Modular, Open-Source{' '}
+              <span className="text-gradient">Logistics OS</span>
             </h1>
 
+            {/* Sub-headline */}
             <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
-              Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Create dynamic workflows, custom fields, and logic to match your operations. Manage planning and optimization to real-time tracking, all in one system.
+              Own your logistics. Build your perfect stack with dynamic workflows and complete control. 
+              Deploy anywhere, customize everything, and own your entire infrastructure. Open-source means 
+              you control your data, your code, and your future—no vendor lock-in, ever.
             </p>
           </div>
 
           {/* CTA Buttons */}
           <div className="space-y-3">
+            {/* Primary CTAs */}
             <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45">Start Free Trial</Button>
-              <Button className="flex-1 md:min-w-45" variant="outline">
-                View on Github
+              <Button className="flex-1 md:min-w-45" asChild>
+                <Link href="/signup">
+                  Get Started - Free
+                </Link>
+              </Button>
+              <Button className="flex-1 md:min-w-45" variant="outline" asChild>
+                <Link href="https://github.com/fleetbase/fleetbase" target="_blank">
+                  <Github className="mr-2 h-4 w-4" />
+                  View on GitHub
+                </Link>
               </Button>
             </div>
+            
+            {/* Secondary CTAs */}
             <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45" variant="secondary">
-                Self Host
+              <Button className="flex-1 md:min-w-45" variant="secondary" asChild>
+                <Link href="/demo">
+                  Book a Demo
+                </Link>
               </Button>
-              <Button className="flex-1 md:min-w-45" variant="secondary">
-                Deploy On AWS
+              <Button className="flex-1 md:min-w-45" variant="secondary" asChild>
+                <Link href="/self-host">
+                  Self-Host Options
+                </Link>
               </Button>
             </div>
-            <div className="text-center text-sm">
-              1.3k stars · Open source by design
+            
+            {/* Trust signals */}
+            <div className="text-center text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center justify-center gap-2">
+                <span className="flex items-center gap-1">
+                  <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
+                  1.3k+ stars
+                </span>
+                <span>•</span>
+                <span>8,000+ organizations</span>
+                <span>•</span>
+                <span>Open Source by Design</span>
+              </div>
             </div>
           </div>
         </div>
