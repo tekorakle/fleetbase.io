@@ -113,7 +113,7 @@ export default function Hero() {
               loop
               muted
               playsInline
-              className="w-full h-full object-contain bg-background"
+              className="w-full h-full object-cover object-top"
               poster="/fleetops-screenshot.png"
             >
               <source src="/fleetops-demo.mp4" type="video/mp4" />
