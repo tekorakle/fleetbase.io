@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Github, Star } from 'lucide-react';
+import { Github, Star } from 'lucide-react';
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
@@ -35,8 +35,8 @@ export default function Hero() {
               <span className="text-gradient">Logistics OS</span>
             </h1>
 
-            {/* Sub-headline */}
-            <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
+            {/* Sub-headline - Improved brightness for dark mode */}
+            <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl dark:text-foreground/95">
               Own your logistics. Build your perfect stack with dynamic workflows and complete control. 
               Deploy anywhere, customize everything, and own your entire infrastructure. Open-source means 
               you control your data, your code, and your future—no vendor lock-in, ever.
@@ -47,12 +47,19 @@ export default function Hero() {
           <div className="space-y-3">
             {/* Primary CTAs */}
             <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45" asChild>
+              <Button 
+                className="flex-1 md:min-w-45 bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md" 
+                asChild
+              >
                 <Link href="/signup">
                   Get Started - Free
                 </Link>
               </Button>
-              <Button className="flex-1 md:min-w-45" variant="outline" asChild>
+              <Button 
+                className="flex-1 md:min-w-45 bg-black hover:bg-gray-900 text-white border-0 shadow-md dark:bg-gray-900 dark:hover:bg-gray-800" 
+                variant="outline" 
+                asChild
+              >
                 <Link href="https://github.com/fleetbase/fleetbase" target="_blank">
                   <Github className="mr-2 h-4 w-4" />
                   View on GitHub
@@ -60,22 +67,30 @@ export default function Hero() {
               </Button>
             </div>
             
-            {/* Secondary CTAs */}
+            {/* Secondary CTAs - Updated with Fleetbase blue styling */}
             <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45" variant="secondary" asChild>
+              <Button 
+                className="flex-1 md:min-w-45 bg-[#4A90E2]/10 hover:bg-[#4A90E2]/20 text-[#4A90E2] border border-[#4A90E2]/30 shadow-sm dark:bg-[#4A90E2]/20 dark:hover:bg-[#4A90E2]/30 dark:text-[#5BA3E7]" 
+                variant="secondary" 
+                asChild
+              >
                 <Link href="/demo">
                   Book a Demo
                 </Link>
               </Button>
-              <Button className="flex-1 md:min-w-45" variant="secondary" asChild>
+              <Button 
+                className="flex-1 md:min-w-45 bg-[#4A90E2]/10 hover:bg-[#4A90E2]/20 text-[#4A90E2] border border-[#4A90E2]/30 shadow-sm dark:bg-[#4A90E2]/20 dark:hover:bg-[#4A90E2]/30 dark:text-[#5BA3E7]" 
+                variant="secondary" 
+                asChild
+              >
                 <Link href="/self-host">
                   Self-Host Options
                 </Link>
               </Button>
             </div>
             
-            {/* Trust signals */}
-            <div className="text-center text-sm text-muted-foreground">
+            {/* Trust signals - Improved brightness for dark mode */}
+            <div className="text-center text-sm text-foreground/70 dark:text-foreground/80">
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <span className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
