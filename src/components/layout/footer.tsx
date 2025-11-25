@@ -92,8 +92,8 @@ const Footer = () => {
         />
 
         <h2 className="my-8 text-2xl lg:my-6 lg:text-5xl">
-          Install it. script it.{' '}
-          <span className="text-gradient">forget it. forever.</span>
+          Your operations. Your rules.{' '}
+          <span className="text-gradient">Your success.</span>
         </h2>
 
         <div className="mx-auto flex max-w-sm justify-center gap-4.5">
