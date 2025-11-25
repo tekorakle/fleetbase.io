@@ -49,16 +49,16 @@ const MAIN_CHART_DATA = [
 ];
 
 const SMALL_CHART_DATA = [
-  { day: 1, runs: 2000 },
-  { day: 2, runs: 3100 },
-  { day: 3, runs: 3600 },
-  { day: 4, runs: 3400 },
-  { day: 5, runs: 5600 },
-  { day: 6, runs: 4800 },
-  { day: 7, runs: 5812 },
-  { day: 9, runs: 6812 },
-  { day: 10, runs: 9812 },
-  { day: 11, runs: 12012 },
+  { day: 1, km: 2000 },
+  { day: 2, km: 3100 },
+  { day: 3, km: 3600 },
+  { day: 4, km: 3400 },
+  { day: 5, km: 5600 },
+  { day: 6, km: 4800 },
+  { day: 7, km: 5812 },
+  { day: 9, km: 6812 },
+  { day: 10, km: 9812 },
+  { day: 11, km: 1.2M},
 ];
 
 const Features2 = () => {
@@ -69,7 +69,7 @@ const Features2 = () => {
       <div className="container space-y-8">
         {/* Header */}
         <h2 className="text-4xxl mb-10 max-w-2xl leading-none tracking-tight text-balance md:text-5xl lg:mx-auto lg:mb-15 lg:text-center lg:text-6xl">
-          Privacy friendly, lightweight visualisation and control
+          From Live Telematics to Actionable Insights
         </h2>
 
         {/* Main Grid */}
@@ -86,11 +86,10 @@ const Features2 = () => {
                   <ChartPie className="h-4.5 w-4.5" />
                 </div>
                 <h3 className="text-accent-foreground text-lg font-bold lg:text-xl">
-                  See Everything at a Glance
+                  Unified Visibility from a Single Dashboard
                 </h3>
                 <p className="text-muted-foreground leading-snug lg:text-lg">
-                  Track your automation performance in real-time. No guesswork,
-                  just clarity.
+              Monitor your entire fleet, track telematics data, and analyze performance trends in real-time. No guesswork, just complete operational clarity.
                 </p>
               </div>
 
@@ -239,20 +238,19 @@ const Features2 = () => {
                   <ChartBar className="h-4.5 w-4.5" />
                 </div>
                 <h3 className="text-accent-foreground text-lg font-bold lg:text-xl">
-                  Build Flows Like You Think
+                  Data-Driven Decisions
                 </h3>
                 <p className="text-muted-foreground leading-snug lg:text-lg">
-                  Drag and connect nodes to build logic that mirrors how your
-                  brain works.
+                  Turn raw telematics data into actionable business intelligence. Identify trends, optimize routes, and improve your bottom line.
                 </p>
               </div>
 
               <div>
-                {/* Total Runs Section */}
+                {/* Total Distance (km) Section */}
                 <div className="flex items-center justify-between gap-5 lg:items-stretch">
                   <div className="w-1/2">
                     <span className="text-xs font-bold lg:text-sm">
-                      Total runs
+                      Total km
                     </span>
                     <div className="mt-2 flex items-center gap-3">
                       <NumberTicker
@@ -265,7 +263,7 @@ const Features2 = () => {
                       </span>
                     </div>
                     <p className="text-muted-foreground text-xs lg:mt-2">
-                      Last 7 days
+                      This Month
                     </p>
                   </div>
 
@@ -274,7 +272,7 @@ const Features2 = () => {
                     {isChartInView && (
                       <ChartContainer
                         config={{
-                          runs: {
+                          km: {
                             label: 'Runs',
                             color: 'var(--chart-2)',
                           },
@@ -306,7 +304,7 @@ const Features2 = () => {
                             </linearGradient>
                           </defs>
                           <Area
-                            dataKey="runs"
+                            dataKey="km"
                             stroke="var(--chart-2)"
                             fill="url(#runGradient)"
                             strokeWidth={2}
@@ -390,27 +388,27 @@ const Features2 = () => {
 const featureCards = [
   {
     icon: Activity,
-    title: 'Performance Tracking',
+    title: 'Live Fleet Tracking',
     description:
-      'Track node performance, timing, and results without digging through logs.',
+      'See every vehicle on a live map with real-time location, speed, and status updates.',
   },
   {
     icon: Zap,
-    title: 'Real-Time Syncing',
+    title: 'Driver Behavior Analytics',
     description:
-      'Keep your contact data, lead stages, and activity logs always in sync.',
+      'Analyze driver behavior, monitor idling, and identify opportunities for fuel savings.',
   },
   {
     icon: Brain,
-    title: 'Intelligent AI Automation',
+    title: 'Customizable Dashboards',
     description:
-      'Just describe your goal — Plasma generates the automation flow instantly.',
+      'Build custom dashboards to track your most important KPIs, from on-time rates to cost-per-mile.',
   },
   {
     icon: GitBranch,
-    title: 'Workflow Mapping',
+    title: 'Advanced Reporting',
     description:
-      'Design and organise flows like a visual blueprint - simple but powerful to execute.',
+      'Generate detailed reports on fleet performance, asset utilization, and operational costs.',
   },
 ];
 
