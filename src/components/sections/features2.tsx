@@ -58,7 +58,7 @@ const SMALL_CHART_DATA = [
   { day: 7, km: 5812 },
   { day: 9, km: 6812 },
   { day: 10, km: 9812 },
-  { day: 11, km: 1.2M},
+  { day: 11, km: 12012 },
 ];
 
 const Features2 = () => {
