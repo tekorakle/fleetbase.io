@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { Marquee } from '@/components/magicui/marquee';
@@ -10,57 +11,117 @@ import { cn } from '@/lib/utils';
 
 const INTEGRATIONS = [
   {
+    name: 'Twilio',
     category: 'Communication',
-    tools: [
-      { name: 'Twilio', purpose: 'SMS & Voice' },
-      { name: 'SendGrid', purpose: 'Email Delivery' },
-      { name: 'Slack', purpose: 'Team Alerts' },
-    ],
+    description: 'SMS & Voice notifications',
+    logo: 'https://cdn.simpleicons.org/twilio/F22F46',
   },
   {
+    name: 'SendGrid',
+    category: 'Communication',
+    description: 'Email delivery platform',
+    logo: 'https://cdn.simpleicons.org/sendgrid/1A82E2',
+  },
+  {
+    name: 'Slack',
+    category: 'Communication',
+    description: 'Team collaboration',
+    logo: 'https://cdn.simpleicons.org/slack/4A154B',
+  },
+  {
+    name: 'SAP',
     category: 'Business & ERP',
-    tools: [
-      { name: 'SAP', purpose: 'Enterprise ERP' },
-      { name: 'QuickBooks', purpose: 'Accounting' },
-      { name: 'Oracle', purpose: 'Supply Chain' },
-    ],
+    description: 'Enterprise resource planning',
+    logo: 'https://cdn.simpleicons.org/sap/0FAAFF',
   },
   {
+    name: 'QuickBooks',
+    category: 'Business & ERP',
+    description: 'Accounting software',
+    logo: 'https://cdn.simpleicons.org/quickbooks/2CA01C',
+  },
+  {
+    name: 'Oracle',
+    category: 'Business & ERP',
+    description: 'Supply chain management',
+    logo: 'https://cdn.simpleicons.org/oracle/F80000',
+  },
+  {
+    name: 'Tableau',
     category: 'Data & Analytics',
-    tools: [
-      { name: 'Tableau', purpose: 'BI Dashboards' },
-      { name: 'Power BI', purpose: 'Data Viz' },
-      { name: 'Looker', purpose: 'Analytics' },
-    ],
+    description: 'Business intelligence',
+    logo: 'https://cdn.simpleicons.org/tableau/E97627',
   },
   {
+    name: 'Power BI',
+    category: 'Data & Analytics',
+    description: 'Data visualization',
+    logo: 'https://cdn.simpleicons.org/powerbi/F2C811',
+  },
+  {
+    name: 'Stripe',
     category: 'Payments',
-    tools: [
-      { name: 'Stripe', purpose: 'Payment Processing' },
-      { name: 'PayPal', purpose: 'Online Payments' },
-      { name: 'Square', purpose: 'Point of Sale' },
-    ],
+    description: 'Payment processing',
+    logo: 'https://cdn.simpleicons.org/stripe/008CDD',
   },
   {
-    category: 'Cloud & Infrastructure',
-    tools: [
-      { name: 'AWS', purpose: 'Cloud Hosting' },
-      { name: 'Google Cloud', purpose: 'Infrastructure' },
-      { name: 'Azure', purpose: 'Enterprise Cloud' },
-    ],
+    name: 'PayPal',
+    category: 'Payments',
+    description: 'Online payments',
+    logo: 'https://cdn.simpleicons.org/paypal/00457C',
   },
   {
+    name: 'Square',
+    category: 'Payments',
+    description: 'Point of sale',
+    logo: 'https://cdn.simpleicons.org/square/000000',
+  },
+  {
+    name: 'AWS',
+    category: 'Cloud',
+    description: 'Cloud infrastructure',
+    logo: 'https://cdn.simpleicons.org/amazonaws/FF9900',
+  },
+  {
+    name: 'Google Cloud',
+    category: 'Cloud',
+    description: 'Cloud platform',
+    logo: 'https://cdn.simpleicons.org/googlecloud/4285F4',
+  },
+  {
+    name: 'Azure',
+    category: 'Cloud',
+    description: 'Microsoft cloud',
+    logo: 'https://cdn.simpleicons.org/microsoftazure/0078D4',
+  },
+  {
+    name: 'GitHub',
     category: 'Developer Tools',
-    tools: [
-      { name: 'GitHub', purpose: 'Version Control' },
-      { name: 'Zapier', purpose: 'Automation' },
-      { name: 'Postman', purpose: 'API Testing' },
-    ],
+    description: 'Version control',
+    logo: 'https://cdn.simpleicons.org/github/181717',
+  },
+  {
+    name: 'Zapier',
+    category: 'Developer Tools',
+    description: 'Workflow automation',
+    logo: 'https://cdn.simpleicons.org/zapier/FF4A00',
+  },
+  {
+    name: 'Postman',
+    category: 'Developer Tools',
+    description: 'API development',
+    logo: 'https://cdn.simpleicons.org/postman/FF6C37',
+  },
+  {
+    name: 'Microsoft Teams',
+    category: 'Communication',
+    description: 'Enterprise messaging',
+    logo: 'https://cdn.simpleicons.org/microsoftteams/6264A7',
   },
 ];
 
-const firstRow = INTEGRATIONS.slice(0, INTEGRATIONS.length / 2);
-const secondRow = INTEGRATIONS.slice(INTEGRATIONS.length / 2);
+const firstRow = INTEGRATIONS.slice(0, Math.ceil(INTEGRATIONS.length / 2));
+const secondRow = INTEGRATIONS.slice(Math.ceil(INTEGRATIONS.length / 2));
 
 const IntegrationsEcosystem = () => {
   return (
@@ -93,19 +154,19 @@ const IntegrationsEcosystem = () => {
       <div className="relative -mr-[max(2rem,calc((100vw-80rem)/2+5rem))] flex flex-1 flex-col gap-2.25 overflow-hidden mask-l-from-50% mask-l-to-100%">
         <Marquee
           pauseOnHover
-          className="py-0 [--duration:25s] [--gap:calc(var(--spacing)*2.25)]"
+          className="py-0 [--duration:30s] [--gap:calc(var(--spacing)*2.25)]"
         >
           {firstRow.map((integration) => (
-            <IntegrationCard key={integration.category} {...integration} />
+            <IntegrationCard key={integration.name} {...integration} />
           ))}
         </Marquee>
         <Marquee
           reverse
           pauseOnHover
-          className="py-0 [--duration:25s] [--gap:calc(var(--spacing)*2.25)]"
+          className="py-0 [--duration:30s] [--gap:calc(var(--spacing)*2.25)]"
         >
           {secondRow.map((integration) => (
-            <IntegrationCard key={integration.category} {...integration} />
+            <IntegrationCard key={integration.name} {...integration} />
           ))}
         </Marquee>
       </div>
@@ -116,36 +177,39 @@ const IntegrationsEcosystem = () => {
 export default IntegrationsEcosystem;
 
 const IntegrationCard = ({
+  name,
   category,
-  tools,
+  description,
+  logo,
 }: {
+  name: string;
   category: string;
-  tools: { name: string; purpose: string }[];
+  description: string;
+  logo: string;
 }) => {
   return (
     <Card
       className={cn(
-        'hover:bg-accent/60 max-w-xs cursor-pointer gap-4 bg-transparent p-6 md:max-w-sm md:p-8',
-        'transition-colors duration-200',
+        'hover:bg-accent/60 flex w-64 cursor-pointer flex-col items-center gap-4 bg-transparent p-6 transition-colors duration-200 md:p-8',
       )}
     >
-      <CardContent className="space-y-4 p-0">
-        <div className="border-primary/20 mb-4 border-b pb-2">
-          <h3 className="text-base font-semibold">{category}</h3>
+      <CardContent className="flex flex-col items-center gap-4 p-0 text-center">
+        <div className="bg-background/50 flex h-16 w-16 items-center justify-center rounded-lg p-3">
+          <Image
+            src={logo}
+            alt={`${name} logo`}
+            width={48}
+            height={48}
+            className="h-auto w-full"
+          />
         </div>
-        <div className="space-y-3">
-          {tools.map((tool) => (
-            <div
-              key={tool.name}
-              className="flex items-center justify-between gap-3"
-            >
-              <span className="font-medium">{tool.name}</span>
-              <span className="text-muted-foreground text-xs">
-                {tool.purpose}
-              </span>
-            </div>
-          ))}
+        <div className="space-y-1">
+          <h3 className="text-base font-semibold">{name}</h3>
+          <p className="text-muted-foreground text-xs">{category}</p>
         </div>
+        <p className="text-muted-foreground text-sm leading-snug">
+          {description}
+        </p>
       </CardContent>
     </Card>
   );
