@@ -1,4 +1,4 @@
-import AIAutomation from '@/components/sections/ai-automation';
+import OrderConfigShowcase from '@/components/sections/order-config-showcase';
 import Features from '@/components/sections/features';
 import FeaturesTabsSection from '@/components/sections/features-tabs';
 import OpenSourceAdvantage from '@/components/sections/open-source-advantage';
@@ -11,7 +11,7 @@ export default function Home() {
       <Hero />
       <Features />
       <OpenSourceAdvantage />
-      <AIAutomation />
+      <OrderConfigShowcase />
       <FeaturesTabsSection />
       <Testimonials />
     </>
