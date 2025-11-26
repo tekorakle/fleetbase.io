@@ -112,12 +112,11 @@ export default function OrderConfigShowcase() {
             </div>
           </motion.div>
           <h2 className="text-4xxl leading-tight tracking-normal md:text-5xl">
-            Configure Operations <br className="hidden md:block" />
-            <span className="text-gradient">Without Writing Code</span>
+            One Platform, <br className="hidden md:block" />
+            <span className="text-gradient">Infinite Configurations</span>
           </h2>
           <p className="text-muted-foreground mt-2 max-w-xl text-lg leading-snug">
-            Adapt Fleetbase to your unique business processes—not the other way around. Create custom fields, set up business rules, and automate workflows that match exactly how your team operates. No developers
-            required.
+            From trucking to healthcare, food delivery to military logistics—Fleetbase adapts to any industry and operational flow. Configure custom fields, business rules, and workflows that match your exact processes. No code, no limits, no vendor lock-in.
           </p>
         </div>
 

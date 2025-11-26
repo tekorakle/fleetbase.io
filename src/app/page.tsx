@@ -4,6 +4,7 @@ import FeaturesTabsSection from '@/components/sections/features-tabs';
 import Features2 from '@/components/sections/features2';
 import Hero from '@/components/sections/hero';
 import IntegrationsEcosystem from '@/components/sections/integrations-ecosystem';
+import DeploymentOptions from '@/components/sections/deployment-options';
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <OrderConfigShowcase />
       <FeaturesTabsSection />
       <IntegrationsEcosystem />
+      <DeploymentOptions />
     </>
   );
 }

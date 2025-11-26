@@ -52,7 +52,7 @@ export default function Hero() {
                 asChild
               >
                 <Link href="/signup">
-                  Get Started - Free
+                  Try Fleetbase Cloud
                 </Link>
               </Button>
               <Button 
@@ -83,8 +83,8 @@ export default function Hero() {
                 variant="secondary" 
                 asChild
               >
-                <Link href="/self-host">
-                  Self-Host Options
+                <Link href="/pricing">
+                  View Pricing
                 </Link>
               </Button>
             </div>

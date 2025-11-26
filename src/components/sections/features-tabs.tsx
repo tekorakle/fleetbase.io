@@ -179,9 +179,9 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
       <div className="flex flex-col justify-between gap-3">
         <div className="space-y-6 text-balance lg:max-w-lg">
           <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-            Engineered <br className="hidden lg:block" />
-            strictly <br className="hidden lg:block" />
-            for power users
+            Built for <br className="hidden lg:block" />
+            the Modern <br className="hidden lg:block" />
+            Developer
           </h2>
           <span className="text-xl leading-7 font-bold">
             Fleetbase Developer Toolkit
