@@ -2,9 +2,10 @@
 
 import { ArrowRight, Check, Copy } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +15,26 @@ import { cn } from '@/lib/utils';
 const FeaturesTabsSection = () => {
   const [activeTab, setActiveTab] = useState('quotes');
   const [copied, setCopied] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  useEffect(() => {
+    // Check initial theme
+    const checkTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setIsDarkMode(isDark);
+    };
+    
+    checkTheme();
+    
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+    
+    return () => observer.disconnect();
+  }, []);
 
   const TABS_DATA = [
     {
@@ -286,7 +307,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
                         >
                           <SyntaxHighlighter
                             language="javascript"
-                            style={vscDarkPlus}
+                            style={isDarkMode ? vscDarkPlus : vs}
                             customStyle={{
                               margin: 0,
                               padding: 0,
@@ -346,7 +367,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
               >
                 <SyntaxHighlighter
                   language="javascript"
-                  style={vscDarkPlus}
+                  style={isDarkMode ? vscDarkPlus : vs}
                   customStyle={{
                     margin: 0,
                     padding: 0,
