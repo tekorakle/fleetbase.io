@@ -36,8 +36,8 @@ const deploymentOptions = [
     cta: 'View Deployment Guide',
     ctaLink: '/docs/self-hosting',
     ctaVariant: 'outline' as const,
-    bgGradient: 'from-purple-500/10 to-pink-500/10',
-    borderColor: 'border-purple-500/30',
+    bgGradient: '',
+    borderColor: 'border-border',
   },
   {
     icon: Wrench,
@@ -52,8 +52,8 @@ const deploymentOptions = [
     cta: 'Deploy Now',
     ctaLink: '/checkout',
     ctaVariant: 'outline' as const,
-    bgGradient: 'from-orange-500/10 to-red-500/10',
-    borderColor: 'border-orange-500/30',
+    bgGradient: 'from-emerald-500/10 to-green-500/10',
+    borderColor: 'border-emerald-500/30',
   },
 ];
 

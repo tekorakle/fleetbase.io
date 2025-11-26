@@ -69,7 +69,7 @@ const Features2 = () => {
       <div className="container space-y-8">
         {/* Header */}
         <h2 className="text-4xxl mb-10 max-w-2xl leading-none tracking-tight text-balance md:text-5xl lg:mx-auto lg:mb-15 lg:text-center lg:text-6xl">
-          Live Telematics to Fleet Insights
+          Live Telematics data for Fleet Insights
         </h2>
 
         {/* Main Grid */}
