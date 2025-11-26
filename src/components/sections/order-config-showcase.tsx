@@ -34,8 +34,8 @@ const activityFlowCards = [
     title: 'Driver En-Route',
     subtitle: 'Driver is on the way',
     icon: Truck,
-    iconColor: 'text-purple-500',
-    bgColor: 'from-purple-500/20 to-purple-600/20',
+    iconColor: 'text-orange-500',
+    bgColor: 'from-orange-500/20 to-yellow-600/20',
     position: 'absolute top-32 left-0',
   },
   {

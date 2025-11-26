@@ -289,7 +289,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
                             style={vscDarkPlus}
                             customStyle={{
                               margin: 0,
-                              padding: '0.5rem',
+                              padding: 0,
                               background: 'transparent',
                               fontSize: '0.875rem',
                             }}
@@ -349,7 +349,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
                   style={vscDarkPlus}
                   customStyle={{
                     margin: 0,
-                    padding: '0.75rem',
+                    padding: 0,
                     background: 'transparent',
                     height: '100%',
                     fontSize: '0.875rem',

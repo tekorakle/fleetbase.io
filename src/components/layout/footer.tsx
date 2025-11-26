@@ -133,7 +133,7 @@ const Footer = () => {
   if (hideFooter) return null;
 
   return (
-    <footer className="section-padding relative overflow-hidden bg-black">
+    <footer className="section-padding relative overflow-hidden bg-black/90">
       <div className="container text-center">
         <p className="text-accent-foreground">
           Trusted by 150+ teams in 120 companies
