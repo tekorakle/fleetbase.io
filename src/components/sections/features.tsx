@@ -1,5 +1,8 @@
-import Image from 'next/image';
+'use client';
 
+import Image from 'next/image';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
@@ -18,7 +21,7 @@ const ITEMS = [
       width: 198,
       height: 133,
     },
-    desc: 'Real-time visibility of your entire fleet on a live map with location updates and ETAs.',
+    desc: 'Real-time visibility of your entire fleet on a live map with location updates and ETAs. Reduce customer calls by 40%.'
   },
   {
     title: 'Modular Extensions',
@@ -36,7 +39,7 @@ const ITEMS = [
       width: 154,
       height: 99,
     },
-    desc: 'Intelligent routing that considers traffic, delivery windows, and vehicle capacity.',
+    desc: 'Intelligent routing that considers traffic, delivery windows, and vehicle capacity. Cut fuel costs by up to 30%.',
   },
   {
     title: 'Custom Dashboards',
@@ -45,7 +48,7 @@ const ITEMS = [
       width: 171,
       height: 120,
     },
-    desc: 'Build dashboards to track your KPIs like cost-per-mile, on-time rates, and utilization.',
+    desc: 'Build dashboards to track your KPIs like cost-per-mile, on-time rates, and utilization. Make data-driven decisions in real-time.',
   },
   {
     title: 'API & Integrations',
@@ -72,7 +75,7 @@ const ITEMS = [
       width: 186,
       height: 103,
     },
-    desc: 'Digital signatures, photos, and notes captured on mobile devices for instant confirmation.',
+    desc: 'Digital signatures, photos, and notes captured on mobile devices for instant confirmation. Eliminate billing disputes.',
   },
   {
     title: 'Advanced Reporting',
@@ -129,7 +132,20 @@ const Features = ({ className }: { className?: string }) => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <div className="container mt-10 flex justify-center gap-3 md:hidden">
+        
+        {/* CTA Button */}
+        <div className="container mt-10 flex justify-center">
+          <Button 
+            className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg" 
+            asChild
+          >
+            <Link href="/demo">
+              See It In Action
+            </Link>
+          </Button>
+        </div>
+        
+        <div className="container mt-6 flex justify-center gap-3 md:hidden">
           <CarouselPrevious className="dark:via-muted/20 border-border dark:to-muted/50 to-background via-card from-card relative top-0 left-0 translate-y-0 rounded-md bg-gradient-to-br dark:from-transparent" />
           <CarouselNext className="dark:via-muted/20 border-border dark:to-muted/50 to-background via-card from-card relative top-0 left-0 translate-y-0 rounded-md bg-gradient-to-br dark:from-transparent" />
         </div>

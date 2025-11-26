@@ -8,6 +8,7 @@ import {
   Workflow,
   Zap,
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { motion } from 'motion/react';
 import { useRef } from 'react';
 
@@ -115,8 +116,7 @@ export default function OrderConfigShowcase() {
             <span className="text-gradient">Without Writing Code</span>
           </h2>
           <p className="text-muted-foreground mt-2 max-w-xl text-lg leading-snug">
-            Create custom fields, define business rules, and build automated
-            workflows that match your exact operational processes. No developers
+            Adapt Fleetbase to your unique business processes—not the other way around. Create custom fields, set up business rules, and automate workflows that match exactly how your team operates. No developers
             required.
           </p>
         </div>
@@ -282,6 +282,18 @@ export default function OrderConfigShowcase() {
                 operational workflow
               </p>
             </div>
+          </div>
+          
+          {/* CTA Button */}
+          <div className="flex justify-center mt-10">
+            <Button 
+              className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg" 
+              asChild
+            >
+              <a href="/order-config">
+                See Configuration Examples
+              </a>
+            </Button>
           </div>
         </div>
       </div>

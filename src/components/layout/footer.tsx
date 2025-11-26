@@ -15,7 +15,6 @@ import {
 } from 'react-icons/fa6';
 
 import Logo from '@/components/layout/logo';
-import { NAV_LINKS } from '@/components/layout/navbar';
 import { Button } from '@/components/ui/button';
 
 const SOCIAL_LINKS = [
@@ -63,6 +62,68 @@ const TECH_ICONS = [
   },
 ];
 
+const FOOTER_LINKS = [
+  {
+    title: 'Platform',
+    links: [
+      { label: 'Platform Overview', href: '/platform' },
+      { label: 'FleetOps', href: '/platform/fleetops' },
+      { label: 'Navigator App', href: '/platform/navigator' },
+      { label: 'Storefront', href: '/platform/storefront' },
+      { label: 'Pallet', href: '/platform/pallet' },
+      { label: 'Mobile Apps', href: '/platform/mobile' },
+      { label: 'Extensions Marketplace', href: '/extensions' },
+      { label: 'Security & Compliance', href: '/platform/security' },
+    ],
+  },
+  {
+    title: 'Solutions',
+    links: [
+      { label: 'Trucking & Haulage', href: '/solutions/trucking' },
+      { label: 'Food & Grocery Delivery', href: '/solutions/food-delivery' },
+      { label: 'Courier & Parcel Services', href: '/solutions/courier-services' },
+      { label: 'E-commerce & Retail', href: '/solutions/ecommerce' },
+      { label: 'Healthcare & Pharmacy', href: '/solutions/healthcare' },
+      { label: 'Waste & Recycling', href: '/solutions/waste-management' },
+      { label: 'Container Operations', href: '/solutions/container-operations' },
+      { label: 'Military & Government', href: '/solutions/government' },
+    ],
+  },
+  {
+    title: 'Developers',
+    links: [
+      { label: 'API Documentation', href: '/docs/api' },
+      { label: 'SDKs & Libraries', href: '/developers/sdks' },
+      { label: 'Developer Console', href: '/developers/console' },
+      { label: 'Webhooks & Events', href: '/docs/webhooks' },
+      { label: 'Build an Extension', href: '/developers/extensions' },
+      { label: 'GitHub Repository', href: 'https://github.com/fleetbase/fleetbase', external: true },
+    ],
+  },
+  {
+    title: 'Resources',
+    links: [
+      { label: 'Documentation', href: '/docs' },
+      { label: 'Testimonials & Case Studies', href: '/customers' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Community (Discord)', href: '/community' },
+      { label: 'Support Services', href: '/support-services' },
+      { label: 'Changelog', href: '/changelog' },
+    ],
+  },
+  {
+    title: 'Company',
+    links: [
+      { label: 'About Us', href: '/company/about' },
+      { label: 'Open Source Mission', href: '/company/open-source' },
+      { label: 'Partners', href: '/partners' },
+      { label: 'Licensing Options', href: '/licensing' },
+      { label: 'Contact Sales', href: '/contact/sales' },
+      { label: 'Pricing', href: '/pricing' },
+    ],
+  },
+];
+
 const Footer = () => {
   const pathname = usePathname();
   const hideFooter = ['/signin', '/signup', '/otp', '/download', '/docs'].some(
@@ -97,22 +158,54 @@ const Footer = () => {
         </h2>
 
         <div className="mx-auto flex max-w-sm justify-center gap-4.5">
-          <Button className="flex-1">Try it locally</Button>
+          <Button className="flex-1" asChild>
+            <Link href="/trial">Try it locally</Link>
+          </Button>
           <Button
             variant="secondary"
             className="border-input bg-accent flex-1 border"
+            asChild
           >
-            View on GitHub
+            <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
+              View on GitHub
+            </Link>
           </Button>
         </div>
 
         <p className="mt-3 text-sm">2.4k stars · 500+ active installs</p>
       </div>
 
-      <div className="container mt-20 flex flex-col-reverse justify-between gap-8 text-xs lg:mt-30 lg:flex-row">
+      {/* Footer Navigation Links */}
+      <div className="container mt-20 lg:mt-30">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5 text-left">
+          {FOOTER_LINKS.map((section, index) => (
+            <div key={index}>
+              <h3 className="font-semibold text-sm mb-4 text-foreground">
+                {section.title}
+              </h3>
+              <ul className="space-y-3">
+                {section.links.map((link, linkIndex) => (
+                  <li key={linkIndex}>
+                    <Link
+                      href={link.href}
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                      {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer Bottom */}
+      <div className="container mt-16 flex flex-col-reverse justify-between gap-8 text-xs lg:flex-row border-t pt-8">
         <div className="flex items-center justify-between gap-2">
           <p className="">
-            © {new Date().getFullYear()} Plasma — Built for builders.
+            © {new Date().getFullYear()} Fleetbase — Open-source logistics for everyone.
           </p>{' '}
           <div className="flex items-center gap-7 lg:hidden">
             {SOCIAL_LINKS.map((link, index) => (
@@ -128,17 +221,6 @@ const Footer = () => {
               </Link>
             ))}
           </div>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-4 lg:justify-center lg:gap-8">
-          {NAV_LINKS.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className="transition-opacity hover:opacity-80"
-            >
-              {link.label}
-            </Link>
-          ))}
         </div>
 
         <div className="hidden items-center gap-7 lg:flex">

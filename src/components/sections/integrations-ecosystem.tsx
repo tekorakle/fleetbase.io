@@ -132,10 +132,7 @@ const IntegrationsEcosystem = () => {
         </h2>
         <div className="space-y-7.5">
           <p className="text-muted-foreground text-lg leading-snug">
-            Fleetbase integrates seamlessly with your existing tools via REST
-            APIs, WebSockets, and webhooks. Connect your ERP, communication
-            platforms, analytics tools, and more to create a unified logistics
-            ecosystem.
+            Don't rip and replace your existing systems. Fleetbase works with the tools you already use—your accounting software, communication platforms, analytics dashboards, and more. Build a connected logistics ecosystem without starting from scratch.
           </p>
 
           <Button

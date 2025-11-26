@@ -374,10 +374,12 @@ const Features2 = () => {
 
         <div className="flex justify-center">
           <Button
-            variant="secondary"
-            className="border-input bg-accent max-w-64 flex-1 border"
+            className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg"
+            asChild
           >
-            Join Plasma
+            <a href="/analytics">
+              Explore Analytics Features
+            </a>
           </Button>
         </div>
       </div>

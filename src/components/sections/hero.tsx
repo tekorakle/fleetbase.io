@@ -37,9 +37,9 @@ export default function Hero() {
 
             {/* Sub-headline - Improved brightness for dark mode */}
             <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl dark:text-foreground/95">
-              Own your logistics. Build your perfect stack with dynamic workflows and complete control. 
-              Deploy anywhere, customize everything, and own your entire infrastructure. Open-source means 
-              you control your data, your code, and your future—no vendor lock-in, ever.
+              Cut delivery costs by 30%, improve on-time rates, and eliminate vendor lock-in. Own your logistics 
+              with complete control over workflows, data, and infrastructure. Deploy anywhere, customize 
+              everything—open-source means you control your future, not your vendor.
             </p>
           </div>
 
