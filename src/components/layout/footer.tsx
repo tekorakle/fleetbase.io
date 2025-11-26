@@ -133,7 +133,7 @@ const Footer = () => {
   if (hideFooter) return null;
 
   return (
-    <footer className="section-padding relative overflow-hidden">
+    <footer className="section-padding relative overflow-hidden bg-black">
       <div className="container text-center">
         <p className="text-accent-foreground">
           Trusted by 150+ teams in 120 companies
@@ -183,7 +183,7 @@ const Footer = () => {
               <h3 className="font-semibold text-sm mb-4 text-foreground">
                 {section.title}
               </h3>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <Link

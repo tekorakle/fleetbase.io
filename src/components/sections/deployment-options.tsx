@@ -20,6 +20,8 @@ const deploymentOptions = [
     ctaLink: '/signup',
     ctaVariant: 'default' as const,
     highlight: true,
+    bgGradient: 'from-blue-500/10 to-cyan-500/10',
+    borderColor: 'border-blue-500/30',
   },
   {
     icon: Server,
@@ -34,6 +36,8 @@ const deploymentOptions = [
     cta: 'View Deployment Guide',
     ctaLink: '/docs/self-hosting',
     ctaVariant: 'outline' as const,
+    bgGradient: 'from-purple-500/10 to-pink-500/10',
+    borderColor: 'border-purple-500/30',
   },
   {
     icon: Wrench,
@@ -45,15 +49,17 @@ const deploymentOptions = [
       'Dedicated support team',
       'Training & onboarding',
     ],
-    cta: 'Contact Sales',
-    ctaLink: '/contact/sales',
+    cta: 'Deploy Now',
+    ctaLink: '/checkout',
     ctaVariant: 'outline' as const,
+    bgGradient: 'from-orange-500/10 to-red-500/10',
+    borderColor: 'border-orange-500/30',
   },
 ];
 
 export default function DeploymentOptions() {
   return (
-    <section className="section-padding bg-muted/30">
+    <section className="section-padding bg-gradient-to-b from-background to-muted/30">
       <div className="container">
         {/* Header */}
         <div className="mx-auto max-w-3xl text-center mb-12 lg:mb-16">
@@ -66,16 +72,16 @@ export default function DeploymentOptions() {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-6">
           {deploymentOptions.map((option) => {
             const IconComponent = option.icon;
             return (
               <Card
                 key={option.title}
-                className={`relative overflow-hidden ${
+                className={`relative overflow-hidden bg-gradient-to-br ${option.bgGradient} border-2 ${option.borderColor} ${
                   option.highlight
-                    ? 'border-primary shadow-lg ring-2 ring-primary/20'
-                    : ''
+                    ? 'shadow-xl ring-2 ring-primary/20'
+                    : 'shadow-lg'
                 }`}
               >
                 {option.highlight && (
@@ -83,7 +89,7 @@ export default function DeploymentOptions() {
                     Recommended
                   </div>
                 )}
-                <CardContent className="p-6 lg:p-8 flex flex-col h-full">
+                <CardContent className="p-5 lg:p-6 flex flex-col h-full">
                   {/* Icon */}
                   <div className="mb-4">
                     <div className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-3">
@@ -92,16 +98,16 @@ export default function DeploymentOptions() {
                   </div>
 
                   {/* Title & Description */}
-                  <h3 className="text-2xl font-bold mb-3">{option.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-snug">
+                  <h3 className="text-2xl font-bold mb-2">{option.title}</h3>
+                  <p className="text-muted-foreground mb-5 leading-snug text-sm">
                     {option.description}
                   </p>
 
                   {/* Features List */}
-                  <ul className="space-y-3 mb-8 flex-1">
+                  <ul className="space-y-2 mb-6 flex-1">
                     {option.features.map((feature) => (
                       <li key={feature} className="flex items-start gap-2">
-                        <Check className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                        <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
                         <span className="text-sm">{feature}</span>
                       </li>
                     ))}

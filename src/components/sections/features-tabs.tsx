@@ -176,7 +176,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
   return (
     <section className="section-padding container grid max-w-screen-xl lg:grid-cols-2 lg:gap-18">
       {/* Left: Text & Tabs */}
-      <div className="flex flex-col justify-between gap-3">
+      <div className="flex flex-col justify-between gap-2">
         <div className="space-y-6 text-balance lg:max-w-lg">
           <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
             Built for <br className="hidden lg:block" />
@@ -289,7 +289,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
                             style={vscDarkPlus}
                             customStyle={{
                               margin: 0,
-                              padding: '1rem',
+                              padding: '0.5rem',
                               background: 'transparent',
                               fontSize: '0.875rem',
                             }}
@@ -349,7 +349,7 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
                   style={vscDarkPlus}
                   customStyle={{
                     margin: 0,
-                    padding: '1.5rem',
+                    padding: '0.75rem',
                     background: 'transparent',
                     height: '100%',
                     fontSize: '0.875rem',

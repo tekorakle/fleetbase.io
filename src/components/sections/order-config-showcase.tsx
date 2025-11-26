@@ -7,6 +7,9 @@ import {
   Settings,
   Workflow,
   Zap,
+  Truck,
+  Package,
+  MapPin,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion } from 'motion/react';
@@ -15,21 +18,24 @@ import { useRef } from 'react';
 import { AnimatedBeam } from '@/components/magicui/animated-beam';
 import { cn } from '@/lib/utils';
 
-const configCards = [
+// Activity flow status cards (replacing generic config cards)
+const activityFlowCards = [
   {
-    id: 'custom-fields',
-    title: 'Custom Fields',
-    subtitle: 'Add order-specific data fields',
-    icon: FileText,
+    id: 'order-started',
+    title: 'Order Started',
+    subtitle: 'Order has been created',
+    icon: Package,
     iconColor: 'text-blue-500',
+    bgColor: 'from-blue-500/20 to-blue-600/20',
     position: 'absolute top-0 left-0',
   },
   {
-    id: 'business-rules',
-    title: 'Business Rules',
-    subtitle: 'Define conditional logic',
-    icon: GitBranch,
+    id: 'driver-enroute',
+    title: 'Driver En-Route',
+    subtitle: 'Driver is on the way',
+    icon: Truck,
     iconColor: 'text-purple-500',
+    bgColor: 'from-purple-500/20 to-purple-600/20',
     position: 'absolute top-32 left-0',
   },
   {
@@ -42,11 +48,12 @@ const configCards = [
     isProcessing: true,
   },
   {
-    id: 'status-flow',
-    title: 'Custom Status Flow',
-    subtitle: 'Automated status updates',
-    icon: Workflow,
+    id: 'delivered',
+    title: 'Delivered',
+    subtitle: 'Order completed successfully',
+    icon: MapPin,
     iconColor: 'text-emerald-500',
+    bgColor: 'from-emerald-500/20 to-emerald-600/20',
     position: 'absolute right-0 bottom-0',
   },
 ];
@@ -120,20 +127,20 @@ export default function OrderConfigShowcase() {
           </p>
         </div>
 
-        {/* Right Workflow */}
+        {/* Right Workflow - Activity Flow Visualization */}
         <div className="relative h-full min-h-[300px]">
-          {configCards.map((card, index) => {
+          {activityFlowCards.map((card, index) => {
             const IconComponent = card.icon;
             return (
               <div
                 key={card.id}
                 ref={cardRefs[index]}
                 className={cn(
-                  'z-10 w-fit space-y-2 px-3 py-2.5',
+                  'z-10 w-fit space-y-2 px-4 py-3 backdrop-blur-sm',
                   card.position,
                   card.isProcessing
-                    ? 'after:bg-accent rounded-full before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-[var(--chart-1)] before:via-[var(--chart-2)] before:to-[var(--chart-3)] after:absolute after:inset-[1px] after:rounded-full'
-                    : 'bg-accent rounded-md shadow-xl',
+                    ? 'after:bg-accent rounded-full before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-[var(--chart-1)] via-[var(--chart-2)] before:to-[var(--chart-3)] after:absolute after:inset-[1px] after:rounded-full'
+                    : `bg-gradient-to-br ${card.bgColor} rounded-lg shadow-xl border border-white/10`,
                 )}
               >
                 {card.isProcessing ? (
@@ -149,10 +156,10 @@ export default function OrderConfigShowcase() {
                     <div className="flex items-center gap-2">
                       {IconComponent && (
                         <IconComponent
-                          className={`size-3 lg:size-3.5 ${card.iconColor}`}
+                          className={`size-4 lg:size-5 ${card.iconColor}`}
                         />
                       )}
-                      <h3 className="text-xs font-bold lg:text-sm">
+                      <h3 className="text-sm font-bold lg:text-base text-foreground">
                         {card.title}
                       </h3>
                     </div>
@@ -239,61 +246,61 @@ export default function OrderConfigShowcase() {
       </div>
 
       {/* Key Capabilities */}
-      <div className="mx-auto max-w-4xl pt-16">
-        <p className="text-muted-foreground text-center mb-8">
+      <div className="mx-auto max-w-5xl pt-16">
+        <p className="text-muted-foreground text-center mb-10 text-lg">
           What you can configure:
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border bg-card/50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <FileText className="h-6 w-6 text-primary" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="flex flex-col items-center text-center gap-4 p-6 rounded-xl border-2 bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border-blue-500/20 hover:border-blue-500/40 transition-all shadow-lg">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-blue-500/20 border border-blue-500/30">
+              <FileText className="h-7 w-7 text-blue-500" />
             </div>
             <div>
-              <h3 className="font-semibold mb-1">Custom Fields</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="font-bold text-lg mb-2">Custom Fields</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Add any data fields your orders need - from special handling
                 instructions to custom pricing
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border bg-card/50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <GitBranch className="h-6 w-6 text-primary" />
+          <div className="flex flex-col items-center text-center gap-4 p-6 rounded-xl border-2 bg-gradient-to-br from-purple-500/10 to-pink-500/10 border-purple-500/20 hover:border-purple-500/40 transition-all shadow-lg">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-purple-500/20 border border-purple-500/30">
+              <GitBranch className="h-7 w-7 text-purple-500" />
             </div>
             <div>
-              <h3 className="font-semibold mb-1">Logic & Triggers</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="font-bold text-lg mb-2">Logic & Triggers</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Set conditions and triggers to automate actions based on order
                 status, location, or custom rules
               </p>
             </div>
           </div>
 
-          <div className="flex flex-col items-center text-center gap-3 p-6 rounded-lg border bg-card/50">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <Workflow className="h-6 w-6 text-primary" />
+          <div className="flex flex-col items-center text-center gap-4 p-6 rounded-xl border-2 bg-gradient-to-br from-emerald-500/10 to-green-500/10 border-emerald-500/20 hover:border-emerald-500/40 transition-all shadow-lg">
+            <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-emerald-500/20 border border-emerald-500/30">
+              <Workflow className="h-7 w-7 text-emerald-500" />
             </div>
             <div>
-              <h3 className="font-semibold mb-1">Activity Flows</h3>
-              <p className="text-muted-foreground text-sm">
+              <h3 className="font-bold text-lg mb-2">Activity Flows</h3>
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 Design custom status progressions that match your exact
                 operational workflow
               </p>
             </div>
           </div>
-          
-          {/* CTA Button */}
-          <div className="flex justify-center mt-10">
-            <Button 
-              className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg" 
-              asChild
-            >
-              <a href="/order-config">
-                See Configuration Examples
-              </a>
-            </Button>
-          </div>
+        </div>
+        
+        {/* CTA Button - Centered */}
+        <div className="flex justify-center">
+          <Button 
+            className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-xl px-10 py-6 text-lg font-semibold rounded-lg transition-all hover:shadow-2xl hover:scale-105" 
+            asChild
+          >
+            <a href="/order-config">
+              See Configuration Examples
+            </a>
+          </Button>
         </div>
       </div>
     </section>
