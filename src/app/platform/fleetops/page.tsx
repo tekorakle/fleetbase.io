@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Testimonials } from '@/components/sections/testimonials';
+import Testimonials from '@/components/sections/testimonials';
 
 export default function FleetOpsPage() {
   return (

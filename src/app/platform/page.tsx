@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { IntegrationsEcosystem } from '@/components/sections/integrations-ecosystem';
-import { OpenSourceAdvantage } from '@/components/sections/open-source-advantage';
+import IntegrationsEcosystem from '@/components/sections/integrations-ecosystem';
+import OpenSourceAdvantage from '@/components/sections/open-source-advantage';
 import DeploymentOptions from '@/components/sections/deployment-options';
-import { Testimonials } from '@/components/sections/testimonials';
+import Testimonials from '@/components/sections/testimonials';
 
 export default function PlatformOverviewPage() {
   return (
