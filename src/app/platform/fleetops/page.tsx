@@ -275,11 +275,11 @@ export default function FleetOpsPage() {
       {/* Testimonials */}
       <Testimonials />
 
-      {/* Final CTA */}
+      {/*// Final CTA
       <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Start Optimizing Your Fleet Operations Today
+            Ready to Achieve 98% On-Time Delivery?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
             Join thousands of logistics professionals using FleetOps to reduce costs, improve delivery times, and delight customers.
@@ -296,7 +296,7 @@ export default function FleetOpsPage() {
             No credit card required • 14-day free trial • Cancel anytime
           </p>
         </div>
-      </section>
+      </section>n>
     </div>
   );
 }

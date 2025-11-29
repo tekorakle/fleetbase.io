@@ -188,28 +188,28 @@ export default function PlatformOverviewPage() {
       {/* Testimonials */}
       <Testimonials />
 
-      {/* Final CTA */}
+      {/* // Final CTA
       <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Transform Your Logistics Operations?
+            Start Building Your Logistics Future Today
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Join hundreds of companies using Fleetbase to power their supply chain operations.
+            Whether you choose our managed Cloud or a self-hosted solution, Fleetbase gives you the power to build, scale, and control your entire logistics operation.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link href="/pricing">
-              <Button size="lg">Start Free Trial</Button>
+              <Button size="lg">Try Fleetbase Cloud</Button>
             </Link>
             <Link href="/contact">
-              <Button size="lg" variant="outline">Schedule Demo</Button>
+              <Button size="lg" variant="outline">Schedule Enterprise Demo</Button>
             </Link>
             <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
               <Button size="lg" variant="outline">View on GitHub</Button>
             </Link>
           </div>
         </div>
-      </section>
+      </section>>
     </div>
   );
 }
