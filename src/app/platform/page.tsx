@@ -188,7 +188,7 @@ export default function PlatformOverviewPage() {
       {/* Testimonials */}
       <Testimonials />
 
-      {/* // Final CTA
+      {/* Final CTA */}
       <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -209,7 +209,7 @@ export default function PlatformOverviewPage() {
             </Link>
           </div>
         </div>
-      </section>>
+      </section>
     </div>
   );
 }
