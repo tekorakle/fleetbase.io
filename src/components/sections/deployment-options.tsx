@@ -1,152 +1,312 @@
 'use client';
 
-import { Cloud, Server, Wrench, ArrowRight, Check } from 'lucide-react';
+import { Cloud, Server, Wrench, Check, X } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 const deploymentOptions = [
   {
     icon: Cloud,
-    title: 'Fleetbase Cloud',
-    description: 'Fully managed cloud platform with automatic updates, backups, and 99.9% uptime SLA.',
-    features: [
-      'No infrastructure management',
-      'Automatic scaling',
+    name: 'Fleetbase Cloud',
+    type: 'cloud' as const,
+    description: 'Fully managed platform with automatic updates and enterprise-grade reliability',
+    price: 'Starting at $99/mo',
+    cta: {
+      text: 'Start Free Trial',
+      href: '/signup',
+      variant: 'default' as const,
+    },
+    features: {
+      included: [
+        'Automatic scaling & load balancing',
+        'Managed database & backups',
+        '99.9% uptime SLA',
+        'Global CDN & edge locations',
+        'Automatic security updates',
+        'Email & chat support',
+        'SSL certificates included',
+        'Monitoring & analytics dashboard',
+      ],
+      excluded: [
+        'Custom infrastructure control',
+        'On-premise deployment',
+        'Source code modifications',
+      ],
+    },
+    pros: [
+      'Zero infrastructure management',
+      'Fastest time to production',
+      'Predictable monthly costs',
       'Enterprise-grade security',
-      'Global CDN & edge locations',
     ],
-    cta: 'Start Free Trial',
-    ctaLink: '/signup',
-    ctaVariant: 'default' as const,
+    cons: [
+      'Less infrastructure control',
+      'Vendor dependency',
+      'Internet connectivity required',
+    ],
     highlight: true,
-    bgGradient: 'from-blue-500/10 to-cyan-500/10',
-    borderColor: 'border-blue-500/30',
   },
   {
     icon: Server,
-    title: 'Self-Hosted',
-    description: 'Deploy on your own infrastructure with complete control over data, security, and customization.',
-    features: [
-      'Full source code access',
-      'Deploy anywhere (AWS, Azure, GCP, on-prem)',
-      'Custom licensing options',
-      'No vendor lock-in',
+    name: 'Self-Hosted',
+    type: 'self-hosted' as const,
+    description: 'Deploy on your own infrastructure with complete control and customization',
+    price: 'Free (infrastructure costs apply)',
+    cta: {
+      text: 'View Deployment Guide',
+      href: '/docs/self-hosting',
+      variant: 'outline' as const,
+    },
+    features: {
+      included: [
+        'Full source code access',
+        'Deploy anywhere (AWS, Azure, GCP, on-prem)',
+        'Complete data sovereignty',
+        'Custom licensing options',
+        'No vendor lock-in',
+        'Unlimited customization',
+        'Community support',
+        'Open-source transparency',
+      ],
+      excluded: [
+        'Managed infrastructure',
+        'Automatic updates',
+        'Dedicated support team',
+      ],
+    },
+    pros: [
+      'Maximum control & flexibility',
+      'No recurring platform fees',
+      'Complete data ownership',
+      'Customize everything',
     ],
-    cta: 'View Deployment Guide',
-    ctaLink: '/docs/self-hosting',
-    ctaVariant: 'outline' as const,
-    bgGradient: '',
-    borderColor: 'border-border',
+    cons: [
+      'Requires DevOps expertise',
+      'Manual updates & maintenance',
+      'Infrastructure management overhead',
+    ],
+    highlight: false,
   },
   {
     icon: Wrench,
-    title: 'Professional Services',
-    description: 'Expert implementation, custom development, and dedicated support for enterprise deployments.',
-    features: [
-      'Custom feature development',
-      'White-label solutions',
-      'Dedicated support team',
-      'Training & onboarding',
+    name: 'Professional Services',
+    type: 'enterprise' as const,
+    description: 'Expert implementation, custom development, and dedicated support for enterprises',
+    price: 'Custom pricing',
+    cta: {
+      text: 'Contact Sales',
+      href: '/contact',
+      variant: 'outline' as const,
+    },
+    features: {
+      included: [
+        'Custom feature development',
+        'White-label solutions',
+        'Dedicated support team',
+        'Training & onboarding',
+        'Architecture consulting',
+        'Priority bug fixes',
+        'SLA guarantees',
+        'Migration assistance',
+      ],
+      excluded: [
+        'Self-service deployment',
+        'Standard pricing tiers',
+      ],
+    },
+    pros: [
+      'Tailored to your needs',
+      'Expert guidance & support',
+      'Faster enterprise adoption',
+      'Reduced implementation risk',
     ],
-    cta: 'Deploy Now',
-    ctaLink: '/checkout',
-    ctaVariant: 'outline' as const,
-    bgGradient: 'from-emerald-500/10 to-green-500/10',
-    borderColor: 'border-emerald-500/30',
+    cons: [
+      'Higher upfront investment',
+      'Longer sales cycle',
+      'Custom contract required',
+    ],
+    highlight: false,
   },
 ];
 
 export default function DeploymentOptions() {
   return (
-    <section className="section-padding bg-gradient-to-b from-background to-muted/30">
-      <div className="container">
-        {/* Header */}
-        <div className="mx-auto max-w-3xl text-center mb-12 lg:mb-16">
-          <h2 className="text-4xxl mb-4 leading-none tracking-tight text-balance md:text-5xl lg:text-6xl">
-            Deploy Your Way
-          </h2>
-          <p className="text-muted-foreground text-lg lg:text-xl">
-            Choose the deployment option that fits your needs—from fully managed cloud to self-hosted infrastructure, with professional services available for every stage.
-          </p>
+    <section className="section-padding relative container space-y-15 md:space-y-20">
+      <div className="mx-auto max-w-4xl space-y-4 text-balance sm:text-center">
+        <h2 className="text-5xl leading-none tracking-tight text-balance md:text-6xl">
+          Deploy <span className="text-gradient">Your Way</span>
+        </h2>
+        <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
+          Choose the deployment option that fits your needs—from fully managed cloud to self-hosted infrastructure, with professional services available for every stage.
+        </p>
+      </div>
+
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="grid grid-cols-3 gap-6">
+          {deploymentOptions.map((option) => (
+            <DeploymentCard key={option.name} option={option} />
+          ))}
         </div>
+      </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-6">
-          {deploymentOptions.map((option) => {
-            const IconComponent = option.icon;
-            return (
-              <Card
-                key={option.title}
-                className={`relative overflow-hidden bg-gradient-to-br ${option.bgGradient} border-2 ${option.borderColor} ${
-                  option.highlight
-                    ? 'shadow-xl ring-2 ring-primary/20'
-                    : 'shadow-lg'
-                }`}
-              >
-                {option.highlight && (
-                  <div className="absolute top-0 right-0 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-bl-lg">
-                    Recommended
-                  </div>
-                )}
-                <CardContent className="p-5 lg:p-6 flex flex-col h-full">
-                  {/* Icon */}
-                  <div className="mb-4">
-                    <div className="inline-flex items-center justify-center rounded-lg bg-primary/10 p-3">
-                      <IconComponent className="h-6 w-6 text-primary" />
-                    </div>
-                  </div>
+      {/* Mobile Layout */}
+      <div className="lg:hidden space-y-6">
+        {deploymentOptions.map((option) => (
+          <DeploymentCard key={option.name} option={option} />
+        ))}
+      </div>
 
-                  {/* Title & Description */}
-                  <h3 className="text-2xl font-bold mb-2">{option.title}</h3>
-                  <p className="text-muted-foreground mb-5 leading-snug text-sm">
-                    {option.description}
-                  </p>
-
-                  {/* Features List */}
-                  <ul className="space-y-2 mb-6 flex-1">
-                    {option.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-2">
-                        <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
-                        <span className="text-sm">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA Button */}
-                  <Button
-                    variant={option.ctaVariant}
-                    className={`w-full group ${
-                      option.ctaVariant === 'default'
-                        ? 'bg-[#4A90E2] hover:bg-[#3D7DC2] text-white'
-                        : ''
-                    }`}
-                    asChild
-                  >
-                    <Link href={option.ctaLink} className="flex items-center justify-center gap-2">
-                      {option.cta}
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="mt-12 lg:mt-16 text-center">
-          <p className="text-muted-foreground mb-4">
-            Not sure which option is right for you?
-          </p>
-          <Button variant="outline" asChild>
-            <Link href="/pricing" className="gap-2">
-              Compare All Options
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-        </div>
+      {/* Bottom CTA */}
+      <div className="mt-12 lg:mt-16 text-center">
+        <p className="text-muted-foreground mb-4">
+          Need help choosing the right deployment option?
+        </p>
+        <Button variant="outline" asChild>
+          <Link href="/contact">Schedule a Consultation</Link>
+        </Button>
       </div>
     </section>
   );
 }
+
+const DeploymentCard = ({
+  option,
+}: {
+  option: typeof deploymentOptions[0];
+}) => {
+  const IconComponent = option.icon;
+  const isCloud = option.type === 'cloud';
+
+  return (
+    <Card
+      className={cn(
+        'relative overflow-hidden shadow-none dark:bg-[#07070e]',
+        isCloud &&
+          'before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-tr before:from-[var(--chart-1)]/10 before:via-[var(--chart-2)] before:to-[var(--chart-3)] before:mask-b-from-40% before:mask-b-to-80%',
+        isCloud &&
+          'after:bg-card after:absolute after:inset-[1px] after:rounded-[calc(var(--radius)-1px)] dark:after:bg-[#07070e]',
+      )}
+    >
+      <div className="relative z-10 flex h-full flex-col">
+        {isCloud && (
+          <div className="absolute top-4 right-4 z-20 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
+            Recommended
+          </div>
+        )}
+
+        <CardHeader className="gap-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10">
+              <IconComponent className="size-6 text-primary" />
+            </div>
+            <div>
+              <CardTitle className="text-2xl tracking-tight md:text-3xl">
+                {option.name}
+              </CardTitle>
+            </div>
+          </div>
+          <CardDescription className="text-base leading-snug">
+            {option.description}
+          </CardDescription>
+          <div className="font-medium tracking-tight">
+            <span className="text-2xl">{option.price}</span>
+          </div>
+        </CardHeader>
+
+        <CardContent className="flex-1 space-y-6">
+          {/* Features Included */}
+          <div>
+            <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-muted-foreground">
+              What's Included
+            </h4>
+            <ul className="space-y-2">
+              {option.features.included.map((feature) => (
+                <li key={feature} className="flex items-start gap-2">
+                  <div className="flex size-5 items-center justify-center rounded-full bg-secondary shrink-0 mt-0.5">
+                    <Check className="size-3" />
+                  </div>
+                  <span className="text-sm leading-snug">{feature}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Features Excluded */}
+          {option.features.excluded.length > 0 && (
+            <div>
+              <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-muted-foreground">
+                Not Included
+              </h4>
+              <ul className="space-y-2">
+                {option.features.excluded.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2">
+                    <div className="flex size-5 items-center justify-center rounded-full bg-muted shrink-0 mt-0.5">
+                      <X className="size-3" />
+                    </div>
+                    <span className="text-sm leading-snug text-muted-foreground">
+                      {feature}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Pros */}
+          <div>
+            <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
+              Pros
+            </h4>
+            <ul className="space-y-1.5">
+              {option.pros.map((pro) => (
+                <li key={pro} className="flex items-start gap-2">
+                  <span className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5">
+                    +
+                  </span>
+                  <span className="text-sm leading-snug">{pro}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Cons */}
+          <div>
+            <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-orange-600 dark:text-orange-400">
+              Cons
+            </h4>
+            <ul className="space-y-1.5">
+              {option.cons.map((con) => (
+                <li key={con} className="flex items-start gap-2">
+                  <span className="text-orange-600 dark:text-orange-400 shrink-0 mt-0.5">
+                    −
+                  </span>
+                  <span className="text-sm leading-snug">{con}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </CardContent>
+
+        <CardFooter>
+          <Button
+            variant={option.cta.variant}
+            className="h-12 w-full"
+            asChild
+          >
+            <Link href={option.cta.href}>{option.cta.text}</Link>
+          </Button>
+        </CardFooter>
+      </div>
+    </Card>
+  );
+};
