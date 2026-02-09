@@ -17,6 +17,8 @@ import {
   HelpCircle,
   ChevronDown,
   ArrowRight,
+  UserCircle,
+  Store,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -49,14 +51,14 @@ interface PricingTier {
   overageRate: number;
   description: string;
   recommended?: boolean;
-  features: string[];
+  supportLevel: string;
   plusVariant?: {
     name: string;
     monthlyPrice: number;
     annualPrice: number;
     includedUnits: number;
     overageRate: number;
-    additionalFeatures: string[];
+    supportLevel: string;
   };
 }
 
@@ -68,26 +70,15 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 1920,
     includedUnits: 300,
     overageRate: 0.75,
-    description: 'Perfect for small businesses getting started',
-    features: [
-      'All core platform features',
-      '300 resource units/month',
-      '7-day free trial',
-      'Email support',
-      'Basic analytics',
-    ],
+    description: 'Perfect for small businesses',
+    supportLevel: 'Email support',
     plusVariant: {
       name: 'Starter Plus',
       monthlyPrice: 300,
       annualPrice: 2880,
       includedUnits: 500,
       overageRate: 0.65,
-      additionalFeatures: [
-        '500 resource units/month',
-        'Priority email support',
-        'Advanced analytics',
-        'Custom webhooks',
-      ],
+      supportLevel: 'Priority email support',
     },
   },
   {
@@ -97,27 +88,16 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 3840,
     includedUnits: 800,
     overageRate: 0.55,
-    description: 'Scale your operations with confidence',
+    description: 'For growing operations',
     recommended: true,
-    features: [
-      'All Starter Plus features',
-      '800 resource units/month',
-      'Phone & email support',
-      'API access',
-      'Custom integrations',
-    ],
+    supportLevel: 'Phone & email support',
     plusVariant: {
       name: 'Scale Plus',
       monthlyPrice: 500,
       annualPrice: 4800,
       includedUnits: 1200,
       overageRate: 0.45,
-      additionalFeatures: [
-        '1,200 resource units/month',
-        'Dedicated support',
-        'Advanced API features',
-        'Custom reporting',
-      ],
+      supportLevel: 'Dedicated support',
     },
   },
   {
@@ -127,26 +107,15 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 5760,
     includedUnits: 1700,
     overageRate: 0.4,
-    description: 'Professional-grade for demanding operations',
-    features: [
-      'All Scale Plus features',
-      '1,700 resource units/month',
-      '24/7 support',
-      'SLA guarantee',
-      'Advanced security',
-    ],
+    description: 'Professional-grade',
+    supportLevel: '24/7 support',
     plusVariant: {
       name: 'Pro Plus',
       monthlyPrice: 700,
       annualPrice: 6720,
       includedUnits: 2300,
       overageRate: 0.35,
-      additionalFeatures: [
-        '2,300 resource units/month',
-        'Premium support',
-        'Custom SLA',
-        'Dedicated account manager',
-      ],
+      supportLevel: 'Premium support',
     },
   },
   {
@@ -156,26 +125,15 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 7680,
     includedUnits: 3000,
     overageRate: 0.3,
-    description: 'Elite-level service for enterprise operations',
-    features: [
-      'All Pro Plus features',
-      '3,000 resource units/month',
-      'White-glove support',
-      'Custom development',
-      'Training & onboarding',
-    ],
+    description: 'Elite-level service',
+    supportLevel: 'White-glove support',
     plusVariant: {
       name: 'Elite Plus',
       monthlyPrice: 900,
       annualPrice: 8640,
       includedUnits: 3800,
       overageRate: 0.25,
-      additionalFeatures: [
-        '3,800 resource units/month',
-        'Executive support',
-        'Priority development',
-        'Quarterly business reviews',
-      ],
+      supportLevel: 'Executive support',
     },
   },
   {
@@ -185,26 +143,15 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 9600,
     includedUnits: 5000,
     overageRate: 0.2,
-    description: 'Enterprise-grade for large organizations',
-    features: [
-      'All Elite Plus features',
-      '5,000 resource units/month',
-      'Enterprise SLA',
-      'Custom infrastructure',
-      'Compliance support',
-    ],
+    description: 'Enterprise-grade',
+    supportLevel: 'Enterprise SLA',
     plusVariant: {
       name: 'Enterprise Plus',
       monthlyPrice: 1500,
       annualPrice: 14400,
       includedUnits: 7500,
       overageRate: 0.15,
-      additionalFeatures: [
-        '7,500 resource units/month',
-        'Dedicated infrastructure',
-        'Custom pricing available',
-        'Strategic partnership',
-      ],
+      supportLevel: 'Dedicated infrastructure',
     },
   },
 ];
@@ -228,59 +175,66 @@ interface ResourceType {
   icon: React.ElementType;
   weight: number;
   description: string;
+  isRolling: boolean;
 }
 
-const ONE_TIME_RESOURCES: ResourceType[] = [
+// Top 8 resources based on CSV data
+const RESOURCES: ResourceType[] = [
   {
     name: 'Orders',
     icon: Package,
     weight: 2,
     description: 'Customer orders',
+    isRolling: false,
   },
   {
     name: 'Places',
     icon: MapPin,
     weight: 1,
-    description: 'Saved locations',
+    description: 'Locations and addresses',
+    isRolling: false,
   },
   {
     name: 'Contacts',
-    icon: Users,
+    icon: UserCircle,
     weight: 1,
     description: 'Customer contacts',
+    isRolling: false,
   },
-];
-
-const ROLLING_RESOURCES: ResourceType[] = [
+  {
+    name: 'Vendors',
+    icon: Store,
+    weight: 1,
+    description: 'Service vendors',
+    isRolling: false,
+  },
   {
     name: 'Users',
     icon: Users,
     weight: 5,
     description: 'System users',
+    isRolling: true,
   },
   {
     name: 'Webhooks',
     icon: Webhook,
     weight: 5,
-    description: 'API webhooks',
+    description: 'API webhook endpoints',
+    isRolling: true,
   },
   {
     name: 'Vehicles',
     icon: Truck,
     weight: 1,
     description: 'Fleet vehicles',
+    isRolling: true,
   },
   {
     name: 'Drivers',
     icon: Users,
     weight: 1,
-    description: 'Active drivers',
-  },
-  {
-    name: 'API Keys',
-    icon: Key,
-    weight: 1,
-    description: 'API credentials',
+    description: 'Fleet drivers',
+    isRolling: true,
   },
 ];
 
@@ -357,9 +311,9 @@ const PricingPage = () => {
         </h1>
 
         <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-          Fair and transparent pricing based on Resource Units. Pay a flat
-          monthly fee with a generous allocation of units. Use more? Only pay
-          for what you need at a simple per-unit rate.
+          Fair and transparent pricing based on Resource Units. All plans
+          include full platform access. Pay a flat monthly fee with included
+          units, then simple per-unit overage rates.
         </p>
 
         <div className="flex flex-col items-center gap-4 pt-4 sm:flex-row sm:justify-center">
@@ -410,15 +364,17 @@ const PricingPage = () => {
         </div>
       </div>
 
-      {/* Pricing Tiers Grid - 5 Main Plans */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-        {PRICING_TIERS.map((tier) => (
-          <PricingTierCard
-            key={tier.tier}
-            tier={tier}
-            billingPeriod={billingPeriod}
-          />
-        ))}
+      {/* Pricing Tiers Grid - 5 Columns */}
+      <div className="overflow-x-auto">
+        <div className="mx-auto grid min-w-[1200px] grid-cols-5 gap-4">
+          {PRICING_TIERS.map((tier) => (
+            <PricingTierCard
+              key={tier.tier}
+              tier={tier}
+              billingPeriod={billingPeriod}
+            />
+          ))}
+        </div>
       </div>
 
       {/* What Are Resource Units Section */}
@@ -434,56 +390,56 @@ const PricingPage = () => {
           </h2>
 
           <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-            Think of Resource Units as the currency of Fleetbase. Every key
-            action you perform in the system consumes a certain number of these
-            units. It's a simple way to measure your usage across the entire
-            platform.
+            Resource Units are the currency of Fleetbase. Every key action you
+            perform consumes a certain number of units. It's a simple way to
+            measure your usage across the platform.
           </p>
         </div>
 
-        {/* Grouped Resource Types */}
-        <div className="space-y-8">
-          {/* One-Time Resources */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-green-500/20">
-                <Check className="size-5 text-green-600 dark:text-green-400" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold">One-Time Resources</h3>
-                <p className="text-sm text-muted-foreground">
-                  Billed once when created, resets each billing cycle
-                </p>
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {ONE_TIME_RESOURCES.map((resource) => (
-                <ResourceCard key={resource.name} resource={resource} />
-              ))}
-            </div>
-          </div>
+        {/* 4x2 Resource Grid */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {RESOURCES.map((resource) => (
+            <ResourceCard key={resource.name} resource={resource} />
+          ))}
+        </div>
 
-          {/* Rolling Resources */}
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="flex size-10 items-center justify-center rounded-lg bg-blue-500/20">
-                <TrendingUp className="size-5 text-blue-600 dark:text-blue-400" />
+        {/* Billing Type Explanation */}
+        <div className="grid gap-4 md:grid-cols-2">
+          <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-transparent">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-green-500/20">
+                  <Check className="size-4 text-green-600 dark:text-green-400" />
+                </div>
+                <CardTitle className="text-lg">One-Time Resources</CardTitle>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold">
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Billed once when created. Usage count resets at the end of each
+                billing cycle. Examples: Orders, Places, Contacts, Vendors.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent">
+            <CardHeader className="pb-3">
+              <div className="flex items-center gap-2">
+                <div className="flex size-8 items-center justify-center rounded-lg bg-blue-500/20">
+                  <TrendingUp className="size-4 text-blue-600 dark:text-blue-400" />
+                </div>
+                <CardTitle className="text-lg">
                   Recurring (Rolling) Resources
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  Charged every billing period while active
-                </p>
+                </CardTitle>
               </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-              {ROLLING_RESOURCES.map((resource) => (
-                <ResourceCard key={resource.name} resource={resource} />
-              ))}
-            </div>
-          </div>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">
+                Charged every billing period while active. Examples: Users,
+                Webhooks, Vehicles, Drivers.
+              </p>
+            </CardContent>
+          </Card>
         </div>
       </div>
 
@@ -685,29 +641,29 @@ const PricingTierCard = ({
       )}
     >
       {isRecommended && (
-        <div className="absolute right-4 top-4 z-10">
-          <div className="rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-3 py-1 text-xs font-semibold text-white">
-            Recommended
+        <div className="absolute right-2 top-2 z-10">
+          <div className="rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white">
+            Popular
           </div>
         </div>
       )}
 
-      <CardHeader className="pb-4">
-        <CardTitle className="text-2xl">
+      <CardHeader className="pb-3">
+        <CardTitle className="text-xl">
           {showPlus && tier.plusVariant ? tier.plusVariant.name : tier.name}
         </CardTitle>
-        <CardDescription className="text-sm">
+        <CardDescription className="text-xs">
           {tier.description}
         </CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-1 space-y-6">
+      <CardContent className="flex-1 space-y-4">
         <div className="space-y-1">
           <div className="flex items-baseline gap-1">
-            <span className="text-4xl font-bold tracking-tight">
+            <span className="text-3xl font-bold tracking-tight">
               ${Math.round(displayPrice)}
             </span>
-            <span className="text-muted-foreground">/month</span>
+            <span className="text-xs text-muted-foreground">/mo</span>
           </div>
           {billingPeriod === 'annual' && (
             <p className="text-xs text-muted-foreground">
@@ -716,61 +672,73 @@ const PricingTierCard = ({
                 ? tier.plusVariant.annualPrice
                 : tier.annualPrice
               ).toLocaleString()}{' '}
-              billed annually
+              /year
             </p>
           )}
         </div>
 
         <div className="space-y-2">
-          <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-            <span className="text-sm font-medium">Included Units</span>
-            <span className="text-lg font-bold">
+          <div className="rounded-lg bg-muted/50 p-2">
+            <div className="text-xs text-muted-foreground">Included Units</div>
+            <div className="text-lg font-bold">
               {(showPlus && tier.plusVariant
                 ? tier.plusVariant.includedUnits
                 : tier.includedUnits
               ).toLocaleString()}
-            </span>
+            </div>
           </div>
-          <div className="flex items-center justify-between rounded-lg bg-muted/50 p-3">
-            <span className="text-sm font-medium">Overage Rate</span>
-            <span className="text-lg font-bold">
+          <div className="rounded-lg bg-muted/50 p-2">
+            <div className="text-xs text-muted-foreground">Overage Rate</div>
+            <div className="text-lg font-bold">
               $
               {showPlus && tier.plusVariant
                 ? tier.plusVariant.overageRate
                 : tier.overageRate}
               /unit
-            </span>
+            </div>
           </div>
         </div>
 
-        <div className="space-y-3">
-          {(showPlus && tier.plusVariant
-            ? tier.plusVariant.additionalFeatures
-            : tier.features
-          ).map((feature, index) => (
-            <div key={index} className="flex items-start gap-2">
-              <Check className="size-5 shrink-0 text-green-600 dark:text-green-400" />
-              <span className="text-sm text-muted-foreground">{feature}</span>
-            </div>
-          ))}
+        <div className="space-y-2">
+          <div className="flex items-start gap-2">
+            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
+            <span className="text-xs text-muted-foreground">
+              Full platform access
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
+            <span className="text-xs text-muted-foreground">
+              {showPlus && tier.plusVariant
+                ? tier.plusVariant.supportLevel
+                : tier.supportLevel}
+            </span>
+          </div>
+          <div className="flex items-start gap-2">
+            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
+            <span className="text-xs text-muted-foreground">
+              7-day free trial
+            </span>
+          </div>
         </div>
 
         {tier.plusVariant && (
           <button
             onClick={() => setShowPlus(!showPlus)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed p-3 text-sm font-medium transition-colors hover:bg-muted/50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed p-2 text-xs font-medium transition-colors hover:bg-muted/50"
           >
             <span>
               {showPlus ? `Show ${tier.name}` : `Show ${tier.plusVariant.name}`}
             </span>
-            <ArrowRight className="size-4" />
+            <ArrowRight className="size-3" />
           </button>
         )}
       </CardContent>
 
-      <CardFooter>
+      <CardFooter className="pt-0">
         <Button
           className="w-full"
+          size="sm"
           variant={isRecommended ? 'default' : 'outline'}
           asChild
         >
@@ -799,8 +767,20 @@ const ResourceCard = ({ resource }: { resource: ResourceType }) => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-1">
-        <h3 className="font-semibold">{resource.name}</h3>
+      <CardContent className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold">{resource.name}</h3>
+          <div
+            className={cn(
+              'rounded-full px-2 py-0.5 text-xs font-medium',
+              resource.isRolling
+                ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
+                : 'bg-green-500/20 text-green-600 dark:text-green-400',
+            )}
+          >
+            {resource.isRolling ? 'Recurring' : 'One-time'}
+          </div>
+        </div>
         <p className="text-sm text-muted-foreground">{resource.description}</p>
       </CardContent>
     </Card>
