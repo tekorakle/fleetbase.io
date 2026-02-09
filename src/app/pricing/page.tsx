@@ -70,7 +70,7 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 1920,
     includedUnits: 300,
     overageRate: 0.75,
-    description: 'Perfect for small businesses',
+    description: 'Launch your logistics operations with everything you need to get started and grow.',
     supportLevel: 'Email support',
     plusVariant: {
       name: 'Starter Plus',
@@ -88,7 +88,7 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 3840,
     includedUnits: 800,
     overageRate: 0.55,
-    description: 'For growing operations',
+    description: 'Scale your business with increased capacity and priority support for growing teams.',
     recommended: true,
     supportLevel: 'Phone & email support',
     plusVariant: {
@@ -107,7 +107,7 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 5760,
     includedUnits: 1700,
     overageRate: 0.4,
-    description: 'Professional-grade',
+    description: 'Power your professional operations with 24/7 support and enterprise-ready features.',
     supportLevel: '24/7 support',
     plusVariant: {
       name: 'Pro Plus',
@@ -125,7 +125,7 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 7680,
     includedUnits: 3000,
     overageRate: 0.3,
-    description: 'Elite-level service',
+    description: 'Deliver exceptional service at scale with white-glove support and premium resources.',
     supportLevel: 'White-glove support',
     plusVariant: {
       name: 'Elite Plus',
@@ -143,7 +143,7 @@ const PRICING_TIERS: PricingTier[] = [
     annualPrice: 9600,
     includedUnits: 5000,
     overageRate: 0.2,
-    description: 'Enterprise-grade',
+    description: 'Transform your enterprise logistics with maximum capacity, dedicated SLA, and priority access.',
     supportLevel: 'Enterprise SLA',
     plusVariant: {
       name: 'Enterprise Plus',
