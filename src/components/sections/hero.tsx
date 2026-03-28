@@ -1,7 +1,8 @@
-'use client';
 import Image from 'next/image';
-
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight, Github, Star, Truck, Package, Globe } from 'lucide-react';
 
 interface SVGProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
@@ -9,53 +10,81 @@ interface SVGProps extends React.SVGProps<SVGSVGElement> {
 
 export default function Hero() {
   return (
-    <section className="section-padding relative">
+    <section className="section-padding relative overflow-hidden">
       <div className="relative container">
-        <div className="flex flex-col justify-between gap-10 lg:flex-row lg:items-center">
-          <div className="flex max-w-3xl flex-1 flex-col items-start gap-5">
-            <div className="flex items-center rounded-full border p-1 text-xs">
-              <span className="bg-muted rounded-full px-3 py-1">
-                What&apos;s New?
-              </span>
-              <span className="px-3">Introducing Plasma 2.0</span>
-            </div>
+        <div className="flex max-w-4xl flex-col items-start gap-6">
+          {/* Announcement badge */}
+          <Link href="/changelog" className="group">
+            <Badge
+              variant="outline"
+              className="gap-2 rounded-full border-chart-1/30 bg-chart-1/10 px-4 py-1.5 text-chart-1 transition-all hover:border-chart-1/50 hover:bg-chart-1/20"
+            >
+              <span className="size-1.5 rounded-full bg-chart-1 animate-pulse" />
+              <span className="text-xs font-medium">v2.0 — Extensions Marketplace now live</span>
+              <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+            </Badge>
+          </Link>
 
-            <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-              Local-first automation for{' '}
-              <span className="text-gradient">power users</span>
-            </h1>
+          <h1 className="text-5xl font-bold leading-[1.08] tracking-tight text-balance md:text-6xl lg:text-7xl">
+            The{' '}
+            <span className="text-gradient">open-source</span>{' '}
+            logistics &amp; operations OS
+          </h1>
 
-            <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
-              Plasma is an open-source desktop app that lets you build and run
-              automations directly on your machine. No fluff just fast, visual
-              workflows powered by you.
-            </p>
-          </div>
+          <p className="max-w-2xl text-lg text-muted-foreground leading-relaxed md:text-xl">
+            Fleetbase gives every logistics team — from solo couriers to enterprise fleets — a modular, self-hostable platform to manage dispatch, drivers, storefronts, and supply chains.
+          </p>
 
           {/* CTA Buttons */}
-          <div className="space-y-3">
-            <div className="flex gap-4.5">
-              <Button className="flex-1 md:min-w-45">Try it locally</Button>
-              <Button className="flex-1 md:min-w-45" variant="outline">
-                View on Github
-              </Button>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <Button size="lg" asChild className="gap-2 px-6">
+              <Link href="https://app.fleetbase.io">
+                Start for free
+                <ArrowRight className="size-4" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild className="gap-2 px-6">
+              <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
+                <Github className="size-4" />
+                Star on GitHub
+              </Link>
+            </Button>
+          </div>
+
+          {/* Social proof stats */}
+          <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+            <div className="flex items-center gap-1.5">
+              <Star className="size-4 text-chart-1 fill-chart-1" />
+              <span><strong className="text-foreground">1,200+</strong> GitHub stars</span>
             </div>
-            <div className="text-center text-sm">
-              2.4k stars · 500+ active installs
+            <div className="flex items-center gap-1.5">
+              <Truck className="size-4 text-chart-1" />
+              <span><strong className="text-foreground">500+</strong> active deployments</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Package className="size-4 text-chart-1" />
+              <span><strong className="text-foreground">30+</strong> countries</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Globe className="size-4 text-chart-1" />
+              <span>AGPL-3.0 open source</span>
             </div>
           </div>
         </div>
 
-        {/* Hero Image */}
-        <Image
-          src="/images/home/hero.webp"
-          alt="App screenshot"
-          className="ring-foreground/5 mt-10 w-full rounded-xs shadow-2xl ring-6 invert md:mt-20 md:rounded-sm md:px-[1px] md:ring-16 lg:mt-30 dark:invert-0"
-          width={1440}
-          height={905}
-          priority
-        />
-        <GradientSVG className="absolute top-0 right-0 -z-10 origin-right scale-30 md:scale-50 lg:scale-100" />
+        {/* Hero Screenshot */}
+        <div className="relative mt-12 md:mt-20">
+          <div className="absolute -inset-2 rounded-xl bg-gradient-to-r from-chart-1/20 via-chart-2/10 to-chart-3/20 blur-2xl" />
+          <Image
+            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-dispatch-map-real_d84fe41f.webp"
+            alt="Fleetbase dashboard — fleet management and dispatch operations"
+            className="ring-foreground/5 relative w-full rounded-lg shadow-2xl ring-1 md:rounded-xl md:ring-2"
+            width={1440}
+            height={905}
+            priority
+          />
+        </div>
+        <GradientSVG className="absolute top-0 right-0 -z-10 origin-right scale-30 md:scale-50 lg:scale-100 opacity-60" />
       </div>
     </section>
   );

@@ -112,7 +112,7 @@ const Footer = () => {
       <div className="container mt-20 flex flex-col-reverse justify-between gap-8 text-xs lg:mt-30 lg:flex-row">
         <div className="flex items-center justify-between gap-2">
           <p className="">
-            © {new Date().getFullYear()} Plasma — Built for builders.
+            © {new Date().getFullYear()} Fleetbase — Open-Source Logistics OS.
           </p>{' '}
           <div className="flex items-center gap-7 lg:hidden">
             {SOCIAL_LINKS.map((link, index) => (

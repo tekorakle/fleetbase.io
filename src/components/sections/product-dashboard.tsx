@@ -1,6 +1,6 @@
 'use client';
 
-import { Activity, ArrowRight, Bug, Clock, Settings } from 'lucide-react';
+import { ArrowRight, Map, Package, Truck, Wallet, Zap, BarChart3 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -15,36 +15,52 @@ import {
 
 const FEATURE_CARDS = [
   {
-    title: 'Runtime & Performance Logs',
+    title: 'Live Fleet Tracking',
     description:
-      'Instantly view how long each node takes to execute, with timestamps and retry data.',
-    icon: Clock,
-    cta: 'Read more',
-    href: '#',
+      'Monitor every driver and vehicle in real time on an interactive map. Know exactly where your fleet is at all times.',
+    icon: Map,
+    cta: 'Explore FleetOps',
+    href: '/products/fleetops',
   },
   {
-    title: 'Live Flow Activity Feed',
+    title: 'Smart Dispatch',
     description:
-      'Watch your automation unfold in real time — success, fail, delay — no refresh needed.',
-    icon: Activity,
-    cta: 'Read more',
-    href: '#',
+      'Assign orders to the nearest available driver automatically, or manage assignments manually from the dispatch board.',
+    icon: Truck,
+    cta: 'Explore FleetOps',
+    href: '/products/fleetops',
   },
   {
-    title: 'Node-Level Debugging',
+    title: 'Order Lifecycle',
     description:
-      'Click into any node to inspect its payloads, logs, and available data output at each step.',
-    icon: Bug,
-    cta: 'Read more',
-    href: '#',
+      'Track every order from creation to proof of delivery. Customers get live updates. You get full visibility.',
+    icon: Package,
+    cta: 'Explore Storefront',
+    href: '/products/storefront',
   },
   {
-    title: 'Custom Event Tracking',
+    title: 'Financial Ledger',
     description:
-      'Attach custom events to any trigger or node and track their journey through the flow.',
-    icon: Settings,
-    cta: 'Read more',
-    href: '#',
+      'Built-in accounting for logistics — track driver earnings, order revenue, and operational costs in one place.',
+    icon: Wallet,
+    cta: 'Explore Ledger',
+    href: '/products/ledger',
+  },
+  {
+    title: 'Extensions & Automations',
+    description:
+      'Connect your WMS, ERP, or any third-party tool via REST API. Build custom extensions with the Fleetbase SDK.',
+    icon: Zap,
+    cta: 'View Extensions',
+    href: '/products/extensions',
+  },
+  {
+    title: 'Analytics & Reporting',
+    description:
+      'Deep operational insights across fleet performance, delivery SLAs, driver behaviour, and revenue metrics.',
+    icon: BarChart3,
+    cta: 'Learn more',
+    href: '/products/fleetops',
   },
 ];
 
@@ -54,26 +70,26 @@ export default function ProductDashboard() {
       {/* Header */}
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
         <h2 className="text-4xl leading-none tracking-tight text-balance md:text-5xl lg:text-6xl">
-          Privacy friendly, lightweight visualisation and control
+          The complete logistics command centre
         </h2>
       </div>
 
       {/* Main Dashboard Image */}
       <Image
-        src="/images/product/plasma.webp"
-        alt="Plasma Dashboard"
+        src="https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-live-fleet-map_45501733.webp"
+        alt="Fleetbase dispatch dashboard — real-time fleet management"
         width={1440}
         height={905}
-        className="mx-auto mt-10 mask-b-from-50% mask-b-to-95% invert md:mt-16 dark:invert-0"
+        className="mx-auto mt-10 mask-b-from-50% mask-b-to-95% md:mt-16"
       />
 
       {/* Tagline */}
       <h3 className="text-muted-foreground mt-4 text-center uppercase">
-        EVERYTHING YOU WANT TO SEE, NOTHING YOU DON&apos;T
+        EVERYTHING YOUR LOGISTICS TEAM NEEDS. NOTHING YOU DON&apos;T.
       </h3>
 
       {/* Feature Cards */}
-      <div className="mx-auto mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {FEATURE_CARDS.map((card, index) => {
           const IconComponent = card.icon;
           return (
@@ -98,7 +114,7 @@ export default function ProductDashboard() {
                     className="group mt-6 h-12 gap-3 !px-0 font-normal transition-opacity hover:!bg-transparent hover:opacity-95"
                   >
                     <Link href={card.href}>
-                      Read more
+                      {card.cta}
                       <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
                     </Link>
                   </Button>

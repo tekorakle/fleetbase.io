@@ -10,57 +10,56 @@ import { cn } from '@/lib/utils';
 
 const stats = [
   {
-    value: 650,
-    suffix: 'k+',
-    label: 'Users',
+    value: 1200,
+    suffix: '+',
+    label: 'GitHub Stars',
   },
   {
-    value: 37.2,
-    suffix: 'M+',
-    label: 'Deployments',
+    value: 500,
+    suffix: '+',
+    label: 'Active Deployments',
   },
   {
-    value: 4.8,
-    suffix: 'M+',
-    label: 'Requests',
+    value: 30,
+    suffix: '+',
+    label: 'Countries',
   },
 ];
 
 const cards = [
   {
-    id: 'profile',
-    title: 'Add new profile to leads',
-    subtitle: 'Check key stakeholder and collect profile',
+    id: 'driver',
+    title: 'Driver assigned',
+    subtitle: 'Ahmed Al-Rashidi — 2.3km away',
     icon: Users,
-    iconColor: 'text-purple-500',
+    iconColor: 'text-blue-500',
     position: 'absolute top-0 left-0',
     isGenerating: false,
   },
   {
-    id: 'company',
-    title: 'Company information',
-    subtitle: 'Check Crunchbase data for fundraise',
+    id: 'route',
+    title: 'Route optimised',
+    subtitle: '4 stops — saved 18 minutes',
     icon: Building2,
-    iconColor: 'text-blue-500',
+    iconColor: 'text-green-500',
     position: 'absolute top-32 left-0',
     isGenerating: false,
   },
   {
-    id: 'generating',
-    title: 'Generating step 4',
+    id: 'dispatching',
+    title: 'Dispatching order #4821',
     subtitle: '',
     icon: null,
     iconColor: '',
     position: 'absolute top-18 right-0',
     isGenerating: true,
   },
-
   {
-    id: 'fileWatcher',
-    title: 'File Watcher',
-    subtitle: 'New change in file or new file in folder?',
+    id: 'pod',
+    title: 'Proof of delivery',
+    subtitle: 'Photo + signature captured',
     icon: Folder,
-    iconColor: 'fill-destructive text-destructive',
+    iconColor: 'text-chart-1',
     position: 'absolute right-0 bottom-0',
     isGenerating: false,
   },
@@ -119,21 +118,19 @@ export default function AIAutomation() {
             <div className="relative z-10 flex items-center gap-2 px-5 py-4 text-xs lg:text-sm">
               <Sparkles className="fill-foreground size-3.5 shrink-0" />
               <div>
-                <span className="text-muted-foreground">Ask AI:</span>{' '}
+                <span className="text-muted-foreground">Live dispatch:</span>{' '}
                 <span className="text-accent-foreground">
-                  Enrich contact details every time with new profile
+                  Order #4821 — nearest driver assigned automatically
                 </span>
               </div>
             </div>
           </motion.div>
           <h2 className="text-4xxl leading-tight tracking-normal md:text-5xl">
-            Even more control with <br className="hidden md:block" />
-            <span className="text-gradient">AI auto build and trigger</span>
+            Open source, <br className="hidden md:block" />
+            <span className="text-gradient">self-hosted, yours</span>
           </h2>
           <p className="text-muted-foreground mt-2 max-w-xl text-lg leading-snug">
-            From prompt to production in seconds. Just say what you want to
-            automate, and Plasma handles the logic, connections, and triggers -
-            exactly how you&apos;d build it.
+            Fleetbase is AGPL-3.0 licensed. Deploy on your own infrastructure, keep your data sovereign, and extend the platform with your own code. No vendor lock-in, ever.
           </p>
         </div>
 
@@ -257,7 +254,7 @@ export default function AIAutomation() {
 
       {/* Statistics */}
       <div className="mx-auto max-w-3xl pt-12 text-center">
-        <p className="text-muted-foreground">Our numbers say it all:</p>
+        <p className="text-muted-foreground">Trusted by logistics teams worldwide:</p>
         <div className="mt-6 grid grid-cols-3 justify-between gap-6">
           {stats.map((stat, index) => (
             <div key={index} className="space-y-1">

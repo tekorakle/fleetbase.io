@@ -1,27 +1,11 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts';
-
+import Image from 'next/image';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ChartContainer, ChartTooltip } from '@/components/ui/chart';
-import { Terminal } from '@/components/ui/terminal';
-
-const OBSERVABILITY_DATA = [
-  { time: '00:00', views: 180 },
-  { time: '04:00', views: 190 },
-  { time: '08:00', views: 220 },
-  { time: '10:00', views: 280 },
-  { time: '12:00', views: 320 },
-  { time: '14:00', views: 270 },
-  { time: '16:00', views: 300 },
-  { time: '16:00', views: 320 },
-  { time: '18:00', views: 380 },
-  { time: '18:00', views: 460 },
-  { time: '20:00', views: 460 },
-  { time: '22:00', views: 500 },
-  { time: '24:00', views: 590 },
-];
+import { Badge } from '@/components/ui/badge';
+import { ArrowRight, Github } from 'lucide-react';
 
 export default function ProductHero() {
   return (
@@ -31,147 +15,56 @@ export default function ProductHero() {
           <span className="bg-muted rounded-full px-3 py-1">
             What&apos;s New?
           </span>
-          <span className="px-3">Introducing Plasma 2.0</span>
+          <span className="px-3">Introducing Fleetbase v2.0 — Extensions Marketplace</span>
         </div>
 
         <h1 className="text-foreground text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-          See everything in real time with <br className="hidden sm:block" />
-          <span className="text-gradient">configurable observability</span>
+          Real-time fleet operations <br className="hidden sm:block" />
+          <span className="text-gradient">powered by open source</span>
         </h1>
 
         <p className="text-muted-foreground max-w-2xl leading-snug md:text-lg lg:text-xl">
-          Plasma gives you full visibility into automation health,
-          performance, and results — tailored exactly to how you work.
+          Fleetbase gives you full visibility into your fleet — live driver tracking, automated dispatch, route optimisation, and proof of delivery — all in one self-hostable platform.
         </p>
       </div>
 
-      {/* Chart Visualization */}
-      <div className="relative mt-10 h-54 w-full md:-mt-20 md:h-96 lg:h-140">
-        <ChartContainer
-          config={{
-            views: {
-              label: 'Views',
-              color: 'var(--chart-2)',
-            },
-          }}
-          className="h-full w-full"
-        >
-          <AreaChart data={OBSERVABILITY_DATA}>
-            <defs>
-              <linearGradient id="viewsGradient" x1="0" y1="0" x2="1" y2="0">
-                <stop
-                  offset="0%"
-                  stopColor="var(--chart-1)"
-                  stopOpacity={0.2}
-                />
-                <stop
-                  offset="50%"
-                  stopColor="var(--chart-2)"
-                  stopOpacity={0.2}
-                />
-                <stop
-                  offset="100%"
-                  stopColor="var(--chart-3)"
-                  stopOpacity={0.3}
-                />
-              </linearGradient>
-            </defs>
-            <CartesianGrid
-              strokeDasharray="none"
-              stroke="var(--border)"
-              opacity={0.2}
-              horizontal={true}
-              vertical={false}
-              horizontalCoordinatesGenerator={(props) => {
-                return [
-                  props.yAxis.scale(50),
-                  props.yAxis.scale(100),
-                  props.yAxis.scale(200),
-                  props.yAxis.scale(300),
-                  props.yAxis.scale(400),
-                  props.yAxis.scale(500),
-                ];
-              }}
-            />
-            <XAxis hide />
-            <YAxis width={1} stroke="var(--border)" opacity={0.2} />
-            <ChartTooltip
-              content={({ active, payload }) => {
-                if (active && payload && payload.length) {
-                  return (
-                    <div className="bg-background flex flex-col items-center gap-2 rounded-lg border p-3 text-xs shadow-md">
-                      {[
-                        {
-                          label: 'Views',
-                          value: payload[0]?.value,
-                          change: '+74%',
-                          changeClass:
-                            'inline-block rounded-sm bg-green-600/15 px-2 py-1 font-medium text-green-500',
-                        },
-                      ].map((item) => (
-                        <div
-                          key={item.label}
-                          className="flex items-center gap-3"
-                        >
-                          <span className="text-muted-foreground">
-                            {item.label}
-                          </span>
-                          <div className="flex items-center gap-2">
-                            <span className="text-accent-foreground font-medium">
-                              {item.value}
-                            </span>
-                            <span className={item.changeClass}>
-                              {item.change}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Area
-              dataKey="views"
-              type="monotone"
-              stroke="url(#viewsGradient)"
-              strokeWidth={3}
-              fill="url(#viewsGradient)"
-              activeDot={{
-                r: 3,
-                fill: 'var(--chart-2)',
-                stroke: 'var(--chart-2)',
-              }}
-            />
-          </AreaChart>
-        </ChartContainer>
+      {/* Hero Screenshot */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+        className="relative mt-12 md:mt-16"
+      >
+        <div className="absolute -inset-2 rounded-xl bg-gradient-to-r from-chart-1/20 via-chart-2/10 to-chart-3/20 blur-2xl" />
+        <Image
+          src="https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/hero_7dbb1a93.webp"
+          alt="Fleetbase FleetOps — live dispatch and fleet management dashboard"
+          className="ring-foreground/5 relative w-full rounded-lg shadow-2xl ring-1 md:rounded-xl md:ring-2"
+          width={1440}
+          height={905}
+          priority
+        />
+      </motion.div>
 
-        {/* Terminal Window */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 20 }}
-          whileInView={{ opacity: 1, scale: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.4,
-            delay: 1,
-            ease: 'easeOut',
-          }}
-          className="absolute right-4 -bottom-4 z-10 w-120 origin-bottom-right scale-30 sm:scale-40 md:right-8 md:scale-60 lg:-bottom-10 lg:scale-80 xl:scale-90"
-        >
-          <Terminal className="w-full" />
-        </motion.div>
-      </div>
       {/* CTA Buttons */}
-      <div className="mx-auto mt-10 max-w-md space-y-3 md:mt-20">
-        <div className="flex gap-4.5">
-          <Button className="flex-1 md:min-w-45">Try it locally</Button>
-          <Button className="flex-1 md:min-w-45" variant="outline">
-            View on GitHub
+      <div className="mx-auto mt-10 max-w-md space-y-3 md:mt-16">
+        <div className="flex gap-4">
+          <Button className="flex-1 md:min-w-45" asChild>
+            <Link href="https://app.fleetbase.io">
+              Start for free
+              <ArrowRight className="size-4 ml-2" />
+            </Link>
+          </Button>
+          <Button className="flex-1 md:min-w-45" variant="outline" asChild>
+            <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
+              <Github className="size-4 mr-2" />
+              View on GitHub
+            </Link>
           </Button>
         </div>
-        <div className="text-center text-sm">
-          2.4k stars · 500+ active installs
+        <div className="text-center text-sm text-muted-foreground">
+          1,200+ GitHub stars · AGPL-3.0 open source · 500+ active deployments
         </div>
       </div>
     </section>

@@ -9,39 +9,39 @@ const newsItems = [
   {
     id: 1,
     logo: {
-      src: '/images/logos/forbes.svg',
+      src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/forbes_ba08816c.svg',
       alt: 'Forbes',
       width: 162,
       height: 42,
       className: 'invert dark:invert-0',
     },
     title:
-      'With a drag-and-drop interface that feels more like a design tool than a backend UI, Plasma is quietly redefining local-first automation. No cloud, no subscriptions - just speed and control.',
+      'Fleetbase is quietly redefining what open-source logistics software can look like. Modular, self-hostable, and built for teams of every size — it\'s the platform logistics operators have been waiting for.',
     readMoreLink: '#',
   },
   {
     id: 2,
     logo: {
-      src: '/images/logos/tc.svg',
+      src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/tc_0932530a.svg',
       alt: 'TechCrunch',
       width: 84,
       height: 42,
     },
     title:
-      'Plasma puts full autonomy in the hands of builders. Its ability to connect folders, scripts, APIs and even AI-generated logic all without leaving your desktop',
+      'Fleetbase puts full control in the hands of logistics operators. Its ability to connect dispatch, storefronts, driver tracking, and finance — all in one open-source platform — is a genuine differentiator.',
     readMoreLink: '#',
   },
   {
     id: 3,
     logo: {
-      src: '/images/logos/the-guardian.svg',
+      src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/the-guardian_b263cce7.svg',
       alt: 'The Guardian',
       width: 127.8,
       height: 48,
       className: 'invert dark:invert-0',
     },
     title:
-      "Lightweight, privacy-first, and shockingly powerful. It's rare for an automation product to feel this flexible out of the box. Local-first isn't just a feature—it's a philosophy.",
+      "Open-source, self-hosted, and shockingly powerful. Fleetbase gives logistics teams the tools of enterprise software without the enterprise price tag. Data sovereignty isn't just a feature — it's the whole point.",
     readMoreLink: '#',
   },
 ];
@@ -51,7 +51,7 @@ export default function AboutNews() {
     <section className="section-padding bg-muted/40">
       <div className="container">
         <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-          We are in the news!
+          Fleetbase in the news
         </h2>
 
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -62,7 +62,7 @@ export default function AboutNews() {
                 alt={item.logo.alt}
                 width={item.logo.width}
                 height={item.logo.height}
-                className={cn`object-contain ${item.logo.className}`}
+                className={cn('object-contain', item.logo.className)}
               />
 
               <p className="text-accent-foreground text-lg leading-snug">

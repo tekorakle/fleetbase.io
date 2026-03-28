@@ -14,7 +14,7 @@ export default function NotFoundPage() {
       <div className="relative container flex max-w-4xl flex-col items-center text-center">
         {/* Lightning Bolt Icon */}
         <div className="relative h-[134px] w-[124px] md:h-[315px] md:w-[341px]">
-          <Image src="/layout/logo-icon.svg" alt="Plasma Logo" fill priority />
+          <Image src="/layout/logo-icon.svg" alt="Fleetbase Logo" fill priority />
         </div>
         <div className="mt-10 space-y-4 text-balance md:mt-20">
           <h1 className="md:text-6xxl text-5xl leading-none tracking-tight text-balance">
