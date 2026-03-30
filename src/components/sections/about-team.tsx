@@ -8,24 +8,24 @@ import {
 
 const teamMembers = [
   {
-    name: 'Ronald A. Richardson',
-    role: 'Co-Founder & CEO',
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/1_592c2778.webp',
+    name: 'Alex Johnson',
+    role: 'Lead Engineer',
+    image: '/images/about/team/1.webp',
   },
   {
-    name: 'Abayomi Ogundipe',
-    role: 'Co-Founder & CTO',
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/2_b99d3145.webp',
+    name: 'Sarah Chen',
+    role: 'Product Designer',
+    image: '/images/about/team/2.webp',
   },
   {
-    name: 'Muhammed Mukhtar',
-    role: 'Head of Engineering',
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/3_0007f055.webp',
+    name: 'Marcus Rodriguez',
+    role: 'Backend Developer',
+    image: '/images/about/team/3.webp',
   },
   {
-    name: 'Femi Akindele',
-    role: 'Lead Product Designer',
-    image: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/4_2c2e515b.webp',
+    name: 'Emily Thompson',
+    role: 'Frontend Developer',
+    image: '/images/about/team/4.webp',
   },
 ];
 
@@ -33,10 +33,12 @@ export default function AboutTeam() {
   return (
     <section className="section-padding container max-w-screen-xl">
       <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-        Meet the Fleetbase team
+        Meet the Plasma team!
       </h2>
       <p className="text-muted-foreground mt-3 max-w-2xl text-lg leading-snug">
-        Fleetbase is built by a passionate team of engineers, designers, and logistics experts committed to making world-class operations software open and accessible to everyone.
+        Plasma is built by a small team of designers, engineers, and open
+        source contributors passionate about developer tooling and local-first
+        software.
       </p>
 
       <Carousel
@@ -57,7 +59,6 @@ export default function AboutTeam() {
                 alt={member.name}
                 width={289}
                 height={358}
-                className="rounded-lg object-cover"
               />
               <h3 className="text-accent-foreground mt-4 text-2xl font-bold">
                 {member.name}

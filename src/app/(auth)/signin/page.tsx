@@ -46,7 +46,7 @@ export default function SignInPage() {
     <>
       <div className="space-y-1">
         <h1 className="text-card-foreground text-xl font-semibold">
-          Welcome to Fleetbase
+          Welcome to Plasma
         </h1>
         <p className="text-xs">Sign up or sign in to your account</p>
       </div>

@@ -69,7 +69,7 @@ const Features2 = () => {
       <div className="container space-y-8">
         {/* Header */}
         <h2 className="text-4xxl mb-10 max-w-2xl leading-none tracking-tight text-balance md:text-5xl lg:mx-auto lg:mb-15 lg:text-center lg:text-6xl">
-          Real-time operations intelligence, built for logistics
+          Privacy friendly, lightweight visualisation and control
         </h2>
 
         {/* Main Grid */}
@@ -86,10 +86,11 @@ const Features2 = () => {
                   <ChartPie className="h-4.5 w-4.5" />
                 </div>
                 <h3 className="text-accent-foreground text-lg font-bold lg:text-xl">
-                  Fleet Performance at a Glance
+                  See Everything at a Glance
                 </h3>
                 <p className="text-muted-foreground leading-snug lg:text-lg">
-                  Track delivery rates, driver performance, and order SLAs in real time. No guesswork, just clarity.
+                  Track your automation performance in real-time. No guesswork,
+                  just clarity.
                 </p>
               </div>
 
@@ -238,10 +239,11 @@ const Features2 = () => {
                   <ChartBar className="h-4.5 w-4.5" />
                 </div>
                 <h3 className="text-accent-foreground text-lg font-bold lg:text-xl">
-                  Operational Metrics That Matter
+                  Build Flows Like You Think
                 </h3>
                 <p className="text-muted-foreground leading-snug lg:text-lg">
-                  Monitor orders dispatched, on-time delivery rates, and driver utilisation — all from one dashboard.
+                  Drag and connect nodes to build logic that mirrors how your
+                  brain works.
                 </p>
               </div>
 
@@ -250,7 +252,7 @@ const Features2 = () => {
                 <div className="flex items-center justify-between gap-5 lg:items-stretch">
                   <div className="w-1/2">
                     <span className="text-xs font-bold lg:text-sm">
-                      Orders dispatched
+                      Total runs
                     </span>
                     <div className="mt-2 flex items-center gap-3">
                       <NumberTicker
@@ -377,7 +379,7 @@ const Features2 = () => {
             variant="secondary"
             className="border-input bg-accent max-w-64 flex-1 border"
           >
-            Get started free
+            Join Plasma
           </Button>
         </div>
       </div>
@@ -388,27 +390,27 @@ const Features2 = () => {
 const featureCards = [
   {
     icon: Activity,
-    title: 'Live Driver Tracking',
+    title: 'Performance Tracking',
     description:
-      'See every driver on the map in real time. Monitor speed, location, and order status without refreshing.',
+      'Track node performance, timing, and results without digging through logs.',
   },
   {
     icon: Zap,
-    title: 'Automated Dispatch',
+    title: 'Real-Time Syncing',
     description:
-      'Assign orders to the nearest available driver automatically based on proximity, capacity, and priority.',
+      'Keep your contact data, lead stages, and activity logs always in sync.',
   },
   {
     icon: Brain,
-    title: 'Route Optimisation',
+    title: 'Intelligent AI Automation',
     description:
-      'Optimise multi-stop routes to reduce fuel costs and improve on-time delivery rates.',
+      'Just describe your goal — Plasma generates the automation flow instantly.',
   },
   {
     icon: GitBranch,
-    title: 'Extensions Marketplace',
+    title: 'Workflow Mapping',
     description:
-      'Connect WMS, ERP, and third-party tools via the Extensions Marketplace or build your own with the SDK.',
+      'Design and organise flows like a visual blueprint - simple but powerful to execute.',
   },
 ];
 

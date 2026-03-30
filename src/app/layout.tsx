@@ -2,23 +2,18 @@ import './globals.css';
 
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
-import { Azeret_Mono, DM_Sans, Space_Grotesk } from 'next/font/google';
+import { Azeret_Mono, Inter } from 'next/font/google';
 
+import Banner from '@/components/layout/banner';
 import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
+import { StyleGlideProvider } from '@/components/styleglide-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 
-const spaceGrotesk = Space_Grotesk({
-  variable: '--font-space-grotesk',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-});
-
-const dmSans = DM_Sans({
-  variable: '--font-dm-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
 });
 
 const azeretMono = Azeret_Mono({
@@ -28,29 +23,24 @@ const azeretMono = Azeret_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fleetbase — Open-Source Logistics & Operations OS',
-    template: '%s | Fleetbase',
+    default: 'Plasma - Modern Next.js Template',
+    template: '%s | Plasma',
   },
   description:
-    'Fleetbase is the #1 open-source logistics and operations platform. Self-host or use cloud. Manage fleets, dispatch drivers, run storefronts, and automate supply chains — all in one modular OS.',
+    'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
   keywords: [
-    'open source logistics',
-    'open source fleet management',
-    'logistics platform',
-    'fleet management software',
-    'open source dispatch',
-    'supply chain management',
-    'last mile delivery',
-    'logistics OS',
-    'Fleetbase',
-    'FleetOps',
-    'self-hosted logistics',
-    'logistics API',
-    'fleet tracking',
+    'Next.js',
+    'React',
+    'JavaScript',
+    'TypeScript',
+    'TailwindCSS',
+    'Template',
+    'Shadcn/UI',
+    'Web Development',
   ],
-  authors: [{ name: 'Fleetbase' }],
-  creator: 'Fleetbase',
-  publisher: 'Fleetbase',
+  authors: [{ name: 'Plasma - Shadcnblocks.com' }],
+  creator: 'Plasma - Shadcnblocks.com',
+  publisher: 'Plasma',
   robots: {
     index: true,
     follow: true,
@@ -67,28 +57,26 @@ export const metadata: Metadata = {
     shortcut: [{ url: '/favicon/favicon.ico' }],
   },
   openGraph: {
-    title: 'Fleetbase — Open-Source Logistics & Operations OS',
+    title: 'Plasma - Modern Next.js Template',
     description:
-      'The #1 open-source logistics platform. Manage fleets, dispatch drivers, run storefronts, and automate supply chains.',
-    siteName: 'Fleetbase',
+      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+    siteName: 'Plasma',
     images: [
       {
-        url: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/og-image_1c8c9702.jpeg',
+        url: '/images/og-image.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Fleetbase — Open-Source Logistics OS',
+        alt: 'Plasma - Modern Next.js Template',
       },
     ],
-    locale: 'en_US',
-    type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fleetbase — Open-Source Logistics & Operations OS',
+    title: 'Plasma - Modern Next.js Template',
     description:
-      'The #1 open-source logistics platform. Manage fleets, dispatch drivers, run storefronts, and automate supply chains.',
-    images: ['https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/og-image_1c8c9702.jpeg'],
-    creator: '@fleetbase_io',
+      'A modern, fully featured Next.js template built with Shadcn/UI, TailwindCSS and TypeScript, perfect for your next web application.',
+    images: ['/images/og-image.jpeg'],
+    creator: '@shadcnblocks',
   },
 };
 
@@ -102,8 +90,7 @@ export default function RootLayout({
       <body
         className={cn(
           'relative flex min-h-screen flex-col antialiased [--header-height:calc(var(--spacing)*17)]',
-          spaceGrotesk.variable,
-          dmSans.variable,
+          inter.variable,
           azeretMono.variable,
         )}
       >
@@ -125,9 +112,11 @@ export default function RootLayout({
             <div
               className="absolute inset-0 z-[-1] size-full opacity-70 mix-blend-overlay dark:md:opacity-100"
               style={{
-                background: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/noise_73f0de7f.webp) lightgray 0% 0% / 83.69px 83.69px repeat`,
+                background: `url(/images/noise.webp) lightgray 0% 0% / 83.69069695472717px 83.69069695472717px repeat`,
               }}
             />
+            <StyleGlideProvider />
+            <Banner url="https://www.shadcnblocks.com/template/plasma" />
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />

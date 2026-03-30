@@ -1,10 +1,10 @@
 'use client';
-import { Github, Map, MessageSquare, Package, ShoppingBag, Star, Truck, Wallet, Zap, Building2 } from 'lucide-react';
+import { Clock, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-import Image from 'next/image';
+import Logo from '@/components/layout/logo';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
   Accordion,
@@ -27,42 +27,38 @@ import { cn } from '@/lib/utils';
 export const NAV_LINKS = [
   {
     label: 'Products',
-    href: '/products',
+    href: '/product',
     subitems: [
-      { label: 'FleetOps', href: '/products/fleetops', description: 'Fleet & dispatch management', icon: Truck },
-      { label: 'Storefront', href: '/products/storefront', description: 'Headless commerce & delivery', icon: ShoppingBag },
-      { label: 'Navigator', href: '/products/navigator', description: 'Driver mobile app', icon: Map },
-      { label: 'Ledger', href: '/products/ledger', description: 'Finance & billing for logistics', icon: Wallet },
-      { label: 'Pallet', href: '/products/pallet', description: 'Warehouse & inventory', icon: Package },
-      { label: 'Extensions', href: '/products/extensions', description: 'Integrations & add-ons', icon: Zap },
+      {
+        label: 'Configurable Observability',
+        href: '/product',
+        description: 'This is a subtext that explains a part of the item',
+        icon: Clock,
+      },
+      {
+        label: 'Plasma AI',
+        href: '/product',
+        description: 'This is a subtext that explains a part of the item',
+        icon: Cpu,
+      },
     ],
   },
-  {
-    label: 'Solutions',
-    href: '/solutions',
-    subitems: [
-      { label: 'Last Mile Delivery', href: '/solutions/last-mile-delivery', description: 'Optimise final-mile ops', icon: Truck },
-      { label: 'E-Commerce Logistics', href: '/solutions/ecommerce-logistics', description: 'End-to-end order fulfilment', icon: ShoppingBag },
-      { label: 'Field Service', href: '/solutions/field-service-management', description: 'Manage field teams', icon: Zap },
-      { label: 'Enterprise', href: '/solutions/enterprise', description: 'Large-scale deployments', icon: Building2 },
-      { label: 'Startups', href: '/solutions/startups', description: 'Launch fast, scale later', icon: Star },
-    ],
-  },
+  { label: 'Company', href: '/about' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Download', href: '/download' },
   { label: 'Docs', href: '/docs' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Open Source', href: '/open-source' },
+  { label: 'Changelog', href: '/changelog' },
 ];
 
 const ACTION_BUTTONS = [
-  { label: 'GitHub', href: 'https://github.com/fleetbase/fleetbase', variant: 'ghost' as const },
-  { label: 'Get Started', href: 'https://app.fleetbase.io', variant: 'default' as const },
+  { label: 'Log in', href: '/signin', variant: 'ghost' as const },
+  { label: 'Sign up', href: '/signup', variant: 'default' as const },
 ];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const hideNavbar = ['/signin', '/signup', '/otp'].some((route) =>
+  const hideNavbar = ['/signin', '/signup', '/otp', '/docs'].some((route) =>
     pathname.includes(route),
   );
 
@@ -86,16 +82,7 @@ const Navbar = () => {
   return (
     <header className="lg:border-b">
       <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
-        <Link href="/" className="flex items-center shrink-0">
-          <Image
-            src="https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-logo_ffc1037e.png"
-            alt="Fleetbase"
-            width={160}
-            height={40}
-            className="h-8 w-auto"
-            priority
-          />
-        </Link>
+        <Logo className="w-47" />
 
         <NavigationMenu viewport={false} className="hidden lg:block">
           <NavigationMenuList className="gap-4 xl:gap-8">
@@ -152,18 +139,21 @@ const Navbar = () => {
           </NavigationMenuList>
         </NavigationMenu>
 
-        <div className="hidden items-center justify-end gap-3 lg:flex">
-          <Button size="sm" variant="ghost" asChild className="gap-1.5">
-            <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
-              <Github className="size-4" />
-              GitHub
-            </Link>
-          </Button>
-          <Button size="sm" asChild>
-            <Link href="https://app.fleetbase.io">Get Started</Link>
-          </Button>
+        <div className="hidden w-47 items-center justify-end gap-4 lg:flex">
+          <ThemeToggle />
+          {ACTION_BUTTONS.map((button) => (
+            <Button
+              key={button.label}
+              size="sm"
+              variant={button.variant}
+              asChild
+            >
+              <Link href={button.href}>{button.label}</Link>
+            </Button>
+          ))}
         </div>
         <div className="flex items-center gap-2 lg:hidden lg:gap-4">
+          <ThemeToggle />
           <button
             className="text-muted-foreground relative flex size-8 rounded-sm border lg:hidden"
             onClick={() => setIsMenuOpen(!isMenuOpen)}

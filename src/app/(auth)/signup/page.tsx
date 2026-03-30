@@ -67,7 +67,7 @@ export default function SignUpPage() {
         <h1 className="text-card-foreground text-xl font-semibold">
           Create your account
         </h1>
-        <p className="text-xs">Sign up to get started with Fleetbase</p>
+        <p className="text-xs">Sign up to get started with Plasma</p>
       </div>
 
       <div className="mt-6 space-y-6">

@@ -32,14 +32,14 @@ const QUICK_START_SECTIONS = [
   {
     title: 'Installation',
     description:
-      'Get started with Fleetbase by installing the necessary dependencies and setting up your environment.',
+      'Get started with Plasma by installing the necessary dependencies and setting up your environment.',
     icon: Package,
     href: '/docs/installation',
   },
   {
     title: 'Core Concepts',
     description:
-      'Learn the fundamental concepts and architecture behind Fleetbase to build better applications.',
+      'Learn the fundamental concepts and architecture behind Plasma to build better applications.',
     icon: BookOpen,
     href: '/docs/core-concepts',
   },
@@ -53,7 +53,7 @@ const QUICK_START_SECTIONS = [
   {
     title: 'File Systems',
     description:
-      'Understand how to manage and organize files efficiently within the Fleetbase ecosystem.',
+      'Understand how to manage and organize files efficiently within the Plasma ecosystem.',
     icon: FileText,
     href: '/docs/file-systems',
   },
@@ -120,11 +120,11 @@ export function DocsOverview() {
         </div>
 
         <h1 className="!mb-0 text-balance text-4xl leading-none md:text-5xl lg:text-6xl">
-          Welcome to the <span className="text-gradient">Fleetbase Docs</span>
+          Welcome to the <span className="text-gradient">Plasma Docs</span>
         </h1>
 
         <p className="text-muted-foreground !my-0 leading-snug md:text-lg">
-          Get answers to common questions on all things Fleetbase
+          Get answers to common questions on all things Plasma
         </p>
       </div>
       <div className="mx-auto mt-10 max-w-xl md:mt-12">

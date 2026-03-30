@@ -84,10 +84,11 @@ export default function ProductFeatures() {
       {/* Header */}
       <div className="mx-auto max-w-4xl">
         <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-          Every delivery detail, exactly when you need it
+          Details Don&apos;t Mean Clarity — Until They Do
         </h2>
         <p className="text-muted-foreground mt-3 text-lg leading-snug">
-          Fleetbase surfaces the right operational data — delivery timelines, driver performance, proof of delivery, and system events — at the right time.
+          Most automators hide the details. Plasma shows you the right
+          things — logs, durations, errors, and system info — at the right time.
         </p>
       </div>
 

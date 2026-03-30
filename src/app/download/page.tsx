@@ -15,16 +15,16 @@ export default function DownloadPage() {
       <div className="relative container flex max-w-4xl flex-col items-center text-center">
         {/* Lightning Bolt Icon */}
         <div className="relative h-[134px] w-[124px] md:h-[315px] md:w-[341px]">
-          <Image src="/layout/logo-icon.svg" alt="Fleetbase Logo" fill priority />
+          <Image src="/layout/logo-icon.svg" alt="Plasma Logo" fill priority />
         </div>
         <div className="mt-10 space-y-4 text-balance md:mt-20">
           <h1 className="md:text-6xxl text-5xl leading-none tracking-tight text-balance">
-            Download Fleetbase for <br className="hidden sm:block" />
+            Download Plasma for <br className="hidden sm:block" />
             <span className="text-gradient">Windows & Mac</span>
           </h1>
 
           <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
-            Fleetbase is an open-source logistics OS that lets you manage dispatch, drivers, and supply chains
+            Plasma is an open-source desktop app that lets you build and run
             automations directly on your machine. No fluff just fast, visual
             workflows powered by you.
           </p>

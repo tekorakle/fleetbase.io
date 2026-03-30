@@ -184,7 +184,7 @@ const PricingPage = () => {
         </h1>
 
         <p className="text-muted-foreground leading-snug md:text-lg lg:text-xl">
-          Fleetbase is an open-source logistics OS that lets you manage dispatch, drivers, and supply chains
+          Plasma is an open-source desktop app that lets you build and run
           automations directly on your machine. No fluff just fast, visual
           workflows powered by you.
         </p>

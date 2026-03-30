@@ -38,7 +38,7 @@ export default function Logo({
           fill="#9A5CD0"
         />
       </svg>
-      <span className={cn('', wordmarkClassName)}>Fleetbase</span>
+      <span className={cn('', wordmarkClassName)}>Plasma</span>
     </Element>
   );
 }

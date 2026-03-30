@@ -10,29 +10,46 @@ import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 
 const FeaturesTabsSection = () => {
-  const [activeTab, setActiveTab] = useState('dispatch');
+  const [activeTab, setActiveTab] = useState('reporting');
 
   const TABS_DATA = [
     {
-      id: 'dispatch',
-      title: 'Real-time Dispatch & Fleet Management',
-      description: 'Manage your entire fleet from a single command centre. Assign orders, track drivers live, and optimise routes in real time.',
-      image: { src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-order-board_603f1205.webp', width: 550, height: 400 },
-      className: 'self-end justify-self-end justify-end items-end flex md:mt-16 md:ps-16 mt-10 ps-10 w-full',
+      id: 'reporting',
+      title: 'Explore reporting tools',
+      description:
+        'Comprehensive reporting and analytics tools to track your automation performance.',
+      image: {
+        src: '/images/home/features-tabs/1.webp',
+        width: 550,
+        height: 544,
+      },
+      className:
+        'self-end justify-self-end justify-end items-end flex md:mt-16 md:ps-16 mt-10 ps-10 w-full',
     },
     {
-      id: 'storefront',
-      title: 'Headless Storefront & Commerce',
-      description: 'Launch a branded delivery storefront with product listings, checkout, and live order tracking — powered by your own fleet.',
-      image: { src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-live-fleet-map_45501733.webp', width: 550, height: 400 },
+      id: 'stack',
+      title: 'Built to Work With Your Stack',
+      description:
+        'Seamlessly integrate with your existing development tools and workflows.',
+      image: {
+        src: '/images/home/features-tabs/2.webp',
+        width: 380,
+        height: 525,
+      },
       className: 'w-full h-full flex justify-center items-center p-14 lg:p-0',
     },
     {
-      id: 'developer',
-      title: 'Developer-First APIs & Extensions',
-      description: 'Build custom workflows, integrate third-party services, and extend Fleetbase with a full REST API and Extensions Marketplace.',
-      image: { src: 'https://d2xsxph8kpxj0f.cloudfront.net/310519663169626730/J4w6d7p35FS5oTJJ4JyigN/fleetbase-order-tracking_d5bd5a2c.webp', width: 550, height: 400 },
-      className: 'self-end justify-self-end justify-end items-end flex md:mt-15 md:ps-15 mt-10 ps-10 w-full',
+      id: 'automations',
+      title: 'Custom Automations',
+      description:
+        'Create powerful custom automations tailored to your specific needs.',
+      image: {
+        src: '/images/home/features-tabs/3.webp',
+        width: 550,
+        height: 544,
+      },
+      className:
+        'self-end justify-self-end justify-end items-end flex md:mt-15 md:ps-15 mt-10 ps-10 w-full',
     },
   ];
 
@@ -42,15 +59,16 @@ const FeaturesTabsSection = () => {
       <div className="flex flex-col justify-between gap-3">
         <div className="space-y-6 text-balance lg:max-w-lg">
           <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-            One platform, <br className="hidden lg:block" />
-            every logistics <br className="hidden lg:block" />
-            workflow
+            Engineered <br className="hidden lg:block" />
+            strictly <br className="hidden lg:block" />
+            for power users
           </h2>
           <span className="text-xl leading-7 font-bold">
-            Modular by design
+            Transparent Execution Logs
           </span>
           <p className="text-muted-foreground mt-3 text-lg leading-snug">
-            Fleetbase is built as a modular OS — use only the modules you need, self-host on your infrastructure, and extend with your own code.
+            Every run is tracked in detail - from inputs to outputs to runtime
+            errors. Perfect for debugging and transparency.
           </p>
         </div>
         {/* Tabs Section */}
@@ -140,7 +158,7 @@ const FeaturesTabsSection = () => {
                               alt={tab.title}
                               width={tab.image.width}
                               height={tab.image.height}
-                              className="object-contain"
+                              className="object-contain invert dark:invert-0"
                               priority
                             />
                           </motion.div>
@@ -178,7 +196,7 @@ const FeaturesTabsSection = () => {
                   alt={tab.title}
                   width={tab.image.width}
                   height={tab.image.height}
-                  className="object-contain"
+                  className="object-contain invert dark:invert-0"
                   priority
                 />
               </motion.div>

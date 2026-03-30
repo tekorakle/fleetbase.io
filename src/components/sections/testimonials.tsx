@@ -17,52 +17,40 @@ import { cn } from '@/lib/utils';
 
 const REVIEWS = [
   {
-    name: 'Ahmed Al-Rashidi',
-    username: '@ahmedalrashidi',
-    body: "We self-hosted @fleetbase in a weekend. Our dispatch team went live on Monday. The open-source model means we own our data completely.",
-    img: 'https://avatar.vercel.sh/ahmedalrashidi',
+    name: 'Flora Schuler',
+    username: '@floraFlawa',
+    body: "i'm using @plasma to get access to some of the best automation features in the market, you should try it too",
+    img: 'https://avatar.vercel.sh/floraFlawa',
   },
   {
-    name: 'Sarah Chen',
-    username: '@sarahchen_ops',
-    body: "Switched from a $3k/month SaaS to @fleetbase. Same features, self-hosted, and our devs can actually extend it. Game changer.",
-    img: 'https://avatar.vercel.sh/sarahchen_ops',
+    name: 'OneBadDev',
+    username: '@elidecodes',
+    body: "been using @plasma to automate my podcast post-prod flow. local triggers + ffmpeg scripts = chef's kiss",
+    img: 'https://avatar.vercel.sh/elidecodes',
   },
   {
-    name: 'Marcus Okonkwo',
-    username: '@marcokonkwo',
-    body: "@fleetbase FleetOps handles our 200-driver operation without breaking a sweat. The live dispatch board is exactly what we needed.",
-    img: 'https://avatar.vercel.sh/marcokonkwo',
+    name: 'John Robert',
+    username: '@scripteddev',
+    body: '@plasma is already part of my daily toolkit. Local folder watcher → python script → discord alert. Took 2 mins to set up.',
+    img: 'https://avatar.vercel.sh/scripteddev',
   },
   {
-    name: 'DevOps Diaries',
-    username: '@devopsdiaries',
-    body: "The @fleetbase API is genuinely well-designed. Built a custom integration with our WMS in a day. Docs are solid.",
-    img: 'https://avatar.vercel.sh/devopsdiaries',
+    name: 'CodeNinja',
+    username: '@sysninja',
+    body: "Can't believe how fast @plasma runs. It's like Zapier if it respected your privacy and your CPU.",
+    img: 'https://avatar.vercel.sh/sysninja',
   },
   {
-    name: 'Priya Nair',
-    username: '@priyanair_tech',
-    body: "We use @fleetbase Storefront for our grocery delivery. Customers love the live tracking. Setup took less than a day.",
-    img: 'https://avatar.vercel.sh/priyanair_tech',
+    name: 'Tusmah',
+    username: '@ananenu1',
+    body: "Made a Plasma flow that watches my screenshot folder and auto-saves new captures to Notion. Didn't touch the cloud once. 🔥",
+    img: 'https://avatar.vercel.sh/ananenu1',
   },
   {
-    name: 'Tom Bergmann',
-    username: '@tombergmann_eu',
-    body: "Finally an open-source logistics platform that doesn't feel like it was built in 2010. @fleetbase is the real deal.",
-    img: 'https://avatar.vercel.sh/tombergmann_eu',
-  },
-  {
-    name: 'Logistics Weekly',
-    username: '@logisticsweekly',
-    body: "@fleetbase is what happens when developers build logistics software. Clean API, modular design, and actually open source.",
-    img: 'https://avatar.vercel.sh/logisticsweekly',
-  },
-  {
-    name: 'Kwame Asante',
-    username: '@kwameasante',
-    body: "Running @fleetbase on our own servers in Ghana. No vendor lock-in, no data leaving our country. Exactly what we needed.",
-    img: 'https://avatar.vercel.sh/kwameasante',
+    name: 'Liam Stone',
+    username: '@liam.codes',
+    body: "Plasma completely changed how I debug and monitor workflows. It's like having a second brain for automation.",
+    img: 'https://avatar.vercel.sh/liam.codes',
   },
 ];
 
@@ -73,11 +61,12 @@ const Testimonials = () => {
     <section className="container flex flex-col gap-y-10 overflow-x-hidden py-10 md:py-15 lg:flex-row">
       <div className="flex max-w-lg flex-col gap-15 text-balance">
         <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-          Trusted by logistics teams worldwide
+          Real automation for control freaks
         </h2>
         <div className="space-y-7.5">
           <p className="text-muted-foreground text-lg leading-snug">
-            From solo couriers to enterprise fleets — teams across 30+ countries use Fleetbase to power their logistics operations.
+            Every run is tracked in detail - from inputs to outputs to runtime
+            errors. Perfect for debugging and transparency.
           </p>
 
           <Button
@@ -85,8 +74,8 @@ const Testimonials = () => {
             asChild
             className="text-accent-foreground group gap-3 !px-0 hover:!bg-transparent hover:opacity-90"
           >
-            <Link href="https://app.fleetbase.io">
-              Start for free
+            <Link href="#">
+              Get started too
               <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
@@ -153,8 +142,8 @@ const ReviewCard = ({
       </CardHeader>
       <CardContent className="p-0">
         <blockquote className="text-sm leading-snug">
-          {body.split(/(@fleetbase)/g).map((part, index) =>
-            part === '@fleetbase' ? (
+          {body.split(/(@plasma)/g).map((part, index) =>
+            part === '@plasma' ? (
               <span key={index} className="text-chart-1">
                 {part}
               </span>
