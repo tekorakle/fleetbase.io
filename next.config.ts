@@ -5,6 +5,11 @@ const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
   /* config options here */
+  allowedDevOrigins: [
+    '*.manus.computer',
+    'localhost',
+    '127.0.0.1',
+  ],
   images: {
     remotePatterns: [
       {
@@ -14,6 +19,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'cdn.simpleicons.org',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.manus.computer',
       },
     ],
   },
