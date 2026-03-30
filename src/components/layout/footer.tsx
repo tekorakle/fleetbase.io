@@ -71,6 +71,7 @@ const FOOTER_LINKS = [
       { label: 'Navigator App', href: '/platform/navigator' },
       { label: 'Storefront', href: '/platform/storefront' },
       { label: 'Pallet', href: '/platform/pallet' },
+      { label: 'Ledger', href: '/platform/ledger' },
       { label: 'Mobile Apps', href: '/platform/mobile' },
       { label: 'Extensions Marketplace', href: '/extensions' },
       { label: 'Security & Compliance', href: '/platform/security' },

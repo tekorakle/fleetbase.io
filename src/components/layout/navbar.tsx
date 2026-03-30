@@ -9,7 +9,8 @@ import {
   Boxes, 
   Code, 
   Webhook, 
-  BookOpen, 
+  BookOpen,
+  Landmark,
   Users, 
   MessageSquare, 
   FileText, 
@@ -83,6 +84,12 @@ export const NAV_LINKS = [
         href: '/platform/pallet',
         description: 'Control warehouse operations with smart inventory and fulfillment tools.',
         icon: Package,
+      },
+      {
+        label: 'Ledger',
+        href: '/platform/ledger',
+        description: 'Automate logistics accounting with a double-entry financial ledger built for operations.',
+        icon: Landmark,
       },
       {
         label: 'Extensions Marketplace',
