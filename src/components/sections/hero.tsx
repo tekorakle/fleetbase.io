@@ -37,9 +37,7 @@ export default function Hero() {
 
             {/* Sub-headline - Improved brightness for dark mode */}
             <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl dark:text-foreground/95">
-              Cut delivery costs by 30%, improve on-time rates, and eliminate vendor lock-in. Own your logistics 
-              with complete control over workflows, data, and infrastructure. Deploy anywhere, customize 
-              everything—open-source means you control your future, not your vendor.
+              Build, deploy, and scale your logistics operations without limits. Open-source, usage-based pricing, and fully customizable — from first mile to last.
             </p>
           </div>
 
@@ -52,7 +50,7 @@ export default function Hero() {
                 asChild
               >
                 <Link href="/signup">
-                  Try Fleetbase Cloud
+                  Start Free Trial
                 </Link>
               </Button>
               <Button 

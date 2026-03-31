@@ -200,17 +200,15 @@ const fleetbase = new Fleetbase('<Fleetbase API Key>');
       <div className="flex flex-col justify-between gap-2">
         <div className="space-y-6 text-balance lg:max-w-lg">
           <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-            Built for <br className="hidden lg:block" />
-            the Modern <br className="hidden lg:block" />
-            Developer
+            Integrate in{' '}<br className="hidden lg:block" />
+            Minutes, Not{' '}<br className="hidden lg:block" />
+            Months
           </h2>
           <span className="text-xl leading-7 font-bold">
             Fleetbase Developer Toolkit
           </span>
           <p className="text-muted-foreground mt-3 text-lg leading-snug">
-            Instantly create, dispatch, and track logistics operations via API.
-            Use the SDK to connect to Fleetbase services, manage resources, and
-            optimize your workflows with a few lines of code.
+            A fully documented REST API, JavaScript SDK, and real-time WebSocket events give your team everything needed to build, automate, and extend your logistics operations — without waiting on vendor support.
           </p>
         </div>
         {/* Tabs Section */}

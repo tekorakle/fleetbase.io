@@ -30,7 +30,7 @@ const ITEMS = [
       width: 148,
       height: 124,
     },
-    desc: 'Add capabilities like warehouse management, customer portals, and more as you grow.',
+    desc: 'Add capabilities like warehouse management, customer storefronts, and financial ledger as your business grows — without rebuilding your stack.',
   },
   {
     title: 'Route Optimization',
@@ -95,10 +95,10 @@ const Features = ({ className }: { className?: string }) => {
         <div className="container flex flex-col justify-between gap-10 md:flex-row md:items-center">
           <div className="max-w-3xl space-y-3">
             <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
-              Orchestrate your entire logistics operation.
+              Everything Your Logistics Operation Needs.
             </h2>
             <p className="text-muted-foreground max-w-xl text-lg leading-snug">
-              Flexible logistics software that adapts to your operations. Customize everything, integrate with your existing tools, and scale as you grow.
+              From real-time tracking to route optimization, proof of delivery to advanced reporting — every tool your team needs to run faster, leaner operations.
             </p>
           </div>
           <div className="hidden gap-3 md:flex">

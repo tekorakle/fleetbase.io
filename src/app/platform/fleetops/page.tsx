@@ -1,739 +1,555 @@
+'use client';
+
 import Link from 'next/link';
+import {
+  ArrowRight,
+  CheckCircle2,
+  XCircle,
+  MapPin,
+  Truck,
+  Route,
+  BarChart3,
+  Wrench,
+  AlertTriangle,
+  Calendar,
+  FileText,
+  Package,
+  Clock,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import Testimonials from '@/components/sections/testimonials';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+
+const outcomes = [
+  { value: '30%', label: 'Average fuel cost reduction' },
+  { value: '40%', label: 'Fewer customer support calls' },
+  { value: '99.9%', label: 'Platform uptime SLA' },
+  { value: '2×', label: 'Faster dispatch vs manual' },
+];
+
+const problems = [
+  {
+    title: 'Rigid, One-Size-Fits-All Workflows',
+    description:
+      "Traditional TMS platforms force you to adapt your operations to their software. Custom fields, order types, and activity flows require expensive professional services — if they're possible at all.",
+  },
+  {
+    title: 'No Real-Time Visibility',
+    description:
+      "Dispatchers are flying blind. Without live GPS, driver status, and ETA data flowing in real time, you're always reacting instead of managing proactively.",
+  },
+  {
+    title: 'Per-Seat Pricing That Punishes Growth',
+    description:
+      "Every new driver, dispatcher, or partner you add increases your software bill. Scaling your team shouldn't mean scaling your costs at the same rate.",
+  },
+];
+
+const coreFeatures = [
+  {
+    badge: 'Dispatch & Routing',
+    title: 'Intelligent Dispatch and Route Optimization',
+    description:
+      'Stop manually assigning orders. FleetOps automatically dispatches to the nearest available driver, optimizes multi-stop routes for fuel efficiency, and re-routes in real time when conditions change.',
+    points: [
+      'Auto-dispatch to nearest available driver',
+      'Multi-stop route optimization with traffic awareness',
+      'Dynamic re-routing on delays or cancellations',
+      'Delivery window and vehicle capacity constraints',
+      'Bulk order import and batch dispatch',
+    ],
+    placeholderLabel: 'Route Optimization Map',
+    placeholderDesc: 'Live map showing optimized multi-stop routes, driver positions, and ETAs',
+    imageLeft: false,
+  },
+  {
+    badge: 'Live Tracking',
+    title: 'Real-Time Fleet and Order Visibility',
+    description:
+      "Every driver, vehicle, and order on a single live map. Know exactly where your fleet is, what status each order is in, and what your customers' ETAs look like — without making a single phone call.",
+    points: [
+      'Live GPS tracking with sub-minute updates',
+      'Order status timeline with activity feed',
+      'Customer-facing tracking links with live ETA',
+      'Geofence-triggered status updates',
+      'Driver location history and replay',
+    ],
+    placeholderLabel: 'Live Fleet Map',
+    placeholderDesc: 'Real-time map view showing driver locations, order statuses, and ETAs',
+    imageLeft: true,
+  },
+  {
+    badge: 'Order Management',
+    title: 'Flexible Order Configuration for Any Workflow',
+    description:
+      "Not every delivery is a simple A-to-B. FleetOps supports multi-waypoint orders, custom order types, configurable activity flows, and custom fields — so your software matches your operations.",
+    points: [
+      'Custom order types with configurable fields',
+      'Multi-waypoint and multi-leg order support',
+      'Drag-and-drop activity flow builder',
+      'Proof of delivery: signatures, photos, notes',
+      'Barcode and QR code scanning via mobile',
+    ],
+    placeholderLabel: 'Order Management Dashboard',
+    placeholderDesc: 'Order list view with status filters, custom fields, and activity timeline',
+    imageLeft: false,
+  },
+  {
+    badge: 'Driver & Fleet Management',
+    title: 'Manage Your Drivers and Vehicles in One Place',
+    description:
+      'From onboarding drivers to tracking vehicle utilization, FleetOps gives you complete control over your fleet. Assign vehicles, track hours, manage documents, and monitor performance.',
+    points: [
+      'Driver profiles with documents and certifications',
+      'Vehicle assignment and availability management',
+      'Driver performance metrics and scorecards',
+      'Shift scheduling and availability windows',
+      'Mobile app for drivers: Navigator (iOS & Android)',
+    ],
+    placeholderLabel: 'Driver Management Panel',
+    placeholderDesc: 'Driver list with performance metrics, vehicle assignments, and status',
+    imageLeft: true,
+  },
+];
+
+const maintenanceFeatures = [
+  { icon: Wrench, title: 'Work Order Management', description: 'Create, assign, and track maintenance work orders from open to resolved. Attach parts, labor, and costs to every job.' },
+  { icon: AlertTriangle, title: 'Fault & Issue Reporting', description: 'Drivers report faults directly from the Navigator app. Issues are automatically escalated to the maintenance queue.' },
+  { icon: Calendar, title: 'Preventive Maintenance Schedules', description: 'Set maintenance intervals by mileage, engine hours, or calendar date. Get alerts before vehicles go overdue.' },
+  { icon: Package, title: 'Parts & Inventory Tracking', description: 'Manage your parts inventory, track stock levels, and link parts consumption to specific work orders and vehicles.' },
+  { icon: FileText, title: 'Service History & Audit Trail', description: 'Complete maintenance history for every vehicle. Searchable records for compliance, resale, and insurance purposes.' },
+  { icon: BarChart3, title: 'Maintenance Cost Analytics', description: 'Track total cost of ownership per vehicle, identify high-maintenance assets, and make data-driven fleet replacement decisions.' },
+];
+
+const analyticsItems = [
+  { icon: BarChart3, title: 'On-Time Delivery Rate', description: 'Track delivery performance against committed windows across your entire fleet.' },
+  { icon: Route, title: 'Route Efficiency Score', description: 'Compare planned vs actual routes to identify optimization opportunities.' },
+  { icon: Truck, title: 'Vehicle Utilization', description: 'Understand how much of your fleet capacity is being used at any given time.' },
+  { icon: Clock, title: 'Driver Hours & Productivity', description: 'Monitor active hours, idle time, and orders completed per driver per shift.' },
+];
+
+const useCases = [
+  { title: 'Last-Mile Delivery', description: 'Optimize multi-stop routes, automate dispatch, and give customers live tracking links.' },
+  { title: '3PL Operations', description: 'Manage multiple client operations from one platform with separate data and workflows per organization.' },
+  { title: 'Food & Beverage', description: 'Handle time-sensitive deliveries with temperature tracking, POD capture, and real-time driver status.' },
+  { title: 'Field Service', description: 'Dispatch technicians, track job completion, and capture signatures and photos on-site.' },
+  { title: 'Freight & Haulage', description: 'Manage long-haul routes, multi-leg shipments, and carrier assignments from a single dashboard.' },
+  { title: 'E-Commerce Fulfillment', description: 'Connect your storefront to your delivery operations and automate order-to-dispatch flows.' },
+  { title: 'Healthcare Logistics', description: 'Manage sensitive deliveries with chain-of-custody tracking, compliance fields, and audit logs.' },
+  { title: 'Retail Distribution', description: 'Coordinate store replenishment runs, manage delivery schedules, and track in-store confirmations.' },
+];
+
+const faqs = [
+  { q: 'How does FleetOps handle route optimization?', a: 'FleetOps uses constraint-based route optimization that considers traffic conditions, delivery time windows, vehicle capacity, and driver availability. Routes are optimized at dispatch time and can be re-optimized dynamically when conditions change.' },
+  { q: 'Can I customize order types and workflows?', a: 'Yes. FleetOps supports fully configurable order types with custom fields, custom activity flows, and custom statuses. You can build workflows that match your exact operational processes without writing any code.' },
+  { q: 'Does FleetOps include a mobile app for drivers?', a: 'Yes. The Navigator app (iOS and Android) is an open-source mobile app built for FleetOps. Drivers receive dispatched orders, navigate to stops, capture proof of delivery, and report vehicle faults — all from the app.' },
+  { q: 'What is the maintenance module and when is it available?', a: 'The maintenance module adds full vehicle maintenance management: work orders, preventive maintenance schedules, parts inventory, fault reporting, and cost analytics. It is currently in active development.' },
+  { q: 'How does FleetOps pricing work?', a: "FleetOps uses resource-unit-based pricing. You pay a flat monthly fee based on your plan tier with included resource units. There are no per-seat or per-driver fees — scale your team without scaling your software costs." },
+  { q: 'Can I integrate FleetOps with my existing systems?', a: 'Yes. FleetOps exposes a full REST API and supports webhooks for all major events. Integrate with ERPs, WMS systems, e-commerce platforms, accounting software, and any other system via the API or pre-built integrations.' },
+  { q: 'Is FleetOps open source?', a: 'Yes. FleetOps is fully open-source and available on GitHub at github.com/fleetbase/fleetops. You can self-host it, inspect the code, contribute, and build extensions on top of it.' },
+  { q: 'How does real-time tracking work?', a: 'Drivers share their location via the Navigator app. Dispatchers see live positions on the map, and customers receive a tracking link with a live ETA. Geofences can trigger automatic status updates when drivers arrive or depart.' },
+];
 
 export default function FleetOpsPage() {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="section-padding relative">
-        <div className="relative container">
-          <div className="flex flex-col items-center text-center gap-8 max-w-4xl mx-auto">
-            {/* Badge */}
-            <div className="flex items-center rounded-full border p-1 text-xs">
-              <span className="bg-muted rounded-full px-3 py-1">
-                FleetOps
-              </span>
-              <span className="px-3">Open-Source Transport Management</span>
+
+      {/* ── Hero ─────────────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-background via-muted/10 to-background section-padding">
+        <div className="container relative z-10">
+          <div className="mx-auto max-w-4xl text-center">
+            <div className="flex items-center justify-center rounded-full border w-fit mx-auto px-3 py-1 text-xs mb-6 gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              Transport Management System
             </div>
-
-            {/* Headline */}
-            <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-              The Open-Source TMS{' '}
-              <span className="text-gradient">That Adapts to Your Business</span>
+            <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl mb-6">
+              The Open-Source TMS That{' '}
+              <span className="text-gradient">Adapts to Your Business</span>
             </h1>
-
-            {/* Description */}
-            <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl dark:text-foreground/95 max-w-3xl">
-              Stop forcing your operations into rigid software. FleetOps is the infinitely flexible transport management system designed to manage your entire logistics operation, from first mile to last.
+            <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl max-w-2xl mx-auto mb-10">
+              Stop forcing your operations into rigid software. FleetOps gives you intelligent dispatch, real-time tracking, and fully configurable workflows — all on an open-source platform you actually own.
             </p>
-
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-4 justify-center mt-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Link href="/pricing">
-                <Button size="lg">Start 7-Day Free Trial</Button>
+                <Button size="lg">
+                  Start Free Trial <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </Link>
               <Link href="/contact">
                 <Button size="lg" variant="outline">Book a Demo</Button>
               </Link>
               <Link href="https://github.com/fleetbase/fleetops" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" variant="ghost">Explore the Code</Button>
+                <Button size="lg" variant="ghost">View on GitHub</Button>
               </Link>
             </div>
 
-            {/* Video Placeholder */}
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🎥</div>
-                <p className="text-muted-foreground">FleetOps Platform Overview Video</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Dashboard, Live Map & Order Management Demo</p>
+            {/* Outcome Stats */}
+            <div className="grid grid-cols-2 gap-px rounded-xl border bg-border md:grid-cols-4 overflow-hidden mb-16">
+              {outcomes.map((stat) => (
+                <div key={stat.label} className="flex flex-col items-center gap-1 bg-background px-6 py-8 text-center">
+                  <span className="text-3xl font-bold tracking-tight md:text-4xl">{stat.value}</span>
+                  <span className="text-xs text-muted-foreground">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Hero Screenshot Placeholder */}
+          <div className="rounded-xl border bg-muted/30 overflow-hidden shadow-2xl">
+            <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
+              <div className="flex gap-1.5">
+                <div className="h-3 w-3 rounded-full bg-red-400/60" />
+                <div className="h-3 w-3 rounded-full bg-yellow-400/60" />
+                <div className="h-3 w-3 rounded-full bg-green-400/60" />
+              </div>
+              <span className="text-xs text-muted-foreground ml-2">FleetOps — Live Operations Dashboard</span>
+            </div>
+            <div className="aspect-[16/7] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center">
+              <div className="text-center space-y-3">
+                <MapPin className="h-12 w-12 text-muted-foreground/40 mx-auto" />
+                <p className="text-sm text-muted-foreground font-medium">Live Fleet Map — Screenshot Placeholder</p>
+                <p className="text-xs text-muted-foreground/60">Real-time driver positions, order statuses, and route overlays</p>
               </div>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Problem Section */}
-      <section className="py-24 bg-gradient-to-b from-background to-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Is Your Logistics Software Working Against You?
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              Traditional transport management systems are built on outdated, monolithic architecture. They're expensive to license, difficult to customize, and lock you into a single vendor's ecosystem.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">📋</div>
-                  <p className="text-xs text-muted-foreground">Messy manual processes</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Inflexible Workflows</h3>
-              <p className="text-muted-foreground">
-                Your operations are unique, but your TMS treats you like everyone else. You're stuck with predefined workflows that don't match your business processes, causing manual workarounds and data silos.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">💸</div>
-                  <p className="text-xs text-muted-foreground">Exponential cost growth</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Prohibitive Costs</h3>
-              <p className="text-muted-foreground">
-                Per-user pricing models penalize you for growing. Every new driver, dispatcher, or manager adds to your monthly bill, making it impossible to scale affordably.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">🔒</div>
-                  <p className="text-xs text-muted-foreground">Trapped by vendor lock-in</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Vendor Lock-In</h3>
-              <p className="text-muted-foreground">
-                Your data is held hostage in a proprietary system. Migrating is a nightmare, and integrations are limited and expensive. You have no control over the product roadmap.
-              </p>
-            </div>
-          </div>
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute top-0 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
         </div>
       </section>
 
-      {/* Solution Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              The Freedom to Run Your Logistics, Your Way
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              FleetOps is an open-source, API-first Transport Management System that gives you the freedom to build, customize, and scale your logistics operations without limits.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">⚙️</div>
-                  <p className="text-xs text-muted-foreground">Custom workflow builder</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Build Your Perfect Workflow</h3>
-              <p className="text-muted-foreground">
-                Create custom fields, define your own activity flows, and trigger updates based on your unique business logic. The system adapts to you, not the other way around.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">📈</div>
-                  <p className="text-xs text-muted-foreground">Linear, predictable growth</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Scale Affordably</h3>
-              <p className="text-muted-foreground">
-                Our usage-based pricing means you never pay per user. Scale your team, your fleet, and your order volume without worrying about exponential cost increases.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">🔓</div>
-                  <p className="text-xs text-muted-foreground">Open-source freedom</p>
-                </div>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">Own Your Data & Destiny</h3>
-              <p className="text-muted-foreground">
-                As an open-source platform, FleetOps gives you complete control. Host it yourself, access the full codebase, and integrate with any system using our powerful API.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 1: Order Management */}
+      {/* ── Problem Section ──────────────────────────────────────────────── */}
       <section className="py-24 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-                <span className="text-primary">●</span>
-                <span className="ml-2">Order Management & Dispatch</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Centralize and Automate Your Entire Order Lifecycle
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                From simple point-to-point deliveries to complex multi-stop routes, FleetOps provides a powerful command center to manage every order. Create custom workflows, automate dispatching, and track progress in real-time.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🔄</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Custom Order Workflows</h4>
-                    <p className="text-sm text-muted-foreground">Define unique activity flows, statuses, and logic for any type of order. Add custom fields, conditional triggers, and automated actions.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🤖</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Automated Dispatch</h4>
-                    <p className="text-sm text-muted-foreground">Automatically assign orders to the best driver based on location, availability, vehicle capacity, and custom business rules.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">📍</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Real-Time Tracking</h4>
-                    <p className="text-sm text-muted-foreground">Monitor order progress live on a map from the moment it's created to the final proof of delivery. Track every waypoint and status change.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">✍️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Proof of Delivery</h4>
-                    <p className="text-sm text-muted-foreground">Capture digital signatures, photos, and notes at the point of delivery for complete accountability and customer satisfaction.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📦</div>
-                <p className="text-muted-foreground font-medium">Order Management Dashboard</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Order list with statuses, live map, and tracking details</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 2: Fleet & Driver Management */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center order-2 md:order-1">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🚚</div>
-                <p className="text-muted-foreground font-medium">Fleet Management View</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Driver list, status indicators, and live map locations</p>
-              </div>
-            </div>
-
-            <div className="order-1 md:order-2">
-              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-                <span className="text-primary">●</span>
-                <span className="ml-2">Fleet & Driver Management</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Complete Visibility and Control Over Your Fleet
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Manage your vehicles, drivers, and equipment in one centralized system. Track locations, monitor performance, and ensure your entire fleet is operating at peak efficiency.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🗺️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Live GPS Tracking</h4>
-                    <p className="text-sm text-muted-foreground">See your entire fleet on a live map with real-time location updates. Track vehicle movements, driver routes, and delivery progress.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">👤</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Driver Profiles & Scheduling</h4>
-                    <p className="text-sm text-muted-foreground">Manage driver information, availability, and schedules. Assign drivers to vehicles and orders with ease. Track hours of service for compliance.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🚗</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Vehicle Management</h4>
-                    <p className="text-sm text-muted-foreground">Keep detailed records of all vehicles, including documents, service history, telematics data, and assignments.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">📊</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Performance Analytics</h4>
-                    <p className="text-sm text-muted-foreground">Monitor driver performance, vehicle utilization, and fleet efficiency with comprehensive analytics and reporting.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 3: Route Optimization */}
-      <section className="py-24 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-                <span className="text-primary">●</span>
-                <span className="ml-2">Route Planning & Optimization</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Smarter Routes, Lower Costs, Faster Deliveries
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Our advanced route optimization engine finds the most efficient routes for your multi-stop deliveries. Reduce fuel costs, minimize drive time, and increase the number of deliveries your fleet can handle each day.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🎯</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Multi-Stop Optimization</h4>
-                    <p className="text-sm text-muted-foreground">Automatically calculate the most efficient sequence for unlimited stops. Consider time windows, vehicle capacity, and driver schedules.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🔄</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Dynamic Rerouting</h4>
-                    <p className="text-sm text-muted-foreground">Adjust routes on the fly based on traffic conditions, delays, or new orders. Keep your fleet moving efficiently all day long.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🗺️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Service Areas & Zones</h4>
-                    <p className="text-sm text-muted-foreground">Define geographic territories for your drivers and vehicles. Ensure efficient assignments and balanced workloads across your service areas.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">⏱️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Accurate ETA Calculations</h4>
-                    <p className="text-sm text-muted-foreground">Provide customers with real-time, traffic-aware ETAs. Reduce customer inquiries and improve satisfaction.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🗺️</div>
-                <p className="text-muted-foreground font-medium">Route Optimization View</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Optimized multi-stop route vs. unoptimized route comparison</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 4: Maintenance & Compliance */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center order-2 md:order-1">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔧</div>
-                <p className="text-muted-foreground font-medium">Maintenance Dashboard</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Upcoming services, open issues, work order statuses</p>
-              </div>
-            </div>
-
-            <div className="order-1 md:order-2">
-              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-                <span className="text-primary">●</span>
-                <span className="ml-2">Maintenance & Compliance</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Keep Your Fleet on the Road and Out of the Shop
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Proactively manage vehicle maintenance with automated scheduling, issue tracking, and work order management. Ensure your fleet is safe, compliant, and always ready for the next job.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">📅</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Preventive Maintenance Scheduling</h4>
-                    <p className="text-sm text-muted-foreground">Set up recurring service schedules based on mileage, engine hours, or time. Never miss an oil change or inspection again.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">⚠️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Issue Tracking</h4>
-                    <p className="text-sm text-muted-foreground">Allow drivers to report issues from the road. Track problems from discovery through resolution with full history and documentation.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">📋</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Work Order Management</h4>
-                    <p className="text-sm text-muted-foreground">Create, assign, and track maintenance work orders. Manage internal technicians or coordinate with third-party vendors.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">⛽</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Fuel & Parts Tracking</h4>
-                    <p className="text-sm text-muted-foreground">Monitor fuel consumption, identify inefficiencies, and manage your spare parts inventory all in one place.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 5: Dynamic Pricing */}
-      <section className="py-24 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-                <span className="text-primary">●</span>
-                <span className="ml-2">Dynamic Pricing & Quoting</span>
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                Flexible Pricing That Adapts to Every Scenario
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8">
-                Configure complex pricing rules based on distance, weight, zones, and custom parameters. Automate rate selection and generate instant quotes for your customers.
-              </p>
-              
-              <div className="space-y-6">
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">💰</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Dynamic Rate Engine</h4>
-                    <p className="text-sm text-muted-foreground">Create pricing rules based on any combination of factors: distance, weight, zones, time of day, vehicle type, and more.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">🗺️</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Zone-to-Zone Pricing</h4>
-                    <p className="text-sm text-muted-foreground">Define service areas and set different rates for each zone combination. Perfect for complex metropolitan or regional operations.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">📄</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Instant Quote Generation</h4>
-                    <p className="text-sm text-muted-foreground">Generate professional quotes in seconds. Convert quotes to orders with a single click when customers are ready to book.</p>
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <span className="text-2xl">➕</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold mb-1">Surcharges & Fees</h4>
-                    <p className="text-sm text-muted-foreground">Add fuel surcharges, after-hours fees, handling charges, and other custom fees to your pricing structure.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">💵</div>
-                <p className="text-muted-foreground font-medium">Service Rate Configuration</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Rate builder with zones, distance tiers, and pricing rules</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Section 6: API & Integrations */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
-              <span className="text-primary">●</span>
-              <span className="ml-2">Developer Platform</span>
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Built for Developers: The Ultimate Integration Platform
+        <div className="container">
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <div className="flex items-center justify-center rounded-full border w-fit mx-auto px-3 py-1 text-xs mb-4">The Problem</div>
+            <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">
+              Your TMS Should Work for You — Not Against You
             </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              FleetOps was built from the ground up with developers in mind. Our robust, API-first architecture allows you to integrate with any system, build custom applications, and extend the platform to meet your exact needs.
+            <p className="text-muted-foreground text-lg">
+              Most fleet management platforms were built for a different era. They&apos;re expensive, inflexible, and designed to keep you dependent on the vendor.
             </p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-3xl mb-3">🔌</div>
-              <h4 className="font-semibold mb-2">RESTful API</h4>
-              <p className="text-sm text-muted-foreground">
-                Access every piece of data and functionality through our comprehensive, well-documented API.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-3xl mb-3">⚡</div>
-              <h4 className="font-semibold mb-2">Event Webhooks</h4>
-              <p className="text-sm text-muted-foreground">
-                Get real-time notifications for any event in the system, from order creation to driver location updates.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-3xl mb-3">💻</div>
-              <h4 className="font-semibold mb-2">Open Source</h4>
-              <p className="text-sm text-muted-foreground">
-                Get under the hood, contribute to the project, and customize anything you want.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-3xl mb-3">🧩</div>
-              <h4 className="font-semibold mb-2">Modular Extensions</h4>
-              <p className="text-sm text-muted-foreground">
-                Build your own extensions and add new capabilities to the platform.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-12 rounded-lg border bg-card p-8">
-            <div className="text-sm font-mono bg-muted/50 p-6 rounded-lg overflow-x-auto">
-              <div className="text-muted-foreground mb-2">// Create an order via the API</div>
-              <div className="text-foreground">
-                <span className="text-blue-500">POST</span> /api/v1/orders
+          <div className="grid gap-6 md:grid-cols-3">
+            {problems.map((problem) => (
+              <div key={problem.title} className="rounded-xl border bg-card p-6">
+                <XCircle className="h-8 w-8 text-destructive mb-4" />
+                <h3 className="font-semibold text-lg mb-2">{problem.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{problem.description}</p>
               </div>
-              <div className="text-foreground mt-4">{'{'}</div>
-              <div className="text-foreground ml-4">"pickup": "123 Main St",</div>
-              <div className="text-foreground ml-4">"dropoff": "456 Oak Ave",</div>
-              <div className="text-foreground ml-4">"scheduled_at": "2026-02-09T10:00:00Z",</div>
-              <div className="text-foreground ml-4">"driver_id": "driver_abc123"</div>
-              <div className="text-foreground">{'}'}</div>
-            </div>
-            <p className="text-sm text-muted-foreground mt-4 text-center">
-              Simple, powerful API for all your integration needs
-            </p>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Use Cases */}
-      <section className="py-24 bg-muted/20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              The Engine for Any Logistics Operation
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-              FleetOps is trusted by businesses across dozens of industries to power their unique logistics operations.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">📦</div>
-              <h4 className="font-semibold mb-2">Last-Mile Delivery</h4>
-              <p className="text-sm text-muted-foreground">
-                Perfect for e-commerce, food, grocery, and parcel delivery. Optimize routes, track drivers, and provide customers with real-time ETAs.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">🔧</div>
-              <h4 className="font-semibold mb-2">Field Service</h4>
-              <p className="text-sm text-muted-foreground">
-                Manage your technicians, schedule service appointments, and dispatch the right person with the right equipment to every job.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">🚛</div>
-              <h4 className="font-semibold mb-2">Freight & Trucking</h4>
-              <p className="text-sm text-muted-foreground">
-                From LTL to FTL, manage your loads, drivers, and compliance in one system. Integrate with telematics and ELD providers.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">⚡</div>
-              <h4 className="font-semibold mb-2">On-Demand Services</h4>
-              <p className="text-sm text-muted-foreground">
-                Power your on-demand business, whether it's ride-sharing, mobile services, or asset rentals. Handle complex, real-time dispatching.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">🏥</div>
-              <h4 className="font-semibold mb-2">Healthcare Logistics</h4>
-              <p className="text-sm text-muted-foreground">
-                Deliver medical supplies, specimens, and equipment with compliance and temperature monitoring.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">🏪</div>
-              <h4 className="font-semibold mb-2">Retail Distribution</h4>
-              <p className="text-sm text-muted-foreground">
-                Manage wholesale, B2B, and route sales operations. Optimize multi-stop routes for maximum efficiency.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">♻️</div>
-              <h4 className="font-semibold mb-2">Waste Management</h4>
-              <p className="text-sm text-muted-foreground">
-                Schedule recurring routes, manage on-demand pickups, and track container locations and status.
-              </p>
-            </div>
-
-            <div className="bg-card border rounded-lg p-6">
-              <div className="text-4xl mb-4">🏛️</div>
-              <h4 className="font-semibold mb-2">Government & Military</h4>
-              <p className="text-sm text-muted-foreground">
-                Secure, compliant logistics for asset transport, supply chain management, and emergency response.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why FleetOps */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Why FleetOps? The Fleetbase Advantage
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🔓</span>
+      {/* ── Core Features ────────────────────────────────────────────────── */}
+      {coreFeatures.map((feature, i) => (
+        <section key={feature.badge} className={`py-24 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/10'}`}>
+          <div className="container">
+            <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+              <div className={feature.imageLeft ? 'lg:order-2' : ''}>
+                <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4 gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                  {feature.badge}
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">{feature.title}</h2>
+                <p className="text-muted-foreground leading-relaxed mb-6">{feature.description}</p>
+                <ul className="space-y-3">
+                  {feature.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                      <span className="text-sm">{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Unmatched Flexibility</h3>
-              <p className="text-muted-foreground">
-                Open-source and API-first, giving you the freedom to customize and integrate like no other TMS. Your operations, your rules.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">💰</span>
+              <div className={`rounded-xl border bg-muted/30 overflow-hidden shadow-lg ${feature.imageLeft ? 'lg:order-1' : ''}`}>
+                <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
+                  <div className="flex gap-1.5">
+                    <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
+                    <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
+                  </div>
+                  <span className="text-xs text-muted-foreground ml-2">{feature.placeholderLabel}</span>
+                </div>
+                <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-8">
+                  <div className="text-center space-y-2">
+                    <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
+                      <MapPin className="h-6 w-6 text-primary/50" />
+                    </div>
+                    <p className="text-xs text-muted-foreground font-medium">{feature.placeholderLabel}</p>
+                    <p className="text-xs text-muted-foreground/60 max-w-48">{feature.placeholderDesc}</p>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-semibold mb-3">Predictable, Fair Pricing</h3>
-              <p className="text-muted-foreground">
-                Our usage-based model means you never pay per user. Scale your operations without fear of runaway costs.
-              </p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🌐</span>
-              </div>
-              <h3 className="text-xl font-semibold mb-3">A Thriving Ecosystem</h3>
-              <p className="text-muted-foreground">
-                Backed by a vibrant community and a suite of powerful extensions like Navigator App, Storefront, and Customer Portal.
-              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ))}
 
-      {/* Testimonials */}
-      <Testimonials />
-
-      {/* Final CTA */}
+      {/* ── Maintenance Module ───────────────────────────────────────────── */}
       <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Ready to Transform Your Logistics?
-          </h2>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Take control of your operations with a TMS that works for you, not against you. Start your free 7-day trial and experience the power and flexibility of FleetOps.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/pricing">
-              <Button size="lg">Start 7-Day Free Trial</Button>
-            </Link>
-            <Link href="/contact">
-              <Button size="lg" variant="outline">Talk to an Expert</Button>
-            </Link>
-            <Link href="https://docs.fleetbase.io" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" variant="ghost">Read the Documentation</Button>
-            </Link>
+        <div className="container">
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4 gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-orange-500" />
+              Coming Soon — Maintenance Module
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">
+              Complete Vehicle Maintenance Management
+            </h2>
+            <p className="text-muted-foreground text-lg leading-relaxed">
+              Keep your fleet on the road and out of the shop. The FleetOps Maintenance Module brings work orders, preventive schedules, parts inventory, and cost analytics directly into your operations platform.
+            </p>
           </div>
-          <p className="text-sm text-muted-foreground mt-6">
-            No credit card required • Full platform access • Cancel anytime
-          </p>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {maintenanceFeatures.map((feature) => {
+              const Icon = feature.icon;
+              return (
+                <div key={feature.title} className="rounded-xl border bg-card p-6">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500/10 mb-4">
+                    <Icon className="h-5 w-5 text-orange-500" />
+                  </div>
+                  <h3 className="font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-12 rounded-xl border bg-muted/30 overflow-hidden shadow-lg">
+            <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
+              <div className="flex gap-1.5">
+                <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+                <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
+                <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
+              </div>
+              <span className="text-xs text-muted-foreground ml-2">FleetOps — Maintenance Dashboard</span>
+            </div>
+            <div className="aspect-[16/6] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center">
+              <div className="text-center space-y-3">
+                <Wrench className="h-12 w-12 text-muted-foreground/40 mx-auto" />
+                <p className="text-sm text-muted-foreground font-medium">Maintenance Dashboard — Screenshot Placeholder</p>
+                <p className="text-xs text-muted-foreground/60">Work orders, vehicle health, parts inventory, and maintenance schedules</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* ── Analytics ────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+            <div className="rounded-xl border bg-muted/30 overflow-hidden shadow-lg">
+              <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
+                </div>
+                <span className="text-xs text-muted-foreground ml-2">FleetOps — Analytics Dashboard</span>
+              </div>
+              <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-8">
+                <div className="text-center space-y-2">
+                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
+                    <BarChart3 className="h-6 w-6 text-primary/50" />
+                  </div>
+                  <p className="text-xs text-muted-foreground font-medium">Analytics Dashboard</p>
+                  <p className="text-xs text-muted-foreground/60 max-w-48">KPI charts, delivery performance trends, and fleet utilization metrics</p>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4 gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                Analytics & Reporting
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">
+                Make Every Decision with Data
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-8">
+                FleetOps surfaces the metrics that matter most to your operations. Track performance trends, identify inefficiencies, and make data-driven decisions — from individual driver scorecards to fleet-wide cost analysis.
+              </p>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {analyticsItems.map((item) => {
+                  const Icon = item.icon;
+                  return (
+                    <div key={item.title} className="flex items-start gap-3">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10 shrink-0">
+                        <Icon className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold">{item.title}</p>
+                        <p className="text-xs text-muted-foreground">{item.description}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Use Cases ────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-muted/10">
+        <div className="container">
+          <div className="mx-auto max-w-3xl text-center mb-16">
+            <div className="flex items-center justify-center rounded-full border w-fit mx-auto px-3 py-1 text-xs mb-4">Industry Use Cases</div>
+            <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">
+              Built for Every Fleet Operation
+            </h2>
+            <p className="text-muted-foreground text-lg">
+              FleetOps adapts to your industry and workflow — not the other way around.
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {useCases.map((useCase) => (
+              <div key={useCase.title} className="rounded-xl border bg-card p-5">
+                <h3 className="font-semibold mb-2">{useCase.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{useCase.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Developer Section ────────────────────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
+            <div>
+              <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4 gap-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+                Open Source & API-First
+              </div>
+              <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl mb-4">
+                Extend, Integrate, and Build on FleetOps
+              </h2>
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                FleetOps is fully open-source and exposes a complete REST API, WebSocket events, and webhook system. Build custom integrations, automate workflows, or extend the platform with your own modules.
+              </p>
+              <div className="space-y-3 mb-8">
+                {[
+                  'Full REST API with comprehensive documentation',
+                  'WebSocket channels for real-time event streaming',
+                  'Webhooks for order, driver, and fleet events',
+                  'JavaScript SDK for rapid integration',
+                  'Self-hostable — deploy on your own infrastructure',
+                ].map((point) => (
+                  <div key={point} className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                    <span className="text-sm">{point}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-3">
+                <Link href="/developers/api">
+                  <Button>View API Docs</Button>
+                </Link>
+                <Link href="https://github.com/fleetbase/fleetops" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline">GitHub</Button>
+                </Link>
+              </div>
+            </div>
+            <div className="rounded-xl border bg-muted/30 overflow-hidden shadow-lg">
+              <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
+                <div className="flex gap-1.5">
+                  <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
+                  <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
+                </div>
+                <span className="text-xs text-muted-foreground ml-2">FleetOps API — Create & Dispatch Order</span>
+              </div>
+              <div className="p-6 font-mono text-sm">
+                <pre className="text-muted-foreground leading-relaxed overflow-x-auto text-xs">{`import Fleetbase from '@fleetbase/sdk';
+
+const fleetbase = new Fleetbase('YOUR_API_KEY');
+
+// Create and dispatch an order
+const order = await fleetbase.orders.create({
+  payload: {
+    pickup: '123 Warehouse Rd, Sydney',
+    dropoff: '456 Customer St, Melbourne',
+    scheduled_at: new Date(),
+  },
+  dispatch: true,
+});
+
+console.log(\`Order: \${order.id}\`);
+console.log(\`Driver: \${order.driver.name}\`);
+console.log(\`ETA: \${order.eta}\`);`}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ──────────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-muted/10">
+        <div className="container">
+          <div className="mx-auto max-w-3xl">
+            <div className="text-center mb-12">
+              <div className="flex items-center justify-center rounded-full border w-fit mx-auto px-3 py-1 text-xs mb-4">FAQ</div>
+              <h2 className="text-3xl font-bold tracking-tight md:text-4xl mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-muted-foreground">Everything you need to know about FleetOps.</p>
+            </div>
+            <Accordion type="single" collapsible className="space-y-3">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={i} value={`faq-${i}`} className="rounded-lg border bg-card px-6">
+                  <AccordionTrigger className="text-left font-semibold hover:no-underline py-5">
+                    {faq.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed pb-5">
+                    {faq.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Final CTA ────────────────────────────────────────────────────── */}
+      <section className="py-24 bg-background">
+        <div className="container">
+          <div className="relative overflow-hidden rounded-2xl border bg-card px-8 py-16 text-center md:px-16">
+            <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+              <div className="absolute -top-1/2 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/5 blur-3xl" />
+            </div>
+            <div className="mx-auto max-w-3xl">
+              <div className="flex items-center justify-center rounded-full border w-fit mx-auto px-3 py-1 text-xs mb-6">Start Today</div>
+              <h2 className="text-3xl font-bold tracking-tight text-balance md:text-4xl lg:text-5xl mb-4">
+                Ready to Transform Your{' '}
+                <span className="text-gradient">Fleet Operations?</span>
+              </h2>
+              <p className="text-muted-foreground text-lg leading-relaxed mb-10 max-w-xl mx-auto">
+                Join hundreds of logistics teams using FleetOps to dispatch smarter, track in real time, and cut costs. 7-day free trial, no credit card required.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/pricing">
+                  <Button size="lg">
+                    Start Free Trial <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
+                <Link href="/contact">
+                  <Button size="lg" variant="outline">Book a Demo</Button>
+                </Link>
+              </div>
+              <p className="mt-6 text-xs text-muted-foreground">
+                No credit card required &nbsp;·&nbsp; Full platform access &nbsp;·&nbsp; Cancel anytime
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
