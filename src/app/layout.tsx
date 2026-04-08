@@ -7,6 +7,7 @@ import { Azeret_Mono, Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
+import WhatsAppFloat from '@/components/layout/whatsapp-float';
 import { StyleGlideProvider } from '@/components/styleglide-provider';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
@@ -120,6 +121,7 @@ export default function RootLayout({
             <Navbar />
             <main className="flex-1">{children}</main>
             <Footer />
+            <WhatsAppFloat />
           </RootProvider>
         </ThemeProvider>
       </body>
