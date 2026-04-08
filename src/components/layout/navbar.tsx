@@ -24,7 +24,13 @@ import {
   Heart,
   Recycle,
   Ship,
-  Smartphone
+  Smartphone,
+  MapPin,
+  BarChart3,
+  Zap,
+  UserCog,
+  Briefcase,
+  ClipboardList,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -50,7 +56,30 @@ import {
 } from '@/components/ui/navigation-menu';
 import { cn } from '@/lib/utils';
 
-export const NAV_LINKS = [
+// Type definitions
+interface NavSubItem {
+  label: string;
+  href: string;
+  description: string;
+  icon: React.ElementType;
+  external?: boolean;
+}
+
+interface NavSubGroup {
+  groupLabel: string;
+  items: NavSubItem[];
+}
+
+interface NavLink {
+  label: string;
+  href: string;
+  subitems?: NavSubItem[];
+  subgroups?: NavSubGroup[];
+  megaMenu?: boolean;
+  groupedMegaMenu?: boolean;
+}
+
+export const NAV_LINKS: NavLink[] = [
   {
     label: 'Platform',
     href: '/platform',
@@ -127,57 +156,144 @@ export const NAV_LINKS = [
   {
     label: 'Solutions',
     href: '/solutions',
-    subitems: [
+    groupedMegaMenu: true,
+    subgroups: [
       {
-        label: 'Trucking & Haulage',
-        href: '/solutions/trucking',
-        description: 'Optimize long-haul routes, manage assets, and track freight in real-time.',
-        icon: Truck,
+        groupLabel: 'By Industry',
+        items: [
+          {
+            label: 'Trucking & Haulage',
+            href: '/solutions/trucking',
+            description: 'Optimize long-haul routes, manage assets, and track freight in real-time.',
+            icon: Truck,
+          },
+          {
+            label: 'Food & Grocery Delivery',
+            href: '/solutions/food-delivery',
+            description: 'Power on-demand delivery with live tracking and temperature monitoring.',
+            icon: Utensils,
+          },
+          {
+            label: 'Courier & Parcel Services',
+            href: '/solutions/courier-services',
+            description: 'Automate dispatch, proof of delivery, and last-mile optimization.',
+            icon: Package,
+          },
+          {
+            label: 'E-commerce & Retail',
+            href: '/solutions/ecommerce',
+            description: 'Sync inventory, fulfill orders, and delight customers with fast shipping.',
+            icon: ShoppingCart,
+          },
+          {
+            label: 'Healthcare & Pharmacy',
+            href: '/solutions/healthcare',
+            description: 'Deliver medical supplies securely with HIPAA-compliant logistics.',
+            icon: Heart,
+          },
+          {
+            label: 'Waste & Recycling',
+            href: '/solutions/waste-management',
+            description: 'Optimize collection routes and manage recycling operations efficiently.',
+            icon: Recycle,
+          },
+          {
+            label: 'Container Operations',
+            href: '/solutions/container-operations',
+            description: 'Track containers from port to destination with real-time visibility.',
+            icon: Ship,
+          },
+          {
+            label: 'Military & Government',
+            href: '/solutions/government',
+            description: 'Secure logistics for defense operations and battle management systems.',
+            icon: Shield,
+          },
+        ],
       },
       {
-        label: 'Food & Grocery Delivery',
-        href: '/solutions/food-delivery',
-        description: 'Power on-demand delivery with live tracking and temperature monitoring.',
-        icon: Utensils,
+        groupLabel: 'By Use Case',
+        items: [
+          {
+            label: 'Last-Mile Delivery',
+            href: '/solutions/use-cases/last-mile-delivery',
+            description: 'Streamline final-leg delivery with smart dispatch and real-time tracking.',
+            icon: MapPin,
+          },
+          {
+            label: 'Route Optimization',
+            href: '/solutions/use-cases/route-optimization',
+            description: 'Cut fuel costs and improve on-time rates with AI-powered routing.',
+            icon: Navigation,
+          },
+          {
+            label: 'Fleet Management',
+            href: '/solutions/use-cases/fleet-management',
+            description: 'Monitor vehicle health, utilization, and compliance from one dashboard.',
+            icon: Truck,
+          },
+          {
+            label: 'Order Management',
+            href: '/solutions/use-cases/order-management',
+            description: 'Configure, track, and fulfill any order type with custom workflows.',
+            icon: ClipboardList,
+          },
+          {
+            label: 'Analytics & Reporting',
+            href: '/solutions/use-cases/analytics',
+            description: 'Turn operational data into actionable insights with live dashboards.',
+            icon: BarChart3,
+          },
+          {
+            label: 'API & Integrations',
+            href: '/solutions/use-cases/integrations',
+            description: 'Connect your ERP, WMS, and third-party tools via REST APIs and webhooks.',
+            icon: Zap,
+          },
+        ],
       },
       {
-        label: 'Courier & Parcel Services',
-        href: '/solutions/courier-services',
-        description: 'Automate dispatch, proof of delivery, and last-mile optimization.',
-        icon: Package,
-      },
-      {
-        label: 'E-commerce & Retail',
-        href: '/solutions/ecommerce',
-        description: 'Sync inventory, fulfill orders, and delight customers with fast shipping.',
-        icon: ShoppingCart,
-      },
-      {
-        label: 'Healthcare & Pharmacy',
-        href: '/solutions/healthcare',
-        description: 'Deliver medical supplies securely with HIPAA-compliant logistics.',
-        icon: Heart,
-      },
-      {
-        label: 'Waste & Recycling',
-        href: '/solutions/waste-management',
-        description: 'Optimize collection routes and manage recycling operations efficiently.',
-        icon: Recycle,
-      },
-      {
-        label: 'Container Operations',
-        href: '/solutions/container-operations',
-        description: 'Track containers from port to destination with real-time visibility.',
-        icon: Ship,
-      },
-      {
-        label: 'Military & Government',
-        href: '/solutions/government',
-        description: 'Secure logistics for defense operations and battle management systems.',
-        icon: Shield,
+        groupLabel: 'By Role',
+        items: [
+          {
+            label: 'Operations Managers',
+            href: '/solutions/roles/operations-managers',
+            description: 'Get full visibility and control over daily logistics operations.',
+            icon: UserCog,
+          },
+          {
+            label: 'Fleet Managers',
+            href: '/solutions/roles/fleet-managers',
+            description: 'Manage drivers, vehicles, and routes from a single command center.',
+            icon: Truck,
+          },
+          {
+            label: 'IT & Developers',
+            href: '/solutions/roles/developers',
+            description: 'Build, extend, and integrate Fleetbase into your existing tech stack.',
+            icon: Code,
+          },
+          {
+            label: 'Business Owners & CEOs',
+            href: '/solutions/roles/executives',
+            description: 'Scale logistics operations and reduce costs with a platform that grows with you.',
+            icon: Briefcase,
+          },
+          {
+            label: 'Warehouse Managers',
+            href: '/solutions/roles/warehouse-managers',
+            description: 'Coordinate inventory, fulfillment, and inbound/outbound flows seamlessly.',
+            icon: Package,
+          },
+          {
+            label: 'Customer Success Teams',
+            href: '/solutions/roles/customer-success',
+            description: 'Deliver proactive updates and reduce WISMO calls with live tracking.',
+            icon: Users,
+          },
+        ],
       },
     ],
-    megaMenu: true,
   },
   {
     label: 'Developers',
@@ -338,19 +454,76 @@ const Navbar = () => {
   return (
     <header className="lg:border-b">
       <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
-        <Logo className="flex-shrink-0" />
+      
+        <Logo />
 
         <NavigationMenu viewport={false} className="hidden lg:flex flex-1 justify-center">
           <NavigationMenuList className="gap-2 xl:gap-4">
             {NAV_LINKS.map((item) => (
               <NavigationMenuItem key={item.label}>
-                {item.subitems ? (
+                {item.subgroups ? (
+                  /* ── Grouped mega-menu (Solutions) ── */
                   <>
                     <NavigationMenuTrigger
                       className={cn(
                         'cursor-pointer bg-transparent [&_svg]:ms-2 [&_svg]:size-4',
-                        pathname.startsWith(item.href) &&
-                          'bg-accent font-semibold',
+                        pathname.startsWith(item.href) && 'bg-accent font-semibold',
+                      )}
+                    >
+                      {item.label}
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent>
+                      <div className="w-[780px] p-4">
+                        <div className="grid grid-cols-3 gap-x-6">
+                          {item.subgroups.map((group) => (
+                            <div key={group.groupLabel}>
+                              {/* Group heading */}
+                              <div className="mb-2 px-2 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+                                {group.groupLabel}
+                              </div>
+                              <ul className="space-y-0.5">
+                                {group.items.map((subitem) => (
+                                  <li key={subitem.label}>
+                                    <NavigationMenuLink
+                                      href={subitem.href}
+                                      className="flex flex-row items-start gap-2.5 rounded-md p-2 transition-colors hover:bg-accent"
+                                      {...(subitem.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                                    >
+                                      <subitem.icon className="mt-0.5 size-4 flex-shrink-0 text-foreground" />
+                                      <div className="flex flex-col gap-0.5">
+                                        <span className="text-sm font-medium leading-tight">
+                                          {subitem.label}
+                                        </span>
+                                        <span className="line-clamp-2 text-xs leading-snug text-muted-foreground">
+                                          {subitem.description}
+                                        </span>
+                                      </div>
+                                    </NavigationMenuLink>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                        {/* Footer link */}
+                        <div className="mt-4 border-t pt-3">
+                          <NavigationMenuLink
+                            href="/solutions"
+                            className="flex items-center gap-1.5 px-2 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+                          >
+                            View all solutions →
+                          </NavigationMenuLink>
+                        </div>
+                      </div>
+                    </NavigationMenuContent>
+                  </>
+                ) : item.subitems ? (
+                  /* ── Standard mega-menu / dropdown ── */
+                  <>
+                    <NavigationMenuTrigger
+                      className={cn(
+                        'cursor-pointer bg-transparent [&_svg]:ms-2 [&_svg]:size-4',
+                        pathname.startsWith(item.href) && 'bg-accent font-semibold',
                       )}
                     >
                       {item.label}
@@ -383,6 +556,7 @@ const Navbar = () => {
                     </NavigationMenuContent>
                   </>
                 ) : (
+                  /* ── Plain link ── */
                   <NavigationMenuLink
                     href={item.href}
                     className={cn(
@@ -418,6 +592,7 @@ const Navbar = () => {
             </Button>
           ))}
         </div>
+
         <div className="flex items-center gap-2 lg:hidden lg:gap-4">
           <ThemeToggle />
           <button
@@ -455,7 +630,7 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/*  Mobile Menu Navigation */}
+        {/* Mobile Menu Navigation */}
         <div
           className={cn(
             'bg-background/95 text-accent-foreground fixed inset-0 top-[var(--header-height)] z-50 flex flex-col justify-between tracking-normal backdrop-blur-md transition-all duration-500 ease-out lg:hidden',
@@ -472,7 +647,45 @@ const Navbar = () => {
               <NavigationMenuList className="w-full flex-col items-start gap-6">
                 {NAV_LINKS.map((item) => (
                   <NavigationMenuItem key={item.label} className="w-full">
-                    {item.subitems ? (
+                    {item.subgroups ? (
+                      /* ── Mobile: grouped Solutions accordion ── */
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value={item.label}>
+                          <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
+                            {item.label}
+                          </AccordionTrigger>
+                          <AccordionContent className="pt-2 pb-0">
+                            <div className="space-y-4">
+                              {item.subgroups.map((group) => (
+                                <div key={group.groupLabel}>
+                                  <div className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                                    {group.groupLabel}
+                                  </div>
+                                  <div className="space-y-1">
+                                    {group.items.map((subitem) => (
+                                      <NavigationMenuLink
+                                        key={subitem.label}
+                                        href={subitem.href}
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className={cn(
+                                          'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
+                                          pathname === subitem.href && 'bg-accent font-semibold',
+                                        )}
+                                        {...(subitem.external && { target: '_blank', rel: 'noopener noreferrer' })}
+                                      >
+                                        <subitem.icon className="size-5" />
+                                        <span>{subitem.label}</span>
+                                      </NavigationMenuLink>
+                                    ))}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    ) : item.subitems ? (
+                      /* ── Mobile: standard accordion ── */
                       <Accordion type="single" collapsible className="">
                         <AccordionItem value={item.label}>
                           <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
@@ -487,8 +700,7 @@ const Navbar = () => {
                                   onClick={() => setIsMenuOpen(false)}
                                   className={cn(
                                     'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
-                                    pathname === subitem.href &&
-                                      'bg-accent font-semibold',
+                                    pathname === subitem.href && 'bg-accent font-semibold',
                                   )}
                                   {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
                                 >
@@ -501,6 +713,7 @@ const Navbar = () => {
                         </AccordionItem>
                       </Accordion>
                     ) : (
+                      /* ── Mobile: plain link ── */
                       <NavigationMenuLink
                         href={item.href}
                         className={cn(
