@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
-const WHATSAPP_NUMBER = '60123456789'; // Replace with the real Fleetbase WhatsApp number
+const WHATSAPP_NUMBER = '6588345437'; // Fleetbase sales: +65 8834 5437
 const WHATSAPP_MESSAGE = encodeURIComponent(
   'Hi Fleetbase team! I\'d like to learn more about your logistics platform.'
 );
