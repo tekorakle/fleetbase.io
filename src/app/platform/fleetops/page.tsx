@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 
 import Link from 'next/link';
 import {
@@ -62,6 +63,8 @@ const coreFeatures = [
       'Delivery window and vehicle capacity constraints',
       'Bulk order import and batch dispatch',
     ],
+    screenshot: '/images/console-screenshots/fleetops-orders-table.webp',
+    screenshotAlt: 'Fleetbase FleetOps order management table showing dispatch queue with pickup, dropoff, driver assignment and status columns',
     placeholderLabel: 'Route Optimization Map',
     placeholderDesc: 'Live map showing optimized multi-stop routes, driver positions, and ETAs',
     imageLeft: false,
@@ -78,6 +81,8 @@ const coreFeatures = [
       'Geofence-triggered status updates',
       'Driver location history and replay',
     ],
+    screenshot: '/images/console-screenshots/fleetops-live-map.webp',
+    screenshotAlt: 'Fleetbase FleetOps live map view showing real-time vehicle positions across Singapore with order pins and driver status indicators',
     placeholderLabel: 'Live Fleet Map',
     placeholderDesc: 'Real-time map view showing driver locations, order statuses, and ETAs',
     imageLeft: true,
@@ -94,6 +99,8 @@ const coreFeatures = [
       'Proof of delivery: signatures, photos, notes',
       'Barcode and QR code scanning via mobile',
     ],
+    screenshot: '/images/console-screenshots/fleetops-kanban-board.webp',
+    screenshotAlt: 'Fleetbase FleetOps kanban board view showing orders organised by status: Created, Dispatched, Started, Enroute, and Completed columns',
     placeholderLabel: 'Order Management Dashboard',
     placeholderDesc: 'Order list view with status filters, custom fields, and activity timeline',
     imageLeft: false,
@@ -110,6 +117,8 @@ const coreFeatures = [
       'Shift scheduling and availability windows',
       'Mobile app for drivers: Navigator (iOS & Android)',
     ],
+    screenshot: '/images/console-screenshots/fleetops-drivers.webp',
+    screenshotAlt: 'Fleetbase FleetOps driver management panel showing driver list with IDs, vehicle assignments, phone numbers, and active status',
     placeholderLabel: 'Driver Management Panel',
     placeholderDesc: 'Driver list with performance metrics, vehicle assignments, and status',
     imageLeft: true,
@@ -198,8 +207,8 @@ export default function FleetOpsPage() {
             </div>
           </div>
 
-          {/* Hero Screenshot Placeholder */}
-          <div className="rounded-xl border bg-muted/30 overflow-hidden shadow-2xl">
+          {/* Hero Screenshot */}
+          <div className="rounded-xl border overflow-hidden shadow-2xl">
             <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
               <div className="flex gap-1.5">
                 <div className="h-3 w-3 rounded-full bg-red-400/60" />
@@ -208,12 +217,15 @@ export default function FleetOpsPage() {
               </div>
               <span className="text-xs text-muted-foreground ml-2">FleetOps — Live Operations Dashboard</span>
             </div>
-            <div className="aspect-[16/7] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center">
-              <div className="text-center space-y-3">
-                <MapPin className="h-12 w-12 text-muted-foreground/40 mx-auto" />
-                <p className="text-sm text-muted-foreground font-medium">Live Fleet Map — Screenshot Placeholder</p>
-                <p className="text-xs text-muted-foreground/60">Real-time driver positions, order statuses, and route overlays</p>
-              </div>
+            <div className="relative aspect-[16/7] w-full">
+              <Image
+                src="/images/console-screenshots/fleetops-live-map.webp"
+                alt="Fleetbase FleetOps live operations dashboard showing real-time fleet map with driver positions, active orders, and route overlays across Singapore"
+                fill
+                className="object-cover object-top"
+                sizes="100vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -276,15 +288,27 @@ export default function FleetOpsPage() {
                   </div>
                   <span className="text-xs text-muted-foreground ml-2">{feature.placeholderLabel}</span>
                 </div>
-                <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-8">
-                  <div className="text-center space-y-2">
-                    <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
-                      <MapPin className="h-6 w-6 text-primary/50" />
-                    </div>
-                    <p className="text-xs text-muted-foreground font-medium">{feature.placeholderLabel}</p>
-                    <p className="text-xs text-muted-foreground/60 max-w-48">{feature.placeholderDesc}</p>
+                {feature.screenshot ? (
+                  <div className="relative aspect-[4/3] w-full">
+                    <Image
+                      src={feature.screenshot}
+                      alt={feature.screenshotAlt || feature.placeholderLabel}
+                      fill
+                      className="object-cover object-top"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
                   </div>
-                </div>
+                ) : (
+                  <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-8">
+                    <div className="text-center space-y-2">
+                      <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
+                        <MapPin className="h-6 w-6 text-primary/50" />
+                      </div>
+                      <p className="text-xs text-muted-foreground font-medium">{feature.placeholderLabel}</p>
+                      <p className="text-xs text-muted-foreground/60 max-w-48">{feature.placeholderDesc}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -320,21 +344,23 @@ export default function FleetOpsPage() {
               );
             })}
           </div>
-          <div className="mt-12 rounded-xl border bg-muted/30 overflow-hidden shadow-lg">
+          <div className="mt-12 rounded-xl border overflow-hidden shadow-lg">
             <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
               <div className="flex gap-1.5">
                 <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
                 <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
                 <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
               </div>
-              <span className="text-xs text-muted-foreground ml-2">FleetOps — Maintenance Dashboard</span>
+              <span className="text-xs text-muted-foreground ml-2">FleetOps — Vehicle Management</span>
             </div>
-            <div className="aspect-[16/6] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center">
-              <div className="text-center space-y-3">
-                <Wrench className="h-12 w-12 text-muted-foreground/40 mx-auto" />
-                <p className="text-sm text-muted-foreground font-medium">Maintenance Dashboard — Screenshot Placeholder</p>
-                <p className="text-xs text-muted-foreground/60">Work orders, vehicle health, parts inventory, and maintenance schedules</p>
-              </div>
+            <div className="relative aspect-[16/6] w-full">
+              <Image
+                src="/images/console-screenshots/fleetops-vehicles.webp"
+                alt="Fleetbase FleetOps vehicle management panel showing fleet list with vehicle status, plate numbers, driver assignments, and maintenance indicators"
+                fill
+                className="object-cover object-top"
+                sizes="100vw"
+              />
             </div>
           </div>
         </div>
@@ -344,7 +370,7 @@ export default function FleetOpsPage() {
       <section className="py-24 bg-background">
         <div className="container">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20 items-center">
-            <div className="rounded-xl border bg-muted/30 overflow-hidden shadow-lg">
+            <div className="rounded-xl border overflow-hidden shadow-lg">
               <div className="flex items-center gap-2 border-b bg-muted/50 px-4 py-3">
                 <div className="flex gap-1.5">
                   <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
@@ -353,14 +379,14 @@ export default function FleetOpsPage() {
                 </div>
                 <span className="text-xs text-muted-foreground ml-2">FleetOps — Analytics Dashboard</span>
               </div>
-              <div className="aspect-[4/3] bg-gradient-to-br from-muted/50 to-muted/20 flex items-center justify-center p-8">
-                <div className="text-center space-y-2">
-                  <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center mx-auto">
-                    <BarChart3 className="h-6 w-6 text-primary/50" />
-                  </div>
-                  <p className="text-xs text-muted-foreground font-medium">Analytics Dashboard</p>
-                  <p className="text-xs text-muted-foreground/60 max-w-48">KPI charts, delivery performance trends, and fleet utilization metrics</p>
-                </div>
+              <div className="relative aspect-[4/3] w-full">
+                <Image
+                  src="/images/console-screenshots/fleetops-kanban-board.webp"
+                  alt="Fleetbase FleetOps analytics and order pipeline view showing delivery performance across all operational stages"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
             </div>
             <div>

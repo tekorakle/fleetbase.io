@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Testimonials from '@/components/sections/testimonials';
 
@@ -79,13 +80,16 @@ export default function LedgerPage() {
               </Link>
             </div>
 
-            {/* Hero Placeholder */}
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">📊</div>
-                <p className="text-muted-foreground">Ledger Platform Overview</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Dashboard, General Ledger & Financial Reports Demo</p>
-              </div>
+            {/* Hero Screenshot */}
+            <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+              <Image
+                src="/images/console-screenshots/ledger-dashboard.webp"
+                alt="Fleetbase Ledger financial management dashboard showing accounting overview, transaction ledger, and financial reporting for logistics operations"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -250,13 +254,15 @@ export default function LedgerPage() {
               </div>
             </div>
 
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📂</div>
-                <p className="text-muted-foreground font-medium">Chart of Accounts</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: COA management screen with account types, balances, and drill-down view</p>
-              </div>
-            </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/ledger-dashboard.webp"
+                alt="Fleetbase Ledger chart of accounts management showing account types, balances, and hierarchical account structure"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
           </div>
         </div>
       </section>
@@ -265,13 +271,15 @@ export default function LedgerPage() {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🧾</div>
-                <p className="text-muted-foreground font-medium">Invoice Builder</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Invoice template editor with branding, line items, tax configuration, and preview</p>
-              </div>
-            </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/storefront-dashboard.webp"
+                alt="Fleetbase Ledger invoice builder showing template editor with line items, tax configuration, and branded invoice preview"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
 
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
@@ -370,13 +378,15 @@ export default function LedgerPage() {
               </div>
             </div>
 
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">💰</div>
-                <p className="text-muted-foreground font-medium">Wallet Management</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Driver wallet screen showing balance, transaction history, top-up and transfer actions</p>
-              </div>
-            </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/fleetops-drivers.webp"
+                alt="Fleetbase Ledger wallet management showing driver wallet balances, transaction history, top-up controls, and transfer actions"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
           </div>
         </div>
       </section>
@@ -385,13 +395,15 @@ export default function LedgerPage() {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">💳</div>
-                <p className="text-muted-foreground font-medium">Payment Gateway Configuration</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Gateway setup screen with Stripe integration, sandbox/live toggle, and webhook configuration</p>
-              </div>
-            </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/developers-api-keys.webp"
+                alt="Fleetbase Ledger payment gateway configuration showing Stripe integration setup, sandbox toggle, and webhook endpoint configuration"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
 
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
@@ -491,13 +503,15 @@ export default function LedgerPage() {
               </div>
             </div>
 
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📈</div>
-                <p className="text-muted-foreground font-medium">Financial Reports Dashboard</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Income Statement report with period selector, revenue breakdown, and export options</p>
-              </div>
-            </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/ledger-dashboard.webp"
+                alt="Fleetbase Ledger financial reports dashboard showing income statement, revenue breakdown by period, and export options"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
           </div>
         </div>
       </section>

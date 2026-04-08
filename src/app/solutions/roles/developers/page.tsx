@@ -25,6 +25,8 @@ export default function DevelopersPage() {
         { value: '100+', label: 'Webhook event types' },
         { value: '99.9%', label: 'API uptime SLA' },
       ]}
+      heroScreenshot="/images/console-screenshots/developers-api-keys.webp"
+      heroScreenshotAlt="Fleetbase developer console API key management panel for developers building logistics integrations"
       heroScreenshotNeeded="Fleetbase developer console — API key management, webhook configuration, and live API event log"
       painPoints={{
         heading: 'What developers hate about logistics software',

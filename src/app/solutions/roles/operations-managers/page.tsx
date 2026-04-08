@@ -25,6 +25,8 @@ export default function OperationsManagersPage() {
         { value: '2×', label: 'Faster exception resolution' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-kanban-board.webp"
+      heroScreenshotAlt="Fleetbase FleetOps operations board showing live order pipeline for operations managers"
       heroScreenshotNeeded="FleetOps operations dashboard — live order count, SLA status, active drivers, and exception alerts in one view"
       painPoints={{
         heading: 'What makes operations management harder than it needs to be',

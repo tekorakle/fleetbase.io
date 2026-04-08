@@ -25,6 +25,8 @@ export default function IntegrationsPage() {
         { value: 'Open', label: 'Source — inspect everything' },
         { value: '99.9%', label: 'API uptime SLA' },
       ]}
+      heroScreenshot="/images/console-screenshots/developers-api-keys.webp"
+      heroScreenshotAlt="Fleetbase developer console showing API key management with permission scopes and usage tracking"
       heroScreenshotNeeded="Fleetbase developer console — API key management, webhook configuration, and live event log"
       painPoints={{
         heading: 'Integration problems that slow logistics teams down',

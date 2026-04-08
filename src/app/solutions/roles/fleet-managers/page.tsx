@@ -25,6 +25,8 @@ export default function FleetManagersPage() {
         { value: '100%', label: 'Compliance deadline visibility' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-vehicles.webp"
+      heroScreenshotAlt="Fleetbase FleetOps vehicle management dashboard for fleet managers showing vehicle status and assignments"
       heroScreenshotNeeded="FleetOps fleet dashboard — vehicle list with health status, compliance indicators, and maintenance schedule"
       painPoints={{
         heading: 'What keeps fleet managers up at night',

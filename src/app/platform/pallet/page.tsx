@@ -1,4 +1,6 @@
+'use client';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -48,13 +50,16 @@ export default function PalletPage() {
                             </Link>
                         </div>
 
-                        {/* Video Placeholder */}
-                        <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-                            <div className="text-center">
-                                <div className="text-6xl mb-4">🎬</div>
-                                <p className="text-muted-foreground">Pallet WMS Platform Overview</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Multi-warehouse management, picking, and inventory control demo</p>
-                            </div>
+                        {/* Hero Screenshot */}
+                        <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+                            <Image
+                                src="/images/console-screenshots/storefront-products.webp"
+                                alt="Fleetbase Pallet WMS platform showing inventory management, warehouse locations, and stock control dashboard"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 80vw"
+                                priority
+                            />
                         </div>
                     </div>
                 </div>
@@ -229,12 +234,14 @@ export default function PalletPage() {
                             </div>
                         </div>
 
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">🗺️</div>
-                                <p className="text-muted-foreground font-medium">Multi-Warehouse Dashboard</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Warehouse map view with inventory levels and transfer status</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/storefront-products.webp"
+                                alt="Fleetbase Pallet WMS multi-warehouse dashboard showing inventory levels, warehouse locations, and stock transfer status"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
                     </div>
                 </div>
@@ -244,12 +251,14 @@ export default function PalletPage() {
             <section className="py-24">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center order-2 md:order-1">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">📦</div>
-                                <p className="text-muted-foreground font-medium">Wave Picking Dashboard</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Pick list generation, wave batching, and picker assignment</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/fleetops-orders-table.webp"
+                                alt="Fleetbase Pallet WMS wave picking dashboard showing pick list generation, batch creation, and picker assignment"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
 
                         <div className="order-1 md:order-2">
@@ -369,12 +378,14 @@ export default function PalletPage() {
                             </div>
                         </div>
 
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">✅</div>
-                                <p className="text-muted-foreground font-medium">Cycle Count Interface</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Cycle count dashboard with variance reports and adjustment workflow</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/fleetops-orders-table.webp"
+                                alt="Fleetbase Pallet WMS cycle count interface showing inventory variance reports, count assignments, and adjustment workflow"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
                     </div>
                 </div>
@@ -384,12 +395,14 @@ export default function PalletPage() {
             <section className="py-24">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center order-2 md:order-1">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">🔍</div>
-                                <p className="text-muted-foreground font-medium">Traceability Report</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Lot genealogy, serial number tracking, and recall management</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/developers-logs.webp"
+                                alt="Fleetbase Pallet WMS traceability report showing lot genealogy, serial number tracking, and recall management"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
 
                         <div className="order-1 md:order-2">
@@ -509,12 +522,14 @@ export default function PalletPage() {
                             </div>
                         </div>
 
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">🌡️</div>
-                                <p className="text-muted-foreground font-medium">Temperature Zones Dashboard</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Warehouse map with temperature zones and monitoring alerts</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/storefront-dashboard.webp"
+                                alt="Fleetbase Pallet WMS temperature zone management showing warehouse map with cold chain monitoring and alerts"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
                     </div>
                 </div>
@@ -524,12 +539,14 @@ export default function PalletPage() {
             <section className="py-24">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-2 gap-12 items-center">
-                        <div className="w-full h-[600px] rounded-lg border bg-muted/30 flex items-center justify-center order-2 md:order-1">
-                            <div className="text-center p-8">
-                                <div className="text-6xl mb-4">📱</div>
-                                <p className="text-muted-foreground font-medium">Mobile Warehouse Interface</p>
-                                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Tablet interface with barcode scanning and pick list</p>
-                            </div>
+                        <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
+                            <Image
+                                src="/images/console-screenshots/fleetops-drivers.webp"
+                                alt="Fleetbase Pallet WMS mobile interface showing barcode scanning, pick list navigation, and bin location guidance"
+                                fill
+                                className="object-cover object-top"
+                                sizes="(max-width: 768px) 100vw, 50vw"
+                            />
                         </div>
 
                         <div className="order-1 md:order-2">
@@ -682,13 +699,15 @@ export default function PalletPage() {
                         </p>
                     </div>
 
-                    <div className="w-full max-w-4xl mx-auto h-[400px] rounded-lg border bg-muted/30 flex items-center justify-center">
-                        <div className="text-center p-8">
-                            <div className="text-6xl mb-4">🔄</div>
-                            <p className="text-muted-foreground font-medium">Order Lifecycle Diagram</p>
-                            <p className="text-sm text-muted-foreground/70 mt-2">Receiving → Putaway → Picking → Packing → Dispatch → Delivery → POD</p>
-                        </div>
-                    </div>
+                    <div className="w-full max-w-4xl mx-auto h-[400px] rounded-lg border overflow-hidden shadow-lg relative">
+                    <Image
+                        src="/images/console-screenshots/fleetops-kanban-board.webp"
+                        alt="Fleetbase Pallet WMS order lifecycle showing complete flow from receiving through putaway, picking, packing, dispatch, and delivery"
+                        fill
+                        className="object-cover object-top"
+                        sizes="(max-width: 768px) 100vw, 80vw"
+                    />
+                </div>
                 </div>
             </section>
 

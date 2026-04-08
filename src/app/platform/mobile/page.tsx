@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 const faqs = [
@@ -78,12 +79,15 @@ export default function MobileAppsPage() {
               <Link href="https://github.com/fleetbase/storefront-app" target="_blank" rel="noopener noreferrer"><Button size="lg" variant="outline">Storefront App on GitHub</Button></Link>
               <Link href="/developers/api"><Button size="lg" variant="ghost">Build Your Own App</Button></Link>
             </div>
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">📱</div>
-                <p className="text-muted-foreground font-medium">Navigator & Storefront Mobile Apps</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Side-by-side view of Navigator driver app and Storefront customer app on iOS and Android</p>
-              </div>
+            <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+              <Image
+                src="/images/console-screenshots/fleetops-live-map.webp"
+                alt="Fleetbase mobile app ecosystem — Navigator driver app and Storefront customer app connected to live FleetOps dispatch"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -132,12 +136,14 @@ export default function MobileAppsPage() {
               <h2 className="text-3xl md:text-4xl font-bold mb-6">Give Your Drivers the Tools They Need to Succeed</h2>
               <p className="text-lg text-muted-foreground mb-8">Navigator is a purpose-built driver app that integrates directly with FleetOps. From the moment a driver is dispatched to the moment a delivery is confirmed, Navigator handles the entire workflow — on iOS, Android, and even in areas with no signal.</p>
             </div>
-            <div className="w-full h-[400px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🧭</div>
-                <p className="text-muted-foreground font-medium">Navigator App Screens</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Navigator app showing active order list, turn-by-turn navigation, and proof of delivery capture screen</p>
-              </div>
+            <div className="w-full h-[400px] rounded-lg border overflow-hidden shadow-lg relative">
+              <Image
+                src="/images/console-screenshots/fleetops-orders-table.webp"
+                alt="Fleetbase Navigator driver app order management showing active deliveries, driver assignments, and real-time status updates"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -156,12 +162,14 @@ export default function MobileAppsPage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
-            <div className="w-full h-[400px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🛍️</div>
-                <p className="text-muted-foreground font-medium">Storefront Customer App</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Storefront app showing store listing, product catalog, cart, and live order tracking map</p>
-              </div>
+            <div className="w-full h-[400px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/storefront-products.webp"
+                alt="Fleetbase Storefront customer app showing product catalogue, store listing, and order management interface"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Storefront App</span></div>
@@ -211,13 +219,15 @@ export default function MobileAppsPage() {
                 <Link href="/developers/console"><Button variant="outline">Developer Console</Button></Link>
               </div>
             </div>
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔧</div>
-                <p className="text-muted-foreground font-medium">Custom App Development</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Code editor showing React Native app using Fleetbase API with live order tracking and driver management</p>
-              </div>
-            </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
+            <Image
+                src="/images/console-screenshots/fleetops-drivers.webp"
+                alt="Fleetbase Navigator mobile app showing driver job list with active delivery, navigation controls, and proof of delivery capture"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+            />
+        </div>
           </div>
         </div>
       </section>

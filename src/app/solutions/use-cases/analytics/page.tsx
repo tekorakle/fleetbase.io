@@ -25,6 +25,8 @@ export default function AnalyticsPage() {
         { value: '40%', label: 'Faster operational decisions' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-kanban-board.webp"
+      heroScreenshotAlt="Fleetbase FleetOps order board providing operational analytics view across delivery pipeline stages"
       heroScreenshotNeeded="FleetOps analytics dashboard — overview with KPI cards, delivery performance chart, and fleet utilization graph"
       painPoints={{
         heading: 'Running blind on data you already have',

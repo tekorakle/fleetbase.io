@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -30,12 +31,15 @@ export default function StorefrontPage() {
             
             {/* Video Placeholder */}
             <div className="mt-12 w-full max-w-5xl">
-              <div className="relative aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                  <div className="text-6xl mb-4">🎬</div>
-                  <div className="text-xl font-semibold text-white mb-2">Platform Overview Video</div>
-                  <div className="text-sm text-slate-400 max-w-md">90-second demo showing customer ordering from branded mobile app → restaurant receiving order → driver delivering, all within the Fleetbase ecosystem</div>
-                </div>
+              <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                <Image
+                  src="/images/console-screenshots/storefront-dashboard.webp"
+                  alt="Fleetbase Storefront console dashboard showing live orders, store activity, and delivery metrics"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 80vw"
+                  priority
+                />
               </div>
             </div>
           </div>
@@ -207,12 +211,14 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="aspect-[9/16] bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                  <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-                    <div className="text-6xl mb-4">📱</div>
-                    <div className="text-lg font-semibold text-white mb-2">Mobile App Screenshots</div>
-                    <div className="text-sm text-slate-400 max-w-xs">Animated GIF showing: browsing products → adding to cart → checkout → order tracking with live map</div>
-                  </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image
+                    src="/images/console-screenshots/storefront-products.webp"
+                    alt="Fleetbase Storefront product catalogue showing items, categories, and pricing configuration"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </div>
             </TabsContent>
@@ -248,12 +254,14 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                  <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-                    <div className="text-6xl mb-4">🏪</div>
-                    <div className="text-lg font-semibold text-white mb-2">Marketplace Dashboard</div>
-                    <div className="text-sm text-slate-400 max-w-md">Screenshot showing: network overview → multiple stores → aggregated sales metrics → commission tracking → store performance rankings</div>
-                  </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image
+                    src="/images/console-screenshots/storefront-dashboard.webp"
+                    alt="Fleetbase Storefront multi-vendor marketplace dashboard showing store network, order volume, and revenue metrics"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </div>
             </TabsContent>
@@ -289,12 +297,14 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                  <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-                    <div className="text-6xl mb-4">📦</div>
-                    <div className="text-lg font-semibold text-white mb-2">Product Management Interface</div>
-                    <div className="text-sm text-slate-400 max-w-md">Screenshot showing: product editor → variants (size, color) → addons (toppings, extras) → availability settings → pricing rules</div>
-                  </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image
+                    src="/images/console-screenshots/storefront-products.webp"
+                    alt="Fleetbase Storefront product management showing product list with variants, addons, and availability settings"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </div>
             </TabsContent>
@@ -330,12 +340,14 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                  <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-                    <div className="text-6xl mb-4">🗺️</div>
-                    <div className="text-lg font-semibold text-white mb-2">FleetOps Integration</div>
-                    <div className="text-sm text-slate-400 max-w-md">Screenshot showing: map view with driver route → multiple stops → real-time location → ETA countdown → delivery status updates</div>
-                  </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image
+                    src="/images/console-screenshots/fleetops-live-map.webp"
+                    alt="Fleetbase FleetOps live map showing Storefront order dispatch with driver routes and real-time delivery tracking"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </div>
             </TabsContent>

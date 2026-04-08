@@ -25,6 +25,8 @@ export default function FoodDeliveryPage() {
         { value: '35%', label: 'Fewer failed deliveries' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-kanban-board.webp"
+      heroScreenshotAlt="Fleetbase FleetOps order board showing food delivery orders in Created, Dispatched, and Enroute stages"
       heroScreenshotNeeded="FleetOps live map — food delivery orders with driver positions and ETA countdown timers"
       painPoints={{
         heading: 'The problems killing your margins',

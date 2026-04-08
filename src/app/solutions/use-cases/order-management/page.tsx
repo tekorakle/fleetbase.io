@@ -25,6 +25,8 @@ export default function OrderManagementPage() {
         { value: '0', label: 'Code required for configuration' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshotAlt="Fleetbase FleetOps order management table showing full order queue with custom columns and status filters"
       heroScreenshotNeeded="FleetOps order management view — order list with custom columns, statuses, and filter panel"
       painPoints={{
         heading: 'Why rigid order management holds you back',

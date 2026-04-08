@@ -25,6 +25,8 @@ export default function GovernmentPage() {
         { value: 'SOC 2', label: 'Security compliance ready' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshotAlt="Fleetbase FleetOps live map showing government fleet operations with real-time vehicle tracking"
       heroScreenshotNeeded="FleetOps live map — government fleet operations with classified zone indicators and secure access panel"
       painPoints={{
         heading: 'The security and operational gaps in legacy systems',

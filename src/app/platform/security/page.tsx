@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 const faqs = [
@@ -106,12 +107,14 @@ export default function SecurityCompliancePage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔒</div>
-                <p className="text-muted-foreground font-medium">Data Protection Overview</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Diagram: Data flow showing encryption layers from client to database, with self-hosting architecture option</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
+              <Image
+                src="/images/console-screenshots/iam-users.webp"
+                alt="Fleetbase IAM user management showing team members with role assignments, access permissions, and account status"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -120,12 +123,14 @@ export default function SecurityCompliancePage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🛡️</div>
-                <p className="text-muted-foreground font-medium">Role & Permission Management</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: RBAC configuration panel showing custom roles, module-level permissions, and user assignments</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/iam-roles.webp"
+                alt="Fleetbase IAM access control showing role-based permissions matrix with granular access settings per module and action type"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Access Control</span></div>
@@ -160,12 +165,14 @@ export default function SecurityCompliancePage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📋</div>
-                <p className="text-muted-foreground font-medium">Audit Log Dashboard</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Audit log table showing user, action, resource, timestamp, IP address, and change diff inspector</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
+              <Image
+                src="/images/console-screenshots/developers-logs.webp"
+                alt="Fleetbase audit log dashboard showing complete action history with user, action type, resource, timestamp, IP address, and change inspector"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -195,12 +202,14 @@ export default function SecurityCompliancePage() {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[400px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🏠</div>
-                <p className="text-muted-foreground font-medium">Self-Hosting Architecture</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Diagram: Self-hosted Fleetbase deployment on private cloud or on-premises infrastructure with full data sovereignty</p>
-              </div>
+            <div className="w-full h-[400px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/iam-roles.webp"
+                alt="Fleetbase IAM roles and permissions management showing role configuration with granular access controls for self-hosted deployment"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Self-Hosting</span></div>

@@ -25,8 +25,8 @@ export default function TruckingPage() {
         { value: '99.9%', label: 'Platform uptime' },
         { value: '2×', label: 'Faster dispatch times' },
       ]}
-      heroScreenshot="/fleetops-screenshot.png"
-      heroScreenshotAlt="Fleetbase FleetOps live map tracking for trucking operations"
+      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshotAlt="Fleetbase FleetOps live map showing trucking fleet positions with real-time GPS tracking across routes"
       heroScreenshotNeeded="FleetOps live map view showing multiple trucks on long-haul routes with ETAs"
       painPoints={{
         heading: 'Sound familiar?',

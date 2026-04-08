@@ -25,6 +25,8 @@ export default function LastMileDeliveryPage() {
         { value: '25%', label: 'More deliveries per driver per day' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshotAlt="Fleetbase FleetOps live map showing last-mile delivery drivers on optimized routes with stop sequences"
       heroScreenshotNeeded="FleetOps live map — last-mile delivery drivers on routes with stop sequence numbers and ETAs"
       painPoints={{
         heading: 'Last-mile problems that cost you money and customers',

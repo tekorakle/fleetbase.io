@@ -25,6 +25,8 @@ export default function FleetManagementPage() {
         { value: '100%', label: 'Fleet visibility in real-time' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
+      heroScreenshot="/images/console-screenshots/fleetops-vehicles.webp"
+      heroScreenshotAlt="Fleetbase FleetOps vehicle management panel showing fleet list with status, assignments, and plate numbers"
       heroScreenshotNeeded="FleetOps fleet dashboard — vehicle list with health status, location, driver assignment, and utilization"
       painPoints={{
         heading: 'What fleet managers deal with every day',

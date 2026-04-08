@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 const faqs = [
@@ -69,12 +70,15 @@ export default function DeveloperConsolePage() {
               <Link href="/developers/api"><Button size="lg" variant="outline">View API Reference</Button></Link>
               <Link href="https://github.com/fleetbase/dev-engine" target="_blank" rel="noopener noreferrer"><Button size="lg" variant="ghost">View Source</Button></Link>
             </div>
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🖥️</div>
-                <p className="text-muted-foreground font-medium">Developer Console Overview</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Developer Console dashboard showing API keys, recent webhook deliveries, and live request log</p>
-              </div>
+            <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+              <Image
+                src="/images/console-screenshots/developers-monitoring.webp"
+                alt="Fleetbase Developer Console dashboard showing API monitoring, request logs, webhook deliveries, and socket channel activity"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -125,12 +129,14 @@ export default function DeveloperConsolePage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔑</div>
-                <p className="text-muted-foreground font-medium">API Key Management</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: API keys list with name, created date, expiry, last used, and revoke action</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
+              <Image
+                src="/images/console-screenshots/developers-api-keys.webp"
+                alt="Fleetbase Developer Console API key management showing key list with names, creation dates, expiry settings, and revoke controls"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -140,12 +146,14 @@ export default function DeveloperConsolePage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔔</div>
-                <p className="text-muted-foreground font-medium">Webhook Configuration</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Webhook endpoint form with event selector, delivery history, and retry controls</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/developers-webhooks.webp"
+                alt="Fleetbase Developer Console webhook configuration showing endpoint URL, event type subscriptions, delivery history, and retry settings"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Webhooks</span></div>
@@ -191,12 +199,14 @@ export default function DeveloperConsolePage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📋</div>
-                <p className="text-muted-foreground font-medium">API Request Logs</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Request log table with method, endpoint, status badge, latency, and expandable request/response inspector</p>
-              </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
+              <Image
+                src="/images/console-screenshots/developers-logs.webp"
+                alt="Fleetbase Developer Console API request logs showing method, endpoint, HTTP status, response time, and expandable request/response inspector"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -206,12 +216,14 @@ export default function DeveloperConsolePage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[460px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">⚡</div>
-                <p className="text-muted-foreground font-medium">Socket Channels Monitor</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Socket channels list showing active channels, connected client count, and recent message stream</p>
-              </div>
+            <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/developers-monitoring.webp"
+                alt="Fleetbase Developer Console socket channels monitor showing active WebSocket connections, channel names, client counts, and live message stream"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Real-Time Socket Channels</span></div>
