@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import Testimonials from '@/components/sections/testimonials';
 
 const faqs = [
   {
@@ -714,7 +713,6 @@ export default function LedgerPage() {
       </section>
 
       {/* Testimonials */}
-      <Testimonials />
 
       {/* FAQ Section */}
       <section className="py-24 bg-muted/20">

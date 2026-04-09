@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import Testimonials from '@/components/sections/testimonials';
 
 export default function StorefrontPage() {
   return (
@@ -659,7 +658,6 @@ console.log(order.total); // 2450 ($24.50)`}
       </section>
 
       {/* Testimonials */}
-      <Testimonials />
 
       {/* Final CTA */}
       <section className="py-24 bg-gradient-to-b from-background to-muted/20">

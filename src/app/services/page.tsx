@@ -507,7 +507,7 @@ export default function ServicesPage() {
             </p>
             <div className="flex gap-3 justify-center flex-wrap">
               <Button size="lg" asChild>
-                <Link href="/contact/sales">
+                <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">
                   Book a Discovery Call <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>

@@ -9,7 +9,6 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion';
-import Testimonials from '@/components/sections/testimonials';
 
 export default function PalletPage() {
     return (
@@ -797,7 +796,6 @@ export default function PalletPage() {
             </section>
 
             {/* Testimonials */}
-            <Testimonials />
 
             {/* Final CTA Section */}
             <section className="py-24">

@@ -186,16 +186,19 @@ export default function ContactSalesPage() {
                     </div>
                   </div>
                 </div>
-                <div className="flex items-start gap-4 rounded-xl border bg-card p-5">
-                  <Calendar className="mt-0.5 size-5 shrink-0 text-primary" />
-                  <div>
-                    <div className="font-semibold">Book a demo</div>
-                    <div className="mt-1 text-sm text-muted-foreground">
-                      Schedule a 30-minute personalised demo with our team. We&apos;ll tailor it to
-                      your specific operation and use case.
+                <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer" className="block">
+                  <div className="flex items-start gap-4 rounded-xl border bg-card p-5 hover:border-primary/50 transition-colors cursor-pointer">
+                    <Calendar className="mt-0.5 size-5 shrink-0 text-primary" />
+                    <div>
+                      <div className="font-semibold">Book a demo</div>
+                      <div className="mt-1 text-sm text-muted-foreground">
+                        Schedule a 30-minute personalised demo with our team. We&apos;ll tailor it to
+                        your specific operation and use case.
+                      </div>
+                      <div className="mt-2 text-sm text-primary font-medium">Book a time on Cal.com →</div>
                     </div>
                   </div>
-                </div>
+                </Link>
                 <div className="flex items-start gap-4 rounded-xl border bg-card p-5">
                   <MessageSquare className="mt-0.5 size-5 shrink-0 text-primary" />
                   <div>

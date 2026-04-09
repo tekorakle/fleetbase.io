@@ -3,7 +3,6 @@ import { Button } from '@/components/ui/button';
 import IntegrationsEcosystem from '@/components/sections/integrations-ecosystem';
 import OpenSourceAdvantage from '@/components/sections/open-source-advantage';
 import DeploymentOptions from '@/components/sections/deployment-options';
-import Testimonials from '@/components/sections/testimonials';
 
 export default function PlatformOverviewPage() {
   return (
@@ -186,7 +185,6 @@ export default function PlatformOverviewPage() {
       <DeploymentOptions />
 
       {/* Testimonials */}
-      <Testimonials />
 
       {/* Final CTA */}
       <section className="py-24 bg-gradient-to-b from-muted/20 to-background">
