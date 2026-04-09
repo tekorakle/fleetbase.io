@@ -5,6 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata = {
+  title: 'Extensions | Logistics Platform Integrations & Add-ons',
+  description: 'Extend Fleetbase with a growing marketplace of integrations and extensions. Connect your ERP, payment gateway, communication tools, and more with the Fleetbase Extensions SDK.',
+  keywords: ['logistics integrations', 'fleet management integrations', 'logistics API integrations', 'fleet software extensions', 'logistics platform extensions'],
+  openGraph: {
+    title: 'Extensions | Logistics Platform Integrations & Add-ons',
+    description: 'Extend Fleetbase with a growing marketplace of integrations and extensions. Connect your ERP, payment gateway, communication tools, and more with the Fleetbase Extensions SDK.',
+  },
+};
+
+
 const faqs = [
   {
     q: 'What is the Fleetbase Extensions Marketplace?',

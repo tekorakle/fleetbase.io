@@ -11,6 +11,17 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
 
+export const metadata = {
+  title: 'Pricing | Open-Source Fleet Management Software',
+  description: 'Fleetbase pricing starts at $50/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
+  keywords: ['fleet management software pricing', 'logistics software pricing', 'open source fleet management cost', 'TMS software pricing', 'delivery management software pricing'],
+  openGraph: {
+    title: 'Pricing | Open-Source Fleet Management Software',
+    description: 'Fleetbase pricing starts at $50/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
+  },
+};
+
+
 // ─── Cloud Pricing Tiers ──────────────────────────────────────────────────────
 const CLOUD_TIERS = [
   {

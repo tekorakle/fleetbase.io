@@ -3,9 +3,8 @@ import { Package, MapPin, FileCheck, BarChart3, Zap, Smartphone } from 'lucide-r
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
-  title: 'Courier & Parcel Delivery Software | Fleetbase',
-  description:
-    'Automate courier dispatch, proof of delivery, and last-mile optimization for parcel and courier services. Open-source, modular, and built to scale.',
+  title: 'Courier & Parcel Delivery Management Software',
+  description: 'Open-source courier and parcel delivery management software. Automate dispatch, track packages in real time, manage drivers, and send customer notifications. Onfleet alternative.',
   keywords: ['courier management software', 'parcel delivery platform', 'last mile courier', 'proof of delivery software', 'courier dispatch system'],
   openGraph: {
     title: 'Courier & Parcel Delivery Software | Fleetbase',

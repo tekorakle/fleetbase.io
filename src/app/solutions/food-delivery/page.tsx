@@ -3,9 +3,8 @@ import { Utensils, MapPin, Zap, Star, Smartphone, BarChart3 } from 'lucide-react
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
-  title: 'Food & Grocery Delivery Software | Fleetbase',
-  description:
-    'Power on-demand food and grocery delivery with real-time driver tracking, automated dispatch, customer notifications, and live order status — built on open-source logistics infrastructure.',
+  title: 'Food & Grocery Delivery Management Software',
+  description: 'Manage food and grocery delivery operations with Fleetbase. Real-time driver tracking, automated dispatch, customer notifications, and proof of delivery — all in one open-source platform.',
   keywords: ['food delivery software', 'grocery delivery platform', 'on-demand delivery', 'restaurant delivery management', 'last mile food delivery'],
   openGraph: {
     title: 'Food & Grocery Delivery Software | Fleetbase',

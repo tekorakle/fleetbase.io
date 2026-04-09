@@ -4,6 +4,17 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
+export const metadata = {
+  title: 'Storefront | E-commerce & Online Ordering Platform',
+  description: 'Launch a white-label online storefront with built-in delivery management. Fleetbase Storefront connects your orders directly to FleetOps dispatch — no middleware needed.',
+  keywords: ['online ordering platform', 'storefront software', 'delivery management', 'white label delivery app', 'e-commerce logistics software'],
+  openGraph: {
+    title: 'Storefront | E-commerce & Online Ordering Platform',
+    description: 'Launch a white-label online storefront with built-in delivery management. Fleetbase Storefront connects your orders directly to FleetOps dispatch — no middleware needed.',
+  },
+};
+
+
 export default function StorefrontPage() {
   return (
     <div className="flex flex-col">

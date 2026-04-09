@@ -19,6 +19,17 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
+
+export const metadata = {
+  title: 'FleetOps | Fleet Management & Dispatch Software',
+  description: 'FleetOps by Fleetbase is open-source fleet management and dispatch software. Real-time GPS tracking, route optimization, driver management, and automated dispatch — self-hosted or cloud.',
+  keywords: ['fleet management software', 'dispatch software', 'route optimization', 'real time fleet tracking', 'GPS fleet tracking', 'driver management software', 'open source fleet management'],
+  openGraph: {
+    title: 'FleetOps | Fleet Management & Dispatch Software',
+    description: 'FleetOps by Fleetbase is open-source fleet management and dispatch software. Real-time GPS tracking, route optimization, driver management, and automated dispatch — self-hosted or cloud.',
+  },
+};
+
   Accordion,
   AccordionContent,
   AccordionItem,

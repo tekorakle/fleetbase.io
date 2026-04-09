@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Globe, Heart, Zap, Shield, Code2 } from 'lucide-react';
+import { ArrowRight, Globe, Heart, Zap, Shield, Code2, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
-  title: 'About Us | Fleetbase',
+  title: 'About Fleetbase | Open-Source Logistics Platform — Singapore',
   description:
-    'Learn about Fleetbase — the open-source logistics platform on a mission to democratize logistics technology. Our story, values, and the team behind the platform.',
-  keywords: ['about fleetbase', 'fleetbase team', 'open source logistics company'],
+    'Fleetbase is an open-source logistics and fleet management platform founded in Singapore by Shiv Thakker and Ronald Richardson. Learn our story, mission, and the team behind the platform.',
+  keywords: ['about fleetbase', 'fleetbase team', 'open source logistics company', 'fleetbase singapore', 'logistics startup singapore', 'shiv thakker', 'ronald richardson'],
+  alternates: { canonical: 'https://fleetbase.io/company/about' },
   openGraph: {
     title: 'About Us | Fleetbase',
     description: 'The open-source logistics platform on a mission to democratize logistics technology.',
@@ -176,6 +177,88 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Founders */}
+      <section className="border-t py-16 md:py-24">
+        <div className="container">
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">The founders</h2>
+            <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
+              Fleetbase was built by two founders who lived the problem first-hand — one in banking and precious metals logistics across Southeast Asia, one in military logistics and port operations.
+            </p>
+          </div>
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* Shiv Thakker */}
+            <div className="rounded-xl border bg-card p-8">
+              <div className="flex items-start gap-5 mb-5">
+                <div className="size-20 rounded-full bg-muted flex-shrink-0 overflow-hidden border-2 border-primary/20">
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-2xl font-bold text-primary">ST</div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Shiv Thakker</h3>
+                  <p className="text-primary font-medium text-sm">Co-founder &amp; CEO</p>
+                  <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                    <MapPin className="size-3" />
+                    Singapore
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                Shiv, born and raised in the UK, started work at JP Morgan at the age of 17. He went on to work with them in the UK and Singapore, building deep expertise across banking, precious metals logistics, and technology. A multiple startup founder, Shiv has 10+ years of experience building and running logistics platforms across Southeast Asia.
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                His experience navigating the gap between enterprise logistics software and the reality of operating in emerging markets became the founding insight behind Fleetbase — logistics technology should be open, accessible, and operator-first.
+              </p>
+            </div>
+            {/* Ronald Richardson */}
+            <div className="rounded-xl border bg-card p-8">
+              <div className="flex items-start gap-5 mb-5">
+                <div className="size-20 rounded-full bg-muted flex-shrink-0 overflow-hidden border-2 border-primary/20">
+                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-2xl font-bold text-primary">RR</div>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">Ronald Richardson</h3>
+                  <p className="text-primary font-medium text-sm">Co-founder &amp; CTO</p>
+                  <div className="flex items-center gap-1 mt-1 text-xs text-muted-foreground">
+                    <MapPin className="size-3" />
+                    Singapore
+                  </div>
+                </div>
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground mb-4">
+                Ron is a former US Marine with 5 years of military logistics experience. He has spent over 6 years developing supply chain and logistics software solutions — helping thousands of containers move through ports, brokering millions of dollars in oil and chemicals, and building digital infrastructure for supply chain.
+              </p>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                His background in military-grade operations and port logistics shaped Fleetbase&apos;s architecture: built for reliability, designed for scale, and engineered to handle the complexity of real-world logistics from day one.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Singapore HQ */}
+      <section className="border-t py-12 md:py-16 bg-muted/20">
+        <div className="container">
+          <div className="flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto">
+            <div className="flex-shrink-0 rounded-xl border bg-card p-6 flex flex-col items-center gap-3 min-w-[180px]">
+              <div className="text-4xl">🇸🇬</div>
+              <div className="text-center">
+                <div className="font-semibold">Headquartered in</div>
+                <div className="text-primary font-bold text-lg">Singapore</div>
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mb-3">Built in Singapore, deployed worldwide</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Fleetbase is headquartered in Singapore — one of the world&apos;s leading logistics and trade hubs. Our location gives us direct access to the complex, high-volume logistics markets of Southeast Asia, while our open-source model means our platform is deployed by operators in 40+ countries across every continent.
+              </p>
+              <p className="mt-3 text-muted-foreground leading-relaxed">
+                Singapore&apos;s position as a global port and supply chain hub isn&apos;t just our address — it&apos;s our proving ground. Every feature we build is tested against the demands of one of the world&apos;s most sophisticated logistics ecosystems.
+              </p>
+            </div>
           </div>
         </div>
       </section>

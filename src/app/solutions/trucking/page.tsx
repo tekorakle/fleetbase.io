@@ -3,9 +3,8 @@ import { Truck, MapPin, Wrench, BarChart3, FileCheck, Smartphone } from 'lucide-
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
-  title: 'Trucking & Haulage Logistics Software | Fleetbase',
-  description:
-    'Open-source fleet management and TMS built for trucking and haulage operators. Optimize routes, track freight in real-time, manage compliance, and reduce fuel costs by up to 30%.',
+  title: 'Fleet Management Software for Trucking & Haulage',
+  description: 'Open-source fleet management software for trucking and haulage companies. Dispatch loads, track vehicles in real time, manage drivers, and optimize routes. Free to start.',
   keywords: ['trucking software', 'haulage management', 'fleet management', 'TMS', 'freight tracking', 'route optimization trucking'],
   openGraph: {
     title: 'Trucking & Haulage Logistics Software | Fleetbase',

@@ -5,6 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata = {
+  title: 'Ledger | Logistics Accounting & Financial Management',
+  description: 'Fleetbase Ledger provides double-entry accounting, automated invoicing, and financial reporting built for logistics operations. Track revenue, costs, and profitability per fleet or customer.',
+  keywords: ['logistics accounting software', 'fleet accounting software', 'invoice management logistics', 'financial management logistics'],
+  openGraph: {
+    title: 'Ledger | Logistics Accounting & Financial Management',
+    description: 'Fleetbase Ledger provides double-entry accounting, automated invoicing, and financial reporting built for logistics operations. Track revenue, costs, and profitability per fleet or customer.',
+  },
+};
+
+
 const faqs = [
   {
     q: 'Is Ledger a full accounting system like QuickBooks or Xero?',

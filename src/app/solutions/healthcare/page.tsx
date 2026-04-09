@@ -3,9 +3,8 @@ import { Heart, Shield, FileCheck, MapPin, ClipboardList, Lock } from 'lucide-re
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
-  title: 'Healthcare & Pharmacy Logistics Software | Fleetbase',
-  description:
-    'HIPAA-compliant logistics platform for healthcare and pharmacy delivery. Chain-of-custody tracking, temperature monitoring, audit logs, and secure data handling for sensitive medical deliveries.',
+  title: 'Healthcare & Medical Logistics Management Software',
+  description: 'Manage medical supply chains, pharmacy deliveries, and patient transport with Fleetbase. HIPAA-friendly, self-hosted deployment, real-time tracking, and chain-of-custody proof of delivery.',
   keywords: ['healthcare logistics software', 'pharmacy delivery platform', 'HIPAA compliant logistics', 'medical supply chain', 'chain of custody tracking'],
   openGraph: {
     title: 'Healthcare & Pharmacy Logistics Software | Fleetbase',

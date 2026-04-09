@@ -3,9 +3,8 @@ import { ShoppingCart, Package, Zap, BarChart3, Webhook, Store } from 'lucide-re
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
-  title: 'E-commerce & Retail Logistics Software | Fleetbase',
-  description:
-    'Sync inventory, fulfill orders faster, and delight customers with real-time delivery tracking. Fleetbase connects your e-commerce store to your logistics operation end-to-end.',
+  title: 'E-commerce Delivery & Fulfillment Management Software',
+  description: 'Connect your e-commerce store to a powerful delivery management platform. Automate order fulfillment, dispatch drivers, and track deliveries in real time with Fleetbase.',
   keywords: ['ecommerce logistics software', 'retail fulfillment platform', 'order fulfillment software', 'ecommerce delivery management', 'WMS for ecommerce'],
   openGraph: {
     title: 'E-commerce & Retail Logistics Software | Fleetbase',

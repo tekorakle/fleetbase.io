@@ -4,6 +4,17 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
+
+export const metadata = {
+  title: 'Pallet | Open-Source Warehouse Management System (WMS)',
+  description: 'Pallet is an open-source WMS for inventory management, pick-and-pack, and warehouse operations. Fully integrated with FleetOps for end-to-end logistics.',
+  keywords: ['warehouse management system', 'open source WMS', 'inventory management software', 'pick and pack software', 'warehouse logistics software'],
+  openGraph: {
+    title: 'Pallet | Open-Source Warehouse Management System (WMS)',
+    description: 'Pallet is an open-source WMS for inventory management, pick-and-pack, and warehouse operations. Fully integrated with FleetOps for end-to-end logistics.',
+  },
+};
+
     Accordion,
     AccordionContent,
     AccordionItem,

@@ -5,6 +5,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata = {
+  title: 'Security & Compliance | Enterprise Fleet Management Security',
+  description: 'Fleetbase provides enterprise-grade security for fleet management operations. Role-based access control, audit logs, data encryption, GDPR compliance, and self-hosted deployment options.',
+  keywords: ['fleet management security', 'logistics data security', 'RBAC fleet management', 'GDPR logistics software', 'enterprise fleet security'],
+  openGraph: {
+    title: 'Security & Compliance | Enterprise Fleet Management Security',
+    description: 'Fleetbase provides enterprise-grade security for fleet management operations. Role-based access control, audit logs, data encryption, GDPR compliance, and self-hosted deployment options.',
+  },
+};
+
+
 const faqs = [
   { q: 'Is Fleetbase SOC 2 compliant?', a: 'Fleetbase Cloud is working toward SOC 2 Type II certification. Our infrastructure and operational controls are designed to meet SOC 2 requirements across the Trust Service Criteria of Security, Availability, and Confidentiality. Enterprise customers can request our current security documentation and roadmap.' },
   { q: 'Where is my data stored?', a: 'Fleetbase Cloud stores data in ISO 27001-certified data centers. You can choose your preferred region at account setup. For customers with strict data residency requirements, Fleetbase can be self-hosted on your own infrastructure in any region or cloud provider of your choice.' },

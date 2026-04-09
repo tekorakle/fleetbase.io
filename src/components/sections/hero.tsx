@@ -31,13 +31,13 @@ export default function Hero() {
 
             {/* Headline */}
             <h1 className="text-5xl leading-none tracking-tight text-balance md:text-6xl lg:text-7xl">
-              The Modular, Open-Source{' '}
-              <span className="text-gradient">Logistics OS</span>
+              Open-Source Fleet Management{' '}
+              <span className="text-gradient">&amp; TMS Software</span>
             </h1>
 
-            {/* Sub-headline - Improved brightness for dark mode */}
+            {/* Sub-headline */}
             <p className="text-foreground/90 leading-snug md:text-lg lg:text-xl dark:text-foreground/95">
-              Build, deploy, and scale your logistics operations without limits. Open-source, usage-based pricing, and fully customizable — from first mile to last.
+              Dispatch, track, and optimize your fleet in real time. The open-source alternative to Onfleet, Tookan &amp; Route4Me — self-hosted or cloud, no per-seat pricing.
             </p>
           </div>
 

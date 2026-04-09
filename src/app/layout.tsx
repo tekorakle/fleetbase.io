@@ -24,20 +24,31 @@ const azeretMono = Azeret_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Fleetbase | Open-Source Logistics Platform',
+    default: 'Fleetbase | Open-Source Fleet Management & TMS Software',
     template: '%s | Fleetbase',
   },
   description:
-    'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
+    'Fleetbase is open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
   keywords: [
-    'logistics',
-    'open-source',
-    'supply chain',
-    'fleet management',
-    'transportation',
-    'order management',
-    'route optimization',
-    'tracking',
+    'open source fleet management software',
+    'fleet management software',
+    'TMS software',
+    'transportation management system',
+    'open source logistics platform',
+    'delivery management software',
+    'dispatch software',
+    'route optimization software',
+    'last mile delivery software',
+    'self hosted fleet management',
+    'fleet management API',
+    'open source delivery management',
+    'Onfleet alternative',
+    'Tookan alternative',
+    'logistics platform open source',
+    'order management system',
+    'real time fleet tracking',
+    'driver management software',
+    'supply chain software',
   ],
   authors: [{ name: 'Fleetbase' }],
   creator: 'Fleetbase',
@@ -58,26 +69,26 @@ export const metadata: Metadata = {
     shortcut: [{ url: '/favicon/favicon.ico' }],
   },
   openGraph: {
-    title: 'Fleetbase | Open-Source Logistics Platform',
+    title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
     description:
-      'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
+      'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
     siteName: 'Fleetbase',
     images: [
       {
         url: '/images/og-image.jpeg',
         width: 1200,
         height: 630,
-        alt: 'Fleetbase - Open-Source Logistics Platform',
+        alt: 'Fleetbase - Open-Source Fleet Management & TMS Software',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Fleetbase | Open-Source Logistics Platform',
+    title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
     description:
-      'Fleetbase is an open-source, modular logistics OS designed to support any logistics operation. Plan, optimize, track, and scale your supply chain operations with complete control.',
+      'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
     images: ['/images/og-image.jpeg'],
-    creator: '@shadcnblocks',
+    creator: '@fleetbase_io',
   },
 };
 

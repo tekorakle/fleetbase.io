@@ -1,17 +1,76 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Handshake, Code2, Globe, Wrench, BarChart3, Puzzle } from 'lucide-react';
+import { ArrowRight, Handshake, Code2, Globe, Wrench, Puzzle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+// All integrations grouped by category
+const INTEGRATIONS = [
+  // Maps & Location
+  { name: 'Google Maps', category: 'Maps & Location', logo: 'https://cdn.simpleicons.org/googlemaps/4285F4' },
+  { name: 'Mapbox', category: 'Maps & Location', logo: 'https://cdn.simpleicons.org/mapbox/000000' },
+  { name: 'HERE Maps', category: 'Maps & Location', logo: 'https://cdn.simpleicons.org/here/00AFAA' },
+  { name: 'OpenStreetMap', category: 'Maps & Location', logo: 'https://cdn.simpleicons.org/openstreetmap/7EBC6F' },
+  // Payments
+  { name: 'Stripe', category: 'Payments', logo: 'https://cdn.simpleicons.org/stripe/635BFF' },
+  { name: 'PayPal', category: 'Payments', logo: 'https://cdn.simpleicons.org/paypal/003087' },
+  { name: 'Braintree', category: 'Payments', logo: 'https://cdn.simpleicons.org/braintree/009CDE' },
+  // Communication
+  { name: 'Twilio', category: 'Communication', logo: 'https://cdn.simpleicons.org/twilio/F22F46' },
+  { name: 'SendGrid', category: 'Communication', logo: 'https://cdn.simpleicons.org/sendgrid/51A9E3' },
+  { name: 'Slack', category: 'Communication', logo: 'https://cdn.simpleicons.org/slack/4A154B' },
+  { name: 'Microsoft Teams', category: 'Communication', logo: 'https://cdn.simpleicons.org/microsoftteams/6264A7' },
+  { name: 'WhatsApp', category: 'Communication', logo: 'https://cdn.simpleicons.org/whatsapp/25D366' },
+  { name: 'Mailgun', category: 'Communication', logo: 'https://cdn.simpleicons.org/mailgun/F06B66' },
+  // Cloud & Infrastructure
+  { name: 'AWS', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/amazonaws/FF9900' },
+  { name: 'Google Cloud', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/googlecloud/4285F4' },
+  { name: 'Microsoft Azure', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/microsoftazure/0078D4' },
+  { name: 'DigitalOcean', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/digitalocean/0080FF' },
+  { name: 'Docker', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/docker/2496ED' },
+  { name: 'Kubernetes', category: 'Cloud & Infrastructure', logo: 'https://cdn.simpleicons.org/kubernetes/326CE5' },
+  // Databases
+  { name: 'MySQL', category: 'Databases', logo: 'https://cdn.simpleicons.org/mysql/4479A1' },
+  { name: 'PostgreSQL', category: 'Databases', logo: 'https://cdn.simpleicons.org/postgresql/4169E1' },
+  { name: 'Redis', category: 'Databases', logo: 'https://cdn.simpleicons.org/redis/DC382D' },
+  { name: 'MongoDB', category: 'Databases', logo: 'https://cdn.simpleicons.org/mongodb/47A248' },
+  // Developer Tools
+  { name: 'GitHub', category: 'Developer Tools', logo: 'https://cdn.simpleicons.org/github/181717' },
+  { name: 'Zapier', category: 'Developer Tools', logo: 'https://cdn.simpleicons.org/zapier/FF4A00' },
+  { name: 'Postman', category: 'Developer Tools', logo: 'https://cdn.simpleicons.org/postman/FF6C37' },
+  // Analytics & Monitoring
+  { name: 'Google Analytics', category: 'Analytics & Monitoring', logo: 'https://cdn.simpleicons.org/googleanalytics/E37400' },
+  { name: 'Sentry', category: 'Analytics & Monitoring', logo: 'https://cdn.simpleicons.org/sentry/362D59' },
+  { name: 'Datadog', category: 'Analytics & Monitoring', logo: 'https://cdn.simpleicons.org/datadog/632CA6' },
+  { name: 'Grafana', category: 'Analytics & Monitoring', logo: 'https://cdn.simpleicons.org/grafana/F46800' },
+  // E-commerce
+  { name: 'Shopify', category: 'E-commerce', logo: 'https://cdn.simpleicons.org/shopify/96BF48' },
+  { name: 'WooCommerce', category: 'E-commerce', logo: 'https://cdn.simpleicons.org/woocommerce/96588A' },
+  { name: 'Magento', category: 'E-commerce', logo: 'https://cdn.simpleicons.org/magento/EE672F' },
+  // Auth & Security
+  { name: 'Auth0', category: 'Auth & Security', logo: 'https://cdn.simpleicons.org/auth0/EB5424' },
+  { name: 'Keycloak', category: 'Auth & Security', logo: 'https://cdn.simpleicons.org/keycloak/4D4D4D' },
+  // Mobile
+  { name: 'Android', category: 'Mobile', logo: 'https://cdn.simpleicons.org/android/3DDC84' },
+  { name: 'React Native', category: 'Mobile', logo: 'https://cdn.simpleicons.org/react/61DAFB' },
+  { name: 'Expo', category: 'Mobile', logo: 'https://cdn.simpleicons.org/expo/000020' },
+  // Backend & Framework
+  { name: 'Laravel', category: 'Backend & Framework', logo: 'https://cdn.simpleicons.org/laravel/FF2D20' },
+  { name: 'Node.js', category: 'Backend & Framework', logo: 'https://cdn.simpleicons.org/nodedotjs/339933' },
+  { name: 'Next.js', category: 'Backend & Framework', logo: 'https://cdn.simpleicons.org/nextdotjs/000000' },
+  { name: 'PHP', category: 'Backend & Framework', logo: 'https://cdn.simpleicons.org/php/777BB4' },
+];
+const INTEGRATION_CATEGORIES = [...new Set(INTEGRATIONS.map((i) => i.category))];
+
 export const metadata: Metadata = {
-  title: 'Partner Program | Fleetbase',
+  title: 'Partners & Integrations | Fleetbase',
   description:
-    'Join the Fleetbase partner network. Integration partners, solution providers, and implementation specialists helping businesses deploy and extend the open-source logistics platform.',
-  keywords: ['fleetbase partners', 'logistics software partners', 'fleetbase integration partners', 'logistics technology partner program'],
+    'Fleetbase integrates with 50+ tools across payments, maps, communication, ERP, cloud, and more. Join the Fleetbase partner program as an integration, implementation, technology, or reseller partner.',
+  keywords: ['Fleetbase integrations', 'fleet management integrations', 'logistics software integrations', 'Fleetbase partner program', 'logistics API integrations'],
   openGraph: {
-    title: 'Partner Program | Fleetbase',
-    description: 'Join the Fleetbase partner network — integration partners, solution providers, and implementation specialists.',
+    title: 'Partners & Integrations | Fleetbase',
+    description: 'Fleetbase integrates with 50+ tools. Join the partner program as an integration, implementation, technology, or reseller partner.',
   },
+  alternates: { canonical: 'https://fleetbase.io/partners' },
 };
 
 const partnerTypes = [
@@ -86,6 +145,42 @@ export default function PartnersPage() {
               <Link href="/developers">View API docs</Link>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* Integration Ecosystem */}
+      <section className="py-16 md:py-20 border-b">
+        <div className="container">
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Integration Ecosystem</h2>
+            <p className="mt-3 text-lg text-muted-foreground max-w-2xl mx-auto">
+              Connect Fleetbase to the tools you already use. All integrations are available via the Extensions marketplace or directly through our REST API and webhooks.
+            </p>
+          </div>
+          {INTEGRATION_CATEGORIES.map((category) => (
+            <div key={category} className="mb-10">
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-4 border-b pb-2">
+                {category}
+              </h3>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-3">
+                {INTEGRATIONS.filter((i) => i.category === category).map((integration) => (
+                  <div
+                    key={integration.name}
+                    className="flex flex-col items-center gap-2 rounded-lg border bg-card p-3 hover:border-primary/40 hover:shadow-sm transition-all"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={integration.logo}
+                      alt={`${integration.name} logo`}
+                      className="h-8 w-8 object-contain"
+                      loading="lazy"
+                    />
+                    <span className="text-xs text-center text-muted-foreground leading-tight">{integration.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 

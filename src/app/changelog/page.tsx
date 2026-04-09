@@ -229,7 +229,7 @@ export default function ChangelogPage() {
         .md-link:hover { opacity: 0.8; }
       `}</style>
 
-      <section className="section-padding container max-w-5xl space-y-24">
+      <section className="section-padding container max-w-5xl space-y-12">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-10">
           <div className="space-y-3">
@@ -303,7 +303,8 @@ export default function ChangelogPage() {
         {/* Timeline */}
         {!loading && !error && releases.length > 0 && (
           <div className="[--sidebar-width:160px]">
-            <div className="relative">
+            {/* Scrollable release feed */}
+            <div className="relative overflow-y-auto max-h-[72vh] pr-2 scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent rounded-xl border bg-muted/20 p-6 md:p-8">
               {releases.map((release, index) => (
                 <div key={release.id} className="flex gap-5 md:gap-12">
                   {/* Date column */}
@@ -391,9 +392,8 @@ export default function ChangelogPage() {
                 </div>
               ))}
             </div>
-
             {/* Footer */}
-            <div className="flex justify-end mt-16">
+            <div className="flex justify-end mt-6">
               <Button
                 variant="outline"
                 className="h-12 w-full md:w-[calc(100%-var(--sidebar-width))]"

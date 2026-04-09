@@ -3,9 +3,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
 export const metadata = {
-  title: 'Navigator — Driver Mobile App | Fleetbase',
-  description:
-    'Navigator is the open-source driver app for Fleetbase. Real-time GPS tracking, proof of delivery, turn-by-turn navigation, and instant dispatch communication. Available on Android.',
+  title: 'Navigator | Driver App for Fleet Management',
+  description: 'Navigator is the free open-source driver app for Fleetbase FleetOps. Real-time job assignments, turn-by-turn navigation, proof of delivery, and live tracking. Available on Android.',
 };
 
 export default function NavigatorPage() {
