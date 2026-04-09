@@ -19,7 +19,7 @@ const deploymentOptions = [
     name: 'Fleetbase Cloud',
     type: 'cloud' as const,
     description: 'Fully managed platform with automatic updates and enterprise-grade reliability',
-    price: 'Starting at $99/mo',
+    price: 'Starting at $50/mo',
     cta: {
       text: 'Start Free Trial',
       href: '/signup',
@@ -60,10 +60,10 @@ const deploymentOptions = [
     name: 'Self-Hosted',
     type: 'self-hosted' as const,
     description: 'Deploy on your own infrastructure with complete control and customization',
-    price: 'Free (infrastructure costs apply)',
+    price: '$2,500 one-time implementation',
     cta: {
-      text: 'View Deployment Guide',
-      href: '/docs/self-hosting',
+      text: 'Get Started',
+      href: '/contact/sales',
       variant: 'outline' as const,
     },
     features: {

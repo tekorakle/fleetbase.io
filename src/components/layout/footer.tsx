@@ -19,19 +19,24 @@ import { Button } from '@/components/ui/button';
 
 const SOCIAL_LINKS = [
   {
-    name: 'Instagram',
-    href: 'https://instagram.com',
-    icon: <FaInstagram className="size-4" />,
+    name: 'GitHub',
+    href: 'https://github.com/fleetbase',
+    icon: <FaGithub className="size-4" />,
+  },
+  {
+    name: 'X (Twitter)',
+    href: 'https://twitter.com/fleetbase_io',
+    icon: <FaXTwitter className="size-4" />,
   },
   {
     name: 'WhatsApp',
-    href: 'https://wa.me',
+    href: 'https://wa.me/6588345437?text=Hi%20Fleetbase%20team!%20I%27d%20like%20to%20learn%20more%20about%20your%20logistics%20platform.',
     icon: <FaWhatsapp className="size-4" />,
   },
   {
-    name: 'X',
-    href: 'https://x.com',
-    icon: <FaXTwitter className="size-4" />,
+    name: 'Instagram',
+    href: 'https://instagram.com/fleetbase.io',
+    icon: <FaInstagram className="size-4" />,
   },
 ];
 
@@ -120,7 +125,10 @@ const FOOTER_LINKS = [
       { label: 'Partners', href: '/partners' },
       { label: 'Licensing Options', href: '/licensing' },
       { label: 'Contact Sales', href: '/contact/sales' },
+      { label: 'Services', href: '/services' },
       { label: 'Pricing', href: '/pricing' },
+      { label: 'Terms of Service', href: '/terms' },
+      { label: 'Privacy Policy', href: '/privacy' },
     ],
   },
 ];

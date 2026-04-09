@@ -9,6 +9,7 @@ import StatsBar from '@/components/sections/stats-bar';
 import ProblemSolution from '@/components/sections/problem-solution';
 import IndustryUseCases from '@/components/sections/industry-use-cases';
 import FinalCTA from '@/components/sections/final-cta';
+import LedgerShowcase from '@/components/sections/ledger-showcase';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <OrderConfigShowcase />
       <IndustryUseCases />
       <FeaturesTabsSection />
+      <LedgerShowcase />
       <IntegrationsEcosystem />
       <DeploymentOptions />
       <FinalCTA />

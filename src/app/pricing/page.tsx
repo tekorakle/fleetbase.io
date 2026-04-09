@@ -1,790 +1,695 @@
 'use client';
 
-import {
-  Check,
-  Zap,
-  Users,
-  Truck,
-  MapPin,
-  Package,
-  Webhook,
-  Key,
-  Building,
-  Activity,
-  TrendingUp,
-  Shield,
-  Clock,
-  HelpCircle,
-  ChevronDown,
-  ArrowRight,
-  UserCircle,
-  Store,
-} from 'lucide-react';
-import Link from 'next/link';
 import { useState } from 'react';
-
+import Link from 'next/link';
+import {
+  Check, X, ArrowRight, Zap, Server, Users, Truck, Package,
+  Webhook, Key,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
 
-type BillingPeriod = 'monthly' | 'annual';
-
-interface PricingTier {
-  tier: number;
-  name: string;
-  monthlyPrice: number;
-  annualPrice: number;
-  includedUnits: number;
-  overageRate: number;
-  description: string;
-  recommended?: boolean;
-  supportLevel: string;
-  plusVariant?: {
-    name: string;
-    monthlyPrice: number;
-    annualPrice: number;
-    includedUnits: number;
-    overageRate: number;
-    supportLevel: string;
-  };
-}
-
-const PRICING_TIERS: PricingTier[] = [
+// ─── Cloud Pricing Tiers ──────────────────────────────────────────────────────
+const CLOUD_TIERS = [
   {
-    tier: 1,
     name: 'Starter',
-    monthlyPrice: 200,
-    annualPrice: 1920,
-    includedUnits: 300,
-    overageRate: 0.75,
-    description: 'Launch your logistics operations with everything you need to get started and grow.',
-    supportLevel: 'Email support',
-    plusVariant: {
-      name: 'Starter Plus',
-      monthlyPrice: 300,
-      annualPrice: 2880,
-      includedUnits: 500,
-      overageRate: 0.65,
-      supportLevel: 'Priority email support',
-    },
+    monthlyPrice: 50,
+    annualPrice: 40,
+    units: 100,
+    overage: 0.75,
+    description: 'Perfect for small operations getting started with Fleetbase.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io/register',
+    highlight: false,
+    badge: null,
   },
   {
-    tier: 2,
+    name: 'Growth',
+    monthlyPrice: 200,
+    annualPrice: 160,
+    units: 300,
+    overage: 0.75,
+    description: 'For growing teams managing regular delivery operations.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io/register',
+    highlight: false,
+    badge: null,
+  },
+  {
     name: 'Scale',
     monthlyPrice: 400,
-    annualPrice: 3840,
-    includedUnits: 800,
-    overageRate: 0.55,
-    description: 'Scale your business with increased capacity and priority support for growing teams.',
-    recommended: true,
-    supportLevel: 'Phone & email support',
-    plusVariant: {
-      name: 'Scale Plus',
-      monthlyPrice: 500,
-      annualPrice: 4800,
-      includedUnits: 1200,
-      overageRate: 0.45,
-      supportLevel: 'Dedicated support',
-    },
+    annualPrice: 320,
+    units: 800,
+    overage: 0.55,
+    description: 'For scaling operations with higher order volumes.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io/register',
+    highlight: true,
+    badge: 'Most Popular',
   },
   {
-    tier: 3,
     name: 'Pro',
     monthlyPrice: 600,
-    annualPrice: 5760,
-    includedUnits: 1700,
-    overageRate: 0.4,
-    description: 'Power your professional operations with 24/7 support and enterprise-ready features.',
-    supportLevel: '24/7 support',
-    plusVariant: {
-      name: 'Pro Plus',
-      monthlyPrice: 700,
-      annualPrice: 6720,
-      includedUnits: 2300,
-      overageRate: 0.35,
-      supportLevel: 'Premium support',
-    },
+    annualPrice: 480,
+    units: 1700,
+    overage: 0.40,
+    description: 'For professional logistics teams with complex workflows.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io/register',
+    highlight: false,
+    badge: 'Best Value',
   },
   {
-    tier: 4,
     name: 'Elite',
     monthlyPrice: 800,
-    annualPrice: 7680,
-    includedUnits: 3000,
-    overageRate: 0.3,
-    description: 'Deliver exceptional service at scale with white-glove support and premium resources.',
-    supportLevel: 'White-glove support',
-    plusVariant: {
-      name: 'Elite Plus',
-      monthlyPrice: 900,
-      annualPrice: 8640,
-      includedUnits: 3800,
-      overageRate: 0.25,
-      supportLevel: 'Executive support',
-    },
+    annualPrice: 640,
+    units: 3000,
+    overage: 0.30,
+    description: 'For high-volume operations requiring maximum efficiency.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io/register',
+    highlight: false,
+    badge: null,
   },
   {
-    tier: 5,
     name: 'Enterprise',
     monthlyPrice: 1000,
-    annualPrice: 9600,
-    includedUnits: 5000,
-    overageRate: 0.2,
-    description: 'Transform your enterprise logistics with maximum capacity, dedicated SLA, and priority access.',
-    supportLevel: 'Enterprise SLA',
-    plusVariant: {
-      name: 'Enterprise Plus',
-      monthlyPrice: 1500,
-      annualPrice: 14400,
-      includedUnits: 7500,
-      overageRate: 0.15,
-      supportLevel: 'Dedicated infrastructure',
-    },
+    annualPrice: 800,
+    units: 5000,
+    overage: 0.20,
+    description: 'For enterprise logistics operations at scale.',
+    cta: 'Contact Sales',
+    ctaHref: '/contact/sales',
+    highlight: false,
+    badge: null,
+  },
+  {
+    name: 'Enterprise Plus',
+    monthlyPrice: 1500,
+    annualPrice: 1200,
+    units: 7500,
+    overage: 0.15,
+    description: 'Maximum scale with the lowest overage rates.',
+    cta: 'Contact Sales',
+    ctaHref: '/contact/sales',
+    highlight: false,
+    badge: null,
   },
 ];
 
-interface ResourceUnitPack {
-  name: string;
-  units: number;
-  price: number;
-  perUnitCost: number;
-}
-
-const RESOURCE_PACKS: ResourceUnitPack[] = [
-  { name: 'Small Pack', units: 100, price: 90, perUnitCost: 0.9 },
-  { name: 'Medium Pack', units: 300, price: 240, perUnitCost: 0.8 },
-  { name: 'Large Pack', units: 500, price: 375, perUnitCost: 0.75 },
-  { name: 'Jumbo Pack', units: 1000, price: 700, perUnitCost: 0.7 },
+// ─── Resource Unit Costs ──────────────────────────────────────────────────────
+const RESOURCE_UNITS = [
+  { icon: Package, label: 'Order', units: 2 },
+  { icon: Users, label: 'User', units: 5 },
+  { icon: Truck, label: 'Vehicle', units: 1 },
+  { icon: Users, label: 'Driver', units: 1 },
+  { icon: Webhook, label: 'Webhook', units: 5 },
+  { icon: Key, label: 'API Key', units: 1 },
 ];
 
-interface ResourceType {
-  name: string;
-  icon: React.ElementType;
-  weight: number;
-  description: string;
-  isRolling: boolean;
-}
+// ─── Overage Packs ────────────────────────────────────────────────────────────
+const OVERAGE_PACKS = [
+  { name: 'Small', price: 90, units: 100 },
+  { name: 'Medium', price: 240, units: 300 },
+  { name: 'Large', price: 375, units: 500 },
+  { name: 'Jumbo', price: 700, units: 1000 },
+];
 
-// Top 8 resources based on CSV data
-const RESOURCES: ResourceType[] = [
+// ─── Support Tiers ────────────────────────────────────────────────────────────
+const SUPPORT_TIERS = [
   {
-    name: 'Orders',
-    icon: Package,
-    weight: 2,
-    description: 'Customer orders',
-    isRolling: false,
+    name: 'Community',
+    price: 'Free',
+    sla: 'None',
+    colorClass: 'bg-green-500',
+    features: [
+      { label: 'Docs & Guides', included: true },
+      { label: 'Discord / GitHub Support', included: true },
+      { label: 'Email Support', included: false },
+      { label: 'SLA Guarantee', included: false },
+      { label: 'Priority Bug Fixes', included: false },
+      { label: 'Configuration Assistance', included: false },
+      { label: 'Technical Troubleshooting', included: false },
+      { label: 'Private Discord Channel', included: false },
+    ],
+    cta: 'Join Discord',
+    ctaHref: 'https://discord.gg/kRx9E6J8',
+    highlight: false,
   },
   {
-    name: 'Places',
-    icon: MapPin,
-    weight: 1,
-    description: 'Locations and addresses',
-    isRolling: false,
+    name: 'Auto Upgrades',
+    price: '$200/mo',
+    sla: 'None',
+    colorClass: 'bg-gray-400',
+    features: [
+      { label: 'Docs & Guides', included: true },
+      { label: 'Discord / GitHub Support', included: true },
+      { label: 'Automatic Security Patches', included: true },
+      { label: 'Limited Email Support', included: true },
+      { label: 'SLA Guarantee', included: false },
+      { label: 'Priority Bug Fixes', included: false },
+      { label: 'Configuration Assistance', included: false },
+      { label: 'Technical Troubleshooting', included: false },
+    ],
+    cta: 'Get Started',
+    ctaHref: '/contact/sales',
+    highlight: false,
   },
   {
-    name: 'Contacts',
-    icon: UserCircle,
-    weight: 1,
-    description: 'Customer contacts',
-    isRolling: false,
+    name: 'Business',
+    price: '$1,000/mo',
+    sla: '72h SLA',
+    colorClass: 'bg-blue-500',
+    features: [
+      { label: 'Docs & Guides', included: true },
+      { label: 'Discord / GitHub Support', included: true },
+      { label: 'Automatic Security Patches', included: true },
+      { label: 'Email Support (72h SLA)', included: true },
+      { label: 'Limited Priority Bug Fixes', included: true },
+      { label: 'Basic Configuration Assistance', included: true },
+      { label: 'Technical Troubleshooting', included: false },
+      { label: 'Private Discord Channel', included: false },
+    ],
+    cta: 'Get Started',
+    ctaHref: '/contact/sales',
+    highlight: true,
   },
   {
-    name: 'Vendors',
-    icon: Store,
-    weight: 1,
-    description: 'Service vendors',
-    isRolling: false,
+    name: 'Developer',
+    price: '$3,500/mo',
+    sla: '24h SLA',
+    colorClass: 'bg-purple-500',
+    features: [
+      { label: 'Docs & Guides', included: true },
+      { label: 'Email + Private Discord + Weekly Phone', included: true },
+      { label: 'Automatic Security Patches', included: true },
+      { label: 'Email Support (24h SLA)', included: true },
+      { label: 'Priority Bug Fixes', included: true },
+      { label: 'Full Configuration Assistance', included: true },
+      { label: 'Full Technical Troubleshooting', included: true },
+      { label: 'Private Discord with CTO', included: true },
+    ],
+    cta: 'Contact Sales',
+    ctaHref: '/contact/sales',
+    highlight: false,
   },
   {
-    name: 'Users',
-    icon: Users,
-    weight: 5,
-    description: 'System users',
-    isRolling: true,
+    name: 'Fractional CTO',
+    price: '$5,000/mo',
+    sla: 'Full-time',
+    colorClass: 'bg-orange-500',
+    features: [
+      { label: 'Dedicated Engineer', included: true },
+      { label: '2hr Weekly Calls with CTO', included: true },
+      { label: 'Proactive Monitoring', included: true },
+      { label: 'Release Management', included: true },
+      { label: 'Strategic Reviews', included: true },
+      { label: 'PR Reviews', included: true },
+      { label: 'Custom Roadmap Collaboration', included: true },
+      { label: 'Full Technical Troubleshooting', included: true },
+    ],
+    cta: 'Contact Sales',
+    ctaHref: '/contact/sales',
+    highlight: false,
   },
   {
-    name: 'Webhooks',
-    icon: Webhook,
-    weight: 5,
-    description: 'API webhook endpoints',
-    isRolling: true,
-  },
-  {
-    name: 'Vehicles',
-    icon: Truck,
-    weight: 1,
-    description: 'Fleet vehicles',
-    isRolling: true,
-  },
-  {
-    name: 'Drivers',
-    icon: Users,
-    weight: 1,
-    description: 'Fleet drivers',
-    isRolling: true,
+    name: 'Enterprise+',
+    price: 'Contact Us',
+    sla: 'Full-time scalable',
+    colorClass: 'bg-red-500',
+    features: [
+      { label: 'Scalable Engineering Team', included: true },
+      { label: 'Daily Support Access', included: true },
+      { label: 'Full Roadmap Collaboration', included: true },
+      { label: 'Dedicated Full-Stack Team', included: true },
+      { label: 'Enterprise-Level Oversight', included: true },
+      { label: 'Team Expansion Available', included: true },
+      { label: 'Strategic Quarterly Reviews', included: true },
+      { label: 'Custom SLA', included: true },
+    ],
+    cta: 'Contact Sales',
+    ctaHref: '/contact/sales',
+    highlight: false,
   },
 ];
 
-const FAQ_ITEMS = [
+// ─── Commercial License Options ───────────────────────────────────────────────
+const LICENSE_OPTIONS = [
   {
-    question: 'How can I monitor my resource unit usage?',
-    answer:
-      'You can view your current usage, including a breakdown by resource type, directly from your billing dashboard within the Fleetbase console. Track your consumption in real-time to stay informed and avoid surprises.',
+    name: 'Annual License',
+    price: '$25,000/year',
+    flexibility: 'Annual renewal',
+    support: 'Includes all upgrades + Business Support',
+    coverage: 'All versions during active term',
+    note: 'Best value for continuous updates and support.',
+    highlight: true,
   },
   {
-    question: 'What exactly is a "rolling" resource?',
-    answer:
-      'A rolling resource is an item that provides continuous value, like an active Vehicle or User. As long as it exists in your account, it will be counted towards your usage in each billing period. In contrast, a non-rolling resource, like an Order, is a one-time event and is only counted in the billing period it was created.',
+    name: 'Monthly License',
+    price: '$2,500/month',
+    flexibility: 'Flexible month-to-month',
+    support: 'Same as Annual',
+    coverage: 'All versions during active term',
+    note: 'Ideal for pilot or short-term use.',
+    highlight: false,
   },
   {
-    question: 'Is there a free trial?',
-    answer:
-      'Yes! All our plans come with a 7-day free trial so you can experience the full power of Fleetbase. The trial includes a starting balance of 50 resource units to get you up and running. No credit card required to start.',
+    name: 'Major Version License',
+    price: '$25,000 one-time',
+    flexibility: 'Perpetual',
+    support: 'None',
+    coverage: 'Single major version (e.g. 1.x.x)',
+    note: 'No ongoing support or updates.',
+    highlight: false,
   },
   {
-    question: 'What if I have a question about my bill?',
-    answer:
-      "Our support team is always here to help! You can reach out to us anytime through your Fleetbase console or by visiting our support page. We're committed to making billing transparent and easy to understand.",
-  },
-  {
-    question: 'Can I switch plans at any time?',
-    answer:
-      "Absolutely! You can upgrade or downgrade your plan at any time. When you upgrade, you'll immediately get access to the higher tier's included units. When you downgrade, the change will take effect at the start of your next billing period.",
-  },
-  {
-    question: 'What happens to unused resource units?',
-    answer:
-      'Unused resource units from your monthly plan allocation do not roll over to the next billing period. However, Resource Unit Packs that you purchase separately never expire and remain in your account until used.',
-  },
-  {
-    question: 'What if I go over my included units?',
-    answer:
-      "If you use more than your plan's included units, additional units are charged at your plan's overage rate. There are no hidden fees or penalties. You can track usage in real-time from your dashboard.",
-  },
-  {
-    question: 'How do Plus plans differ from standard plans?',
-    answer:
-      'Plus plans offer significantly more included resource units and lower overage rates, making them more cost-effective for high-volume operations. They also include enhanced support and additional features specific to each tier.',
-  },
-  {
-    question: 'Can I purchase Resource Unit Packs on any plan?',
-    answer:
-      'Yes! Resource Unit Packs are available as add-ons for any subscription plan. They never expire and are perfect for handling temporary spikes in usage without changing your base plan.',
-  },
-  {
-    question: 'What payment methods do you accept?',
-    answer:
-      'We accept all major credit cards (Visa, Mastercard, American Express) and ACH transfers for annual plans. Enterprise customers can also arrange for invoice-based billing.',
+    name: 'Minor Version License',
+    price: '$15,000 one-time',
+    flexibility: 'Perpetual',
+    support: 'None',
+    coverage: 'Single minor version (e.g. 1.1.x)',
+    note: 'No ongoing support or updates.',
+    highlight: false,
   },
 ];
 
-const PricingPage = () => {
-  const [billingPeriod, setBillingPeriod] = useState<BillingPeriod>('monthly');
+// ─── FAQs ─────────────────────────────────────────────────────────────────────
+const FAQS = [
+  {
+    q: 'What is a Resource Unit?',
+    a: 'Resource Units are the currency of your Fleetbase Cloud plan. Different platform resources consume different amounts: Orders = 2 units, Users = 5 units, Vehicles = 1 unit, Drivers = 1 unit, Webhooks = 5 units, API Keys = 1 unit. Your plan includes a monthly allocation, and you only pay overage for what you use beyond that.',
+  },
+  {
+    q: 'Can I switch plans at any time?',
+    a: 'Yes. You can upgrade or downgrade your Cloud plan at any time. Upgrades take effect immediately. Downgrades take effect at the start of your next billing cycle.',
+  },
+  {
+    q: 'What is the difference between Cloud and Self-Hosted?',
+    a: 'Fleetbase Cloud is fully managed by us — we handle infrastructure, security patches, and uptime. Self-Hosted means you deploy Fleetbase on your own servers or cloud account. The one-time $2,500 implementation fee covers deployment, CI/CD setup, configuration, and branding.',
+  },
+  {
+    q: 'Do I need a Commercial License?',
+    a: 'Only if you plan to build proprietary (closed-source) extensions or integrations on top of Fleetbase. The core platform is AGPL-licensed, which requires open-sourcing modifications. A Commercial License waives this obligation and keeps your custom code private.',
+  },
+  {
+    q: 'Is there a free trial?',
+    a: 'Yes — every Cloud plan includes a 7-day free trial with no credit card required. You get access to the full platform so you can evaluate it against your real operations.',
+  },
+  {
+    q: 'What does the Self-Hosted implementation fee include?',
+    a: 'The $2,500 one-time fee covers: server deployment on your infrastructure, CI/CD pipeline setup, environment configuration, custom branding, and a go-live handover session. Ongoing support is available separately via our support tiers.',
+  },
+  {
+    q: 'Can I add more Resource Units mid-month?',
+    a: 'Yes. You can purchase Resource Unit Packs at any time: Small (100 units / $90), Medium (300 units / $240), Large (500 units / $375), or Jumbo (1,000 units / $700). These top up your allocation immediately.',
+  },
+  {
+    q: 'What is Professional Services?',
+    a: 'Professional Services covers custom development work — building bespoke extensions, integrating with your existing ERP/CRM, custom workflow automation, data migration, and training. Pricing is scoped per project. Contact our sales team for a quote.',
+  },
+];
+
+export default function PricingPage() {
+  const [billing, setBilling] = useState<'monthly' | 'annual'>('monthly');
 
   return (
-    <div className="section-padding relative container space-y-20 md:space-y-28 lg:space-y-36">
-      {/* Hero Section */}
-      <div className="mx-auto max-w-4xl space-y-6 text-balance text-center">
-        <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 px-4 py-2 text-sm font-medium">
-          <Zap className="size-4" />
-          <span>Pay for What You Use</span>
-        </div>
-
-        <h1 className="text-5xl font-bold leading-none tracking-tight md:text-6xl lg:text-7xl">
-          Transparent Pricing That{' '}
-          <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Scales With You
-          </span>
-        </h1>
-
-        <p className="mx-auto max-w-3xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-          Fair and transparent pricing based on Resource Units. All plans
-          include full platform access. Pay a flat monthly fee with included
-          units, then simple per-unit overage rates.
-        </p>
-
-        <div className="flex flex-col items-center gap-4 pt-4 sm:flex-row sm:justify-center">
-          <Button size="lg" className="h-12 px-8" asChild>
-            <Link href="https://console.fleetbase.io">
-              Start 7-Day Free Trial
-            </Link>
-          </Button>
-          <Button size="lg" variant="outline" className="h-12 px-8" asChild>
-            <Link href="/contact">Book a Demo</Link>
-          </Button>
-        </div>
-
-        <p className="text-sm text-muted-foreground">
-          All plans include a 7-day free trial with 50 resource units • No
-          credit card required
-        </p>
-      </div>
-
-      {/* Billing Period Toggle */}
-      <div className="flex justify-center">
-        <div className="inline-flex items-center gap-3 rounded-full border bg-card p-1.5">
-          <button
-            onClick={() => setBillingPeriod('monthly')}
-            className={cn(
-              'rounded-full px-6 py-2 text-sm font-medium transition-all',
-              billingPeriod === 'monthly'
-                ? 'bg-primary text-primary-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground',
-            )}
-          >
-            Monthly
-          </button>
-          <button
-            onClick={() => setBillingPeriod('annual')}
-            className={cn(
-              'rounded-full px-6 py-2 text-sm font-medium transition-all',
-              billingPeriod === 'annual'
-                ? 'bg-primary text-primary-foreground shadow-sm'
-                : 'text-muted-foreground hover:text-foreground',
-            )}
-          >
-            Annual
-            <span className="ml-2 text-xs font-semibold text-green-600 dark:text-green-400">
-              Save 20%
-            </span>
-          </button>
-        </div>
-      </div>
-
-      {/* Pricing Tiers Grid - 5 Columns */}
-      <div className="overflow-x-auto">
-        <div className="mx-auto grid min-w-[1200px] grid-cols-5 gap-4">
-          {PRICING_TIERS.map((tier) => (
-            <PricingTierCard
-              key={tier.tier}
-              tier={tier}
-              billingPeriod={billingPeriod}
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* What Are Resource Units Section */}
-      <div className="mx-auto max-w-6xl space-y-10">
-        <div className="space-y-4 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 px-4 py-2 text-sm font-medium">
-            <Activity className="size-4" />
-            <span>Understanding Resource Units</span>
+    <div className="flex flex-col">
+      {/* Hero */}
+      <section className="section-padding text-center">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs mb-6">
+            <span className="text-primary">●</span>
+            <span>Transparent, Usage-Based Pricing</span>
           </div>
-
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            What Are Resource Units?
-          </h2>
-
-          <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-            Resource Units are the currency of Fleetbase. Every key action you
-            perform consumes a certain number of units. It's a simple way to
-            measure your usage across the platform.
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-balance">
+            Pay for what you use.{' '}
+            <span className="text-primary">Nothing more.</span>
+          </h1>
+          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Fleetbase Cloud starts at $50/month. Self-hosted implementation is a one-time $2,500 fee. No per-seat charges. No hidden fees. No surprises.
           </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button size="lg" asChild>
+              <Link href="https://console.fleetbase.io/register">
+                Start 7-Day Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/contact/sales">Talk to Sales</Link>
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4">No credit card required · Cancel anytime</p>
         </div>
+      </section>
 
-        {/* 4x2 Resource Grid */}
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {RESOURCES.map((resource) => (
-            <ResourceCard key={resource.name} resource={resource} />
-          ))}
+      {/* Billing Toggle */}
+      <section className="pb-4">
+        <div className="container mx-auto px-4 flex justify-center">
+          <div className="inline-flex items-center gap-1 rounded-full border p-1 bg-muted/30">
+            <button
+              onClick={() => setBilling('monthly')}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
+                billing === 'monthly' ? 'bg-primary text-primary-foreground shadow' : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBilling('annual')}
+              className={cn(
+                'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
+                billing === 'annual' ? 'bg-primary text-primary-foreground shadow' : 'text-muted-foreground hover:text-foreground'
+              )}
+            >
+              Annual
+              <span className="ml-2 text-xs bg-green-500/20 text-green-600 dark:text-green-400 px-1.5 py-0.5 rounded-full font-semibold">Save 20%</span>
+            </button>
+          </div>
         </div>
+      </section>
 
-        {/* Billing Type Explanation */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card className="border-green-500/20 bg-gradient-to-br from-green-500/5 to-transparent">
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-green-500/20">
-                  <Check className="size-4 text-green-600 dark:text-green-400" />
+      {/* Cloud Pricing Tiers */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Fleetbase Cloud</h2>
+            <p className="text-muted-foreground">Fully managed. Automatic updates. 99.9% uptime SLA. Unlimited users &amp; drivers.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {CLOUD_TIERS.map((tier) => (
+              <Card
+                key={tier.name}
+                className={cn(
+                  'relative flex flex-col',
+                  tier.highlight && 'border-primary shadow-lg shadow-primary/10'
+                )}
+              >
+                {tier.badge && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap">
+                    {tier.badge}
+                  </div>
+                )}
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg">{tier.name}</CardTitle>
+                  <CardDescription className="text-xs">{tier.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-1 space-y-3">
+                  <div>
+                    <span className="text-3xl font-bold">
+                      ${billing === 'annual' ? tier.annualPrice : tier.monthlyPrice}
+                    </span>
+                    <span className="text-muted-foreground text-sm">/mo</span>
+                    {billing === 'annual' && (
+                      <div className="text-xs text-green-600 dark:text-green-400 mt-0.5">
+                        Billed annually (${tier.annualPrice * 12}/yr)
+                      </div>
+                    )}
+                  </div>
+                  <div className="space-y-1.5 text-sm">
+                    <div className="flex items-center gap-2">
+                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span><strong>{tier.units.toLocaleString()}</strong> units included/mo</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span>${tier.overage}/unit overage</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span>Unlimited users &amp; drivers</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span>All platform modules</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                      <span>99.9% uptime SLA</span>
+                    </div>
+                  </div>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    className="w-full"
+                    variant={tier.highlight ? 'default' : 'outline'}
+                    asChild
+                  >
+                    <Link href={tier.ctaHref}>{tier.cta}</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Resource Units Explainer */}
+      <section className="py-12 bg-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-bold mb-2">How Resource Units Work</h2>
+              <p className="text-muted-foreground">Each resource type in your account consumes a set number of units per month. Your plan includes a monthly allocation — you only pay overage for what exceeds it.</p>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+              {RESOURCE_UNITS.map((r) => (
+                <div key={r.label} className="bg-card border rounded-lg p-4 text-center">
+                  <r.icon className="w-6 h-6 mx-auto mb-2 text-primary" />
+                  <div className="text-2xl font-bold">{r.units}</div>
+                  <div className="text-xs text-muted-foreground">{r.label}</div>
                 </div>
-                <CardTitle className="text-lg">One-Time Resources</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Billed once when created. Usage count resets at the end of each
-                billing cycle. Examples: Orders, Places, Contacts, Vendors.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-transparent">
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-2">
-                <div className="flex size-8 items-center justify-center rounded-lg bg-blue-500/20">
-                  <TrendingUp className="size-4 text-blue-600 dark:text-blue-400" />
-                </div>
-                <CardTitle className="text-lg">
-                  Recurring (Rolling) Resources
-                </CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                Charged every billing period while active. Examples: Users,
-                Webhooks, Vehicles, Drivers.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-
-      {/* Overage Explanation */}
-      <div className="mx-auto max-w-4xl">
-        <Card className="border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-transparent">
-          <CardHeader>
-            <div className="flex items-center gap-3">
-              <div className="flex size-12 items-center justify-center rounded-lg bg-purple-500/20">
-                <TrendingUp className="size-6 text-purple-600 dark:text-purple-400" />
-              </div>
-              <div>
-                <CardTitle className="text-2xl">
-                  What If I Go Over My Limit?
-                </CardTitle>
-                <CardDescription className="text-base">
-                  No hidden fees or penalties—just transparent overage pricing
-                </CardDescription>
+              ))}
+            </div>
+            <div className="bg-card border rounded-xl p-6">
+              <h3 className="font-semibold mb-4">Resource Unit Top-Up Packs</h3>
+              <p className="text-sm text-muted-foreground mb-4">Need more units mid-month? Purchase a top-up pack at any time — no plan change required.</p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {OVERAGE_PACKS.map((pack) => (
+                  <div key={pack.name} className="border rounded-lg p-3 text-center">
+                    <div className="text-xs text-muted-foreground mb-1">{pack.name}</div>
+                    <div className="text-xl font-bold">${pack.price}</div>
+                    <div className="text-xs text-muted-foreground">{pack.units} units</div>
+                  </div>
+                ))}
               </div>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-muted-foreground">
-              If your business has a great month and you use more than your
-              plan's included units, that's fantastic! Any additional units are
-              charged at your plan's clear <strong>overage rate</strong>. Track
-              your usage in real-time from your dashboard.
-            </p>
-            <div className="flex items-start gap-3 rounded-lg bg-purple-500/10 p-4">
-              <Shield className="size-5 text-purple-600 dark:text-purple-400" />
-              <div className="space-y-1">
-                <p className="text-sm font-medium">
-                  Transparent & Predictable
-                </p>
-                <p className="text-sm text-muted-foreground">
-                  If you consistently exceed your limit, upgrading to the next
-                  tier (or Plus variant) is often more cost-effective.
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Resource Unit Packs */}
-      <div className="mx-auto max-w-6xl space-y-10">
-        <div className="space-y-4 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500/10 via-red-500/10 to-pink-500/10 px-4 py-2 text-sm font-medium">
-            <Package className="size-4" />
-            <span>Flexible Options</span>
           </div>
-
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Need a Temporary Boost?
-          </h2>
-
-          <p className="mx-auto max-w-3xl text-lg text-muted-foreground">
-            Resource Unit Packs are one-time purchases that add extra units to
-            your account. Perfect for seasonal spikes without changing your base
-            plan.
-          </p>
         </div>
+      </section>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {RESOURCE_PACKS.map((pack) => (
-            <Card key={pack.name} className="relative overflow-hidden">
+      {/* Self-Hosted + Professional Services */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Other Deployment Options</h2>
+            <p className="text-muted-foreground">Full control over your infrastructure, or custom-built solutions for your unique requirements.</p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Self-Hosted */}
+            <Card className="flex flex-col">
               <CardHeader>
-                <CardTitle className="text-xl">{pack.name}</CardTitle>
-                <CardDescription>
-                  {pack.units.toLocaleString()} resource units
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <div className="text-3xl font-bold">${pack.price}</div>
-                  <div className="text-sm text-muted-foreground">
-                    ${pack.perUnitCost.toFixed(2)} per unit
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Server className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle>Self-Hosted Implementation</CardTitle>
+                    <CardDescription>Deploy on your own infrastructure</CardDescription>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full" asChild>
-                  <Link href="https://console.fleetbase.io">
-                    Purchase Pack
-                  </Link>
-                </Button>
+                <div className="text-3xl font-bold mt-2">$2,500 <span className="text-base font-normal text-muted-foreground">one-time</span></div>
+              </CardHeader>
+              <CardContent className="flex-1 space-y-2">
+                {[
+                  'Full deployment on your servers or cloud',
+                  'CI/CD pipeline setup',
+                  'Environment configuration & branding',
+                  'Go-live handover session',
+                  'Complete data sovereignty',
+                  'Open-source — audit every line of code',
+                  'Add support tier separately',
+                ].map((f) => (
+                  <div key={f} className="flex items-start gap-2 text-sm">
+                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </div>
+                ))}
               </CardContent>
+              <CardFooter>
+                <Button className="w-full" asChild>
+                  <Link href="/contact/sales">Get Started <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                </Button>
+              </CardFooter>
             </Card>
-          ))}
-        </div>
 
-        <div className="flex items-start gap-3 rounded-lg border bg-card p-6">
-          <Clock className="size-6 text-blue-600 dark:text-blue-400" />
-          <div className="space-y-1">
-            <p className="font-medium">One-Time Purchase, No Expiration</p>
-            <p className="text-sm text-muted-foreground">
-              Resource Unit Packs are added to your account immediately and
-              never expire. Use them whenever you need them.
+            {/* Professional Services */}
+            <Card className="flex flex-col border-dashed">
+              <CardHeader>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Zap className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle>Professional Services</CardTitle>
+                    <CardDescription>Custom development &amp; integrations</CardDescription>
+                  </div>
+                </div>
+                <div className="text-3xl font-bold mt-2">Custom <span className="text-base font-normal text-muted-foreground">pricing</span></div>
+              </CardHeader>
+              <CardContent className="flex-1 space-y-2">
+                {[
+                  'Custom extension development',
+                  'ERP / CRM / WMS integrations',
+                  'Workflow automation & custom logic',
+                  'Data migration from legacy systems',
+                  'White-label & custom branding',
+                  'Team training & onboarding',
+                  'Dedicated project manager',
+                ].map((f) => (
+                  <div key={f} className="flex items-start gap-2 text-sm">
+                    <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <span>{f}</span>
+                  </div>
+                ))}
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full" variant="outline" asChild>
+                  <Link href="/contact/sales">Request a Quote <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Support Tiers */}
+      <section className="py-16 bg-muted/20">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Support Levels</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Once you&apos;re live, choose the level of ongoing support that matches your team&apos;s capacity and ambition. All tiers are available for both Cloud and Self-Hosted customers.
             </p>
           </div>
-        </div>
-      </div>
-
-      {/* FAQ Section - Accordion */}
-      <div className="mx-auto max-w-4xl space-y-10">
-        <div className="space-y-4 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 px-4 py-2 text-sm font-medium">
-            <HelpCircle className="size-4" />
-            <span>Common Questions</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {SUPPORT_TIERS.map((tier) => (
+              <Card key={tier.name} className={cn('flex flex-col', tier.highlight && 'border-primary shadow-lg shadow-primary/10')}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className={cn('w-3 h-3 rounded-full', tier.colorClass)} />
+                    <CardTitle className="text-base">{tier.name}</CardTitle>
+                  </div>
+                  <div className="text-2xl font-bold">{tier.price}</div>
+                  <div className="text-xs text-muted-foreground">SLA: {tier.sla}</div>
+                </CardHeader>
+                <CardContent className="flex-1 space-y-2">
+                  {tier.features.map((f) => (
+                    <div key={f.label} className="flex items-start gap-2 text-sm">
+                      {f.included
+                        ? <Check className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                        : <X className="w-4 h-4 text-muted-foreground/40 flex-shrink-0 mt-0.5" />}
+                      <span className={f.included ? '' : 'text-muted-foreground/50'}>{f.label}</span>
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full" variant={tier.highlight ? 'default' : 'outline'} asChild>
+                    <Link href={tier.ctaHref}>{tier.cta}</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
           </div>
-
-          <h2 className="text-4xl font-bold tracking-tight md:text-5xl">
-            Frequently Asked Questions
-          </h2>
         </div>
+      </section>
 
-        <Accordion type="single" collapsible className="w-full">
-          {FAQ_ITEMS.map((item, index) => (
-            <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left text-lg font-semibold">
-                {item.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">
-                {item.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
-
-      {/* Final CTA */}
-      <div className="mx-auto max-w-4xl">
-        <Card className="relative overflow-hidden border-none bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 p-[1px]">
-          <div className="rounded-lg bg-card p-8 md:p-12">
-            <div className="space-y-6 text-center">
-              <h2 className="text-3xl font-bold tracking-tight md:text-4xl">
-                Ready to Transform Your Operations?
-              </h2>
-              <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-                Start your 7-day free trial today. No credit card required.
-                Experience the full power of Fleetbase with 50 resource units.
-              </p>
-              <div className="flex flex-col items-center gap-4 pt-4 sm:flex-row sm:justify-center">
-                <Button size="lg" className="h-12 px-8" asChild>
-                  <Link href="https://console.fleetbase.io">
-                    Start Free Trial
-                  </Link>
-                </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="h-12 px-8"
-                  asChild
-                >
-                  <Link href="/contact">Talk to Sales</Link>
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Questions?{' '}
-                <Link
-                  href="/contact"
-                  className="font-medium text-primary hover:underline"
-                >
-                  Contact our team
-                </Link>{' '}
-                for personalized guidance.
-              </p>
-            </div>
+      {/* Commercial License Options */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Commercial License Options</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Building proprietary extensions or integrations? A Commercial License waives AGPL obligations and keeps your custom code private. Fleetbase Core remains open-source — only your extensions are covered.
+            </p>
           </div>
-        </Card>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            {LICENSE_OPTIONS.map((lic) => (
+              <Card key={lic.name} className={cn('flex flex-col', lic.highlight && 'border-primary shadow-lg shadow-primary/10')}>
+                {lic.highlight && (
+                  <div className="bg-primary text-primary-foreground text-xs font-semibold text-center py-1.5 rounded-t-lg">
+                    Best Value
+                  </div>
+                )}
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">{lic.name}</CardTitle>
+                  <div className="text-2xl font-bold">{lic.price}</div>
+                </CardHeader>
+                <CardContent className="flex-1 space-y-2 text-sm">
+                  <div><span className="text-muted-foreground">Flexibility:</span> {lic.flexibility}</div>
+                  <div><span className="text-muted-foreground">Support:</span> {lic.support}</div>
+                  <div><span className="text-muted-foreground">Coverage:</span> {lic.coverage}</div>
+                  <div className="text-xs text-muted-foreground italic pt-1">{lic.note}</div>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full" variant={lic.highlight ? 'default' : 'outline'} asChild>
+                    <Link href="/contact/sales">Get License</Link>
+                  </Button>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-6">
+            Not sure which license you need?{' '}
+            <Link href="/licensing" className="text-primary underline underline-offset-4">Read our licensing guide</Link>
+            {' '}or{' '}
+            <Link href="/contact/sales" className="text-primary underline underline-offset-4">talk to our team</Link>.
+          </p>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-16 bg-muted/20">
+        <div className="container mx-auto px-4 max-w-3xl">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
+          </div>
+          <Accordion type="single" collapsible className="space-y-2">
+            {FAQS.map((faq, i) => (
+              <AccordionItem key={i} value={`faq-${i}`} className="bg-card border rounded-lg px-4">
+                <AccordionTrigger className="text-left font-medium py-4 hover:no-underline">
+                  {faq.q}
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground pb-4">
+                  {faq.a}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </section>
+
+      {/* Bottom CTA */}
+      <section className="py-20">
+        <div className="container mx-auto px-4 text-center max-w-2xl">
+          <h2 className="text-4xl font-bold mb-4">Ready to get started?</h2>
+          <p className="text-muted-foreground mb-8">
+            Try Fleetbase free for 7 days — no credit card required. Or speak to our team to find the right plan for your operation.
+          </p>
+          <div className="flex gap-4 justify-center flex-wrap">
+            <Button size="lg" asChild>
+              <Link href="https://console.fleetbase.io/register">
+                Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </Button>
+            <Button size="lg" variant="outline" asChild>
+              <Link href="/contact/sales">Talk to Sales</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </div>
   );
-};
-
-const PricingTierCard = ({
-  tier,
-  billingPeriod,
-}: {
-  tier: PricingTier;
-  billingPeriod: BillingPeriod;
-}) => {
-  const [showPlus, setShowPlus] = useState(false);
-  const price =
-    billingPeriod === 'monthly' ? tier.monthlyPrice : tier.annualPrice / 12;
-  const isRecommended = tier.recommended;
-
-  const displayTier = showPlus && tier.plusVariant ? tier.plusVariant : tier;
-  const displayPrice = showPlus && tier.plusVariant
-    ? billingPeriod === 'monthly'
-      ? tier.plusVariant.monthlyPrice
-      : tier.plusVariant.annualPrice / 12
-    : price;
-
-  return (
-    <Card
-      className={cn(
-        'relative flex flex-col overflow-hidden',
-        isRecommended &&
-          'border-purple-500/50 shadow-lg shadow-purple-500/20 ring-1 ring-purple-500/20',
-      )}
-    >
-      {isRecommended && (
-        <div className="absolute right-2 top-2 z-10">
-          <div className="rounded-full bg-gradient-to-r from-purple-600 to-pink-600 px-2 py-0.5 text-xs font-semibold text-white">
-            Popular
-          </div>
-        </div>
-      )}
-
-      <CardHeader className="pb-3">
-        <CardTitle className="text-xl">
-          {showPlus && tier.plusVariant ? tier.plusVariant.name : tier.name}
-        </CardTitle>
-        <CardDescription className="text-xs">
-          {tier.description}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="flex-1 space-y-4">
-        <div className="space-y-1">
-          <div className="flex items-baseline gap-1">
-            <span className="text-3xl font-bold tracking-tight">
-              ${Math.round(displayPrice)}
-            </span>
-            <span className="text-xs text-muted-foreground">/mo</span>
-          </div>
-          {billingPeriod === 'annual' && (
-            <p className="text-xs text-muted-foreground">
-              $
-              {(showPlus && tier.plusVariant
-                ? tier.plusVariant.annualPrice
-                : tier.annualPrice
-              ).toLocaleString()}{' '}
-              /year
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <div className="rounded-lg bg-muted/50 p-2">
-            <div className="text-xs text-muted-foreground">Included Units</div>
-            <div className="text-lg font-bold">
-              {(showPlus && tier.plusVariant
-                ? tier.plusVariant.includedUnits
-                : tier.includedUnits
-              ).toLocaleString()}
-            </div>
-          </div>
-          <div className="rounded-lg bg-muted/50 p-2">
-            <div className="text-xs text-muted-foreground">Overage Rate</div>
-            <div className="text-lg font-bold">
-              $
-              {showPlus && tier.plusVariant
-                ? tier.plusVariant.overageRate
-                : tier.overageRate}
-              /unit
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <div className="flex items-start gap-2">
-            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
-            <span className="text-xs text-muted-foreground">
-              Full platform access
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
-            <span className="text-xs text-muted-foreground">
-              {showPlus && tier.plusVariant
-                ? tier.plusVariant.supportLevel
-                : tier.supportLevel}
-            </span>
-          </div>
-          <div className="flex items-start gap-2">
-            <Check className="size-4 shrink-0 text-green-600 dark:text-green-400" />
-            <span className="text-xs text-muted-foreground">
-              7-day free trial
-            </span>
-          </div>
-        </div>
-
-        {tier.plusVariant && (
-          <button
-            onClick={() => setShowPlus(!showPlus)}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-dashed p-2 text-xs font-medium transition-colors hover:bg-muted/50"
-          >
-            <span>
-              {showPlus ? `Show ${tier.name}` : `Show ${tier.plusVariant.name}`}
-            </span>
-            <ArrowRight className="size-3" />
-          </button>
-        )}
-      </CardContent>
-
-      <CardFooter className="pt-0">
-        <Button
-          className="w-full"
-          size="sm"
-          variant={isRecommended ? 'default' : 'outline'}
-          asChild
-        >
-          <Link href="https://console.fleetbase.io">
-            {tier.tier <= 2 ? 'Start Free Trial' : 'Contact Sales'}
-          </Link>
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-};
-
-const ResourceCard = ({ resource }: { resource: ResourceType }) => {
-  return (
-    <Card className="relative overflow-hidden">
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20">
-            <resource.icon className="size-5" />
-          </div>
-          <div className="text-right">
-            <div className="text-2xl font-bold">{resource.weight}</div>
-            <div className="text-xs text-muted-foreground">
-              {resource.weight === 1 ? 'unit' : 'units'}
-            </div>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="flex items-center justify-between">
-          <h3 className="font-semibold">{resource.name}</h3>
-          <div
-            className={cn(
-              'rounded-full px-2 py-0.5 text-xs font-medium',
-              resource.isRolling
-                ? 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
-                : 'bg-green-500/20 text-green-600 dark:text-green-400',
-            )}
-          >
-            {resource.isRolling ? 'Recurring' : 'One-time'}
-          </div>
-        </div>
-        <p className="text-sm text-muted-foreground">{resource.description}</p>
-      </CardContent>
-    </Card>
-  );
-};
-
-export default PricingPage;
+}

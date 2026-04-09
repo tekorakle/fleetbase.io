@@ -418,6 +418,24 @@ export const NAV_LINKS: NavLink[] = [
         description: 'Get in touch with our enterprise team for custom solutions.',
         icon: Mail,
       },
+      {
+        label: 'Services',
+        href: '/services',
+        description: 'Implementation, custom development, training, and support services.',
+        icon: Handshake,
+      },
+      {
+        label: 'Terms of Service',
+        href: '/terms',
+        description: 'Our SaaS and Cloud terms of service.',
+        icon: FileCheck,
+      },
+      {
+        label: 'Privacy Policy',
+        href: '/privacy',
+        description: 'How we collect, use, and protect your data.',
+        icon: FileCheck,
+      },
     ],
   },
 ];
