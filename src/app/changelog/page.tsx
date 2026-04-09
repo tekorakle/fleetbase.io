@@ -1,7 +1,12 @@
-import { Bell, ExternalLink, Tag, GitCommit } from 'lucide-react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { MDXRemote } from 'next-mdx-remote/rsc';
+import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
+import { Bell, ExternalLink, Tag, GitCommit, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -15,35 +20,6 @@ interface GitHubRelease {
   html_url: string;
   prerelease: boolean;
   draft: boolean;
-}
-
-// ─── Data Fetching ────────────────────────────────────────────────────────────
-async function getGitHubReleases(): Promise<GitHubRelease[]> {
-  try {
-    const res = await fetch(
-      'https://api.github.com/repos/fleetbase/fleetbase/releases?per_page=30',
-      {
-        headers: {
-          Accept: 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-        // Revalidate every hour so the page stays fresh without blocking every request
-        next: { revalidate: 3600 },
-      }
-    );
-
-    if (!res.ok) {
-      console.error('GitHub API error:', res.status, res.statusText);
-      return [];
-    }
-
-    const releases: GitHubRelease[] = await res.json();
-    // Filter out drafts; keep pre-releases
-    return releases.filter((r) => !r.draft);
-  } catch (err) {
-    console.error('Failed to fetch GitHub releases:', err);
-    return [];
-  }
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -63,56 +39,70 @@ function formatDateShort(iso: string): string {
   });
 }
 
-// ─── MDX Components ───────────────────────────────────────────────────────────
-const mdxComponents = {
-  h1: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-accent-foreground mt-6 mb-3 text-xl font-semibold hidden">
+// ─── Markdown Components ──────────────────────────────────────────────────────
+const markdownComponents: React.ComponentProps<typeof ReactMarkdown>['components'] = {
+  h1: ({ children }) => (
+    <h3 className="text-accent-foreground mt-6 mb-3 text-xl font-semibold sr-only">
       {children}
     </h3>
   ),
-  h2: ({ children }: { children: React.ReactNode }) => (
+  h2: ({ children }) => (
     <h3 className="text-accent-foreground mt-6 mb-3 text-lg font-semibold">
       {children}
     </h3>
   ),
-  h3: ({ children }: { children: React.ReactNode }) => (
+  h3: ({ children }) => (
     <h4 className="text-accent-foreground mt-4 mb-2 text-base font-medium">
       {children}
     </h4>
   ),
-  p: ({ children }: { children: React.ReactNode }) => (
+  p: ({ children }) => (
     <p className="text-muted-foreground text-base leading-relaxed mb-3">
       {children}
     </p>
   ),
-  blockquote: ({ children }: { children: React.ReactNode }) => (
+  blockquote: ({ children }) => (
     <blockquote className="border-l-2 border-primary/40 pl-4 my-3 italic text-muted-foreground text-base">
       {children}
     </blockquote>
   ),
-  ul: ({ children }: { children: React.ReactNode }) => (
-    <ul className="text-muted-foreground text-base space-y-1.5 mb-3">{children}</ul>
+  ul: ({ children }) => (
+    <ul className="text-muted-foreground text-base space-y-1.5 mb-3 list-none pl-0">
+      {children}
+    </ul>
   ),
-  ol: ({ children }: { children: React.ReactNode }) => (
-    <ol className="text-muted-foreground text-base space-y-1.5 mb-3 list-decimal pl-5">{children}</ol>
+  ol: ({ children }) => (
+    <ol className="text-muted-foreground text-base space-y-1.5 mb-3 list-decimal pl-5">
+      {children}
+    </ol>
   ),
-  li: ({ children }: { children: React.ReactNode }) => (
+  li: ({ children }) => (
     <li className="flex items-start gap-2.5">
       <span className="bg-muted-foreground flex size-1.5 rounded-full mt-2 shrink-0" />
       <span>{children}</span>
     </li>
   ),
-  code: ({ children }: { children: React.ReactNode }) => (
-    <code className="bg-muted text-primary px-1.5 py-0.5 rounded text-sm font-mono">
-      {children}
-    </code>
-  ),
-  pre: ({ children }: { children: React.ReactNode }) => (
+  code: ({ children, className }) => {
+    const isBlock = className?.includes('language-');
+    if (isBlock) {
+      return (
+        <code className="block bg-muted rounded-lg p-4 overflow-x-auto text-sm font-mono my-4 whitespace-pre">
+          {children}
+        </code>
+      );
+    }
+    return (
+      <code className="bg-muted text-primary px-1.5 py-0.5 rounded text-sm font-mono">
+        {children}
+      </code>
+    );
+  },
+  pre: ({ children }) => (
     <pre className="bg-muted rounded-lg p-4 overflow-x-auto text-sm font-mono my-4">
       {children}
     </pre>
   ),
-  a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
+  a: ({ href, children }) => (
     <a
       href={href}
       target="_blank"
@@ -122,29 +112,57 @@ const mdxComponents = {
       {children}
     </a>
   ),
-  img: ({ src, alt }: { src?: string; alt?: string }) => (
+  img: ({ src, alt }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img src={src} alt={alt ?? ''} className="my-4 rounded-lg max-w-full" />
   ),
   hr: () => <hr className="border-border my-6" />,
-  strong: ({ children }: { children: React.ReactNode }) => (
+  strong: ({ children }) => (
     <strong className="font-semibold text-foreground">{children}</strong>
+  ),
+  table: ({ children }) => (
+    <div className="overflow-x-auto my-4">
+      <table className="w-full text-sm border-collapse">{children}</table>
+    </div>
+  ),
+  th: ({ children }) => (
+    <th className="border border-border px-3 py-2 text-left font-medium bg-muted/50">
+      {children}
+    </th>
+  ),
+  td: ({ children }) => (
+    <td className="border border-border px-3 py-2 text-muted-foreground">
+      {children}
+    </td>
   ),
 };
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-export const metadata = {
-  title: 'Changelog | Fleetbase',
-  description:
-    'Stay up to date with the latest Fleetbase releases — new features, bug fixes, and platform improvements.',
-  openGraph: {
-    title: 'Changelog | Fleetbase',
-    description: 'New updates and product improvements to the Fleetbase logistics platform.',
-  },
-};
+// ─── Page Component ───────────────────────────────────────────────────────────
+export default function ChangelogPage() {
+  const [releases, setReleases] = useState<GitHubRelease[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
-export default async function ChangelogPage() {
-  const releases = await getGitHubReleases();
+  useEffect(() => {
+    fetch('https://api.github.com/repos/fleetbase/fleetbase/releases?per_page=30', {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+        return res.json();
+      })
+      .then((data: GitHubRelease[]) => {
+        setReleases(data.filter((r) => !r.draft));
+        setLoading(false);
+      })
+      .catch(() => {
+        setError(true);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <section className="section-padding container max-w-5xl space-y-24">
@@ -192,7 +210,16 @@ export default async function ChangelogPage() {
         </div>
       </div>
 
-      {releases.length === 0 ? (
+      {/* Loading */}
+      {loading && (
+        <div className="flex items-center justify-center py-20 gap-3 text-muted-foreground">
+          <Loader2 className="h-5 w-5 animate-spin" />
+          <span>Loading releases from GitHub…</span>
+        </div>
+      )}
+
+      {/* Error */}
+      {!loading && error && (
         <div className="text-center py-20">
           <p className="text-muted-foreground text-lg">
             Unable to load releases. View them directly on{' '}
@@ -207,9 +234,11 @@ export default async function ChangelogPage() {
             .
           </p>
         </div>
-      ) : (
+      )}
+
+      {/* Timeline */}
+      {!loading && !error && releases.length > 0 && (
         <div className="[--sidebar-width:160px]">
-          {/* Timeline */}
           <div className="relative">
             {releases.map((release, index) => (
               <div key={release.id} className="flex gap-5 md:gap-12">
@@ -260,18 +289,16 @@ export default async function ChangelogPage() {
                     )}
                   </div>
 
-                  {/* MDX body */}
+                  {/* Markdown body */}
                   {release.body ? (
-                    <div className="mt-2 space-y-2 prose-sm max-w-none">
-                      <MDXRemote
-                        source={release.body}
-                        components={mdxComponents}
-                        options={{
-                          mdxOptions: {
-                            remarkPlugins: [remarkGfm],
-                          },
-                        }}
-                      />
+                    <div className="mt-2 space-y-2">
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        rehypePlugins={[rehypeRaw, rehypeSanitize]}
+                        components={markdownComponents}
+                      >
+                        {release.body}
+                      </ReactMarkdown>
                     </div>
                   ) : (
                     <p className="text-muted-foreground text-sm">
@@ -306,7 +333,11 @@ export default async function ChangelogPage() {
 
           {/* Footer */}
           <div className="flex justify-end mt-16">
-            <Button variant="outline" className="h-12 w-full md:w-[calc(100%-var(--sidebar-width))]" asChild>
+            <Button
+              variant="outline"
+              className="h-12 w-full md:w-[calc(100%-var(--sidebar-width))]"
+              asChild
+            >
               <Link
                 href="https://github.com/fleetbase/fleetbase/releases"
                 target="_blank"
