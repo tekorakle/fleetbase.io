@@ -21,8 +21,8 @@ const deploymentOptions = [
     description: 'Fully managed platform with automatic updates and enterprise-grade reliability',
     price: 'Starting at $50/mo',
     cta: {
-      text: 'Start Free Trial',
-      href: '/signup',
+      text: 'Try Fleetbase Cloud',
+      href: 'https://console.fleetbase.io',
       variant: 'default' as const,
     },
     features: {
@@ -47,11 +47,6 @@ const deploymentOptions = [
       'Fastest time to production',
       'Predictable monthly costs',
       'Enterprise-grade security',
-    ],
-    cons: [
-      'Less infrastructure control',
-      'Vendor dependency',
-      'Internet connectivity required',
     ],
     highlight: true,
   },
@@ -89,11 +84,6 @@ const deploymentOptions = [
       'Complete data ownership',
       'Customize everything',
     ],
-    cons: [
-      'Requires DevOps expertise',
-      'Manual updates & maintenance',
-      'Infrastructure management overhead',
-    ],
     highlight: false,
   },
   {
@@ -103,8 +93,8 @@ const deploymentOptions = [
     description: 'Expert implementation, custom development, and dedicated support for enterprises',
     price: 'Custom pricing',
     cta: {
-      text: 'Contact Sales',
-      href: '/contact',
+      text: 'Book a Call',
+      href: 'https://cal.com/shivthakker/enquiry',
       variant: 'outline' as const,
     },
     features: {
@@ -128,11 +118,6 @@ const deploymentOptions = [
       'Expert guidance & support',
       'Faster enterprise adoption',
       'Reduced implementation risk',
-    ],
-    cons: [
-      'Higher upfront investment',
-      'Longer sales cycle',
-      'Custom contract required',
     ],
     highlight: false,
   },
@@ -172,7 +157,7 @@ export default function DeploymentOptions() {
           Need help choosing the right deployment option?
         </p>
         <Button variant="outline" asChild>
-          <Link href="/contact">Schedule a Consultation</Link>
+          <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">Schedule a Consultation</Link>
         </Button>
       </div>
     </section>
@@ -227,7 +212,7 @@ const DeploymentCard = ({
           {/* Features Included */}
           <div>
             <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-muted-foreground">
-              What's Included
+              What&apos;s Included
             </h4>
             <ul className="space-y-2">
               {option.features.included.map((feature) => (
@@ -265,7 +250,7 @@ const DeploymentCard = ({
           {/* Pros */}
           <div>
             <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-emerald-600 dark:text-emerald-400">
-              Pros
+              Highlights
             </h4>
             <ul className="space-y-1.5">
               {option.pros.map((pro) => (
@@ -278,23 +263,6 @@ const DeploymentCard = ({
               ))}
             </ul>
           </div>
-
-          {/* Cons */}
-          <div>
-            <h4 className="font-semibold mb-3 text-sm uppercase tracking-wide text-orange-600 dark:text-orange-400">
-              Cons
-            </h4>
-            <ul className="space-y-1.5">
-              {option.cons.map((con) => (
-                <li key={con} className="flex items-start gap-2">
-                  <span className="text-orange-600 dark:text-orange-400 shrink-0 mt-0.5">
-                    −
-                  </span>
-                  <span className="text-sm leading-snug">{con}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </CardContent>
 
         <CardFooter>
@@ -303,7 +271,12 @@ const DeploymentCard = ({
             className="h-12 w-full"
             asChild
           >
-            <Link href={option.cta.href}>{option.cta.text}</Link>
+            <Link
+              href={option.cta.href}
+              {...(option.cta.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              {option.cta.text}
+            </Link>
           </Button>
         </CardFooter>
       </div>

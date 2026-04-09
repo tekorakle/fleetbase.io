@@ -21,7 +21,7 @@ const channels = [
     description:
       'The most active Fleetbase community hub. Get help with your deployment, discuss features, share your extensions, and connect with other operators and developers in real-time.',
     cta: 'Join Discord',
-    href: 'https://discord.gg/fleetbase',
+    href: 'https://discord.com/invite/HnTqQ6zAVn',
     badge: '5,000+ members',
   },
   {
@@ -96,7 +96,7 @@ export default function CommunityPage() {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" asChild>
-              <Link href="https://discord.gg/fleetbase" target="_blank" rel="noopener noreferrer">
+              <Link href="https://discord.com/invite/HnTqQ6zAVn" target="_blank" rel="noopener noreferrer">
                 <MessageSquare className="mr-2 size-4" />
                 Join Discord
               </Link>
@@ -190,7 +190,7 @@ export default function CommunityPage() {
                 open-source logistics.
               </p>
               <Button size="lg" asChild>
-                <Link href="https://discord.gg/fleetbase" target="_blank" rel="noopener noreferrer">
+                <Link href="https://discord.com/invite/HnTqQ6zAVn" target="_blank" rel="noopener noreferrer">
                   <MessageSquare className="mr-2 size-4" />
                   Join Discord now
                 </Link>

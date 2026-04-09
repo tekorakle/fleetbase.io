@@ -202,7 +202,7 @@ export default function ContactSalesPage() {
                     <div className="font-semibold">Community Discord</div>
                     <div className="mt-1 text-sm text-muted-foreground">
                       For technical questions and community support, join our{' '}
-                      <Link href="https://discord.gg/fleetbase" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                      <Link href="https://discord.com/invite/HnTqQ6zAVn" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
                         Discord server
                       </Link>
                       . Our team is active there daily.
@@ -230,7 +230,7 @@ export default function ContactSalesPage() {
                   Start a free 7-day trial with full platform access. No credit card required.
                 </p>
                 <Button variant="outline" asChild>
-                  <Link href="/trial">
+                  <Link href="https://console.fleetbase.io">
                     Start free trial <ArrowRight className="ml-2 size-4" />
                   </Link>
                 </Button>

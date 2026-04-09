@@ -35,7 +35,7 @@ const SUPPORT_TIERS = [
     ],
     notIncluded: ['Email support', 'SLA guarantee', 'Priority bug fixes'],
     cta: 'Join Discord',
-    ctaHref: 'https://discord.gg/kRx9E6J8',
+    ctaHref: 'https://discord.com/invite/HnTqQ6zAVn',
     highlight: false,
   },
   {
@@ -222,7 +222,7 @@ const SOCIAL_LINKS = [
     name: 'Discord Community',
     description: 'Join 1,000+ developers and operators in our Discord server.',
     icon: MessageCircle,
-    href: 'https://discord.gg/kRx9E6J8',
+    href: 'https://discord.com/invite/HnTqQ6zAVn',
     label: 'Join Discord',
     color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
   },
@@ -293,8 +293,8 @@ const CONTACT_CHANNELS = [
   {
     icon: MessageCircle,
     label: 'Discord',
-    value: 'discord.gg/kRx9E6J8',
-    href: 'https://discord.gg/kRx9E6J8',
+    value: 'discord.com/invite/HnTqQ6zAVn',
+    href: 'https://discord.com/invite/HnTqQ6zAVn',
     description: 'Community support and developer discussions.',
   },
 ];
@@ -324,7 +324,7 @@ export default function ServicesPage() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="https://discord.gg/kRx9E6J8">Join Discord Community</Link>
+              <Link href="https://discord.com/invite/HnTqQ6zAVn">Join Discord Community</Link>
             </Button>
           </div>
         </div>

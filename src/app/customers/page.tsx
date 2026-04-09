@@ -211,7 +211,7 @@ export default function CustomersPage() {
               </p>
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <Button size="lg" asChild>
-                  <Link href="/trial">
+                  <Link href="https://console.fleetbase.io">
                     Start free trial <ArrowRight className="ml-2 size-4" />
                   </Link>
                 </Button>

@@ -49,7 +49,7 @@ export default function Hero() {
                 className="flex-1 md:min-w-45 bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md" 
                 asChild
               >
-                <Link href="/signup">
+                <Link href="https://console.fleetbase.io">
                   Start Free Trial
                 </Link>
               </Button>

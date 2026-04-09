@@ -26,6 +26,18 @@ const CLOUD_TIERS = [
     badge: null,
   },
   {
+    name: 'Essentials',
+    monthlyPrice: 100,
+    annualPrice: 80,
+    units: 175,
+    overage: 0.75,
+    description: 'For small teams ready to scale beyond the starter plan.',
+    cta: 'Start Free Trial',
+    ctaHref: 'https://console.fleetbase.io',
+    highlight: false,
+    badge: null,
+  },
+  {
     name: 'Growth',
     monthlyPrice: 200,
     annualPrice: 160,
@@ -33,7 +45,7 @@ const CLOUD_TIERS = [
     overage: 0.75,
     description: 'For growing teams managing regular delivery operations.',
     cta: 'Start Free Trial',
-    ctaHref: 'https://console.fleetbase.io/register',
+    ctaHref: 'https://console.fleetbase.io',
     highlight: false,
     badge: null,
   },
@@ -97,6 +109,18 @@ const CLOUD_TIERS = [
     highlight: false,
     badge: null,
   },
+  {
+    name: 'Custom',
+    monthlyPrice: null,
+    annualPrice: null,
+    units: null,
+    overage: null,
+    description: 'Tailored infrastructure, dedicated support, and custom SLAs for large enterprises.',
+    cta: 'Book a Call',
+    ctaHref: 'https://cal.com/shivthakker/enquiry',
+    highlight: false,
+    badge: 'Enterprise',
+  },
 ];
 
 // ─── Resource Unit Costs ──────────────────────────────────────────────────────
@@ -135,7 +159,7 @@ const SUPPORT_TIERS = [
       { label: 'Private Discord Channel', included: false },
     ],
     cta: 'Join Discord',
-    ctaHref: 'https://discord.gg/kRx9E6J8',
+    ctaHref: 'https://discord.com/invite/HnTqQ6zAVn',
     highlight: false,
   },
   {
@@ -398,25 +422,54 @@ export default function PricingPage() {
                 </CardHeader>
                 <CardContent className="flex-1 space-y-3">
                   <div>
-                    <span className="text-3xl font-bold">
-                      ${billing === 'annual' ? tier.annualPrice : tier.monthlyPrice}
-                    </span>
-                    <span className="text-muted-foreground text-sm">/mo</span>
-                    {billing === 'annual' && (
-                      <div className="text-xs text-green-600 dark:text-green-400 mt-0.5">
-                        Billed annually (${tier.annualPrice * 12}/yr)
-                      </div>
+                    {tier.monthlyPrice !== null ? (
+                      <>
+                        <span className="text-3xl font-bold">
+                          ${billing === 'annual' ? tier.annualPrice : tier.monthlyPrice}
+                        </span>
+                        <span className="text-muted-foreground text-sm">/mo</span>
+                        {billing === 'annual' && tier.annualPrice && (
+                          <div className="text-xs text-green-600 dark:text-green-400 mt-0.5">
+                            Billed annually (${tier.annualPrice * 12}/yr)
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <span className="text-3xl font-bold">Custom</span>
                     )}
                   </div>
                   <div className="space-y-1.5 text-sm">
-                    <div className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                      <span><strong>{tier.units.toLocaleString()}</strong> units included/mo</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
-                      <span>${tier.overage}/unit overage</span>
-                    </div>
+                    {tier.units !== null ? (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span><strong>{tier.units.toLocaleString()}</strong> units included/mo</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span>${tier.overage}/unit overage</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span>Custom resource unit allocation</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span>Negotiated overage rates</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span>Dedicated infrastructure</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                          <span>Custom SLA &amp; support</span>
+                        </div>
+                      </>
+                    )}
                     <div className="flex items-center gap-2">
                       <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />
                       <span>Unlimited users &amp; drivers</span>
@@ -437,7 +490,12 @@ export default function PricingPage() {
                     variant={tier.highlight ? 'default' : 'outline'}
                     asChild
                   >
-                    <Link href={tier.ctaHref}>{tier.cta}</Link>
+                    <Link
+                      href={tier.ctaHref}
+                      {...(tier.ctaHref.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {tier.cta}
+                    </Link>
                   </Button>
                 </CardFooter>
               </Card>

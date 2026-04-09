@@ -280,7 +280,7 @@ export default function SolutionsPage() {
                 Talk to Sales <ArrowRight className="size-4" />
               </Link>
               <Link
-                href="/trial"
+                href="https://console.fleetbase.io"
                 className="inline-flex items-center justify-center gap-2 rounded-md border px-6 py-2.5 text-sm font-medium transition-colors hover:bg-accent"
               >
                 Start Free Trial

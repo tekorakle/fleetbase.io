@@ -20,7 +20,7 @@ import { Button } from '@/components/ui/button';
 const SOCIAL_LINKS = [
   {
     name: 'GitHub',
-    href: 'https://github.com/fleetbase',
+    href: 'https://github.com/fleetbase/fleetbase',
     icon: <FaGithub className="size-4" />,
   },
   {
@@ -168,7 +168,7 @@ const Footer = () => {
 
         <div className="mx-auto flex max-w-sm justify-center gap-4.5">
           <Button className="flex-1" asChild>
-            <Link href="/signup">Try Fleetbase Cloud</Link>
+            <Link href="https://console.fleetbase.io">Try Fleetbase Cloud</Link>
           </Button>
           <Button
             variant="secondary"
