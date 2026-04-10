@@ -31,6 +31,7 @@ import {
   UserCog,
   Briefcase,
   ClipboardList,
+  Brain,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -143,6 +144,12 @@ export const NAV_LINKS: NavLink[] = [
         href: '/platform/mobile',
         description: 'Native iOS and Android apps for drivers and customers on the go.',
         icon: Smartphone,
+      },
+      {
+        label: 'Logistics AI',
+        href: '/ai',
+        description: 'AI-powered route optimisation, autonomous dispatch, and predictive analytics — on infrastructure you own.',
+        icon: Brain,
       },
       {
         label: 'Security & Compliance',

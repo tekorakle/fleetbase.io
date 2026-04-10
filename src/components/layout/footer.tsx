@@ -79,6 +79,7 @@ const FOOTER_LINKS = [
       { label: 'Ledger', href: '/platform/ledger' },
       { label: 'Mobile Apps', href: '/platform/mobile' },
       { label: 'Extensions Marketplace', href: '/extensions' },
+      { label: 'Logistics AI', href: '/ai' },
       { label: 'Security & Compliance', href: '/platform/security' },
     ],
   },
