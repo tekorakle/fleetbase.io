@@ -1,9 +1,13 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export const metadata = {
   title: 'Pallet | Open-Source Warehouse Management System (WMS)',
@@ -14,12 +18,6 @@ export const metadata = {
     description: 'Pallet is an open-source WMS for inventory management, pick-and-pack, and warehouse operations. Fully integrated with FleetOps for end-to-end logistics.',
   },
 };
-
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-} from '@/components/ui/accordion';
 
 export default function PalletPage() {
     return (

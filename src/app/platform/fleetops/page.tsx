@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 
 import Link from 'next/link';
@@ -19,6 +18,11 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 export const metadata = {
   title: 'FleetOps | Fleet Management & Dispatch Software',
@@ -29,12 +33,6 @@ export const metadata = {
     description: 'FleetOps by Fleetbase is open-source fleet management and dispatch software. Real-time GPS tracking, route optimization, driver management, and automated dispatch — self-hosted or cloud.',
   },
 };
-
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
 
 const outcomes = [
   { value: '30%', label: 'Average fuel cost reduction' },

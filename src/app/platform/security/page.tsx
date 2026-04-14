@@ -5,15 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
-export const metadata = {
-  title: 'Security & Compliance | Enterprise Fleet Management Security',
-  description: 'Fleetbase provides enterprise-grade security for fleet management operations. Role-based access control, audit logs, data encryption, GDPR compliance, and self-hosted deployment options.',
-  keywords: ['fleet management security', 'logistics data security', 'RBAC fleet management', 'GDPR logistics software', 'enterprise fleet security'],
-  openGraph: {
-    title: 'Security & Compliance | Enterprise Fleet Management Security',
-    description: 'Fleetbase provides enterprise-grade security for fleet management operations. Role-based access control, audit logs, data encryption, GDPR compliance, and self-hosted deployment options.',
-  },
-};
 
 
 const faqs = [

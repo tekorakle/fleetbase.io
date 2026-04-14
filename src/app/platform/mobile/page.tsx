@@ -5,15 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
-export const metadata = {
-  title: 'Mobile Apps | Fleet Management Mobile Solutions',
-  description: 'Fleetbase mobile apps for fleet managers and drivers. Real-time visibility, job management, and proof of delivery on iOS and Android. Built on the open-source Navigator platform.',
-  keywords: ['fleet management mobile app', 'driver mobile app', 'delivery app', 'fleet tracking app', 'logistics mobile app'],
-  openGraph: {
-    title: 'Mobile Apps | Fleet Management Mobile Solutions',
-    description: 'Fleetbase mobile apps for fleet managers and drivers. Real-time visibility, job management, and proof of delivery on iOS and Android. Built on the open-source Navigator platform.',
-  },
-};
 
 
 const faqs = [
