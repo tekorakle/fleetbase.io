@@ -1,31 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
-const WHATSAPP_NUMBER = '6588345437'; // Fleetbase sales: +65 8834 5437
+const WHATSAPP_NUMBER = '6588345437'; // Fleetbase: +65 8834 5437
 const WHATSAPP_MESSAGE = encodeURIComponent(
-  'Hi Fleetbase team! I\'d like to learn more about your logistics platform.'
+  "Hi Fleetbase team! I'd like to learn more about your logistics platform."
 );
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
-// How far down the page (px) before the button appears
-const SCROLL_THRESHOLD = 300;
-
 export default function WhatsAppFloat() {
-  const [visible, setVisible] = useState(false);
   const [hovered, setHovered] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > SCROLL_THRESHOLD);
-    };
-
-    // Show immediately if already scrolled past threshold (e.g. page refresh mid-page)
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <Link
@@ -36,33 +21,26 @@ export default function WhatsAppFloat() {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={[
-        // Positioning & stacking
+        // Positioning & stacking — always visible
         'fixed bottom-8 right-8 z-[9999]',
         // Size — desktop
         'w-[72px] h-[72px]',
-        // Size — mobile override via sm breakpoint
-        'sm:w-[72px] sm:h-[72px]',
         // Shrink on small screens
         'max-[768px]:w-14 max-[768px]:h-14 max-[768px]:bottom-5 max-[768px]:right-5',
         // Shape & colour
         'rounded-full bg-[#25D366]',
-        // Shadow — matches the site's card shadow style
+        // Shadow
         'shadow-[0_12px_30px_rgba(0,0,0,0.35)]',
         // Flex centre
         'flex items-center justify-center',
-        // Smooth entrance / hover transition
+        // Hover transition
         'transition-all duration-300 ease-out',
-        // Hover scale
         hovered ? 'scale-110' : 'scale-100',
-        // Fade + slide-up entrance
-        visible
-          ? 'opacity-100 translate-y-0 pointer-events-auto'
-          : 'opacity-0 translate-y-4 pointer-events-none',
-        // Subtle ring on focus for accessibility
+        // Accessibility ring
         'focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#25D366]/50',
       ].join(' ')}
     >
-      {/* WhatsApp SVG icon — inline so no extra network request */}
+      {/* WhatsApp SVG icon — inline, no extra network request */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 32 32"
