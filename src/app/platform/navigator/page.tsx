@@ -79,20 +79,53 @@ export default function NavigatorPage() {
         </div>
       </section>
 
-      {/* Play Store Screenshot */}
-      <section className="py-12 bg-muted/10">
-        <div className="container max-w-4xl mx-auto px-4">
-          <div className="rounded-2xl overflow-hidden border shadow-lg">
-            <Image
-              src="/images/app-store/navigator-play-store.webp"
-              alt="Fleetbase Navigator on Google Play Store — driver app for logistics operations"
-              width={1280}
-              height={720}
-              className="w-full object-cover object-top"
-              priority
-            />
+      {/* App Screenshots */}
+      <section className="py-16 bg-muted/10">
+        <div className="container">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-bold mb-2">See Navigator in Action</h2>
+            <p className="text-muted-foreground">Real screenshots from the Navigator driver app</p>
           </div>
-          <p className="text-center text-sm text-muted-foreground mt-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div className="rounded-2xl overflow-hidden border shadow-lg">
+              <Image
+                src="/images/console-screenshots/navigator-orders-calendar.png"
+                alt="Navigator app showing scheduled orders calendar view"
+                width={400}
+                height={700}
+                className="w-full object-cover"
+                priority
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden border shadow-lg">
+              <Image
+                src="/images/console-screenshots/navigator-order-detail.png"
+                alt="Navigator app showing order detail with map and route"
+                width={400}
+                height={700}
+                className="w-full object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden border shadow-lg">
+              <Image
+                src="/images/console-screenshots/navigator-chat-list.png"
+                alt="Navigator app showing real-time chat with operations and customers"
+                width={400}
+                height={700}
+                className="w-full object-cover"
+              />
+            </div>
+            <div className="rounded-2xl overflow-hidden border shadow-lg">
+              <Image
+                src="/images/console-screenshots/navigator-tracking-dashboard.png"
+                alt="Navigator app showing real-time location tracking dashboard"
+                width={400}
+                height={700}
+                className="w-full object-cover"
+              />
+            </div>
+          </div>
+          <p className="text-center text-sm text-muted-foreground mt-6">
             Available now on{' '}
             <Link
               href="https://play.google.com/store/apps/details?id=io.fleetbase.navigator"

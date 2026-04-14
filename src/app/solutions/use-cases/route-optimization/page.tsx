@@ -25,7 +25,7 @@ export default function RouteOptimizationPage() {
         { value: '15 sec', label: 'Average route calculation time' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
       heroScreenshotAlt="Fleetbase FleetOps route optimization showing driver routes with multi-stop sequencing and ETAs"
       heroScreenshotNeeded="FleetOps route optimization panel — showing before/after route comparison with distance and time savings"
       painPoints={{

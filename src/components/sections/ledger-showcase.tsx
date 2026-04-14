@@ -79,7 +79,7 @@ export default function LedgerShowcase() {
           >
             <div className="relative rounded-xl border overflow-hidden shadow-2xl aspect-[4/3]">
               <Image
-                src="/images/console-screenshots/ledger-dashboard.webp"
+                src="/images/console-screenshots/ledger-dashboard-detail.webp"
                 alt="Fleetbase Ledger finance dashboard showing invoice management, wallet balances, and financial reporting for logistics operations"
                 fill
                 className="object-cover object-top"

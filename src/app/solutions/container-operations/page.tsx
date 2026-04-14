@@ -25,7 +25,7 @@ export default function ContainerOperationsPage() {
         { value: '3×', label: 'Faster customs clearance workflows' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps container operations order list showing port logistics and container tracking"
       heroScreenshotNeeded="FleetOps live map — container shipments tracked from port with status indicators and ETA"
       painPoints={{

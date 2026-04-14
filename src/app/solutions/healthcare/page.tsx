@@ -24,7 +24,7 @@ export default function HealthcarePage() {
         { value: '99.9%', label: 'Platform uptime' },
         { value: '30%', label: 'Reduction in delivery exceptions' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps order management for healthcare delivery showing chain-of-custody order tracking"
       heroScreenshotNeeded="FleetOps order detail — healthcare delivery with chain-of-custody timeline and compliance fields"
       painPoints={{

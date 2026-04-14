@@ -72,7 +72,7 @@ const coreFeatures = [
       'Delivery window and vehicle capacity constraints',
       'Bulk order import and batch dispatch',
     ],
-    screenshot: '/images/console-screenshots/fleetops-orders-table.webp',
+    screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
     screenshotAlt: 'Fleetbase FleetOps order management table showing dispatch queue with pickup, dropoff, driver assignment and status columns',
     placeholderLabel: 'Route Optimization Map',
     placeholderDesc: 'Live map showing optimized multi-stop routes, driver positions, and ETAs',
@@ -90,7 +90,7 @@ const coreFeatures = [
       'Geofence-triggered status updates',
       'Driver location history and replay',
     ],
-    screenshot: '/images/console-screenshots/fleetops-live-map.webp',
+    screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
     screenshotAlt: 'Fleetbase FleetOps live map view showing real-time vehicle positions across Singapore with order pins and driver status indicators',
     placeholderLabel: 'Live Fleet Map',
     placeholderDesc: 'Real-time map view showing driver locations, order statuses, and ETAs',
@@ -108,7 +108,7 @@ const coreFeatures = [
       'Proof of delivery: signatures, photos, notes',
       'Barcode and QR code scanning via mobile',
     ],
-    screenshot: '/images/console-screenshots/fleetops-kanban-board.webp',
+    screenshot: '/images/console-screenshots/fleetops-kanban-board-detail.webp',
     screenshotAlt: 'Fleetbase FleetOps kanban board view showing orders organised by status: Created, Dispatched, Started, Enroute, and Completed columns',
     placeholderLabel: 'Order Management Dashboard',
     placeholderDesc: 'Order list view with status filters, custom fields, and activity timeline',
@@ -126,7 +126,7 @@ const coreFeatures = [
       'Shift scheduling and availability windows',
       'Mobile app for drivers: Navigator (iOS & Android)',
     ],
-    screenshot: '/images/console-screenshots/fleetops-drivers.webp',
+    screenshot: '/images/console-screenshots/fleetops-drivers-create.webp',
     screenshotAlt: 'Fleetbase FleetOps driver management panel showing driver list with IDs, vehicle assignments, phone numbers, and active status',
     placeholderLabel: 'Driver Management Panel',
     placeholderDesc: 'Driver list with performance metrics, vehicle assignments, and status',
@@ -228,7 +228,7 @@ export default function FleetOpsPage() {
             </div>
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-live-map.webp"
+                src="/images/console-screenshots/fleetops-live-map-singapore.png"
                 alt="Fleetbase FleetOps live operations dashboard showing real-time fleet map with driver positions, active orders, and route overlays across Singapore"
                 fill
                 className="object-cover object-top"
@@ -390,8 +390,8 @@ export default function FleetOpsPage() {
               </div>
               <div className="relative aspect-[4/3] w-full">
                 <Image
-                  src="/images/console-screenshots/fleetops-kanban-board.webp"
-                  alt="Fleetbase FleetOps analytics and order pipeline view showing delivery performance across all operational stages"
+                src="/images/console-screenshots/fleetops-scheduler.webp"
+                alt="Fleetbase FleetOps scheduler showing calendar view with scheduled and unscheduled orders for dispatch planning"
                   fill
                   className="object-cover object-top"
                   sizes="(max-width: 768px) 100vw, 50vw"

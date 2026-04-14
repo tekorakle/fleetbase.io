@@ -84,7 +84,7 @@ export default function LedgerPage() {
             {/* Hero Screenshot */}
             <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
               <Image
-                src="/images/console-screenshots/ledger-dashboard.webp"
+                src="/images/console-screenshots/ledger-dashboard-detail.webp"
                 alt="Fleetbase Ledger financial management dashboard showing accounting overview, transaction ledger, and financial reporting for logistics operations"
                 fill
                 className="object-cover object-top"
@@ -257,7 +257,7 @@ export default function LedgerPage() {
 
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
             <Image
-                src="/images/console-screenshots/ledger-dashboard.webp"
+                src="/images/console-screenshots/ledger-dashboard-detail.webp"
                 alt="Fleetbase Ledger chart of accounts management showing account types, balances, and hierarchical account structure"
                 fill
                 className="object-cover object-top"
@@ -274,7 +274,7 @@ export default function LedgerPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
             <Image
-                src="/images/console-screenshots/storefront-dashboard.webp"
+                src="/images/console-screenshots/ledger-invoices-create.webp"
                 alt="Fleetbase Ledger invoice builder showing template editor with line items, tax configuration, and branded invoice preview"
                 fill
                 className="object-cover object-top"
@@ -381,7 +381,7 @@ export default function LedgerPage() {
 
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
             <Image
-                src="/images/console-screenshots/fleetops-drivers.webp"
+                src="/images/console-screenshots/ledger-transactions.webp"
                 alt="Fleetbase Ledger wallet management showing driver wallet balances, transaction history, top-up controls, and transfer actions"
                 fill
                 className="object-cover object-top"
@@ -506,7 +506,7 @@ export default function LedgerPage() {
 
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
             <Image
-                src="/images/console-screenshots/ledger-dashboard.webp"
+                src="/images/console-screenshots/ledger-dashboard-detail.webp"
                 alt="Fleetbase Ledger financial reports dashboard showing income statement, revenue breakdown by period, and export options"
                 fill
                 className="object-cover object-top"

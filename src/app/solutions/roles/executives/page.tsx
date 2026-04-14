@@ -25,7 +25,7 @@ export default function ExecutivesPage() {
         { value: '100%', label: 'Data ownership — no vendor lock-in' },
         { value: '99.9%', label: 'Platform uptime SLA' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-kanban-board.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-kanban-board-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps executive view showing order pipeline performance across all delivery stages"
       heroScreenshotNeeded="FleetOps executive dashboard — high-level KPI cards showing cost per delivery, on-time rate, fleet utilization, and revenue impact"
       painPoints={{

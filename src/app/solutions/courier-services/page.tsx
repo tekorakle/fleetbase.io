@@ -24,7 +24,7 @@ export default function CourierServicesPage() {
         { value: '25%', label: 'More stops per driver per day' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps order table showing courier parcel orders with pickup, dropoff, driver and status columns"
       heroScreenshotNeeded="FleetOps order list view — parcel orders with statuses, driver assignments, and tracking links"
       painPoints={{

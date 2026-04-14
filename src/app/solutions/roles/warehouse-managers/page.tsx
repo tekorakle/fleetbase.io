@@ -25,7 +25,7 @@ export default function WarehouseManagersPage() {
         { value: '100%', label: 'Real-time inventory accuracy' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps order table for warehouse managers showing outbound order queue and fulfilment status"
       heroScreenshotNeeded="Pallet WMS dashboard — inventory overview with stock levels, pending picks, and outbound order queue"
       painPoints={{

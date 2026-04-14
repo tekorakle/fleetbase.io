@@ -201,7 +201,7 @@ export default function DeveloperConsolePage() {
             </div>
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/console-screenshots/developers-logs.webp"
+                src="/images/console-screenshots/developers-monitoring-detail.webp"
                 alt="Fleetbase Developer Console API request logs showing method, endpoint, HTTP status, response time, and expandable request/response inspector"
                 fill
                 className="object-cover object-top"

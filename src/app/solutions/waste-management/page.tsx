@@ -25,7 +25,7 @@ export default function WasteManagementPage() {
         { value: '100%', label: 'Digital compliance records' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
       heroScreenshotAlt="Fleetbase FleetOps live map showing waste collection vehicles on optimized collection routes"
       heroScreenshotNeeded="FleetOps live map — waste collection vehicles on optimized routes with collection point markers"
       painPoints={{

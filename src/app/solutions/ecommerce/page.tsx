@@ -24,7 +24,7 @@ export default function EcommercePage() {
         { value: '4.9★', label: 'Post-delivery customer rating' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/storefront-products.webp"
+      heroScreenshot="/images/console-screenshots/storefront-products-grid.webp"
       heroScreenshotAlt="Fleetbase Storefront product catalogue integrated with FleetOps dispatch for e-commerce fulfilment"
       heroScreenshotNeeded="FleetOps + Pallet side-by-side — e-commerce orders flowing from Storefront into dispatch"
       painPoints={{

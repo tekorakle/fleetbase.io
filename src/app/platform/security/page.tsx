@@ -111,7 +111,7 @@ export default function SecurityCompliancePage() {
             </div>
             <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/console-screenshots/iam-users.webp"
+                src="/images/console-screenshots/iam-users-create.webp"
                 alt="Fleetbase IAM user management showing team members with role assignments, access permissions, and account status"
                 fill
                 className="object-cover object-top"
@@ -169,7 +169,7 @@ export default function SecurityCompliancePage() {
             </div>
             <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/console-screenshots/developers-logs.webp"
+                src="/images/console-screenshots/developers-monitoring-detail.webp"
                 alt="Fleetbase audit log dashboard showing complete action history with user, action type, resource, timestamp, IP address, and change inspector"
                 fill
                 className="object-cover object-top"

@@ -83,7 +83,7 @@ export default function MobileAppsPage() {
             </div>
             <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
               <Image
-                src="/images/console-screenshots/fleetops-live-map.webp"
+                src="/images/console-screenshots/navigator-order-detail.png"
                 alt="Fleetbase mobile app ecosystem — Navigator driver app and Storefront customer app connected to live FleetOps dispatch"
                 fill
                 className="object-cover object-top"
@@ -140,8 +140,8 @@ export default function MobileAppsPage() {
             </div>
             <div className="w-full h-[400px] rounded-lg border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/console-screenshots/fleetops-orders-table.webp"
-                alt="Fleetbase Navigator driver app order management showing active deliveries, driver assignments, and real-time status updates"
+                src="/images/console-screenshots/navigator-orders-calendar.png"
+                alt="Fleetbase Navigator driver app showing orders calendar and scheduled deliveries"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -166,7 +166,7 @@ export default function MobileAppsPage() {
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="w-full h-[400px] rounded-lg border overflow-hidden shadow-lg relative order-last md:order-first">
               <Image
-                src="/images/console-screenshots/storefront-products.webp"
+                src="/images/console-screenshots/storefront-customer-app.png"
                 alt="Fleetbase Storefront customer app showing product catalogue, store listing, and order management interface"
                 fill
                 className="object-cover object-top"
@@ -223,7 +223,7 @@ export default function MobileAppsPage() {
             </div>
             <div className="w-full h-[460px] rounded-lg border overflow-hidden shadow-lg relative">
             <Image
-                src="/images/console-screenshots/fleetops-drivers.webp"
+                src="/images/console-screenshots/navigator-tracking-dashboard.png"
                 alt="Fleetbase Navigator mobile app showing driver job list with active delivery, navigation controls, and proof of delivery capture"
                 fill
                 className="object-cover object-top"

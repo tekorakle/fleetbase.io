@@ -43,7 +43,7 @@ export default function StorefrontPage() {
             <div className="mt-12 w-full max-w-5xl">
               <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
                 <Image
-                  src="/images/console-screenshots/storefront-dashboard.webp"
+                  src="/images/console-screenshots/storefront-dashboard-detail.webp"
                   alt="Fleetbase Storefront console dashboard showing live orders, store activity, and delivery metrics"
                   fill
                   className="object-cover object-top"
@@ -223,7 +223,7 @@ export default function StorefrontPage() {
                 </div>
                 <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
                   <Image
-                    src="/images/console-screenshots/storefront-products.webp"
+                    src="/images/console-screenshots/storefront-products-grid.webp"
                     alt="Fleetbase Storefront product catalogue showing items, categories, and pricing configuration"
                     fill
                     className="object-cover object-top"
@@ -266,7 +266,7 @@ export default function StorefrontPage() {
                 </div>
                 <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
                   <Image
-                    src="/images/console-screenshots/storefront-dashboard.webp"
+                    src="/images/console-screenshots/storefront-dashboard-detail.webp"
                     alt="Fleetbase Storefront multi-vendor marketplace dashboard showing store network, order volume, and revenue metrics"
                     fill
                     className="object-cover object-top"
@@ -309,7 +309,7 @@ export default function StorefrontPage() {
                 </div>
                 <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
                   <Image
-                    src="/images/console-screenshots/storefront-products.webp"
+                    src="/images/console-screenshots/storefront-products-grid.webp"
                     alt="Fleetbase Storefront product management showing product list with variants, addons, and availability settings"
                     fill
                     className="object-cover object-top"
@@ -352,7 +352,7 @@ export default function StorefrontPage() {
                 </div>
                 <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
                   <Image
-                    src="/images/console-screenshots/fleetops-live-map.webp"
+                    src="/images/console-screenshots/fleetops-live-map-singapore.png"
                     alt="Fleetbase FleetOps live map showing Storefront order dispatch with driver routes and real-time delivery tracking"
                     fill
                     className="object-cover object-top"

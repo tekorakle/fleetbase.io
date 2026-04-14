@@ -25,7 +25,7 @@ export default function GovernmentPage() {
         { value: 'SOC 2', label: 'Security compliance ready' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-live-map.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
       heroScreenshotAlt="Fleetbase FleetOps live map showing government fleet operations with real-time vehicle tracking"
       heroScreenshotNeeded="FleetOps live map — government fleet operations with classified zone indicators and secure access panel"
       painPoints={{

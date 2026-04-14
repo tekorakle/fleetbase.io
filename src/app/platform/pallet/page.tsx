@@ -61,7 +61,7 @@ export default function PalletPage() {
                         {/* Hero Screenshot */}
                         <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
                             <Image
-                                src="/images/console-screenshots/storefront-products.webp"
+                                src="/images/console-screenshots/storefront-products-grid.webp"
                                 alt="Fleetbase Pallet WMS platform showing inventory management, warehouse locations, and stock control dashboard"
                                 fill
                                 className="object-cover object-top"
@@ -244,7 +244,7 @@ export default function PalletPage() {
 
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/storefront-products.webp"
+                                src="/images/console-screenshots/storefront-products-grid.webp"
                                 alt="Fleetbase Pallet WMS multi-warehouse dashboard showing inventory levels, warehouse locations, and stock transfer status"
                                 fill
                                 className="object-cover object-top"
@@ -261,7 +261,7 @@ export default function PalletPage() {
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/fleetops-orders-table.webp"
+                                src="/images/console-screenshots/fleetops-orders-table-detail.webp"
                                 alt="Fleetbase Pallet WMS wave picking dashboard showing pick list generation, batch creation, and picker assignment"
                                 fill
                                 className="object-cover object-top"
@@ -388,7 +388,7 @@ export default function PalletPage() {
 
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/fleetops-orders-table.webp"
+                                src="/images/console-screenshots/fleetops-orders-table-detail.webp"
                                 alt="Fleetbase Pallet WMS cycle count interface showing inventory variance reports, count assignments, and adjustment workflow"
                                 fill
                                 className="object-cover object-top"
@@ -405,7 +405,7 @@ export default function PalletPage() {
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/developers-logs.webp"
+                                src="/images/console-screenshots/developers-monitoring-detail.webp"
                                 alt="Fleetbase Pallet WMS traceability report showing lot genealogy, serial number tracking, and recall management"
                                 fill
                                 className="object-cover object-top"
@@ -532,7 +532,7 @@ export default function PalletPage() {
 
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/storefront-dashboard.webp"
+                                src="/images/console-screenshots/storefront-dashboard-detail.webp"
                                 alt="Fleetbase Pallet WMS temperature zone management showing warehouse map with cold chain monitoring and alerts"
                                 fill
                                 className="object-cover object-top"
@@ -549,7 +549,7 @@ export default function PalletPage() {
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="w-full h-[600px] rounded-lg border overflow-hidden shadow-lg relative">
                             <Image
-                                src="/images/console-screenshots/fleetops-drivers.webp"
+                                src="/images/console-screenshots/fleetops-drivers-create.webp"
                                 alt="Fleetbase Pallet WMS mobile interface showing barcode scanning, pick list navigation, and bin location guidance"
                                 fill
                                 className="object-cover object-top"
@@ -709,7 +709,7 @@ export default function PalletPage() {
 
                     <div className="w-full max-w-4xl mx-auto h-[400px] rounded-lg border overflow-hidden shadow-lg relative">
                     <Image
-                        src="/images/console-screenshots/fleetops-kanban-board.webp"
+                        src="/images/console-screenshots/fleetops-kanban-board-detail.webp"
                         alt="Fleetbase Pallet WMS order lifecycle showing complete flow from receiving through putaway, picking, packing, dispatch, and delivery"
                         fill
                         className="object-cover object-top"

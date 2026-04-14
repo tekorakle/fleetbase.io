@@ -25,7 +25,7 @@ export default function CustomerSuccessPage() {
         { value: '4.8★', label: 'Average customer satisfaction score' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/console-screenshots/fleetops-orders-table.webp"
+      heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
       heroScreenshotAlt="Fleetbase FleetOps order detail view for customer success teams showing full order timeline and driver status"
       heroScreenshotNeeded="FleetOps order detail view — full order timeline, customer info, driver position, and POD visible to support agent"
       painPoints={{

@@ -81,7 +81,7 @@ export default function ExtensionsMarketplacePage() {
             </div>
             <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
               <Image
-                src="/images/console-screenshots/developers-monitoring.webp"
+                src="/images/console-screenshots/extensions-marketplace.webp"
                 alt="Fleetbase console showing extensions marketplace with installed modules, API monitoring dashboard, and developer tools"
                 fill
                 className="object-cover object-top"
@@ -148,8 +148,8 @@ export default function ExtensionsMarketplacePage() {
             </div>
             <div className="w-full h-[500px] rounded-lg border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/console-screenshots/developers-api-keys.webp"
-                alt="Fleetbase developer console showing API key management with permission scopes, key generation, and usage metrics"
+                src="/images/console-screenshots/extensions-marketplace.webp"
+                alt="Fleetbase extensions marketplace showing available extensions with categories, install buttons, and publisher information"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
