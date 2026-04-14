@@ -14,7 +14,7 @@ const faqs = [
   },
   {
     q: 'Can I white-label the Navigator or Storefront app?',
-    a: 'Absolutely. Both apps are open-source with permissive licensing. You can fork the repositories, replace the branding, customize the UI, add features, and publish your own branded app to the App Store and Google Play under your own developer account.',
+    a: 'Absolutely. Both apps are open-source under AGPL-3.0. You can fork the repositories, replace the branding, customise the UI, add features, and publish your own branded app to the App Store and Google Play. If you need to keep your modifications proprietary, a commercial licence is available.',
   },
   {
     q: 'What technology are the apps built with?',

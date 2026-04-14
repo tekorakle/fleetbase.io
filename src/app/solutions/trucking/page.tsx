@@ -104,7 +104,7 @@ export default function TruckingPage() {
         },
         {
           q: 'Is Fleetbase open source?',
-          a: 'Yes. Fleetbase is fully open-source under AGPL. You can self-host it on your own infrastructure, inspect the code, and extend it to fit your exact workflows.',
+          a: 'Yes. Fleetbase is fully open-source under AGPL-3.0. You can self-host it on your own infrastructure, inspect the code, and extend it to fit your exact workflows. If you deploy a modified version as a service to external users, AGPL requires those modifications to be open source. A commercial licence is available if you need to keep changes proprietary.',
         },
         {
           q: 'How is pricing structured for trucking fleets?',

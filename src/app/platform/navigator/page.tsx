@@ -237,7 +237,7 @@ export default function NavigatorPage() {
             <div className="text-5xl mb-6">⚙️</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Fully Open Source</h2>
             <p className="text-lg text-muted-foreground mb-8">
-              Navigator is open source under the MIT licence. Use it as-is, white-label it as your own brand, or extend it with custom workflows. The full source code is available on GitHub.
+              Navigator is open source under AGPL-3.0. Use it as-is, white-label it as your own brand, or extend it with custom workflows. The full source code is available on GitHub. A commercial licence is available if you need to keep your modifications proprietary.
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link

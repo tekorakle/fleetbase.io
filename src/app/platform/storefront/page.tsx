@@ -633,7 +633,7 @@ console.log(order.total); // 2450 ($24.50)`}
             <AccordionItem value="item-6">
               <AccordionTrigger>Is Storefront really open-source?</AccordionTrigger>
               <AccordionContent>
-                Yes. Storefront is fully open-source under the MIT license. You can view the code on GitHub, self-host it on your own infrastructure, and customize it to your exact needs. No vendor lock-in, no hidden fees.
+                Yes. Storefront is fully open-source under AGPL-3.0. You can view the code on GitHub, self-host it on your own infrastructure, and customise it to your exact needs. If you deploy a modified version as a service to external users, AGPL requires you to make those modifications available under the same licence. A commercial licence is available if you need to keep your changes proprietary. No vendor lock-in, no hidden fees.
               </AccordionContent>
             </AccordionItem>
 

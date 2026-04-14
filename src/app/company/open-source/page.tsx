@@ -55,22 +55,16 @@ const reasons = [
 
 const licenceDetails = [
   {
-    title: 'Core platform — AGPL-3.0',
+    title: 'AGPL-3.0 — Open Source',
     description:
-      'The Fleetbase core platform, FleetOps, Pallet, Storefront, and all first-party extensions are released under the GNU Affero General Public License v3.0. This means you can use, modify, and distribute the software freely — with the requirement that any modifications you distribute must also be open-source under the same licence.',
-    suitable: ['Internal deployments', 'Non-commercial use', 'Open-source projects', 'Academic and research use'],
+      'Fleetbase is released under the GNU Affero General Public License v3.0. You can use, modify, and self-host it freely. The AGPL network copyleft clause means that if you deploy a modified version over a network — including as a SaaS product — you must make those modifications available under AGPL-3.0. Internal use with no external users has no such obligation.',
+    suitable: ['Internal deployments for your own operations', 'Non-commercial and academic use', 'Open-source projects and contributions', 'Operators happy to share modifications with the community'],
   },
   {
-    title: 'SDKs & client libraries — MIT',
+    title: 'Commercial Licence',
     description:
-      'The Fleetbase JavaScript SDK, PHP SDK, Extensions SDK, and Navigator app are released under the MIT licence. This gives maximum flexibility for building integrations, custom apps, and commercial products on top of the Fleetbase API.',
-    suitable: ['Commercial integrations', 'Custom mobile apps', 'White-label products', 'SaaS products built on Fleetbase'],
-  },
-  {
-    title: 'Commercial licence',
-    description:
-      'For businesses that need to distribute modified versions of Fleetbase without open-source obligations, or that require a different licence for compliance reasons, commercial licences are available. Contact our team to discuss your requirements.',
-    suitable: ['Proprietary modifications', 'OEM/white-label distribution', 'Enterprise compliance requirements', 'Managed service providers'],
+      'The commercial licence removes all AGPL copyleft obligations. If you want to make proprietary modifications, build a SaaS product on Fleetbase without disclosing your changes, or distribute customised versions to customers, a commercial licence is required. Your IP stays entirely yours.',
+    suitable: ['Proprietary modifications kept private', 'SaaS products without open-source disclosure', 'OEM and white-label distribution', 'Managed service providers and enterprise deployments'],
   },
 ];
 
@@ -118,8 +112,8 @@ export default function OpenSourcePage() {
         <div className="container">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
             {[
-              { value: 'AGPL-3.0', label: 'Core platform licence' },
-              { value: 'MIT', label: 'SDK & client library licence' },
+              { value: 'AGPL-3.0', label: 'Platform licence' },
+              { value: 'Commercial', label: 'Proprietary option available' },
               { value: '100%', label: 'Source code public' },
               { value: 'Self-host', label: 'Deploy anywhere' },
             ].map((stat) => (
@@ -162,8 +156,8 @@ export default function OpenSourcePage() {
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Licensing explained</h2>
             <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-              Fleetbase uses different licences for different parts of the platform. Here is what each
-              means for your use case.
+              Fleetbase is released under AGPL-3.0. A commercial licence is available for businesses
+              that need to keep their modifications proprietary. Here is what each option means.
             </p>
           </div>
           <div className="space-y-6">

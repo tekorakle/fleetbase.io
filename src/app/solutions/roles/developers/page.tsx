@@ -20,7 +20,7 @@ export default function DevelopersPage() {
       title={<>Open Source. API-First. <span className="text-gradient">Built for Builders.</span></>}
       description="Fleetbase is the logistics platform developers actually want to work with — fully open-source, API-first, self-hostable, and extensible. Integrate it into your stack, build on top of it, or fork it entirely. The code is yours."
       stats={[
-        { value: '100%', label: 'Open source — MIT & AGPL' },
+        { value: 'AGPL-3.0', label: 'Open source licence' },
         { value: 'REST', label: 'Full API coverage' },
         { value: '100+', label: 'Webhook event types' },
         { value: '99.9%', label: 'API uptime SLA' },
@@ -93,7 +93,7 @@ export default function DevelopersPage() {
       faqs={[
         {
           q: 'What licence is Fleetbase released under?',
-          a: 'Fleetbase core is released under AGPL-3.0. The Extensions SDK and client libraries are released under MIT. Commercial licences are available for enterprise deployments that require different terms.',
+          a: 'Fleetbase is released under AGPL-3.0. The network copyleft clause means that if you deploy a modified version over a network, you must make those modifications available under AGPL-3.0. A commercial licence is available for businesses that need to keep their modifications proprietary or build SaaS products without open-source disclosure obligations.'
         },
         {
           q: 'Is there an official SDK?',
@@ -109,7 +109,7 @@ export default function DevelopersPage() {
         },
         {
           q: 'Can I build a white-label product on top of Fleetbase?',
-          a: 'Yes. Fleetbase can be white-labelled for commercial products. The Extensions framework allows you to customise the UI, branding, and functionality. Enterprise licences are available for commercial white-label use.',
+          a: 'Yes. Fleetbase can be white-labelled for commercial products. The Extensions framework allows you to customise the UI, branding, and functionality. If you need to keep your modifications proprietary while distributing to customers, a commercial licence is required to remove the AGPL network copyleft obligation.'
         },
       ]}
       ctaHeading="Start building on Fleetbase"
