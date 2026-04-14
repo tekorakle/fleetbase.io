@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Globe, Heart, Zap, Shield, Code2, MapPin, Linkedin, Twitter } from 'lucide-react';
+import { ArrowRight, Globe, Heart, Zap, Shield, Code2, MapPin, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
   title: 'About Fleetbase | Open-Source Logistics Platform — Singapore',
   description:
-    'Fleetbase is an open-source logistics and fleet management platform founded in Singapore by Shiv Thakker and Ronald Richardson. Learn our story, mission, and the team behind the platform.',
+    'Fleetbase is an open-source logistics and fleet management platform founded in 2018 in Singapore by Shiv Thakker and Ronald Richardson. Learn our story, mission, and the team behind the platform.',
   keywords: ['about fleetbase', 'fleetbase team', 'open source logistics company', 'fleetbase singapore', 'logistics startup singapore', 'shiv thakker', 'ronald richardson'],
   alternates: { canonical: 'https://fleetbase.io/company/about' },
   openGraph: {
@@ -56,16 +57,16 @@ const values = [
 
 const milestones = [
   {
-    year: '2021',
+    year: '2018',
     title: 'Founded',
     description:
-      'Fleetbase was founded with a single conviction: logistics technology should be open-source and accessible to every business, not just the largest enterprises.',
+      'Fleetbase was founded in Singapore with a single conviction: logistics technology should be open, accessible, and operator-first — not locked inside expensive, static enterprise systems with high monthly subscriptions.',
   },
   {
     year: '2022',
-    title: 'First public release',
+    title: 'Open-sourced',
     description:
-      'FleetOps v1.0 launched publicly on GitHub. Within the first month, hundreds of operators had deployed the platform and the community Discord reached 1,000 members.',
+      'After years of building and validating the platform with real operators, Fleetbase was open-sourced under AGPL-3.0. The community immediately embraced it — hundreds of operators deployed within the first month and the Discord reached 1,000 members.',
   },
   {
     year: '2023',
@@ -104,14 +105,18 @@ export default function AboutPage() {
             Fleetbase was born out of frustration. The logistics software market was dominated by
             expensive, closed-source platforms that locked operators into long contracts, charged per
             driver, and made customization impossible without paying for professional services.
+            Developers who wanted to build on top of logistics infrastructure had nowhere to start —
+            and operators who needed flexibility were forced into static systems with high monthly
+            subscriptions and no way to adapt.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            We believed there was a better way — a fully open-source logistics platform that operators
-            could deploy on their own infrastructure, extend with their own code, and own completely.
-            No vendor lock-in. No per-seat pricing. No black boxes.
+            We believed there was a better way — a fully open-source logistics platform built for
+            both <strong>developers</strong> and <strong>operators</strong> alike. One that
+            developers could extend without months of custom development time, and that operators
+            could deploy, own, and adapt without vendor lock-in, per-seat pricing, or black boxes.
           </p>
           <p className="mt-4 text-lg leading-relaxed text-muted-foreground md:text-xl">
-            That platform is Fleetbase.
+            That platform is Fleetbase. Founded in 2018 in Singapore, open-sourced in 2022.
           </p>
         </div>
       </section>
@@ -161,7 +166,7 @@ export default function AboutPage() {
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">Our journey</h2>
             <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-              From a GitHub repository to a global logistics platform used in 40+ countries.
+              From a founding conviction in 2018 to a global logistics platform used in 40+ countries.
             </p>
           </div>
           <div className="relative space-y-8 pl-8 before:absolute before:left-3 before:top-2 before:h-full before:w-px before:bg-border">
@@ -187,7 +192,11 @@ export default function AboutPage() {
           <div className="mb-12">
             <h2 className="text-3xl font-bold tracking-tight md:text-4xl">The founders</h2>
             <p className="mt-3 max-w-2xl text-lg text-muted-foreground">
-              Fleetbase was built by two founders who lived the problem first-hand — one in banking and precious metals logistics across Southeast Asia, one in military logistics and port operations.
+              Fleetbase was built by two founders who bring together enterprise finance, technology,
+              and operational expertise — from the trading floors of JP Morgan to the logistics
+              operations of the US Marines. Their combined background gives Fleetbase a rare
+              perspective: the rigour of enterprise systems, the discipline of military operations,
+              and the pragmatism of operators who have run logistics at scale.
             </p>
           </div>
           <div className="grid gap-8 md:grid-cols-2">
@@ -195,7 +204,13 @@ export default function AboutPage() {
             <div className="rounded-xl border bg-card p-8">
               <div className="flex items-start gap-5 mb-5">
                 <div className="size-20 rounded-full bg-muted flex-shrink-0 overflow-hidden border-2 border-primary/20">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-2xl font-bold text-primary">ST</div>
+                  <Image
+                    src="/images/team/shiv-thakker.jpg"
+                    alt="Shiv Thakker — Co-founder & CEO of Fleetbase"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold">Shiv Thakker</h3>
@@ -204,20 +219,42 @@ export default function AboutPage() {
                     <MapPin className="size-3" />
                     Singapore
                   </div>
+                  <Link
+                    href="https://www.linkedin.com/in/shivthakker"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="size-3.5" />
+                    LinkedIn
+                  </Link>
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Shiv, born and raised in the UK, started work at JP Morgan at the age of 17. He went on to work with them in the UK and Singapore, building deep expertise across banking, precious metals logistics, and technology. A multiple startup founder, Shiv has 10+ years of experience building and running logistics platforms across Southeast Asia.
+                Shiv is an enterprise technologist and serial entrepreneur with a background spanning
+                investment banking, precious metals logistics, and technology. He began his career at
+                JP Morgan at 17, working across the UK and Singapore, where he developed deep
+                expertise at the intersection of financial systems and physical supply chains. He has
+                10+ years of experience building and running logistics platforms across Southeast Asia.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                His experience navigating the gap between enterprise logistics software and the reality of operating in emerging markets became the founding insight behind Fleetbase — logistics technology should be open, accessible, and operator-first.
+                His experience navigating the gap between enterprise-grade logistics software and the
+                operational reality of emerging markets became the founding insight behind Fleetbase —
+                that operators and developers alike deserved infrastructure that was open, adaptable,
+                and free from the constraints of static, high-subscription legacy systems.
               </p>
             </div>
             {/* Ronald Richardson */}
             <div className="rounded-xl border bg-card p-8">
               <div className="flex items-start gap-5 mb-5">
                 <div className="size-20 rounded-full bg-muted flex-shrink-0 overflow-hidden border-2 border-primary/20">
-                  <div className="w-full h-full bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center text-2xl font-bold text-primary">RR</div>
+                  <Image
+                    src="/images/team/ronald-richardson.jpg"
+                    alt="Ronald Richardson — Co-founder & CTO of Fleetbase"
+                    width={80}
+                    height={80}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold">Ronald Richardson</h3>
@@ -226,13 +263,30 @@ export default function AboutPage() {
                     <MapPin className="size-3" />
                     Singapore
                   </div>
+                  <Link
+                    href="https://www.linkedin.com/in/ronald-a-richardson"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <Linkedin className="size-3.5" />
+                    LinkedIn
+                  </Link>
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground mb-4">
-                Ron is a former US Marine with 5 years of military logistics experience. He has spent over 6 years developing supply chain and logistics software solutions — helping thousands of containers move through ports, brokering millions of dollars in oil and chemicals, and building digital infrastructure for supply chain.
+                Ron is a former US Marine with 5 years of military logistics experience, where he
+                developed a first-hand understanding of what it means to run operations under
+                pressure, at scale, and without margin for error. After leaving the Marines, he
+                spent over 6 years building supply chain and logistics software for ports, brokers,
+                and operators handling millions of dollars in oil, chemicals, and container freight.
               </p>
               <p className="text-sm leading-relaxed text-muted-foreground">
-                His background in military-grade operations and port logistics shaped Fleetbase&apos;s architecture: built for reliability, designed for scale, and engineered to handle the complexity of real-world logistics from day one.
+                His background in military-grade operations and port logistics shaped Fleetbase&apos;s
+                architecture: built for reliability, designed for scale, and engineered to handle the
+                complexity of real-world logistics from day one. As CTO, Ron leads the technical
+                vision that makes Fleetbase a platform developers can build on without months of
+                custom development time.
               </p>
             </div>
           </div>
