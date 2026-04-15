@@ -17,6 +17,11 @@ const nextConfig: NextConfig = {
         destination: '/',
         permanent: true,
       },
+      {
+        source: '/docs/webhooks',
+        destination: '/developers/webhooks',
+        permanent: true,
+      },
     ];
   },
   allowedDevOrigins: [
