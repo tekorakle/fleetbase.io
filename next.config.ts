@@ -5,6 +5,15 @@ const withMDX = createMDX();
 
 const nextConfig: NextConfig = {
   /* config options here */
+  async redirects() {
+    return [
+      {
+        source: '/support-services',
+        destination: '/services',
+        permanent: true,
+      },
+    ];
+  },
   allowedDevOrigins: [
     '*.manus.computer',
     'localhost',

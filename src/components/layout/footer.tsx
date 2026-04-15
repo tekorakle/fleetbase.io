@@ -114,7 +114,6 @@ const FOOTER_LINKS = [
       { label: 'Testimonials & Case Studies', href: '/customers' },
       { label: 'Blog', href: '/blog' },
       { label: 'Community (Discord)', href: '/community' },
-      { label: 'Support Services', href: '/support-services' },
       { label: 'Changelog', href: '/changelog' },
     ],
   },
@@ -182,7 +181,7 @@ const Footer = () => {
           </Button>
         </div>
 
-        <p className="mt-3 text-sm">2.4k stars · 500+ active installs</p>
+        <p className="mt-3 text-sm">1.8k+ stars · 500+ active installs</p>
       </div>
 
       {/* Footer Navigation Links */}

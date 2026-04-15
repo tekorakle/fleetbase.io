@@ -378,8 +378,8 @@ export const NAV_LINKS: NavLink[] = [
         icon: MessageSquare,
       },
       {
-        label: 'Support Services',
-        href: '/support-services',
+        label: 'Services',
+        href: '/services',
         description: 'Professional implementation, development, and enterprise support options.',
         icon: Handshake,
       },
