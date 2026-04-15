@@ -40,7 +40,7 @@ export default function FinalCTA() {
             </div>
 
             <p className="mt-6 text-xs text-muted-foreground">
-              No credit card required &nbsp;·&nbsp; Full platform access &nbsp;·&nbsp; Cancel anytime
+              Full platform access &nbsp;·&nbsp; Cancel anytime
             </p>
           </div>
         </div>
