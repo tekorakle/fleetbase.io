@@ -45,6 +45,8 @@ export default function RouteOptimizationPage() {
           description:
             'Fleetbase optimizes routes against multiple real-world constraints simultaneously — delivery time windows, vehicle load capacity, driver shift hours, and traffic conditions. Every route is the best possible route given your constraints.',
           icon: Navigation,
+          screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
+          screenshotAlt: 'Constraint-Based Route Optimization',
           screenshotNeeded: 'FleetOps route optimizer — constraint settings panel showing time windows, capacity, and traffic options',
         },
         {
@@ -52,6 +54,8 @@ export default function RouteOptimizationPage() {
           description:
             'When a new order comes in, a driver is delayed, or traffic conditions change, Fleetbase re-optimizes affected routes in real-time. Dispatchers are notified of changes and can approve or override.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Dynamic Re-Optimization',
           screenshotNeeded: 'FleetOps live dispatch — dynamic re-optimization alert with updated route suggestion',
         },
         {
@@ -59,6 +63,8 @@ export default function RouteOptimizationPage() {
           description:
             'Distribute orders across your available fleet to balance workload, minimize total distance, and ensure no vehicle exceeds capacity. Optimize across your entire fleet simultaneously.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Multi-Vehicle Load Balancing',
           screenshotNeeded: 'FleetOps fleet dispatch view — load balancing across multiple vehicles with capacity indicators',
         },
         {
@@ -66,6 +72,8 @@ export default function RouteOptimizationPage() {
           description:
             'Set delivery time windows per order and let Fleetbase sequence stops to meet them all. Receive alerts when a time window is at risk and see which orders need priority re-routing.',
           icon: Clock,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Time Window Management',
           screenshotNeeded: 'FleetOps order list — time window column with at-risk indicators and ETA vs window comparison',
         },
         {
@@ -73,6 +81,8 @@ export default function RouteOptimizationPage() {
           description:
             'Track driver progress against the optimized route in real-time. See which stops have been completed, which are next, and where drivers are deviating from the planned route.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Route Monitoring',
           screenshotNeeded: 'FleetOps live map — driver on optimized route with completed stops (green), current stop (blue), remaining (grey)',
         },
         {
@@ -80,6 +90,8 @@ export default function RouteOptimizationPage() {
           description:
             'Compare planned vs. actual routes to measure optimization effectiveness. Track fuel consumption, on-time rate, and distance per stop over time to continuously improve your routing strategy.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-fuel-reports.webp',
+          screenshotAlt: 'Route Performance Analytics',
           screenshotNeeded: 'FleetOps analytics — planned vs actual route comparison chart with fuel and time variance',
         },
       ]}

@@ -45,6 +45,8 @@ export default function OperationsManagersPage() {
           description:
             'See every active order, driver position, vehicle status, and SLA health on one live dashboard. No refreshing, no switching tabs — your entire operation at a glance, updated in real-time.',
           icon: LayoutDashboard,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Live Operations Command Centre',
           screenshotNeeded: 'FleetOps live operations dashboard — KPI cards, map view, order list, and driver status panel',
         },
         {
@@ -52,6 +54,8 @@ export default function OperationsManagersPage() {
           description:
             'Configure dispatch rules and order workflows that run automatically. Fleetbase handles routine assignment, notification, and escalation tasks so your team focuses on exceptions, not administration.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Automated Dispatch & Workflow Execution',
           screenshotNeeded: 'FleetOps automation rules panel — showing dispatch rules and workflow triggers',
         },
         {
@@ -59,6 +63,8 @@ export default function OperationsManagersPage() {
           description:
             'Set SLA targets per order type and receive alerts before a breach occurs — not after. Fleetbase flags at-risk orders in real-time so you can intervene while there is still time.',
           icon: Bell,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'SLA Monitoring & Proactive Alerts',
           screenshotNeeded: 'FleetOps SLA monitor — at-risk orders highlighted with time-to-breach countdown',
         },
         {
@@ -66,6 +72,8 @@ export default function OperationsManagersPage() {
           description:
             'All exceptions — failed deliveries, driver delays, vehicle faults — are surfaced in one exception queue with context and suggested actions. Resolve issues faster without hunting through emails and messages.',
           icon: Settings,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Exception Management',
           screenshotNeeded: 'FleetOps exception queue — list of active exceptions with type, severity, and resolution options',
         },
         {
@@ -73,6 +81,8 @@ export default function OperationsManagersPage() {
           description:
             'Manage driver availability, assignments, and performance from the same console. See who is on shift, who is available for new jobs, and who needs attention based on performance data.',
           icon: Users,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Team & Driver Management',
           screenshotNeeded: 'FleetOps driver management panel — shift status, current assignment, and performance indicators',
         },
         {
@@ -80,6 +90,8 @@ export default function OperationsManagersPage() {
           description:
             'Generate daily, weekly, and monthly performance reports automatically. Track on-time rate, exception rate, cost-per-order, and driver utilization — and share with leadership in one click.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Operations Performance Reporting',
           screenshotNeeded: 'FleetOps operations report — weekly summary with on-time rate, exception count, and cost metrics',
         },
       ]}

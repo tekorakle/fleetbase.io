@@ -45,6 +45,8 @@ export default function OrderManagementPage() {
           description:
             'Create unlimited order types — each with its own fields, statuses, activity flows, and validation rules. Whether you handle standard deliveries, returns, collections, or complex multi-leg shipments, Fleetbase adapts to your operation.',
           icon: Settings,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Fully Configurable Order Types',
           screenshotNeeded: 'FleetOps order config panel — order type builder with custom fields and status workflow editor',
         },
         {
@@ -52,6 +54,8 @@ export default function OrderManagementPage() {
           description:
             'Add any field type — text, number, date, dropdown, file upload, or signature — to any order type. Set validation rules to ensure data quality at order creation or completion.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Custom Fields & Validation Rules',
           screenshotNeeded: 'FleetOps custom field builder — showing field types, validation rules, and required/optional toggle',
         },
         {
@@ -59,6 +63,8 @@ export default function OrderManagementPage() {
           description:
             'Define what happens at each stage of an order — auto-assign to a driver, send a customer notification, trigger a webhook, or require a supervisor approval. Automate your entire order lifecycle.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Automated Order Workflows',
           screenshotNeeded: 'FleetOps workflow builder — order lifecycle stages with automation rules and trigger conditions',
         },
         {
@@ -66,6 +72,8 @@ export default function OrderManagementPage() {
           description:
             'Configure exactly what drivers must capture to complete each order type — signatures, photos, barcodes, custom form fields, or any combination. All evidence is stored against the order.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Digital Proof of Completion',
           screenshotNeeded: 'FleetOps order completion config — showing required POD fields per order type',
         },
         {
@@ -73,6 +81,8 @@ export default function OrderManagementPage() {
           description:
             'Connect your order management to any upstream system — e-commerce platforms, ERPs, WMS, or customer portals — via REST API and webhooks. Orders flow in automatically and status updates flow back out.',
           icon: Webhook,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'API & Webhook Integration',
           screenshotNeeded: 'Fleetbase developer console — order webhook configuration with event types and payload preview',
         },
         {
@@ -80,6 +90,8 @@ export default function OrderManagementPage() {
           description:
             'Track order volumes, completion rates, SLA performance, and exception rates by order type, zone, driver, or time period. Identify bottlenecks and optimize your fulfillment operation.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Order Analytics & SLA Tracking',
           screenshotNeeded: 'FleetOps analytics — order volume chart, SLA performance by order type, and exception rate trend',
         },
       ]}

@@ -45,6 +45,8 @@ export default function GovernmentPage() {
           description:
             'Fleetbase is fully open-source and can be deployed on your own infrastructure — on-premise, private cloud, or in air-gapped environments with no external network dependencies. You own the code, the data, and the deployment.',
           icon: Server,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Self-Hosted & Air-Gap Capable Deployment',
           screenshotNeeded: 'Fleetbase self-hosted deployment architecture diagram — showing on-premise and air-gap options',
         },
         {
@@ -52,6 +54,8 @@ export default function GovernmentPage() {
           description:
             'All data is encrypted at rest and in transit. No data leaves your infrastructure. Fleetbase supports bring-your-own-key (BYOK) encryption for maximum data sovereignty.',
           icon: Lock,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'End-to-End Encryption & Data Sovereignty',
           screenshotNeeded: 'Fleetbase security settings — encryption status, key management, and data residency options',
         },
         {
@@ -59,6 +63,8 @@ export default function GovernmentPage() {
           description:
             'Define precise access permissions per user, role, and resource. Restrict visibility of sensitive routes, assets, or personnel data to authorised personnel only. Supports multi-level security classifications.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'Granular Role-Based Access Control',
           screenshotNeeded: 'Fleetbase RBAC panel — showing role hierarchy with granular permission toggles',
         },
         {
@@ -66,6 +72,8 @@ export default function GovernmentPage() {
           description:
             'Every action in the platform — order creation, status change, access event, or data export — is logged with user identity, timestamp, and IP address. Immutable audit logs for accountability and compliance.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'Full Audit Trail & Chain of Custody',
           screenshotNeeded: 'Fleetbase audit log — showing timestamped events with user identity and action type',
         },
         {
@@ -73,6 +81,8 @@ export default function GovernmentPage() {
           description:
             'Track vehicles, assets, and personnel on a live operational map. Configure geofences, restricted zones, and automated alerts for boundary violations or status changes.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Real-Time Asset & Fleet Tracking',
           screenshotNeeded: 'FleetOps live map — government asset tracking with restricted zone geofences',
         },
         {
@@ -80,6 +90,8 @@ export default function GovernmentPage() {
           description:
             'Generate mission readiness reports, asset utilization analyses, and logistics performance dashboards. Export in standard formats for command reporting or integration with existing C2 systems.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Operational Reporting & Intelligence',
           screenshotNeeded: 'FleetOps analytics — operational readiness dashboard with asset availability and mission metrics',
         },
       ]}

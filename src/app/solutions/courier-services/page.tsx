@@ -44,6 +44,8 @@ export default function CourierServicesPage() {
           description:
             'Fleetbase automatically groups parcels into optimized runs and assigns them to the right driver based on zone, capacity, and availability. What used to take an hour takes seconds.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Automated Multi-Stop Dispatch',
           screenshotNeeded: 'FleetOps dispatch view — auto-grouped parcel runs assigned to drivers with stop counts',
         },
         {
@@ -51,6 +53,8 @@ export default function CourierServicesPage() {
           description:
             'Drivers capture signatures, photos, and recipient names directly in the Navigator app. Every POD is timestamped, geotagged, and stored against the order — accessible instantly from the console.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Digital Proof of Delivery',
           screenshotNeeded: 'Navigator app POD capture — signature pad, photo, and recipient name fields',
         },
         {
@@ -58,6 +62,8 @@ export default function CourierServicesPage() {
           description:
             'Every order generates a shareable tracking link with live driver position and ETA. Send it automatically via SMS or email at dispatch. Eliminate "where is my parcel?" calls entirely.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Parcel Tracking for Customers',
           screenshotNeeded: 'Customer-facing tracking page — live map with driver dot, ETA, and order status',
         },
         {
@@ -65,6 +71,8 @@ export default function CourierServicesPage() {
           description:
             'Optimize delivery sequences across dozens of stops per driver run, factoring in time windows, traffic, and vehicle capacity. Cut fuel costs and increase stops-per-hour.',
           icon: Package,
+          screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
+          screenshotAlt: 'Route Optimization for Multi-Stop Runs',
           screenshotNeeded: 'FleetOps route view — optimized multi-stop sequence on map with stop numbers',
         },
         {
@@ -72,6 +80,8 @@ export default function CourierServicesPage() {
           description:
             'The Navigator app works in low-connectivity areas and syncs when back online. Drivers never lose their job list or miss a delivery due to a signal drop.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-drivers-create.webp',
+          screenshotAlt: 'Driver App with Offline Mode',
           screenshotNeeded: 'Navigator app — job list screen with offline indicator and sync status',
         },
         {
@@ -79,6 +89,8 @@ export default function CourierServicesPage() {
           description:
             'Track first-attempt delivery rate, average stops per hour, and on-time performance by driver, zone, and time period. Identify inefficiencies and reward top performers.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Courier Performance Analytics',
           screenshotNeeded: 'FleetOps analytics — first-attempt delivery rate and stops-per-hour by driver chart',
         },
       ]}

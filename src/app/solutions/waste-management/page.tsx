@@ -45,6 +45,8 @@ export default function WasteManagementPage() {
           description:
             'Fleetbase calculates the most efficient collection sequences for each vehicle, minimizing fuel consumption and maximizing the number of collection points per shift. Re-plan routes dynamically when new collections are added.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
+          screenshotAlt: 'Optimized Collection Route Planning',
           screenshotNeeded: 'FleetOps route planning — waste collection route with optimized sequence and collection point markers',
         },
         {
@@ -52,6 +54,8 @@ export default function WasteManagementPage() {
           description:
             'Monitor every collection vehicle in real-time on a live map. Set geofences around collection zones and receive automatic alerts when vehicles enter, depart, or skip a collection point.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Fleet Tracking & Geofencing',
           screenshotNeeded: 'FleetOps live map — waste fleet with geofence zones and vehicle positions',
         },
         {
@@ -59,6 +63,8 @@ export default function WasteManagementPage() {
           description:
             'Drivers log collection completions, weights, and exceptions directly in the Navigator app. Records are timestamped, geotagged, and stored against the job — eliminating paper logs and disputes.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/navigator-order-detail.png',
+          screenshotAlt: 'Digital Collection Records',
           screenshotNeeded: 'Navigator app — waste collection job completion screen with weight input and photo capture',
         },
         {
@@ -66,6 +72,8 @@ export default function WasteManagementPage() {
           description:
             'When a collection is missed, the system flags it automatically and triggers a configurable follow-up workflow — re-schedule, notify the customer, or escalate to a supervisor.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Missed Collection Management',
           screenshotNeeded: 'FleetOps exception panel — missed collection alerts with re-schedule workflow',
         },
         {
@@ -73,6 +81,8 @@ export default function WasteManagementPage() {
           description:
             'Track vehicle service schedules, MOT dates, and compliance certificates from the fleet dashboard. Receive automated reminders before deadlines and maintain a complete maintenance history.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
+          screenshotAlt: 'Vehicle Maintenance & Compliance',
           screenshotNeeded: 'FleetOps vehicle compliance panel — showing service dates, MOT status, and upcoming reminders',
         },
         {
@@ -80,6 +90,8 @@ export default function WasteManagementPage() {
           description:
             'Generate reports on tonnes collected, fuel consumption, CO2 emissions, and recycling rates by zone, vehicle, or time period. Export for council reporting, sustainability audits, or internal reviews.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Environmental KPI Reporting',
           screenshotNeeded: 'FleetOps analytics — environmental KPI dashboard with tonnes collected and CO2 emissions chart',
         },
       ]}

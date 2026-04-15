@@ -45,6 +45,8 @@ export default function DevelopersPage() {
           description:
             'Every Fleetbase resource is accessible via a clean REST API with full OpenAPI documentation, code examples in multiple languages, and interactive API explorer. No undocumented endpoints, no surprises.',
           icon: Code2,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'Full REST API with OpenAPI Docs',
           screenshotNeeded: 'Fleetbase API documentation — endpoint list with request/response schema and code examples',
         },
         {
@@ -52,6 +54,8 @@ export default function DevelopersPage() {
           description:
             'Subscribe to any operational event via HTTP webhooks. Over 100 event types covering orders, drivers, vehicles, routes, and more. Configure retry logic, signing secrets, and event filtering per endpoint.',
           icon: Webhook,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Webhook Event System',
           screenshotNeeded: 'Fleetbase developer console — webhook endpoint configuration with event type selector and signing secret',
         },
         {
@@ -59,6 +63,8 @@ export default function DevelopersPage() {
           description:
             'Build custom Fleetbase extensions using the open-source Extensions SDK. Add new order types, API endpoints, UI panels, and integrations that appear natively in the Fleetbase console. Publish to the marketplace or keep private.',
           icon: Puzzle,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'Extensions SDK',
           screenshotNeeded: 'Fleetbase console — custom extension installed with its own navigation item and panel',
         },
         {
@@ -66,6 +72,8 @@ export default function DevelopersPage() {
           description:
             'Deploy Fleetbase on your own infrastructure — bare metal, VMs, Kubernetes, or Docker. Full deployment documentation, Helm charts, and Docker Compose files available. No external dependencies required.',
           icon: GitBranch,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Self-Hosted Deployment',
           screenshotNeeded: 'Fleetbase self-hosted architecture diagram — Docker/Kubernetes deployment with component labels',
         },
         {
@@ -73,6 +81,8 @@ export default function DevelopersPage() {
           description:
             'Create API keys scoped to specific resources and actions. Separate keys for different integrations, with read-only or write access per resource type. Rotate keys without downtime.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'Granular API Key Permissions',
           screenshotNeeded: 'Fleetbase developer console — API key creation with resource permission checkboxes',
         },
         {
@@ -80,6 +90,8 @@ export default function DevelopersPage() {
           description:
             'Every account includes a fully isolated sandbox environment with separate API keys and data. Test integrations, webhooks, and custom extensions without affecting production.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'Sandbox & Production Environments',
           screenshotNeeded: 'Fleetbase developer console — environment switcher showing sandbox vs production with separate API keys',
         },
       ]}

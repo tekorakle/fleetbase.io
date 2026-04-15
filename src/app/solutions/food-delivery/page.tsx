@@ -44,6 +44,8 @@ export default function FoodDeliveryPage() {
           description:
             'Every active order and driver is visible on a live map. Dispatchers see driver positions, order statuses, and ETAs in one view. Customers receive a live tracking link the moment their order is dispatched.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Real-Time Order & Driver Tracking',
           screenshotNeeded: 'FleetOps live map — food delivery orders with colour-coded statuses and driver avatars',
         },
         {
@@ -51,6 +53,8 @@ export default function FoodDeliveryPage() {
           description:
             'Fleetbase automatically assigns incoming orders to the nearest available driver based on location, capacity, and delivery zone rules. Reduce manual work and eliminate dispatch bottlenecks during peak hours.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Automated Smart Dispatch',
           screenshotNeeded: 'FleetOps dispatch panel — auto-assign rules and incoming order queue',
         },
         {
@@ -58,6 +62,8 @@ export default function FoodDeliveryPage() {
           description:
             'Automatically send SMS and push notifications at every order milestone — confirmed, picked up, en route, delivered. Reduce inbound support calls by up to 40% and increase repeat order rates.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Customer Notification Engine',
           screenshotNeeded: 'FleetOps order detail — customer notification timeline showing SMS/push events',
         },
         {
@@ -65,6 +71,8 @@ export default function FoodDeliveryPage() {
           description:
             'Track on-time rate, average delivery time, and customer ratings per driver. Identify your top performers and address issues before they impact your reviews.',
           icon: Star,
+          screenshot: '/images/console-screenshots/fleetops-drivers-create.webp',
+          screenshotAlt: 'Driver Performance & Ratings',
           screenshotNeeded: 'FleetOps driver profile — showing rating score, on-time %, and delivery history',
         },
         {
@@ -72,6 +80,8 @@ export default function FoodDeliveryPage() {
           description:
             'Understand which zones are most profitable, which time slots drive the most volume, and where your delivery SLAs are slipping. Make data-driven decisions to grow the right markets.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-fleets.webp',
+          screenshotAlt: 'Delivery Analytics & Zone Insights',
           screenshotNeeded: 'FleetOps analytics — delivery zone heatmap and SLA performance chart',
         },
         {
@@ -79,6 +89,8 @@ export default function FoodDeliveryPage() {
           description:
             'Connect Fleetbase Storefront to your delivery operation for end-to-end order management — from customer checkout to doorstep delivery — with no manual data entry between systems.',
           icon: Utensils,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Storefront Integration',
           screenshotNeeded: 'Storefront order flowing into FleetOps dispatch — side-by-side or split-screen view',
         },
       ]}

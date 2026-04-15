@@ -45,6 +45,8 @@ export default function CustomerSuccessPage() {
           description:
             'Every support agent sees the same live order data as the operations team — current driver position, order status, ETA, and full event history. Answer "where is my order?" instantly without escalating.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Real-Time Order Visibility for Support Agents',
           screenshotNeeded: 'FleetOps order detail — support agent view showing live driver position, ETA, and order status timeline',
         },
         {
@@ -52,6 +54,8 @@ export default function CustomerSuccessPage() {
           description:
             'Generate and share a live tracking link for any order in seconds. Send it to the customer via SMS, email, or chat. They see the driver\'s real-time position and ETA without needing to call back.',
           icon: MessageSquare,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Shareable Live Tracking Links',
           screenshotNeeded: 'FleetOps order detail — "Share tracking link" button with SMS/email send options',
         },
         {
@@ -59,6 +63,8 @@ export default function CustomerSuccessPage() {
           description:
             'Every completed delivery has a timestamped, geotagged proof of delivery — signature, photo, and recipient name — accessible instantly from the order record. Resolve disputes in seconds with irrefutable evidence.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Instant Proof of Delivery Access',
           screenshotNeeded: 'FleetOps order detail — POD section showing signature image, delivery photo, and GPS coordinates',
         },
         {
@@ -66,6 +72,8 @@ export default function CustomerSuccessPage() {
           description:
             'Every event in an order\'s lifecycle is logged — created, assigned, picked up, en route, delivered, or failed — with timestamps and context. Support agents have the full story without asking anyone.',
           icon: Bell,
+          screenshot: '/images/console-screenshots/developers-monitoring-detail.webp',
+          screenshotAlt: 'Complete Order Event History',
           screenshotNeeded: 'FleetOps order timeline — full event log with timestamps, driver actions, and status changes',
         },
         {
@@ -73,6 +81,8 @@ export default function CustomerSuccessPage() {
           description:
             'Reduce inbound support volume by automatically notifying customers at every delivery milestone. Fewer customers call because they already know where their order is.',
           icon: Headphones,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Proactive Customer Notifications',
           screenshotNeeded: 'FleetOps notification settings — customer notification triggers with SMS/push/email options',
         },
         {
@@ -80,6 +90,8 @@ export default function CustomerSuccessPage() {
           description:
             'Track delivery-related support ticket volume, resolution time, and customer satisfaction scores. Identify which order types or zones generate the most support contacts and address root causes.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Support Performance Analytics',
           screenshotNeeded: 'FleetOps support analytics — ticket volume by order type, resolution time trend, and CSAT score',
         },
       ]}

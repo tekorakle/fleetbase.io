@@ -69,12 +69,8 @@ export default function StorefrontPage() {
           <div className="grid md:grid-cols-3 gap-8">
             {/* Pain Point 1 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-red-500/10 to-orange-500/10 rounded-lg mb-6 flex items-center justify-center border border-red-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">💸</div>
-                  <div className="text-3xl font-bold text-red-600 dark:text-red-400">-30%</div>
-                  <div className="text-sm text-muted-foreground mt-2">Per Order Commission</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-gateways.webp" alt="Payment gateway commission fees" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Crippling Commission Fees</h3>
               <p className="text-muted-foreground">
@@ -84,11 +80,8 @@ export default function StorefrontPage() {
 
             {/* Pain Point 2 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-orange-500/10 to-yellow-500/10 rounded-lg mb-6 flex items-center justify-center border border-orange-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">🏷️</div>
-                  <div className="text-sm text-muted-foreground mt-2 max-w-[200px]">Your brand is just another logo in a crowded marketplace</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/storefront-food-trucks.webp" alt="Storefront branded store listing" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">No Brand Control</h3>
               <p className="text-muted-foreground">
@@ -98,11 +91,8 @@ export default function StorefrontPage() {
 
             {/* Pain Point 3 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg mb-6 flex items-center justify-center border border-purple-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">🚫</div>
-                  <div className="text-sm text-muted-foreground mt-2 max-w-[200px]">Platform owns your customer data and relationships</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/storefront-customer-app.png" alt="Storefront customer app showing order and customer data ownership" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">You Don't Own Your Customers</h3>
               <p className="text-muted-foreground">
@@ -126,12 +116,8 @@ export default function StorefrontPage() {
           <div className="grid md:grid-cols-3 gap-8">
             {/* Solution 1 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-lg mb-6 flex items-center justify-center border border-green-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">💰</div>
-                  <div className="text-3xl font-bold text-green-600 dark:text-green-400">100%</div>
-                  <div className="text-sm text-muted-foreground mt-2">Keep All Your Revenue</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-dashboard-detail.webp" alt="Ledger financial dashboard showing full revenue retention" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Keep 100% of Your Revenue</h3>
               <p className="text-muted-foreground">
@@ -141,11 +127,8 @@ export default function StorefrontPage() {
 
             {/* Solution 2 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-cyan-500/10 rounded-lg mb-6 flex items-center justify-center border border-blue-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">🎨</div>
-                  <div className="text-sm text-muted-foreground mt-2 max-w-[200px]">Branded app, website, and delivery experience</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/storefront-products-grid.webp" alt="Storefront branded product catalogue and customer experience" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Own Your Brand & Customers</h3>
               <p className="text-muted-foreground">
@@ -155,11 +138,8 @@ export default function StorefrontPage() {
 
             {/* Solution 3 */}
             <div className="bg-card border rounded-xl p-8 hover:shadow-lg transition-shadow">
-              <div className="aspect-video bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg mb-6 flex items-center justify-center border border-purple-500/20">
-                <div className="text-center p-6">
-                  <div className="text-5xl mb-2">🚚</div>
-                  <div className="text-sm text-muted-foreground mt-2 max-w-[200px]">Order → FleetOps → Dispatch → Delivery</div>
-                </div>
+              <div className="relative aspect-video rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/fleetops-orders-table-detail.webp" alt="FleetOps order dispatch integrated with Storefront" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Integrated Logistics Included</h3>
               <p className="text-muted-foreground">
@@ -393,12 +373,8 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
-                <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
-                  <div className="h-full flex flex-col items-center justify-center p-8 text-center">
-                    <div className="text-6xl mb-4">📍</div>
-                    <div className="text-lg font-semibold text-white mb-2">Zone-Based Delivery</div>
-                    <div className="text-sm text-slate-400 max-w-md">Screenshot showing: map with drawn delivery zones → zone pricing editor → Zone A: $5, Zone B: $7, Zone C: $10 → minimum order values</div>
-                  </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image src="/images/console-screenshots/fleetops-live-map-singapore.png" alt="Fleetbase live map showing delivery zones and location-based commerce" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 50vw" />
                 </div>
               </div>
             </TabsContent>
@@ -434,6 +410,11 @@ export default function StorefrontPage() {
                     </li>
                   </ul>
                 </div>
+                <div className="relative aspect-video rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden">
+                  <Image src="/images/console-screenshots/developers-api-keys.webp" alt="Fleetbase developer console showing Storefront API keys and endpoint documentation" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 50vw" />
+                </div>
+                {/* Keep code snippet hidden - replaced by screenshot */}
+                <div className="hidden">
                 <div className="aspect-video bg-gradient-to-br from-slate-900 to-slate-800 rounded-xl border-2 border-slate-700 shadow-2xl overflow-hidden p-8">
                   <div className="h-full flex flex-col">
                     <div className="text-sm text-slate-400 mb-2">Create Order via API</div>
@@ -464,6 +445,7 @@ console.log(order.status); // "pending"
 console.log(order.total); // 2450 ($24.50)`}
                     </pre>
                   </div>
+                </div>
                 </div>
               </div>
             </TabsContent>

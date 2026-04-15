@@ -86,12 +86,15 @@ export default function ExtensionsMarketplacePage() {
               </Link>
             </div>
 
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🧩</div>
-                <p className="text-muted-foreground font-medium">Extensions Marketplace</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Marketplace browse view with category filters, extension cards, and install actions</p>
-              </div>
+            <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+              <Image
+                src="/images/console-screenshots/extensions-marketplace.webp"
+                alt="Fleetbase Extensions Marketplace showing installed modules, available extensions, and one-click install actions"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -174,12 +177,14 @@ export default function ExtensionsMarketplacePage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">📦</div>
-                <p className="text-muted-foreground font-medium">Extension Install Flow</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Extension detail modal with description, screenshots, bundle selector, and install/purchase button</p>
-              </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden relative">
+              <Image
+                src="/images/console-screenshots/extensions-marketplace.webp"
+                alt="Fleetbase extension install flow showing extension detail, bundle selector, and install action"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -189,12 +194,14 @@ export default function ExtensionsMarketplacePage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🚀</div>
-                <p className="text-muted-foreground font-medium">Developer Publisher Portal</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Developer dashboard showing extension management, analytics, and payment settings</p>
-              </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/developers-monitoring-detail.webp"
+                alt="Fleetbase developer publisher portal showing extension management, API monitoring, and analytics"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">

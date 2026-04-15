@@ -87,11 +87,8 @@ export default function PalletPage() {
 
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">💸</div>
-                                    <p className="text-xs text-muted-foreground">Prohibitive upfront costs</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/fleetops-orders-table-detail.webp" alt="Order management showing cost of legacy WMS" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Prohibitive Licensing Fees</h3>
                             <p className="text-muted-foreground">
@@ -100,11 +97,8 @@ export default function PalletPage() {
                         </div>
 
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">🔗</div>
-                                    <p className="text-xs text-muted-foreground">Disconnected systems</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/fleetops-vendors.webp" alt="FleetOps vendor integration showing disconnected system problem" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">No Integration with Delivery</h3>
                             <p className="text-muted-foreground">
@@ -113,11 +107,8 @@ export default function PalletPage() {
                         </div>
 
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">⚙️</div>
-                                    <p className="text-xs text-muted-foreground">One-size-fits-all approach</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/fleetops-order-config-activity-flow.webp" alt="Fleetbase configurable activity flow for custom workflows" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Forced, Rigid Workflows</h3>
                             <p className="text-muted-foreground">
@@ -142,11 +133,8 @@ export default function PalletPage() {
 
                     <div className="grid md:grid-cols-3 gap-8">
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">🌱</div>
-                                    <p className="text-xs text-muted-foreground">Open-source freedom</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/extensions-marketplace.webp" alt="Fleetbase extensions marketplace showing open-source modules" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Keep Your Capital</h3>
                             <p className="text-muted-foreground">
@@ -155,11 +143,8 @@ export default function PalletPage() {
                         </div>
 
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">🔄</div>
-                                    <p className="text-xs text-muted-foreground">End-to-end visibility</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/fleetops-kanban-board-detail.webp" alt="FleetOps kanban board showing end-to-end order visibility" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Seamless Order-to-Delivery</h3>
                             <p className="text-muted-foreground">
@@ -168,11 +153,8 @@ export default function PalletPage() {
                         </div>
 
                         <div className="bg-card border rounded-lg p-8">
-                            <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                                <div className="text-center">
-                                    <div className="text-5xl mb-2">🚀</div>
-                                    <p className="text-xs text-muted-foreground">Enterprise-grade features</p>
-                                </div>
+                            <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                                <Image src="/images/console-screenshots/fleetops-live-map-singapore.png" alt="Fleetbase enterprise-scale live map and fleet operations" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
                             </div>
                             <h3 className="text-xl font-semibold mb-3">Scale Without Limits</h3>
                             <p className="text-muted-foreground">

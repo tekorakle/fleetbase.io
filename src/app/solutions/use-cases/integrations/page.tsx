@@ -45,6 +45,8 @@ export default function IntegrationsPage() {
           description:
             'Every Fleetbase resource — orders, drivers, vehicles, routes, organizations — is accessible via a clean, well-documented REST API. Create, read, update, and delete any resource programmatically.',
           icon: Code2,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'Full REST API Coverage',
           screenshotNeeded: 'Fleetbase API documentation page — showing endpoint list with request/response examples',
         },
         {
@@ -52,6 +54,8 @@ export default function IntegrationsPage() {
           description:
             'Subscribe to any operational event — order created, driver assigned, delivery completed, exception raised — and receive real-time HTTP callbacks to your systems. Over 100 event types supported.',
           icon: Webhook,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Webhook Event System',
           screenshotNeeded: 'Fleetbase developer console — webhook configuration with event type selector and endpoint URL',
         },
         {
@@ -59,6 +63,8 @@ export default function IntegrationsPage() {
           description:
             'Connect to Shopify, WooCommerce, Stripe, Twilio, and other popular platforms with pre-built integrations. Install from the Extensions marketplace and configure in minutes.',
           icon: Puzzle,
+          screenshot: '/images/console-screenshots/storefront-catalogs.webp',
+          screenshotAlt: 'Pre-Built Platform Integrations',
           screenshotNeeded: 'Fleetbase Extensions marketplace — showing available platform integrations with install buttons',
         },
         {
@@ -66,6 +72,8 @@ export default function IntegrationsPage() {
           description:
             'Manage API keys, configure sandbox and production environments, and monitor API usage from the developer console. Granular key permissions ensure each integration only accesses what it needs.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Developer Console & API Keys',
           screenshotNeeded: 'Fleetbase developer console — API key list with permission scopes and usage metrics',
         },
         {
@@ -73,6 +81,8 @@ export default function IntegrationsPage() {
           description:
             'Build custom Fleetbase extensions using the open-source Extensions SDK. Add new order types, UI panels, API endpoints, and integrations that appear natively in the Fleetbase console.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/extensions-marketplace.webp',
+          screenshotAlt: 'Custom Extensions Framework',
           screenshotNeeded: 'Fleetbase console — custom extension installed and visible in the navigation sidebar',
         },
         {
@@ -80,6 +90,8 @@ export default function IntegrationsPage() {
           description:
             'Monitor API call volumes, error rates, and latency per key and endpoint. Identify integration issues before they impact your operation with real-time API health monitoring.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'API Usage Analytics',
           screenshotNeeded: 'Fleetbase developer console — API usage chart with call volume, error rate, and latency metrics',
         },
       ]}

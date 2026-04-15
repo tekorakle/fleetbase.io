@@ -45,6 +45,8 @@ export default function AnalyticsPage() {
           description:
             'See your entire operation at a glance — active orders, driver positions, delivery completion rate, and SLA status — all updating in real-time. No refresh required.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Live Operations Dashboard',
           screenshotNeeded: 'FleetOps live operations dashboard — KPI cards, active order count, on-time rate, and fleet status',
         },
         {
@@ -52,6 +54,8 @@ export default function AnalyticsPage() {
           description:
             'Track on-time delivery rate, first-attempt success rate, average delivery time, and SLA compliance by zone, order type, driver, and time period. Drill down to identify root causes of underperformance.',
           icon: TrendingUp,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Delivery Performance Analytics',
           screenshotNeeded: 'FleetOps analytics — on-time rate trend chart with zone breakdown and SLA compliance table',
         },
         {
@@ -59,6 +63,8 @@ export default function AnalyticsPage() {
           description:
             'Understand vehicle utilization rates, cost-per-mile, fuel consumption, and maintenance spend per vehicle. Identify underutilized assets and optimize your fleet size and composition.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Fleet Utilization & Cost Analysis',
           screenshotNeeded: 'FleetOps analytics — fleet utilization heatmap and cost-per-vehicle breakdown chart',
         },
         {
@@ -66,6 +72,8 @@ export default function AnalyticsPage() {
           description:
             'Rank drivers by on-time rate, delivery completion, customer ratings, and efficiency metrics. Identify coaching opportunities and reward top performers with data to back your decisions.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Driver Performance Metrics',
           screenshotNeeded: 'FleetOps driver analytics — driver leaderboard with on-time %, completion rate, and rating columns',
         },
         {
@@ -73,6 +81,8 @@ export default function AnalyticsPage() {
           description:
             'Build custom dashboards for different stakeholders — operations, finance, executive — with the metrics they care about. Schedule automated report delivery via email.',
           icon: Settings,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Custom Dashboards & Reports',
           screenshotNeeded: 'FleetOps custom dashboard builder — drag-and-drop widget layout with metric selector',
         },
         {
@@ -80,6 +90,8 @@ export default function AnalyticsPage() {
           description:
             'Export any report to CSV or PDF for sharing with management, clients, or regulators. Schedule automated report generation and delivery on a daily, weekly, or monthly basis.',
           icon: FileText,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Exportable Reports for Stakeholders',
           screenshotNeeded: 'FleetOps report export panel — showing report type selection, date range, and format options',
         },
       ]}

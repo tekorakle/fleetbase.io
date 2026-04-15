@@ -45,6 +45,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Fleetbase automatically assigns incoming orders to the nearest available driver based on location, zone, and capacity. Dispatchers review and approve — or let the system run fully automated during peak hours.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Smart Dispatch & Auto-Assignment',
           screenshotNeeded: 'FleetOps dispatch panel — auto-assignment queue with driver proximity and capacity indicators',
         },
         {
@@ -52,6 +54,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Every driver run is automatically sequenced for maximum efficiency — factoring in delivery time windows, traffic, and vehicle capacity. Drivers follow optimized routes in the Navigator app with turn-by-turn guidance.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Optimized Multi-Stop Routes',
           screenshotNeeded: 'FleetOps route view — optimized multi-stop sequence on map with numbered stops and ETA per stop',
         },
         {
@@ -59,6 +63,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Every delivery generates a live tracking link sent automatically to the customer at dispatch. They see the driver\'s real-time position, ETA, and delivery confirmation — no app download required.',
           icon: Users,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Customer Tracking',
           screenshotNeeded: 'Customer tracking page — live map with driver position, ETA countdown, and delivery status',
         },
         {
@@ -66,6 +72,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Drivers receive their job list, navigate to each stop, and capture proof of delivery — all in the Navigator app on their own smartphone. No dedicated hardware required.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Driver Mobile App (Navigator)',
           screenshotNeeded: 'Navigator app — active delivery job with navigation, stop list, and POD capture button',
         },
         {
@@ -73,6 +81,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Capture signatures, photos, and delivery notes at every stop. PODs are timestamped, geotagged, and instantly available in the console — eliminating billing disputes and failed delivery claims.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Digital Proof of Delivery',
           screenshotNeeded: 'Navigator app POD screen — signature capture with timestamp and GPS coordinates',
         },
         {
@@ -80,6 +90,8 @@ export default function LastMileDeliveryPage() {
           description:
             'Track first-attempt delivery rate, average delivery time, on-time performance, and driver efficiency. Identify problem zones and underperforming routes with data-driven insights.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-fleets.webp',
+          screenshotAlt: 'Last-Mile Performance Analytics',
           screenshotNeeded: 'FleetOps analytics — first-attempt delivery rate, on-time %, and average delivery time by zone',
         },
       ]}

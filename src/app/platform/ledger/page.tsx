@@ -110,11 +110,8 @@ export default function LedgerPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">📋</div>
-                  <p className="text-xs text-muted-foreground">Manual CSV exports and imports</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-transactions.webp" alt="Ledger transaction log showing manual reconciliation overhead" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Manual Reconciliation Hell</h3>
               <p className="text-muted-foreground">
@@ -123,11 +120,8 @@ export default function LedgerPage() {
             </div>
 
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">⏱️</div>
-                  <p className="text-xs text-muted-foreground">Always looking at yesterday's numbers</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-dashboard-detail.webp" alt="Ledger real-time financial dashboard" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">No Real-Time Financial Visibility</h3>
               <p className="text-muted-foreground">
@@ -136,11 +130,8 @@ export default function LedgerPage() {
             </div>
 
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">🔒</div>
-                  <p className="text-xs text-muted-foreground">Generic COA doesn't fit logistics</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-chart-of-accounts.webp" alt="Ledger chart of accounts configured for logistics" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Inflexible Chart of Accounts</h3>
               <p className="text-muted-foreground">
@@ -165,11 +156,8 @@ export default function LedgerPage() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">⚖️</div>
-                  <p className="text-xs text-muted-foreground">Balanced, immutable journal entries</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/ledger-invoices-create.webp" alt="Ledger double-entry invoice creation" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Rock-Solid Double-Entry Core</h3>
               <p className="text-muted-foreground">
@@ -178,11 +166,8 @@ export default function LedgerPage() {
             </div>
 
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">🔗</div>
-                  <p className="text-xs text-muted-foreground">Native connection to FleetOps & Storefront</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/fleetops-orders-table-detail.webp" alt="FleetOps orders natively integrated with Ledger" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Natively Integrated with Operations</h3>
               <p className="text-muted-foreground">
@@ -191,11 +176,8 @@ export default function LedgerPage() {
             </div>
 
             <div className="bg-card border rounded-lg p-8">
-              <div className="w-full h-48 rounded-lg bg-muted/30 mb-6 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-5xl mb-2">🔌</div>
-                  <p className="text-xs text-muted-foreground">Powerful REST API for any integration</p>
-                </div>
+              <div className="relative w-full h-48 rounded-lg mb-6 overflow-hidden border">
+                <Image src="/images/console-screenshots/developers-api-keys.webp" alt="Fleetbase developer API keys for Ledger integration" fill className="object-cover object-top" sizes="(max-width: 768px) 100vw, 33vw" />
               </div>
               <h3 className="text-xl font-semibold mb-3">Developer-First & Extensible</h3>
               <p className="text-muted-foreground">

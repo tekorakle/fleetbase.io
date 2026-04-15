@@ -44,6 +44,8 @@ export default function EcommercePage() {
           description:
             'Fleetbase Storefront connects directly to FleetOps. When a customer places an order, it flows automatically into your dispatch queue — no manual data entry, no delays, no errors.',
           icon: Store,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Storefront to Dispatch in One Click',
           screenshotNeeded: 'Storefront order panel — showing new orders auto-populating into FleetOps dispatch queue',
         },
         {
@@ -51,6 +53,8 @@ export default function EcommercePage() {
           description:
             'Keep your online store inventory in sync with your warehouse in real-time. When stock is picked and packed in Pallet, your Storefront product counts update automatically.',
           icon: Package,
+          screenshot: '/images/console-screenshots/storefront-products-grid.webp',
+          screenshotAlt: 'Inventory Sync with Pallet WMS',
           screenshotNeeded: 'Pallet WMS inventory view — showing stock levels synced with Storefront product listings',
         },
         {
@@ -58,6 +62,8 @@ export default function EcommercePage() {
           description:
             'Route orders to the right warehouse, fulfillment centre, or carrier based on customer location, stock availability, and delivery SLA. Handle multi-location fulfillment without complexity.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/developers-monitoring-detail.webp',
+          screenshotAlt: 'Automated Order Routing',
           screenshotNeeded: 'FleetOps order routing rules panel — showing warehouse selection logic',
         },
         {
@@ -65,6 +71,8 @@ export default function EcommercePage() {
           description:
             'Every order generates a live tracking link sent automatically at dispatch. Customers see real-time driver position, ETA, and delivery confirmation — reducing support tickets by up to 40%.',
           icon: ShoppingCart,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Customer Delivery Tracking',
           screenshotNeeded: 'Customer tracking page — branded with live map, ETA, and order summary',
         },
         {
@@ -72,6 +80,8 @@ export default function EcommercePage() {
           description:
             'Connect Fleetbase to Shopify, WooCommerce, Magento, or any custom platform via REST API and webhooks. Sync orders, inventory, and fulfilment status bidirectionally.',
           icon: Webhook,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'API & Platform Integrations',
           screenshotNeeded: 'Fleetbase developer console — showing active Shopify webhook integration',
         },
         {
@@ -79,6 +89,8 @@ export default function EcommercePage() {
           description:
             'Manage returns end-to-end — from customer return request to driver collection, warehouse receipt, and inventory restock. All tracked in the same system as your outbound orders.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/developers-monitoring-detail.webp',
+          screenshotAlt: 'Returns & Reverse Logistics',
           screenshotNeeded: 'FleetOps return order flow — showing return request, driver collection, and warehouse receipt steps',
         },
       ]}

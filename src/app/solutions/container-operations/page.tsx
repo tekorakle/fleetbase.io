@@ -45,6 +45,8 @@ export default function ContainerOperationsPage() {
           description:
             'Track every container from vessel arrival through port handling, customs clearance, and final delivery. Every status update, location change, and handoff is recorded in real-time.',
           icon: Ship,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'End-to-End Container Tracking',
           screenshotNeeded: 'FleetOps container tracking view — shipment timeline from vessel arrival to delivery with status stages',
         },
         {
@@ -52,6 +54,8 @@ export default function ContainerOperationsPage() {
           description:
             'See all active containers and transport vehicles on a single live map. Monitor port dwell times, truck positions, and delivery ETAs from one operations dashboard.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Map Visibility',
           screenshotNeeded: 'FleetOps live map — container trucks at port and in transit with container IDs visible',
         },
         {
@@ -59,6 +63,8 @@ export default function ContainerOperationsPage() {
           description:
             'Configure customs clearance workflows with required document checklists, approval steps, and automated notifications. Reduce clearance time and eliminate documentation errors.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Customs & Documentation Workflows',
           screenshotNeeded: 'FleetOps order workflow — customs clearance steps with document upload and approval status',
         },
         {
@@ -66,6 +72,8 @@ export default function ContainerOperationsPage() {
           description:
             'Manage intermodal shipments across sea, rail, and road from a single platform. Track handoffs between transport modes and maintain a complete chain-of-custody for every container.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Multi-Modal Shipment Management',
           screenshotNeeded: 'FleetOps shipment detail — multi-modal journey showing sea, rail, and road legs',
         },
         {
@@ -73,6 +81,8 @@ export default function ContainerOperationsPage() {
           description:
             'Connect Fleetbase to port management systems, shipping line APIs, and customs platforms via REST API and webhooks. Automate status updates and document exchanges without manual entry.',
           icon: Webhook,
+          screenshot: '/images/console-screenshots/developers-api-keys.webp',
+          screenshotAlt: 'API Integration with Port & Carrier Systems',
           screenshotNeeded: 'Fleetbase developer console — showing active port system and carrier API integrations',
         },
         {
@@ -80,6 +90,8 @@ export default function ContainerOperationsPage() {
           description:
             'Track container dwell times, identify bottlenecks causing demurrage charges, and report on port performance. Reduce detention costs with proactive visibility into at-risk containers.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Demurrage & Detention Analytics',
           screenshotNeeded: 'FleetOps analytics — container dwell time chart with demurrage risk indicators',
         },
       ]}

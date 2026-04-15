@@ -80,12 +80,15 @@ export default function ApiIntegrationsPage() {
               <Link href="https://documenter.getpostman.com/view/6866273/2s9YyvAfZh" target="_blank" rel="noopener noreferrer"><Button size="lg" variant="outline">Postman Collection</Button></Link>
               <Link href="/developers/console"><Button size="lg" variant="ghost">Developer Console</Button></Link>
             </div>
-            <div className="w-full mt-12 rounded-lg border bg-muted/20 aspect-video flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-6xl mb-4">🔌</div>
-                <p className="text-muted-foreground font-medium">API & Integrations Overview</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: API documentation page showing endpoint list, request builder, and live response preview</p>
-              </div>
+            <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
+              <Image
+                src="/images/console-screenshots/developers-api-keys.webp"
+                alt="Fleetbase developer console showing API keys, endpoint documentation, and integration tools"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 80vw"
+                priority
+              />
             </div>
           </div>
         </div>
@@ -184,12 +187,14 @@ export default function ApiIntegrationsPage() {
       <section className="py-24 bg-muted/20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">⚡</div>
-                <p className="text-muted-foreground font-medium">Real-Time WebSocket Channels</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Live order tracking map with WebSocket-powered driver location updates and status events</p>
-              </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/fleetops-live-map-singapore.png"
+                alt="Fleetbase FleetOps live map showing real-time WebSocket-powered driver location updates and order tracking"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">WebSocket Channels</span></div>
@@ -256,12 +261,14 @@ export default function ApiIntegrationsPage() {
                 ))}
               </div>
             </div>
-            <div className="w-full h-[500px] rounded-lg border bg-muted/30 flex items-center justify-center">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🔔</div>
-                <p className="text-muted-foreground font-medium">Webhook Delivery Dashboard</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Webhook delivery log showing event type, endpoint, status, latency, and payload inspector</p>
-              </div>
+            <div className="w-full h-[500px] rounded-lg border overflow-hidden relative">
+              <Image
+                src="/images/console-screenshots/developers-webhooks.webp"
+                alt="Fleetbase developer console webhook delivery log showing event types, endpoints, status, and payload inspector"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </div>
@@ -296,12 +303,14 @@ export default function ApiIntegrationsPage() {
       <section className="py-24">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="w-full h-[400px] rounded-lg border bg-muted/30 flex items-center justify-center order-last md:order-first">
-              <div className="text-center p-8">
-                <div className="text-6xl mb-4">🛍️</div>
-                <p className="text-muted-foreground font-medium">Storefront API</p>
-                <p className="text-sm text-muted-foreground/70 mt-2">Screenshot: Storefront API documentation showing store, product, and order endpoints</p>
-              </div>
+            <div className="w-full h-[400px] rounded-lg border overflow-hidden relative order-last md:order-first">
+              <Image
+                src="/images/console-screenshots/storefront-products-grid.webp"
+                alt="Fleetbase Storefront API showing product catalogue, store management, and order endpoints"
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4"><span className="text-primary">●</span><span className="ml-2">Storefront API</span></div>

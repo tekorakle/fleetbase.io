@@ -45,6 +45,8 @@ export default function ExecutivesPage() {
           description:
             'See the metrics that matter at the business level — cost per delivery, on-time rate, fleet utilization, customer satisfaction, and revenue impact — in a single executive dashboard updated in real-time.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Executive Performance Dashboard',
           screenshotNeeded: 'FleetOps executive dashboard — high-level KPI cards with trend indicators and period comparison',
         },
         {
@@ -52,6 +54,8 @@ export default function ExecutivesPage() {
           description:
             'Track cost-per-order, cost-per-mile, and total logistics spend over time. Fleetbase customers average a 30% reduction in operational costs within the first year through route optimization, automation, and reduced overhead.',
           icon: DollarSign,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Cost Reduction & ROI Visibility',
           screenshotNeeded: 'FleetOps cost analytics — total logistics spend trend with cost-per-order breakdown',
         },
         {
@@ -59,6 +63,8 @@ export default function ExecutivesPage() {
           description:
             'Fleetbase is fully open-source. You own the code, the data, and the deployment. Scale to new markets, add new order types, and build custom integrations — without asking a vendor for permission or paying for custom development.',
           icon: Globe,
+          screenshot: '/images/console-screenshots/fleetops-vendors.webp',
+          screenshotAlt: 'Scalable Infrastructure Without Vendor Lock-In',
           screenshotNeeded: 'Fleetbase architecture overview — showing modular extensions and self-hosted deployment options',
         },
         {
@@ -66,6 +72,8 @@ export default function ExecutivesPage() {
           description:
             'Automated dispatch, intelligent routing, and digital workflows replace manual coordination. As your order volume grows, your team size does not have to grow proportionally.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Operational Efficiency at Scale',
           screenshotNeeded: 'FleetOps automation dashboard — showing automated workflows and their time/cost savings',
         },
         {
@@ -73,6 +81,8 @@ export default function ExecutivesPage() {
           description:
             'Your logistics data stays in your infrastructure. No third-party access, no data sharing with competitors, no surprise policy changes. Full data sovereignty with enterprise-grade security controls.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'Data Ownership & Security',
           screenshotNeeded: 'Fleetbase security overview — data residency, encryption status, and access control summary',
         },
         {
@@ -80,6 +90,8 @@ export default function ExecutivesPage() {
           description:
             'Track market expansion performance, new zone profitability, and customer retention metrics tied to delivery performance. Understand the direct relationship between logistics quality and business growth.',
           icon: TrendingUp,
+          screenshot: '/images/console-screenshots/fleetops-fleets.webp',
+          screenshotAlt: 'Business Growth Analytics',
           screenshotNeeded: 'FleetOps growth analytics — zone expansion performance and customer retention correlation chart',
         },
       ]}

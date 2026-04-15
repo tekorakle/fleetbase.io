@@ -44,6 +44,8 @@ export default function TruckingPage() {
           description:
             'See every truck, trailer, and driver in real-time on an interactive map. Get live ETAs, geofence alerts, and automatic status updates as drivers arrive and depart stops — without a single phone call.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Live Fleet Tracking on a Single Map',
           screenshotNeeded: 'FleetOps live map — multiple trucks with route lines, ETAs, and driver names visible',
         },
         {
@@ -51,6 +53,8 @@ export default function TruckingPage() {
           description:
             'Fleetbase calculates the most efficient routes considering traffic, delivery time windows, vehicle capacity, and driver hours. Re-optimize dynamically when conditions change mid-route.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
+          screenshotAlt: 'Intelligent Route Optimization',
           screenshotNeeded: 'Route optimization panel — showing optimized multi-stop route with distance/time savings',
         },
         {
@@ -58,6 +62,8 @@ export default function TruckingPage() {
           description:
             'Drivers capture signatures, photos, and delivery notes directly in the Navigator mobile app. PODs are timestamped, geotagged, and instantly available in the console — eliminating billing disputes.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Digital Proof of Delivery',
           screenshotNeeded: 'Navigator app POD screen — signature capture and photo upload on mobile',
         },
         {
@@ -65,6 +71,8 @@ export default function TruckingPage() {
           description:
             'Track vehicle health, schedule preventive maintenance, manage work orders, and monitor fault reports from the fleet dashboard. Reduce breakdowns and keep your fleet roadworthy.',
           icon: Wrench,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Vehicle Maintenance Management',
           screenshotNeeded: 'FleetOps vehicle maintenance panel — showing service schedule and fault log',
         },
         {
@@ -72,6 +80,8 @@ export default function TruckingPage() {
           description:
             'Monitor KPIs like cost-per-mile, on-time delivery rate, fuel consumption, and driver utilization. Build custom dashboards and export reports for stakeholders and compliance.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-fuel-reports.webp',
+          screenshotAlt: 'Operations Analytics & Reporting',
           screenshotNeeded: 'FleetOps analytics dashboard — cost per mile, on-time rate, utilization charts',
         },
         {
@@ -79,6 +89,8 @@ export default function TruckingPage() {
           description:
             'Drivers get turn-by-turn navigation, job notifications, and proof-of-delivery capture on iOS or Android. No hardware required — just a smartphone.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Driver Mobile App (Navigator)',
           screenshotNeeded: 'Navigator app home screen — showing active job, navigation button, and POD capture',
         },
       ]}

@@ -44,6 +44,8 @@ export default function HealthcarePage() {
           description:
             'Every handoff is recorded — from pharmacy to driver to patient. Timestamps, GPS coordinates, and digital signatures are captured at each stage and stored in an immutable audit log.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Chain-of-Custody Tracking',
           screenshotNeeded: 'FleetOps order timeline — chain-of-custody events with timestamps, GPS, and signatures',
         },
         {
@@ -51,6 +53,8 @@ export default function HealthcarePage() {
           description:
             'Patient information is encrypted at rest and in transit. Role-based access controls ensure only authorised personnel can view sensitive delivery details. Fleetbase supports HIPAA, GDPR, and SOC 2 compliance requirements.',
           icon: Lock,
+          screenshot: '/images/console-screenshots/iam-users-create.webp',
+          screenshotAlt: 'HIPAA-Compliant Data Handling',
           screenshotNeeded: 'Fleetbase security settings — showing role permissions and data encryption status',
         },
         {
@@ -58,6 +62,8 @@ export default function HealthcarePage() {
           description:
             'Drivers capture recipient signatures, photos, and — where required — ID verification directly in the Navigator app. All evidence is stored against the order and available for compliance review.',
           icon: FileCheck,
+          screenshot: '/images/console-screenshots/fleetops-order-label.webp',
+          screenshotAlt: 'Digital Proof of Delivery with ID Verification',
           screenshotNeeded: 'Navigator app — POD screen with signature, photo, and ID verification fields for medical delivery',
         },
         {
@@ -65,6 +71,8 @@ export default function HealthcarePage() {
           description:
             'Configure custom fields for each order type — temperature logs, handling instructions, controlled substance confirmations, or any other compliance requirement. No code required.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/fleetops-telematics.webp',
+          screenshotAlt: 'Custom Compliance Fields per Order Type',
           screenshotNeeded: 'FleetOps order config — custom fields panel showing temperature log and handling instruction fields',
         },
         {
@@ -72,6 +80,8 @@ export default function HealthcarePage() {
           description:
             'Pharmacy coordinators and healthcare administrators see live driver positions and order statuses on a single map. Proactively manage exceptions before they become compliance issues.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Real-Time Delivery Visibility',
           screenshotNeeded: 'FleetOps live map — healthcare delivery routes with order status indicators',
         },
         {
@@ -79,6 +89,8 @@ export default function HealthcarePage() {
           description:
             'Generate complete delivery audit reports for any time period, order type, or driver. Export to PDF or CSV for regulatory submissions, internal reviews, or insurance claims.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Audit-Ready Reporting',
           screenshotNeeded: 'FleetOps reports panel — showing audit report export with date range and order type filters',
         },
       ]}

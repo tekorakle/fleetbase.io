@@ -45,6 +45,8 @@ export default function FleetManagementPage() {
           description:
             'See every vehicle\'s live position, current driver, job status, and speed on a single interactive map. Filter by zone, vehicle type, or status to focus on what matters.',
           icon: MapPin,
+          screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
+          screenshotAlt: 'Real-Time Fleet Visibility',
           screenshotNeeded: 'FleetOps live map — fleet overview with vehicle type icons, driver names, and status indicators',
         },
         {
@@ -52,6 +54,8 @@ export default function FleetManagementPage() {
           description:
             'Schedule preventive maintenance, track service history, manage work orders, and receive automated reminders before service deadlines. Reduce unplanned breakdowns and extend vehicle lifespan.',
           icon: Wrench,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Vehicle Maintenance Management',
           screenshotNeeded: 'FleetOps vehicle maintenance panel — service schedule, work order list, and upcoming reminders',
         },
         {
@@ -59,6 +63,8 @@ export default function FleetManagementPage() {
           description:
             'Manage driver profiles, licence expiry dates, and certifications in one place. Track on-time rate, delivery completion rate, and customer ratings per driver.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Driver Management & Performance',
           screenshotNeeded: 'FleetOps driver management panel — driver list with licence status, performance metrics, and assignment history',
         },
         {
@@ -66,6 +72,8 @@ export default function FleetManagementPage() {
           description:
             'Monitor vehicle compliance certificates, insurance expiry, and regulatory requirements. Receive automated alerts before deadlines and maintain a complete compliance history per vehicle.',
           icon: Shield,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Fleet Compliance Tracking',
           screenshotNeeded: 'FleetOps compliance panel — vehicle compliance status with expiry dates and alert indicators',
         },
         {
@@ -73,6 +81,8 @@ export default function FleetManagementPage() {
           description:
             'Drivers report vehicle faults, complete pre-trip inspections, and submit incident reports directly in the Navigator app. All reports are logged against the vehicle and available instantly in the console.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
+          screenshotAlt: 'Driver Mobile App (Navigator)',
           screenshotNeeded: 'Navigator app — vehicle inspection checklist and fault reporting screen',
         },
         {
@@ -80,6 +90,8 @@ export default function FleetManagementPage() {
           description:
             'Analyse fleet utilization, fuel consumption, maintenance costs, and driver performance over time. Identify your most and least efficient vehicles and make data-driven fleet investment decisions.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
+          screenshotAlt: 'Fleet Analytics & Cost Reporting',
           screenshotNeeded: 'FleetOps analytics — fleet utilization chart, cost per vehicle, and maintenance spend over time',
         },
       ]}

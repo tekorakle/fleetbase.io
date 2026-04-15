@@ -45,6 +45,8 @@ export default function WarehouseManagersPage() {
           description:
             'Track stock levels, locations, and movements in real-time across your warehouse. Receive low-stock alerts, manage bin locations, and maintain accurate inventory counts without manual reconciliation.',
           icon: Package,
+          screenshot: '/images/console-screenshots/fleetops-issues.webp',
+          screenshotAlt: 'Real-Time Inventory Management',
           screenshotNeeded: 'Pallet WMS inventory panel — stock list with bin locations, quantities, and low-stock alerts',
         },
         {
@@ -52,6 +54,8 @@ export default function WarehouseManagersPage() {
           description:
             'Generate optimized pick lists automatically when orders are received. Pickers use the Pallet mobile app to scan items, confirm picks, and flag discrepancies — eliminating paper pick lists and reducing errors.',
           icon: ClipboardList,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Digital Pick-and-Pack Workflows',
           screenshotNeeded: 'Pallet mobile app — pick list with item scan confirmation and bin location navigation',
         },
         {
@@ -59,6 +63,8 @@ export default function WarehouseManagersPage() {
           description:
             'When an order is packed and ready, it automatically flows into FleetOps for dispatch assignment. No manual data entry, no delay between fulfillment and delivery dispatch.',
           icon: Zap,
+          screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
+          screenshotAlt: 'Automatic Dispatch Integration',
           screenshotNeeded: 'Pallet to FleetOps handoff — packed order automatically appearing in dispatch queue',
         },
         {
@@ -66,6 +72,8 @@ export default function WarehouseManagersPage() {
           description:
             'Manage the full outbound order lifecycle — from order receipt to pick, pack, dispatch, and delivery confirmation — in one connected system. Every stage is tracked and visible in real-time.',
           icon: Truck,
+          screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+          screenshotAlt: 'Outbound Order Management',
           screenshotNeeded: 'Pallet order management — outbound order list with fulfillment stage indicators',
         },
         {
@@ -73,6 +81,8 @@ export default function WarehouseManagersPage() {
           description:
             'Process returns end-to-end in the same system as outbound orders. Receive returned items, inspect and restock, and update inventory automatically. Complete return history per order.',
           icon: Smartphone,
+          screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+          screenshotAlt: 'Returns & Reverse Logistics',
           screenshotNeeded: 'Pallet returns panel — return receipt workflow with condition assessment and restock action',
         },
         {
@@ -80,6 +90,8 @@ export default function WarehouseManagersPage() {
           description:
             'Track pick accuracy, order fulfillment time, throughput per picker, and inventory turnover. Identify bottlenecks in your warehouse workflow and optimize staffing and layout decisions.',
           icon: BarChart3,
+          screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
+          screenshotAlt: 'Warehouse Performance Analytics',
           screenshotNeeded: 'Pallet analytics — pick accuracy rate, fulfillment time trend, and throughput by picker',
         },
       ]}
