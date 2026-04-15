@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Ledger — Financial Management | Fleetbase Platform',
+  description: 'Fleetbase Ledger gives logistics operators full financial visibility — invoicing, revenue tracking, payment gateways, and chart of accounts.',
+  keywords: 'fleetbase ledger, logistics financial management, fleet invoicing, delivery billing, logistics accounting',
+  openGraph: {
+    title: 'Ledger — Financial Management | Fleetbase Platform',
+    description: 'Fleetbase Ledger gives logistics operators full financial visibility — invoicing, revenue tracking, payment gateways, and chart of accounts.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ledger — Financial Management | Fleetbase Platform',
+    description: 'Fleetbase Ledger gives logistics operators full financial visibility — invoicing, revenue tracking, payment gateways, and chart of accounts.',
+  },
+};
 
 
 const faqs = [

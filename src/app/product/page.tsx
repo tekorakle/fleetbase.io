@@ -1,8 +1,24 @@
+import type { Metadata } from 'next';
 import ProductDashboard from '@/components/sections/product-dashboard';
 import ProductFeatures from '@/components/sections/product-features';
 import ProductHero from '@/components/sections/product-hero';
 import ProductLogs from '@/components/sections/product-logs';
 
+export const metadata: Metadata = {
+  title: 'Product Overview | Fleetbase Logistics Platform',
+  description: 'Discover what Fleetbase can do — real-time fleet tracking, order management, storefront, financial management, and a full developer API.',
+  keywords: 'fleetbase product, logistics platform features, fleet management software, open source logistics',
+  openGraph: {
+    title: 'Product Overview | Fleetbase Logistics Platform',
+    description: 'Discover what Fleetbase can do — real-time fleet tracking, order management, storefront, financial management, and a full developer API.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Product Overview | Fleetbase Logistics Platform',
+    description: 'Discover what Fleetbase can do — real-time fleet tracking, order management, storefront, financial management, and a full developer API.',
+  },
+};
 export default function ProductPage() {
  return (
  <>

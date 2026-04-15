@@ -1,9 +1,25 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'REST API | Fleetbase Developer Documentation',
+  description: 'Integrate with Fleetbase using the REST API. Manage orders, drivers, vehicles, and real-time tracking programmatically.',
+  keywords: 'fleetbase API, REST API, logistics API, fleet management API, delivery API',
+  openGraph: {
+    title: 'REST API | Fleetbase Developer Documentation',
+    description: 'Integrate with Fleetbase using the REST API. Manage orders, drivers, vehicles, and real-time tracking programmatically.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'REST API | Fleetbase Developer Documentation',
+    description: 'Integrate with Fleetbase using the REST API. Manage orders, drivers, vehicles, and real-time tracking programmatically.',
+  },
+};
 const faqs = [
  {
  q: 'What authentication method does the Fleetbase API use?',

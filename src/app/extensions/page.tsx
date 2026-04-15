@@ -1,9 +1,25 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Extensions Marketplace | Fleetbase',
+  description: 'Browse and install Fleetbase extensions to add new capabilities to your logistics platform — payments, integrations, custom workflows, and more.',
+  keywords: 'fleetbase extensions marketplace, logistics plugins, fleet management extensions, install extension',
+  openGraph: {
+    title: 'Extensions Marketplace | Fleetbase',
+    description: 'Browse and install Fleetbase extensions to add new capabilities to your logistics platform — payments, integrations, custom workflows, and more.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Extensions Marketplace | Fleetbase',
+    description: 'Browse and install Fleetbase extensions to add new capabilities to your logistics platform — payments, integrations, custom workflows, and more.',
+  },
+};
 const faqs = [
  {
  q: 'What is the Fleetbase Extensions Marketplace?',

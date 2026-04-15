@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Extensions & Integrations | Fleetbase Platform',
+  description: 'Extend Fleetbase with first-party and community extensions. Connect payment gateways, ERP systems, communication tools, and custom modules.',
+  keywords: 'fleetbase platform extensions, logistics integrations, fleet management plugins, ERP integration',
+  openGraph: {
+    title: 'Extensions & Integrations | Fleetbase Platform',
+    description: 'Extend Fleetbase with first-party and community extensions. Connect payment gateways, ERP systems, communication tools, and custom modules.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Extensions & Integrations | Fleetbase Platform',
+    description: 'Extend Fleetbase with first-party and community extensions. Connect payment gateways, ERP systems, communication tools, and custom modules.',
+  },
+};
 
 
 const faqs = [

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Mobile Apps | Fleetbase Platform',
+  description: 'Fleetbase mobile apps for drivers and customers. Real-time tracking, proof of delivery, in-app chat, and route navigation on iOS and Android.',
+  keywords: 'fleetbase mobile app, driver app, delivery app, fleet management mobile, iOS Android logistics',
+  openGraph: {
+    title: 'Mobile Apps | Fleetbase Platform',
+    description: 'Fleetbase mobile apps for drivers and customers. Real-time tracking, proof of delivery, in-app chat, and route navigation on iOS and Android.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mobile Apps | Fleetbase Platform',
+    description: 'Fleetbase mobile apps for drivers and customers. Real-time tracking, proof of delivery, in-app chat, and route navigation on iOS and Android.',
+  },
+};
 
 
 const faqs = [

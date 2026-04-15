@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeClosed } from 'lucide-react';
@@ -19,6 +20,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
+export const metadata: Metadata = {
+  title: 'Create Your Account | Fleetbase',
+  description: 'Create a free Fleetbase account and start building your logistics operations today.',
+  keywords: 'fleetbase signup, create account, free logistics platform',
+  openGraph: {
+    title: 'Create Your Account | Fleetbase',
+    description: 'Create a free Fleetbase account and start building your logistics operations today.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Create Your Account | Fleetbase',
+    description: 'Create a free Fleetbase account and start building your logistics operations today.',
+  },
+};
 const formSchema = z
  .object({
  email: z.string().email('Please enter a valid email address').optional(),

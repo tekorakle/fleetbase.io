@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -6,6 +7,21 @@ import { Bell, ExternalLink, Tag, GitCommit, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
+export const metadata: Metadata = {
+  title: 'Changelog | Fleetbase',
+  description: 'See the latest updates, new features, and improvements to the Fleetbase platform.',
+  keywords: 'fleetbase changelog, platform updates, new features, release notes',
+  openGraph: {
+    title: 'Changelog | Fleetbase',
+    description: 'See the latest updates, new features, and improvements to the Fleetbase platform.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Changelog | Fleetbase',
+    description: 'See the latest updates, new features, and improvements to the Fleetbase platform.',
+  },
+};
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface GitHubRelease {
  id: number;

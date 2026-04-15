@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import Image from 'next/image';
@@ -5,6 +6,21 @@ import { FaApple, FaWindows } from 'react-icons/fa6';
 
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Download Fleetbase | Self-Hosted Open-Source Logistics',
+  description: 'Download and self-host Fleetbase on your own infrastructure. Docker, Kubernetes, and bare-metal deployment guides included.',
+  keywords: 'download fleetbase, self hosted fleet management, open source logistics download, docker fleet management',
+  openGraph: {
+    title: 'Download Fleetbase | Self-Hosted Open-Source Logistics',
+    description: 'Download and self-host Fleetbase on your own infrastructure. Docker, Kubernetes, and bare-metal deployment guides included.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Download Fleetbase | Self-Hosted Open-Source Logistics',
+    description: 'Download and self-host Fleetbase on your own infrastructure. Docker, Kubernetes, and bare-metal deployment guides included.',
+  },
+};
 interface SVGProps extends React.SVGProps<SVGSVGElement> {
  className?: string;
 }

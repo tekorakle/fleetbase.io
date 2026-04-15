@@ -1,9 +1,25 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import IntegrationsEcosystem from '@/components/sections/integrations-ecosystem';
 import OpenSourceAdvantage from '@/components/sections/open-source-advantage';
 import DeploymentOptions from '@/components/sections/deployment-options';
 
+export const metadata: Metadata = {
+  title: 'Platform Overview | Fleetbase Open-Source Logistics',
+  description: 'Explore the full Fleetbase platform — FleetOps, Storefront, Ledger, Pallet, Navigator, and more. One open-source platform for all logistics operations.',
+  keywords: 'fleetbase platform, fleet management software, logistics platform, open source TMS, delivery management',
+  openGraph: {
+    title: 'Platform Overview | Fleetbase Open-Source Logistics',
+    description: 'Explore the full Fleetbase platform — FleetOps, Storefront, Ledger, Pallet, Navigator, and more. One open-source platform for all logistics operations.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Platform Overview | Fleetbase Open-Source Logistics',
+    description: 'Explore the full Fleetbase platform — FleetOps, Storefront, Ledger, Pallet, Navigator, and more. One open-source platform for all logistics operations.',
+  },
+};
 export default function PlatformOverviewPage() {
  return (
  <div className="flex flex-col">

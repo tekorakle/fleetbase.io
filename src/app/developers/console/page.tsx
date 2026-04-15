@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 
 import { useState } from 'react';
@@ -5,6 +6,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
+export const metadata: Metadata = {
+  title: 'Developer Console | Fleetbase',
+  description: 'Access the Fleetbase Developer Console to manage API keys, webhooks, sandbox environments, and integrations.',
+  keywords: 'fleetbase developer console, API keys, webhooks, sandbox, developer tools',
+  openGraph: {
+    title: 'Developer Console | Fleetbase',
+    description: 'Access the Fleetbase Developer Console to manage API keys, webhooks, sandbox environments, and integrations.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Developer Console | Fleetbase',
+    description: 'Access the Fleetbase Developer Console to manage API keys, webhooks, sandbox environments, and integrations.',
+  },
+};
 const faqs = [
  {
  q: 'What is the Fleetbase Developer Console?',

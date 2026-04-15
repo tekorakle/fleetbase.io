@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeClosed } from 'lucide-react';
@@ -19,6 +20,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 
+export const metadata: Metadata = {
+  title: 'Sign In | Fleetbase',
+  description: 'Sign in to your Fleetbase account to manage your logistics operations.',
+  keywords: 'fleetbase sign in, logistics platform login, fleet management login',
+  openGraph: {
+    title: 'Sign In | Fleetbase',
+    description: 'Sign in to your Fleetbase account to manage your logistics operations.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sign In | Fleetbase',
+    description: 'Sign in to your Fleetbase account to manage your logistics operations.',
+  },
+};
 const formSchema = z.object({
  email: z.string().optional(),
  password: z.string().optional(),

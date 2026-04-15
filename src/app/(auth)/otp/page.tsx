@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 'use client';
 import { ChevronLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
@@ -13,6 +14,21 @@ import {
 } from '@/components/ui/input-otp';
 import { Separator } from '@/components/ui/separator';
 
+export const metadata: Metadata = {
+  title: 'Verify Your Account | Fleetbase',
+  description: 'Enter your one-time passcode to verify your Fleetbase account.',
+  keywords: 'fleetbase login, otp verification, account access',
+  openGraph: {
+    title: 'Verify Your Account | Fleetbase',
+    description: 'Enter your one-time passcode to verify your Fleetbase account.',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Verify Your Account | Fleetbase',
+    description: 'Enter your one-time passcode to verify your Fleetbase account.',
+  },
+};
 export default function OTPPage() {
  const [value, setValue] = useState('');
 

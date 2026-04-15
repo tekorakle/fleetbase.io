@@ -90,7 +90,7 @@ export default function VsOnfleetPage() {
  </p>
  <div className="flex flex-col sm:flex-row gap-4 justify-center pt-2">
  <Button size="lg" asChild>
- <Link href="https://console.fleetbase.io">
+ <Link href="https://console.fleetbase.io/onboard">
  Try Fleetbase Free <ArrowRight className="ml-2 h-4 w-4" />
  </Link>
  </Button>
@@ -213,7 +213,7 @@ export default function VsOnfleetPage() {
  </p>
  <div className="flex flex-col sm:flex-row gap-4 justify-center">
  <Button size="lg" asChild>
- <Link href="https://console.fleetbase.io">
+ <Link href="https://console.fleetbase.io/onboard">
  Start Free Trial <ArrowRight className="ml-2 h-4 w-4" />
  </Link>
  </Button>
