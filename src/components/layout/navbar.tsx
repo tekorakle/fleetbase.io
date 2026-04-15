@@ -479,14 +479,10 @@ const Navbar = () => {
   if (hideNavbar) return null;
 
   return (
-    <header className={cn(
-      'lg:border-b',
-      // On docs pages: sticky so Fumadocs sidebar/TOC offset correctly via --fd-nav-height
-      isDocsPage ? 'sticky top-0 z-50 bg-background/95 backdrop-blur-md' : '',
-    )}>
+    <header className="lg:border-b">
       <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
       
-        {/* On docs pages the Fumadocs sidebar already shows the logo — hide it here to avoid duplication */}
+        {/* Hide logo on /docs pages — the Fumadocs sidebar already shows it */}
         {!isDocsPage && <Logo />}
 
         <NavigationMenu viewport={false} className="hidden lg:flex flex-1 justify-center">

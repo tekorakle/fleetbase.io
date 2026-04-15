@@ -7,12 +7,6 @@
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
 
-/* Tell Fumadocs the height of our external site navbar so it offsets
-   the sidebar, TOC, and scroll anchors correctly. The site navbar is
-   h-[var(--header-height)] = calc(var(--spacing) * 17) = 68px in Tailwind v4. */
-:root {
-  --fd-nav-height: 68px !important;
-}
 
 @variant dark (&:is(.dark *));
 
