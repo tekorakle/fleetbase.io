@@ -145,7 +145,7 @@ export default function LedgerShowcase() {
               </Link>
             </Button>
             <Button variant="outline" asChild>
-              <Link href="/contact/sales">Talk to Sales</Link>
+              <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
             </Button>
           </div>
         </motion.div>

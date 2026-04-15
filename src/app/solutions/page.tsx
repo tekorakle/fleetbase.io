@@ -274,7 +274,7 @@ export default function SolutionsPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                href="/contact/sales"
+                href="https://cal.com/shivthakker/enquiry"
                 className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
                 Talk to Sales <ArrowRight className="size-4" />

@@ -96,7 +96,7 @@ export default function CompanyPage() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/contact/sales">Talk to us</Link>
+              <Link href="https://cal.com/shivthakker/enquiry">Talk to us</Link>
             </Button>
           </div>
         </div>

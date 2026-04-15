@@ -127,9 +127,9 @@ export default function ContainerOperationsPage() {
       ctaHeading="Take control of your container operations"
       ctaBody="Port-to-destination visibility, customs workflow automation, and real-time tracking — all on one open-source platform. Start your free trial today."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Talk to Sales"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

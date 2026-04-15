@@ -197,7 +197,7 @@ export default function FleetOpsPage() {
                   Start Free Trial <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/contact">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 <Button size="lg" variant="outline">Book a Demo</Button>
               </Link>
               <Link href="https://github.com/fleetbase/fleetops" target="_blank" rel="noopener noreferrer">
@@ -573,7 +573,7 @@ console.log(\`ETA: \${order.eta}\`);`}</pre>
                     Start Free Trial <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-                <Link href="/contact">
+                <Link href="https://cal.com/shivthakker/enquiry">
                   <Button size="lg" variant="outline">Book a Demo</Button>
                 </Link>
               </div>

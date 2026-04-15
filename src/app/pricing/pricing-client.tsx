@@ -33,7 +33,7 @@ const CLOUD_TIERS = [
     overage: 0.75,
     description: 'For small teams ready to scale beyond the starter plan.',
     cta: 'Start Free Trial',
-    ctaHref: 'https://console.fleetbase.io',
+    ctaHref: 'https://console.fleetbase.io/onboard',
     highlight: false,
     badge: null,
   },
@@ -45,7 +45,7 @@ const CLOUD_TIERS = [
     overage: 0.75,
     description: 'For growing teams managing regular delivery operations.',
     cta: 'Start Free Trial',
-    ctaHref: 'https://console.fleetbase.io',
+    ctaHref: 'https://console.fleetbase.io/onboard',
     highlight: false,
     badge: null,
   },
@@ -361,7 +361,7 @@ export default function PricingClient() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/contact/sales">Talk to Sales</Link>
+              <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">No credit card required · Cancel anytime</p>
@@ -484,7 +484,7 @@ export default function PricingClient() {
                     </div>
                   </div>
                 </CardContent>
-                <CardFooter>
+                <CardFooter className="pt-4">
                   <Button
                     className="w-full"
                     variant={tier.highlight ? 'default' : 'outline'}
@@ -578,7 +578,7 @@ export default function PricingClient() {
               </CardContent>
               <CardFooter>
                 <Button className="w-full" asChild>
-                  <Link href="/contact/sales">Get Started <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                  <Link href="https://tally.so/r/mVbv2M" target="_blank" rel="noopener noreferrer">Get Started <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -615,7 +615,7 @@ export default function PricingClient() {
               </CardContent>
               <CardFooter>
                 <Button className="w-full" variant="outline" asChild>
-                  <Link href="/contact/sales">Request a Quote <ArrowRight className="ml-2 w-4 h-4" /></Link>
+                  <Link href="https://cal.com/shivthakker/enquiry">Request a Quote <ArrowRight className="ml-2 w-4 h-4" /></Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -693,7 +693,7 @@ export default function PricingClient() {
                 </CardContent>
                 <CardFooter>
                   <Button className="w-full" variant={lic.highlight ? 'default' : 'outline'} asChild>
-                    <Link href="/contact/sales">Get License</Link>
+                    <Link href="https://cal.com/shivthakker/enquiry">Get License</Link>
                   </Button>
                 </CardFooter>
               </Card>
@@ -703,7 +703,7 @@ export default function PricingClient() {
             Not sure which license you need?{' '}
             <Link href="/licensing" className="text-primary underline underline-offset-4">Read our licensing guide</Link>
             {' '}or{' '}
-            <Link href="/contact/sales" className="text-primary underline underline-offset-4">talk to our team</Link>.
+            <Link href="https://cal.com/shivthakker/enquiry" className="text-primary underline underline-offset-4">talk to our team</Link>.
           </p>
         </div>
       </section>
@@ -743,7 +743,7 @@ export default function PricingClient() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="/contact/sales">Talk to Sales</Link>
+              <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
             </Button>
           </div>
         </div>

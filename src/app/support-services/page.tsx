@@ -177,7 +177,7 @@ export default function SupportServicesPage() {
           </div>
           <div className="mt-8 text-center">
             <Button size="lg" asChild>
-              <Link href="/contact/sales">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 Discuss your requirements <ArrowRight className="ml-2 size-4" />
               </Link>
             </Button>

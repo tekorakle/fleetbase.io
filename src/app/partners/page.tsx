@@ -137,7 +137,7 @@ export default function PartnersPage() {
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Button size="lg" asChild>
-              <Link href="/contact/sales">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 Apply to partner <ArrowRight className="ml-2 size-4" />
               </Link>
             </Button>
@@ -211,7 +211,7 @@ export default function PartnersPage() {
                     ))}
                   </div>
                 </div>
-                <Link href="/contact/sales" className="flex items-center text-sm font-medium text-primary hover:underline">
+                <Link href="https://cal.com/shivthakker/enquiry" className="flex items-center text-sm font-medium text-primary hover:underline">
                   {type.cta} <ArrowRight className="ml-1 size-3.5" />
                 </Link>
               </div>
@@ -257,7 +257,7 @@ export default function PartnersPage() {
                 partnerships team will be in touch within 2 business days.
               </p>
               <Button size="lg" asChild>
-                <Link href="/contact/sales">
+                <Link href="https://cal.com/shivthakker/enquiry">
                   Apply now <ArrowRight className="ml-2 size-4" />
                 </Link>
               </Button>

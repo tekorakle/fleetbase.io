@@ -127,9 +127,9 @@ export default function RouteOptimizationPage() {
       ctaHeading="Cut fuel costs and deliver more on time"
       ctaBody="Route optimization is one of the highest-ROI investments in logistics. Start your free trial and see how much Fleetbase can save your operation."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

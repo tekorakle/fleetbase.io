@@ -127,9 +127,9 @@ export default function OrderManagementPage() {
       ctaHeading="Build the order management system your operation actually needs"
       ctaBody="Stop compromising on rigid software. Fleetbase gives you fully configurable order types, workflows, and fields — no code required."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

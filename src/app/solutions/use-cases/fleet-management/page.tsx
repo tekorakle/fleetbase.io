@@ -127,9 +127,9 @@ export default function FleetManagementPage() {
       ctaHeading="Take full control of your fleet"
       ctaBody="Real-time visibility, proactive maintenance, and driver performance data — all in one open-source platform. Start your free trial today."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

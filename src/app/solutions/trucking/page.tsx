@@ -126,9 +126,9 @@ export default function TruckingPage() {
       ctaHeading="Ready to modernize your fleet operations?"
       ctaBody="Join hundreds of trucking and haulage operators running smarter, leaner fleets on Fleetbase. Start your free trial today — no credit card required."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Talk to Sales"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

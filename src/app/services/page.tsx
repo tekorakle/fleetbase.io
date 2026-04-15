@@ -319,7 +319,7 @@ export default function ServicesPage() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Button size="lg" asChild>
-              <Link href="/contact/sales">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 Talk to Our Team <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -367,7 +367,7 @@ export default function ServicesPage() {
                 </CardContent>
                 <CardFooter>
                   <Button className="w-full" variant="outline" asChild>
-                    <Link href="/contact/sales">Request a Quote</Link>
+                    <Link href="https://cal.com/shivthakker/enquiry">Request a Quote</Link>
                   </Button>
                 </CardFooter>
               </Card>

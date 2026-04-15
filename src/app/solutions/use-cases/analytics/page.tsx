@@ -127,9 +127,9 @@ export default function AnalyticsPage() {
       ctaHeading="Make data-driven decisions about your logistics operation"
       ctaBody="Real-time dashboards, driver performance metrics, and cost analysis — all built into Fleetbase. Start your free trial and see your operation clearly for the first time."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

@@ -35,7 +35,7 @@ export default function PlatformOverviewPage() {
               <Link href="/pricing">
                 <Button size="lg">Try Fleetbase Cloud</Button>
               </Link>
-              <Link href="/contact">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 <Button size="lg" variant="outline">Schedule Demo</Button>
               </Link>
             </div>
@@ -199,7 +199,7 @@ export default function PlatformOverviewPage() {
             <Link href="/pricing">
               <Button size="lg">Try Fleetbase Cloud</Button>
             </Link>
-            <Link href="/contact">
+            <Link href="https://cal.com/shivthakker/enquiry">
               <Button size="lg" variant="outline">Schedule Enterprise Demo</Button>
             </Link>
             <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">

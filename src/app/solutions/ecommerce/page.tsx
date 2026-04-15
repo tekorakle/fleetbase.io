@@ -126,9 +126,9 @@ export default function EcommercePage() {
       ctaHeading="Connect your store to your logistics operation"
       ctaBody="Stop managing orders in one system and deliveries in another. Fleetbase brings it all together — from checkout to doorstep."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

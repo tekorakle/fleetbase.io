@@ -126,9 +126,9 @@ export default function FoodDeliveryPage() {
       ctaHeading="Ready to scale your delivery operation?"
       ctaBody="Join food and grocery delivery businesses running faster, more profitable operations on Fleetbase. 7-day free trial, no credit card required."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

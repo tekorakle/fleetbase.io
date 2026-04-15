@@ -126,9 +126,9 @@ export default function CourierServicesPage() {
       ctaHeading="Scale your courier operation without scaling your team"
       ctaBody="Automate dispatch, eliminate paper POD, and give customers the tracking experience they expect — all on one open-source platform."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Talk to Sales"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

@@ -66,7 +66,7 @@ export default function ProblemSolution() {
               ))}
             </ul>
             <Button asChild>
-              <Link href="/pricing">Start Free Trial</Link>
+              <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">Start Free Trial</Link>
             </Button>
           </div>
         </div>

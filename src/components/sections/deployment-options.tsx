@@ -22,7 +22,7 @@ const deploymentOptions = [
     price: 'Starting at $50/mo',
     cta: {
       text: 'Try Fleetbase Cloud',
-      href: 'https://console.fleetbase.io',
+      href: 'https://console.fleetbase.io/onboard',
       variant: 'default' as const,
     },
     features: {
@@ -58,7 +58,7 @@ const deploymentOptions = [
     price: '$2,500 one-time implementation',
     cta: {
       text: 'Get Started',
-      href: '/contact/sales',
+      href: 'https://tally.so/r/mVbv2M',
       variant: 'outline' as const,
     },
     features: {

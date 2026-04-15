@@ -73,7 +73,7 @@ export default function LedgerPage() {
               <Link href="/pricing">
                 <Button size="lg">Start 7-Day Free Trial</Button>
               </Link>
-              <Link href="/contact">
+              <Link href="https://cal.com/shivthakker/enquiry">
                 <Button size="lg" variant="outline">Book a Demo</Button>
               </Link>
               <Link href="https://github.com/fleetbase/ledger" target="_blank" rel="noopener noreferrer">
@@ -744,7 +744,7 @@ export default function LedgerPage() {
             <Link href="/pricing">
               <Button size="lg">Start 7-Day Free Trial</Button>
             </Link>
-            <Link href="/contact">
+            <Link href="https://cal.com/shivthakker/enquiry">
               <Button size="lg" variant="outline">Talk to a Specialist</Button>
             </Link>
             <Link href="https://docs.fleetbase.io" target="_blank" rel="noopener noreferrer">

@@ -35,7 +35,7 @@ export default function StorefrontPage() {
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-4">
               <Link href="/pricing"><Button size="lg">Start Your Free Trial</Button></Link>
-              <Link href="/contact"><Button size="lg" variant="outline">Book a Demo</Button></Link>
+              <Link href="https://cal.com/shivthakker/enquiry"><Button size="lg" variant="outline">Book a Demo</Button></Link>
               <Link href="https://github.com/fleetbase/storefront" target="_blank"><Button size="lg" variant="ghost">Explore the Code →</Button></Link>
             </div>
             
@@ -680,7 +680,7 @@ console.log(order.total); // 2450 ($24.50)`}
                 <li>✓ Get your questions answered</li>
                 <li>✓ See it in action</li>
               </ul>
-              <Link href="/contact"><Button size="lg" variant="outline" className="w-full">Schedule Demo</Button></Link>
+              <Link href="https://cal.com/shivthakker/enquiry"><Button size="lg" variant="outline" className="w-full">Schedule Demo</Button></Link>
             </div>
 
             <div className="bg-card border rounded-xl p-8 text-center hover:shadow-lg transition-shadow">
@@ -690,7 +690,7 @@ console.log(order.total); // 2450 ($24.50)`}
                 <li>✓ Need help with migration?</li>
                 <li>✓ Let's chat about your business</li>
               </ul>
-              <Link href="/contact"><Button size="lg" variant="outline" className="w-full">Contact Sales</Button></Link>
+              <Link href="https://cal.com/shivthakker/enquiry"><Button size="lg" variant="outline" className="w-full">Contact Sales</Button></Link>
             </div>
           </div>
         </div>

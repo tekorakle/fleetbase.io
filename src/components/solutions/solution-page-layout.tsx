@@ -110,7 +110,7 @@ export default function SolutionPageLayout({
   ctaSecondary,
   ctaSecondaryHref,
 }: SolutionPageProps) {
-  const primaryCta = heroCta ?? { primary: 'Start Free Trial', primaryHref: '/trial', secondary: 'Book a Demo', secondaryHref: '/contact/sales' };
+  const primaryCta = heroCta ?? { primary: 'Start Free Trial', primaryHref: 'https://console.fleetbase.io/onboard', secondary: 'Book a Demo', secondaryHref: 'https://cal.com/shivthakker/enquiry' };
 
   return (
     <div className="flex flex-col">

@@ -56,7 +56,7 @@ export default function SecurityCompliancePage() {
               Fleetbase is designed with security and compliance at its core. From end-to-end encryption and granular access control to full audit logging and self-hosting options, your data is protected at every layer — and you remain in full control.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-4">
-              <Link href="/contact"><Button size="lg">Talk to Our Security Team</Button></Link>
+              <Link href="https://cal.com/shivthakker/enquiry"><Button size="lg">Talk to Our Security Team</Button></Link>
               <Link href="/pricing"><Button size="lg" variant="outline">View Enterprise Plans</Button></Link>
               <Link href="https://github.com/fleetbase" target="_blank" rel="noopener noreferrer"><Button size="lg" variant="ghost">Review Source Code</Button></Link>
             </div>
@@ -280,7 +280,7 @@ export default function SecurityCompliancePage() {
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Have Security or Compliance Requirements?</h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">Our security team is available to discuss your specific requirements, provide compliance documentation, and help you evaluate Fleetbase for your environment.</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link href="/contact"><Button size="lg">Talk to Our Security Team</Button></Link>
+            <Link href="https://cal.com/shivthakker/enquiry"><Button size="lg">Talk to Our Security Team</Button></Link>
             <Link href="/pricing"><Button size="lg" variant="outline">View Enterprise Plans</Button></Link>
           </div>
           <p className="text-sm text-muted-foreground mt-6">Security questionnaires · DPAs · BAAs · Custom compliance reviews available on Enterprise plans</p>

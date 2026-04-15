@@ -127,9 +127,9 @@ export default function LastMileDeliveryPage() {
       ctaHeading="Make your last mile your competitive advantage"
       ctaBody="Faster dispatch, smarter routes, happier customers. Start your free trial and see the difference Fleetbase makes in your last-mile operation."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

@@ -127,9 +127,9 @@ export default function OperationsManagersPage() {
       ctaHeading="Run a tighter operation with less effort"
       ctaBody="One dashboard. Real-time visibility. Automated workflows. Fleetbase gives operations managers the control they need to run efficiently at scale."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

@@ -216,7 +216,7 @@ export default function CustomersPage() {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="/contact/sales">Talk to sales</Link>
+                  <Link href="https://cal.com/shivthakker/enquiry">Talk to sales</Link>
                 </Button>
               </div>
             </div>

@@ -127,9 +127,9 @@ export default function CustomerSuccessPage() {
       ctaHeading="Give your support team the answers they need"
       ctaBody="Real-time order visibility, instant POD access, and proactive customer notifications — reduce support volume and resolve queries faster with Fleetbase."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

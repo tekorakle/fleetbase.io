@@ -127,9 +127,9 @@ export default function WarehouseManagersPage() {
       ctaHeading="Connect your warehouse to your delivery operation"
       ctaBody="Accurate inventory, digital pick-and-pack, and automatic dispatch integration — all in one connected platform. Start your free trial today."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

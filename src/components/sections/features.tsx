@@ -139,7 +139,7 @@ const Features = ({ className }: { className?: string }) => {
             className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg" 
             asChild
           >
-            <Link href="/demo">
+            <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
               See It In Action
             </Link>
           </Button>

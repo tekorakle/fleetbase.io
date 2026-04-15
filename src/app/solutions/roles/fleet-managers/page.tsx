@@ -127,9 +127,9 @@ export default function FleetManagersPage() {
       ctaHeading="Stay ahead of every vehicle issue"
       ctaBody="Proactive maintenance, compliance tracking, and real-time visibility — all in one open-source fleet management platform. Start your free trial today."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Book a Demo"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

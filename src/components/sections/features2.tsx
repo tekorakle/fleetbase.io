@@ -34,18 +34,18 @@ import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
 const MAIN_CHART_DATA = [
-  { month: 'Jan', views: 170, clicks: 30 },
-  { month: 'Feb', views: 135, clicks: 62 },
-  { month: 'Mar', views: 130, clicks: 68 },
-  { month: 'Apr', views: 135, clicks: 75 },
-  { month: 'May', views: 136, clicks: 64 },
-  { month: 'Jun', views: 130, clicks: 78 },
-  { month: 'Jul', views: 140, clicks: 110 },
-  { month: 'Aug', views: 152, clicks: 125 },
-  { month: 'Sep', views: 190, clicks: 145 },
-  { month: 'Oct', views: 225, clicks: 165 },
-  { month: 'Nov', views: 230, clicks: 155 },
-  { month: 'Dec', views: 280, clicks: 200 },
+  { month: 'Jan', orders: 1240, delivered: 1105 },
+  { month: 'Feb', orders: 1380, delivered: 1260 },
+  { month: 'Mar', orders: 1520, delivered: 1410 },
+  { month: 'Apr', orders: 1460, delivered: 1370 },
+  { month: 'May', orders: 1610, delivered: 1520 },
+  { month: 'Jun', orders: 1750, delivered: 1680 },
+  { month: 'Jul', orders: 1820, delivered: 1740 },
+  { month: 'Aug', orders: 1960, delivered: 1890 },
+  { month: 'Sep', orders: 2140, delivered: 2060 },
+  { month: 'Oct', orders: 2380, delivered: 2290 },
+  { month: 'Nov', orders: 2510, delivered: 2420 },
+  { month: 'Dec', orders: 2780, delivered: 2680 },
 ];
 
 const SMALL_CHART_DATA = [
@@ -98,12 +98,12 @@ const Features2 = () => {
                 {isChartInView && (
                   <ChartContainer
                     config={{
-                      views: {
-                        label: 'Views',
+                      orders: {
+                        label: 'Orders',
                         color: 'var(--chart-2)',
                       },
-                      clicks: {
-                        label: 'Clicks',
+                      delivered: {
+                        label: 'Delivered',
                         color: 'var(--chart-4)',
                       },
                     }}
@@ -121,10 +121,10 @@ const Features2 = () => {
                         horizontal={true}
                         vertical={false}
                         horizontalCoordinatesGenerator={(props) => [
-                          props.yAxis.scale(50),
-                          props.yAxis.scale(100),
-                          props.yAxis.scale(150),
-                          props.yAxis.scale(200),
+                          props.yAxis.scale(500),
+                          props.yAxis.scale(1000),
+                          props.yAxis.scale(1500),
+                          props.yAxis.scale(2000),
                         ]}
                       />
                       <XAxis
@@ -149,9 +149,9 @@ const Features2 = () => {
                         axisLine={true}
                         tickMargin={8}
                         tick={{ fill: 'var(--border)', opacity: 0.5 }}
-                        ticks={[50, 100, 150]}
+                        ticks={[500, 1000, 1500, 2000, 2500]}
                         stroke="var(--border)"
-                        domain={[0, 200]}
+                        domain={[0, 3000]}
                       />
                       <ChartTooltip
                         content={({ active, payload }) => {
@@ -160,18 +160,18 @@ const Features2 = () => {
                               <div className="bg-background flex flex-col items-center gap-2 rounded-lg border p-3 text-xs shadow-md">
                                 {[
                                   {
-                                    label: 'Views',
+                                    label: 'Orders',
                                     value: payload[0]?.value,
-                                    change: '+74%',
+                                    change: '+18%',
                                     changeClass:
                                       'inline-block rounded-sm bg-green-600/15 px-2 py-1  font-medium text-green-500',
                                   },
                                   {
-                                    label: 'Clicks',
+                                    label: 'Delivered',
                                     value: payload[1]?.value,
-                                    change: '-52%',
+                                    change: '+96%',
                                     changeClass:
-                                      'inline-block rounded-sm bg-red-600/15 px-2 py-1  font-medium text-red-400',
+                                      'inline-block rounded-sm bg-green-600/15 px-2 py-1  font-medium text-green-500',
                                   },
                                 ].map((item) => (
                                   <div
@@ -198,7 +198,7 @@ const Features2 = () => {
                         }}
                       />
                       <Line
-                        dataKey="views"
+                        dataKey="orders"
                         type="monotone"
                         stroke="var(--chart-2)"
                         strokeWidth={2}
@@ -211,7 +211,7 @@ const Features2 = () => {
                         }}
                       />
                       <Line
-                        dataKey="clicks"
+                        dataKey="delivered"
                         type="monotone"
                         stroke="var(--chart-4)"
                         strokeWidth={2}

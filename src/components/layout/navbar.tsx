@@ -421,7 +421,7 @@ export const NAV_LINKS: NavLink[] = [
       },
       {
         label: 'Contact Sales',
-        href: '/contact/sales',
+        href: 'https://cal.com/shivthakker/enquiry',
         description: 'Get in touch with our enterprise team for custom solutions.',
         icon: Mail,
       },
@@ -449,7 +449,7 @@ export const NAV_LINKS: NavLink[] = [
 
 const ACTION_BUTTONS = [
   { label: 'GitHub', href: 'https://github.com/fleetbase/fleetbase', variant: 'ghost' as const, icon: Github, external: true },
-  { label: 'Start Free Trial', href: '/trial', variant: 'default' as const },
+  { label: 'Start Free Trial', href: 'https://console.fleetbase.io/onboard', variant: 'default' as const },
 ];
 
 const Navbar = () => {

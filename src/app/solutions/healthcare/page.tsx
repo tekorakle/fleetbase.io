@@ -126,9 +126,9 @@ export default function HealthcarePage() {
       ctaHeading="Deliver with confidence. Comply with ease."
       ctaBody="Healthcare and pharmacy operators trust Fleetbase to keep sensitive deliveries secure, compliant, and on time. Start your free trial or talk to our team."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Talk to Sales"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

@@ -127,9 +127,9 @@ export default function WasteManagementPage() {
       ctaHeading="Optimize your collection operation today"
       ctaBody="Waste and recycling operators use Fleetbase to cut fuel costs, increase collections, and stay compliant — without the complexity of legacy software."
       ctaPrimary="Start Free Trial"
-      ctaPrimaryHref="/trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
       ctaSecondary="Talk to Sales"
-      ctaSecondaryHref="/contact/sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
     />
   );
 }

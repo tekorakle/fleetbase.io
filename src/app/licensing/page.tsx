@@ -221,7 +221,7 @@ export default function LicensingPage() {
             </div>
             <p className="mt-8 text-sm text-muted-foreground">
               Still unsure which licence applies to your use case?{' '}
-              <Link href="/contact/sales" className="text-primary hover:underline">
+              <Link href="https://cal.com/shivthakker/enquiry" className="text-primary hover:underline">
                 Contact our team
               </Link>{' '}
               and we will help you choose the right option.

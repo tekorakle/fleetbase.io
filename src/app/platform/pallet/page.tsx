@@ -50,7 +50,7 @@ export default function PalletPage() {
                             <Link href="/pricing">
                                 <Button size="lg">Start 7-Day Free Trial</Button>
                             </Link>
-                            <Link href="/contact">
+                            <Link href="https://cal.com/shivthakker/enquiry">
                                 <Button size="lg" variant="outline">Book a Demo</Button>
                             </Link>
                             <Link href="https://github.com/fleetbase/pallet" target="_blank" rel="noopener noreferrer">
@@ -818,7 +818,7 @@ export default function PalletPage() {
                             <p className="text-sm text-muted-foreground mb-6">
                                 See Pallet in action with a personalized walkthrough from our team.
                             </p>
-                            <Link href="/contact">
+                            <Link href="https://cal.com/shivthakker/enquiry">
                                 <Button size="lg" variant="outline" className="w-full">Book a Demo</Button>
                             </Link>
                         </div>
@@ -829,7 +829,7 @@ export default function PalletPage() {
                             <p className="text-sm text-muted-foreground mb-6">
                                 Have complex requirements? Let's discuss your warehouse operation.
                             </p>
-                            <Link href="/contact">
+                            <Link href="https://cal.com/shivthakker/enquiry">
                                 <Button size="lg" variant="ghost" className="w-full">Talk to an Expert</Button>
                             </Link>
                         </div>
