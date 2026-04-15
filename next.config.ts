@@ -12,6 +12,11 @@ const nextConfig: NextConfig = {
         destination: '/services',
         permanent: true,
       },
+      {
+        source: '/customers',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
   allowedDevOrigins: [

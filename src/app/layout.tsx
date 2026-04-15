@@ -13,129 +13,129 @@ import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 
 const inter = Inter({
-  variable: '--font-inter',
-  subsets: ['latin'],
+ variable: '--font-inter',
+ subsets: ['latin'],
 });
 
 const azeretMono = Azeret_Mono({
-  variable: '--font-azeret-mono',
-  subsets: ['latin'],
+ variable: '--font-azeret-mono',
+ subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Fleetbase | Open-Source Fleet Management & TMS Software',
-    template: '%s | Fleetbase',
-  },
-  description:
-    'Fleetbase is open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
-  keywords: [
-    'open source fleet management software',
-    'fleet management software',
-    'TMS software',
-    'transportation management system',
-    'open source logistics platform',
-    'delivery management software',
-    'dispatch software',
-    'route optimization software',
-    'last mile delivery software',
-    'self hosted fleet management',
-    'fleet management API',
-    'open source delivery management',
-    'Onfleet alternative',
-    'Tookan alternative',
-    'logistics platform open source',
-    'order management system',
-    'real time fleet tracking',
-    'driver management software',
-    'supply chain software',
-  ],
-  authors: [{ name: 'Fleetbase' }],
-  creator: 'Fleetbase',
-  publisher: 'Fleetbase',
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: [
-      { url: '/favicon/favicon.ico', sizes: '48x48' },
-      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon/favicon.ico' },
-    ],
-    apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180' }],
-    shortcut: [{ url: '/favicon/favicon.ico' }],
-  },
-  openGraph: {
-    title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
-    description:
-      'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
-    siteName: 'Fleetbase',
-    images: [
-      {
-        url: '/images/og-image.jpeg',
-        width: 1200,
-        height: 630,
-        alt: 'Fleetbase - Open-Source Fleet Management & TMS Software',
-      },
-    ],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
-    description:
-      'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
-    images: ['/images/og-image.jpeg'],
-    creator: '@fleetbase_io',
-  },
+ title: {
+ default: 'Fleetbase | Open-Source Fleet Management & TMS Software',
+ template: '%s | Fleetbase',
+ },
+ description:
+ 'Fleetbase is open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
+ keywords: [
+ 'open source fleet management software',
+ 'fleet management software',
+ 'TMS software',
+ 'transportation management system',
+ 'open source logistics platform',
+ 'delivery management software',
+ 'dispatch software',
+ 'route optimization software',
+ 'last mile delivery software',
+ 'self hosted fleet management',
+ 'fleet management API',
+ 'open source delivery management',
+ 'Onfleet alternative',
+ 'Tookan alternative',
+ 'logistics platform open source',
+ 'order management system',
+ 'real time fleet tracking',
+ 'driver management software',
+ 'supply chain software',
+ ],
+ authors: [{ name: 'Fleetbase' }],
+ creator: 'Fleetbase',
+ publisher: 'Fleetbase',
+ robots: {
+ index: true,
+ follow: true,
+ },
+ icons: {
+ icon: [
+ { url: '/favicon/favicon.ico', sizes: '48x48' },
+ { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+ { url: '/favicon/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+ { url: '/favicon/favicon.svg', type: 'image/svg+xml' },
+ { url: '/favicon/favicon.ico' },
+ ],
+ apple: [{ url: '/favicon/apple-touch-icon.png', sizes: '180x180' }],
+ shortcut: [{ url: '/favicon/favicon.ico' }],
+ },
+ openGraph: {
+ title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
+ description:
+ 'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
+ siteName: 'Fleetbase',
+ images: [
+ {
+ url: '/images/og-image.jpeg',
+ width: 1200,
+ height: 630,
+ alt: 'Fleetbase - Open-Source Fleet Management & TMS Software',
+ },
+ ],
+ },
+ twitter: {
+ card: 'summary_large_image',
+ title: 'Fleetbase | Open-Source Fleet Management & TMS Software',
+ description:
+ 'Open-source fleet management and TMS software. Dispatch, track, and optimize your fleet in real time. Self-hosted or cloud — free to start, no per-seat pricing.',
+ images: ['/images/og-image.jpeg'],
+ creator: '@fleetbase_io',
+ },
 };
 
 export default function RootLayout({
-  children,
+ children,
 }: Readonly<{
-  children: React.ReactNode;
+ children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'relative flex min-h-screen flex-col antialiased [--header-height:calc(var(--spacing)*17)]',
-          inter.variable,
-          azeretMono.variable,
-        )}
-      >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          disableTransitionOnChange
-        >
-          <RootProvider
-            search={{
-              options: {
-                type: 'static',
-              },
-            }}
-          >
-            {/* Background Blur */}
-            <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
-            {/* Noise Background */}
-            <div
-              className="absolute inset-0 z-[-1] size-full opacity-70 mix-blend-overlay dark:md:opacity-100"
-              style={{
-                background: `url(/images/noise.webp) lightgray 0% 0% / 83.69069695472717px 83.69069695472717px repeat`,
-              }}
-            />
-            <StyleGlideProvider />
+ return (
+ <html lang="en" suppressHydrationWarning>
+ <body
+ className={cn(
+ 'relative flex min-h-screen flex-col antialiased [--header-height:calc(var(--spacing)*17)]',
+ inter.variable,
+ azeretMono.variable,
+ )}
+ >
+ <ThemeProvider
+ attribute="class"
+ defaultTheme="dark"
+ disableTransitionOnChange
+ >
+ <RootProvider
+ search={{
+ options: {
+ type: 'static',
+ },
+ }}
+ >
+ {/* Background Blur */}
+ <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
+ {/* Noise Background */}
+ <div
+ className="absolute inset-0 z-[-1] size-full opacity-70 mix-blend-overlay dark:md:opacity-100"
+ style={{
+ background: `url(/images/noise.webp) lightgray 0% 0% / 83.69069695472717px 83.69069695472717px repeat`,
+ }}
+ />
+ <StyleGlideProvider />
 
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <WhatsAppFloat />
-          </RootProvider>
-        </ThemeProvider>
-      </body>
-    </html>
-  );
+ <Navbar />
+ <main className="flex-1">{children}</main>
+ <Footer />
+ <WhatsAppFloat />
+ </RootProvider>
+ </ThemeProvider>
+ </body>
+ </html>
+ );
 }

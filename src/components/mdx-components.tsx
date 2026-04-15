@@ -11,54 +11,54 @@ import type { MDXComponents } from 'mdx/types';
 
 import { Badge } from './ui/badge';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+ Card,
+ CardContent,
+ CardDescription,
+ CardHeader,
+ CardTitle,
 } from './ui/card';
 
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
-  return {
-    ...defaultMdxComponents,
-    // Fumadocs UI Components (following recommended structure)
-    Accordion,
-    Accordions,
-    Banner,
-    CodeBlock,
-    Files,
-    File,
-    Folder,
-    Step,
-    Steps,
-    Tab,
-    Tabs,
-    TypeTable,
-    // Custom components using your design system
-    Badge,
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-    // Enhanced code blocks with proper responsive behavior and background
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    pre: ({ ref: _ref, ...props }) => (
-      <CodeBlock {...props}>
-        <Pre>{props.children}</Pre>
-      </CodeBlock>
-    ),
-    // Custom callouts using semantic tokens
-    blockquote: ({ children, ...props }) => (
-      <blockquote
-        className="border-accent bg-muted/20 text-muted-foreground rounded-r-lg border-l-4 py-2 pl-4 italic"
-        {...props}
-      >
-        {children}
-      </blockquote>
-    ),
-    ...components,
-  };
+ return {
+ ...defaultMdxComponents,
+ // Fumadocs UI Components (following recommended structure)
+ Accordion,
+ Accordions,
+ Banner,
+ CodeBlock,
+ Files,
+ File,
+ Folder,
+ Step,
+ Steps,
+ Tab,
+ Tabs,
+ TypeTable,
+ // Custom components using your design system
+ Badge,
+ Card,
+ CardContent,
+ CardDescription,
+ CardHeader,
+ CardTitle,
+ // Enhanced code blocks with proper responsive behavior and background
+ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+ pre: ({ ref: _ref, ...props }) => (
+ <CodeBlock {...props}>
+ <Pre>{props.children}</Pre>
+ </CodeBlock>
+ ),
+ // Custom callouts using semantic tokens
+ blockquote: ({ children, ...props }) => (
+ <blockquote
+ className="border-accent bg-muted/20 text-muted-foreground rounded-r-lg border-l-4 py-2 pl-4 italic"
+ {...props}
+ >
+ {children}
+ </blockquote>
+ ),
+ ...components,
+ };
 }
 
 // Default export for Next.js MDX

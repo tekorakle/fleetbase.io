@@ -5,13 +5,13 @@ import AboutTeam from '@/components/sections/about-team';
 import Features from '@/components/sections/features';
 
 export default function AboutPage() {
-  return (
-    <>
-      <AboutHero />
-      <AboutLogos />
-      <AboutTeam />
-      <AboutNews />
-      <Features className="section-padding" />
-    </>
-  );
+ return (
+ <>
+ <AboutHero />
+ <AboutLogos />
+ <AboutTeam />
+ <AboutNews />
+ <Features className="section-padding" />
+ </>
+ );
 }

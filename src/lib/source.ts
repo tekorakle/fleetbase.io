@@ -10,28 +10,28 @@ import * as docs_5 from '@/../content/docs/installation.mdx';
 
 // Manually create the docs array without using _runtime
 const docsArray = [
-  { info: { path: 'ai-prompts.mdx' }, data: docs_0 },
-  { info: { path: 'core-concepts.mdx' }, data: docs_1 },
-  { info: { path: 'crm-csv.mdx' }, data: docs_2 },
-  { info: { path: 'file-systems.mdx' }, data: docs_3 },
-  { info: { path: 'index.mdx' }, data: docs_4 },
-  { info: { path: 'installation.mdx' }, data: docs_5 },
+ { info: { path: 'ai-prompts.mdx' }, data: docs_0 },
+ { info: { path: 'core-concepts.mdx' }, data: docs_1 },
+ { info: { path: 'crm-csv.mdx' }, data: docs_2 },
+ { info: { path: 'file-systems.mdx' }, data: docs_3 },
+ { info: { path: 'index.mdx' }, data: docs_4 },
+ { info: { path: 'installation.mdx' }, data: docs_5 },
 ];
 
 // Create a custom source that converts to Fumadocs Source format
 export const source = loader({
-  baseUrl: '/docs',
-  source: {
-    files: docsArray.map((doc: any) => ({
-      type: 'page',
-      path: doc.info.path.replace(/\.mdx?$/, ''),
-      data: {
-        ...doc.data,
-        body: doc.data.default,
-        structuredData: doc.data.structuredData || doc.data.toc,
-      },
-    })),
-  },
+ baseUrl: '/docs',
+ source: {
+ files: docsArray.map((doc: any) => ({
+ type: 'page',
+ path: doc.info.path.replace(/\.mdx?$/, ''),
+ data: {
+ ...doc.data,
+ body: doc.data.default,
+ structuredData: doc.data.structuredData || doc.data.toc,
+ },
+ })),
+ },
 });
 
 export type Page = InferPageType<typeof source>;
