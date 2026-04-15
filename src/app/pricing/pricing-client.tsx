@@ -226,6 +226,25 @@ const SUPPORT_TIERS = [
     ctaHref: '/contact/sales',
     highlight: false,
   },
+  {
+    name: 'Enterprise+',
+    price: 'Contact Us',
+    sla: 'Full-time scalable',
+    colorClass: 'bg-red-500',
+    features: [
+      { label: 'Scalable Engineering Team', included: true },
+      { label: 'Daily Support Access', included: true },
+      { label: 'Full Roadmap Collaboration', included: true },
+      { label: 'Dedicated Full-Stack Team', included: true },
+      { label: 'Enterprise-Level Oversight', included: true },
+      { label: 'Team Expansion Available', included: true },
+      { label: 'Strategic Quarterly Reviews', included: true },
+      { label: 'Custom SLA', included: true },
+    ],
+    cta: 'Contact Sales',
+    ctaHref: 'https://cal.com/shivthakker/enquiry',
+    highlight: false,
+  },
 ];
 
 
