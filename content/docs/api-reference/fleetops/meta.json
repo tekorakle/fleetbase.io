@@ -1,0 +1,19 @@
+{
+  "title": "FleetOps API",
+  "pages": [
+    "index",
+    "orders",
+    "drivers",
+    "vehicles",
+    "fleets",
+    "vendors",
+    "service-rates",
+    "service-quotes",
+    "tracking-numbers",
+    "tracking-statuses",
+    "payloads",
+    "entities",
+    "zones",
+    "service-areas"
+  ]
+}

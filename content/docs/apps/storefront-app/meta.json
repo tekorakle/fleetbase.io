@@ -1,0 +1,9 @@
+{
+  "title": "Storefront App",
+  "pages": [
+    "index",
+    "overview",
+    "setup",
+    "customization"
+  ]
+}

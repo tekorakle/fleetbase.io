@@ -1,0 +1,13 @@
+{
+  "title": "Storefront API",
+  "pages": [
+    "index",
+    "store",
+    "products",
+    "categories",
+    "cart",
+    "checkout",
+    "customers",
+    "reviews"
+  ]
+}

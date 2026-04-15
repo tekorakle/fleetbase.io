@@ -1,0 +1,14 @@
+{
+  "title": "Guides & Examples",
+  "pages": [
+    "index",
+    "build-a-last-mile-delivery-app",
+    "build-an-on-demand-marketplace",
+    "integrate-with-your-erp",
+    "track-a-fleet-in-real-time",
+    "build-a-custom-extension",
+    "set-up-multi-tenant-organizations",
+    "configure-automated-order-routing",
+    "white-label-the-navigator-app"
+  ]
+}

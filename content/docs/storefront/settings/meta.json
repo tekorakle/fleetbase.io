@@ -1,0 +1,10 @@
+{
+  "title": "Settings",
+  "pages": [
+    "index",
+    "api",
+    "gateways",
+    "locations",
+    "notifications"
+  ]
+}

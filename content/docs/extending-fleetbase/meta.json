@@ -1,0 +1,17 @@
+{
+  "title": "Building & Extending",
+  "pages": [
+    "index",
+    "overview",
+    "extension-architecture",
+    "scaffolding-your-extension",
+    "backend-development",
+    "frontend-development",
+    "menus-and-navigation",
+    "hooks-and-lifecycle",
+    "dashboard-widgets",
+    "registering-components",
+    "virtual-routes",
+    "publishing-to-marketplace"
+  ]
+}

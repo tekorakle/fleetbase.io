@@ -1,0 +1,9 @@
+{
+  "title": "Ledger API",
+  "pages": [
+    "index",
+    "wallets",
+    "transactions",
+    "invoices"
+  ]
+}

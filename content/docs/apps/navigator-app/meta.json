@@ -1,0 +1,9 @@
+{
+  "title": "Navigator App",
+  "pages": [
+    "index",
+    "overview",
+    "setup",
+    "customization"
+  ]
+}

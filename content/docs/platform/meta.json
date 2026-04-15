@@ -1,0 +1,10 @@
+{
+  "title": "Core Platform",
+  "pages": [
+    "index",
+    "iam",
+    "developer-console",
+    "extensions",
+    "features"
+  ]
+}

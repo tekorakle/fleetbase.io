@@ -1,0 +1,10 @@
+{
+  "title": "Catalog Management",
+  "pages": [
+    "index",
+    "products",
+    "categories",
+    "variants-and-addons",
+    "pricing"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Orders & Checkout",
+  "pages": [
+    "index",
+    "cart",
+    "checkout",
+    "payment-gateways"
+  ]
+}

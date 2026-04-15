@@ -1,0 +1,13 @@
+{
+  "title": "FleetOps",
+  "pages": [
+    "index",
+    "overview",
+    "management",
+    "operations",
+    "connectivity",
+    "maintenance",
+    "analytics",
+    "settings"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Order Fulfillment",
+  "pages": [
+    "index",
+    "purchase-orders",
+    "sales-orders",
+    "pick-lists",
+    "waves-and-batches"
+  ]
+}

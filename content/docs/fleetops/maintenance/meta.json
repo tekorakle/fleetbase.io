@@ -1,0 +1,10 @@
+{
+  "title": "Maintenance",
+  "pages": [
+    "index",
+    "equipment",
+    "parts",
+    "maintenance-schedules",
+    "work-orders"
+  ]
+}

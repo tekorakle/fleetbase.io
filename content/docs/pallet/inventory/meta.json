@@ -1,0 +1,12 @@
+{
+  "title": "Inventory Control",
+  "pages": [
+    "index",
+    "products",
+    "stock-levels",
+    "stock-adjustments",
+    "stock-transfers",
+    "low-stock",
+    "expired-stock"
+  ]
+}

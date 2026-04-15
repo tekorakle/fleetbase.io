@@ -1,0 +1,11 @@
+{
+  "title": "Core API",
+  "pages": [
+    "index",
+    "places",
+    "contacts",
+    "companies",
+    "files",
+    "webhooks"
+  ]
+}

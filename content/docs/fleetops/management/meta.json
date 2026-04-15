@@ -1,0 +1,14 @@
+{
+  "title": "Management",
+  "pages": [
+    "index",
+    "drivers",
+    "contacts",
+    "vehicles",
+    "fleets",
+    "vendors",
+    "places",
+    "issues",
+    "fuel-reports"
+  ]
+}

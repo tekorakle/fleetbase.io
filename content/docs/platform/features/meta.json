@@ -1,0 +1,11 @@
+{
+  "title": "Platform Features",
+  "pages": [
+    "index",
+    "custom-fields",
+    "dashboards-and-widgets",
+    "chat-and-collaboration",
+    "notifications",
+    "scheduling"
+  ]
+}

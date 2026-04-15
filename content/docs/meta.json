@@ -1,0 +1,17 @@
+{
+  "title": "Fleetbase Docs",
+  "pages": [
+    "index",
+    "getting-started",
+    "platform",
+    "fleetops",
+    "storefront",
+    "pallet",
+    "ledger",
+    "extending-fleetbase",
+    "api-reference",
+    "guides",
+    "apps",
+    "community"
+  ]
+}

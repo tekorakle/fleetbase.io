@@ -1,0 +1,14 @@
+{
+  "title": "Storefront",
+  "pages": [
+    "index",
+    "overview",
+    "catalog",
+    "stores",
+    "customers",
+    "orders",
+    "reviews",
+    "promotions",
+    "settings"
+  ]
+}
