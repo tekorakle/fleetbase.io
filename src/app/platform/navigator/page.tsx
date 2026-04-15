@@ -41,6 +41,13 @@ export default function NavigatorPage() {
                 <Button size="lg">Download on Google Play</Button>
               </Link>
               <Link
+                href="https://apps.apple.com/us/app/fleetbase-navigator/id1554208255"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" variant="outline">Download on the App Store</Button>
+              </Link>
+              <Link
                 href="https://github.com/fleetbase/navigator-app"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -134,6 +141,15 @@ export default function NavigatorPage() {
               className="text-primary underline underline-offset-4"
             >
               Google Play
+            </Link>{' '}
+            and{' '}
+            <Link
+              href="https://apps.apple.com/us/app/fleetbase-navigator/id1554208255"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary underline underline-offset-4"
+            >
+              iOS App Store
             </Link>{' '}
             · Source code on{' '}
             <Link
@@ -282,6 +298,21 @@ export default function NavigatorPage() {
             </div>
 
             <div className="bg-card border rounded-lg p-8 text-center">
+              <div className="text-5xl mb-4">🍎</div>
+              <h3 className="text-xl font-semibold mb-2">iOS</h3>
+              <p className="text-muted-foreground mb-4 text-sm">
+                Available on the Apple App Store. Free to download and use with your Fleetbase account.
+              </p>
+              <Link
+                href="https://apps.apple.com/us/app/fleetbase-navigator/id1554208255"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button variant="outline" className="w-full">Get on the App Store</Button>
+              </Link>
+            </div>
+
+            <div className="bg-card border rounded-lg p-8 text-center">
               <div className="text-5xl mb-4">⚙️</div>
               <h3 className="text-xl font-semibold mb-2">Self-Build</h3>
               <p className="text-muted-foreground mb-4 text-sm">
@@ -330,6 +361,13 @@ export default function NavigatorPage() {
               rel="noopener noreferrer"
             >
               <Button size="lg">Download on Google Play</Button>
+            </Link>
+            <Link
+              href="https://apps.apple.com/us/app/fleetbase-navigator/id1554208255"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" variant="outline">Download on the App Store</Button>
             </Link>
             <Link
               href="https://cal.com/shivthakker/enquiry"
