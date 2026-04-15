@@ -490,7 +490,7 @@ const Navbar = () => {
  {/* Hide logo on /docs pages — the Fumadocs sidebar already shows it */}
  {!isDocsPage && <Logo />}
 
- <NavigationMenu viewport={false} className="hidden lg:flex flex-1 justify-center">
+ <NavigationMenu viewport={false} className={cn('hidden lg:flex flex-1', isDocsPage ? 'justify-end' : 'justify-center')}>
  <NavigationMenuList className="gap-2 xl:gap-4">
  {NAV_LINKS.map((item) => (
  <NavigationMenuItem key={item.label}>
