@@ -32,11 +32,11 @@ export default function PlatformOverviewPage() {
 
  {/* CTAs */}
  <div className="flex flex-wrap gap-4 justify-center mt-4">
- <Link href="/pricing">
- <Button size="lg">Try Fleetbase Cloud</Button>
- </Link>
- <Link href="https://cal.com/shivthakker/enquiry">
- <Button size="lg" variant="outline">Schedule Demo</Button>
+          <Link href="https://console.fleetbase.io/onboard">
+            <Button size="lg">Try Fleetbase Cloud</Button>
+          </Link>
+          <Link href="https://cal.com/shivthakker/enquiry">
+            <Button size="lg" variant="outline">Schedule Demo</Button>
  </Link>
  </div>
 
@@ -196,11 +196,11 @@ export default function PlatformOverviewPage() {
  Whether you choose our managed Cloud or a self-hosted solution, Fleetbase gives you the power to build, scale, and control your entire logistics operation.
  </p>
  <div className="flex flex-wrap gap-4 justify-center">
- <Link href="/pricing">
- <Button size="lg">Try Fleetbase Cloud</Button>
- </Link>
- <Link href="https://cal.com/shivthakker/enquiry">
- <Button size="lg" variant="outline">Schedule Enterprise Demo</Button>
+          <Link href="https://console.fleetbase.io/onboard">
+            <Button size="lg">Try Fleetbase Cloud</Button>
+          </Link>
+          <Link href="https://cal.com/shivthakker/enquiry">
+            <Button size="lg" variant="outline">Schedule Enterprise Demo</Button>
  </Link>
  <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer">
  <Button size="lg" variant="outline">View on GitHub</Button>

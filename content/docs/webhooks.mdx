@@ -1,0 +1,286 @@
+---
+title: Webhooks
+description: Receive real-time event notifications from Fleetbase and integrate them into your own systems and workflows.
+---
+
+## Overview
+
+Webhooks allow your external applications to receive real-time notifications whenever something meaningful happens inside Fleetbase — an order is dispatched, a driver updates their location, a delivery is completed, or a vehicle raises an issue. Rather than polling the API repeatedly, your server receives an HTTP POST request the moment an event fires.
+
+Webhooks are the primary integration mechanism for connecting Fleetbase to third-party systems such as ERPs, CRMs, customer notification services, and analytics platforms.
+
+---
+
+## Setting Up a Webhook
+
+### 1. Navigate to the Developers Section
+
+Open the Fleetbase console and go to **Developers → Webhooks**. This panel lists all configured webhooks for your organisation and shows the delivery log for each one.
+
+### 2. Create a New Webhook
+
+Click **Add Webhook** and fill in the following fields:
+
+| Field | Description |
+|---|---|
+| **Endpoint URL** | The HTTPS URL on your server that will receive POST requests |
+| **Events** | The specific event types you want to subscribe to (or select "All events") |
+| **Description** | An optional label to identify this webhook |
+
+### 3. Select Events
+
+You can subscribe to individual events or receive all events. Common event groups include:
+
+| Group | Example Events |
+|---|---|
+| **Orders** | `order.created`, `order.dispatched`, `order.completed`, `order.cancelled`, `order.updated` |
+| **Drivers** | `driver.location_changed`, `driver.assigned`, `driver.updated`, `driver.online`, `driver.offline` |
+| **Vehicles** | `vehicle.updated`, `vehicle.assigned` |
+| **Tracking** | `tracking_status.created`, `tracking_number.created` |
+| **Issues** | `issue.created`, `issue.updated`, `issue.resolved` |
+| **Proofs of Delivery** | `proof_of_delivery.created` |
+
+---
+
+## Webhook Payload Structure
+
+Every webhook POST request sent by Fleetbase follows the same envelope structure:
+
+```json
+{
+  "id": "evt_01HX9ABCDEF",
+  "api_version": "1.0",
+  "event": "order.dispatched",
+  "created_at": "2024-06-12T09:41:00Z",
+  "data": {
+    "id": "order_xxxxxxxx",
+    "public_id": "ORDER-12345",
+    "status": "dispatched",
+    "driver_assigned": {
+      "id": "driver_xxxxxxxx",
+      "name": "James Okafor"
+    },
+    "payload": {
+      "pickup": { "address": "12 Marina Bay, Singapore" },
+      "dropoff": { "address": "88 Orchard Road, Singapore" }
+    },
+    "additionalData": {}
+  }
+}
+```
+
+The `data` object contains the full updated resource. The `event` field names the type of change using a `resource.action` convention.
+
+---
+
+## Configuring Your Endpoint
+
+Your receiving endpoint must:
+
+- Accept **HTTPS POST** requests only (HTTP endpoints are not supported)
+- Return a **2xx HTTP status code** within **10 seconds** to acknowledge receipt
+- Be publicly accessible from the internet
+
+If your endpoint returns a non-2xx status or times out, Fleetbase will retry delivery with exponential back-off.
+
+### Retry Policy
+
+| Attempt | Delay |
+|---|---|
+| 1st retry | 5 minutes |
+| 2nd retry | 30 minutes |
+| 3rd retry | 2 hours |
+| 4th retry | 8 hours |
+
+After four failed attempts the webhook event is marked as failed and logged in the console.
+
+---
+
+## Processing Incoming Events
+
+### Node.js / Express Example
+
+```javascript
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.post('/webhooks/fleetbase', (req, res) => {
+  const { event, data } = req.body;
+
+  switch (event) {
+    case 'order.dispatched':
+      console.log(`Order ${data.public_id} dispatched to driver ${data.driver_assigned?.name}`);
+      // Notify customer via SMS / push notification
+      break;
+
+    case 'driver.location_changed':
+      console.log(`Driver ${data.id} is now at`, data.location);
+      // Update your live tracking map
+      break;
+
+    case 'order.completed':
+      console.log(`Order ${data.public_id} completed`);
+      // Trigger invoice generation, update ERP
+      break;
+
+    default:
+      console.log(`Unhandled event: ${event}`);
+  }
+
+  res.sendStatus(200);
+});
+
+app.listen(3000);
+```
+
+### PHP / Laravel Example
+
+```php
+<?php
+
+use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
+
+class FleetbaseWebhookController extends Controller
+{
+    public function handle(Request $request)
+    {
+        $event = $request->input('event');
+        $data  = $request->input('data');
+
+        match ($event) {
+            'order.dispatched' => $this->onOrderDispatched($data),
+            'driver.location_changed' => $this->onDriverLocationChanged($data),
+            'order.completed' => $this->onOrderCompleted($data),
+            default => logger("Unhandled Fleetbase event: {$event}"),
+        };
+
+        return response()->json(['received' => true]);
+    }
+
+    private function onOrderDispatched(array $data): void
+    {
+        // Notify customer, update your own order table, etc.
+    }
+
+    private function onDriverLocationChanged(array $data): void
+    {
+        $location = $data['location'];
+        // Push real-time coordinates to your tracking dashboard
+    }
+
+    private function onOrderCompleted(array $data): void
+    {
+        // Trigger billing, generate proof of delivery report, etc.
+    }
+}
+```
+
+---
+
+## Security Best Practices
+
+### Validate the Source
+
+Fleetbase signs each webhook request with an HMAC-SHA256 signature. The signature is included in the `X-Fleetbase-Signature` header. Verify it before processing the payload:
+
+```javascript
+const crypto = require('crypto');
+
+function verifySignature(payload, signature, secret) {
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(JSON.stringify(payload))
+    .digest('hex');
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expected)
+  );
+}
+```
+
+### Use HTTPS
+
+Your endpoint must be secured with a valid TLS certificate. Fleetbase will not deliver to plain HTTP endpoints.
+
+### Respond Quickly
+
+Acknowledge the webhook immediately with a `200 OK` and process the payload asynchronously (e.g. via a queue). Long-running synchronous processing risks timeouts and duplicate deliveries.
+
+---
+
+## Testing Webhooks
+
+### Send a Test Event
+
+From the Fleetbase console under **Developers → Webhooks**, select your webhook and click **Send Test Event**. This sends a sample payload to your endpoint so you can verify your handler before going live.
+
+### Test with cURL
+
+```bash
+curl -X POST https://your-server.com/webhooks/fleetbase \
+  -H "Content-Type: application/json" \
+  -H "X-Fleetbase-Signature: test_signature" \
+  -d '{
+    "id": "evt_test_001",
+    "api_version": "1.0",
+    "event": "order.dispatched",
+    "created_at": "2024-06-12T09:41:00Z",
+    "data": {
+      "id": "order_test",
+      "public_id": "ORDER-TEST-001",
+      "status": "dispatched"
+    }
+  }'
+```
+
+### Use a Tunnel for Local Development
+
+During development, expose your local server using a tunnelling tool:
+
+```bash
+# Using ngrok
+ngrok http 3000
+
+# Using localtunnel
+npx localtunnel --port 3000
+```
+
+Copy the generated HTTPS URL into the Fleetbase webhook endpoint field.
+
+---
+
+## Viewing Webhook Logs
+
+The **Developers → Webhooks** panel in the console shows a full delivery log for every webhook, including:
+
+- The event type and timestamp
+- The full request payload sent by Fleetbase
+- The HTTP status code returned by your endpoint
+- The response body
+- Retry history for failed deliveries
+
+Use this log to debug integration issues without needing to instrument your own server.
+
+---
+
+## Common Use Cases
+
+| Use Case | Events to Subscribe |
+|---|---|
+| **Customer order tracking notifications** | `order.dispatched`, `tracking_status.created`, `order.completed` |
+| **Live driver location on a custom map** | `driver.location_changed` |
+| **ERP / WMS order sync** | `order.created`, `order.updated`, `order.completed`, `order.cancelled` |
+| **Proof of delivery archiving** | `proof_of_delivery.created` |
+| **Driver management system** | `driver.assigned`, `driver.online`, `driver.offline`, `driver.updated` |
+| **Fleet maintenance alerts** | `issue.created`, `vehicle.updated` |
+| **Financial / billing triggers** | `order.completed`, `proof_of_delivery.created` |
+
+---
+
+## Further Reading
+
+- [Fleetbase REST API Reference](https://docs.fleetbase.io/api-reference)
+- [Develop with Sockets](/docs/sockets) — for bidirectional real-time communication
+- [Building an Extension](/docs/extensions) — add custom event handlers directly inside Fleetbase

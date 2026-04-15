@@ -12,7 +12,9 @@ import {
  Package,
  Search,
  Terminal,
+ Webhook,
  X,
+ Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -32,48 +34,48 @@ const QUICK_START_SECTIONS = [
  {
  title: 'Installation',
  description:
- 'Get started with Plasma by installing the necessary dependencies and setting up your environment.',
+ 'Get started with Fleetbase — install via CLI, Docker, or from source and have your instance running in minutes.',
  icon: Package,
  href: '/docs/installation',
  },
  {
  title: 'Core Concepts',
  description:
- 'Learn the fundamental concepts and architecture behind Plasma to build better applications.',
+ 'Understand the Fleetbase architecture: extensions, the console, the API, and how everything fits together.',
  icon: BookOpen,
  href: '/docs/core-concepts',
  },
  {
- title: 'AI Prompts',
+ title: 'Webhooks',
  description:
- 'Discover how to leverage AI capabilities and create effective prompts for your use cases.',
- icon: Cpu,
- href: '/docs/ai-prompts',
+ 'Receive real-time event notifications from Fleetbase and integrate them into your own systems and workflows.',
+ icon: Webhook,
+ href: '/docs/webhooks',
+ },
+ {
+ title: 'API Reference',
+ description:
+ 'Full REST API documentation for all Fleetbase resources — orders, drivers, places, vehicles, and more.',
+ icon: Zap,
+ href: 'https://docs.fleetbase.io/api-reference',
  },
  {
  title: 'File Systems',
  description:
- 'Understand how to manage and organize files efficiently within the Plasma ecosystem.',
+ 'Configure storage adapters for file uploads, media, and document management within Fleetbase.',
  icon: FileText,
  href: '/docs/file-systems',
  },
  {
- title: 'CRM CSV',
+ title: 'CLI Reference',
  description:
- 'Learn how to manage and import CRM data using CSV files for efficient data processing.',
- icon: Bug,
- href: '/docs/crm-csv',
- },
- {
- title: 'CLI Commands',
- description:
- 'Master the command-line interface and available commands for efficient development.',
+ 'Master the Fleetbase CLI for scaffolding extensions, managing deployments, and publishing to the registry.',
  icon: Terminal,
  href: '/docs/cli',
  },
 ];
 
-const POPULAR_SEARCHES = ['Billing', 'AI Build', 'Integrations'];
+const POPULAR_SEARCHES = ['Webhooks', 'Extensions', 'API Keys', 'Installation'];
 
 // Initialize Orama for static search mode
 function initOrama() {
@@ -120,11 +122,11 @@ export function DocsOverview() {
  </div>
 
  <h1 className="!mb-0 text-balance text-4xl leading-none md:text-5xl lg:text-6xl">
- Welcome to the <span className="text-gradient">Plasma Docs</span>
+ Welcome to the <span className="text-gradient">Fleetbase Docs</span>
  </h1>
 
  <p className="text-muted-foreground !my-0 leading-snug md:text-lg">
- Get answers to common questions on all things Plasma
+ Guides, references, and resources for building with Fleetbase
  </p>
  </div>
  <div className="mx-auto mt-10 max-w-xl md:mt-12">

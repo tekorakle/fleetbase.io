@@ -143,19 +143,7 @@ const Footer = () => {
  return (
  <footer className="section-padding relative overflow-hidden bg-black/90">
  <div className="container text-center">
- <p className="text-accent-foreground">
- Trusted by 150+ teams in 120 companies
- </p>
-
- <div className="mt-6 flex flex-wrap items-center justify-between gap-6 sm:justify-center lg:mt-10 lg:gap-16">
- {TECH_ICONS.map((icon, index) => (
- <div key={index} className="text-accent-foreground">
- {icon.icon}
- </div>
- ))}
- </div>
-
- <Logo
+      <Logo
  className="mt-20 justify-center gap-3 text-3xl lg:mt-30"
  iconClassName="w-10"
  />
@@ -167,7 +155,7 @@ const Footer = () => {
 
  <div className="mx-auto flex max-w-sm justify-center gap-4.5">
  <Button className="flex-1" asChild>
- <Link href="https://console.fleetbase.io">Try Fleetbase Cloud</Link>
+ <Link href="https://console.fleetbase.io/onboard">Try Fleetbase Cloud</Link>
  </Button>
  <Button
  variant="secondary"
