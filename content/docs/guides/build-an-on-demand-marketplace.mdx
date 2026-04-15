@@ -5,6 +5,88 @@ description: Learn how to build a full on-demand marketplace using the Storefron
 
 # Build an On-Demand Marketplace
 
-Learn how to build a full on-demand marketplace using the Storefront extension and Storefront App.
+This guide walks you through the process of building a complete on-demand marketplace (like UberEats or DoorDash) using the Storefront extension, FleetOps, and the open-source Storefront App.
 
-> This page is coming soon. Content is actively being developed.
+By the end of this guide, you will have a working system that can:
+1. Manage multiple stores and their product catalogs.
+2. Allow customers to browse products, add them to a cart, and checkout using the Storefront App.
+3. Automatically route the resulting order to a driver using FleetOps.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+- A Fleetbase account (or a self-hosted instance).
+- The **Storefront** extension installed.
+- A **Public Key** from the [Developer Console](/docs/platform/developer-console/api-keys).
+- The [Storefront App](/docs/apps/storefront-app/overview) installed on a mobile device or emulator.
+
+## Step 1: Create a Store and Catalog
+
+First, you need to create a store and add some products to its catalog.
+
+You can do this via the Fleetbase Console (in the Storefront section) or via the API:
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/storefront/stores \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Burger Joint",
+    "description": "The best burgers in town.",
+    "currency": "USD"
+  }'
+```
+
+Next, add a product to the store:
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/storefront/products \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "store": "store_xxxxxxxx",
+    "name": "Classic Cheeseburger",
+    "price": 999,
+    "currency": "USD"
+  }'
+```
+
+## Step 2: Configure the Storefront App
+
+1. Clone the [Storefront App repository](https://github.com/fleetbase/storefront-app).
+2. Open the `environment.js` file and configure it with your Fleetbase API URL and Public Key.
+3. Run the app on your emulator or device.
+
+You should now see the "Burger Joint" store and the "Classic Cheeseburger" product in the app.
+
+## Step 3: Place an Order
+
+1. In the Storefront App, add the "Classic Cheeseburger" to your cart.
+2. Proceed to checkout.
+3. Enter a delivery address and select a payment method (e.g., Cash on Delivery).
+4. Tap "Place Order".
+
+When the order is placed, the Storefront extension automatically creates a corresponding [Order](/docs/api-reference/fleetops/orders) in FleetOps.
+
+## Step 4: Dispatch the Order
+
+Now that the order is in FleetOps, you can dispatch it to a driver.
+
+If you have configured [Automated Order Routing](/docs/guides/configure-automated-order-routing), FleetOps will automatically assign the order to the nearest available driver.
+
+Otherwise, you can manually dispatch the order via the Fleetbase Console or the API:
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/dispatch \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "driver": "driver_xxxxxxxx"
+  }'
+```
+
+## Step 5: Track the Delivery
+
+The customer can track the delivery status in real-time within the Storefront App.
+
+As the driver updates the order status in the [Navigator App](/docs/apps/navigator-app/overview) (e.g., "Picked Up", "En Route", "Completed"), the Storefront App will automatically reflect these changes.

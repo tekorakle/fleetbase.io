@@ -5,6 +5,112 @@ description: Create and manage order payloads — the collection of entities and
 
 # Payloads
 
-Create and manage order payloads — the collection of entities and waypoints for an order.
+A **Payload** represents the physical cargo or items being transported in an [Order](/docs/api-reference/fleetops/orders).
 
-> This page is coming soon. Content is actively being developed.
+It acts as a container that holds multiple [Entities](/docs/api-reference/fleetops/entities) (the individual items) and defines the pickup and dropoff [Places](/docs/api-reference/core/places) (the waypoints).
+
+## The Payload Object
+
+```json
+{
+  "id": "payload_xxxxxxxx",
+  "pickup": "place_xxxxxxxx",
+  "dropoff": "place_xxxxxxxx",
+  "return": null,
+  "payment_method": "card",
+  "cod_amount": 0,
+  "cod_currency": "USD",
+  "cod_payment_method": null,
+  "type": "standard",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `pickup` | string | The ID of the [Place](/docs/api-reference/core/places) where the payload should be picked up. |
+| `dropoff` | string | The ID of the [Place](/docs/api-reference/core/places) where the payload should be delivered. |
+| `return` | string | The ID of the [Place](/docs/api-reference/core/places) where the payload should be returned if delivery fails. |
+| `payment_method` | string | The method used to pay for the delivery service (e.g., `card`, `cash`). |
+| `cod_amount` | integer | The amount to be collected on delivery (in cents). |
+| `cod_currency` | string | The currency of the COD amount (e.g., `USD`). |
+| `type` | string | The type of payload (e.g., `standard`, `fragile`, `refrigerated`). |
+
+## Create a Payload
+
+Creates a new Payload object.
+
+You can pass existing Place IDs for `pickup` and `dropoff`, or you can pass nested Place objects to create them simultaneously. You can also pass an array of `entities` to create the items within the payload.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/payloads \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pickup": "place_xxxxxxxx",
+    "dropoff": "place_yyyyyyyy",
+    "payment_method": "card",
+    "entities": [
+      {
+        "name": "Box of Widgets",
+        "weight": 5.5,
+        "weight_unit": "kg"
+      }
+    ]
+  }'
+```
+
+## Retrieve a Payload
+
+Retrieves the details of an existing Payload.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/payloads/payload_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update a Payload
+
+Updates the specified Payload by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/payloads/payload_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "cod_amount": 5000,
+    "cod_currency": "USD"
+  }'
+```
+
+## Delete a Payload
+
+Permanently deletes a Payload. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/fleet-ops/payloads/payload_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Payloads
+
+Returns a list of your Payloads. The payloads are returned sorted by creation date, with the most recently created payloads appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/payloads \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

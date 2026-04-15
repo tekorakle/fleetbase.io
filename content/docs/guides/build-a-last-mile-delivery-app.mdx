@@ -5,6 +5,100 @@ description: A complete walkthrough for building a last-mile delivery applicatio
 
 # Build a Last-Mile Delivery App
 
-A complete walkthrough for building a last-mile delivery application using the FleetOps API and Navigator App.
+This guide walks you through the process of building a complete last-mile delivery solution using the FleetOps API and the open-source Navigator driver app.
 
-> This page is coming soon. Content is actively being developed.
+By the end of this guide, you will have a working system that can:
+1. Receive orders via API.
+2. Automatically assign orders to drivers based on proximity.
+3. Allow drivers to accept, navigate, and complete deliveries using the Navigator app.
+4. Track the delivery status in real-time.
+
+## Prerequisites
+
+Before you begin, ensure you have:
+- A Fleetbase account (or a self-hosted instance).
+- A **Secret Key** from the [Developer Console](/docs/platform/developer-console/api-keys).
+- The [Navigator App](/docs/apps/navigator-app/overview) installed on a mobile device or emulator.
+
+## Step 1: Create a Driver
+
+First, you need to create a driver in FleetOps. This driver will use the Navigator app to complete deliveries.
+
+You can create a driver via the Fleetbase Console or the API:
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/drivers \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe",
+    "phone": "+14155551234",
+    "status": "active"
+  }'
+```
+
+Once the driver is created, they will receive an SMS with a link to download the Navigator app and a temporary password to log in.
+
+## Step 2: Create an Order
+
+Next, create an order representing the delivery. An order typically consists of a pickup location (payload) and a dropoff location (destination).
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "payload": {
+      "pickup": {
+        "name": "Warehouse A",
+        "location": {
+          "type": "Point",
+          "coordinates": [-122.395, 37.793]
+        }
+      },
+      "dropoff": {
+        "name": "Customer Home",
+        "location": {
+          "type": "Point",
+          "coordinates": [-122.408, 37.783]
+        }
+      }
+    }
+  }'
+```
+
+## Step 3: Dispatch the Order
+
+Once the order is created, you can dispatch it to the driver you created in Step 1.
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/dispatch \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "driver": "driver_xxxxxxxx"
+  }'
+```
+
+## Step 4: Complete the Delivery in Navigator
+
+1. Open the Navigator app and log in as the driver.
+2. You will see the new order in the "Incoming" tab.
+3. Tap "Accept" to assign the order to yourself.
+4. Follow the navigation prompts to the pickup location.
+5. Tap "Picked Up" once you have the package.
+6. Follow the navigation prompts to the dropoff location.
+7. Tap "Complete" and collect a signature or photo as proof of delivery.
+
+## Step 5: Track the Status via Webhooks
+
+To track the delivery status in real-time, you can set up a [Webhook](/docs/platform/developer-console/webhooks) in the Developer Console.
+
+Listen for the following events:
+- `order.created`
+- `order.dispatched`
+- `order.driver_assigned`
+- `order.en_route`
+- `order.completed`
+
+When the driver completes the delivery in the Navigator app, Fleetbase will send an `order.completed` webhook to your server, allowing you to update your internal systems or notify the customer.

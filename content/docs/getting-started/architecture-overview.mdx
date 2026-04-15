@@ -5,6 +5,60 @@ description: A high-level overview of the Fleetbase system architecture: PHP bac
 
 # Architecture Overview
 
-A high-level overview of the Fleetbase system architecture: PHP backend, Ember.js frontend, and the extension bridge.
+Fleetbase is built on a modern, modular architecture designed for scalability, extensibility, and real-time performance. By separating the core infrastructure from domain-specific logistics logic, Fleetbase allows developers to build custom solutions without modifying the underlying platform.
 
-> This page is coming soon. Content is actively being developed.
+## High-Level Architecture
+
+The Fleetbase system consists of three primary layers:
+
+1. **The Backend (PHP/Laravel)**: Handles data persistence, API routing, authentication, and business logic.
+2. **The Frontend (Ember.js)**: Provides the unified web console for operators and administrators.
+3. **The Real-Time Layer (SocketCluster)**: Manages WebSocket connections for live tracking and event broadcasting.
+
+These layers communicate via RESTful APIs and WebSocket events, ensuring a decoupled and highly scalable system.
+
+## The Backend: PHP & Laravel
+
+The Fleetbase backend is built on **PHP** and the **Laravel** framework. It is structured as a collection of Composer packages, rather than a single monolithic application.
+
+### Core API Package
+The `core-api` package provides the foundational services required by all Fleetbase instances:
+- **Identity & Access Management (IAM)**: Users, roles, permissions, and organizations.
+- **Developer Tools**: API keys, webhooks, and request logging.
+- **File Management**: S3-compatible storage for attachments and media.
+
+### Extension Packages
+Logistics capabilities are added via extension packages (e.g., `fleetops`, `storefront`). These packages register their own routes, models, and controllers, which are dynamically loaded by the core platform.
+
+### Database & Caching
+- **MySQL**: The primary relational database for structured data.
+- **Redis**: Used for caching, session management, and queue processing (e.g., dispatching webhooks or processing background jobs).
+
+## The Frontend: Ember.js
+
+The Fleetbase Console is a single-page application (SPA) built with **Ember.js**. It provides a unified, responsive interface for managing all aspects of your logistics operations.
+
+### Ember Core & UI
+- **`ember-core`**: Provides the foundational services, authentication flows, and the **Universe Service** (the extensibility engine).
+- **`ember-ui`**: A comprehensive library of over 200 reusable UI components (buttons, modals, tables, maps) that ensure a consistent design language across all extensions.
+
+### Extension Engines
+Frontend extensions are built as **Ember Engines**. When an extension is installed, its engine is dynamically loaded into the console. The engine uses the Universe Service to inject its routes, sidebar menus, and dashboard widgets into the core UI.
+
+## The Real-Time Layer: SocketCluster
+
+Logistics operations require real-time visibility. Fleetbase uses **SocketCluster** to provide a highly scalable WebSocket server.
+
+When an event occurs in the backend (e.g., a driver updates their location, or an order status changes), the backend publishes the event to Redis. The SocketCluster server subscribes to these Redis channels and broadcasts the events to connected clients (the web console, mobile apps, or external integrations).
+
+This architecture ensures that real-time tracking and live updates are delivered with minimal latency, even under heavy load.
+
+## The Extension Bridge
+
+The **Extension Bridge** is the mechanism that connects the backend packages and frontend engines. When you install an extension via the Fleetbase CLI (`flb install`), the bridge handles:
+
+1. Downloading the backend Composer package and running its database migrations.
+2. Downloading the frontend Ember engine and registering it with the Universe Service.
+3. Updating the platform configuration to expose the new API routes and UI components.
+
+This seamless integration allows you to add complex logistics capabilities—like warehouse management or headless e-commerce—with a single command.

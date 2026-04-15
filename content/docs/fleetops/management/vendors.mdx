@@ -5,6 +5,54 @@ description: Manage third-party vendors and integrated service providers within 
 
 # Vendors
 
-Manage third-party vendors and integrated service providers within your logistics network.
+In FleetOps, a **Vendor** represents a third-party logistics provider (3PL), a partner company, or an external delivery network that you work with.
 
-> This page is coming soon. Content is actively being developed.
+Vendors are crucial for operations that rely on a hybrid fleet model—using internal drivers for standard operations, but outsourcing to third parties during peak demand or for specialized deliveries (e.g., long-haul freight).
+
+## Types of Vendors
+
+FleetOps supports two types of vendors:
+
+1. **Standard Vendors**: Traditional partner companies. You assign orders to them manually, and they manage the execution outside of your system.
+2. **Integrated Vendors**: Third-party delivery networks (like Lalamove, Stuart, or Uber Direct) that are connected to Fleetbase via API. Orders assigned to these vendors are automatically dispatched to their network, and status updates are synced back to FleetOps in real-time.
+
+## Creating a Standard Vendor
+
+To add a new partner company to your network:
+
+1. Navigate to **FleetOps** > **Vendors** in the Fleetbase Console.
+2. Click the **New Vendor** button.
+3. Fill in the vendor's details:
+   - **Name**: The company's name.
+   - **Email**: Essential for sending automated dispatch notifications.
+   - **Phone Number**: The primary contact number for the vendor.
+   - **Internal ID**: An optional custom identifier (e.g., a vendor ID from your ERP).
+   - **Status**: Set the initial status (e.g., `Active`, `Inactive`).
+4. Click **Save**.
+
+## Assigning Orders to Vendors
+
+When creating or dispatching an order, you can assign it to a Vendor instead of an internal Driver or Fleet.
+
+If the vendor is a **Standard Vendor**, FleetOps will typically send them an email notification with the order details, and your dispatchers will need to manually update the order status in FleetOps based on updates from the vendor.
+
+If the vendor is an **Integrated Vendor**, the dispatch process is fully automated.
+
+## Integrated Vendors
+
+Integrated Vendors are a powerful feature of FleetOps, allowing you to seamlessly overflow orders to external networks.
+
+To use an Integrated Vendor, you must first configure the integration in the **[Connectivity](/docs/fleetops/connectivity/integrated-vendors)** section. This involves providing your API keys for the third-party service (e.g., your Lalamove API key).
+
+Once configured, the Integrated Vendor will appear in your Vendors list, and you can assign orders to them just like any other resource.
+
+### Automated Dispatch and Tracking
+
+When you assign an order to an Integrated Vendor:
+
+1. FleetOps automatically sends the order details (pickup, dropoff, payload) to the vendor's API.
+2. The vendor's system accepts the order and assigns it to one of their drivers.
+3. As the vendor's driver completes the delivery, their system sends webhooks back to FleetOps.
+4. FleetOps automatically updates the order status (e.g., `dispatched`, `active`, `completed`) and the driver's location on your map, providing a seamless tracking experience for your dispatchers and customers.
+
+To learn more about setting up these connections, see the [Integrated Vendors](/docs/fleetops/connectivity/integrated-vendors) documentation.

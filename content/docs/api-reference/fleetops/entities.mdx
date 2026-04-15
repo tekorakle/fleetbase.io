@@ -5,6 +5,114 @@ description: Manage entity records representing individual items or packages wit
 
 # Entities
 
-Manage entity records representing individual items or packages within an order payload.
+An **Entity** represents an individual item, package, or piece of cargo within a [Payload](/docs/api-reference/fleetops/payloads).
 
-> This page is coming soon. Content is actively being developed.
+Entities can have their own dimensions, weight, and tracking information.
+
+## The Entity Object
+
+```json
+{
+  "id": "entity_xxxxxxxx",
+  "payload": "payload_xxxxxxxx",
+  "name": "Box of Widgets",
+  "description": "Fragile electronic components",
+  "internal_id": "SKU-12345",
+  "weight": 5.5,
+  "weight_unit": "kg",
+  "length": 30,
+  "width": 20,
+  "height": 15,
+  "dimensions_unit": "cm",
+  "declared_value": 15000,
+  "currency": "USD",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `payload` | string | The ID of the [Payload](/docs/api-reference/fleetops/payloads) this entity belongs to. |
+| `name` | string | The name or title of the item. |
+| `description` | string | A description of the item. |
+| `internal_id` | string | An optional identifier used to map the item to an external system (e.g., a SKU or barcode). |
+| `weight` | number | The weight of the item. |
+| `weight_unit` | string | The unit of measurement for the weight (e.g., `kg`, `lb`). |
+| `length` | number | The length of the item. |
+| `width` | number | The width of the item. |
+| `height` | number | The height of the item. |
+| `dimensions_unit` | string | The unit of measurement for the dimensions (e.g., `cm`, `in`). |
+| `declared_value` | integer | The declared value of the item for insurance or customs purposes (in cents). |
+| `currency` | string | The currency of the declared value (e.g., `USD`). |
+
+## Create an Entity
+
+Creates a new Entity object.
+
+*Note: Entities are typically created simultaneously when creating a [Payload](/docs/api-reference/fleetops/payloads), but you can also create them individually and attach them to an existing payload.*
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/entities \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "payload": "payload_xxxxxxxx",
+    "name": "Box of Widgets",
+    "weight": 5.5,
+    "weight_unit": "kg"
+  }'
+```
+
+## Retrieve an Entity
+
+Retrieves the details of an existing Entity.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/entities/entity_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update an Entity
+
+Updates the specified Entity by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/entities/entity_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "declared_value": 20000
+  }'
+```
+
+## Delete an Entity
+
+Permanently deletes an Entity. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/fleet-ops/entities/entity_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Entities
+
+Returns a list of your Entities. The entities are returned sorted by creation date, with the most recently created entities appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/entities \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

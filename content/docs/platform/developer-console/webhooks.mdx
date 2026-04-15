@@ -5,6 +5,83 @@ description: Configure webhook endpoints to receive real-time event notification
 
 # Webhooks
 
-Configure webhook endpoints to receive real-time event notifications from Fleetbase when resources change.
+Webhooks allow you to build or set up integrations that subscribe to certain events on Fleetbase. When one of those events is triggered, Fleetbase sends an HTTP POST payload to the webhook's configured URL.
 
-> This page is coming soon. Content is actively being developed.
+Webhooks are the most efficient way to keep your external systems (like an ERP, CRM, or custom dashboard) in sync with your logistics operations, as they eliminate the need for constant API polling.
+
+## Creating a Webhook Endpoint
+
+To configure a new webhook:
+
+1. Navigate to **Developers** > **Webhooks** in the Fleetbase Console.
+2. Click **Create Webhook**.
+3. Enter the **URL** where you want to receive the webhook payloads (e.g., `https://api.yourdomain.com/webhooks/fleetbase`).
+4. Provide a brief **Description** for the webhook.
+5. Select the **Events** you want to subscribe to. You can choose specific events (like `order.created` or `driver.updated`) or subscribe to all events.
+6. Click **Save**.
+
+Once created, Fleetbase will immediately begin sending POST requests to your URL whenever the selected events occur.
+
+## Webhook Payloads
+
+When an event occurs, Fleetbase sends an HTTP POST request to your configured URL. The body of the request contains a JSON payload with details about the event.
+
+### Payload Structure
+
+A typical webhook payload includes the following top-level fields:
+
+- `id`: A unique identifier for the webhook event.
+- `api_version`: The version of the Fleetbase API that generated the event.
+- `event`: The name of the event that triggered the webhook (e.g., `order.created`).
+- `created_at`: The timestamp when the event occurred.
+- `data`: An object containing the resource that triggered the event.
+
+### Example Payload
+
+Here is an example of a payload sent when a new order is created (`order.created`):
+
+```json
+{
+  "id": "evt_123456789",
+  "api_version": "v1",
+  "event": "order.created",
+  "created_at": "2026-04-15T10:30:00Z",
+  "data": {
+    "id": "order_987654321",
+    "public_id": "ORD-123",
+    "status": "created",
+    "customer": {
+      "id": "cust_123",
+      "name": "Acme Corp"
+    },
+    "pickup": {
+      "address": "123 Main St, City, Country"
+    },
+    "dropoff": {
+      "address": "456 Elm St, City, Country"
+    }
+  }
+}
+```
+
+## Event Types
+
+Fleetbase broadcasts a wide variety of events across the core platform and installed extensions. The specific events available depend on which extensions you have installed.
+
+Common event categories include:
+
+- **Orders**: `order.created`, `order.updated`, `order.dispatched`, `order.started`, `order.completed`, `order.canceled`
+- **Drivers**: `driver.created`, `driver.updated`, `driver.deleted`
+- **Vehicles**: `vehicle.created`, `vehicle.updated`, `vehicle.deleted`
+- **Users**: `user.created`, `user.updated`, `user.deleted`
+
+When configuring a webhook, you can view the full list of available events in the Fleetbase Console.
+
+## Best Practices
+
+When building webhook endpoints, keep the following best practices in mind:
+
+1. **Respond Quickly**: Your endpoint should respond with a `2xx` HTTP status code as quickly as possible (ideally within 3 seconds) to acknowledge receipt. If you need to perform complex processing, acknowledge the webhook first and process the payload asynchronously.
+2. **Handle Retries**: If your endpoint fails to respond or returns an error (e.g., `500 Internal Server Error`), Fleetbase will automatically retry sending the webhook with exponential backoff. Ensure your endpoint is idempotent (can safely process the same payload multiple times).
+3. **Verify Signatures**: (Coming Soon) Fleetbase will soon support webhook signatures to verify that the payload was sent by Fleetbase and not a malicious third party.
+4. **Use HTTPS**: Always use HTTPS URLs for your webhook endpoints to ensure the payload is encrypted in transit.

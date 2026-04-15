@@ -5,6 +5,85 @@ description: Set up the Navigator App, configure it to connect to your Fleetbase
 
 # Setup & Configuration
 
-Set up the Navigator App, configure it to connect to your Fleetbase instance, and prepare it for deployment.
+This guide explains how to set up the Navigator App locally, configure it to connect to your Fleetbase instance, and prepare it for deployment.
 
-> This page is coming soon. Content is actively being developed.
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your development machine:
+- **Node.js** (v16 or later)
+- **Yarn** or **npm**
+- **Expo CLI** (`npm install -g expo-cli`)
+- **Git**
+
+You will also need a **Public Key** from the [Developer Console](/docs/platform/developer-console/api-keys) in your Fleetbase instance.
+
+## Step 1: Clone the Repository
+
+Clone the open-source Navigator App repository from GitHub:
+
+```bash
+git clone https://github.com/fleetbase/navigator-app.git
+cd navigator-app
+```
+
+## Step 2: Install Dependencies
+
+Install the required Node.js packages using Yarn:
+
+```bash
+yarn install
+```
+
+## Step 3: Configure Environment Variables
+
+Create a `.env` file in the root directory of the project. You can copy the provided `.env.example` file if it exists.
+
+```bash
+cp .env.example .env
+```
+
+Open the `.env` file and configure the following variables:
+
+```env
+# The base URL of your Fleetbase API
+API_URL=https://api.fleetbase.io/v1
+
+# Your Fleetbase Public Key
+PUBLIC_KEY=flb_test_xxxxxxxxxxxx
+
+# The URL of your Fleetbase SocketCluster server (for real-time tracking)
+SOCKET_URL=wss://socket.fleetbase.io/socketcluster/
+
+# Optional: Google Maps API Key (for turn-by-turn navigation)
+GOOGLE_MAPS_API_KEY=AIzaSyxxxxxxxxxxxx
+```
+
+*(If you are self-hosting Fleetbase, replace the `API_URL` and `SOCKET_URL` with your own domain).*
+
+## Step 4: Run the App Locally
+
+Start the Expo development server:
+
+```bash
+yarn start
+```
+
+This will open the Expo Developer Tools in your browser. From here, you can:
+- Run the app in an iOS Simulator (requires Xcode).
+- Run the app in an Android Emulator (requires Android Studio).
+- Scan the QR code with the **Expo Go** app on your physical iOS or Android device to test it live.
+
+## Step 5: Log In as a Driver
+
+To test the app, you need a valid driver account.
+
+1. Go to the Fleetbase Console and navigate to **FleetOps > Drivers**.
+2. Create a new driver with a valid phone number.
+3. In the Navigator App, enter the driver's phone number.
+4. Enter the temporary password sent via SMS (or check the driver's profile in the console if SMS is not configured).
+
+You should now be logged in and able to view incoming orders.
+
+## Next Steps
+
+Now that the app is running locally, you can proceed to [Customization](/docs/apps/navigator-app/customization) to white-label the app with your own branding before deploying it to the App Store or Google Play Store.

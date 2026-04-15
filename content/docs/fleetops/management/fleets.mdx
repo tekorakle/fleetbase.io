@@ -5,6 +5,46 @@ description: Organize vehicles and drivers into fleets for structured dispatch a
 
 # Fleets
 
-Organize vehicles and drivers into fleets for structured dispatch and operational management.
+As your logistics operation grows, managing individual drivers and vehicles becomes unwieldy. **Fleets** allow you to group your resources into logical units, making it easier to dispatch orders, monitor performance, and manage permissions.
 
-> This page is coming soon. Content is actively being developed.
+## Why Use Fleets?
+
+Fleets are highly flexible and can be used to organize your resources in whatever way makes sense for your business model:
+
+- **By Region**: "North London Fleet", "South London Fleet".
+- **By Vehicle Type**: "Refrigerated Trucks", "Bike Couriers", "Heavy Haulage".
+- **By Service Type**: "Express Delivery", "Standard Freight", "White Glove Service".
+- **By Client**: If you provide dedicated logistics for specific customers, you can create a fleet exclusively for their orders.
+
+## Creating a Fleet
+
+To create a new fleet:
+
+1. Navigate to **FleetOps** > **Fleets** in the Fleetbase Console.
+2. Click the **New Fleet** button.
+3. Provide a **Name** for the fleet.
+4. (Optional) Select a **Service Area** to restrict this fleet to a specific geographic zone.
+5. Click **Save**.
+
+## Managing Fleet Members
+
+Once a fleet is created, you can assign drivers and vehicles to it.
+
+1. Open the fleet's detailed profile.
+2. Navigate to the **Drivers** or **Vehicles** tab.
+3. Click **Add Driver** or **Add Vehicle**.
+4. Select the resources you want to add from the list.
+
+A driver or vehicle can belong to multiple fleets simultaneously. For example, a driver might belong to both the "North London Fleet" and the "Express Delivery" fleet.
+
+## Dispatching to a Fleet
+
+The primary benefit of organizing your resources into fleets is streamlined dispatching.
+
+When creating or dispatching an order, you can assign it to an entire Fleet rather than an individual driver. FleetOps will then use its routing engine to determine the most efficient driver *within that specific fleet* to handle the delivery, taking into account their current location, schedule, and vehicle capacity.
+
+This is particularly useful for automated dispatch workflows, where orders are automatically routed to the appropriate regional or specialized fleet based on the order's requirements.
+
+## Fleet-Level Analytics
+
+Grouping resources into fleets also allows you to track performance at a higher level. In the [Analytics](/docs/fleetops/analytics) section, you can filter reports by Fleet to compare the efficiency, on-time delivery rates, and costs of different teams or regions.

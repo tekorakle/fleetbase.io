@@ -5,6 +5,105 @@ description: Add items, update quantities, remove items, and empty the cart via 
 
 # Cart
 
-Add items, update quantities, remove items, and empty the cart via the Storefront API.
+A **Cart** represents a customer's shopping cart, containing the [Products](/docs/api-reference/storefront/products) they intend to purchase.
 
-> This page is coming soon. Content is actively being developed.
+Carts are typically created automatically when a customer adds their first item, and they persist across sessions using a unique cart ID.
+
+## The Cart Object
+
+```json
+{
+  "id": "cart_xxxxxxxx",
+  "customer": "customer_xxxxxxxx",
+  "currency": "USD",
+  "subtotal": 19900,
+  "total": 19900,
+  "items": [
+    {
+      "id": "cart_item_xxxxxxxx",
+      "product": "product_xxxxxxxx",
+      "name": "Wireless Headphones",
+      "quantity": 1,
+      "price": 19900,
+      "subtotal": 19900
+    }
+  ],
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `customer` | string | The ID of the [Customer](/docs/api-reference/storefront/customers) who owns the cart (if logged in). |
+| `currency` | string | The currency of the cart (e.g., `USD`). |
+| `subtotal` | integer | The total price of all items in the cart before taxes and shipping (in cents). |
+| `total` | integer | The final total price of the cart (in cents). |
+| `items` | array | An array of cart item objects. |
+
+## Retrieve a Cart
+
+Retrieves the details of an existing Cart.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/storefront/carts/cart_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Add an Item to the Cart
+
+Adds a product to the cart. If the cart ID is not provided, a new cart will be created.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/storefront/carts/cart_xxxxxxxx/items \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "product": "product_xxxxxxxx",
+    "quantity": 1
+  }'
+```
+
+## Update an Item in the Cart
+
+Updates the quantity of an existing item in the cart.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/storefront/carts/cart_xxxxxxxx/items/cart_item_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "quantity": 2
+  }'
+```
+
+## Remove an Item from the Cart
+
+Removes an item from the cart.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/storefront/carts/cart_xxxxxxxx/items/cart_item_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Empty the Cart
+
+Removes all items from the cart.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/storefront/carts/cart_xxxxxxxx/empty \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

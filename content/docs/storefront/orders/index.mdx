@@ -5,6 +5,57 @@ description: Manage the full order lifecycle from cart to checkout and fulfillme
 
 # Orders & Checkout
 
-Manage the full order lifecycle from cart to checkout and fulfillment.
+The primary purpose of Storefront is to facilitate transactions. The **Orders & Checkout** system handles the entire lifecycle of a purchase, from the moment a customer adds an item to their cart to the moment the order is dispatched for delivery.
 
-> This page is coming soon. Content is actively being developed.
+## The Transaction Lifecycle
+
+A typical transaction in Storefront moves through three distinct phases:
+
+### 1. [The Cart](/docs/storefront/orders/cart)
+The Cart is a temporary container for the items a customer intends to purchase.
+- Customers can add [Products](/docs/storefront/catalog/products), specify quantities, and select [Variants & Add-ons](/docs/storefront/catalog/variants-and-addons).
+- The Cart automatically calculates the subtotal based on the configured [Pricing](/docs/storefront/catalog/pricing).
+- Carts are persisted in the database, meaning a customer can close your app and return later without losing their selected items.
+
+### 2. [Checkout](/docs/storefront/orders/checkout)
+When the customer is ready to pay, the Cart transitions into the Checkout phase.
+- The customer provides their delivery address.
+- Storefront communicates with FleetOps to calculate a dynamic delivery fee (a [Service Quote](/docs/fleetops/operations/service-quotes)) based on the distance from the Store to the customer.
+- The customer applies any [Promotions](/docs/storefront/promotions) or discount codes.
+- The final total (Subtotal + Delivery Fee - Discounts + Taxes) is calculated.
+
+### 3. [Payment & Order Creation](/docs/storefront/orders/payment-gateways)
+The customer provides their payment details.
+- Storefront securely processes the payment via an integrated [Payment Gateway](/docs/storefront/orders/payment-gateways) (e.g., Stripe).
+- Upon successful payment, the Cart is destroyed, and a formal **Order** is created.
+- This Order is instantly visible in both the Storefront Console (for the merchant to prepare) and the FleetOps Console (for the dispatcher to assign to a driver).
+
+## Managing Orders in the Console
+
+As a merchant or administrator, you can view and manage all Storefront orders directly from the Fleetbase Console.
+
+1. Navigate to **Storefront** > **Orders**.
+2. Here you will see a real-time list of incoming orders.
+3. Clicking on an order reveals its full details, including the customer's information, the purchased items, the payment status, and the current delivery status.
+
+### Order Statuses
+
+A Storefront Order shares its status with the underlying FleetOps Order. As the delivery progresses, the status updates automatically:
+
+- **Created**: The order has been paid for and created, but the merchant has not yet accepted it.
+- **Preparing**: The merchant has accepted the order and is preparing the items.
+- **Dispatched**: A driver has been assigned to pick up the order.
+- **In Transit**: The driver has picked up the order and is en route to the customer.
+- **Completed**: The driver has successfully delivered the order.
+- **Canceled**: The order was canceled by the merchant, the customer, or the dispatcher.
+
+## Integration with FleetOps
+
+It is important to understand that a Storefront Order is essentially a specialized wrapper around a FleetOps Order.
+
+When a Storefront Order is created, FleetOps automatically handles the logistics:
+- The **Pickup Address** is set to the Store's [Location](/docs/storefront/stores/store-locations).
+- The **Dropoff Address** is set to the customer's provided address.
+- The **Payload** is populated with the specific items purchased.
+
+This deep integration means you do not need to build complex webhooks or synchronization logic between your e-commerce backend and your dispatch system — Fleetbase handles it all natively.

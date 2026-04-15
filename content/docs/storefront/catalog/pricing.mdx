@@ -5,6 +5,51 @@ description: Configure product pricing, including base prices, variant pricing, 
 
 # Pricing
 
-Configure product pricing, including base prices, variant pricing, and scheduled pricing.
+Storefront provides a flexible pricing engine that allows you to configure simple flat rates, complex variant pricing, and dynamic scheduled pricing.
 
-> This page is coming soon. Content is actively being developed.
+## Base Pricing
+
+The simplest form of pricing is the **Base Price**. This is the default price of a [Product](/docs/storefront/catalog/products) if no variants or special rules apply.
+
+You set the Base Price when creating or editing a product in the Fleetbase Console.
+
+The currency used for the Base Price is determined by the **Currency** setting of the [Store](/docs/storefront/stores/stores-and-networks) that owns the product.
+
+## Variant Pricing
+
+If a product has [Variants](/docs/storefront/catalog/variants-and-addons) (e.g., Size: Small, Medium, Large), the Base Price is often overridden by the Variant Price.
+
+When you create a Variant, you assign it a specific price.
+
+When a customer selects that Variant in your frontend application, the [Storefront API](/docs/api-reference/storefront) will use the Variant Price instead of the Base Price to calculate the cart total.
+
+## Add-on Pricing
+
+[Add-ons](/docs/storefront/catalog/variants-and-addons) (e.g., "Extra Cheese") have their own specific prices.
+
+When a customer selects an Add-on, its price is added to the Base Price (or Variant Price) of the product.
+
+For example:
+- Base Product: Cheeseburger ($10.00)
+- Add-on: Extra Cheese (+$1.00)
+- Total Price: $11.00
+
+## Scheduled Pricing (Sales & Happy Hours)
+
+Storefront allows you to schedule temporary price changes for specific products. This is useful for running sales, promotions, or "Happy Hour" specials.
+
+To schedule a price change:
+
+1. Navigate to **Storefront** > **Products** in the Fleetbase Console.
+2. Open the product you want to modify.
+3. Go to the **Pricing** tab.
+4. Click **Add Scheduled Price**.
+5. Provide the details:
+   - **Price**: The new, temporary price.
+   - **Start Date/Time**: When the new price should take effect.
+   - **End Date/Time**: When the price should revert to the Base Price.
+6. Click **Save**.
+
+During the scheduled window, the [Storefront API](/docs/api-reference/storefront) will automatically use the Scheduled Price instead of the Base Price. Once the window expires, the price will automatically revert.
+
+*Note: Scheduled Pricing overrides the Base Price, but it does not override Variant or Add-on prices. If you need to discount a specific Variant, you must create a Scheduled Price specifically for that Variant.*

@@ -5,6 +5,92 @@ description: Query and retrieve product records from a Storefront catalog.
 
 # Products
 
-Query and retrieve product records from a Storefront catalog.
+A **Product** represents an item available for purchase in the store.
 
-> This page is coming soon. Content is actively being developed.
+Products can have multiple variants (e.g., sizes, colors), addons, and belong to one or more [Categories](/docs/api-reference/storefront/categories).
+
+## The Product Object
+
+```json
+{
+  "id": "product_xxxxxxxx",
+  "name": "Wireless Headphones",
+  "description": "High-quality noise-canceling wireless headphones.",
+  "price": 19900,
+  "sale_price": 14900,
+  "currency": "USD",
+  "sku": "WH-1000XM4",
+  "is_available": true,
+  "is_featured": true,
+  "primary_image_url": "https://example.com/headphones.png",
+  "images": [
+    "https://example.com/headphones.png",
+    "https://example.com/headphones-side.png"
+  ],
+  "categories": [
+    "category_xxxxxxxx"
+  ],
+  "variants": [
+    {
+      "id": "variant_xxxxxxxx",
+      "name": "Black",
+      "price": 19900
+    },
+    {
+      "id": "variant_yyyyyyyy",
+      "name": "Silver",
+      "price": 19900
+    }
+  ],
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the product. |
+| `description` | string | A description of the product. |
+| `price` | integer | The regular price of the product (in cents). |
+| `sale_price` | integer | The discounted price of the product (in cents). |
+| `currency` | string | The currency of the price (e.g., `USD`). |
+| `sku` | string | The Stock Keeping Unit identifier. |
+| `is_available` | boolean | Whether the product is currently available for purchase. |
+| `is_featured` | boolean | Whether the product is marked as featured. |
+| `primary_image_url` | string | The URL of the primary product image. |
+| `images` | array | An array of URLs for all product images. |
+| `categories` | array | An array of [Category](/docs/api-reference/storefront/categories) IDs this product belongs to. |
+| `variants` | array | An array of product variants (e.g., sizes, colors). |
+
+## Retrieve a Product
+
+Retrieves the details of an existing Product.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/storefront/products/product_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Products
+
+Returns a list of Products available in the store. The products are returned sorted by creation date, with the most recently created products appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/storefront/products \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `category` | string | Filter products by a specific [Category](/docs/api-reference/storefront/categories) ID. |
+| `query` | string | Search for products by name or description. |
+| `is_featured` | boolean | Filter to only return featured products. |

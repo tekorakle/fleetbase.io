@@ -5,6 +5,119 @@ description: Create and manage service zones within service areas.
 
 # Zones
 
-Create and manage service zones within service areas.
+A **Zone** represents a specific geographical area defined by a polygon or multipolygon.
 
-> This page is coming soon. Content is actively being developed.
+Zones are used to define operational boundaries, calculate [Service Quotes](/docs/api-reference/fleetops/service-quotes), and restrict [Fleets](/docs/api-reference/fleetops/fleets) or [Drivers](/docs/api-reference/fleetops/drivers) to specific areas.
+
+## The Zone Object
+
+```json
+{
+  "id": "zone_xxxxxxxx",
+  "name": "Downtown Delivery Zone",
+  "description": "The central business district.",
+  "service_area": "area_xxxxxxxx",
+  "border": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-122.408, 37.783],
+        [-122.395, 37.793],
+        [-122.388, 37.788],
+        [-122.401, 37.778],
+        [-122.408, 37.783]
+      ]
+    ]
+  },
+  "status": "active",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the zone. |
+| `description` | string | A description of the zone. |
+| `service_area` | string | The ID of the [Service Area](/docs/api-reference/fleetops/service-areas) this zone belongs to. |
+| `border` | object | A GeoJSON Polygon or MultiPolygon object defining the zone's boundaries. |
+| `status` | string | The current status of the zone (e.g., `active`, `inactive`). |
+
+## Create a Zone
+
+Creates a new Zone object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/zones \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Downtown Delivery Zone",
+    "border": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [-122.408, 37.783],
+          [-122.395, 37.793],
+          [-122.388, 37.788],
+          [-122.401, 37.778],
+          [-122.408, 37.783]
+        ]
+      ]
+    },
+    "status": "active"
+  }'
+```
+
+## Retrieve a Zone
+
+Retrieves the details of an existing Zone.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/zones/zone_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update a Zone
+
+Updates the specified Zone by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/zones/zone_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "inactive"
+  }'
+```
+
+## Delete a Zone
+
+Permanently deletes a Zone. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/fleet-ops/zones/zone_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Zones
+
+Returns a list of your Zones. The zones are returned sorted by creation date, with the most recently created zones appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/zones \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

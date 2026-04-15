@@ -5,6 +5,51 @@ description: Understand the fundamental concepts behind Fleetbase: the Core API,
 
 # Core Concepts
 
-Understand the fundamental concepts behind Fleetbase: the Core API, extensions, the Ember.js frontend, and the Universe Service.
+To effectively build with and operate Fleetbase, it is important to understand the core concepts and architectural patterns that power the platform. Fleetbase is designed as a modular operating system, separating core infrastructure from domain-specific logistics logic.
 
-> This page is coming soon. Content is actively being developed.
+## The Core Platform
+
+At the heart of Fleetbase is the **Core Platform**. This is the foundational layer that provides essential services required by all logistics applications, regardless of their specific use case.
+
+The Core Platform handles:
+- **Identity & Access Management (IAM)**: Users, roles, permissions, and organizations.
+- **API Routing & Authentication**: Managing API keys, request routing, and rate limiting.
+- **Real-Time Events**: The WebSocket server (SocketCluster) that broadcasts live updates.
+- **Webhooks**: Dispatching HTTP callbacks to external systems when events occur.
+- **File Management**: Uploading and managing attachments and media.
+
+By centralizing these services, Fleetbase ensures that extensions do not need to reinvent the wheel for basic infrastructure.
+
+## Extensions
+
+**Extensions** are modular packages that add specific logistics capabilities to Fleetbase. They are the building blocks that transform the core platform into a tailored logistics solution.
+
+Extensions can be installed from the Fleetbase Registry or built custom for your organization. They consist of two parts:
+1. **Backend Package**: A PHP Laravel package that registers new API routes, database models, and business logic.
+2. **Frontend Engine**: An Ember.js engine that registers new UI components, routes, and sidebar menus in the Fleetbase Console.
+
+Examples of official extensions include **FleetOps** (fleet management), **Storefront** (headless e-commerce), and **Ledger** (accounting).
+
+## The Universe Service
+
+The **Universe Service** is the internal extensibility engine that powers the Fleetbase frontend. It acts as a central registry where extensions can inject their own UI components, menus, and logic into the core console.
+
+When an extension is installed, it uses the Universe Service to:
+- Add new items to the main sidebar navigation.
+- Register custom dashboard widgets.
+- Inject UI components into existing views (e.g., adding a custom tab to an order details page).
+- Hook into platform lifecycle events.
+
+This architecture allows extensions to seamlessly blend into the Fleetbase Console, providing a unified user experience without requiring modifications to the core codebase.
+
+## The Core API
+
+The **Core API** is the primary interface for interacting with Fleetbase programmatically. It is a RESTful API that provides access to all core resources, such as users, organizations, and webhooks.
+
+Extensions expose their own APIs under specific namespaces. For example, the FleetOps API is available under `/fleet-ops/v1/`, while the Storefront API is available under `/storefront/v1/`. All APIs share the same authentication mechanism (Bearer tokens via API keys) and follow consistent design patterns.
+
+## The Fleetbase Console
+
+The **Fleetbase Console** is the unified web interface used by operators and administrators to manage their logistics operations. Built with Ember.js, the console dynamically loads installed extensions and renders their UI components.
+
+The console is designed to be highly customizable, allowing users to configure dashboards, manage custom fields, and tailor the interface to their specific operational needs.

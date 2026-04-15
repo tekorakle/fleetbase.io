@@ -5,6 +5,46 @@ description: Integrate telematics providers to stream vehicle location and telem
 
 # Telematics
 
-Integrate telematics providers to stream vehicle location and telemetry data into Fleetbase.
+If your fleet already uses a comprehensive telematics platform (like Samsara, Geotab, KeepTruckin, or Verizon Connect), you don't need to rip out your existing hardware to use FleetOps.
 
-> This page is coming soon. Content is actively being developed.
+Instead, you can integrate your existing telematics provider directly into Fleetbase. This allows FleetOps to pull in vehicle locations, diagnostics, and driver behavior data, combining it with your order and dispatch data in a single, unified dashboard.
+
+## Why Integrate Telematics?
+
+By connecting your telematics provider to FleetOps, you get the best of both worlds:
+- **Unified Visibility**: See your orders, routes, and vehicle locations on a single map, rather than switching between two different systems.
+- **Better Dispatching**: FleetOps can use the real-time location data from your telematics provider to make smarter automated routing decisions.
+- **Automated Workflows**: Trigger [Orchestrator](/docs/fleetops/operations/orchestrator) rules based on telematics events (e.g., "If a vehicle reports a critical engine fault, automatically re-route its assigned orders to another driver").
+
+## Supported Providers
+
+Fleetbase supports integrations with many major telematics providers via the [Registry](/docs/platform/extensions).
+
+To see the currently supported providers, navigate to the **Registry** in the Fleetbase Console and search for "Telematics".
+
+If your provider is not listed, you can build a custom integration using the Fleetbase [Core API](/docs/api-reference/core) and a custom Extension.
+
+## Setting Up an Integration
+
+The exact steps to connect a telematics provider depend on the specific provider, but the general process is:
+
+1. **Install the Extension**: Find the integration for your provider in the Fleetbase Registry and install it.
+2. **Configure API Keys**: You will need to provide Fleetbase with API credentials from your telematics provider's dashboard. This authorizes Fleetbase to pull data from their system.
+3. **Map Vehicles**: Once connected, the integration will typically pull a list of all vehicles registered in your telematics account. You must then map these external vehicles to the corresponding [Vehicle](/docs/fleetops/management/vehicles) records in FleetOps.
+
+## Data Synchronization
+
+Once configured and mapped, the integration will continuously synchronize data.
+
+Depending on the provider's API capabilities, this synchronization might happen via:
+- **Webhooks**: The provider pushes new data to Fleetbase instantly as it occurs (preferred).
+- **Polling**: Fleetbase periodically requests the latest data from the provider's API (e.g., every 30 seconds).
+
+The synchronized data typically includes:
+- Real-time GPS location
+- Speed and heading
+- Odometer readings
+- Engine diagnostics (fuel level, battery voltage, fault codes)
+- Driver behavior events (harsh braking, rapid acceleration)
+
+This data is then visible on the FleetOps map and available for use in [Analytics](/docs/fleetops/analytics) and [Orchestrator](/docs/fleetops/operations/orchestrator) rules.

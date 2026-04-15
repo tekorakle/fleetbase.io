@@ -5,6 +5,70 @@ description: View, update, and uninstall extensions on your Fleetbase instance.
 
 # Managing Extensions
 
-View, update, and uninstall extensions on your Fleetbase instance.
+Once you have installed extensions to your Fleetbase instance, you can manage them through the Fleetbase Console or the Fleetbase CLI. This includes viewing installed extensions, updating them to the latest versions, and uninstalling them if they are no longer needed.
 
-> This page is coming soon. Content is actively being developed.
+## Viewing Installed Extensions
+
+To see which extensions are currently installed and active on your instance:
+
+1. Navigate to **Extensions** in the Fleetbase Console.
+2. Click on the **Installed** tab.
+3. This view displays all active extensions, their current version numbers, and a brief description of their functionality.
+
+From this view, you can also access the specific settings or documentation for each installed extension.
+
+## Updating Extensions
+
+The Fleetbase team and community developers regularly release updates to extensions to add new features, improve performance, and fix bugs.
+
+### Updating via the Console (Fleetbase Cloud)
+
+If you are using Fleetbase Cloud, extensions are typically updated automatically. However, if a major version update requires your approval (e.g., due to significant changes in functionality or pricing), you will see an **Update Available** badge next to the extension in the **Installed** tab.
+
+Click the badge to review the release notes and apply the update.
+
+### Updating via the CLI (Self-Hosted)
+
+If you are self-hosting Fleetbase, you must manually update extensions using the Fleetbase CLI. This ensures you have full control over when changes are applied to your production environment.
+
+To update an extension, simply run the install command again. The CLI will detect the existing installation and pull the latest version from the registry:
+
+```bash
+flb install @fleetbase/fleetops
+```
+
+The CLI will download the updated packages, run any new database migrations, and rebuild the frontend console.
+
+## Uninstalling Extensions
+
+If you no longer need an extension, you can uninstall it to remove its features from your console and free up system resources.
+
+### Important Considerations Before Uninstalling
+
+- **Data Loss**: Uninstalling an extension may permanently delete the data associated with it (e.g., uninstalling FleetOps may delete your drivers and vehicles). Always ensure you have backed up any necessary data before proceeding.
+- **Dependencies**: Some extensions may depend on others. The system will warn you if uninstalling an extension will break another installed extension.
+
+### Uninstalling via the Console
+
+1. Navigate to **Extensions** > **Installed**.
+2. Find the extension you want to remove.
+3. Click the **Uninstall** button.
+4. Confirm the action in the warning dialog.
+
+### Uninstalling via the CLI
+
+To uninstall an extension from a self-hosted instance, use the `uninstall` command:
+
+```bash
+flb uninstall @fleetbase/fleetops
+```
+
+The CLI will remove the extension's backend package and frontend engine, roll back its database migrations (if applicable), and rebuild the console to remove its UI components.
+
+## Troubleshooting
+
+If you encounter issues after installing, updating, or uninstalling an extension:
+
+1. **Check the Request Logs**: Navigate to **Developers** > **Request Logs** to see if the extension's API routes are returning errors.
+2. **Rebuild the Console**: If UI components are missing or displaying incorrectly, try forcing a rebuild of the frontend console (for self-hosted instances).
+3. **Review Permissions**: Ensure that your user role has the necessary permissions to access the extension's features. New permissions are often added during updates.

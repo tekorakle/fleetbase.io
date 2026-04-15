@@ -5,6 +5,57 @@ description: An introduction to Storefront, its capabilities, and how to install
 
 # Overview & Setup
 
-An introduction to Storefront, its capabilities, and how to install and configure it on your Fleetbase instance.
+Storefront is a powerful extension that transforms Fleetbase from a pure logistics engine into a complete, end-to-end commerce platform.
 
-> This page is coming soon. Content is actively being developed.
+Whether you are building a single-brand D2C app, a multi-vendor food delivery marketplace, or a B2B wholesale portal, Storefront provides the backend APIs and management interfaces you need.
+
+## Why Use Storefront?
+
+While you could build your own e-commerce backend and integrate it with the FleetOps API, using Storefront offers several major advantages:
+
+1. **Deep Integration**: Storefront is built specifically for Fleetbase. When a customer checks out, the order is instantly created in FleetOps, complete with the correct pickup/dropoff locations, payload details, and calculated delivery fees.
+2. **Headless Flexibility**: Storefront provides the data (products, carts, customers), but you control the presentation. You can build any frontend experience you want using the [Storefront API](/docs/api-reference/storefront).
+3. **Multi-Vendor Support**: Storefront natively supports complex marketplace models (like UberEats or DoorDash) where multiple independent stores operate under a single network.
+4. **Unified Management**: You manage your catalog, customers, and dispatch operations all from the same Fleetbase Console.
+
+## Installation
+
+If you are using Fleetbase Cloud, Storefront is available as a one-click install from the Registry.
+
+If you are self-hosting Fleetbase, you can install Storefront via the Fleetbase CLI:
+
+```bash
+flb install @fleetbase/storefront
+```
+
+This command will download the extension, run the necessary database migrations, and register the Storefront UI components in your Fleetbase Console.
+
+## Initial Configuration
+
+Once installed, you'll see a new **Storefront** icon in the Fleetbase Console sidebar.
+
+Before you can start selling, you need to configure a few basic settings:
+
+1. **Create a Network or Store**: Decide if you are building a multi-vendor marketplace (create a [Network](/docs/storefront/networks-and-stores/networks)) or a single-brand shop (create a [Store](/docs/storefront/networks-and-stores/stores)).
+2. **Configure Payment Gateways**: Navigate to **Storefront** > **Settings** > **Gateways** to connect your Stripe or PayPal account so you can process customer payments.
+3. **Set Up Delivery Pricing**: Ensure you have [Service Rates](/docs/fleetops/operations/service-rates) configured in FleetOps. Storefront uses these rates to calculate the delivery fee shown to the customer at checkout.
+
+## Building Your Frontend
+
+With the backend configured, the next step is to build the customer-facing application.
+
+You have two main options:
+
+### 1. Use the Open-Source Storefront App
+Fleetbase provides a fully functional, open-source mobile app built with React Native and Expo. You can fork this repository, customize the branding, and publish it to the App Store and Google Play.
+- [View the Storefront App Guide](/docs/apps/storefront-app)
+- [View the GitHub Repository](https://github.com/fleetbase/storefront-app)
+
+### 2. Build a Custom Frontend
+If you prefer to build a custom web or mobile application from scratch, you can interact directly with the [Storefront API](/docs/api-reference/storefront).
+
+The API provides endpoints for:
+- Fetching networks, stores, and products.
+- Managing customer accounts and authentication.
+- Creating and updating shopping carts.
+- Processing checkouts and payments.

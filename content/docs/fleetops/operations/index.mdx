@@ -5,6 +5,33 @@ description: The operational core of FleetOps — manage orders, routes, dispatc
 
 # Operations
 
-The operational core of FleetOps — manage orders, routes, dispatch, and service pricing.
+The **Operations** section is the beating heart of FleetOps. This is where you manage the day-to-day execution of your logistics network—creating orders, calculating prices, routing drivers, and monitoring deliveries in real-time.
 
-> This page is coming soon. Content is actively being developed.
+While the [Management](/docs/fleetops/management) section is about setting up your resources, the Operations section is about putting those resources to work.
+
+## Core Operational Workflows
+
+### [Orders](/docs/fleetops/operations/orders)
+The fundamental unit of work in FleetOps. An order represents a request to move goods from one place to another. Here you can create, dispatch, track, and manage the lifecycle of every delivery.
+
+### [Routing & Dispatching](/docs/fleetops/operations/routing-and-dispatching)
+The process of assigning orders to drivers and determining the most efficient path for them to take. FleetOps provides tools for both manual dispatching and automated, algorithm-driven routing.
+
+### [Service Rates](/docs/fleetops/operations/service-rates)
+Define how you charge for your services. Service Rates allow you to build complex pricing models based on distance, weight, volume, time of day, or custom geographic zones.
+
+### [Service Quotes](/docs/fleetops/operations/service-quotes)
+Generate estimated prices for a delivery before an order is officially created. Service Quotes use your defined Service Rates to calculate the cost based on the specific pickup and dropoff locations.
+
+## Advanced Operations
+
+For more complex logistics networks, FleetOps provides advanced tools for automation and customization:
+
+### [Order Configurations](/docs/fleetops/operations/order-configurations)
+Not all orders are the same. Order Configurations allow you to define custom workflows, required fields, and specific UI layouts for different types of deliveries (e.g., "Standard Courier" vs. "Heavy Freight").
+
+### [Orchestrator](/docs/fleetops/operations/orchestrator)
+A powerful automation engine. The Orchestrator allows you to define rules that automatically trigger actions based on specific events (e.g., "If an order is created in Zone A, automatically assign it to the North Fleet").
+
+### [Scheduler](/docs/fleetops/operations/scheduler)
+Manage recurring orders and planned routes. The Scheduler allows you to set up deliveries that happen on a regular basis (e.g., a daily milk run) without having to create them manually each time.

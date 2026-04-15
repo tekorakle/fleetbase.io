@@ -5,6 +5,39 @@ description: Connect hardware devices, sensors, and telematics systems to Fleetb
 
 # Connectivity & Telematics
 
-Connect hardware devices, sensors, and telematics systems to Fleetbase for real-time fleet visibility.
+While the Navigator app provides basic GPS tracking via the driver's smartphone, many modern fleets require deeper visibility into their vehicles and cargo.
 
-> This page is coming soon. Content is actively being developed.
+The **Connectivity** section of FleetOps allows you to integrate dedicated hardware devices, sensors, and third-party telematics platforms directly into your logistics network.
+
+## Why Connect Hardware?
+
+Relying solely on a driver's smartphone for tracking has limitations:
+- **Battery Drain**: Continuous GPS tracking drains phone batteries quickly.
+- **Signal Loss**: Phones can lose signal in remote areas or inside buildings.
+- **Limited Data**: A phone can only tell you where the driver is, not the health of the vehicle or the condition of the cargo.
+
+By connecting dedicated hardware, you gain access to a wealth of real-time data that can improve safety, efficiency, and compliance.
+
+## Core Connectivity Features
+
+### [Devices](/docs/fleetops/connectivity/devices)
+Manage the physical hardware installed in your vehicles. This includes GPS trackers, OBD-II dongles, and dashcams. You can register devices, assign them to specific vehicles, and monitor their connection status.
+
+### [Sensors](/docs/fleetops/connectivity/sensors)
+Monitor the condition of your cargo. Sensors can track temperature, humidity, light exposure, and shock/vibration. This is critical for cold-chain logistics (e.g., transporting pharmaceuticals or fresh food) where maintaining a specific environment is required by law.
+
+### [Telematics](/docs/fleetops/connectivity/telematics)
+Integrate with third-party telematics platforms (like Samsara, Geotab, or KeepTruckin). If your fleet already uses one of these systems, you can connect it to FleetOps to pull in vehicle diagnostics, fuel consumption, and driver behavior data (e.g., harsh braking, speeding) without needing to install new hardware.
+
+### [Real-Time Tracking](/docs/fleetops/connectivity/real-time-tracking)
+The culmination of your connectivity efforts. This section explains how FleetOps aggregates data from the Navigator app, dedicated devices, and telematics platforms to provide a unified, real-time view of your entire fleet on the map.
+
+## How It Works
+
+Fleetbase uses a flexible, event-driven architecture to ingest data from external sources.
+
+When a connected device or telematics platform sends an update (e.g., a new GPS coordinate or a temperature reading), it is received by the Fleetbase API. The system then:
+1. Identifies the device and the vehicle it is assigned to.
+2. Updates the vehicle's current state in the database.
+3. Broadcasts the new data via [Socket Events](/docs/platform/developer-console/socket-events) to any active Fleetbase Console sessions, instantly updating the map and dashboards.
+4. Triggers any relevant [Orchestrator](/docs/fleetops/operations/orchestrator) rules or [Notifications](/docs/platform/features/notifications) (e.g., sending an alert if a refrigerated truck's temperature rises above a safe threshold).

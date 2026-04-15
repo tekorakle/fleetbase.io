@@ -5,6 +5,47 @@ description: Structure your Fleetbase instance with organizations and groups for
 
 # Organizations & Groups
 
-Structure your Fleetbase instance with organizations and groups for multi-tenant or team-based access control.
+Fleetbase is designed from the ground up to support multi-tenant operations. Whether you are a single company managing multiple regional branches, or a logistics provider managing operations for several distinct clients, the **Organizations** and **Groups** features provide the necessary structure and data isolation.
 
-> This page is coming soon. Content is actively being developed.
+## Organizations
+
+An **Organization** (often referred to as a "Company" in the codebase) is the top-level tenant in Fleetbase. It represents a distinct operational entity.
+
+All data in Fleetbase—including users, orders, drivers, vehicles, and API keys—is strictly scoped to an Organization. A user logged into Organization A cannot see or access any data belonging to Organization B, ensuring complete data privacy and security.
+
+### Multi-Tenant Capabilities
+
+A single Fleetbase instance can host multiple Organizations. This is particularly useful for:
+- **Logistics as a Service (LaaS)**: Providing a white-labeled logistics platform to multiple independent clients.
+- **Franchise Models**: Managing separate franchise locations, where each location needs its own isolated data but the parent company requires global oversight.
+- **Testing Environments**: Creating a separate "Sandbox" organization to test new extensions or workflows without affecting production data.
+
+### Switching Organizations
+
+A single User account (identified by their email address) can belong to multiple Organizations.
+
+If a user is a member of more than one Organization, they can seamlessly switch between them using the organization selector in the top navigation bar of the Fleetbase Console. When switching, the console reloads to display only the data and settings relevant to the selected Organization.
+
+## Groups
+
+While Organizations provide strict, top-level data isolation, **Groups** provide a way to organize users *within* a single Organization.
+
+Groups are collections of users that share a common characteristic, such as a department, a regional office, or a specific project team.
+
+### Use Cases for Groups
+
+- **Regional Teams**: Create groups for "North America Dispatchers" and "Europe Dispatchers".
+- **Departmental Organization**: Group users by function, such as "Warehouse Staff", "Customer Support", and "Fleet Managers".
+- **Communication**: In the future, Groups will integrate with the Fleetbase Chat system, allowing you to easily message an entire team at once.
+
+### Managing Groups
+
+To create and manage Groups:
+
+1. Navigate to **Settings** > **Groups** in the Fleetbase Console.
+2. Click **Create Group**.
+3. Provide a name and description for the group.
+4. Select the users you want to add to the group.
+5. Click **Save Group**.
+
+Users can belong to multiple groups simultaneously. Group membership does not inherently grant permissions (that is handled by [Roles](/docs/platform/iam/users-roles-permissions)), but it provides a powerful organizational tool for large teams.

@@ -5,6 +5,52 @@ description: Retrieve and manage tracking numbers associated with orders.
 
 # Tracking Numbers
 
-Retrieve and manage tracking numbers associated with orders.
+A **Tracking Number** is a unique identifier assigned to an [Order](/docs/api-reference/fleetops/orders) or [Entity](/docs/api-reference/fleetops/entities) that allows customers to track its status and location.
 
-> This page is coming soon. Content is actively being developed.
+Tracking numbers are typically generated automatically when an order is created, but they can also be created manually or imported from external systems.
+
+## The Tracking Number Object
+
+```json
+{
+  "id": "tracking_xxxxxxxx",
+  "tracking_number": "FLB-123456789",
+  "subject_uuid": "order_xxxxxxxx",
+  "subject_type": "fleet-ops:order",
+  "status": "active",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `tracking_number` | string | The actual tracking number string (e.g., `FLB-123456789`). |
+| `subject_uuid` | string | The ID of the object this tracking number belongs to (e.g., an Order ID). |
+| `subject_type` | string | The type of object this tracking number belongs to (e.g., `fleet-ops:order`). |
+| `status` | string | The current status of the tracking number. |
+
+## Retrieve a Tracking Number
+
+Retrieves the details of an existing Tracking Number.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/tracking-numbers/tracking_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Tracking Numbers
+
+Returns a list of your Tracking Numbers. The tracking numbers are returned sorted by creation date, with the most recently created tracking numbers appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/tracking-numbers \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

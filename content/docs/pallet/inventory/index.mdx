@@ -5,6 +5,35 @@ description: Track and manage stock levels, adjustments, and transfers across yo
 
 # Inventory Control
 
-Track and manage stock levels, adjustments, and transfers across your warehouses.
+The **Inventory** module in Pallet is where you track the physical quantities of goods stored across your [Warehouses](/docs/pallet/warehouses).
 
-> This page is coming soon. Content is actively being developed.
+Pallet provides real-time visibility into stock levels, allowing you to monitor what is available for sale, what is currently being picked for an order, and what needs to be restocked.
+
+## Core Inventory Concepts
+
+### [Products](/docs/pallet/inventory/products)
+The items you track in Pallet. If you are using [Storefront](/docs/storefront), Pallet Products map directly to Storefront Products. However, Pallet tracks the *physical* attributes of the product (e.g., weight, dimensions, barcode) rather than just the marketing details.
+
+### [Stock Levels](/docs/pallet/inventory/stock-levels)
+The exact quantity of a specific Product located in a specific [Bin](/docs/pallet/warehouses/zones-aisles-racks-bins) within a Warehouse. Pallet tracks both the "On Hand" quantity (total physical stock) and the "Available" quantity (stock that has not yet been allocated to an active order).
+
+### [Stock Adjustments](/docs/pallet/inventory/stock-adjustments)
+Manual corrections to stock levels. Adjustments are used to record shrinkage (e.g., damaged goods, theft) or to correct discrepancies found during an [Audit](/docs/pallet/audits).
+
+### [Stock Transfers](/docs/pallet/inventory/stock-transfers)
+The process of moving inventory from one location to another. This can be an internal transfer (e.g., moving stock from the Receiving Dock to Aisle 4) or an external transfer (e.g., moving stock from Warehouse A to Warehouse B).
+
+## Managing Inventory
+
+You can view and manage your inventory directly from the Fleetbase Console.
+
+1. Navigate to **Pallet** > **Inventory**.
+2. Here you will see a comprehensive list of all tracked products and their current stock levels across all warehouses.
+3. You can filter the list by Warehouse, Zone, or specific Product.
+
+## Low Stock & Expiration Tracking
+
+Pallet includes built-in tools to help you proactively manage your inventory:
+
+- **[Low Stock Alerts](/docs/pallet/inventory/low-stock)**: Configure minimum threshold levels for specific products. When the stock level drops below the threshold, Pallet flags the item for reordering.
+- **[Expired Stock Tracking](/docs/pallet/inventory/expired-stock)**: For perishable goods, Pallet tracks batch numbers and expiration dates. You can easily identify stock that is nearing expiration so it can be discounted or removed from inventory.

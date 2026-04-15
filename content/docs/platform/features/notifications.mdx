@@ -5,6 +5,74 @@ description: Configure push, email, and in-app notifications for platform events
 
 # Notifications
 
-Configure push, email, and in-app notifications for platform events and operational alerts.
+Keeping your team and your customers informed is critical to running a smooth logistics operation. Fleetbase provides a comprehensive notification system that can send alerts via multiple channels based on real-time events.
 
-> This page is coming soon. Content is actively being developed.
+## Notification Channels
+
+Fleetbase supports three primary notification channels:
+
+1. **In-App Notifications**: Alerts that appear directly within the Fleetbase Console (the bell icon in the top navigation bar).
+2. **Push Notifications**: Alerts sent to mobile devices running the Navigator or Storefront apps.
+3. **Email Notifications**: Automated emails sent to users, drivers, or customers.
+
+## Configuring Notifications
+
+The notification system is highly configurable, allowing you to specify exactly which events trigger alerts and which channels should be used.
+
+### Event Triggers
+
+Notifications are triggered by the same events that power the [Webhooks](/docs/platform/developer-console/webhooks) and [Socket Events](/docs/platform/developer-console/socket-events) systems.
+
+Common triggers include:
+- **Order Status Changes**: `order.created`, `order.dispatched`, `order.completed`, `order.canceled`
+- **Driver Activity**: `driver.assigned`, `driver.arrived`
+- **System Alerts**: `payment.failed`, `inventory.low`
+
+### Setting Up a Notification Rule
+
+To configure a new notification rule:
+
+1. Navigate to **Settings** > **Notifications** in the Fleetbase Console.
+2. Click **Create Notification Rule**.
+3. Select the **Event** that should trigger the notification (e.g., `order.completed`).
+4. Select the **Target Audience** (e.g., "The Customer associated with the Order", "All Admins", or a specific User).
+5. Select the **Channels** you want to use (e.g., Email and Push).
+6. Customize the **Message Template** for each selected channel.
+7. Click **Save**.
+
+## Message Templates
+
+When configuring a notification rule, you can customize the message that will be sent. Fleetbase uses a simple templating language that allows you to inject dynamic data from the event payload into the message.
+
+For example, if you are configuring an email notification for the `order.completed` event, your template might look like this:
+
+```text
+Subject: Your order {{ order.public_id }} has been delivered!
+
+Hi {{ customer.name }},
+
+Great news! Your order has been successfully delivered to {{ dropoff.address }}.
+
+Thank you for choosing us!
+```
+
+When the event occurs, Fleetbase will automatically replace the `{{ ... }}` tags with the actual data from the order.
+
+## Push Notifications (Mobile Apps)
+
+If you are using the Fleetbase mobile apps (Navigator for drivers, Storefront for customers), push notifications are a critical communication channel.
+
+To enable push notifications, you must configure your Fleetbase instance with the appropriate credentials for Apple Push Notification service (APNs) and Firebase Cloud Messaging (FCM).
+
+1. Navigate to **Settings** > **Integrations**.
+2. Locate the **Push Notifications** section.
+3. Enter your APNs and FCM credentials.
+4. Click **Save**.
+
+Once configured, Fleetbase will automatically route push notifications to the correct devices based on the user's active sessions.
+
+## Best Practices
+
+- **Don't Over-Notify**: Be mindful of how many notifications you send. Too many alerts can lead to "notification fatigue," causing users to ignore important messages.
+- **Use the Right Channel**: Use In-App notifications for general updates, Push notifications for urgent alerts that require immediate action (like a new order assignment for a driver), and Email for receipts or summaries.
+- **Test Your Templates**: Always test your message templates to ensure the dynamic variables are rendering correctly before enabling the rule in production.

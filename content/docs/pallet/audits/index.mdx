@@ -5,6 +5,46 @@ description: Maintain inventory accuracy with cycle counts and a full audit trai
 
 # Audits & Cycle Counts
 
-Maintain inventory accuracy with cycle counts and a full audit trail of all stock movements.
+Maintaining accurate inventory records is critical for any warehouse operation. If your digital records don't match your physical stock, you risk overselling products or failing to fulfill orders.
 
-> This page is coming soon. Content is actively being developed.
+The **Audits** module in Pallet provides the tools necessary to verify your inventory levels and maintain a complete history of all stock movements.
+
+## The Audit Trail
+
+Pallet automatically maintains a comprehensive audit trail for every item in your [Inventory](/docs/pallet/inventory).
+
+Every time a stock level changes, Pallet records:
+- **What** changed (the specific Product and quantity).
+- **Where** it changed (the specific Warehouse, Zone, Aisle, Rack, and Bin).
+- **Why** it changed (e.g., a [Purchase Order](/docs/pallet/fulfillment/purchase-orders) was received, a [Sales Order](/docs/pallet/fulfillment/sales-orders) was shipped, or a manual [Stock Adjustment](/docs/pallet/inventory/stock-adjustments) was made).
+- **Who** made the change (the specific user account).
+- **When** the change occurred.
+
+This audit trail is invaluable for investigating discrepancies, tracking down missing items, and ensuring accountability within your warehouse team.
+
+## Cycle Counts
+
+A **Cycle Count** is a physical inventory auditing procedure where a small subset of inventory is counted on a specific day, rather than conducting a full physical inventory count of the entire warehouse at once.
+
+Cycle counting allows you to continuously verify your inventory accuracy without disrupting daily operations.
+
+### Conducting a Cycle Count
+
+1. Navigate to **Pallet** > **Audits** > **Cycle Counts** in the Fleetbase Console.
+2. Click **New Cycle Count**.
+3. Select the specific [Warehouse](/docs/pallet/warehouses) and the specific area (e.g., a single Zone or Aisle) you want to audit.
+4. Pallet generates a list of all Products that are *supposed* to be in that area, along with their expected quantities.
+5. A warehouse worker physically counts the items in the designated area and enters the actual quantities into Pallet.
+6. Pallet compares the actual quantities against the expected quantities.
+
+### Reconciling Discrepancies
+
+If the physical count matches the expected count, the Cycle Count is marked as complete.
+
+If there is a discrepancy (e.g., Pallet expects 10 items, but the worker only found 8), Pallet highlights the variance.
+
+A warehouse manager must then review the discrepancy. They can choose to:
+- Request a recount to verify the numbers.
+- Approve the variance, which automatically generates a [Stock Adjustment](/docs/pallet/inventory/stock-adjustments) to correct the digital records, bringing them in line with the physical reality.
+
+By conducting regular cycle counts, you can identify and correct inventory errors early, before they impact your customers or your bottom line.

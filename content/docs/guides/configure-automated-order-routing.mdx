@@ -5,6 +5,96 @@ description: Set up the FleetOps Orchestrator to automatically assign and route 
 
 # Configure Automated Order Routing
 
-Set up the FleetOps Orchestrator to automatically assign and route orders based on custom rules.
+The FleetOps Orchestrator allows you to automate the dispatching process by defining custom rules for how orders should be assigned to drivers.
 
-> This page is coming soon. Content is actively being developed.
+This guide explains how to configure the Orchestrator to automatically route orders based on proximity, vehicle type, and driver availability.
+
+## Step 1: Create an Order Configuration
+
+An Order Configuration defines the default settings and routing rules for a specific type of order (e.g., "Food Delivery", "Freight Shipping").
+
+You can create an Order Configuration via the Fleetbase Console (in the FleetOps Settings) or via the API:
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/order-configs \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "On-Demand Food Delivery",
+    "description": "Configuration for fast, local food deliveries.",
+    "auto_dispatch": true,
+    "dispatch_rules": [
+      {
+        "type": "proximity",
+        "max_distance": 5000,
+        "unit": "meters"
+      },
+      {
+        "type": "availability",
+        "require_online": true
+      }
+    ]
+  }'
+```
+
+In this example, we've enabled `auto_dispatch` and added two rules:
+1. The driver must be within 5,000 meters of the pickup location.
+2. The driver must be online and available.
+
+## Step 2: Assign the Configuration to an Order
+
+When creating a new order, you can specify which Order Configuration should be used to route it.
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "order_config": "config_xxxxxxxx",
+    "payload": {
+      "pickup": {
+        "name": "Burger Joint",
+        "location": {
+          "type": "Point",
+          "coordinates": [-122.395, 37.793]
+        }
+      },
+      "dropoff": {
+        "name": "Customer Home",
+        "location": {
+          "type": "Point",
+          "coordinates": [-122.408, 37.783]
+        }
+      }
+    }
+  }'
+```
+
+## Step 3: The Orchestrator in Action
+
+When the order is created, the Orchestrator will automatically evaluate the rules defined in the Order Configuration.
+
+1. It will query the real-time locations of all drivers.
+2. It will filter out drivers who are offline or further than 5,000 meters from the pickup location.
+3. It will assign the order to the closest eligible driver.
+
+If no drivers meet the criteria, the order will remain in the `unassigned` state, and a dispatcher can manually assign it later.
+
+## Advanced Rules
+
+You can define more complex routing rules, such as requiring specific vehicle types or driver tags.
+
+```json
+"dispatch_rules": [
+  {
+    "type": "vehicle_type",
+    "require": ["refrigerated_truck", "van"]
+  },
+  {
+    "type": "driver_tags",
+    "require_all": ["hazmat_certified"]
+  }
+]
+```
+
+By combining these rules, you can build a highly automated and efficient dispatching system tailored to your specific business needs.

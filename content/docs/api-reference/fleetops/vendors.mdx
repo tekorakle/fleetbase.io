@@ -5,6 +5,98 @@ description: Manage vendor records and integrated service providers via the API.
 
 # Vendors
 
-Manage vendor records and integrated service providers via the API.
+A **Vendor** represents a third-party logistics provider, subcontractor, or integrated service provider that you use to fulfill [Orders](/docs/api-reference/fleetops/orders).
 
-> This page is coming soon. Content is actively being developed.
+When an order is assigned to a vendor, they act as the `facilitator` for that order.
+
+## The Vendor Object
+
+```json
+{
+  "id": "vendor_xxxxxxxx",
+  "name": "Speedy Couriers",
+  "email": "dispatch@speedycouriers.com",
+  "phone": "+14155552222",
+  "status": "active",
+  "type": "subcontractor",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the vendor. |
+| `email` | string | The vendor's primary email address. |
+| `phone` | string | The vendor's primary phone number. |
+| `status` | string | The current status of the vendor (e.g., `active`, `inactive`). |
+| `type` | string | The type of vendor (e.g., `subcontractor`, `integrated_provider`). |
+
+## Create a Vendor
+
+Creates a new Vendor object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/vendors \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Speedy Couriers",
+    "email": "dispatch@speedycouriers.com",
+    "phone": "+14155552222",
+    "status": "active"
+  }'
+```
+
+## Retrieve a Vendor
+
+Retrieves the details of an existing Vendor.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/vendors/vendor_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update a Vendor
+
+Updates the specified Vendor by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/vendors/vendor_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "inactive"
+  }'
+```
+
+## Delete a Vendor
+
+Permanently deletes a Vendor. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/fleet-ops/vendors/vendor_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Vendors
+
+Returns a list of your Vendors. The vendors are returned sorted by creation date, with the most recently created vendors appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/vendors \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

@@ -5,6 +5,62 @@ description: Build custom dashboards with widgets to get full visibility into yo
 
 # Dashboards & Widgets
 
-Build custom dashboards with widgets to get full visibility into your operations at a glance.
+The Fleetbase Console provides a highly customizable dashboard system that allows you to monitor your operations at a glance. Instead of navigating through multiple screens to find the information you need, you can build custom dashboards tailored to your specific role or workflow.
 
-> This page is coming soon. Content is actively being developed.
+## How Dashboards Work
+
+A **Dashboard** is a customizable canvas where you can arrange and display various **Widgets**.
+
+Because Fleetbase is a modular operating system, the available widgets depend on which extensions you have installed. For example:
+- The **FleetOps** extension provides widgets for "Active Drivers", "Recent Orders", and "Fleet Status".
+- The **Storefront** extension provides widgets for "Recent Sales", "Top Products", and "Customer Growth".
+- The **Ledger** extension provides widgets for "Revenue Overview" and "Pending Invoices".
+
+By combining widgets from different extensions onto a single dashboard, you can create a unified view of your entire business.
+
+## Creating a Custom Dashboard
+
+To create a new dashboard:
+
+1. Navigate to the **Dashboard** section in the Fleetbase Console.
+2. Click the **+ New Dashboard** button (or the gear icon to manage existing dashboards).
+3. Enter a name for your dashboard (e.g., "Morning Dispatch View", "Executive Overview").
+4. Click **Save**.
+
+You can create multiple dashboards and switch between them using the dropdown menu at the top of the screen.
+
+## Managing Widgets
+
+Once you have created a dashboard, you can populate it with widgets.
+
+### Adding Widgets
+
+1. While viewing your dashboard, click the **Add Widget** button.
+2. A modal will appear listing all available widgets, categorized by the extension that provides them.
+3. Select the widgets you want to add to your dashboard.
+4. Click **Add to Dashboard**.
+
+### Arranging Widgets
+
+You can customize the layout of your dashboard to prioritize the most important information:
+
+- **Move**: Click and drag the header of any widget to move it to a new position on the canvas.
+- **Resize**: Click and drag the bottom-right corner of a widget to resize it. Some widgets (like charts or maps) are designed to span multiple columns, while others (like simple metric counters) are best kept small.
+
+### Removing Widgets
+
+To remove a widget from your dashboard, click the **X** or trash can icon in the top-right corner of the widget. This does not delete any data; it simply removes the widget from your current view.
+
+## Default Dashboards
+
+When you first install Fleetbase or a new extension, the system may automatically generate a default dashboard for you. For example, installing FleetOps will create a default "Fleet Operations" dashboard populated with the most commonly used widgets.
+
+You can customize these default dashboards just like any other, or delete them if you prefer to build your own from scratch.
+
+## Developer Integration
+
+For developers building custom extensions, the Fleetbase frontend engine (Ember.js) provides a simple API for registering new widgets.
+
+By registering a component as a widget, you make it available for users to add to their dashboards. This is a powerful way to surface key metrics or quick actions from your custom extension directly on the user's home screen.
+
+To learn more about building custom widgets, see the [Custom Dashboard Widgets](/docs/building-and-extending/custom-dashboard-widgets) guide in the Building & Extending section.

@@ -5,6 +5,126 @@ description: Create, send, record payments, and retrieve invoice records via the
 
 # Invoices
 
-Create, send, record payments, and retrieve invoice records via the Ledger API.
+An **Invoice** represents a bill issued to a customer or organization for services rendered or products purchased.
 
-> This page is coming soon. Content is actively being developed.
+Invoices can be generated automatically from [Orders](/docs/api-reference/fleetops/orders) or created manually.
+
+## The Invoice Object
+
+```json
+{
+  "id": "invoice_xxxxxxxx",
+  "customer": "customer_xxxxxxxx",
+  "order": "order_xxxxxxxx",
+  "number": "INV-2023-001",
+  "currency": "USD",
+  "subtotal": 15000,
+  "tax": 1500,
+  "total": 16500,
+  "amount_due": 16500,
+  "amount_paid": 0,
+  "status": "draft",
+  "due_date": "2023-11-27T10:00:00Z",
+  "items": [
+    {
+      "id": "item_xxxxxxxx",
+      "description": "Delivery Service",
+      "quantity": 1,
+      "price": 15000,
+      "subtotal": 15000
+    }
+  ],
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `customer` | string | The ID of the [Customer](/docs/api-reference/storefront/customers) or organization being billed. |
+| `order` | string | The ID of the [Order](/docs/api-reference/fleetops/orders) this invoice is associated with (if applicable). |
+| `number` | string | The human-readable invoice number (e.g., `INV-2023-001`). |
+| `currency` | string | The currency of the invoice (e.g., `USD`). |
+| `subtotal` | integer | The total price of all items before taxes (in cents). |
+| `tax` | integer | The total tax amount (in cents). |
+| `total` | integer | The final total price of the invoice (in cents). |
+| `amount_due` | integer | The remaining amount to be paid (in cents). |
+| `amount_paid` | integer | The total amount paid so far (in cents). |
+| `status` | string | The current status of the invoice (e.g., `draft`, `open`, `paid`, `void`, `uncollectible`). |
+| `due_date` | string | The date and time when the invoice is due. |
+| `items` | array | An array of invoice line items. |
+
+## Create an Invoice
+
+Creates a new Invoice object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/ledger/invoices \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customer": "customer_xxxxxxxx",
+    "currency": "USD",
+    "due_date": "2023-11-27T10:00:00Z",
+    "items": [
+      {
+        "description": "Delivery Service",
+        "quantity": 1,
+        "price": 15000
+      }
+    ]
+  }'
+```
+
+## Retrieve an Invoice
+
+Retrieves the details of an existing Invoice.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/invoices/invoice_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update an Invoice
+
+Updates the specified Invoice by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/ledger/invoices/invoice_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "open"
+  }'
+```
+
+## Delete an Invoice
+
+Permanently deletes an Invoice. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/ledger/invoices/invoice_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Invoices
+
+Returns a list of your Invoices. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/invoices \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

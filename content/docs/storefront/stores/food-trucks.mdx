@@ -5,6 +5,40 @@ description: Manage mobile store locations such as food trucks with dynamic posi
 
 # Food Trucks
 
-Manage mobile store locations such as food trucks with dynamic positioning.
+Storefront is uniquely positioned to handle mobile merchants, such as food trucks, pop-up shops, or mobile service providers.
 
-> This page is coming soon. Content is actively being developed.
+Because Storefront is built on top of FleetOps (a logistics engine), it natively understands that a "Store" doesn't have to be a fixed building.
+
+## How Mobile Stores Work
+
+In a traditional e-commerce system, a store's address is static. In Storefront, a Store's [Location](/docs/storefront/stores/store-locations) can be updated dynamically.
+
+When a food truck moves to a new spot for the day, the owner simply updates their Location in the Fleetbase Console (or via a custom merchant app using the [Storefront API](/docs/api-reference/storefront)).
+
+1. The owner updates the Location's coordinates (Latitude/Longitude) to their current spot.
+2. Storefront instantly updates the Store's position in the customer-facing app.
+3. Customers browsing the app will now see the food truck if they are within its delivery radius.
+4. When an order is placed, FleetOps uses the *new* coordinates as the Pickup Address for the delivery driver.
+
+## Setting Up a Food Truck
+
+To configure a Store as a mobile merchant:
+
+1. Create a [Store](/docs/storefront/stores/stores-and-networks) as normal.
+2. Add a single [Location](/docs/storefront/stores/store-locations) to the Store.
+3. Instead of entering a fixed street address, you can leave the address blank and rely entirely on the Coordinates (Latitude/Longitude).
+4. Ensure the Store's [Operating Hours](/docs/storefront/stores/operating-hours) are updated to reflect when the truck is open for business at that specific location.
+
+## Dynamic Delivery Zones
+
+If a food truck moves across the city, its delivery area needs to move with it.
+
+By default, Storefront uses a simple radius around the Store's current Location (e.g., "Deliver within 5 miles"). This is ideal for mobile merchants, as the delivery zone automatically shifts whenever the Location coordinates are updated.
+
+If you use fixed geographic [Zones](/docs/fleetops/operations/zones) (e.g., "Only deliver to the Downtown zone"), you must remember to update the Store's assigned Zone when it moves to a new neighborhood.
+
+## Real-Time Tracking (Advanced)
+
+For advanced implementations, you can integrate a GPS [Device](/docs/fleetops/connectivity/devices) directly into the food truck.
+
+By linking the GPS device to the Store's Location via the Fleetbase API, the Store's position in your customer app can update in real-time as the truck drives down the street, creating a truly dynamic marketplace experience.

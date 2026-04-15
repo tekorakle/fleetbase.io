@@ -5,6 +5,76 @@ description: Understand how virtual routes work in Fleetbase and how to implemen
 
 # Virtual Routes & Deep Linking
 
-Understand how virtual routes work in Fleetbase and how to implement deep linking in your extension.
+In a traditional Ember application, every URL corresponds to a specific, hardcoded route defined in the `router.js` file.
 
-> This page is coming soon. Content is actively being developed.
+However, because Fleetbase is a modular platform where extensions can be installed and uninstalled dynamically, the core router cannot know about every possible route ahead of time.
+
+To solve this, Fleetbase uses **Virtual Routes**.
+
+## What is a Virtual Route?
+
+A virtual route is a route that is handled dynamically by the core platform or by an extension, rather than being hardcoded into the main router.
+
+When a user navigates to a URL that the core router doesn't recognize, the platform checks the **Universe Service** to see if any extension has registered a virtual route that matches the URL. If a match is found, the platform dynamically loads the extension's engine and transitions to the appropriate route within that engine.
+
+## Registering a Virtual Route
+
+You typically register virtual routes when you register [Menu Items](/docs/extending-fleetbase/menus-and-navigation).
+
+By setting the `_virtual` property to `true` on a menu item configuration, you tell the Universe Service that this route should be handled dynamically.
+
+```javascript
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+    @service universe;
+
+    init() {
+        super.init(...arguments);
+
+        // Register a virtual route in the FleetOps operations menu
+        this.universe.registerMenuItem('fleetops.operations', {
+            title: 'My Custom Operation',
+            icon: 'truck',
+            route: 'console.fleetops.operations.custom',
+            _virtual: true,
+        });
+    }
+}
+```
+
+In this example, the route `console.fleetops.operations.custom` does not exist in the core Fleetbase router. However, because it is registered as a virtual route, the platform knows how to handle it when a user clicks the "My Custom Operation" link.
+
+## Deep Linking
+
+Virtual routes also enable **Deep Linking**.
+
+Deep linking allows users to bookmark or share URLs that point directly to specific pages within your extension (e.g., a specific order details page or a specific settings panel).
+
+Because the Universe Service intercepts unrecognized URLs and resolves them against registered virtual routes, deep links to your extension will work seamlessly, even if the user navigates directly to the URL without clicking through the UI first.
+
+### Handling Deep Links in Your Engine
+
+To ensure deep links work correctly, your extension's frontend engine must define the corresponding routes in its `addon/routes.js` file.
+
+```javascript
+// addon/routes.js
+import buildRoutes from 'ember-engines/routes';
+
+export default buildRoutes(function () {
+    this.route('index', { path: '/' });
+    
+    // This route corresponds to the virtual route registered above
+    this.route('custom', { path: '/custom' });
+    
+    // This route handles deep links to specific items
+    this.route('details', { path: '/custom/:id' });
+});
+```
+
+When a user navigates to `https://your-fleetbase-instance.com/console/fleetops/operations/custom/123`, the platform will:
+1. Recognize that the URL falls under the `fleetops` namespace.
+2. Check the Universe Service for virtual routes matching `operations/custom`.
+3. Load your extension's engine.
+4. Transition to your engine's `details` route, passing `123` as the `id` parameter.

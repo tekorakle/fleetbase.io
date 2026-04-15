@@ -5,6 +5,43 @@ description: Define physical store locations with addresses, coordinates, and op
 
 # Store Locations
 
-Define physical store locations with addresses, coordinates, and operating zones.
+A **Store Location** represents the physical address where a Store operates.
 
-> This page is coming soon. Content is actively being developed.
+This is a critical piece of data because it serves as the **Pickup Address** when an order is routed to FleetOps for delivery.
+
+A single Store can have multiple Locations (e.g., a franchise with five restaurants in the same city). When a customer places an order, Storefront automatically determines which Location is closest to the customer's delivery address and routes the order there.
+
+## Adding a Location
+
+To add a physical location to a Store:
+
+1. Navigate to **Storefront** > **Stores** in the Fleetbase Console.
+2. Open the Store you want to manage.
+3. Go to the **Locations** tab.
+4. Click **Add Location**.
+5. Provide the details:
+   - **Name**: A descriptive name for the location (e.g., "Downtown Branch", "Warehouse A").
+   - **Address**: The full street address. As you type, Fleetbase will attempt to geocode the address and place a pin on the map.
+   - **Coordinates**: If the address is not found, you can manually drag the pin on the map or enter the exact Latitude and Longitude.
+   - **Contact Info**: A phone number or email address specific to this location.
+6. Click **Save**.
+
+## Delivery Zones
+
+By default, a Store Location can deliver anywhere within the maximum radius defined in your global [Routing Settings](/docs/fleetops/settings/routing).
+
+However, you can restrict a Location to only serve specific geographic areas by assigning it to a **Zone**.
+
+Zones are defined in FleetOps (see [Zones](/docs/fleetops/operations/zones)). Once a Zone is created, you can link it to a Store Location.
+
+If a customer tries to place an order for delivery outside of the Location's assigned Zone, Storefront will reject the order and inform the customer that they are outside the delivery area.
+
+## Managing Multiple Locations
+
+If a Store has multiple Locations, Storefront uses a nearest-neighbor algorithm to determine which Location should fulfill an incoming order.
+
+1. The customer enters their delivery address.
+2. Storefront calculates the straight-line distance from the delivery address to every active Location belonging to the Store.
+3. The order is assigned to the Location with the shortest distance.
+
+If the closest Location is currently closed (based on its [Operating Hours](/docs/storefront/stores/operating-hours)), Storefront will check the next closest Location. If all Locations are closed or out of range, the customer will not be able to complete the checkout.

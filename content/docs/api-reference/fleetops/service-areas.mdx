@@ -5,6 +5,118 @@ description: Define geographic service areas to control where your fleet operate
 
 # Service Areas
 
-Define geographic service areas to control where your fleet operates.
+A **Service Area** represents a broad geographical region where your fleet operates (e.g., a city, state, or country).
 
-> This page is coming soon. Content is actively being developed.
+Service Areas can contain multiple [Zones](/docs/api-reference/fleetops/zones) and are used to group operations and restrict [Fleets](/docs/api-reference/fleetops/fleets) to specific regions.
+
+## The Service Area Object
+
+```json
+{
+  "id": "area_xxxxxxxx",
+  "name": "San Francisco Bay Area",
+  "type": "city",
+  "border": {
+    "type": "Polygon",
+    "coordinates": [
+      [
+        [-122.514, 37.708],
+        [-122.357, 37.708],
+        [-122.357, 37.833],
+        [-122.514, 37.833],
+        [-122.514, 37.708]
+      ]
+    ]
+  },
+  "status": "active",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the service area. |
+| `type` | string | The type of area (e.g., `city`, `state`, `country`, `region`). |
+| `border` | object | A GeoJSON Polygon or MultiPolygon object defining the area's boundaries. |
+| `status` | string | The current status of the service area (e.g., `active`, `inactive`). |
+
+## Create a Service Area
+
+Creates a new Service Area object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/service-areas \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "San Francisco Bay Area",
+    "type": "city",
+    "border": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [-122.514, 37.708],
+          [-122.357, 37.708],
+          [-122.357, 37.833],
+          [-122.514, 37.833],
+          [-122.514, 37.708]
+        ]
+      ]
+    },
+    "status": "active"
+  }'
+```
+
+## Retrieve a Service Area
+
+Retrieves the details of an existing Service Area.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/service-areas/area_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update a Service Area
+
+Updates the specified Service Area by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/service-areas/area_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "status": "inactive"
+  }'
+```
+
+## Delete a Service Area
+
+Permanently deletes a Service Area. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/fleet-ops/service-areas/area_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Service Areas
+
+Returns a list of your Service Areas. The service areas are returned sorted by creation date, with the most recently created service areas appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/service-areas \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

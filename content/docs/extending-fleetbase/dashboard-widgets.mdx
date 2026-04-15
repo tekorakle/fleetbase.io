@@ -5,6 +5,117 @@ description: Build and register custom dashboard widgets that users can add to t
 
 # Dashboard Widgets
 
-Build and register custom dashboard widgets that users can add to their Fleetbase dashboards.
+Fleetbase allows users to customize their dashboards by adding, removing, and rearranging widgets.
 
-> This page is coming soon. Content is actively being developed.
+As an extension developer, you can build custom widgets and register them with the platform, making them available for users to add to their own dashboards.
+
+## Building a Widget Component
+
+A dashboard widget is simply an Ember component.
+
+You create the component in your extension's `addon/components/` directory.
+
+```bash
+ember generate component my-custom-widget
+```
+
+This will generate a template (`my-custom-widget.hbs`) and a component class (`my-custom-widget.js`).
+
+### The Widget Template
+
+In your template, you can use standard HTML and Ember components. It's highly recommended to use the `@fleetbase/ember-ui` library to ensure your widget matches the platform's design system.
+
+```handlebars
+<div class="widget-container">
+    <div class="widget-header">
+        <h3 class="widget-title">My Custom Data</h3>
+    </div>
+    <div class="widget-body">
+        {{#if this.isLoading}}
+            <Spinner />
+        {{else}}
+            <div class="data-value">{{this.dataValue}}</div>
+            <div class="data-label">Total Items Processed</div>
+        {{/if}}
+    </div>
+</div>
+```
+
+### The Widget Class
+
+In your component class, you can fetch data from your extension's backend API using the `fetch` service.
+
+```javascript
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+
+export default class MyCustomWidgetComponent extends Component {
+    @service fetch;
+    @tracked dataValue = 0;
+    @tracked isLoading = true;
+
+    constructor() {
+        super(...arguments);
+        this.loadData();
+    }
+
+    @action
+    async loadData() {
+        this.isLoading = true;
+        try {
+            const response = await this.fetch.get('my-extension/v1/widget-data');
+            this.dataValue = response.total;
+        } catch (error) {
+            console.error('Failed to load widget data', error);
+        } finally {
+            this.isLoading = false;
+        }
+    }
+}
+```
+
+## Registering the Widget
+
+Once your component is built, you need to register it with the **Universe Service** so that Fleetbase knows it exists and can offer it to users in the dashboard customization menu.
+
+You typically do this in an initializer or within the `init` method of your engine's application route.
+
+```javascript
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+    @service universe;
+
+    init() {
+        super.init(...arguments);
+
+        this.universe.registerDashboardWidget('my-custom-widget', {
+            title: 'My Custom Data',
+            description: 'Displays the total number of items processed by My Extension.',
+            icon: 'chart-bar',
+            component: 'my-custom-widget', // The name of your Ember component
+            grid: {
+                w: 4, // Default width (in grid columns)
+                h: 3, // Default height (in grid rows)
+                minW: 2, // Minimum width
+                minH: 2, // Minimum height
+            },
+        });
+    }
+}
+```
+
+### Widget Configuration Options
+
+The configuration object passed to `registerDashboardWidget` accepts several properties:
+
+- **`title`** (String): The human-readable name of the widget, displayed in the widget library.
+- **`description`** (String): A brief description of what the widget does.
+- **`icon`** (String): The FontAwesome icon to display next to the title.
+- **`component`** (String): The exact name of the Ember component that renders the widget.
+- **`grid`** (Object): Defines the default and minimum dimensions of the widget on the dashboard grid.
+
+Once registered, users will see "My Custom Data" in the "Add Widget" menu on their dashboard, and they can drag and drop it into place.

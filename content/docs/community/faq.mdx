@@ -3,8 +3,55 @@ title: FAQ
 description: Answers to frequently asked questions about Fleetbase, its features, licensing, and deployment.
 ---
 
-# FAQ
+# Frequently Asked Questions
 
-Answers to frequently asked questions about Fleetbase, its features, licensing, and deployment.
+Answers to common questions about Fleetbase, its features, licensing, and deployment.
 
-> This page is coming soon. Content is actively being developed.
+## General
+
+### What is Fleetbase?
+Fleetbase is an open-source logistics operating system. It provides a modular, extensible platform for managing fleets, orders, drivers, and supply chain operations. It is designed to be highly customizable, allowing developers to build their own extensions and integrations.
+
+### Is Fleetbase free?
+Yes, the core Fleetbase platform and its official extensions (FleetOps, Storefront, Ledger) are open-source and free to use under the AGPL-3.0 license. You can self-host the platform on your own infrastructure at no cost.
+
+### What is Fleetbase Cloud?
+Fleetbase Cloud is our fully managed, hosted version of the platform. It provides a hassle-free way to use Fleetbase without worrying about server maintenance, scaling, or updates. It includes premium support and SLAs.
+
+## Technical
+
+### What is the tech stack?
+Fleetbase is built using a modern, scalable tech stack:
+- **Backend**: PHP 8.x, Laravel Framework
+- **Frontend**: Ember.js
+- **Database**: MySQL or PostgreSQL
+- **Cache/Queue**: Redis
+- **Real-time**: SocketCluster (Node.js)
+- **Mobile Apps**: React Native (Expo)
+
+### Can I build my own extensions?
+Yes! Fleetbase is designed to be extensible. You can build custom extensions (using PHP for the backend and Ember.js for the frontend) to add new features, integrate with third-party services, or modify existing behavior. See the [Building & Extending Fleetbase](/docs/extending-fleetbase/index) section for more details.
+
+### Does Fleetbase have an API?
+Yes, Fleetbase provides a comprehensive REST API for interacting with the core platform and its extensions. You can use the API to create orders, manage drivers, track vehicles, and more. See the [API Reference](/docs/api-reference/core/index) for full documentation.
+
+## Deployment
+
+### How do I install Fleetbase?
+The easiest way to install Fleetbase locally or on a server is using the Fleetbase CLI:
+```bash
+curl -sL https://fleetbase.io/install.sh | bash
+flb install-fleetbase
+```
+See the [Quickstart (Self-Hosted)](/docs/getting-started/quickstart-self-hosted) guide for detailed instructions.
+
+### Can I run Fleetbase using Docker?
+Yes, Fleetbase provides official Docker images and a `docker-compose.yml` file for easy deployment. The CLI tool uses Docker under the hood to orchestrate the various services (API, Console, Redis, MySQL, SocketCluster).
+
+## Licensing
+
+### What does the AGPL-3.0 license mean for me?
+The AGPL-3.0 license requires that if you modify the Fleetbase source code and make it available over a network (e.g., as a SaaS product), you must also make your modified source code available under the same license.
+
+### Do you offer commercial licenses?
+Yes, if you need to use Fleetbase in a proprietary, closed-source product or require a license without the AGPL-3.0 copyleft requirements, we offer commercial licensing options. Please contact our sales team for more information.

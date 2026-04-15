@@ -5,6 +5,71 @@ description: Create and manage users, define roles, and assign granular permissi
 
 # Users, Roles & Permissions
 
-Create and manage users, define roles, and assign granular permissions to control access across your organization.
+Fleetbase provides a robust, granular Identity and Access Management (IAM) system that allows you to control exactly who can access your organization and what actions they can perform.
 
-> This page is coming soon. Content is actively being developed.
+This system is built around three core concepts: **Users**, **Roles**, and **Permissions**.
+
+## Users
+
+A **User** is an individual account that can log into the Fleetbase Console or mobile applications. Users are associated with an Organization and can be assigned one or more Roles.
+
+### Inviting Users
+
+To add a new team member to your organization:
+
+1. Navigate to **Settings** > **Users** in the Fleetbase Console.
+2. Click **Invite User**.
+3. Enter the user's email address.
+4. Select the Role(s) you want to assign to the user.
+5. Click **Send Invitation**.
+
+The user will receive an email with a link to set their password and join your organization.
+
+### Managing Users
+
+From the Users panel, administrators can:
+- **Edit Users**: Update a user's name, email, or assigned roles.
+- **Resend Invitations**: Resend the invitation email if the user hasn't accepted it yet.
+- **Deactivate Users**: Temporarily disable a user's access without deleting their account.
+- **Delete Users**: Permanently remove a user from the organization.
+
+## Roles
+
+A **Role** is a collection of permissions that defines a specific job function or access level within your organization. Instead of assigning individual permissions to each user, you assign permissions to a Role, and then assign that Role to users.
+
+Fleetbase comes with several default roles, such as **Admin**, **Dispatcher**, and **Driver**. You can also create custom roles to fit your specific operational needs.
+
+### Creating Custom Roles
+
+To create a custom role:
+
+1. Navigate to **Settings** > **Roles** in the Fleetbase Console.
+2. Click **Create Role**.
+3. Enter a name for the role (e.g., "Warehouse Manager").
+4. Provide a brief description of the role's purpose.
+5. Select the specific permissions you want to grant to this role.
+6. Click **Save Role**.
+
+You can now assign this custom role to any user in your organization.
+
+## Permissions
+
+**Permissions** are granular rules that allow or deny specific actions within the Fleetbase platform. They are the building blocks of Roles.
+
+Because Fleetbase is a modular operating system, permissions are dynamically registered by the core platform and any installed extensions. For example, installing the FleetOps extension will automatically add permissions like `create-order`, `view-drivers`, and `delete-vehicle`.
+
+### Permission Structure
+
+Permissions in Fleetbase generally follow a standard naming convention: `action-resource`.
+
+Common actions include:
+- `view`: Read-only access to a resource.
+- `create`: Ability to create a new resource.
+- `update`: Ability to modify an existing resource.
+- `delete`: Ability to remove a resource.
+
+For example, the `view-orders` permission allows a user to see the list of orders, while the `create-order` permission allows them to create new ones.
+
+### Assigning Permissions
+
+Permissions are assigned to Roles, not directly to Users. When creating or editing a Role, you will see a categorized list of all available permissions across the core platform and installed extensions. Simply check the boxes next to the permissions you want to grant to the Role.

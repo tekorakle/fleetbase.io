@@ -5,6 +5,87 @@ description: Top up, transfer, credit, payout, freeze, and retrieve wallet recor
 
 # Wallets
 
-Top up, transfer, credit, payout, freeze, and retrieve wallet records via the Ledger API.
+A **Wallet** represents a digital account that holds a balance of funds for a specific user, driver, vendor, or organization.
 
-> This page is coming soon. Content is actively being developed.
+Wallets can be used to process payments, issue refunds, collect commissions, and manage payouts.
+
+## The Wallet Object
+
+```json
+{
+  "id": "wallet_xxxxxxxx",
+  "owner_uuid": "driver_xxxxxxxx",
+  "owner_type": "fleet-ops:driver",
+  "currency": "USD",
+  "balance": 15000,
+  "status": "active",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `owner_uuid` | string | The ID of the object that owns the wallet (e.g., a Driver ID). |
+| `owner_type` | string | The type of object that owns the wallet (e.g., `fleet-ops:driver`, `storefront:customer`). |
+| `currency` | string | The currency of the wallet balance (e.g., `USD`). |
+| `balance` | integer | The current balance of the wallet (in cents). |
+| `status` | string | The current status of the wallet (e.g., `active`, `frozen`). |
+
+## Retrieve a Wallet
+
+Retrieves the details of an existing Wallet.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/wallets/wallet_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Top Up a Wallet
+
+Adds funds to a wallet. This creates a corresponding [Transaction](/docs/api-reference/ledger/transactions).
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/ledger/wallets/wallet_xxxxxxxx/top-up \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 5000,
+    "description": "Manual top-up via API"
+  }'
+```
+
+## Transfer Funds
+
+Transfers funds from one wallet to another.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/ledger/wallets/wallet_xxxxxxxx/transfer \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "destination": "wallet_yyyyyyyy",
+    "amount": 2500,
+    "description": "Payment for services rendered"
+  }'
+```
+
+## List all Wallets
+
+Returns a list of your Wallets. The wallets are returned sorted by creation date, with the most recently created wallets appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/wallets \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

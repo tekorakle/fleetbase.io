@@ -5,6 +5,45 @@ description: Schedule drivers and resources against orders using the visual sche
 
 # Scheduler
 
-Schedule drivers and resources against orders using the visual scheduling calendar.
+While the Dispatch Board is designed for real-time, on-demand operations, the **Scheduler** is built for planned, future deliveries.
 
-> This page is coming soon. Content is actively being developed.
+If your business involves recurring routes (like a daily milk run), scheduled appointments (like a furniture installation next Tuesday), or bulk deliveries that need to be planned days in advance, the Scheduler provides the visual tools you need.
+
+## The Scheduling Calendar
+
+The primary interface for the Scheduler is a visual calendar.
+
+- **Timeline View**: See a timeline of your drivers and vehicles, with their assigned orders plotted as blocks of time. This makes it easy to spot gaps in a driver's schedule or identify when a vehicle is double-booked.
+- **Calendar View**: A traditional month/week/day calendar showing all scheduled orders.
+
+## Scheduling an Order
+
+To schedule an order for a future date:
+
+1. Create a new order (or select an existing unassigned order).
+2. In the order details, set the **Scheduled At** date and time. This is the time the delivery is expected to occur.
+3. Open the Scheduler in the Fleetbase Console.
+4. Locate the order in the "Unscheduled" list.
+5. Drag and drop the order onto a driver's timeline at the appropriate time slot.
+
+The order is now assigned to that driver, but it will not be dispatched (and the driver will not be notified) until the scheduled time approaches.
+
+## Recurring Orders
+
+For deliveries that happen on a regular basis, you can create **Recurring Orders**.
+
+Instead of manually creating a new order every day or week, you can define a recurrence pattern (e.g., "Every Monday and Wednesday at 8:00 AM"). FleetOps will automatically generate the individual orders in advance and place them on the schedule.
+
+This is particularly useful for B2B logistics, where you might have standing contracts to restock retail stores or deliver office supplies on a fixed schedule.
+
+## Integration with Availability
+
+The Scheduler is deeply integrated with the platform's core [Scheduling](/docs/platform/features/scheduling) engine.
+
+When you attempt to schedule an order for a driver, the system automatically checks the driver's defined working hours and any constraints (like maximum daily hours). If you try to schedule a delivery outside of their shift, or if it conflicts with another assigned order, the Scheduler will flag the conflict, preventing you from overbooking your resources.
+
+## Automated Dispatching of Scheduled Orders
+
+When a scheduled order's time approaches, FleetOps can automatically transition it from `created` to `dispatched`.
+
+You can configure how far in advance this happens (e.g., "Dispatch scheduled orders 30 minutes before the pickup time"). At that moment, the driver will receive the push notification on their Navigator app, and the order will appear on their active task list.

@@ -5,6 +5,75 @@ description: Query and update tracking status records for orders and entities.
 
 # Tracking Statuses
 
-Query and update tracking status records for orders and entities.
+A **Tracking Status** represents a specific event or update in the lifecycle of an [Order](/docs/api-reference/fleetops/orders) or [Entity](/docs/api-reference/fleetops/entities).
 
-> This page is coming soon. Content is actively being developed.
+Tracking statuses are typically created automatically when an order's status changes (e.g., from `created` to `dispatched` to `en_route`), but they can also be created manually to record custom events or exceptions.
+
+## The Tracking Status Object
+
+```json
+{
+  "id": "status_xxxxxxxx",
+  "tracking_number": "tracking_xxxxxxxx",
+  "status": "en_route",
+  "details": "Driver has picked up the package and is en route to the destination.",
+  "code": "EN_ROUTE",
+  "location": {
+    "type": "Point",
+    "coordinates": [-122.395, 37.793]
+  },
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `tracking_number` | string | The ID of the [Tracking Number](/docs/api-reference/fleetops/tracking-numbers) this status belongs to. |
+| `status` | string | The status string (e.g., `en_route`, `delivered`, `exception`). |
+| `details` | string | A human-readable description of the event. |
+| `code` | string | A machine-readable code for the event (e.g., `EN_ROUTE`). |
+| `location` | object | A GeoJSON Point object representing the location where the event occurred. |
+
+## Create a Tracking Status
+
+Creates a new Tracking Status object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/tracking-statuses \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "tracking_number": "tracking_xxxxxxxx",
+    "status": "exception",
+    "details": "Delivery attempted but customer was not available.",
+    "code": "DELIVERY_FAILED"
+  }'
+```
+
+## Retrieve a Tracking Status
+
+Retrieves the details of an existing Tracking Status.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/tracking-statuses/status_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Tracking Statuses
+
+Returns a list of your Tracking Statuses. The statuses are returned sorted by creation date, with the most recently created statuses appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/tracking-statuses \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

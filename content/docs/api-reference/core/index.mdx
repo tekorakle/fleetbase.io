@@ -5,6 +5,37 @@ description: Reference for the Fleetbase Core API resources available at api.fle
 
 # Core API
 
-Reference for the Fleetbase Core API resources available at api.fleetbase.io/v1.
+The **Core API** provides access to the foundational resources that are shared across all Fleetbase modules (such as FleetOps, Storefront, and Ledger).
 
-> This page is coming soon. Content is actively being developed.
+These resources include Places, Contacts, Companies, Files, and Webhooks.
+
+## Base URL
+
+All Core API requests should be made to the following base URL:
+
+```text
+https://api.fleetbase.io/v1
+```
+
+*(If you are self-hosting Fleetbase, replace `api.fleetbase.io` with your own domain).*
+
+## Authentication
+
+All requests to the Core API must be authenticated using a **Secret Key**.
+
+You can generate a Secret Key in the [Developer Console](/docs/platform/developer-console/api-keys).
+
+Pass the Secret Key in the `Authorization` header as a Bearer token:
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/places \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Available Resources
+
+- **[Places](/docs/api-reference/core/places)**: Manage physical locations, addresses, and coordinates.
+- **[Contacts](/docs/api-reference/core/contacts)**: Manage people, customers, and their contact information.
+- **[Companies](/docs/api-reference/core/companies)**: Manage business entities and organizations.
+- **[Files](/docs/api-reference/core/files)**: Upload and manage documents, images, and other media.
+- **[Webhooks](/docs/api-reference/core/webhooks)**: Manage webhook endpoints for receiving real-time event notifications.

@@ -5,6 +5,65 @@ description: Create, manage, and track orders through their full lifecycle from 
 
 # Orders
 
-Create, manage, and track orders through their full lifecycle from dispatch to completion.
+An **Order** is the fundamental unit of work in FleetOps. It represents a request to move goods from one location to another. Every delivery, pickup, or service call your fleet executes is tracked as an Order.
 
-> This page is coming soon. Content is actively being developed.
+## Creating an Order
+
+Orders can be created manually in the Fleetbase Console, or automatically via the [Core API](/docs/api-reference/core/orders) or an integrated extension like [Storefront](/docs/storefront).
+
+To create an order manually:
+
+1. Navigate to **FleetOps** > **Orders** in the Fleetbase Console.
+2. Click the **New Order** button.
+3. Fill in the required details:
+   - **Pickup**: The starting location. You can select a saved [Place](/docs/fleetops/management/places) or enter a new address.
+   - **Dropoff**: The destination location.
+   - **Payload**: The items being transported (optional, but recommended for accurate routing and pricing).
+   - **Customer**: The [Contact](/docs/fleetops/management/contacts) paying for the service.
+   - **Facilitator**: The Contact managing the pickup/dropoff.
+4. (Optional) Assign the order to a specific Driver, Vehicle, or Fleet.
+5. Click **Save**.
+
+Once created, the order enters the `created` state and is ready for dispatch.
+
+## The Order Lifecycle
+
+An order moves through a series of statuses as it is executed. This lifecycle provides real-time visibility to dispatchers and customers.
+
+The standard order lifecycle is:
+
+1. **Created**: The order exists in the system but has not been assigned.
+2. **Dispatched**: The order has been assigned to a driver, and they have been notified via the Navigator app.
+3. **Active**: The driver has accepted the order and is en route to the pickup location.
+4. **Completed**: The driver has successfully delivered the payload and captured proof of delivery.
+
+### Exception Statuses
+
+Things don't always go perfectly. An order can also enter exception statuses:
+- **Canceled**: The order was canceled before completion.
+- **Failed**: The driver attempted delivery but was unsuccessful (e.g., the customer was not home).
+
+## Dispatching an Order
+
+Dispatching is the process of assigning an order to a driver and notifying them to begin work.
+
+1. Open the order in the Fleetbase Console.
+2. In the **Assignment** section, select a Driver or a Fleet.
+3. Click **Dispatch**.
+
+FleetOps will instantly send a push notification to the assigned driver's Navigator app. The driver can then review the order details and tap "Accept" to begin the job.
+
+For more advanced dispatching workflows, including automated assignment, see the [Routing & Dispatching](/docs/fleetops/operations/routing-and-dispatching) documentation.
+
+## Tracking and Proof of Delivery
+
+Once an order is `Active`, dispatchers can track its progress in real-time on the FleetOps map. The driver's GPS location is continuously updated, and FleetOps calculates an Estimated Time of Arrival (ETA) based on current traffic conditions.
+
+When the driver arrives at the dropoff location, they use the Navigator app to complete the order. This process often involves capturing **Proof of Delivery (POD)**.
+
+FleetOps supports several types of POD:
+- **Signatures**: The customer signs directly on the driver's mobile device.
+- **Photos**: The driver takes a picture of the delivered package (e.g., left on the porch).
+- **Notes**: The driver leaves a text note confirming the delivery details.
+
+These POD records are instantly synced back to the Fleetbase Console and permanently attached to the order record.

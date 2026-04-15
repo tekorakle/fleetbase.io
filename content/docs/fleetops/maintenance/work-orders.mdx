@@ -5,6 +5,59 @@ description: Log and manage work orders for vehicle repairs, servicing, and insp
 
 # Work Orders
 
-Log and manage work orders for vehicle repairs, servicing, and inspections.
+A **Work Order** is the central record for any maintenance or repair activity performed on a vehicle or piece of equipment in FleetOps.
 
-> This page is coming soon. Content is actively being developed.
+Whether it's a routine oil change triggered by a [Maintenance Schedule](/docs/fleetops/maintenance/maintenance-schedules) or an emergency repair reported by a driver via an [Issue](/docs/fleetops/management/issues), the Work Order tracks what was done, who did it, and how much it cost.
+
+## Creating a Work Order
+
+Work Orders can be generated automatically from a Maintenance Schedule, or created manually by a fleet manager.
+
+To create a Work Order manually:
+
+1. Navigate to **FleetOps** > **Work Orders** in the Fleetbase Console.
+2. Click the **New Work Order** button.
+3. Select the **Vehicle** or **Equipment** that requires service.
+4. Provide a **Title** and a detailed **Description** of the problem or the requested service.
+5. (Optional) Link the Work Order to a specific reported **Issue**.
+6. Assign the Work Order to a specific mechanic (a [Contact](/docs/fleetops/management/contacts)) or an external repair shop (a [Vendor](/docs/fleetops/management/vendors)).
+7. Set the **Priority** (e.g., `Low`, `Normal`, `High`, `Critical`).
+8. Click **Save**.
+
+## The Work Order Lifecycle
+
+Like an Order, a Work Order moves through a series of statuses:
+
+1. **Pending**: The Work Order has been created but work has not yet begun.
+2. **In Progress**: The mechanic has started the repair. *Note: When a Work Order enters this state, the associated vehicle's status is automatically changed to `maintenance`, preventing it from being dispatched.*
+3. **Completed**: The repair is finished, and the vehicle is ready to return to service.
+4. **Canceled**: The Work Order was canceled before completion.
+
+## Tracking Costs (Parts and Labor)
+
+The primary purpose of a Work Order is to track the true cost of maintaining your fleet.
+
+While a Work Order is `In Progress`, the assigned mechanic or fleet manager can add line items to it:
+
+### Labor
+You can log the number of hours spent on the repair and the hourly rate of the mechanic.
+- *Example*: 2.5 hours @ $85/hour = $212.50
+
+### Parts
+If the repair required physical components, you can add them to the Work Order.
+- If you manage your inventory in FleetOps, you can select items directly from your [Parts](/docs/fleetops/maintenance/parts) catalog. This will automatically deduct the quantity from your inventory and add the unit cost to the Work Order.
+- If you purchased a part specifically for this repair from an external vendor, you can add it as a custom line item with its purchase price.
+
+### Total Cost
+FleetOps automatically calculates the total cost of the Work Order by summing the labor and parts line items. This total is then permanently associated with the vehicle, allowing you to track its Total Cost of Ownership (TCO) over time in the [Analytics](/docs/fleetops/analytics) dashboard.
+
+## Completing a Work Order
+
+When the repair is finished:
+
+1. Open the Work Order.
+2. Ensure all labor and parts have been accurately logged.
+3. Change the status to **Completed**.
+4. (Optional) Add any final notes or attach photos of the completed repair.
+
+Once completed, the vehicle's status is automatically changed back to `active`, making it available for dispatch again. If the Work Order was generated from a Maintenance Schedule, that schedule's interval is reset.

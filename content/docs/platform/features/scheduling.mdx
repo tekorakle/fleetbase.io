@@ -5,6 +5,58 @@ description: Manage resource scheduling, availability, constraints, and exceptio
 
 # Scheduling
 
-Manage resource scheduling, availability, constraints, and exceptions using the built-in scheduling system.
+Logistics is fundamentally about time and availability. Whether you are scheduling a driver's shift, defining the operating hours of a warehouse, or setting the delivery window for an order, you need a robust way to manage time.
 
-> This page is coming soon. Content is actively being developed.
+Fleetbase provides a built-in scheduling engine that allows you to define complex availability rules, constraints, and exceptions for any resource in the platform.
+
+## How Scheduling Works
+
+The scheduling system is built around the concept of **Schedules**. A Schedule is a set of rules that defines when a resource is available or unavailable.
+
+Schedules can be attached to almost any resource in Fleetbase. For example:
+- **Drivers**: Define their weekly shifts and time off.
+- **Vehicles**: Define when a vehicle is available for use (e.g., excluding maintenance periods).
+- **Places (Warehouses/Stores)**: Define operating hours.
+- **Service Areas**: Define when deliveries can be made to a specific zone.
+
+## Defining a Schedule
+
+A Schedule consists of three main components:
+
+### 1. Regular Hours
+
+Regular hours define the standard, recurring availability of a resource. You can set specific time windows for each day of the week.
+
+For example, a warehouse might have the following regular hours:
+- Monday - Friday: 08:00 - 18:00
+- Saturday: 09:00 - 13:00
+- Sunday: Closed
+
+### 2. Exceptions (Overrides)
+
+Exceptions allow you to override the regular hours for specific dates. This is useful for holidays, special events, or temporary closures.
+
+For example, you might add an exception for "New Year's Day" that sets the availability to "Closed", overriding the regular hours for that specific date.
+
+### 3. Constraints
+
+Constraints allow you to define rules that limit how a resource can be scheduled.
+
+Common constraints include:
+- **Maximum Hours per Day**: Ensure a driver is not scheduled for more than 10 hours in a single day.
+- **Minimum Rest Period**: Ensure a driver has at least 8 hours of rest between shifts.
+- **Maximum Consecutive Days**: Ensure a driver does not work more than 6 consecutive days.
+
+## Using Schedules in FleetOps
+
+If you are using the **FleetOps** extension, the scheduling engine is deeply integrated into the dispatching and routing workflows.
+
+When you attempt to assign an order to a driver, FleetOps automatically checks the driver's schedule to ensure they are available during the required delivery window. If the driver is off-shift or has reached their maximum hours constraint, the system will prevent the assignment or flag it as a conflict.
+
+Similarly, when using the automated routing engine, FleetOps uses the schedules of your drivers, vehicles, and delivery locations to calculate the optimal routes and estimated times of arrival (ETAs).
+
+## Developer Integration
+
+For developers building custom extensions, the scheduling engine provides a powerful API for managing time-based logic.
+
+You can attach a Schedule to any custom model in your extension by using the `HasSchedule` trait provided by the Fleetbase core package. This automatically adds the necessary database relationships and API endpoints for managing the resource's availability.

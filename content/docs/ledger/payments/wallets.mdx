@@ -5,6 +5,51 @@ description: Manage digital wallets — top-up, transfer, credit, payout, freeze
 
 # Wallets
 
-Manage digital wallets — top-up, transfer, credit, payout, freeze, and track balances.
+A **Wallet** is a digital account used to track the financial balance of a specific entity within your Fleetbase ecosystem.
 
-> This page is coming soon. Content is actively being developed.
+Wallets are the core mechanism for managing payouts, tracking earnings, and handling internal transfers.
+
+## Who Needs a Wallet?
+
+Wallets can be assigned to almost any entity in Fleetbase:
+
+- **Drivers**: To track their earnings from completed deliveries.
+- **Vendors/Merchants**: To track their revenue from sales in a [Storefront](/docs/storefront) marketplace.
+- **Customers**: To hold store credit, refunds, or prepaid balances.
+- **Your Organization**: To track your platform's overall revenue and commissions.
+
+## Creating a Wallet
+
+Wallets are often created automatically. For example, when you onboard a new driver in [FleetOps](/docs/fleetops), you can configure the system to automatically generate a Wallet for them.
+
+To manually create a Wallet:
+
+1. Navigate to **Ledger** > **Wallets** in the Fleetbase Console.
+2. Click **New Wallet**.
+3. Select the **Owner** of the wallet (e.g., a specific Driver, Vendor, or Customer).
+4. Select the **Currency** for the wallet. *Note: A single entity can have multiple wallets if they operate in multiple currencies.*
+5. Click **Save**.
+
+## Managing Balances
+
+The balance of a Wallet is determined by the sum of all its associated [Transactions](/docs/ledger/payments/transactions).
+
+You can manually adjust a Wallet's balance directly from the Console:
+
+### Top-Up (Credit)
+Adding funds to a wallet. This is often used to issue a refund to a customer as store credit, or to manually correct a driver's earnings.
+
+### Payout (Debit)
+Removing funds from a wallet. This is used when you actually transfer money to a driver's or vendor's real-world bank account. Recording a Payout in Ledger ensures their digital balance drops to zero, reflecting that they have been paid.
+
+### Transfer
+Moving funds from one Wallet to another. For example, transferring a commission fee from a Vendor's Wallet to your Organization's Wallet.
+
+## Freezing a Wallet
+
+If you suspect fraudulent activity, or if a vendor's account is suspended, you can **Freeze** their Wallet.
+
+1. Open the Wallet in the Fleetbase Console.
+2. Click the **Freeze** button.
+
+When a Wallet is frozen, no new transactions can be processed against it. Funds cannot be added, and payouts cannot be issued until the Wallet is unfrozen by an administrator.

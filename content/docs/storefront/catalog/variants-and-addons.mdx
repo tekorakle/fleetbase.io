@@ -5,6 +5,62 @@ description: Define product variants (size, color) and addons (extras, upgrades)
 
 # Variants & Addons
 
-Define product variants (size, color) and addons (extras, upgrades) to offer flexible purchasing options.
+Not all products are simple, single-price items. Many products require the customer to make choices before adding them to their cart.
 
-> This page is coming soon. Content is actively being developed.
+Storefront handles these choices using two distinct concepts: **Variants** and **Add-ons**.
+
+## Variants (Mutually Exclusive Choices)
+
+A **Variant** represents a specific version of a product. When a product has variants, the customer *must* choose exactly one variant to purchase.
+
+Common examples of variants include:
+- **Size**: Small, Medium, Large
+- **Color**: Red, Blue, Green
+- **Material**: Cotton, Polyester
+
+### Creating Variants
+
+To add variants to a product:
+
+1. Navigate to **Storefront** > **Products** in the Fleetbase Console.
+2. Open the product you want to modify.
+3. Go to the **Variants** tab.
+4. Click **Add Variant**.
+5. Provide the details:
+   - **Name**: The name of the variant (e.g., "Large").
+   - **Price**: The specific price for this variant. *Note: When a product has variants, the base product price is often ignored in favor of the variant price.*
+   - **SKU**: (Optional) A unique identifier for this specific variant.
+6. Click **Save**.
+
+When a customer views this product in your frontend application, they will be presented with a dropdown or radio buttons to select their desired variant.
+
+## Add-ons (Optional Extras)
+
+An **Add-on** represents an optional extra or upgrade that a customer can add to a product. Unlike variants, a customer can choose multiple add-ons, or none at all.
+
+Common examples of add-ons include:
+- **Food Modifiers**: "Extra Cheese (+$1.00)", "Add Bacon (+$1.50)", "No Onions"
+- **Upgrades**: "Gift Wrapping (+$5.00)", "Extended Warranty (+$50.00)"
+
+### Creating Add-ons
+
+To add add-ons to a product:
+
+1. Navigate to **Storefront** > **Products** in the Fleetbase Console.
+2. Open the product you want to modify.
+3. Go to the **Add-ons** tab.
+4. Click **Add Add-on**.
+5. Provide the details:
+   - **Name**: The name of the add-on (e.g., "Extra Cheese").
+   - **Price**: The additional cost of this add-on. If the add-on is free (e.g., "No Onions"), set the price to `0`.
+6. Click **Save**.
+
+When a customer views this product in your frontend application, they will be presented with a list of checkboxes to select their desired add-ons.
+
+## The Cart Payload
+
+When a customer adds a product to their cart with selected variants and add-ons, the [Storefront API](/docs/api-reference/storefront) automatically calculates the total price.
+
+For example, if a customer selects a "Large" variant ($10.00) and adds "Extra Cheese" ($1.00) and "Bacon" ($1.50), the total price for that line item in the cart will be $12.50.
+
+When the customer completes checkout, these selections are passed to FleetOps and stored in the Order's **Payload**, ensuring the merchant knows exactly how to prepare the item.

@@ -5,6 +5,91 @@ description: Customize and deploy a white-labeled version of the Navigator drive
 
 # White-Label the Navigator App
 
-Customize and deploy a white-labeled version of the Navigator driver app for your brand.
+The [Navigator App](/docs/apps/navigator-app/overview) is open-source and built with React Native (Expo). This means you can easily customize it with your own branding, logo, and colors, and deploy it to the Apple App Store and Google Play Store under your own developer account.
 
-> This page is coming soon. Content is actively being developed.
+This guide walks you through the process of white-labeling the Navigator app.
+
+## Prerequisites
+
+- Node.js and `npm` or `yarn` installed.
+- An Expo account (free).
+- Apple Developer and Google Play Developer accounts (if you plan to publish to the stores).
+- A **Public Key** from the [Developer Console](/docs/platform/developer-console/api-keys).
+
+## Step 1: Clone the Repository
+
+First, clone the Navigator app repository from GitHub:
+
+```bash
+git clone https://github.com/fleetbase/navigator-app.git
+cd navigator-app
+```
+
+Install the dependencies:
+
+```bash
+yarn install
+```
+
+## Step 2: Configure the Environment
+
+Create a `.env` file in the root of the project (or copy `.env.example` if it exists) and configure it with your Fleetbase API URL and Public Key.
+
+```env
+API_URL=https://api.fleetbase.io/v1
+PUBLIC_KEY=flb_test_xxxxxxxxxxxx
+```
+
+*(If you are self-hosting Fleetbase, replace `https://api.fleetbase.io/v1` with your own API URL).*
+
+## Step 3: Customize Branding
+
+To change the app's name, icon, and splash screen, edit the `app.json` file.
+
+```json
+{
+  "expo": {
+    "name": "My Delivery App",
+    "slug": "my-delivery-app",
+    "version": "1.0.0",
+    "icon": "./assets/my-icon.png",
+    "splash": {
+      "image": "./assets/my-splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "bundleIdentifier": "com.mycompany.deliveryapp"
+    },
+    "android": {
+      "package": "com.mycompany.deliveryapp"
+    }
+  }
+}
+```
+
+Replace the images in the `assets` folder with your own logo and splash screen.
+
+To change the primary colors used throughout the app, look for the theme configuration file (usually `src/utils/theme.js` or similar) and update the color hex codes.
+
+## Step 4: Test Locally
+
+Run the app locally using Expo to verify your changes:
+
+```bash
+yarn start
+```
+
+You can scan the QR code with the Expo Go app on your phone to test it on a real device.
+
+## Step 5: Build and Deploy
+
+Once you are satisfied with your customizations, you can use Expo Application Services (EAS) to build the standalone binaries (`.ipa` for iOS, `.aab` for Android).
+
+```bash
+eas build --platform all
+```
+
+Follow the prompts to log in to your Expo account and configure your Apple/Google developer credentials.
+
+Once the build is complete, you can download the binaries and submit them to the App Store and Google Play Store using `eas submit`.

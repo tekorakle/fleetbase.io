@@ -5,6 +5,54 @@ description: Drive customer engagement and repeat purchases with promotions and 
 
 # Promotions & Marketing
 
-Drive customer engagement and repeat purchases with promotions and push notifications.
+Storefront includes built-in tools to help you drive sales, acquire new customers, and increase order frequency.
 
-> This page is coming soon. Content is actively being developed.
+The primary mechanism for this is the **Promotions** engine, which allows you to create flexible discount codes and automated offers.
+
+## Creating a Promotion
+
+To create a new promotion:
+
+1. Navigate to **Storefront** > **Promotions** in the Fleetbase Console.
+2. Click the **New Promotion** button.
+3. Provide the basic details:
+   - **Name**: An internal name for the promotion (e.g., "Summer Sale 2024").
+   - **Code**: The actual code the customer will type into the checkout screen (e.g., `SUMMER20`). If you leave this blank, the promotion will be applied automatically to all eligible carts.
+   - **Description**: A brief explanation of the offer.
+4. Configure the **Discount**:
+   - **Type**: Choose between a `percentage` (e.g., 20% off) or a `fixed` amount (e.g., $5.00 off).
+   - **Value**: The amount of the discount.
+5. Set the **Rules & Limits**:
+   - **Start Date / End Date**: When the promotion is active.
+   - **Minimum Spend**: The cart subtotal required to use the code (e.g., "Spend $50 to get $10 off").
+   - **Usage Limit**: The maximum number of times the code can be used across all customers (e.g., "First 100 customers only").
+   - **Per-Customer Limit**: How many times a single customer can use the code (usually `1`).
+6. Click **Save**.
+
+## Applying Promotions
+
+When a customer is in the [Checkout](/docs/storefront/orders/checkout) phase, your frontend application should provide an input field for them to enter a promo code.
+
+When they submit the code, your app sends a request to the [Storefront API](/docs/api-reference/storefront).
+
+Storefront validates the code against the promotion's rules:
+- Is the promotion currently active?
+- Has the usage limit been reached?
+- Has this specific customer already used the code?
+- Does the cart meet the minimum spend requirement?
+
+If all rules pass, the discount is applied to the Cart's subtotal, and the updated totals are returned to the frontend.
+
+## Automated Promotions
+
+If you create a promotion *without* a specific code, it becomes an "Automated Promotion".
+
+Storefront will automatically evaluate the rules for every active Cart. If a Cart meets the criteria (e.g., the subtotal is over $100), the discount is applied automatically without the customer needing to type anything.
+
+This is useful for running store-wide sales or offering free delivery on large orders.
+
+## Push Notifications
+
+Promotions are most effective when your customers know about them.
+
+If you are using the [Storefront App](/docs/apps/storefront-app) (or a custom mobile app), you can use [Push Notifications](/docs/storefront/promotions/push-notifications) to alert your customers about new offers, driving immediate traffic and sales.

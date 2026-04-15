@@ -5,6 +5,67 @@ description: Create individual stores or group them into networks for marketplac
 
 # Stores & Networks
 
-Create individual stores or group them into networks for marketplace-style operations.
+This guide covers how to create and configure Stores and Networks in the Fleetbase Console.
 
-> This page is coming soon. Content is actively being developed.
+Before proceeding, ensure you understand the difference between a Store and a Network by reading the [Overview](/docs/storefront/stores).
+
+## Creating a Store
+
+A Store represents a single brand or merchant.
+
+1. Navigate to **Storefront** > **Stores** in the Fleetbase Console.
+2. Click the **New Store** button.
+3. Provide the basic details:
+   - **Name**: The public-facing name of the store (e.g., "Joe's Pizza").
+   - **Description**: A brief overview of what the store sells.
+   - **Currency**: The primary currency used for pricing products in this store.
+4. Upload branding assets:
+   - **Logo**: A square image representing the brand.
+   - **Backdrop Image**: A wide banner image often used at the top of the store's page in a mobile app.
+5. Click **Save**.
+
+Once the Store is created, you can begin adding [Locations](/docs/storefront/stores/store-locations), setting [Operating Hours](/docs/storefront/stores/operating-hours), and building its [Catalog](/docs/storefront/catalog).
+
+## Creating a Network
+
+A Network is used to group multiple Stores together, typically for a multi-vendor marketplace.
+
+1. Navigate to **Storefront** > **Networks** in the Fleetbase Console.
+2. Click the **New Network** button.
+3. Provide the basic details:
+   - **Name**: The name of your marketplace (e.g., "CityEats Delivery").
+   - **Description**: A brief overview of the network.
+   - **Currency**: The primary currency used across the network.
+4. Upload branding assets (Logo and Backdrop Image).
+5. Click **Save**.
+
+## Adding Stores to a Network
+
+Once you have created a Network, you need to populate it with Stores.
+
+1. Open the Network you just created.
+2. Navigate to the **Stores** tab within the Network details.
+3. Click **Add Store**.
+4. Select the Stores you want to include in this Network from the dropdown list.
+5. Click **Save**.
+
+When a customer uses your frontend application to browse the Network, they will now see the Stores you have added (provided those Stores are currently open and within delivery range).
+
+## Managing Store Status
+
+You can temporarily disable a Store without deleting it. This is useful if a restaurant is overwhelmed with orders or needs to close unexpectedly.
+
+1. Open the Store in the Fleetbase Console.
+2. Toggle the **Status** switch from `Active` to `Inactive`.
+
+When a Store is inactive, it will not appear in Network searches, and customers will not be able to place new orders.
+
+## Deleting a Store or Network
+
+If you need to permanently remove a Store or Network:
+
+1. Open the entity in the Fleetbase Console.
+2. Click the **Delete** button (usually represented by a trash can icon).
+3. Confirm the deletion.
+
+*Warning: Deleting a Store will also delete its associated Catalog (Products, Categories, Variants). This action cannot be undone.*

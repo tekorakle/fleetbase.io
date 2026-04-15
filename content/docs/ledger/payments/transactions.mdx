@@ -5,6 +5,47 @@ description: View and manage all financial transactions recorded in Ledger.
 
 # Transactions
 
-View and manage all financial transactions recorded in Ledger.
+A **Transaction** is the fundamental record of money moving into, out of, or between [Wallets](/docs/ledger/payments/wallets) in Ledger.
 
-> This page is coming soon. Content is actively being developed.
+Every financial event in your Fleetbase ecosystem—whether it's a customer paying for an order, a driver earning a delivery fee, or a vendor receiving a payout—is recorded as a Transaction.
+
+## Transaction Types
+
+Transactions are categorized by their `type`, which defines the nature of the financial event:
+
+- **`credit`**: Money added to a Wallet (e.g., a customer top-up, a driver's earnings).
+- **`debit`**: Money removed from a Wallet (e.g., a payout to a vendor's bank account, a customer spending their store credit).
+- **`transfer`**: Money moved from one Wallet to another (e.g., transferring a commission fee from a vendor's Wallet to your organization's Wallet).
+- **`payment`**: A specific type of credit representing a successful charge via a [Payment Gateway](/docs/ledger/payments/gateways) (e.g., a Stripe credit card charge).
+- **`refund`**: A specific type of debit representing money returned to a customer via a Payment Gateway.
+
+## Viewing Transactions
+
+You can view all financial activity across your organization from the Fleetbase Console:
+
+1. Navigate to **Ledger** > **Transactions**.
+2. Here you will see a comprehensive, chronological list of all transactions.
+3. You can filter the list by:
+   - **Type** (e.g., show only `refunds`).
+   - **Status** (e.g., show only `pending` or `failed` transactions).
+   - **Wallet** (e.g., show all activity for a specific driver's wallet).
+   - **Date Range**.
+
+## Transaction Statuses
+
+Every transaction has a `status` that indicates its current state in the financial lifecycle:
+
+- **`pending`**: The transaction has been initiated but not yet completed (e.g., a bank transfer that takes 3 days to clear).
+- **`completed`**: The transaction was successful, and the associated Wallet balances have been updated.
+- **`failed`**: The transaction could not be completed (e.g., a declined credit card, insufficient funds for a payout).
+- **`canceled`**: The transaction was manually voided before it could complete.
+
+## Automated Transactions
+
+While you can manually create transactions (such as a manual Top-Up or Payout), the vast majority of transactions in Ledger are generated automatically by other Fleetbase modules.
+
+### FleetOps Integration
+When a driver completes an [Order](/docs/fleetops/operations/orders) in FleetOps, the system can automatically calculate their earnings based on the [Service Rates](/docs/fleetops/operations/service-rates) and generate a `credit` transaction to their Wallet.
+
+### Storefront Integration
+When a customer completes [Checkout](/docs/storefront/orders/checkout) in Storefront, the system automatically generates a `payment` transaction, recording the successful charge from Stripe and crediting the appropriate Wallet.

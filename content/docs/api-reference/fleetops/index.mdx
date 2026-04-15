@@ -5,6 +5,48 @@ description: Reference for the FleetOps API resources — orders, drivers, vehic
 
 # FleetOps API
 
-Reference for the FleetOps API resources — orders, drivers, vehicles, tracking, and more.
+The **FleetOps API** provides access to all resources related to fleet management, dispatching, and order fulfillment.
 
-> This page is coming soon. Content is actively being developed.
+## Base URL
+
+All FleetOps API requests should be made to the following base URL:
+
+```text
+https://api.fleetbase.io/v1/fleet-ops
+```
+
+*(If you are self-hosting Fleetbase, replace `api.fleetbase.io` with your own domain).*
+
+## Authentication
+
+All requests to the FleetOps API must be authenticated using a **Secret Key**.
+
+You can generate a Secret Key in the [Developer Console](/docs/platform/developer-console/api-keys).
+
+Pass the Secret Key in the `Authorization` header as a Bearer token:
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/orders \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Available Resources
+
+### Operations
+- **[Orders](/docs/api-reference/fleetops/orders)**: Manage delivery and service orders.
+- **[Payloads](/docs/api-reference/fleetops/payloads)**: Manage the items and cargo associated with an order.
+- **[Entities](/docs/api-reference/fleetops/entities)**: Manage individual items within a payload.
+- **[Service Quotes](/docs/api-reference/fleetops/service-quotes)**: Generate and manage pricing quotes for orders.
+- **[Service Rates](/docs/api-reference/fleetops/service-rates)**: Define pricing rules and rate cards.
+
+### Management
+- **[Drivers](/docs/api-reference/fleetops/drivers)**: Manage driver profiles, status, and assignments.
+- **[Vehicles](/docs/api-reference/fleetops/vehicles)**: Manage vehicle profiles, telematics, and assignments.
+- **[Fleets](/docs/api-reference/fleetops/fleets)**: Group drivers and vehicles into logical fleets.
+- **[Vendors](/docs/api-reference/fleetops/vendors)**: Manage third-party logistics providers and subcontractors.
+
+### Tracking & Routing
+- **[Tracking Numbers](/docs/api-reference/fleetops/tracking-numbers)**: Manage unique tracking identifiers for orders.
+- **[Tracking Statuses](/docs/api-reference/fleetops/tracking-statuses)**: Manage the lifecycle events and status updates of an order.
+- **[Zones](/docs/api-reference/fleetops/zones)**: Define geographical zones for routing and pricing.
+- **[Service Areas](/docs/api-reference/fleetops/service-areas)**: Define the operational areas where your fleet provides service.

@@ -5,6 +5,120 @@ description: Install Fleetbase on your own infrastructure using the Fleetbase CL
 
 # Quickstart (Self-Hosted)
 
-Install Fleetbase on your own infrastructure using the Fleetbase CLI and Docker.
+For organizations that require full control over their data and infrastructure, Fleetbase can be self-hosted. The easiest way to install Fleetbase on your own servers is using the Fleetbase CLI, which automates the Docker-based installation process.
 
-> This page is coming soon. Content is actively being developed.
+## Prerequisites
+
+Before installing Fleetbase, ensure your system meets the following requirements:
+
+- **Node.js** (v14 or higher)
+- **Docker** and **Docker Compose**
+- **Git**
+
+## Step 1: Install the Fleetbase CLI
+
+The Fleetbase CLI (`flb`) is a powerful tool for managing your Fleetbase instance, installing extensions, and handling authentication.
+
+Install the CLI globally using npm:
+
+```bash
+npm install -g @fleetbase/cli
+```
+
+## Step 2: Run the Installer
+
+With the CLI installed, you can run the interactive installer to set up Fleetbase using Docker.
+
+```bash
+flb install-fleetbase
+```
+
+You can also pass options directly to the command:
+
+```bash
+flb install-fleetbase --host 0.0.0.0 --environment production --directory /opt/fleetbase
+```
+
+The installer will clone the necessary repositories, configure your environment variables, and start the Docker containers.
+
+### Alternative: Install Script
+
+If you prefer not to use the CLI, you can use the provided installation script directly:
+
+```bash
+git clone git@github.com:fleetbase/fleetbase.git  
+cd fleetbase && ./scripts/docker-install.sh
+```
+
+## Step 3: Accessing Fleetbase
+
+Once the installation is complete and the containers are running, you can access Fleetbase locally:
+
+- **Fleetbase Console**: [http://localhost:4200](http://localhost:4200)
+- **Fleetbase API**: [http://localhost:8000](http://localhost:8000)
+
+## Step 4: Register a Developer Account
+
+To install extensions from the Fleetbase Registry on a self-hosted instance, you must register a Registry Developer Account and authenticate your CLI.
+
+1. **Register your account**:
+   ```bash
+   flb register
+   ```
+   You will be prompted for a username, email, and password.
+
+2. **Verify your email**:
+   Check your email for a verification code, then run:
+   ```bash
+   flb verify -e your@email.com -c 123456
+   ```
+
+3. **Set your registry token**:
+   Use the token provided upon successful verification:
+   ```bash
+   flb set-auth flb_your_token_here
+   ```
+
+## Step 5: Install Extensions
+
+With your CLI authenticated, you can now install extensions to add logistics capabilities to your self-hosted instance.
+
+```bash
+# Install FleetOps for fleet management
+flb install @fleetbase/fleetops
+
+# Install Storefront for headless e-commerce
+flb install @fleetbase/storefront
+```
+
+## Additional Configurations
+
+When deploying to a production server, you will need to configure several environment variables in your `docker-compose.override.yml` file.
+
+### CORS and Frontend Hosts
+
+If you are installing directly on a server, configure the `CONSOLE_HOST` to match your domain:
+
+```yaml
+CONSOLE_HOST: https://console.yourdomain.com
+```
+
+If you have additional applications (like a custom Storefront app), add them to `FRONTEND_HOSTS` as a comma-delimited list.
+
+### WebSocket Security
+
+The `SOCKETCLUSTER_OPTIONS` environment variable controls which domains can connect to the real-time WebSocket server. **Always restrict origins to your specific domains in production** to prevent security vulnerabilities.
+
+```yaml
+# Production example:
+SOCKETCLUSTER_OPTIONS: '{"origins":"https://yourdomain.com:*,wss://yourdomain.com:*"}'
+```
+
+### Essential Services
+
+For Fleetbase to function with full features, configure the following services in your environment:
+
+- `MAIL_MAILER`: Your email provider (ses, smtp, mailgun, postmark, sendgrid).
+- `OSRM_HOST`: Your routing server (defaults to `https://router.project-osrm.org`).
+- `GOOGLE_MAPS_API_KEY`: Required for geocoding and map rendering.
+- `TWILIO_SID` / `TWILIO_TOKEN`: Required for SMS notifications and driver communication.

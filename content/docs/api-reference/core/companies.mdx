@@ -5,6 +5,97 @@ description: Retrieve and manage company (organization) information via the API.
 
 # Companies
 
-Retrieve and manage company (organization) information via the API.
+A **Company** represents a business entity or organization.
 
-> This page is coming soon. Content is actively being developed.
+In Fleetbase, your own organization is represented as a Company. You can also create Company records to represent your B2B clients, vendors, or partners.
+
+## The Company Object
+
+```json
+{
+  "id": "company_xxxxxxxx",
+  "name": "Acme Logistics",
+  "description": "A leading logistics provider.",
+  "email": "contact@acmelogistics.com",
+  "phone": "+14155550000",
+  "website": "https://acmelogistics.com",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the company. |
+| `description` | string | A brief description of the company. |
+| `email` | string | The company's primary email address. |
+| `phone` | string | The company's primary phone number. |
+| `website` | string | The company's website URL. |
+
+## Create a Company
+
+Creates a new Company object.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/companies \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Acme Logistics",
+    "email": "contact@acmelogistics.com",
+    "phone": "+14155550000"
+  }'
+```
+
+## Retrieve a Company
+
+Retrieves the details of an existing Company.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/companies/company_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update a Company
+
+Updates the specified Company by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/companies/company_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "website": "https://acmelogistics.com"
+  }'
+```
+
+## Delete a Company
+
+Permanently deletes a Company. It cannot be undone.
+
+### Request
+
+```bash
+curl -X DELETE https://api.fleetbase.io/v1/companies/company_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Companies
+
+Returns a list of your Companies. The companies are returned sorted by creation date, with the most recently created companies appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/companies \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

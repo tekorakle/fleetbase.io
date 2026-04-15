@@ -5,6 +5,66 @@ description: Query and retrieve transaction records from the Ledger.
 
 # Transactions
 
-Query and retrieve transaction records from the Ledger.
+A **Transaction** represents a movement of funds into, out of, or between [Wallets](/docs/api-reference/ledger/wallets).
 
-> This page is coming soon. Content is actively being developed.
+Transactions are immutable records of financial activity and can be used for auditing, reporting, and reconciliation.
+
+## The Transaction Object
+
+```json
+{
+  "id": "txn_xxxxxxxx",
+  "wallet": "wallet_xxxxxxxx",
+  "amount": 5000,
+  "currency": "USD",
+  "type": "credit",
+  "status": "completed",
+  "description": "Manual top-up via API",
+  "reference": "ref_xxxxxxxx",
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `wallet` | string | The ID of the [Wallet](/docs/api-reference/ledger/wallets) this transaction belongs to. |
+| `amount` | integer | The amount of the transaction (in cents). |
+| `currency` | string | The currency of the transaction (e.g., `USD`). |
+| `type` | string | The type of transaction (e.g., `credit`, `debit`). |
+| `status` | string | The current status of the transaction (e.g., `pending`, `completed`, `failed`). |
+| `description` | string | A human-readable description of the transaction. |
+| `reference` | string | An optional reference ID for external systems. |
+
+## Retrieve a Transaction
+
+Retrieves the details of an existing Transaction.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/transactions/txn_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Transactions
+
+Returns a list of your Transactions. The transactions are returned sorted by creation date, with the most recently created transactions appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/transactions \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+### Query Parameters
+
+| Parameter | Type | Description |
+|---|---|---|
+| `wallet` | string | Filter transactions by a specific [Wallet](/docs/api-reference/ledger/wallets) ID. |
+| `type` | string | Filter transactions by type (e.g., `credit`, `debit`). |
+| `status` | string | Filter transactions by status (e.g., `completed`, `pending`). |

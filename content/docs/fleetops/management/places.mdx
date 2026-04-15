@@ -5,6 +5,55 @@ description: Create and manage a library of locations — addresses, landmarks, 
 
 # Places
 
-Create and manage a library of locations — addresses, landmarks, and waypoints used across orders.
+In FleetOps, a **Place** represents a specific physical location on the map. Places are the fundamental building blocks of routing and dispatching—every order must have at least one pickup Place and one dropoff Place.
 
-> This page is coming soon. Content is actively being developed.
+While you can enter an address manually every time you create an order, saving frequently used locations as Places saves time and ensures accuracy.
+
+## Types of Places
+
+Places can represent a wide variety of locations:
+- **Warehouses & Depots**: Your internal facilities where goods are stored or sorted.
+- **Retail Stores**: Your physical storefronts where customers can pick up orders.
+- **Customer Addresses**: The homes or offices of your frequent customers.
+- **Landmarks & Waypoints**: Specific geographic points (like a port or a border crossing) that drivers need to navigate to.
+
+## Creating a Place
+
+To add a new location to your database:
+
+1. Navigate to **FleetOps** > **Places** in the Fleetbase Console.
+2. Click the **New Place** button.
+3. Fill in the location details:
+   - **Name**: A descriptive name for the location (e.g., "Main Warehouse", "Acme Corp HQ").
+   - **Address**: The full street address. As you type, FleetOps will use its geocoding service to suggest matching addresses.
+   - **Coordinates**: The latitude and longitude. These are usually populated automatically when you select an address, but you can also enter them manually or drag the pin on the map to set the exact location.
+   - **Contact**: (Optional) Link a [Contact](/docs/fleetops/management/contacts) to this place (e.g., the warehouse manager).
+4. Click **Save**.
+
+## Using Places in Orders
+
+When creating an order, you can quickly select a saved Place for the pickup or dropoff location.
+
+1. In the order creation form, click on the **Pickup** or **Dropoff** field.
+2. Start typing the name or address of the saved Place.
+3. Select the Place from the dropdown list.
+
+FleetOps will automatically populate the address, coordinates, and any associated contact information into the order.
+
+## Geocoding and Routing
+
+Accurate coordinates are essential for FleetOps to calculate routes and ETAs.
+
+When you enter an address, FleetOps uses a geocoding service (like Google Maps or Mapbox, depending on your configuration) to convert that address into latitude and longitude coordinates.
+
+If the geocoding service cannot find an exact match, or if the location is off-road (like a new construction site), you can manually adjust the pin on the map to ensure the driver is routed to the correct spot.
+
+## Managing Place Profiles
+
+Clicking on a place in the list opens its detailed profile.
+
+From the profile, you can view the location's complete history, including:
+- **Recent Orders**: A list of all orders that originated from or were delivered to this location.
+- **Associated Contacts**: A list of all contacts linked to this place.
+
+This historical data is useful for identifying high-volume locations and optimizing your network.

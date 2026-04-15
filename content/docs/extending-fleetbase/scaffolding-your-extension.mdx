@@ -5,6 +5,97 @@ description: Use the Fleetbase CLI to scaffold a new extension with a working ba
 
 # Scaffolding Your Extension
 
-Use the Fleetbase CLI to scaffold a new extension with a working backend and frontend skeleton.
+The easiest way to start building a new Fleetbase extension is to use the **Fleetbase CLI**.
 
-> This page is coming soon. Content is actively being developed.
+The CLI provides a `scaffold` command that generates a complete, working extension skeleton, including both the [Backend](/docs/extending-fleetbase/backend-development) (Laravel package) and the [Frontend](/docs/extending-fleetbase/frontend-development) (Ember Engine), along with the necessary `extension.json` manifest.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed on your local development machine:
+
+- **Node.js** (v16 or higher)
+- **PHP** (v8.1 or higher)
+- **Composer**
+- **Git**
+- The **Fleetbase CLI**
+
+If you haven't installed the CLI yet, you can do so via npm:
+
+```bash
+npm install -g @fleetbase/cli
+```
+
+## Scaffolding the Extension
+
+1. Open your terminal and navigate to the directory where you want to create your extension.
+2. Run the `scaffold` command:
+
+```bash
+flb scaffold my-extension
+```
+
+3. The CLI will prompt you for a few details:
+   - **Extension Name**: The human-readable name of your extension (e.g., "My Custom Extension").
+   - **Description**: A brief description of what the extension does.
+   - **Author**: Your name or your organization's name.
+   - **Namespace**: The PHP namespace for your backend package (e.g., `MyOrg\MyExtension`).
+
+4. The CLI will then generate the directory structure and install the necessary dependencies.
+
+## The Generated Structure
+
+Once the scaffolding is complete, you will have a new directory called `my-extension` containing the following structure:
+
+```text
+my-extension/
+├── addon/                 # The Ember.js frontend engine
+├── server/                # The PHP Laravel backend package
+├── extension.json         # The extension manifest
+└── README.md
+```
+
+This is a fully functional, albeit empty, extension. It is ready to be linked to your local Fleetbase instance for development.
+
+## Linking for Development
+
+To develop your extension, you need to link it to a running Fleetbase instance. This allows you to see your changes in real-time without having to publish and install the extension via the Registry.
+
+1. Ensure you have a local Fleetbase instance running (see [Quickstart (Self-Hosted)](/docs/getting-started/quickstart-self-hosted)).
+2. Navigate into your newly scaffolded extension directory:
+
+```bash
+cd my-extension
+```
+
+3. Run the `link` command, providing the path to your local Fleetbase installation:
+
+```bash
+flb link /path/to/your/local/fleetbase
+```
+
+The CLI will create symlinks between your extension directory and the `extensions/` directory within your local Fleetbase instance.
+
+It will also automatically register the backend package with Laravel and mount the frontend engine within the Ember application.
+
+## Starting the Development Server
+
+With the extension linked, you can now start the Fleetbase development servers.
+
+1. Navigate to your local Fleetbase installation directory.
+2. Start the backend server:
+
+```bash
+php artisan serve
+```
+
+3. In a separate terminal window, start the frontend server:
+
+```bash
+npm run start
+```
+
+4. Open your browser and navigate to `http://localhost:4200`.
+
+You should now see your extension listed in the Fleetbase Console sidebar. Clicking on it will load the default route defined in your scaffolded frontend engine.
+
+You are now ready to begin [Backend Development](/docs/extending-fleetbase/backend-development) and [Frontend Development](/docs/extending-fleetbase/frontend-development).

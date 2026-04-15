@@ -5,6 +5,152 @@ description: Create, query, update, dispatch, start, complete, and cancel orders
 
 # Orders
 
-Create, query, update, dispatch, start, complete, and cancel orders via the FleetOps API.
+An **Order** is the central object in FleetOps. It represents a request for a service, typically a delivery or a pickup, that needs to be fulfilled by a driver or a vendor.
 
-> This page is coming soon. Content is actively being developed.
+Orders tie together [Payloads](/docs/api-reference/fleetops/payloads) (what is being transported), [Places](/docs/api-reference/core/places) (where it is going), and [Drivers](/docs/api-reference/fleetops/drivers) (who is doing it).
+
+## The Order Object
+
+```json
+{
+  "id": "order_xxxxxxxx",
+  "public_id": "ORD-12345",
+  "internal_id": "EXT-9876",
+  "customer": "contact_xxxxxxxx",
+  "facilitator": "vendor_xxxxxxxx",
+  "payload": "payload_xxxxxxxx",
+  "driver": "driver_xxxxxxxx",
+  "vehicle": "vehicle_xxxxxxxx",
+  "distance": 15000,
+  "time": 1800,
+  "status": "created",
+  "type": "delivery",
+  "scheduled_at": "2023-10-28T14:00:00Z",
+  "dispatched_at": null,
+  "started_at": null,
+  "completed_at": null,
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `public_id` | string | A human-readable, auto-generated identifier (e.g., `ORD-12345`). |
+| `internal_id` | string | An optional identifier used to map the order to an external system (e.g., an ERP or Storefront order ID). |
+| `customer` | string | The ID of the [Contact](/docs/api-reference/core/contacts) or [Company](/docs/api-reference/core/companies) who placed the order. |
+| `facilitator` | string | The ID of the [Vendor](/docs/api-reference/fleetops/vendors) responsible for fulfilling the order (if outsourced). |
+| `payload` | string | The ID of the [Payload](/docs/api-reference/fleetops/payloads) associated with the order. |
+| `driver` | string | The ID of the [Driver](/docs/api-reference/fleetops/drivers) assigned to the order. |
+| `vehicle` | string | The ID of the [Vehicle](/docs/api-reference/fleetops/vehicles) assigned to the order. |
+| `distance` | integer | The estimated total distance of the route in meters. |
+| `time` | integer | The estimated total duration of the route in seconds. |
+| `status` | string | The current status of the order (e.g., `created`, `dispatched`, `en_route`, `completed`, `canceled`). |
+| `type` | string | The type of order (e.g., `delivery`, `pickup`, `service`). |
+| `scheduled_at` | datetime | The time the order is scheduled to begin. |
+
+## Create an Order
+
+Creates a new Order object.
+
+When creating an order, you can pass existing IDs for related resources (like `payload` or `customer`), or you can pass nested objects to create them simultaneously.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "internal_id": "EXT-9876",
+    "type": "delivery",
+    "payload": "payload_xxxxxxxx",
+    "customer": "contact_xxxxxxxx",
+    "scheduled_at": "2023-10-28T14:00:00Z"
+  }'
+```
+
+## Retrieve an Order
+
+Retrieves the details of an existing Order.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Update an Order
+
+Updates the specified Order by setting the values of the parameters passed.
+
+### Request
+
+```bash
+curl -X PUT https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "driver": "driver_xxxxxxxx",
+    "vehicle": "vehicle_xxxxxxxx"
+  }'
+```
+
+## Dispatch an Order
+
+Dispatches an order to the assigned driver. This changes the order status to `dispatched` and sends a push notification to the driver's Navigator app.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/dispatch \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Start an Order
+
+Marks an order as started. This changes the order status to `en_route` (or similar, depending on your configuration) and records the `started_at` timestamp. This is typically called by the driver app when they begin the route.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/start \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Complete an Order
+
+Marks an order as completed. This changes the order status to `completed` and records the `completed_at` timestamp.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/complete \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Cancel an Order
+
+Cancels an order. This changes the order status to `canceled`.
+
+### Request
+
+```bash
+curl -X POST https://api.fleetbase.io/v1/fleet-ops/orders/order_xxxxxxxx/cancel \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Orders
+
+Returns a list of your Orders. The orders are returned sorted by creation date, with the most recently created orders appearing first.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/fleet-ops/orders \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

@@ -5,6 +5,56 @@ description: Retrieve product categories for a Storefront.
 
 # Categories
 
-Retrieve product categories for a Storefront.
+A **Category** represents a grouping or collection of [Products](/docs/api-reference/storefront/products).
 
-> This page is coming soon. Content is actively being developed.
+Categories can be nested hierarchically to create sub-categories (e.g., "Electronics" > "Headphones").
+
+## The Category Object
+
+```json
+{
+  "id": "category_xxxxxxxx",
+  "name": "Electronics",
+  "description": "Gadgets, devices, and accessories.",
+  "slug": "electronics",
+  "icon_url": "https://example.com/icon.png",
+  "parent": null,
+  "order": 1,
+  "created_at": "2023-10-27T10:00:00Z",
+  "updated_at": "2023-10-27T10:00:00Z"
+}
+```
+
+### Attributes
+
+| Attribute | Type | Description |
+|---|---|---|
+| `id` | string | Unique identifier for the object. |
+| `name` | string | The name of the category. |
+| `description` | string | A description of the category. |
+| `slug` | string | A URL-friendly version of the category name. |
+| `icon_url` | string | The URL of the category's icon image. |
+| `parent` | string | The ID of the parent category (if this is a sub-category). |
+| `order` | integer | The display order of the category. |
+
+## Retrieve a Category
+
+Retrieves the details of an existing Category.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/storefront/categories/category_xxxxxxxx \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## List all Categories
+
+Returns a list of Categories available in the store. The categories are returned sorted by their `order` attribute.
+
+### Request
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/storefront/categories \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```

@@ -5,6 +5,76 @@ description: Define custom order types with configurable workflows, activity flo
 
 # Order Configurations
 
-Define custom order types with configurable workflows, activity flows, custom fields, and automation rules.
+Not all deliveries are the same. A standard courier package requires a different workflow than a heavy freight shipment or a white-glove furniture installation.
 
-> This page is coming soon. Content is actively being developed.
+**Order Configurations** allow you to define custom order types in FleetOps. For each type, you can customize the data collected, the workflow the driver follows, and the automation rules that apply.
+
+## Why Use Order Configurations?
+
+By default, FleetOps provides a standard "Order" model. However, as your business grows, you may need to handle different types of services.
+
+For example, you might have:
+- **Standard Delivery**: Requires a pickup, a dropoff, and a simple signature for proof of delivery.
+- **Medical Transport**: Requires specialized temperature-controlled vehicles, specific custom fields (e.g., "Specimen Type"), and a strict chain-of-custody workflow.
+- **Return/Reverse Logistics**: The workflow is reversed—the driver picks up from the customer and drops off at the warehouse.
+
+Order Configurations allow you to build these distinct workflows without writing custom code.
+
+## Creating an Order Configuration
+
+To define a new order type:
+
+1. Navigate to **FleetOps** > **Order Configs** in the Fleetbase Console.
+2. Click the **New Configuration** button.
+3. Provide a **Name** (e.g., "Medical Transport") and a **Description**.
+4. Configure the specific settings for this order type (detailed below).
+5. Click **Save**.
+
+Once created, dispatchers can select this configuration when creating a new order, and the system will adapt accordingly.
+
+## Key Configuration Options
+
+### 1. Custom Fields
+
+You can attach specific [Custom Fields](/docs/platform/features/custom-fields) to an Order Configuration.
+
+When a dispatcher creates an order using this configuration, the Fleetbase Console will automatically display these custom fields in the creation form. This ensures that all necessary data for this specific type of delivery is captured upfront.
+
+### 2. Activity Flows (Driver Workflow)
+
+The most powerful feature of Order Configurations is the ability to customize the **Activity Flow**.
+
+An Activity Flow defines the exact sequence of steps a driver must complete in the Navigator app to fulfill the order.
+
+For a standard delivery, the flow might be:
+1. `en_route_to_pickup`
+2. `arrived_at_pickup`
+3. `picked_up`
+4. `en_route_to_dropoff`
+5. `arrived_at_dropoff`
+6. `completed`
+
+For a more complex service, you can add custom statuses and require specific actions at each step. For example, you could require the driver to scan a barcode before transitioning from `arrived_at_pickup` to `picked_up`, or require a photo before transitioning to `completed`.
+
+### 3. Automation Rules
+
+You can link an Order Configuration to specific rules in the [Orchestrator](/docs/fleetops/operations/orchestrator).
+
+For example, you could create a rule that says: "If an order is created using the 'Medical Transport' configuration, automatically assign it to the 'Specialized Medical Fleet' and send an SMS notification to the recipient."
+
+## Using Configurations via the API
+
+When creating an order via the [Core API](/docs/api-reference/core/orders), you can specify which configuration to use by passing the `order_config_id` in the request payload.
+
+```json
+{
+  "pickup": "place_123",
+  "dropoff": "place_456",
+  "order_config_id": "config_789",
+  "meta": {
+    "specimen_type": "Blood Sample"
+  }
+}
+```
+
+FleetOps will automatically apply the workflow and validation rules defined in that configuration to the new order.

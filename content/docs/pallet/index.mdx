@@ -3,8 +3,32 @@ title: Pallet
 description: Pallet is the warehouse and inventory management extension for Fleetbase — currently in beta.
 ---
 
-# Pallet
+# Pallet (Beta)
 
-Pallet is the warehouse and inventory management extension for Fleetbase — currently in beta.
+**Pallet** is the warehouse and inventory management extension for Fleetbase.
 
-> This page is coming soon. Content is actively being developed.
+It is designed to work seamlessly alongside [FleetOps](/docs/fleetops) (for dispatching and delivery) and [Storefront](/docs/storefront) (for e-commerce sales), providing a complete end-to-end supply chain solution.
+
+> **Note:** Pallet is currently in active development (Beta). Features and APIs are subject to change.
+
+## Core Capabilities
+
+Pallet provides the tools necessary to manage physical goods across multiple locations:
+
+- **[Warehouses](/docs/pallet/warehouses)**: Define physical storage locations, including specific aisles, racks, and bins.
+- **[Inventory](/docs/pallet/inventory)**: Track stock levels in real-time, including batch numbers and expiration dates.
+- **[Fulfillment](/docs/pallet/fulfillment)**: Manage the picking, packing, and shipping process for outgoing orders.
+- **[Suppliers](/docs/pallet/suppliers)**: Manage your vendors and generate purchase orders for restocking.
+- **[Audits](/docs/pallet/audits)**: Conduct cycle counts and reconcile physical stock with digital records.
+
+## Integration with Storefront
+
+While Storefront manages your [Catalog](/docs/storefront/catalog) (what you sell), Pallet manages your **Inventory** (what you actually have in stock).
+
+When fully integrated, an order placed in Storefront automatically triggers a fulfillment process in Pallet. Once the items are picked and packed in the warehouse, Pallet hands the order over to FleetOps for final-mile delivery.
+
+## Getting Started
+
+To begin using Pallet, you must first install the extension via the Fleetbase CLI or the [Registry](/docs/platform/extensions).
+
+Once installed, the Pallet module will appear in your Fleetbase Console sidebar, allowing you to begin configuring your first [Warehouse](/docs/pallet/warehouses).

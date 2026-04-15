@@ -5,6 +5,36 @@ description: Reference for the Ledger API resources — wallets, transactions, a
 
 # Ledger API
 
-Reference for the Ledger API resources — wallets, transactions, and invoices.
+The **Ledger API** provides access to all resources related to accounting, billing, and payments, including wallets, transactions, and invoices.
 
-> This page is coming soon. Content is actively being developed.
+## Base URL
+
+All Ledger API requests should be made to the following base URL:
+
+```text
+https://api.fleetbase.io/v1/ledger
+```
+
+*(If you are self-hosting Fleetbase, replace `api.fleetbase.io` with your own domain).*
+
+## Authentication
+
+All requests to the Ledger API must be authenticated using a **Secret Key**.
+
+You can generate a Secret Key in the [Developer Console](/docs/platform/developer-console/api-keys).
+
+Pass the Secret Key in the `Authorization` header as a Bearer token:
+
+```bash
+curl -X GET https://api.fleetbase.io/v1/ledger/wallets \
+  -H "Authorization: Bearer flb_test_xxxxxxxxxxxx"
+```
+
+## Available Resources
+
+### Payments
+- **[Wallets](/docs/api-reference/ledger/wallets)**: Manage digital wallets for users, drivers, and vendors.
+- **[Transactions](/docs/api-reference/ledger/transactions)**: Record and query financial transactions.
+
+### Billing
+- **[Invoices](/docs/api-reference/ledger/invoices)**: Generate and manage invoices for orders and services.
