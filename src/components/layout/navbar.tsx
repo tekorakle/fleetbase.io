@@ -448,13 +448,24 @@ export const NAV_LINKS: NavLink[] = [
 ];
 
 const ACTION_BUTTONS = [
-  { label: 'GitHub', href: 'https://github.com/fleetbase/fleetbase', variant: 'ghost' as const, icon: Github, external: true },
   { label: 'Start Free Trial', href: 'https://console.fleetbase.io/onboard', variant: 'default' as const },
 ];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [ghStars, setGhStars] = useState<string>('Star');
   const pathname = usePathname();
+
+  useEffect(() => {
+    fetch('https://api.github.com/repos/fleetbase/fleetbase')
+      .then((r) => r.json())
+      .then((d) => {
+        const count: number = d.stargazers_count;
+        if (count >= 1000) setGhStars(`${(count / 1000).toFixed(1).replace(/\.0$/, '')}k`);
+        else setGhStars(`${count}`);
+      })
+      .catch(() => {});
+  }, []);
   const hideNavbar = ['/signin', '/signup', '/otp'].some((route) =>
     pathname.includes(route),
   );
@@ -603,6 +614,13 @@ const Navbar = () => {
 
         <div className="hidden flex-shrink-0 items-center justify-end gap-3 lg:flex">
           <ThemeToggle />
+          <Button size="sm" variant="ghost" asChild>
+            <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
+              <Github className="size-4" />
+              <span>Star us</span>
+              <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium tabular-nums">{ghStars}</span>
+            </Link>
+          </Button>
           {ACTION_BUTTONS.map((button) => (
             <Button
               key={button.label}

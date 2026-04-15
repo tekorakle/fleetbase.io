@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,7 +8,23 @@ interface SVGProps extends React.SVGProps<SVGSVGElement> {
   className?: string;
 }
 
-export default function Hero() {
+async function getGitHubStars(): Promise<string> {
+  try {
+    const res = await fetch('https://api.github.com/repos/fleetbase/fleetbase', {
+      next: { revalidate: 3600 },
+    });
+    if (!res.ok) return '1.8k+';
+    const data = await res.json();
+    const count: number = data.stargazers_count;
+    if (count >= 1000) return `${(count / 1000).toFixed(1).replace(/\.0$/, '')}k+`;
+    return `${count}+`;
+  } catch {
+    return '1.8k+';
+  }
+}
+
+export default async function Hero() {
+  const stars = await getGitHubStars();
   return (
     <section className="section-padding relative">
       <div className="relative container">
@@ -92,7 +107,7 @@ export default function Hero() {
               <div className="flex flex-wrap items-center justify-center gap-2">
                 <span className="flex items-center gap-1">
                   <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
-                  1.3k+ stars
+                  {stars} stars
                 </span>
                 <span>•</span>
                 <span>8,000+ organizations</span>
