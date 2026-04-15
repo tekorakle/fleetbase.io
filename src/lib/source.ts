@@ -7,6 +7,7 @@ import * as docs_2 from '@/../content/docs/crm-csv.mdx';
 import * as docs_3 from '@/../content/docs/file-systems.mdx';
 import * as docs_4 from '@/../content/docs/index.mdx';
 import * as docs_5 from '@/../content/docs/installation.mdx';
+import * as docs_6 from '@/../content/docs/webhooks.mdx';
 
 // Manually create the docs array without using _runtime
 const docsArray = [
@@ -16,6 +17,7 @@ const docsArray = [
  { info: { path: 'file-systems.mdx' }, data: docs_3 },
  { info: { path: 'index.mdx' }, data: docs_4 },
  { info: { path: 'installation.mdx' }, data: docs_5 },
+ { info: { path: 'webhooks.mdx' }, data: docs_6 },
 ];
 
 // Create a custom source that converts to Fumadocs Source format
