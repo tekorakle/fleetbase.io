@@ -1,10 +1,30 @@
 {
   "title": "Catalog Management",
   "pages": [
-    "index",
-    "products",
-    "categories",
-    "variants-and-addons",
-    "pricing"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Catalog Management"
+    },
+    {
+      "type": "page",
+      "name": "products",
+      "label": "Products"
+    },
+    {
+      "type": "page",
+      "name": "categories",
+      "label": "Categories"
+    },
+    {
+      "type": "page",
+      "name": "variants-and-addons",
+      "label": "Variants & Addons"
+    },
+    {
+      "type": "page",
+      "name": "pricing",
+      "label": "Pricing"
+    }
   ]
 }

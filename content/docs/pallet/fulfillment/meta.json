@@ -1,10 +1,30 @@
 {
   "title": "Order Fulfillment",
   "pages": [
-    "index",
-    "purchase-orders",
-    "sales-orders",
-    "pick-lists",
-    "waves-and-batches"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Order Fulfillment"
+    },
+    {
+      "type": "page",
+      "name": "purchase-orders",
+      "label": "Purchase Orders"
+    },
+    {
+      "type": "page",
+      "name": "sales-orders",
+      "label": "Sales Orders"
+    },
+    {
+      "type": "page",
+      "name": "pick-lists",
+      "label": "Pick Lists"
+    },
+    {
+      "type": "page",
+      "name": "waves-and-batches",
+      "label": "Waves & Batches"
+    }
   ]
 }

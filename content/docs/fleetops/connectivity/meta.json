@@ -1,10 +1,30 @@
 {
   "title": "Connectivity & Telematics",
   "pages": [
-    "index",
-    "devices",
-    "sensors",
-    "telematics",
-    "real-time-tracking"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Connectivity & Telematics"
+    },
+    {
+      "type": "page",
+      "name": "devices",
+      "label": "Devices"
+    },
+    {
+      "type": "page",
+      "name": "sensors",
+      "label": "Sensors"
+    },
+    {
+      "type": "page",
+      "name": "telematics",
+      "label": "Telematics"
+    },
+    {
+      "type": "page",
+      "name": "real-time-tracking",
+      "label": "Real-Time Tracking"
+    }
   ]
 }

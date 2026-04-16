@@ -1,6 +1,10 @@
 {
   "title": "Reports & Metrics",
   "pages": [
-    "index"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Reports & Metrics"
+    }
   ]
 }

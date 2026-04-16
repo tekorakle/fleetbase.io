@@ -1,11 +1,35 @@
 {
   "title": "Community & Support",
   "pages": [
-    "index",
-    "contributing",
-    "discord",
-    "changelog",
-    "faq",
-    "licensing"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Community & Support"
+    },
+    {
+      "type": "page",
+      "name": "contributing",
+      "label": "Contributing to Fleetbase"
+    },
+    {
+      "type": "page",
+      "name": "discord",
+      "label": "Discord Community"
+    },
+    {
+      "type": "page",
+      "name": "changelog",
+      "label": "Changelog"
+    },
+    {
+      "type": "page",
+      "name": "faq",
+      "label": "FAQ"
+    },
+    {
+      "type": "page",
+      "name": "licensing",
+      "label": "Licensing"
+    }
   ]
 }

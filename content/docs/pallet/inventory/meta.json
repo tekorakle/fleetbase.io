@@ -1,12 +1,40 @@
 {
   "title": "Inventory Control",
   "pages": [
-    "index",
-    "products",
-    "stock-levels",
-    "stock-adjustments",
-    "stock-transfers",
-    "low-stock",
-    "expired-stock"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Inventory Control"
+    },
+    {
+      "type": "page",
+      "name": "products",
+      "label": "Products"
+    },
+    {
+      "type": "page",
+      "name": "stock-levels",
+      "label": "Stock Levels"
+    },
+    {
+      "type": "page",
+      "name": "stock-adjustments",
+      "label": "Stock Adjustments"
+    },
+    {
+      "type": "page",
+      "name": "stock-transfers",
+      "label": "Stock Transfers"
+    },
+    {
+      "type": "page",
+      "name": "low-stock",
+      "label": "Low Stock Alerts"
+    },
+    {
+      "type": "page",
+      "name": "expired-stock",
+      "label": "Expired Stock"
+    }
   ]
 }

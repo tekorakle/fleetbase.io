@@ -1,12 +1,40 @@
 {
   "title": "Getting Started",
   "pages": [
-    "index",
-    "what-is-fleetbase",
-    "core-concepts",
-    "quickstart-cloud",
-    "quickstart-self-hosted",
-    "architecture-overview",
-    "deployment-options"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Getting Started"
+    },
+    {
+      "type": "page",
+      "name": "what-is-fleetbase",
+      "label": "What is Fleetbase?"
+    },
+    {
+      "type": "page",
+      "name": "core-concepts",
+      "label": "Core Concepts"
+    },
+    {
+      "type": "page",
+      "name": "quickstart-cloud",
+      "label": "Quickstart (Cloud)"
+    },
+    {
+      "type": "page",
+      "name": "quickstart-self-hosted",
+      "label": "Quickstart (Self-Hosted)"
+    },
+    {
+      "type": "page",
+      "name": "architecture-overview",
+      "label": "Architecture Overview"
+    },
+    {
+      "type": "page",
+      "name": "deployment-options",
+      "label": "Deployment Options"
+    }
   ]
 }

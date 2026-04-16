@@ -1,11 +1,35 @@
 {
   "title": "Ledger",
   "pages": [
-    "index",
-    "overview",
-    "accounting",
-    "billing",
-    "payments",
-    "reports"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Ledger"
+    },
+    {
+      "type": "page",
+      "name": "overview",
+      "label": "Overview & Setup"
+    },
+    {
+      "type": "folder",
+      "name": "accounting",
+      "label": "Accounting"
+    },
+    {
+      "type": "folder",
+      "name": "billing",
+      "label": "Billing & Invoicing"
+    },
+    {
+      "type": "folder",
+      "name": "payments",
+      "label": "Payments & Transactions"
+    },
+    {
+      "type": "folder",
+      "name": "reports",
+      "label": "Financial Reports"
+    }
   ]
 }

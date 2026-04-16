@@ -1,13 +1,45 @@
 {
   "title": "Settings",
   "pages": [
-    "index",
-    "navigator-app",
-    "notifications",
-    "custom-fields",
-    "routing",
-    "orchestrator",
-    "scheduling",
-    "payments"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Settings"
+    },
+    {
+      "type": "page",
+      "name": "navigator-app",
+      "label": "Navigator App"
+    },
+    {
+      "type": "page",
+      "name": "notifications",
+      "label": "Notifications"
+    },
+    {
+      "type": "page",
+      "name": "custom-fields",
+      "label": "Custom Fields"
+    },
+    {
+      "type": "page",
+      "name": "routing",
+      "label": "Routing"
+    },
+    {
+      "type": "page",
+      "name": "orchestrator",
+      "label": "Orchestrator Settings"
+    },
+    {
+      "type": "page",
+      "name": "scheduling",
+      "label": "Scheduling Settings"
+    },
+    {
+      "type": "page",
+      "name": "payments",
+      "label": "Payments"
+    }
   ]
 }

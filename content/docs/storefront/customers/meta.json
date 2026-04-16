@@ -1,8 +1,20 @@
 {
   "title": "Customers",
   "pages": [
-    "index",
-    "overview",
-    "authentication"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Customers"
+    },
+    {
+      "type": "page",
+      "name": "overview",
+      "label": "Customer Management"
+    },
+    {
+      "type": "page",
+      "name": "authentication",
+      "label": "Customer Authentication"
+    }
   ]
 }

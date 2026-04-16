@@ -1,11 +1,35 @@
 {
   "title": "Platform Features",
   "pages": [
-    "index",
-    "custom-fields",
-    "dashboards-and-widgets",
-    "chat-and-collaboration",
-    "notifications",
-    "scheduling"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Platform Features"
+    },
+    {
+      "type": "page",
+      "name": "custom-fields",
+      "label": "Custom Fields"
+    },
+    {
+      "type": "page",
+      "name": "dashboards-and-widgets",
+      "label": "Dashboards & Widgets"
+    },
+    {
+      "type": "page",
+      "name": "chat-and-collaboration",
+      "label": "Chat & Collaboration"
+    },
+    {
+      "type": "page",
+      "name": "notifications",
+      "label": "Notifications"
+    },
+    {
+      "type": "page",
+      "name": "scheduling",
+      "label": "Scheduling"
+    }
   ]
 }

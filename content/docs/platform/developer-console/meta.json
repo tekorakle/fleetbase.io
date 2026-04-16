@@ -1,10 +1,30 @@
 {
   "title": "Developer Console",
   "pages": [
-    "index",
-    "api-keys",
-    "webhooks",
-    "socket-events",
-    "request-logs"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Developer Console"
+    },
+    {
+      "type": "page",
+      "name": "api-keys",
+      "label": "API Keys"
+    },
+    {
+      "type": "page",
+      "name": "webhooks",
+      "label": "Webhooks"
+    },
+    {
+      "type": "page",
+      "name": "socket-events",
+      "label": "Socket Events"
+    },
+    {
+      "type": "page",
+      "name": "request-logs",
+      "label": "Request Logs"
+    }
   ]
 }

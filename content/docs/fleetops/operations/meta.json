@@ -1,13 +1,45 @@
 {
   "title": "Operations",
   "pages": [
-    "index",
-    "orders",
-    "order-configurations",
-    "routing-and-dispatching",
-    "service-rates",
-    "service-quotes",
-    "scheduler",
-    "orchestrator"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Operations"
+    },
+    {
+      "type": "page",
+      "name": "orders",
+      "label": "Orders"
+    },
+    {
+      "type": "page",
+      "name": "order-configurations",
+      "label": "Order Configurations"
+    },
+    {
+      "type": "page",
+      "name": "routing-and-dispatching",
+      "label": "Routing & Dispatching"
+    },
+    {
+      "type": "page",
+      "name": "service-rates",
+      "label": "Service Rates"
+    },
+    {
+      "type": "page",
+      "name": "service-quotes",
+      "label": "Service Quotes"
+    },
+    {
+      "type": "page",
+      "name": "scheduler",
+      "label": "Scheduler"
+    },
+    {
+      "type": "page",
+      "name": "orchestrator",
+      "label": "Orchestrator"
+    }
   ]
 }

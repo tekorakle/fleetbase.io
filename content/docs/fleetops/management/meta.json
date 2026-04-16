@@ -1,14 +1,50 @@
 {
   "title": "Management",
   "pages": [
-    "index",
-    "drivers",
-    "contacts",
-    "vehicles",
-    "fleets",
-    "vendors",
-    "places",
-    "issues",
-    "fuel-reports"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Management"
+    },
+    {
+      "type": "page",
+      "name": "drivers",
+      "label": "Drivers"
+    },
+    {
+      "type": "page",
+      "name": "contacts",
+      "label": "Contacts"
+    },
+    {
+      "type": "page",
+      "name": "vehicles",
+      "label": "Vehicles"
+    },
+    {
+      "type": "page",
+      "name": "fleets",
+      "label": "Fleets"
+    },
+    {
+      "type": "page",
+      "name": "vendors",
+      "label": "Vendors"
+    },
+    {
+      "type": "page",
+      "name": "places",
+      "label": "Places"
+    },
+    {
+      "type": "page",
+      "name": "issues",
+      "label": "Issues"
+    },
+    {
+      "type": "page",
+      "name": "fuel-reports",
+      "label": "Fuel Reports"
+    }
   ]
 }

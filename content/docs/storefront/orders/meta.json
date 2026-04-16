@@ -1,9 +1,25 @@
 {
   "title": "Orders & Checkout",
   "pages": [
-    "index",
-    "cart",
-    "checkout",
-    "payment-gateways"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Orders & Checkout"
+    },
+    {
+      "type": "page",
+      "name": "cart",
+      "label": "Cart"
+    },
+    {
+      "type": "page",
+      "name": "checkout",
+      "label": "Checkout"
+    },
+    {
+      "type": "page",
+      "name": "payment-gateways",
+      "label": "Payment Gateways"
+    }
   ]
 }

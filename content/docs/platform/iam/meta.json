@@ -1,9 +1,25 @@
 {
   "title": "Identity & Access Management",
   "pages": [
-    "index",
-    "users-roles-permissions",
-    "organizations-and-groups",
-    "policies-and-security"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Identity & Access Management"
+    },
+    {
+      "type": "page",
+      "name": "users-roles-permissions",
+      "label": "Users, Roles & Permissions"
+    },
+    {
+      "type": "page",
+      "name": "organizations-and-groups",
+      "label": "Organizations & Groups"
+    },
+    {
+      "type": "page",
+      "name": "policies-and-security",
+      "label": "Policies & Security"
+    }
   ]
 }

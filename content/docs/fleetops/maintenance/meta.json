@@ -1,10 +1,30 @@
 {
   "title": "Maintenance",
   "pages": [
-    "index",
-    "equipment",
-    "parts",
-    "maintenance-schedules",
-    "work-orders"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Maintenance"
+    },
+    {
+      "type": "page",
+      "name": "equipment",
+      "label": "Equipment"
+    },
+    {
+      "type": "page",
+      "name": "parts",
+      "label": "Parts"
+    },
+    {
+      "type": "page",
+      "name": "maintenance-schedules",
+      "label": "Maintenance Schedules"
+    },
+    {
+      "type": "page",
+      "name": "work-orders",
+      "label": "Work Orders"
+    }
   ]
 }

@@ -1,10 +1,30 @@
 {
   "title": "Stores & Networks",
   "pages": [
-    "index",
-    "stores-and-networks",
-    "store-locations",
-    "food-trucks",
-    "operating-hours"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Stores & Networks"
+    },
+    {
+      "type": "page",
+      "name": "stores-and-networks",
+      "label": "Stores & Networks"
+    },
+    {
+      "type": "page",
+      "name": "store-locations",
+      "label": "Store Locations"
+    },
+    {
+      "type": "page",
+      "name": "food-trucks",
+      "label": "Food Trucks"
+    },
+    {
+      "type": "page",
+      "name": "operating-hours",
+      "label": "Operating Hours"
+    }
   ]
 }

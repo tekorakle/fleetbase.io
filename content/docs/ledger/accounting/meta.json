@@ -1,9 +1,25 @@
 {
   "title": "Accounting",
   "pages": [
-    "index",
-    "chart-of-accounts",
-    "general-ledger",
-    "journal-entries"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Accounting"
+    },
+    {
+      "type": "page",
+      "name": "chart-of-accounts",
+      "label": "Chart of Accounts"
+    },
+    {
+      "type": "page",
+      "name": "general-ledger",
+      "label": "General Ledger"
+    },
+    {
+      "type": "page",
+      "name": "journal-entries",
+      "label": "Journal Entries"
+    }
   ]
 }

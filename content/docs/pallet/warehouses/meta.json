@@ -1,8 +1,20 @@
 {
   "title": "Warehouse Management",
   "pages": [
-    "index",
-    "warehouses",
-    "zones-aisles-racks-bins"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Warehouse Management"
+    },
+    {
+      "type": "page",
+      "name": "warehouses",
+      "label": "Warehouses"
+    },
+    {
+      "type": "page",
+      "name": "zones-aisles-racks-bins",
+      "label": "Zones, Aisles, Racks & Bins"
+    }
   ]
 }

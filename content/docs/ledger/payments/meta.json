@@ -1,9 +1,25 @@
 {
   "title": "Payments & Transactions",
   "pages": [
-    "index",
-    "gateways",
-    "wallets",
-    "transactions"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Payments & Transactions"
+    },
+    {
+      "type": "page",
+      "name": "gateways",
+      "label": "Payment Gateways"
+    },
+    {
+      "type": "page",
+      "name": "wallets",
+      "label": "Wallets"
+    },
+    {
+      "type": "page",
+      "name": "transactions",
+      "label": "Transactions"
+    }
   ]
 }

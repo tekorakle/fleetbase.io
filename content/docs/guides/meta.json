@@ -1,14 +1,50 @@
 {
   "title": "Guides & Examples",
   "pages": [
-    "index",
-    "build-a-last-mile-delivery-app",
-    "build-an-on-demand-marketplace",
-    "integrate-with-your-erp",
-    "track-a-fleet-in-real-time",
-    "build-a-custom-extension",
-    "set-up-multi-tenant-organizations",
-    "configure-automated-order-routing",
-    "white-label-the-navigator-app"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Guides & Examples"
+    },
+    {
+      "type": "page",
+      "name": "build-a-last-mile-delivery-app",
+      "label": "Build a Last-Mile Delivery App"
+    },
+    {
+      "type": "page",
+      "name": "build-an-on-demand-marketplace",
+      "label": "Build an On-Demand Marketplace"
+    },
+    {
+      "type": "page",
+      "name": "integrate-with-your-erp",
+      "label": "Integrate Fleetbase with Your ERP"
+    },
+    {
+      "type": "page",
+      "name": "track-a-fleet-in-real-time",
+      "label": "Track a Fleet in Real Time"
+    },
+    {
+      "type": "page",
+      "name": "build-a-custom-extension",
+      "label": "Build a Custom Extension"
+    },
+    {
+      "type": "page",
+      "name": "set-up-multi-tenant-organizations",
+      "label": "Set Up Multi-Tenant Organizations"
+    },
+    {
+      "type": "page",
+      "name": "configure-automated-order-routing",
+      "label": "Configure Automated Order Routing"
+    },
+    {
+      "type": "page",
+      "name": "white-label-the-navigator-app",
+      "label": "White-Label the Navigator App"
+    }
   ]
 }

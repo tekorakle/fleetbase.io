@@ -1,17 +1,65 @@
 {
-  "title": "Building & Extending",
+  "title": "Building & Extending Fleetbase",
   "pages": [
-    "index",
-    "overview",
-    "extension-architecture",
-    "scaffolding-your-extension",
-    "backend-development",
-    "frontend-development",
-    "menus-and-navigation",
-    "hooks-and-lifecycle",
-    "dashboard-widgets",
-    "registering-components",
-    "virtual-routes",
-    "publishing-to-marketplace"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Building & Extending Fleetbase"
+    },
+    {
+      "type": "page",
+      "name": "overview",
+      "label": "Overview"
+    },
+    {
+      "type": "page",
+      "name": "extension-architecture",
+      "label": "Extension Architecture"
+    },
+    {
+      "type": "page",
+      "name": "scaffolding-your-extension",
+      "label": "Scaffolding Your Extension"
+    },
+    {
+      "type": "page",
+      "name": "backend-development",
+      "label": "Backend Development"
+    },
+    {
+      "type": "page",
+      "name": "frontend-development",
+      "label": "Frontend Development"
+    },
+    {
+      "type": "page",
+      "name": "menus-and-navigation",
+      "label": "Menus & Navigation"
+    },
+    {
+      "type": "page",
+      "name": "hooks-and-lifecycle",
+      "label": "Hooks & Lifecycle Events"
+    },
+    {
+      "type": "page",
+      "name": "dashboard-widgets",
+      "label": "Dashboard Widgets"
+    },
+    {
+      "type": "page",
+      "name": "registering-components",
+      "label": "Registering Components & UI"
+    },
+    {
+      "type": "page",
+      "name": "virtual-routes",
+      "label": "Virtual Routes & Deep Linking"
+    },
+    {
+      "type": "page",
+      "name": "publishing-to-marketplace",
+      "label": "Publishing to the Marketplace"
+    }
   ]
 }

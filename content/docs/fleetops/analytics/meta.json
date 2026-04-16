@@ -1,7 +1,15 @@
 {
   "title": "Analytics",
   "pages": [
-    "index",
-    "reports"
+    {
+      "type": "page",
+      "name": "index",
+      "label": "Analytics"
+    },
+    {
+      "type": "page",
+      "name": "reports",
+      "label": "Reports"
+    }
   ]
 }
