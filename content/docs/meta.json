@@ -1,60 +1,16 @@
 {
-  "title": "Welcome to Fleetbase Docs",
+  "title": "Fleetbase Docs",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Welcome to Fleetbase Docs"
-    },
-    {
-      "type": "folder",
-      "name": "getting-started",
-      "label": "Getting Started"
-    },
-    {
-      "type": "folder",
-      "name": "platform",
-      "label": "Core Platform"
-    },
-    {
-      "type": "folder",
-      "name": "fleetops",
-      "label": "FleetOps"
-    },
-    {
-      "type": "folder",
-      "name": "storefront",
-      "label": "Storefront"
-    },
-    {
-      "type": "folder",
-      "name": "pallet",
-      "label": "Pallet"
-    },
-    {
-      "type": "folder",
-      "name": "ledger",
-      "label": "Ledger"
-    },
-    {
-      "type": "folder",
-      "name": "extending-fleetbase",
-      "label": "Building & Extending Fleetbase"
-    },
-    {
-      "type": "folder",
-      "name": "guides",
-      "label": "Guides & Examples"
-    },
-    {
-      "type": "folder",
-      "name": "apps",
-      "label": "Mobile Apps"
-    },
-    {
-      "type": "folder",
-      "name": "community",
-      "label": "Community & Support"
-    }
+    "index",
+    "getting-started",
+    "platform",
+    "fleetops",
+    "storefront",
+    "pallet",
+    "ledger",
+    "extending-fleetbase",
+    "guides",
+    "apps",
+    "community"
   ]
 }

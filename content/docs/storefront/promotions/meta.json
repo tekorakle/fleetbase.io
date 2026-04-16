@@ -1,15 +1,7 @@
 {
   "title": "Promotions & Marketing",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Promotions & Marketing"
-    },
-    {
-      "type": "page",
-      "name": "push-notifications",
-      "label": "Push Notifications"
-    }
+    "index",
+    "push-notifications"
   ]
 }

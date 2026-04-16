@@ -1,30 +1,10 @@
 {
   "title": "Core Platform",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Core Platform"
-    },
-    {
-      "type": "folder",
-      "name": "iam",
-      "label": "Identity & Access Management"
-    },
-    {
-      "type": "folder",
-      "name": "developer-console",
-      "label": "Developer Console"
-    },
-    {
-      "type": "folder",
-      "name": "extensions",
-      "label": "Extensions"
-    },
-    {
-      "type": "folder",
-      "name": "features",
-      "label": "Platform Features"
-    }
+    "index",
+    "iam",
+    "developer-console",
+    "extensions",
+    "features"
   ]
 }

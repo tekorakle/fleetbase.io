@@ -1,20 +1,8 @@
 {
   "title": "Extensions",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Extensions"
-    },
-    {
-      "type": "page",
-      "name": "browsing-and-installing",
-      "label": "Browsing & Installing Extensions"
-    },
-    {
-      "type": "page",
-      "name": "managing-extensions",
-      "label": "Managing Extensions"
-    }
+    "index",
+    "browsing-and-installing",
+    "managing-extensions"
   ]
 }

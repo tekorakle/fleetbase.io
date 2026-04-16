@@ -1,15 +1,7 @@
 {
   "title": "Audits & Cycle Counts",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Audits & Cycle Counts"
-    },
-    {
-      "type": "page",
-      "name": "cycle-counts",
-      "label": "Cycle Counts"
-    }
+    "index",
+    "cycle-counts"
   ]
 }

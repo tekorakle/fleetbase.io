@@ -1,20 +1,8 @@
 {
   "title": "Mobile Apps",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Mobile Apps"
-    },
-    {
-      "type": "folder",
-      "name": "navigator-app",
-      "label": "Navigator App"
-    },
-    {
-      "type": "folder",
-      "name": "storefront-app",
-      "label": "Storefront App"
-    }
+    "index",
+    "navigator-app",
+    "storefront-app"
   ]
 }

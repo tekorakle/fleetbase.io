@@ -1,40 +1,12 @@
 {
   "title": "Financial Reports",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Financial Reports"
-    },
-    {
-      "type": "page",
-      "name": "balance-sheet",
-      "label": "Balance Sheet"
-    },
-    {
-      "type": "page",
-      "name": "income-statement",
-      "label": "Income Statement"
-    },
-    {
-      "type": "page",
-      "name": "cash-flow",
-      "label": "Cash Flow Statement"
-    },
-    {
-      "type": "page",
-      "name": "trial-balance",
-      "label": "Trial Balance"
-    },
-    {
-      "type": "page",
-      "name": "ar-aging",
-      "label": "AR Aging Report"
-    },
-    {
-      "type": "page",
-      "name": "wallet-summary",
-      "label": "Wallet Summary"
-    }
+    "index",
+    "balance-sheet",
+    "income-statement",
+    "cash-flow",
+    "trial-balance",
+    "ar-aging",
+    "wallet-summary"
   ]
 }

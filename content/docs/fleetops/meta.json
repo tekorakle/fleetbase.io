@@ -1,45 +1,13 @@
 {
   "title": "FleetOps",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "FleetOps"
-    },
-    {
-      "type": "page",
-      "name": "overview",
-      "label": "Overview & Setup"
-    },
-    {
-      "type": "folder",
-      "name": "management",
-      "label": "Management"
-    },
-    {
-      "type": "folder",
-      "name": "operations",
-      "label": "Operations"
-    },
-    {
-      "type": "folder",
-      "name": "connectivity",
-      "label": "Connectivity & Telematics"
-    },
-    {
-      "type": "folder",
-      "name": "maintenance",
-      "label": "Maintenance"
-    },
-    {
-      "type": "folder",
-      "name": "analytics",
-      "label": "Analytics"
-    },
-    {
-      "type": "folder",
-      "name": "settings",
-      "label": "Settings"
-    }
+    "index",
+    "overview",
+    "management",
+    "operations",
+    "connectivity",
+    "maintenance",
+    "analytics",
+    "settings"
   ]
 }

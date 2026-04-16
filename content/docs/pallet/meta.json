@@ -1,45 +1,13 @@
 {
-  "title": "Pallet",
+  "title": "Pallet (Beta)",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Pallet"
-    },
-    {
-      "type": "page",
-      "name": "overview",
-      "label": "Overview & Setup"
-    },
-    {
-      "type": "folder",
-      "name": "warehouses",
-      "label": "Warehouse Management"
-    },
-    {
-      "type": "folder",
-      "name": "inventory",
-      "label": "Inventory Control"
-    },
-    {
-      "type": "folder",
-      "name": "fulfillment",
-      "label": "Order Fulfillment"
-    },
-    {
-      "type": "page",
-      "name": "suppliers",
-      "label": "Suppliers"
-    },
-    {
-      "type": "folder",
-      "name": "audits",
-      "label": "Audits & Cycle Counts"
-    },
-    {
-      "type": "folder",
-      "name": "reports",
-      "label": "Reports & Metrics"
-    }
+    "index",
+    "overview",
+    "warehouses",
+    "inventory",
+    "fulfillment",
+    "suppliers",
+    "audits",
+    "reports"
   ]
 }

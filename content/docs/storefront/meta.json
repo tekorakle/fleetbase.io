@@ -1,50 +1,14 @@
 {
   "title": "Storefront",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Storefront"
-    },
-    {
-      "type": "page",
-      "name": "overview",
-      "label": "Overview & Setup"
-    },
-    {
-      "type": "folder",
-      "name": "catalog",
-      "label": "Catalog Management"
-    },
-    {
-      "type": "folder",
-      "name": "stores",
-      "label": "Stores & Networks"
-    },
-    {
-      "type": "folder",
-      "name": "customers",
-      "label": "Customers"
-    },
-    {
-      "type": "folder",
-      "name": "orders",
-      "label": "Orders & Checkout"
-    },
-    {
-      "type": "page",
-      "name": "reviews",
-      "label": "Reviews & Ratings"
-    },
-    {
-      "type": "folder",
-      "name": "promotions",
-      "label": "Promotions & Marketing"
-    },
-    {
-      "type": "folder",
-      "name": "settings",
-      "label": "Settings"
-    }
+    "index",
+    "overview",
+    "stores",
+    "catalog",
+    "customers",
+    "orders",
+    "reviews",
+    "promotions",
+    "settings"
   ]
 }

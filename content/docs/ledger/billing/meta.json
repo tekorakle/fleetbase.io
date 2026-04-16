@@ -1,20 +1,8 @@
 {
   "title": "Billing & Invoicing",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Billing & Invoicing"
-    },
-    {
-      "type": "page",
-      "name": "invoices",
-      "label": "Invoices"
-    },
-    {
-      "type": "page",
-      "name": "invoice-templates",
-      "label": "Invoice Templates"
-    }
+    "index",
+    "invoices",
+    "invoice-templates"
   ]
 }

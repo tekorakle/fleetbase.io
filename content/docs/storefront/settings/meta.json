@@ -1,30 +1,10 @@
 {
   "title": "Settings",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Settings"
-    },
-    {
-      "type": "page",
-      "name": "api",
-      "label": "API Settings"
-    },
-    {
-      "type": "page",
-      "name": "gateways",
-      "label": "Payment Gateways"
-    },
-    {
-      "type": "page",
-      "name": "locations",
-      "label": "Locations"
-    },
-    {
-      "type": "page",
-      "name": "notifications",
-      "label": "Notifications"
-    }
+    "index",
+    "api",
+    "gateways",
+    "locations",
+    "notifications"
   ]
 }

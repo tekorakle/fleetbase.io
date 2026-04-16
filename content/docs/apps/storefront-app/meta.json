@@ -1,25 +1,9 @@
 {
   "title": "Storefront App",
   "pages": [
-    {
-      "type": "page",
-      "name": "index",
-      "label": "Storefront App"
-    },
-    {
-      "type": "page",
-      "name": "overview",
-      "label": "Overview"
-    },
-    {
-      "type": "page",
-      "name": "setup",
-      "label": "Setup & Configuration"
-    },
-    {
-      "type": "page",
-      "name": "customization",
-      "label": "Customization & White-Labeling"
-    }
+    "index",
+    "overview",
+    "setup",
+    "customization"
   ]
 }
