@@ -32,6 +32,10 @@ import {
  Briefcase,
  ClipboardList,
  Brain,
+ FileCode,
+ Library,
+ Terminal,
+ Puzzle,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -313,22 +317,22 @@ export const NAV_LINKS: NavLink[] = [
  icon: BookOpen,
  },
  {
- label: 'API Documentation',
+ label: 'API Reference',
  href: '/docs/api',
  description: 'Comprehensive REST API reference with code examples and guides.',
- icon: BookOpen,
+ icon: FileCode,
  },
  {
  label: 'SDKs & Libraries',
  href: '/developers/sdks',
  description: 'Official SDKs for JavaScript, PHP, Java, Python, and more languages.',
- icon: Code,
+ icon: Library,
  },
  {
  label: 'Developer Console',
  href: '/developers/console',
  description: 'Manage API keys, monitor webhooks, and debug integrations in real-time.',
- icon: Code,
+ icon: Terminal,
  },
  {
  label: 'Webhooks & Events',
@@ -340,7 +344,7 @@ export const NAV_LINKS: NavLink[] = [
  label: 'Build an Extension',
  href: '/developers/extensions',
  description: 'Create custom extensions and publish them to the marketplace.',
- icon: Boxes,
+ icon: Puzzle,
  },
  {
  label: 'GitHub Repository',

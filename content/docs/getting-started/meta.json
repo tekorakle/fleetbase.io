@@ -2,9 +2,9 @@
   "title": "Getting Started",
   "pages": [
     "what-is-fleetbase",
-    "core-concepts",
     "quickstart-cloud",
     "quickstart-self-hosted",
+    "core-concepts",
     "architecture-overview",
     "deployment-options"
   ]
