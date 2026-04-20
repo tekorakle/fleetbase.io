@@ -28,6 +28,7 @@ export default async function Page(props: {
  tableOfContent={{
  style: 'clerk',
  }}
+ article={{ className: 'pt-4 md:pt-6' }}
  >
  {!isOverviewPage && (
  <>

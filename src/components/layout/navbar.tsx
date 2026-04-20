@@ -485,10 +485,15 @@ const Navbar = () => {
  };
  }, [isMenuOpen]);
 
+ const isDocsPage = pathname.startsWith('/docs');
+
  if (hideNavbar) return null;
 
  return (
- <header className="lg:border-b">
+ <header className={cn(
+ 'sticky top-0 z-50 lg:border-b',
+ isDocsPage ? 'bg-fd-card' : 'bg-background/95 backdrop-blur-md',
+ )}>
  <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
  
  <Logo />

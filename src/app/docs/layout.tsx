@@ -12,7 +12,8 @@ export default function Layout({ children }: { children: ReactNode }) {
       <DocsLayout
         tree={source.pageTree}
         {...baseOptions}
-        nav={{ ...baseOptions.nav, enabled: false }}
+        nav={{ enabled: false, title: undefined }}
+        containerProps={{ className: 'md:[&_#nd-page_article]:pt-6' }}
         sidebar={{
           collapsible: false,
           banner: (
