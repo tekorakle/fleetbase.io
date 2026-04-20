@@ -1,11 +1,15 @@
 {
   "title": "Pallet (Beta)",
   "pages": [
+    "index",
     "overview",
+    "$separator:Warehousing",
     "warehouses",
     "inventory",
+    "$separator:Operations",
     "fulfillment",
     "suppliers",
+    "$separator:Reporting",
     "audits",
     "reports"
   ]

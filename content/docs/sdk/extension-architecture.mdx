@@ -1,0 +1,73 @@
+---
+title: Extension Architecture
+description: "Understand the anatomy of a Fleetbase extension: the server package, the frontend engine, and the extension.json manifest."
+---
+
+# Extension Architecture
+
+A Fleetbase extension is a self-contained module that adds new functionality to the core platform.
+
+Because Fleetbase is built on a decoupled architecture—a PHP Laravel backend and an Ember.js frontend—a complete extension typically consists of two distinct parts that communicate via an API.
+
+## The Anatomy of an Extension
+
+A standard Fleetbase extension repository has the following structure:
+
+```text
+my-extension/
+├── addon/                 # The Ember.js frontend engine
+│   ├── components/
+│   ├── controllers/
+│   ├── routes/
+│   ├── templates/
+│   └── engine.js
+├── server/                # The PHP Laravel backend package
+│   ├── src/
+│   │   ├── Http/
+│   │   │   └── Controllers/
+│   │   ├── Models/
+│   │   └── Providers/
+│   ├── database/
+│   │   └── migrations/
+│   └── composer.json
+├── extension.json         # The extension manifest
+└── README.md
+```
+
+### 1. The Frontend (`addon/`)
+The `addon/` directory contains an **Ember Engine**.
+
+An Ember Engine is a self-contained Ember application that can be mounted inside a larger host application (the Fleetbase Console).
+
+This is where you build your UI components, define your frontend routes, and interact with the [Universe Service](/docs/extending-fleetbase) to inject your extension into the Fleetbase navigation and dashboard.
+
+*See [Frontend Development](/docs/extending-fleetbase/frontend-development) for more details.*
+
+### 2. The Backend (`server/`)
+The `server/` directory contains a **Laravel Package**.
+
+This is where you define your database models, create migrations to modify the database schema, and build the API controllers that your frontend will communicate with.
+
+When the extension is installed, Fleetbase automatically registers the package's Service Provider, loading its routes and migrations into the core application.
+
+*See [Backend Development](/docs/extending-fleetbase/backend-development) for more details.*
+
+### 3. The Manifest (`extension.json`)
+The `extension.json` file is the critical link that ties the frontend and backend together.
+
+It is a manifest file that tells the Fleetbase Registry everything it needs to know about your extension: its name, version, author, dependencies, and the specific entry points for the frontend engine and backend package.
+
+```json
+{
+  "name": "my-extension",
+  "version": "1.0.0",
+  "description": "A custom extension for Fleetbase.",
+  "author": "Your Name",
+  "core": "^1.0.0",
+  "type": "engine",
+  "icon": "box",
+  "route": "console.my-extension"
+}
+```
+
+When a user installs your extension via the [Registry](/docs/platform/extensions), Fleetbase reads this manifest to determine how to load and mount the extension within the platform.

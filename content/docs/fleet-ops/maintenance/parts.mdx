@@ -1,0 +1,56 @@
+---
+title: Parts
+description: Manage spare parts inventory used in vehicle maintenance and work orders.
+---
+
+# Parts
+
+If you operate your own maintenance shop, tracking your inventory of spare parts is essential for controlling costs and ensuring mechanics have what they need to complete repairs quickly.
+
+The **Parts** section of FleetOps provides a simple inventory management system specifically designed for vehicle maintenance.
+
+## Managing the Parts Catalog
+
+A Part in FleetOps represents a specific type of component (e.g., "Oil Filter - Model X", "Brake Pad Set - Heavy Duty").
+
+To add a new part to your catalog:
+
+1. Navigate to **FleetOps** > **Parts** in the Fleetbase Console.
+2. Click the **New Part** button.
+3. Provide the details:
+   - **Name**: A descriptive name for the part.
+   - **Part Number / SKU**: The manufacturer's identifier, useful for reordering.
+   - **Description**: Any relevant details or compatibility notes.
+   - **Unit Cost**: The price you paid for the part. This is used to calculate the total cost of a [Work Order](/docs/fleetops/maintenance/work-orders).
+   - **Quantity on Hand**: The current number of these parts you have in stock.
+4. Click **Save**.
+
+## Using Parts in Work Orders
+
+The primary way parts are consumed is through Work Orders.
+
+When a mechanic is working on a vehicle and needs to replace a component, they open the active Work Order and add a "Part" line item.
+
+1. In the Work Order, click **Add Part**.
+2. Search the catalog for the required part.
+3. Enter the quantity used (e.g., 4 spark plugs).
+4. Click **Save**.
+
+FleetOps automatically performs two actions:
+1. It deducts the quantity used from the part's **Quantity on Hand** in your inventory.
+2. It multiplies the quantity by the part's **Unit Cost** and adds that amount to the total cost of the Work Order.
+
+This ensures your inventory levels are always accurate and the true cost of the repair is captured.
+
+## Restocking Parts
+
+When your inventory runs low, you will need to order more parts from a supplier (a [Vendor](/docs/fleetops/management/vendors)).
+
+When the new shipment arrives, you must update the inventory in FleetOps:
+
+1. Open the Part record in the Fleetbase Console.
+2. Update the **Quantity on Hand** to reflect the new total.
+3. If the price of the part has changed, update the **Unit Cost**. *Note: This will only affect future Work Orders; it will not retroactively change the cost of completed repairs.*
+4. Click **Save**.
+
+By keeping your Parts catalog up-to-date, you ensure your maintenance operations run smoothly and your cost tracking remains accurate.

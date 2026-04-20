@@ -1,0 +1,10 @@
+{
+  "title": "API Reference",
+  "pages": [
+    "index",
+    "$separator:Fleetbase API",
+    "fleetbase",
+    "$separator:Storefront API",
+    "storefront"
+  ]
+}

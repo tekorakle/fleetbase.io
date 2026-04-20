@@ -1,0 +1,35 @@
+---
+title: API Reference
+description: Complete REST API reference for the Fleetbase platform, Storefront, and integrated vendor APIs.
+---
+
+# API Reference
+
+The Fleetbase REST API allows you to programmatically interact with every aspect of the platform — creating orders, managing drivers, processing payments, and more.
+
+## Authentication
+
+All API requests require an API key. You can generate API keys from the [Developer Console](/docs/platform/developer-console/api-keys).
+
+Include your API key in the `Authorization` header:
+
+```bash
+curl https://api.fleetbase.io/v1/orders \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+## Base URLs
+
+| API | Base URL |
+|---|---|
+| Fleetbase Core | `https://api.fleetbase.io/v1` |
+| Storefront | `https://api.fleetbase.io/storefront/v1` |
+
+## Available APIs
+
+This reference covers:
+
+- **Fleetbase API** — Core platform endpoints: orders, drivers, vehicles, contacts, places, and more
+- **Storefront API** — E-commerce endpoints: products, stores, customers, carts, and orders
+
+Select an API from the sidebar to explore its endpoints.

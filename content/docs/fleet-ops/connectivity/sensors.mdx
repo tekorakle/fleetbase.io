@@ -1,0 +1,61 @@
+---
+title: Sensors
+description: Connect and monitor sensors attached to vehicles or assets for environmental and operational data.
+---
+
+# Sensors
+
+While [Devices](/docs/fleetops/connectivity/devices) generally track the location and health of a vehicle, **Sensors** are used to monitor the condition of the cargo itself.
+
+Sensors are critical for specialized logistics operations, such as cold-chain transport (food, pharmaceuticals), high-value goods transport, or hazardous materials handling.
+
+## Types of Sensors
+
+Fleetbase can ingest data from various types of environmental and operational sensors:
+
+- **Temperature Sensors**: Monitor the internal temperature of a refrigerated trailer or a specific cooler box.
+- **Humidity Sensors**: Ensure sensitive goods (like electronics or certain foods) are kept dry.
+- **Light Sensors**: Detect if a sealed package or trailer has been opened prematurely.
+- **Shock/Vibration Sensors**: Detect if fragile goods have been dropped or subjected to rough handling.
+- **Door Sensors**: Monitor when the cargo doors of a vehicle are opened and closed.
+
+## Registering a Sensor
+
+Like Devices, Sensors must be registered in FleetOps before their data can be used.
+
+1. Navigate to **FleetOps** > **Sensors** in the Fleetbase Console.
+2. Click the **New Sensor** button.
+3. Fill in the sensor details:
+   - **Name**: A descriptive name (e.g., "Temp Probe - Trailer A").
+   - **Type**: The kind of data the sensor collects (e.g., `Temperature`, `Humidity`).
+   - **Sensor ID / MAC Address**: The unique identifier for the hardware.
+   - **Status**: Set the initial status (e.g., `Active`, `Inactive`).
+4. Click **Save**.
+
+## Assigning a Sensor
+
+Sensors can be assigned to different types of resources depending on your operational needs:
+
+- **Assign to a Vehicle**: If the sensor is permanently installed in a refrigerated truck, assign it to the [Vehicle](/docs/fleetops/management/vehicles). The sensor data will then be associated with any order that vehicle carries.
+- **Assign to an Order/Payload**: If the sensor is placed inside a specific package or pallet, you can assign it directly to the [Order](/docs/fleetops/operations/orders). This provides a complete environmental history for that specific shipment, which is often required for compliance reporting.
+
+## Monitoring Sensor Data
+
+Once a sensor is active and assigned, its data stream is visible in the Fleetbase Console.
+
+When viewing a vehicle or an order that has an assigned sensor, you will see a real-time readout of the sensor's current value (e.g., "Current Temp: -18°C").
+
+### Historical Data
+
+Fleetbase stores the historical data from sensors, allowing you to generate compliance reports. For example, you can generate a report proving that a specific pharmaceutical shipment never exceeded the required temperature range during its entire journey.
+
+## Automated Alerts
+
+The true power of integrating sensors into FleetOps is the ability to trigger automated alerts when things go wrong.
+
+Using the [Orchestrator](/docs/fleetops/operations/orchestrator), you can create rules based on sensor readings:
+
+- *Condition*: "If Sensor 'Temp Probe - Trailer A' reports a value > -15°C for more than 5 minutes..."
+- *Action*: "Send an urgent SMS to the assigned driver and the fleet manager."
+
+This allows you to address issues (like a failing refrigeration unit) before the cargo is ruined.

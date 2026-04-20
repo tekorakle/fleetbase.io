@@ -1,0 +1,35 @@
+---
+title: Fleetbase UI
+description: The Fleetbase UI library — components, conventions, and patterns for building consistent interfaces in the Fleetbase Console.
+---
+
+# Fleetbase UI
+
+The **Fleetbase UI** library (`@fleetbase/ember-ui`) is the standard component library used across all Fleetbase extensions and the core console. It provides a set of pre-built, consistent UI components built on Ember.js that extension developers use to build interfaces that look and behave like native Fleetbase features.
+
+## What's in this section
+
+This section covers:
+
+- **Components** — Every component available in `@fleetbase/ember-ui`, with props, options, and usage examples
+- **Markup Conventions** — The standard patterns and conventions for structuring extension UI
+- **Mobile Apps** — The Navigator and Storefront mobile applications built on the Fleetbase platform
+
+## Getting Started
+
+To use the Fleetbase UI library in your extension, install it via npm:
+
+```bash
+npm install @fleetbase/ember-ui
+```
+
+Then import components as needed in your Ember.js templates:
+
+```handlebars
+{{!-- Example: using a Fleetbase UI button --}}
+<Button @type="primary" @onClick={{this.handleAction}}>
+  Save Changes
+</Button>
+```
+
+For a full walkthrough of building an extension UI, see the [Extension SDK](/docs/sdk) documentation.

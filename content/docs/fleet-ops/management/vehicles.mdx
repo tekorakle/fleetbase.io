@@ -1,0 +1,84 @@
+---
+title: Vehicles
+description: Register and manage your vehicle fleet, including vehicle details, assignments, and status tracking.
+---
+
+# Vehicles
+
+Vehicles are the physical assets that make up your fleet. In FleetOps, a Vehicle record stores all the essential details about a specific truck, van, car, or bike, including its specifications, current status, and assignment history.
+
+## Adding a Vehicle
+
+To register a new vehicle in your fleet:
+
+1. Navigate to **FleetOps** > **Vehicles** in the Fleetbase Console.
+2. Click the **New Vehicle** button.
+3. Fill in the vehicle's details:
+   - **Make & Model**: The manufacturer and model of the vehicle (e.g., "Ford Transit").
+   - **Year**: The manufacturing year.
+   - **License Plate**: The vehicle's registration number.
+   - **VIN**: The Vehicle Identification Number (optional but recommended).
+   - **Internal ID**: An optional custom identifier (e.g., "Truck 04").
+   - **Status**: Set the initial status (e.g., `Active`, `Maintenance`).
+4. Click **Save**.
+
+Once created, the vehicle is added to your fleet inventory and can be assigned to a driver.
+
+## Managing Vehicle Profiles
+
+Clicking on a vehicle in the list opens its detailed profile, where you can manage its specifications, assignments, and maintenance records.
+
+### Vehicle Specifications
+
+Accurate vehicle specifications are crucial for automated routing and dispatching. FleetOps uses this data to ensure that an order is assigned to a vehicle capable of handling it.
+
+In the vehicle's profile, you can define:
+- **Dimensions**: Length, width, and height.
+- **Weight Capacity**: The maximum payload the vehicle can carry.
+- **Volume Capacity**: The total cargo space available.
+
+If an order requires a specific vehicle type (e.g., a refrigerated truck) or exceeds the weight capacity of a standard van, FleetOps will automatically filter out incompatible vehicles during the dispatch process.
+
+### Assigning a Driver
+
+A vehicle must be assigned to a driver to execute deliveries.
+
+1. In the vehicle's profile, locate the **Driver** section.
+2. Click **Assign Driver**.
+3. Select an available driver from your workforce.
+4. Click **Save**.
+
+The vehicle's current location and status will now be associated with that driver.
+
+### Managing Documents
+
+Just like drivers, vehicles require compliance documentation. You can upload and track important documents directly on the vehicle's profile.
+
+1. In the vehicle's profile, navigate to the **Documents** tab.
+2. Click **Upload Document**.
+3. Select the file (e.g., a scan of the vehicle's registration or insurance certificate).
+4. Provide a name and optional expiration date for the document.
+
+If a document has an expiration date, FleetOps can be configured to send automated [Notifications](/docs/platform/features/notifications) before it expires.
+
+## Vehicle Status and Availability
+
+A vehicle's status indicates its current operational state. This status is updated automatically based on its assignment and activity, but can also be changed manually by a dispatcher or fleet manager.
+
+Common statuses include:
+- **Active**: The vehicle is currently assigned to a driver and available for dispatch.
+- **Inactive**: The vehicle is not currently assigned or in use.
+- **Maintenance**: The vehicle is out of service for repairs or routine maintenance.
+
+### Tracking Location
+
+When a vehicle is `Active` and assigned to a driver who is `Online`, the Navigator app continuously transmits the vehicle's GPS location back to FleetOps. This allows dispatchers to see the vehicle's real-time position on the map and calculate accurate ETAs for active orders.
+
+## Maintenance and Issues
+
+Keeping your fleet on the road is critical. FleetOps provides tools for tracking vehicle maintenance and resolving operational issues.
+
+- **Issues**: Drivers can report vehicle defects (like a flat tire or a check engine light) directly from the Navigator app. These reports are logged as [Issues](/docs/fleetops/management/issues) and associated with the vehicle's profile.
+- **Fuel Reports**: Drivers can submit fuel receipts via the app, allowing you to track fuel consumption and expenses per vehicle. These reports are logged as [Fuel Reports](/docs/fleetops/management/fuel-reports).
+
+By monitoring these records, you can identify recurring problems, schedule preventative maintenance, and optimize your fleet's performance.

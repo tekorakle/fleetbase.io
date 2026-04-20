@@ -1,0 +1,19 @@
+{
+  "title": "Fleet-Ops",
+  "pages": [
+    "index",
+    "overview",
+    "$separator:Management",
+    "management",
+    "$separator:Operations",
+    "operations",
+    "$separator:Connectivity",
+    "connectivity",
+    "$separator:Maintenance",
+    "maintenance",
+    "$separator:Analytics",
+    "analytics",
+    "$separator:Settings",
+    "settings"
+  ]
+}

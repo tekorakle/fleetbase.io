@@ -1,13 +1,20 @@
 {
   "title": "Storefront",
   "pages": [
+    "index",
     "overview",
-    "stores",
+    "$separator:Catalog",
     "catalog",
+    "$separator:Stores",
+    "stores",
+    "$separator:Customers",
     "customers",
+    "$separator:Orders",
     "orders",
+    "$separator:Promotions & Reviews",
     "reviews",
     "promotions",
+    "$separator:Settings",
     "settings"
   ]
 }

@@ -1,0 +1,42 @@
+---
+title: Fleetbase CLI
+description: The Fleetbase CLI (flb) — install, manage, and automate your Fleetbase instance from the command line.
+---
+
+# Fleetbase CLI
+
+The **Fleetbase CLI** (`flb`) is the official command-line tool for installing, managing, and automating your Fleetbase instance. It handles everything from initial installation to extension scaffolding and environment management.
+
+## Installation
+
+Install the CLI globally via npm:
+
+```bash
+npm install -g @fleetbase/cli
+```
+
+Verify the installation:
+
+```bash
+flb --version
+```
+
+## What the CLI does
+
+The CLI covers three main areas:
+
+- **Installation & Setup** — Install Fleetbase on your own infrastructure using Docker and Docker Compose
+- **Instance Management** — Update, start, stop, and configure your Fleetbase instance
+- **Extension Development** — Scaffold new extensions, link them to your local instance, and manage the development workflow
+
+## Quick Start
+
+To install a fresh Fleetbase instance:
+
+```bash
+flb install-fleetbase
+```
+
+The installer will guide you through environment configuration, Docker setup, and initial database seeding.
+
+For extension development, see the [Extension SDK](/docs/sdk) documentation.

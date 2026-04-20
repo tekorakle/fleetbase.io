@@ -1,0 +1,39 @@
+---
+title: Extension SDK
+description: Learn how to build extensions, integrate with the platform, and extend its functionality using Fleetbase's powerful extensibility system.
+---
+
+# Extension SDK
+
+Fleetbase is designed from the ground up to be a modular, extensible platform. Rather than building a monolithic application that tries to do everything, Fleetbase provides a robust core and allows developers to build **Extensions** to add specific functionality.
+
+Whether you want to integrate a new payment gateway, add a custom dashboard widget, or build an entirely new logistics module like [Fleet-Ops](/docs/fleet-ops), the extensibility system provides the tools you need.
+
+## The Universe Service
+
+At the heart of Fleetbase's frontend extensibility is the **Universe Service**.
+
+The Universe Service is an Ember.js service that acts as a central registry for the entire platform. It allows extensions to inject their own UI components, routes, and logic into the core Fleetbase Console without modifying the core codebase.
+
+When you build an extension, you will use the Universe Service to:
+- [Register Menus & Navigation](/docs/sdk/menus-and-navigation)
+- [Add Dashboard Widgets](/docs/sdk/dashboard-widgets)
+- [Inject Custom Components](/docs/sdk/registering-components)
+- [Define Virtual Routes](/docs/sdk/virtual-routes)
+
+## Extension Architecture
+
+A complete Fleetbase extension typically consists of two parts:
+
+1. **[Backend Development](/docs/sdk/backend-development)**: A PHP Laravel package that provides the API routes, database models, and server-side logic.
+2. **[Frontend Development](/docs/sdk/frontend-development)**: An Ember.js Engine that provides the UI components and interacts with the Universe Service.
+
+These two parts are bundled together and defined by an `extension.json` manifest file. See the [Extension Architecture](/docs/sdk/extension-architecture) guide for a deep dive into how these pieces fit together.
+
+## Getting Started
+
+The easiest way to start building is to use the Fleetbase CLI to generate a boilerplate extension.
+
+Follow the [Scaffolding Your Extension](/docs/sdk/scaffolding-your-extension) guide to create your first extension, link it to your local Fleetbase instance, and begin development.
+
+Once your extension is complete, you can [Publish it to the Marketplace](/docs/sdk/publishing-to-marketplace) to share it with the Fleetbase community or keep it private for your own organization.

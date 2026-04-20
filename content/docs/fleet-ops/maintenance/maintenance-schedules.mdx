@@ -1,0 +1,66 @@
+---
+title: Maintenance Schedules
+description: Create recurring maintenance schedules for vehicles and equipment to prevent downtime.
+---
+
+# Maintenance Schedules
+
+Preventative maintenance is the key to maximizing the lifespan of your fleet and avoiding costly, unexpected breakdowns.
+
+**Maintenance Schedules** in FleetOps allow you to define recurring service intervals for your vehicles based on time, usage (mileage), or engine hours.
+
+## How Schedules Work
+
+A Maintenance Schedule acts as a template. You define the rules for when service is required, and then apply that schedule to one or more vehicles.
+
+FleetOps continuously monitors the vehicles' data (odometer readings from the Navigator app, or engine hours from [Telematics](/docs/fleetops/connectivity/telematics) integrations). When a vehicle approaches the threshold defined in the schedule, the system automatically generates an alert and creates a pending [Work Order](/docs/fleetops/maintenance/work-orders).
+
+## Creating a Maintenance Schedule
+
+To set up a new preventative maintenance routine:
+
+1. Navigate to **FleetOps** > **Maintenance Schedules** in the Fleetbase Console.
+2. Click the **New Schedule** button.
+3. Provide a **Name** (e.g., "Standard Oil Change - Diesel Trucks").
+4. Define the **Service Tasks** that need to be performed (e.g., "Replace oil filter", "Check tire pressure").
+5. Set the **Intervals** (detailed below).
+6. Click **Save**.
+
+## Defining Intervals
+
+You can trigger maintenance based on three types of intervals. You can use one, or combine them (e.g., "Every 10,000 miles OR every 6 months, whichever comes first").
+
+### 1. Usage (Mileage) Intervals
+The most common method for vehicle maintenance.
+- *Example*: Every 10,000 miles.
+- *How it works*: FleetOps tracks the vehicle's odometer. When the current odometer reading is 10,000 miles higher than the reading at the last completed service, the schedule triggers.
+
+### 2. Time Intervals
+Useful for vehicles that aren't driven frequently, or for seasonal maintenance (like winterizing).
+- *Example*: Every 6 months.
+- *How it works*: FleetOps triggers the schedule exactly 6 months after the date of the last completed service.
+
+### 3. Engine Hour Intervals
+Common for heavy machinery, generators, or specialized equipment where mileage isn't an accurate measure of wear and tear.
+- *Example*: Every 500 engine hours.
+- *How it works*: Requires a [Telematics](/docs/fleetops/connectivity/telematics) integration or an OBD-II [Device](/docs/fleetops/connectivity/devices) that reports engine run time.
+
+## Applying Schedules to Vehicles
+
+Once a schedule is created, you must assign it to the relevant vehicles.
+
+1. Open the Maintenance Schedule.
+2. In the **Assigned Vehicles** section, select the vehicles that should follow this routine.
+3. Click **Save**.
+
+You can assign multiple schedules to a single vehicle (e.g., a "Monthly Inspection" schedule and an "Annual Major Service" schedule).
+
+## Alerts and Work Orders
+
+When a vehicle approaches a scheduled service interval, FleetOps changes the vehicle's maintenance status to `Due Soon`.
+
+You can configure how much advance warning you want (e.g., "Alert me 500 miles before the service is due"). This gives your fleet manager time to order necessary [Parts](/docs/fleetops/maintenance/parts) and schedule the downtime.
+
+When the interval is reached, the status changes to `Overdue`.
+
+At any point during the `Due Soon` or `Overdue` phases, a fleet manager can click a button to instantly generate a [Work Order](/docs/fleetops/maintenance/work-orders) pre-populated with the tasks defined in the schedule. Once that Work Order is marked as completed, the schedule's interval resets, and the countdown begins again.

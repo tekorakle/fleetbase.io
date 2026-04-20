@@ -1,0 +1,46 @@
+---
+title: Contacts
+description: Manage contacts associated with your operations — customers, recipients, and other key individuals.
+---
+
+# Contacts
+
+In FleetOps, a **Contact** represents any individual or organization that interacts with your logistics network, but is not a direct employee (like a Driver) or a third-party logistics provider (like a Vendor).
+
+Contacts are primarily used to represent:
+- **Customers**: The individuals or businesses who place orders with your company.
+- **Recipients**: The individuals who receive the deliveries.
+- **Facility Managers**: The people responsible for specific pickup or dropoff locations (e.g., a warehouse manager).
+
+## Creating a Contact
+
+To add a new contact to your database:
+
+1. Navigate to **FleetOps** > **Contacts** in the Fleetbase Console.
+2. Click the **New Contact** button.
+3. Fill in the contact's details:
+   - **Name**: The individual's or company's name.
+   - **Email**: Essential for sending automated notifications (like order confirmations or receipts).
+   - **Phone Number**: Essential for SMS notifications and driver communication.
+   - **Internal ID**: An optional custom identifier (e.g., a customer ID from your CRM).
+4. Click **Save**.
+
+## Using Contacts in Orders
+
+The primary use of Contacts is within the Order creation process.
+
+When creating an order, you can assign a Contact as the **Customer** (the entity paying for the service) and/or the **Facilitator** (the person managing the pickup or dropoff).
+
+By associating a Contact with an order, FleetOps can automatically:
+- Send email or SMS [Notifications](/docs/platform/features/notifications) to the contact when the order status changes (e.g., "Your order is out for delivery").
+- Provide the driver with the contact's phone number in the Navigator app, allowing them to call or text the recipient if they have trouble finding the location.
+
+## Managing Contact Profiles
+
+Clicking on a contact in the list opens their detailed profile.
+
+From the profile, you can view the contact's complete history with your organization, including:
+- **Recent Orders**: A list of all orders where this contact was the customer or recipient.
+- **Saved Places**: A list of addresses frequently associated with this contact (e.g., their home or office address).
+
+This historical data is invaluable for customer support teams, allowing them to quickly pull up a customer's past deliveries and address any issues.

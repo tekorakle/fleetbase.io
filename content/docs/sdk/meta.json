@@ -1,0 +1,21 @@
+{
+  "title": "Extension SDK",
+  "pages": [
+    "index",
+    "overview",
+    "extension-architecture",
+    "$separator:Getting Started",
+    "scaffolding-your-extension",
+    "$separator:Backend Development",
+    "backend-development",
+    "$separator:Frontend Development",
+    "frontend-development",
+    "menus-and-navigation",
+    "hooks-and-lifecycle",
+    "dashboard-widgets",
+    "registering-components",
+    "virtual-routes",
+    "$separator:Publishing",
+    "publishing-to-marketplace"
+  ]
+}

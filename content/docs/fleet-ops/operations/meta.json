@@ -1,0 +1,12 @@
+{
+  "title": "Operations",
+  "pages": [
+    "orders",
+    "routing-and-dispatching",
+    "service-rates",
+    "service-quotes",
+    "order-configurations",
+    "orchestrator",
+    "scheduler"
+  ]
+}

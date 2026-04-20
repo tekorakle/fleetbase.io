@@ -1,10 +1,13 @@
 {
   "title": "Ledger",
   "pages": [
+    "index",
     "overview",
+    "$separator:Finance",
     "accounting",
     "billing",
     "payments",
+    "$separator:Reporting",
     "reports"
   ]
 }

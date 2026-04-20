@@ -1,0 +1,9 @@
+{
+  "title": "Fleetbase UI",
+  "pages": [
+    "index",
+    "$separator:Mobile Apps",
+    "navigator-app",
+    "storefront-app"
+  ]
+}
