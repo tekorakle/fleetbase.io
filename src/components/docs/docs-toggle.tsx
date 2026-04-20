@@ -71,13 +71,5 @@ const sections = [
 ];
 
 export function DocsToggle() {
-  return (
-    // Wrapper overrides two internal RootToggle styles:
-    // 1. Icon wrapper: remove md:mt-1 / md:mb-auto (which floats icon to top)
-    //    by forcing align-items: center on the icon div.
-    // 2. Description <p>: force single-line truncation with ellipsis.
-    <div className="[&_[class*='size-9']]:!mt-0 [&_[class*='size-9']]:!mb-0 [&_[class*='size-9']]:!self-center [&_p:last-child]:truncate [&_p:last-child]:whitespace-nowrap [&_p:last-child]:overflow-hidden">
-      <RootToggle options={sections} />
-    </div>
-  );
+  return <RootToggle options={sections} />;
 }

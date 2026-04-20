@@ -300,19 +300,33 @@ body {
   padding-top: 1.25rem !important;
 }
 
-/* ── DocsToggle (RootToggle): fix icon/label alignment & description truncation ── */
-/* The icon wrapper inside each toggle option has md:mt-1 md:mb-auto which floats
-   the icon to the top. Override to keep it vertically centred with the title. */
-#nd-sidebar [data-radix-popper-content-wrapper] a > div:first-child,
-#nd-sidebar button > div:first-child {
+/* ── DocsToggle (RootToggle): fix icon alignment & description truncation ── */
+/*
+  RootToggle dropdown items render as:
+    <a class="flex items-center gap-2 ...">
+      <div class="shrink-0 size-9 md:mt-1 md:mb-auto md:size-5">  ← icon wrapper
+        {icon}
+      </div>
+      <div>                                                         ← text wrapper
+        <p class="text-sm font-medium">{title}</p>
+        <p class="text-[13px] text-fd-muted-foreground ...">{description}</p>
+      </div>
+      <Check />
+    </a>
+
+  The md:mt-1 + md:mb-auto on the icon div pushes it to the top of the row.
+  We override those margins to keep the icon vertically centred.
+  We scope to [data-radix-popper-content-wrapper] so the trigger button
+  (which does NOT have mt-1/mb-auto) is not affected.
+*/
+[data-radix-popper-content-wrapper] a > div:first-child {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   align-self: center !important;
 }
 
-/* Description text: force single line with ellipsis */
-#nd-sidebar [data-radix-popper-content-wrapper] a > div:last-of-type p:last-child,
-#nd-sidebar button > div p:last-child {
+/* Description text: force single line with ellipsis so it never wraps */
+[data-radix-popper-content-wrapper] a > div:nth-child(2) p:last-child {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
