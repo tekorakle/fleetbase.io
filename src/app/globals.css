@@ -287,3 +287,15 @@ html,
 body {
   overscroll-behavior: none;
 }
+
+/* ── Docs: remove the tocnav gap and reduce article top padding ── */
+/* #nd-page gets pt-(--fd-tocnav-height) which is 40px on <xl viewports;
+   override to 0 since our sticky site navbar already provides the offset. */
+#nd-page {
+  padding-top: 0 !important;
+}
+/* Ensure the article top padding stays compact on all breakpoints,
+   overriding the md:pt-12 applied by LayoutBody's containerProps selector. */
+#nd-page article {
+  padding-top: 1.25rem !important;
+}

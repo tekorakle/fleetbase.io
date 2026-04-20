@@ -1,0 +1,63 @@
+---
+title: Quick Start
+description: Get up and running with Fleetbase in minutes — cloud or self-hosted.
+---
+
+# Quick Start
+
+Get Fleetbase running as fast as possible. Choose the path that fits your situation.
+
+---
+
+## Option 1 — Cloud (Fastest)
+
+No installation required. Spin up a fully managed Fleetbase instance in under two minutes.
+
+1. Go to [console.fleetbase.io](https://console.fleetbase.io/onboard) and create a free account.
+2. Follow the onboarding wizard to set up your first organisation.
+3. Your instance is live — start exploring the console.
+
+> **Best for:** Evaluating Fleetbase, small teams, or anyone who wants to skip infrastructure setup.
+
+---
+
+## Option 2 — Self-Hosted with the CLI
+
+Install Fleetbase on your own server using the Fleetbase CLI and Docker.
+
+### Prerequisites
+
+- Node.js v14 or higher
+- Docker and Docker Compose
+- Git
+
+### Steps
+
+```bash
+# 1. Install the Fleetbase CLI globally
+npm install -g @fleetbase/cli
+
+# 2. Run the interactive installer
+flb install-fleetbase
+
+# 3. Follow the prompts — the CLI handles Docker, database setup, and configuration
+```
+
+Once complete, Fleetbase is available at `http://localhost` (or the domain you configured).
+
+> **Best for:** Full control over data and infrastructure, on-premise deployments, or custom environments.
+
+---
+
+## Next Steps
+
+Once you have Fleetbase running, here are the most common next steps:
+
+| Goal | Where to go |
+|---|---|
+| Understand the platform | [What is Fleetbase?](/docs/getting-started/what-is-fleetbase) |
+| Manage API keys and webhooks | [Developer Console](/docs/platform/developer-console) |
+| Set up fleet management | [Fleet-Ops](/docs/fleetops) |
+| Build a storefront | [Storefront](/docs/storefront) |
+| Build a custom extension | [Building & Extending Fleetbase](/docs/extending-fleetbase) |
+| Integrate via REST API | [API Reference](/docs/api-reference) |

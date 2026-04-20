@@ -2,6 +2,7 @@
   "title": "Fleetbase Docs",
   "pages": [
     "index",
+    "quick-start",
     "getting-started",
     "platform",
     "fleetops",
