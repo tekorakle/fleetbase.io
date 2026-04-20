@@ -485,18 +485,15 @@ const Navbar = () => {
  };
  }, [isMenuOpen]);
 
- const isDocsPage = pathname.startsWith('/docs');
-
  if (hideNavbar) return null;
 
  return (
  <header className="lg:border-b">
  <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
  
- {/* Hide logo on /docs pages — the Fumadocs sidebar already shows it */}
- {!isDocsPage && <Logo />}
+ <Logo />
 
- <NavigationMenu viewport={false} className={cn('hidden lg:flex flex-1', isDocsPage ? 'justify-end' : 'justify-center')}>
+ <NavigationMenu viewport={false} className={cn('hidden lg:flex flex-1 justify-center')}>
  <NavigationMenuList className="gap-2 xl:gap-4">
  {NAV_LINKS.map((item) => (
  <NavigationMenuItem key={item.label}>
