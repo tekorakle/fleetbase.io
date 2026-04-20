@@ -299,3 +299,22 @@ body {
 #nd-page article {
   padding-top: 1.25rem !important;
 }
+
+/* ── DocsToggle (RootToggle): fix icon/label alignment & description truncation ── */
+/* The icon wrapper inside each toggle option has md:mt-1 md:mb-auto which floats
+   the icon to the top. Override to keep it vertically centred with the title. */
+#nd-sidebar [data-radix-popper-content-wrapper] a > div:first-child,
+#nd-sidebar button > div:first-child {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  align-self: center !important;
+}
+
+/* Description text: force single line with ellipsis */
+#nd-sidebar [data-radix-popper-content-wrapper] a > div:last-of-type p:last-child,
+#nd-sidebar button > div p:last-child {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}

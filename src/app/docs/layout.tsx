@@ -1,27 +1,9 @@
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
 
-import { baseOptions } from '@/app/layout.config';
-import { DocsToggle } from '@/components/docs/docs-toggle';
-import { source } from '@/lib/source';
-
-export default function Layout({ children }: { children: ReactNode }) {
-  return (
-    // Set --fd-nav-height to the site header height so Fumadocs positions the
-    // sidebar top and content padding-top correctly below the sticky navbar.
-    <div style={{ '--fd-nav-height': 'var(--header-height)' } as React.CSSProperties}>
-      <DocsLayout
-        tree={source.pageTree}
-        {...baseOptions}
-        nav={{ enabled: false, title: undefined }}
-        containerProps={{ className: 'md:[&_#nd-page_article]:pt-6' }}
-        sidebar={{
-          collapsible: false,
-          banner: <DocsToggle />,
-        }}
-      >
-        {children}
-      </DocsLayout>
-    </div>
-  );
+// This is a minimal passthrough layout for the /docs route segment.
+// Each sub-section ((platform), fleet-ops, storefront, etc.) has its own
+// DocsLayout defined in its own layout.tsx. This root layout must NOT
+// add a DocsLayout wrapper, otherwise section layouts would be double-nested.
+export default function DocsRootLayout({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }
