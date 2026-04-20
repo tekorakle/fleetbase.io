@@ -307,6 +307,12 @@ export const NAV_LINKS: NavLink[] = [
  href: '/developers',
  subitems: [
  {
+ label: 'Documentation',
+ href: '/docs',
+ description: 'Guides, tutorials, and references for building with Fleetbase.',
+ icon: BookOpen,
+ },
+ {
  label: 'API Documentation',
  href: '/docs/api',
  description: 'Comprehensive REST API reference with code examples and guides.',
