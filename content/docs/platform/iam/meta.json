@@ -1,7 +1,6 @@
 {
   "title": "Identity & Access Management",
   "pages": [
-    "index",
     "users-roles-permissions",
     "organizations-and-groups",
     "policies-and-security"

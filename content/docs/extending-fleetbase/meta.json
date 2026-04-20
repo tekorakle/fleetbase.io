@@ -1,7 +1,6 @@
 {
   "title": "Building & Extending Fleetbase",
   "pages": [
-    "index",
     "overview",
     "extension-architecture",
     "scaffolding-your-extension",

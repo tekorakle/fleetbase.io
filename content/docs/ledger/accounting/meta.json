@@ -1,7 +1,6 @@
 {
   "title": "Accounting",
   "pages": [
-    "index",
     "chart-of-accounts",
     "general-ledger",
     "journal-entries"

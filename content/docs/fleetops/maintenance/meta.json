@@ -1,7 +1,6 @@
 {
   "title": "Maintenance",
   "pages": [
-    "index",
     "maintenance-schedules",
     "work-orders",
     "parts",

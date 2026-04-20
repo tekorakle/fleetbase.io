@@ -1,7 +1,6 @@
 {
   "title": "Customers",
   "pages": [
-    "index",
     "overview",
     "authentication"
   ]

@@ -1,7 +1,6 @@
 {
   "title": "Warehouse Management",
   "pages": [
-    "index",
     "warehouses",
     "zones-aisles-racks-bins"
   ]

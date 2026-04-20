@@ -1,7 +1,6 @@
 {
   "title": "Financial Reports",
   "pages": [
-    "index",
     "balance-sheet",
     "income-statement",
     "cash-flow",

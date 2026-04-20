@@ -1,7 +1,6 @@
 {
   "title": "Billing & Invoicing",
   "pages": [
-    "index",
     "invoices",
     "invoice-templates"
   ]

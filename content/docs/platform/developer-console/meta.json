@@ -1,7 +1,6 @@
 {
   "title": "Developer Console",
   "pages": [
-    "index",
     "api-keys",
     "webhooks",
     "socket-events",

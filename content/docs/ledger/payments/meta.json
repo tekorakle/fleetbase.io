@@ -1,7 +1,6 @@
 {
   "title": "Payments & Transactions",
   "pages": [
-    "index",
     "gateways",
     "wallets",
     "transactions"

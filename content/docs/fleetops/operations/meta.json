@@ -1,7 +1,6 @@
 {
   "title": "Operations",
   "pages": [
-    "index",
     "orders",
     "routing-and-dispatching",
     "service-rates",

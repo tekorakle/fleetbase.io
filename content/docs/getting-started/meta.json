@@ -1,7 +1,6 @@
 {
   "title": "Getting Started",
   "pages": [
-    "index",
     "what-is-fleetbase",
     "core-concepts",
     "quickstart-cloud",

@@ -271,3 +271,19 @@ html.theme-transition::view-transition-new(root) {
     display: none !important;
   }
 }
+
+
+/* ── Docs sidebar: truncate long item labels to one line ── */
+#nd-sidebar a,
+#nd-sidebar button {
+  overflow-wrap: normal !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Prevent overscroll bounce from pulling/pushing the sticky navbar ── */
+html,
+body {
+  overscroll-behavior: none;
+}
