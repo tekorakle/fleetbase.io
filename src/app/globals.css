@@ -11,8 +11,11 @@
 @variant dark (&:is(.dark *));
 
 :root {
+  /* Both ambient glows on the brand-blue hue. The original template
+     used hue 25 (warm orange) for --bg-glow-accent — that's what was
+     causing the pink/orange wash on light surfaces. */
   --bg-glow-primary: oklch(0.65 0.154 254 / 0.07);
-  --bg-glow-accent: oklch(0.72 0.15 25 / 0.05);
+  --bg-glow-accent: oklch(0.45 0.16 257 / 0.05);
 
   /* Light surfaces — true neutral (chroma 0). --background lifted to 0.97
      because the noise overlay (dark-weighted asset, mean lightness 5%)
