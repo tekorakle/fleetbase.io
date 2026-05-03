@@ -121,9 +121,11 @@ export default function RootLayout({
  {/* Background Blur */}
  <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
  {/* Noise Background — multiply on light surfaces (overlay produces no
-     visible effect on near-white), overlay on dark. */}
+     visible effect on near-white), overlay on dark. The noise asset is
+     dark-weighted (mean lightness 5%), so light-mode opacity must stay
+     low (~10%) to keep the surface from collapsing into grey. */}
  <div
- className="absolute inset-0 z-[-1] size-full opacity-25 mix-blend-multiply dark:opacity-70 dark:mix-blend-overlay dark:md:opacity-100"
+ className="absolute inset-0 z-[-1] size-full opacity-10 mix-blend-multiply dark:opacity-70 dark:mix-blend-overlay dark:md:opacity-100"
  style={{
  background: `url(/images/noise.webp) lightgray 0% 0% / 83.69069695472717px 83.69069695472717px repeat`,
  }}
