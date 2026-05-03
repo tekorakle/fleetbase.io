@@ -11,47 +11,47 @@
 @variant dark (&:is(.dark *));
 
 :root {
-  --bg-glow-primary: oklch(0.65 0.165 251 / 0.07);
+  --bg-glow-primary: oklch(0.65 0.154 254 / 0.07);
   --bg-glow-accent: oklch(0.72 0.15 25 / 0.05);
 
-  /* Neutrals: same lightness/chroma as the previous baseline,
-     hue migrated 320/290/240/50 → 251 so backgrounds read as a
-     clean cool-neutral instead of magenta/violet/warm. */
-  --background: oklch(0.87 0.02 251);
-  --foreground: oklch(0.05 0.02 251);
-  --card-foreground: oklch(0.05 0.02 251);
-  --card: oklch(0.95 0.01 251);
-  --popover-foreground: oklch(0.05 0.02 251);
-  --popover: oklch(0.95 0.01 251);
-  /* Fleetbase brand blue (#438DF1) — anchors primary CTAs and stat values */
-  --primary: oklch(0.65 0.165 251);
+  /* Tier 1: lift backgrounds to near-white, drop chroma so the cool tint
+     is barely perceptible — eliminates the periwinkle wash. Brand hue
+     254 (sampled from icon.png at #4391EA). */
+  --background: oklch(0.98 0.005 254);
+  --foreground: oklch(0.05 0.02 254);
+  --card-foreground: oklch(0.05 0.02 254);
+  --card: oklch(0.99 0.004 254);
+  --popover-foreground: oklch(0.05 0.02 254);
+  --popover: oklch(0.99 0.004 254);
+  /* Fleetbase brand blue (#4391EA, sampled from icon.png) */
+  --primary: oklch(0.65 0.154 254);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.62 0.15 251);
-  --secondary-foreground: oklch(0.05 0.02 251);
-  --muted: oklch(0.15 0.03 251 / 0.08);
-  --muted-foreground: oklch(0.35 0.03 251);
-  --accent: oklch(0.96 0.01 251);
-  --accent-foreground: oklch(0.08 0.02 251);
+  --secondary: oklch(0.62 0.14 254);
+  --secondary-foreground: oklch(0.05 0.02 254);
+  --muted: oklch(0.15 0.03 254 / 0.08);
+  --muted-foreground: oklch(0.35 0.03 254);
+  --accent: oklch(0.97 0.005 254);
+  --accent-foreground: oklch(0.08 0.02 254);
   --destructive: oklch(0.604 0.191 22.216);
-  --border: oklch(0.84 0.01 251);
-  --input: oklch(0.75 0.02 251);
-  --ring: oklch(0.65 0.165 251 / 0.4);
+  --border: oklch(0.92 0.008 254);
+  --input: oklch(0.85 0.012 254);
+  --ring: oklch(0.65 0.154 254 / 0.4);
 
   /* Wordmark gradient stops — brand-blue ramp (light → mid → deep) */
-  --chart-1: oklch(0.72 0.13 251);
-  --chart-2: oklch(0.65 0.165 251);
-  --chart-3: oklch(0.50 0.18 254);
-  --chart-4: oklch(0.58 0.18 252);
-  --chart-5: oklch(0.45 0.16 256);
+  --chart-1: oklch(0.72 0.13 254);
+  --chart-2: oklch(0.65 0.154 254);
+  --chart-3: oklch(0.50 0.18 256);
+  --chart-4: oklch(0.58 0.17 254);
+  --chart-5: oklch(0.45 0.16 257);
 
-  --sidebar: oklch(0.9 0.01 251);
-  --sidebar-foreground: oklch(0.05 0.02 251);
-  --sidebar-primary: oklch(0.65 0.165 251);
+  --sidebar: oklch(0.96 0.005 254);
+  --sidebar-foreground: oklch(0.05 0.02 254);
+  --sidebar-primary: oklch(0.65 0.154 254);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.92 0.025 251);
-  --sidebar-accent-foreground: oklch(0.05 0.02 251);
-  --sidebar-border: oklch(0 0 0 / 10%);
-  --sidebar-ring: oklch(0.65 0.165 251 / 0.4);
+  --sidebar-accent: oklch(0.94 0.012 254);
+  --sidebar-accent-foreground: oklch(0.05 0.02 254);
+  --sidebar-border: oklch(0 0 0 / 8%);
+  --sidebar-ring: oklch(0.65 0.154 254 / 0.4);
 
   --radius: 8px;
 
@@ -69,46 +69,45 @@
 }
 
 .dark {
-  --bg-glow-primary: oklch(0.65 0.165 251 / 0.12);
-  --bg-glow-accent: oklch(0.50 0.18 254 / 0.08);
+  --bg-glow-primary: oklch(0.65 0.154 254 / 0.12);
+  --bg-glow-accent: oklch(0.50 0.18 256 / 0.08);
 
-  /* Neutrals: hue migrated 290/240/285 → 251 to remove purple cast.
-     Lightness/chroma preserved so contrast structure is unchanged. */
-  --background: oklch(0.05 0.02 251);
+  /* Neutrals on hue 254 (brand). */
+  --background: oklch(0.05 0.02 254);
   --foreground: oklch(1 0 0);
-  --card: oklch(0.02 0 251);
+  --card: oklch(0.02 0 254);
   --card-foreground: oklch(1 0 0);
-  --popover: oklch(0.02 0 251);
+  --popover: oklch(0.02 0 254);
   --popover-foreground: oklch(1 0 0);
-  /* Brand blue (lighter for dark surfaces) */
-  --primary: oklch(0.72 0.16 251);
-  --primary-foreground: oklch(0.08 0.02 251);
-  --secondary: oklch(0.55 0.15 251);
+  /* Brand blue (lifted for dark surfaces, sampled #4391EA) */
+  --primary: oklch(0.72 0.15 254);
+  --primary-foreground: oklch(0.08 0.02 254);
+  --secondary: oklch(0.55 0.14 254);
   --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.93 0.02 251 / 0.08);
-  --muted-foreground: oklch(0.73 0.01 251);
-  --accent: oklch(0.12 0.04 251);
-  --accent-foreground: oklch(0.94 0.01 251);
+  --muted: oklch(0.93 0.02 254 / 0.08);
+  --muted-foreground: oklch(0.73 0.01 254);
+  --accent: oklch(0.12 0.04 254);
+  --accent-foreground: oklch(0.94 0.01 254);
   --destructive: oklch(0.604 0.191 22.216);
-  --border: oklch(0.15 0.01 251);
-  --input: oklch(0.32 0.01 251);
-  --ring: oklch(0.72 0.16 251 / 0.4);
+  --border: oklch(0.15 0.01 254);
+  --input: oklch(0.32 0.01 254);
+  --ring: oklch(0.72 0.15 254 / 0.4);
 
-  /* Wordmark gradient stops — brand-blue ramp on dark */
-  --chart-1: oklch(0.78 0.13 251);
-  --chart-2: oklch(0.72 0.16 251);
-  --chart-3: oklch(0.55 0.18 254);
-  --chart-4: oklch(0.65 0.165 251);
-  --chart-5: oklch(0.50 0.18 256);
+  /* Tier 1 #2: dark wordmark gradient — punchier, more depth left→right */
+  --chart-1: oklch(0.72 0.16 254);
+  --chart-2: oklch(0.65 0.165 254);
+  --chart-3: oklch(0.50 0.18 256);
+  --chart-4: oklch(0.58 0.17 254);
+  --chart-5: oklch(0.45 0.16 257);
 
-  --sidebar: oklch(0.12 0.01 251);
+  --sidebar: oklch(0.12 0.01 254);
   --sidebar-foreground: oklch(1 0 0);
-  --sidebar-primary: oklch(0.72 0.16 251);
-  --sidebar-primary-foreground: oklch(0.08 0.02 251);
-  --sidebar-accent: oklch(0.20 0.03 251);
+  --sidebar-primary: oklch(0.72 0.15 254);
+  --sidebar-primary-foreground: oklch(0.08 0.02 254);
+  --sidebar-accent: oklch(0.20 0.03 254);
   --sidebar-accent-foreground: oklch(1 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.72 0.16 251 / 0.4);
+  --sidebar-ring: oklch(0.72 0.15 254 / 0.4);
 }
 
 @theme inline {
@@ -140,22 +139,22 @@
   --color-chart-5: var(--chart-5);
 
   /* ── Fleetbase brand color ────────────────────────────────────────────────
-     Anchored on #438DF1 (the icon blue from blue-logo-full.png).
+     Anchored on #4391EA (sampled from icon.png).
      Use as bg-brand / text-brand / border-brand for any explicitly-branded UI,
      and the bg-brand-blue-{50..950} ramp for tints, shades, and hover states. */
-  --color-brand: oklch(0.65 0.165 251);
+  --color-brand: oklch(0.65 0.154 254);
   --color-brand-foreground: oklch(1 0 0);
-  --color-brand-blue-50: oklch(0.97 0.014 251);
-  --color-brand-blue-100: oklch(0.93 0.035 251);
-  --color-brand-blue-200: oklch(0.87 0.065 251);
-  --color-brand-blue-300: oklch(0.80 0.10 251);
-  --color-brand-blue-400: oklch(0.73 0.135 251);
-  --color-brand-blue-500: oklch(0.65 0.165 251);
-  --color-brand-blue-600: oklch(0.58 0.18 252);
-  --color-brand-blue-700: oklch(0.50 0.18 254);
-  --color-brand-blue-800: oklch(0.42 0.16 256);
-  --color-brand-blue-900: oklch(0.34 0.13 258);
-  --color-brand-blue-950: oklch(0.22 0.085 260);
+  --color-brand-blue-50: oklch(0.97 0.012 254);
+  --color-brand-blue-100: oklch(0.93 0.030 254);
+  --color-brand-blue-200: oklch(0.87 0.060 254);
+  --color-brand-blue-300: oklch(0.80 0.095 254);
+  --color-brand-blue-400: oklch(0.73 0.125 254);
+  --color-brand-blue-500: oklch(0.65 0.154 254);
+  --color-brand-blue-600: oklch(0.58 0.17 255);
+  --color-brand-blue-700: oklch(0.50 0.18 256);
+  --color-brand-blue-800: oklch(0.42 0.16 258);
+  --color-brand-blue-900: oklch(0.34 0.13 260);
+  --color-brand-blue-950: oklch(0.22 0.085 262);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
