@@ -1,0 +1,94 @@
+---
+title: Order Configurations
+description: Order configurations define custom order types with their own workflows, entity fields, POD methods, and activity steps.
+---
+
+# Order Configurations
+
+An **Order Configuration** (Order Config) is a template that defines how a particular type of order works in Fleet-Ops. Every order you create must be based on an Order Config — it determines the order's lifecycle, the data fields collected on each item, and what proof of delivery is required.
+
+This lets you run different service types from the same Fleet-Ops instance. A courier might have one config for same-day parcels (signature required), another for document delivery (photo required), and a third for returns (no POD needed). Each config has its own workflow and fields.
+
+![Order Configuration manager — list of configs with status, namespace, and action buttons](/images/placeholder.png)
+
+## What an Order Config Contains
+
+| Component | Purpose |
+| :--- | :--- |
+| **Name & Namespace** | Display name and unique identifier for the config |
+| **Activity Flow** | The sequence of status steps drivers execute for this order type |
+| **Entity Definitions** | Fields and constraints required on each item (entity) in the payload |
+| **POD Method** | The proof of delivery method: signature, photo, QR code, or custom data |
+| **POD Required** | Whether proof is mandatory to complete the order |
+| **Custom Fields** | Order-level fields specific to this order type |
+| **Tags** | For organization and filtering |
+
+## Managing Order Configurations
+
+Navigate to **Fleet-Ops → Operations → Order Configurations**.
+
+The list shows all existing configs with their name, namespace key, version, and status (active/inactive). From here you can:
+
+- **Create** a new configuration
+- **Edit** an existing configuration's flow and fields
+- **Duplicate** an existing configuration as a starting point
+- **Activate/deactivate** configs to control which types are available when creating orders
+- **Delete** configs that are no longer needed (only if no orders reference them)
+
+## Creating a New Order Configuration
+
+<Steps>
+  <Step>
+    Click **+ New Configuration**.
+  </Step>
+  <Step>
+    Set the **Name** (e.g., "Same-Day Delivery") and **Description**.
+  </Step>
+  <Step>
+    The **Namespace** key is auto-generated from the name (e.g., `same-day-delivery`) — this is the API identifier for the config.
+  </Step>
+  <Step>
+    Set **POD Required** and select the **POD Method** (Signature, Photo, QR Code, or Custom Data).
+  </Step>
+  <Step>
+    Configure the **Activity Flow** — the step-by-step workflow drivers follow. See [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows).
+  </Step>
+  <Step>
+    Add **Entity Definitions** — fields required on each item in this order type. See [Order Types](/docs/fleet-ops/operations/order-configurations/order-types).
+  </Step>
+  <Step>
+    Click **Save**. The config is now available for selection when creating orders.
+  </Step>
+</Steps>
+
+## Core Service Configurations
+
+Fleet-Ops ships with several built-in core service configurations:
+
+| Config | Description |
+| :--- | :--- |
+| **Delivery** | Standard pickup-to-dropoff delivery with signature POD |
+| **Pickup & Delivery (P&D)** | Driver collects item, then delivers it |
+| **Return to Sender (RTS)** | Failed delivery item returned to origin |
+| **Multi-Drop** | Single pickup, multiple delivery destinations |
+
+You can customize these built-in configs or create your own from scratch.
+
+## Order Configs and the API
+
+When creating orders via the API, specify the `order_config_uuid` or `type` field matching the config's namespace. The config determines which activity steps, entity fields, and POD requirements apply to the order.
+
+```json
+{
+  "order_config_uuid": "config_01H...",
+  "payload": {
+    "pickup": { ... },
+    "dropoff": { ... }
+  }
+}
+```
+
+## Related Pages
+
+- [Order Types](/docs/fleet-ops/operations/order-configurations/order-types) — defining entity fields and requirements per order type
+- [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows) — configuring the step-by-step driver workflow

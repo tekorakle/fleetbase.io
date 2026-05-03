@@ -1,10 +1,85 @@
 ---
 title: Journal Entries
-description: Create and manage manual journal entries for accounting adjustments and corrections.
+description: View automated journal entries and create manual entries for accounting adjustments and corrections.
 ---
 
 # Journal Entries
 
-Create and manage manual journal entries for accounting adjustments and corrections.
+A **Journal Entry** is the atomic record of a financial event. Every financial activity in Ledger — wallet deposits, invoice payments, gateway charges — automatically creates a journal entry that debits one account and credits another.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Accounting → Journal**.
+
+![Journal entries list — entry number, type, status, date, debit account, credit account, amount](/images/placeholder.png)
+
+## Journal Entry Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Number** | Auto-generated sequential ID (e.g., `JE-00001`) |
+| **Type** | Entry type (see types below) |
+| **Status** | `posted`, `reversed`, or `voided` |
+| **Debit Account** | Account being debited |
+| **Credit Account** | Account being credited |
+| **Amount** | Entry amount in the account's currency |
+| **Entry Date** | Date the event occurred |
+| **Reference** | Human-readable reference (invoice number, order ID, etc.) |
+| **Memo** | Additional notes |
+| **Is System Entry** | `true` = created automatically; `false` = created manually |
+| **Transaction** | Linked Ledger transaction if applicable |
+
+## Entry Types
+
+| Type | When created |
+| :--- | :--- |
+| `general` | Default / manual entries |
+| `adjusting` | Period-end adjustments |
+| `closing` | Period close entries |
+| `reversing` | Reversal of a prior entry |
+| `wallet_deposit` | Wallet credit operation |
+| `wallet_withdrawal` | Wallet debit operation |
+| `wallet_transfer` | Transfer between wallets |
+| `invoice_payment` | Invoice payment recorded |
+| `revenue_recognition` | Invoice created / revenue recognized |
+
+## Creating a Manual Journal Entry
+
+Manual entries are for corrections, adjustments, or one-off transactions that are not triggered automatically.
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Accounting → Journal**.
+  </Step>
+  <Step>
+    Click **New Manual Entry**.
+  </Step>
+  <Step>
+    Select the **Debit Account** and **Credit Account**.
+  </Step>
+  <Step>
+    Enter the **Amount** and **Entry Date**.
+  </Step>
+  <Step>
+    Enter a **Reference** and **Memo** to describe the entry.
+  </Step>
+  <Step>
+    Click **Save**. The entry is posted immediately and both account balances are updated.
+  </Step>
+</Steps>
+
+## Reversing an Entry
+
+If you need to correct a posted entry:
+
+1. Open the journal entry
+2. Click **Reverse**
+3. Confirm — Ledger creates a new entry with the debit/credit accounts swapped for the same amount
+
+The original entry's status changes to `reversed`. The reversing entry references the original.
+
+<Callout type="warn">
+Only reverse entries that were posted in error. Reversing a system entry (e.g., an invoice payment) may cause your reports to show incorrect balances until the corresponding event is re-recorded correctly.
+</Callout>
+
+## Viewing Entries for an Account
+
+For a filtered view of all entries for a specific account, use the **Account Ledger** view: **Ledger → Accounting → Accounts → [Account]**. This shows debit, credit, and running balance columns for that account.

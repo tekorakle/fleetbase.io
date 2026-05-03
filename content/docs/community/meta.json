@@ -3,8 +3,10 @@
   "pages": [
     "contributing",
     "discord",
+    "github-discussions",
     "changelog",
     "faq",
-    "licensing"
+    "licensing",
+    "support-plans"
   ]
 }

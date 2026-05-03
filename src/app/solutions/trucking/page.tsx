@@ -1,134 +1,156 @@
 import type { Metadata } from 'next';
-import { Truck, MapPin, Wrench, BarChart3, FileCheck, Smartphone } from 'lucide-react';
+import { Truck, MapPin, Wrench, BarChart3, FileCheck, Smartphone, Clock, Shield, Zap, DollarSign } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Fleet Management Software for Trucking & Haulage',
- description: 'Open-source fleet management software for trucking and haulage companies. Dispatch loads, track vehicles in real time, manage drivers, and optimize routes. Free to start.',
- keywords: ['trucking software', 'haulage management', 'fleet management', 'TMS', 'freight tracking', 'route optimization trucking'],
- openGraph: {
- title: 'Trucking & Haulage Logistics Software | Fleetbase',
- description: 'Open-source fleet management and TMS built for trucking and haulage operators.',
- },
+  title: 'Fleet Management Software for Trucking & Haulage | Fleetbase',
+  description: 'Replace your legacy TMS with open-source fleet management built for trucking and haulage. Real-time tracking, route optimization, digital POD, and compliance tools — on infrastructure you own.',
+  keywords: ['trucking software', 'haulage management', 'fleet management TMS', 'freight tracking', 'route optimization trucking', 'open source TMS'],
+  openGraph: {
+    title: 'Trucking & Haulage Fleet Management | Fleetbase',
+    description: 'Modern open-source fleet management for trucking operators. Cut costs, eliminate paperwork, and deliver on time.',
+  },
 };
 
 export default function TruckingPage() {
- return (
- <SolutionPageLayout
- badge="Trucking & Haulage"
- title={<>Run a Tighter Fleet. <span className="text-gradient">Cut Costs. Deliver On Time.</span></>}
- description="Fleetbase gives trucking and haulage operators real-time freight visibility, intelligent route optimization, and driver management tools — all on an open-source platform you own and control."
- stats={[
- { value: '30%', label: 'Average fuel cost reduction' },
- { value: '40%', label: 'Fewer customer status calls' },
- { value: '99.9%', label: 'Platform uptime' },
- { value: '2×', label: 'Faster dispatch times' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
- heroScreenshotAlt="Fleetbase FleetOps live map showing trucking fleet positions with real-time GPS tracking across routes"
- heroScreenshotNeeded="FleetOps live map view showing multiple trucks on long-haul routes with ETAs"
- painPoints={{
- heading: 'Sound familiar?',
- items: [
- 'Dispatchers calling drivers every hour for location updates',
- 'Fuel costs rising with no visibility into idle time or route inefficiency',
- 'Paper POD forms causing billing disputes and delays',
- 'No single view of all vehicles, orders, and drivers',
- 'Legacy TMS software too rigid to match your workflows',
- 'Compliance paperwork eating hours every week',
- ],
- }}
- features={[
- {
- title: 'Live Fleet Tracking on a Single Map',
- description:
- 'See every truck, trailer, and driver in real-time on an interactive map. Get live ETAs, geofence alerts, and automatic status updates as drivers arrive and depart stops — without a single phone call.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Live Fleet Tracking on a Single Map',
- screenshotNeeded: 'FleetOps live map — multiple trucks with route lines, ETAs, and driver names visible',
- },
- {
- title: 'Intelligent Route Optimization',
- description:
- 'Fleetbase calculates the most efficient routes considering traffic, delivery time windows, vehicle capacity, and driver hours. Re-optimize dynamically when conditions change mid-route.',
- icon: Truck,
- screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
- screenshotAlt: 'Intelligent Route Optimization',
- screenshotNeeded: 'Route optimization panel — showing optimized multi-stop route with distance/time savings',
- },
- {
- title: 'Digital Proof of Delivery',
- description:
- 'Drivers capture signatures, photos, and delivery notes directly in the Navigator mobile app. PODs are timestamped, geotagged, and instantly available in the console — eliminating billing disputes.',
- icon: FileCheck,
- screenshot: '/images/console-screenshots/fleetops-order-label.webp',
- screenshotAlt: 'Digital Proof of Delivery',
- screenshotNeeded: 'Navigator app POD screen — signature capture and photo upload on mobile',
- },
- {
- title: 'Vehicle Maintenance Management',
- description:
- 'Track vehicle health, schedule preventive maintenance, manage work orders, and monitor fault reports from the fleet dashboard. Reduce breakdowns and keep your fleet roadworthy.',
- icon: Wrench,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Vehicle Maintenance Management',
- screenshotNeeded: 'FleetOps vehicle maintenance panel — showing service schedule and fault log',
- },
- {
- title: 'Operations Analytics & Reporting',
- description:
- 'Monitor KPIs like cost-per-mile, on-time delivery rate, fuel consumption, and driver utilization. Build custom dashboards and export reports for stakeholders and compliance.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-fuel-reports.webp',
- screenshotAlt: 'Operations Analytics & Reporting',
- screenshotNeeded: 'FleetOps analytics dashboard — cost per mile, on-time rate, utilization charts',
- },
- {
- title: 'Driver Mobile App (Navigator)',
- description:
- 'Drivers get turn-by-turn navigation, job notifications, and proof-of-delivery capture on iOS or Android. No hardware required — just a smartphone.',
- icon: Smartphone,
- screenshot: '/images/console-screenshots/fleetops-order-label.webp',
- screenshotAlt: 'Driver Mobile App (Navigator)',
- screenshotNeeded: 'Navigator app home screen — showing active job, navigation button, and POD capture',
- },
- ]}
- testimonial={{
- quote:
- 'We cut our dispatch time in half and our fuel costs dropped 22% in the first three months. The live map alone saved us from hiring another operations coordinator.',
- author: 'James O.',
- role: 'Head of Operations',
- company: 'Regional Haulage Co.',
- }}
- faqs={[
- {
- q: 'Does Fleetbase work for long-haul as well as local delivery?',
- a: 'Yes. Fleetbase handles both long-haul freight and local multi-stop delivery. Route optimization works across any distance, and the live tracking map updates in real-time regardless of route length.',
- },
- {
- q: 'Can I integrate with my existing ERP or accounting system?',
- a: 'Fleetbase exposes a full REST API and supports webhooks for all major events. Pre-built integrations are available for common accounting and ERP platforms, and custom integrations can be built using the API.',
- },
- {
- q: 'How does driver tracking work without dedicated hardware?',
- a: 'Drivers share their location through the Navigator mobile app (iOS and Android). No additional GPS hardware is required, though Fleetbase also supports integration with hardware telematics devices.',
- },
- {
- q: 'Is Fleetbase open source?',
- a: 'Yes. Fleetbase is fully open-source under AGPL-3.0. You can self-host it on your own infrastructure, inspect the code, and extend it to fit your exact workflows. If you deploy a modified version as a service to external users, AGPL requires those modifications to be open source. A commercial licence is available if you need to keep changes proprietary.',
- },
- {
- q: 'How is pricing structured for trucking fleets?',
- a: 'Fleetbase uses resource-unit-based pricing — a flat monthly fee based on your plan tier with included resource units. There are no per-driver or per-vehicle fees, so you can scale your team without scaling your software costs.',
- },
- ]}
- ctaHeading="Ready to modernize your fleet operations?"
- ctaBody="Join hundreds of trucking and haulage operators running smarter, leaner fleets on Fleetbase. Start your free trial today — ."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Talk to Sales"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Trucking & Haulage"
+      title={<>Run a Tighter Fleet.<br /><span className="text-gradient">Cut Costs. Deliver On Time.</span></>}
+      description="Fleetbase gives trucking and haulage operators a complete operations platform — real-time fleet visibility, intelligent route optimization, digital proof of delivery, and driver management — on open-source infrastructure you own and control. No per-seat fees. No vendor lock-in."
+      stats={[
+        { value: '30%', label: 'Average fuel cost reduction' },
+        { value: '2×', label: 'Faster dispatch times' },
+        { value: '40%', label: 'Fewer customer status calls' },
+        { value: '10M+', label: 'Orders processed on platform' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase FleetOps live map — trucking fleet overview"
+      painPoints={{
+        heading: 'Sound familiar? You\'re not alone.',
+        items: [
+          'Dispatchers calling drivers every hour just for location updates',
+          'Fuel costs spiralling with no visibility into idle time or inefficient routes',
+          'Paper POD forms causing billing disputes that drag on for weeks',
+          'No single view of all vehicles, loads, drivers, and delivery status',
+          'Legacy TMS software too rigid and too expensive to adapt to your workflows',
+          'Compliance paperwork eating hours every week that should go to operations',
+        ],
+      }}
+      featuresHeading="The modern TMS your team actually wants to use"
+      featuresSubheading="Built for trucking and haulage operators who are done fighting their software."
+      features={[
+        {
+          title: 'Live Fleet Tracking on a Single Map',
+          description: 'Every truck, trailer, and driver visible in real-time on an interactive map. Live ETAs, geofence arrival/departure alerts, and automatic status updates mean your dispatcher is always in control — without picking up the phone.',
+          bullets: [
+            'GPS position updates every 30 seconds via the Navigator driver app',
+            'Geofence alerts for depot arrivals, customer sites, and restricted zones',
+            'Full trip history and dwell-time reporting per vehicle',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Intelligent Route Optimization',
+          description: 'Stop guessing the best route. Fleetbase calculates optimal multi-stop routes accounting for traffic, delivery time windows, vehicle capacity, and driver hours — then re-optimizes dynamically when conditions change mid-route.',
+          bullets: [
+            'Multi-stop optimization with time-window constraints',
+            'Live re-routing when traffic or priority changes occur',
+            'Cost-per-mile modelling per vehicle type',
+          ],
+          icon: Truck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Digital Proof of Delivery',
+          description: 'Drivers capture signatures, photos, barcodes, and notes directly in the Navigator mobile app. PODs are timestamped, geotagged, and instantly visible in the console — ending billing disputes before they start.',
+          bullets: [
+            'Signature, photo, and barcode capture on iOS and Android',
+            'Automatic PDF generation for every completed delivery',
+            'Customer portal access to view their own delivery records',
+          ],
+          icon: FileCheck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Vehicle Maintenance & Fleet Health',
+          description: 'Track service history, schedule preventive maintenance, log fault reports, and manage work orders from one dashboard. Keep your fleet roadworthy and your insurance and compliance records clean.',
+          bullets: [
+            'Preventive maintenance schedules based on mileage or date',
+            'Driver fault reporting directly from the mobile app',
+            'Export-ready maintenance logs for compliance audits',
+          ],
+          icon: Wrench,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Fleet Analytics & Cost Reporting',
+          description: 'Track the KPIs that actually move your P&L: cost-per-mile, on-time delivery rate, fuel consumption, driver utilization, and vehicle ROI. Build custom dashboards and schedule reports for ops and finance teams.',
+          bullets: [
+            'Cost-per-mile and cost-per-delivery broken down by vehicle and driver',
+            'On-time rate trends and SLA breach alerts',
+            'Fuel consumption vs. route efficiency correlation reports',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Driver App — Navigator',
+          description: 'Drivers get a purpose-built iOS and Android app with turn-by-turn navigation, job notifications, chat with dispatch, and proof-of-delivery capture. No expensive MDM or hardware required — just their smartphone.',
+          bullets: [
+            'Works offline — syncs when connectivity is restored',
+            'In-app chat between drivers and dispatchers',
+            'Multi-language support for diverse driver workforces',
+          ],
+          icon: Smartphone,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Clock, label: 'Time-window scheduling' },
+        { icon: Shield, label: 'Compliance logs' },
+        { icon: DollarSign, label: 'Service rate management' },
+        { icon: Zap, label: 'Webhook integrations' },
+        { icon: MapPin, label: 'Multi-depot support' },
+        { icon: BarChart3, label: 'Custom dashboards' },
+        { icon: FileCheck, label: 'Document management' },
+        { icon: Truck, label: 'Trailer tracking' },
+      ]}
+      testimonial={{
+        quote: 'We cut our dispatch time in half and fuel costs dropped 22% in the first three months. The live map alone saved us from hiring another operations coordinator.',
+        author: 'James O.',
+        role: 'Head of Operations',
+        company: 'Regional Haulage Co.',
+      }}
+      faqs={[
+        {
+          q: 'Does Fleetbase work for long-haul as well as local delivery?',
+          a: 'Yes. Route optimization and live tracking work across any distance. Long-haul operators benefit from geofence-based milestone alerts, while local fleets use the multi-stop optimization engine.',
+        },
+        {
+          q: 'Can I integrate with my existing ERP or accounting system?',
+          a: 'Fleetbase exposes a full REST API and webhooks for all events. Pre-built connectors exist for common accounting and ERP platforms, and the API makes custom integrations straightforward.',
+        },
+        {
+          q: 'How does driver tracking work without dedicated GPS hardware?',
+          a: 'Drivers share their location via the Navigator mobile app (iOS and Android) — no additional hardware needed. Fleetbase also integrates with dedicated telematics hardware and OBD devices if you prefer.',
+        },
+        {
+          q: 'Is Fleetbase open source?',
+          a: 'Yes — fully open source under AGPL-3.0. Self-host on your own infrastructure, inspect the code, and extend it for your exact workflows. A commercial licence is available if you need to keep modifications proprietary.',
+        },
+        {
+          q: 'How is pricing structured?',
+          a: 'Flat monthly tiers based on platform usage — no per-driver or per-vehicle fees. Scale your team without scaling your software bill.',
+        },
+      ]}
+      ctaHeading="Ready to run a leaner, smarter fleet?"
+      ctaBody="Hundreds of trucking and haulage operators have replaced their legacy TMS with Fleetbase. Start your free trial and see the difference in week one."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

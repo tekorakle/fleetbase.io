@@ -1,10 +1,60 @@
 ---
 title: API Settings
-description: Manage your Storefront API credentials and access configuration.
+description: Manage your Storefront API key — used to authenticate public requests from your customer-facing app.
 ---
 
 # API Settings
 
-Manage your Storefront API credentials and access configuration.
+Every store and network in Storefront is assigned a unique **API key** that authenticates public requests from your customer-facing app (mobile or web). This key is passed in the `Storefront-Key` header of all API calls.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Storefront → Settings → API** to view your store's key.
+
+## Your Store Key
+
+The store key is auto-generated when the store is created. It follows the format `store_<hash>` (e.g., `store_a1b2c3d4e5f6...`).
+
+This key is **public** — it is safe to include in your mobile app or web frontend. It identifies which store the request is for; it does not grant admin access.
+
+```http
+GET /storefront/v1/products
+Storefront-Key: store_a1b2c3d4e5f6
+```
+
+## Network Key
+
+If you operate a network, the network key follows the same pattern: `network_<hash>`. Use the network key to fetch stores, categories, and other network-level resources.
+
+## Regenerating Your Key
+
+If you suspect the key has been leaked or misused:
+
+1. Navigate to **Storefront → Settings → API**
+2. Click **Regenerate Key**
+3. Update the key in your frontend app
+
+<Callout type="warn">
+Regenerating the key immediately invalidates the old key. Any currently deployed app versions using the old key will stop working until they receive the updated key.
+</Callout>
+
+## Using the Key in Your App
+
+Include the key in every API request header:
+
+```javascript
+const response = await fetch('https://your-fleetbase-instance.com/storefront/v1/products', {
+  headers: {
+    'Storefront-Key': 'store_a1b2c3d4e5f6',
+    'Content-Type': 'application/json'
+  }
+});
+```
+
+For authenticated customer requests (cart, checkout, profile), also include the customer JWT:
+
+```javascript
+headers: {
+  'Storefront-Key': 'store_a1b2c3d4e5f6',
+  'Authorization': 'Bearer customer_jwt_token',
+  'Content-Type': 'application/json'
+}
+```

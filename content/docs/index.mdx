@@ -4,15 +4,87 @@ description: Everything you need to get started with Fleetbase — the open-sour
 full: true
 ---
 
-# Introduction
+# Fleetbase Documentation
 
-Fleetbase is an open-source, modular logistics operating system built for developers and operators. Whether you are deploying a fleet management platform, building a headless e-commerce marketplace, or developing a custom logistics extension, this documentation covers everything you need.
+Fleetbase is an open-source, modular **Logistics and Supply Chain Operating System** — a production-ready platform that operators and developers can deploy on their own infrastructure, extend with custom logic, and own completely. No vendor lock-in. No per-seat pricing. No black boxes.
 
-## Where to Start
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8 mb-2 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">New to Fleetbase?</CardTitle>
+      <CardDescription>Start with the platform overview and understand what Fleetbase is and how it works.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/getting-started/overview" className="text-primary hover:underline">Platform Overview →</a>
+        <a href="/docs/platform/getting-started/why-fleetbase" className="text-primary hover:underline">Why Fleetbase →</a>
+        <a href="/docs/platform/getting-started/architecture" className="text-primary hover:underline">Architecture →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Ready to deploy?</CardTitle>
+      <CardDescription>Get Fleetbase running in minutes — on the cloud or on your own infrastructure.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/quickstart/cloud-quickstart" className="text-primary hover:underline">Cloud Quickstart →</a>
+        <a href="/docs/platform/quickstart/running-locally" className="text-primary hover:underline">Run Locally →</a>
+        <a href="/docs/platform/quickstart/deploy-in-cloud" className="text-primary hover:underline">Deploy to Production →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Building integrations?</CardTitle>
+      <CardDescription>Use the Developer Console to manage API keys, configure webhooks, and monitor events.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/developer-console/api-keys" className="text-primary hover:underline">API Keys →</a>
+        <a href="/docs/platform/developer-console/webhooks" className="text-primary hover:underline">Webhooks →</a>
+        <a href="/docs/platform/developer-console/socket-events" className="text-primary hover:underline">Socket Events →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Building extensions?</CardTitle>
+      <CardDescription>Create custom modules that plug into the Fleetbase Console and API layer.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/sdk/getting-started/quickstart" className="text-primary hover:underline">Extension Quickstart →</a>
+        <a href="/docs/sdk/universe/overview" className="text-primary hover:underline">Universe Service →</a>
+        <a href="/docs/sdk/architecture/overview" className="text-primary hover:underline">Extension Architecture →</a>
+      </div>
+    </CardContent>
+  </Card>
+</div>
 
-- **New to Fleetbase?** Start with [What is Fleetbase?](/docs/getting-started/what-is-fleetbase) and the [Quick Start](/docs/quick-start) guide.
-- **Setting up your instance?** See [Deployment Options](/docs/getting-started/deployment-options) and the [Self-Hosted Quickstart](/docs/getting-started/quickstart-self-hosted).
-- **Managing a fleet?** Head to the [Fleet-Ops](/docs/fleetops) section.
-- **Building a marketplace?** Start with [Storefront](/docs/storefront).
-- **Building an extension?** See [Building & Extending Fleetbase](/docs/extending-fleetbase).
-- **Integrating via API?** Go to the [API Reference](/docs/api-reference).
+## Platform Modules
+
+Fleetbase ships with a set of first-party modules that cover the most common logistics and supply chain use cases. Each module is an independent extension — install what you need, skip what you don't.
+
+| Module | What it does |
+| :--- | :--- |
+| **[FleetOps](/docs/fleet-ops)** | Fleet management, order dispatch, real-time driver tracking, and route optimisation. The core TMS for delivery and field service operations. |
+| **[Storefront](/docs/storefront)** | Headless e-commerce and multi-vendor marketplace engine. Powers consumer-facing ordering apps and hyperlocal delivery platforms. |
+| **[Pallet](/docs/pallet)** | Inventory and warehouse management. Track stock across stores, warehouses, and dark stores — integrated with Storefront. |
+| **[Ledger](/docs/ledger)** | Accounting and invoicing. Generate invoices from orders and track financials across your operation. |
+| **[Developer Console](/docs/platform/developer-console/api-keys)** | API key management, webhook configuration, socket event monitoring, and request log viewing. |
+
+## What the Platform Docs Cover
+
+This **Platform** section covers the core Fleetbase system that underpins every module:
+
+- **Getting Started** — Architecture, deployment options, and orientation
+- **Quickstart** — Get running on the cloud or locally in minutes
+- **System Setup** — Configure mail, storage, queues, sockets, and branding
+- **Identity & Access** — Users, roles, permissions, policies, and organisations
+- **Developer Console** — API keys, webhooks, socket events, and request logs
+- **Extensions** — Browse and manage extensions from the marketplace
+- **Console Features** — Navigation, dashboards, custom fields, internationalisation, and notifications
+
+For module-specific documentation, use the tab navigation above to switch between FleetOps, Storefront, Pallet, Ledger, CLI, UI Library, Extension SDK, and API Reference.

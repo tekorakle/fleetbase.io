@@ -1,0 +1,82 @@
+---
+title: Reports
+description: Generate custom operational reports — filter by date, driver, fleet, or order type, then export to CSV for further analysis.
+---
+
+# Analytics Reports
+
+**Reports** let you generate custom data exports from Fleet-Ops — filtered, grouped, and formatted for analysis or compliance. Unlike the real-time dashboards, reports query historical data across any date range and can be exported to CSV.
+
+Navigate to **Fleet-Ops → Analytics → Reports**.
+
+![Reports list — report name, type, date range, status, and last-run timestamp](/images/placeholder.png)
+
+## Report Types
+
+Fleet-Ops supports the following report types:
+
+| Report | Data it covers |
+| :--- | :--- |
+| **Order Summary** | All orders for the period with status, driver, distance, and duration |
+| **Driver Activity** | Per-driver breakdown — orders completed, distance, average delivery time |
+| **Fleet Utilization** | Per-vehicle data — orders assigned, distance, utilization rate, downtime |
+| **Delivery Performance** | On-time rate, first-attempt rate, completion rate, cancellation breakdown |
+| **Fuel Report** | Fuel transactions — volume, cost, mileage, and consumption per vehicle |
+| **Issue Report** | Incidents reported — category, priority, resolution time, and status |
+| **Revenue Report** | Service quote values and transaction totals by order type or customer |
+| **Maintenance Report** | Work orders completed, parts used, costs incurred per vehicle |
+
+## Creating a Report
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Analytics → Reports**.
+  </Step>
+  <Step>
+    Click **+ New Report**.
+  </Step>
+  <Step>
+    Select the **Report Type** from the list above.
+  </Step>
+  <Step>
+    Set the **Date Range** — the period the report covers.
+  </Step>
+  <Step>
+    Apply **Filters** to narrow the data:
+    - **Driver** — include only specific drivers
+    - **Fleet** — include only orders from a specific fleet
+    - **Order Config** — filter by order type
+    - **Status** — include only orders with specific statuses
+    - **Vehicle** — filter by vehicle
+  </Step>
+  <Step>
+    Set **Grouping** — how data is aggregated (e.g., by day, by driver, by fleet).
+  </Step>
+  <Step>
+    Click **Run Report**. The report is generated and displayed inline.
+  </Step>
+</Steps>
+
+## Viewing Report Results
+
+Report results are displayed as:
+
+- **Summary cards** — headline numbers for the report period
+- **Data table** — row-by-row results with sortable columns
+- **Charts** — visual breakdown of key metrics (where applicable)
+
+## Exporting Reports
+
+Click **Export** to download the report as a CSV file. The export includes all columns visible in the data table plus any additional raw fields.
+
+For integration with BI tools (Excel, Google Sheets, Power BI, Tableau), the CSV format is compatible with all major tools — paste directly or use the CSV import wizard.
+
+## Saving Reports
+
+Save frequently-used report configurations by clicking **Save Report**. Saved reports appear in the reports list and can be re-run at any time without reconfiguring filters.
+
+Saved reports can also be scheduled to run automatically and emailed to recipients on a daily, weekly, or monthly cadence (if email is configured in platform settings).
+
+## Report Permissions
+
+Report access follows the IAM (Identity and Access Management) permissions configured in the Fleetbase platform. Operators with view-only access can run and export reports but cannot modify report definitions. See [IAM](/docs/platform/iam) for permission configuration.

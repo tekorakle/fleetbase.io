@@ -1,135 +1,156 @@
 import type { Metadata } from 'next';
-import { Recycle, MapPin, BarChart3, Truck, ClipboardList, Zap } from 'lucide-react';
+import { Recycle, MapPin, BarChart3, Truck, ClipboardList, Zap, Bell, Clock, Shield, FileCheck } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Waste & Recycling Collection Software | Fleetbase',
- description:
- 'Optimize waste collection routes, manage recycling operations, and track fleet compliance — all on an open-source logistics platform built for waste and recycling operators.',
- keywords: ['waste management software', 'recycling collection platform', 'waste fleet management', 'route optimization waste', 'bin collection software'],
- openGraph: {
- title: 'Waste & Recycling Collection Software | Fleetbase',
- description: 'Optimize waste collection routes and manage recycling operations efficiently.',
- },
+  title: 'Waste & Recycling Fleet Management Software | Fleetbase',
+  description: 'Optimize waste collection routes, reduce fuel costs, track containers, and generate compliance reports automatically. Open-source fleet management built for waste and recycling operations.',
+  keywords: ['waste management software', 'recycling fleet management', 'waste collection routing', 'bin tracking software', 'refuse logistics platform'],
+  openGraph: {
+    title: 'Waste & Recycling Operations Software | Fleetbase',
+    description: 'Collect more, drive less. Route optimization and compliance tools built for waste operators.',
+  },
 };
 
 export default function WasteManagementPage() {
- return (
- <SolutionPageLayout
- badge="Waste & Recycling"
- title={<>More Collections. <span className="text-gradient">Less Fuel. Full Compliance.</span></>}
- description="Fleetbase helps waste and recycling operators optimize collection routes, track vehicle compliance, manage driver schedules, and report on environmental KPIs — all from a single open-source platform."
- stats={[
- { value: '28%', label: 'Reduction in fuel costs' },
- { value: '20%', label: 'More collections per vehicle per day' },
- { value: '100%', label: 'Digital compliance records' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
- heroScreenshotAlt="Fleetbase FleetOps live map showing waste collection vehicles on optimized collection routes"
- heroScreenshotNeeded="FleetOps live map — waste collection vehicles on optimized routes with collection point markers"
- painPoints={{
- heading: 'Challenges waste operators face every day',
- items: [
- 'Drivers taking inefficient routes with no optimization',
- 'Paper collection records that are incomplete or illegible',
- 'No visibility into which collection points were missed',
- 'Vehicle compliance and maintenance tracked in spreadsheets',
- 'Environmental reporting taking days to compile manually',
- 'Scaling to new service areas requires rebuilding route plans from scratch',
- ],
- }}
- features={[
- {
- title: 'Optimized Collection Route Planning',
- description:
- 'Fleetbase calculates the most efficient collection sequences for each vehicle, minimizing fuel consumption and maximizing the number of collection points per shift. Re-plan routes dynamically when new collections are added.',
- icon: Truck,
- screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
- screenshotAlt: 'Optimized Collection Route Planning',
- screenshotNeeded: 'FleetOps route planning — waste collection route with optimized sequence and collection point markers',
- },
- {
- title: 'Live Fleet Tracking & Geofencing',
- description:
- 'Monitor every collection vehicle in real-time on a live map. Set geofences around collection zones and receive automatic alerts when vehicles enter, depart, or skip a collection point.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Live Fleet Tracking & Geofencing',
- screenshotNeeded: 'FleetOps live map — waste fleet with geofence zones and vehicle positions',
- },
- {
- title: 'Digital Collection Records',
- description:
- 'Drivers log collection completions, weights, and exceptions directly in the Navigator app. Records are timestamped, geotagged, and stored against the job — eliminating paper logs and disputes.',
- icon: ClipboardList,
- screenshot: '/images/console-screenshots/navigator-order-detail.png',
- screenshotAlt: 'Digital Collection Records',
- screenshotNeeded: 'Navigator app — waste collection job completion screen with weight input and photo capture',
- },
- {
- title: 'Missed Collection Management',
- description:
- 'When a collection is missed, the system flags it automatically and triggers a configurable follow-up workflow — re-schedule, notify the customer, or escalate to a supervisor.',
- icon: Zap,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Missed Collection Management',
- screenshotNeeded: 'FleetOps exception panel — missed collection alerts with re-schedule workflow',
- },
- {
- title: 'Vehicle Maintenance & Compliance',
- description:
- 'Track vehicle service schedules, MOT dates, and compliance certificates from the fleet dashboard. Receive automated reminders before deadlines and maintain a complete maintenance history.',
- icon: Truck,
- screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
- screenshotAlt: 'Vehicle Maintenance & Compliance',
- screenshotNeeded: 'FleetOps vehicle compliance panel — showing service dates, MOT status, and upcoming reminders',
- },
- {
- title: 'Environmental KPI Reporting',
- description:
- 'Generate reports on tonnes collected, fuel consumption, CO2 emissions, and recycling rates by zone, vehicle, or time period. Export for council reporting, sustainability audits, or internal reviews.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
- screenshotAlt: 'Environmental KPI Reporting',
- screenshotNeeded: 'FleetOps analytics — environmental KPI dashboard with tonnes collected and CO2 emissions chart',
- },
- ]}
- testimonial={{
- quote:
- "We added 20% more collections per vehicle without adding a single truck. The route optimization paid for the platform in the first quarter.",
- author: 'Mark H.',
- role: 'Fleet Manager',
- company: 'GreenRoute Waste Services',
- }}
- faqs={[
- {
- q: 'Can Fleetbase handle both residential and commercial waste collection?',
- a: 'Yes. You can configure separate order types, workflows, and route rules for residential, commercial, and hazardous waste collections — all managed from the same console.',
- },
- {
- q: 'Does Fleetbase support scheduled recurring collections?',
- a: 'Yes. Recurring collection schedules can be configured per customer or zone. The system automatically generates jobs on the scheduled frequency and assigns them to the appropriate vehicle.',
- },
- {
- q: 'Can we track waste weights and materials per collection?',
- a: 'Yes. Custom fields can be added to collection order types for weight, material type, contamination flags, and any other data point required for compliance or billing.',
- },
- {
- q: 'Does it integrate with council or local authority reporting systems?',
- a: 'Fleetbase exports data in standard formats (CSV, JSON) and has a REST API that can push collection data to council reporting systems or environmental management platforms.',
- },
- {
- q: 'How does Fleetbase handle hazardous waste compliance?',
- a: 'Hazardous waste order types can be configured with mandatory compliance fields, driver certification checks, and chain-of-custody tracking. All records are stored in an audit-ready log.',
- },
- ]}
- ctaHeading="Optimize your collection operation today"
- ctaBody="Waste and recycling operators use Fleetbase to cut fuel costs, increase collections, and stay compliant — without the complexity of legacy software."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Talk to Sales"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Waste & Recycling"
+      title={<>Collect More.<br /><span className="text-gradient">Drive Less. Comply Effortlessly.</span></>}
+      description="Waste and recycling operations run on tight margins, strict compliance timelines, and the constant pressure to do more with the same number of vehicles. Fleetbase gives waste operators intelligent route optimization, container tracking, compliance reporting, and real-time fleet visibility — all on open-source infrastructure you own and control."
+      stats={[
+        { value: '28%', label: 'Average fuel reduction via route optimization' },
+        { value: '40%', label: 'Fewer manual compliance reporting hours' },
+        { value: '15%', label: 'More collections per vehicle per day' },
+        { value: '99.9%', label: 'Platform uptime' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase waste management fleet operations — route optimization and compliance tracking"
+      painPoints={{
+        heading: 'The operational pressures waste operators face every day',
+        items: [
+          'Drivers running inefficient routes because no one\'s looked at the data in months',
+          'Fuel costs rising while collection volume stays flat',
+          'Manual compliance reporting consuming entire days for each regulatory submission',
+          'No visibility into which containers are overflowing between scheduled collections',
+          'Customer complaints about missed collections with no evidence to investigate',
+          'Fleet maintenance backlogs causing breakdowns during critical collection days',
+        ],
+      }}
+      featuresHeading="Smarter waste operations from first collection to compliance report"
+      featuresSubheading="Every vehicle, every container, every collection — visible and optimized."
+      features={[
+        {
+          title: 'Intelligent Collection Route Optimization',
+          description: 'Stop running yesterday\'s routes in today\'s conditions. Fleetbase dynamically optimizes collection routes based on container fill levels, traffic, vehicle capacity, and collection time windows — reducing fuel consumption and increasing collections per shift.',
+          bullets: [
+            'Dynamic route recalculation based on real-time data inputs',
+            'Vehicle capacity and weight constraint modelling',
+            'Multi-vehicle coordination to prevent route overlap and missed zones',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Container & Asset Tracking',
+          description: 'Know where every container, skip, and bin is at any point in time. Track collection status, flag overflows before they become complaints, and manage container placement and retrieval from a single operations dashboard.',
+          bullets: [
+            'Container lifecycle tracking from placement to retrieval',
+            'Fill-level sensor integration via API for predictive collection',
+            'Customer-facing container status portal for business clients',
+          ],
+          icon: Recycle,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Compliance & Environmental Reporting',
+          description: 'Generate the reports your regulators require — waste tonnage by type, collection frequency, disposal facility manifests, and diversion rates — automatically from your operational data. Audit season becomes a non-event.',
+          bullets: [
+            'Pre-built report templates for common waste regulation frameworks',
+            'Automated scheduled reporting to regulators and internal stakeholders',
+            'Digital waste transfer notes and disposal manifests',
+          ],
+          icon: ClipboardList,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Fleet Maintenance & Vehicle Health',
+          description: 'Waste vehicles take a beating. Track service history, schedule preventive maintenance, manage tyre and component wear, and log driver fault reports — keeping your fleet roadworthy and your compliance documentation clean.',
+          bullets: [
+            'Preventive maintenance scheduling based on mileage and date',
+            'Driver fault and defect reporting via the Navigator mobile app',
+            'Vehicle inspection checklists with photo evidence',
+          ],
+          icon: Truck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Customer Notification & Collection Alerts',
+          description: 'Reduce customer complaints with proactive communication. Notify business and residential customers when their collection is scheduled, when it\'s running behind, and when it\'s completed — automatically.',
+          bullets: [
+            'Automated collection day reminders for business clients',
+            'Real-time delay notifications with rescheduling options',
+            'Collection completion confirmation with timestamp and GPS data',
+          ],
+          icon: Bell,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Operations Analytics & KPI Dashboards',
+          description: 'Track the KPIs that determine whether your operation is profitable: cost-per-collection, fuel cost per route, vehicle utilization, and diversion rates. Build custom dashboards for operations, finance, and sustainability reporting.',
+          bullets: [
+            'Cost-per-collection and cost-per-tonne broken down by vehicle and zone',
+            'Diversion rate and recycling performance for sustainability reporting',
+            'Route efficiency trending to catch degradation early',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Clock, label: 'Collection scheduling' },
+        { icon: Shield, label: 'Regulatory compliance' },
+        { icon: Zap, label: 'Auto-dispatch engine' },
+        { icon: FileCheck, label: 'Digital manifests' },
+        { icon: MapPin, label: 'Multi-depot support' },
+        { icon: BarChart3, label: 'Sustainability reports' },
+        { icon: Bell, label: 'Customer notifications' },
+        { icon: Truck, label: 'Fleet maintenance' },
+      ]}
+      testimonial={{
+        quote: 'We reduced our daily driven distance by 18% in the first month and our compliance reporting now takes hours instead of days. Fleetbase paid for itself inside 60 days.',
+        author: 'Mark T.',
+        role: 'Operations Manager',
+        company: 'GreenRoute Waste Services',
+      }}
+      faqs={[
+        {
+          q: 'Can Fleetbase integrate with container fill-level sensor systems?',
+          a: 'Yes. The API supports integration with IoT sensor platforms to ingest fill-level data, which can be used to trigger dynamic collection scheduling and route updates.',
+        },
+        {
+          q: 'Does Fleetbase generate waste transfer notes and disposal manifests?',
+          a: 'Yes. Digital waste transfer notes and disposal facility manifests can be generated from delivery records and exported in the formats required by local regulatory bodies.',
+        },
+        {
+          q: 'Can we manage both municipal and commercial collection operations in one account?',
+          a: 'Yes. Multiple service types, client categories, and collection frequencies can all be managed in one Fleetbase account with separate dashboards and reporting per client type.',
+        },
+        {
+          q: 'How does the compliance reporting work?',
+          a: 'All operational data — tonnage, collection times, vehicle logs, disposal records — is captured automatically. Pre-built report templates generate the submissions your regulators need, on a schedule you define.',
+        },
+        {
+          q: 'Can drivers report vehicle defects and maintenance issues from the field?',
+          a: 'Yes. The Navigator driver app includes a defect reporting workflow where drivers can log issues with photos and descriptions directly from their vehicle.',
+        },
+      ]}
+      ctaHeading="Optimize your waste operation from the ground up"
+      ctaBody="Less fuel, more collections, and compliance reports that don't take all week. See what Fleetbase can do for your waste and recycling operation."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

@@ -1,55 +1,124 @@
 ---
 title: Wallets
-description: Manage digital wallets — top-up, transfer, credit, payout, freeze, and track balances.
+description: Manage digital wallets for drivers, customers, vendors, and your organization — deposit, withdraw, transfer, top-up, and freeze.
 ---
 
 # Wallets
 
-A **Wallet** is a digital account used to track the financial balance of a specific entity within your Fleetbase ecosystem.
+A **Wallet** is a digital balance account within Ledger. Wallets track money owed to or held for a specific entity — a driver's earnings, a customer's prepaid credit, a vendor's payout balance, or your organization's operating account.
 
-Wallets are the core mechanism for managing payouts, tracking earnings, and handling internal transfers.
+Navigate to **Ledger → Payments → Wallets**.
 
-## Who Needs a Wallet?
+![Wallet list — owner name, type, currency, balance, status badge](/images/placeholder.png)
 
-Wallets can be assigned to almost any entity in Fleetbase:
+## Wallet Types
 
-- **Drivers**: To track their earnings from completed deliveries.
-- **Vendors/Merchants**: To track their revenue from sales in a [Storefront](/docs/storefront) marketplace.
-- **Customers**: To hold store credit, refunds, or prepaid balances.
-- **Your Organization**: To track your platform's overall revenue and commissions.
+Wallets are polymorphic — they belong to any Fleetbase entity:
+
+| Type | Owner | Common Use |
+| :--- | :--- | :--- |
+| **Driver** | Fleet-Ops driver | Track earnings from completed deliveries |
+| **Customer** | Storefront customer | Prepaid credit, loyalty balance, refunds |
+| **Company** | Your organization | Platform revenue, operating account |
+| **User** | Individual Fleetbase user | Personal account |
+
+A single entity can have multiple wallets in different currencies.
+
+## Wallet Status
+
+| Status | Behavior |
+| :--- | :--- |
+| **active** | Normal — credits and debits allowed |
+| **frozen** | Debits blocked; credits still allowed (e.g., during dispute review) |
+| **closed** | No operations allowed |
 
 ## Creating a Wallet
 
-Wallets are often created automatically. For example, when you onboard a new driver in [FleetOps](/docs/fleetops), you can configure the system to automatically generate a Wallet for them.
+Wallets are often provisioned automatically — when a new driver is created in Fleet-Ops, or when a customer registers in Storefront. To create one manually:
 
-To manually create a Wallet:
+<Steps>
+  <Step>
+    Navigate to **Ledger → Payments → Wallets**.
+  </Step>
+  <Step>
+    Click **New Wallet**.
+  </Step>
+  <Step>
+    Select the **Owner** (driver, customer, company, or user).
+  </Step>
+  <Step>
+    Select the **Currency**.
+  </Step>
+  <Step>
+    Enter an optional **Name** and **Description**.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
 
-1. Navigate to **Ledger** > **Wallets** in the Fleetbase Console.
-2. Click **New Wallet**.
-3. Select the **Owner** of the wallet (e.g., a specific Driver, Vendor, or Customer).
-4. Select the **Currency** for the wallet. *Note: A single entity can have multiple wallets if they operate in multiple currencies.*
-5. Click **Save**.
+## Wallet Operations
 
-## Managing Balances
+### Deposit (Credit)
 
-The balance of a Wallet is determined by the sum of all its associated [Transactions](/docs/ledger/payments/transactions).
+Add funds to a wallet without a gateway (e.g., manual credit, earning allocation):
 
-You can manually adjust a Wallet's balance directly from the Console:
+1. Open the wallet
+2. Click **Credit**
+3. Enter the amount and description
+4. Click **Save**
 
-### Top-Up (Credit)
-Adding funds to a wallet. This is often used to issue a refund to a customer as store credit, or to manually correct a driver's earnings.
+Journal entry created: `DEBIT Cash → CREDIT Wallet Liability`
 
-### Payout (Debit)
-Removing funds from a wallet. This is used when you actually transfer money to a driver's or vendor's real-world bank account. Recording a Payout in Ledger ensures their digital balance drops to zero, reflecting that they have been paid.
+### Top-Up (Credit via Gateway)
+
+Add funds to a wallet using a payment gateway (e.g., customer tops up with a credit card):
+
+1. Open the wallet
+2. Click **Top Up**
+3. Select the gateway and enter the amount
+4. Click **Charge**
+
+The gateway processes the payment, then credits the wallet.
+
+### Withdrawal (Debit)
+
+Remove funds from a wallet (e.g., driver payout, refund):
+
+1. Open the wallet
+2. Click **Withdraw**
+3. Enter the amount and description
+4. Click **Save**
+
+Journal entry created: `DEBIT Wallet Liability → CREDIT Cash`
+
+<Callout type="warn">
+Withdrawals are blocked on frozen wallets. Unfreeze the wallet first if a debit is legitimately needed.
+</Callout>
 
 ### Transfer
-Moving funds from one Wallet to another. For example, transferring a commission fee from a Vendor's Wallet to your Organization's Wallet.
 
-## Freezing a Wallet
+Move funds between two wallets:
 
-If you suspect fraudulent activity, or if a vendor's account is suspended, you can **Freeze** their Wallet.
+1. Open the source wallet
+2. Click **Transfer**
+3. Select the destination wallet and enter the amount
+4. Click **Transfer**
 
-1. Open the Wallet in the Fleetbase Console.
-2. Click the **Freeze** button.
+Two transactions are created — a debit from the source and a credit to the destination — with corresponding journal entries.
 
-When a Wallet is frozen, no new transactions can be processed against it. Funds cannot be added, and payouts cannot be issued until the Wallet is unfrozen by an administrator.
+### Freeze & Unfreeze
+
+To freeze a wallet:
+1. Open the wallet
+2. Click **Freeze**
+
+To unfreeze: click **Unfreeze**. Only administrators can freeze/unfreeze wallets.
+
+## Viewing Wallet Transactions
+
+Open any wallet and click the **Transactions** tab to see a chronological list of all transactions with amounts, directions, and running balance.
+
+## Balance Reconciliation
+
+If a wallet balance appears incorrect, click **Recalculate Balance** from the wallet detail. This recomputes the balance from scratch based on all completed transactions.

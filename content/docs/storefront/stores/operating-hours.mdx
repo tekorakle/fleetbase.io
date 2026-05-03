@@ -1,48 +1,65 @@
 ---
 title: Operating Hours
-description: Set store and product availability windows with configurable operating hours.
+description: Set store and location availability windows — customers cannot place orders outside operating hours.
 ---
 
 # Operating Hours
 
-In Storefront, **Operating Hours** dictate when a Store is open to accept orders.
+**Operating Hours** define when a store location accepts orders. If a customer tries to check out outside of a location's operating hours, the API rejects the request and the store shows as closed in your app.
 
-If a customer attempts to place an order outside of a Store's operating hours, the [Storefront API](/docs/api-reference/storefront) will reject the checkout request.
+Operating hours are set per **store location**, not per store. This allows a franchise with multiple branches to have different hours per location.
 
-## Setting Store Hours
+Navigate to **Storefront → [Store] → Locations → [Location] → Hours**.
 
-Operating hours are defined on a per-Store basis.
+![Operating hours schedule — day-by-day time blocks with add/remove controls](/images/placeholder.png)
 
-1. Navigate to **Storefront** > **Stores** in the Fleetbase Console.
-2. Open the Store you want to manage.
-3. Go to the **Operating Hours** tab.
-4. You will see a schedule for each day of the week (Monday through Sunday).
-5. For each day, you can define one or more time blocks (e.g., `09:00 AM` to `05:00 PM`).
-6. If a Store is closed on a specific day, simply leave the time blocks empty or toggle the day to `Closed`.
-7. Click **Save**.
+## Setting Hours
 
-## Multiple Time Blocks
+<Steps>
+  <Step>
+    Open your store, click the **Locations** tab, and open a location.
+  </Step>
+  <Step>
+    Click the **Hours** tab within the location detail.
+  </Step>
+  <Step>
+    For each day of the week, click **Add Hours** and set the **Start** and **End** times.
+  </Step>
+  <Step>
+    Leave a day empty (no time blocks) to mark it as closed.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
 
-A Store can have multiple operating blocks in a single day. This is common for restaurants that close between lunch and dinner service.
+## Multiple Time Blocks Per Day
 
-For example, a restaurant's Tuesday schedule might look like this:
-- Block 1: `11:00 AM` to `02:00 PM` (Lunch)
-- Block 2: `05:00 PM` to `10:00 PM` (Dinner)
+A location can have multiple time blocks in a single day — useful for restaurants that close between lunch and dinner.
 
-During the gap between 2:00 PM and 5:00 PM, the Store will appear as "Closed" in your frontend application, and customers will not be able to place orders.
+Example — Tuesday schedule:
+```
+Block 1: 11:00 AM → 02:00 PM  (Lunch)
+Block 2: 05:00 PM → 10:00 PM  (Dinner)
+```
 
-## Timezones
+During the gap (2pm–5pm), the store shows as closed and checkout is blocked.
 
-It is critical to ensure that the Store's timezone is set correctly.
+## Timezone
 
-Operating hours are evaluated against the Store's local timezone, not the customer's timezone or the server's UTC time.
+Operating hours are evaluated in the **store's configured timezone**, not the customer's timezone or the server's UTC time. Always ensure the store timezone is set correctly in **Storefront → [Store] → Details**.
 
-You can set the Store's timezone in the main **Details** tab of the Store configuration.
+## Overriding for Emergencies
 
-## Overriding Hours (Holidays & Exceptions)
+If you need to close the store immediately (e.g., due to a kitchen emergency):
 
-Currently, Storefront does not have a dedicated "Holiday" calendar feature.
+1. Open the store → **Details** tab
+2. Toggle **Online** to off
 
-If a Store needs to close unexpectedly or operate on reduced hours for a specific date (e.g., Thanksgiving), the Store manager must manually update the Operating Hours for that week, and then change them back afterward.
+This overrides the operating schedule and immediately stops new orders regardless of hours. Re-enable **Online** when ready to resume.
 
-Alternatively, if a Store needs to close immediately due to an emergency, the manager can toggle the Store's **Status** to `Inactive` (see [Managing Store Status](/docs/storefront/stores/stores-and-networks#managing-store-status)). This overrides the operating hours and immediately prevents new orders.
+For planned closures like holidays, update the hours for the affected week manually and revert afterward. Storefront does not have a built-in holiday calendar.
+
+## Product-Level Hours
+
+Individual products can also have their own availability hours (e.g., a breakfast item only available 7am–11am). If a customer tries to add a product outside its hours, it is blocked even if the store is open. Configure product hours in **Storefront → Products → [Product] → Hours**.

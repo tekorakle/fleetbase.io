@@ -1,0 +1,93 @@
+---
+title: Service Quotes
+description: Generate and manage service quotes for orders — how quotes are calculated, presented, and linked to transactions.
+---
+
+# Service Quotes
+
+A **Service Quote** is a price estimate generated for an order based on matching Service Rates. Quotes are generated when an order's origin, destination, type, and payload details match a configured rate. They can be presented to customers before confirming an order, and accepted quotes become linked transactions.
+
+![Service quotes list — quote ID, order reference, amount, currency, and expiry](/images/placeholder.png)
+
+## How Quotes are Generated
+
+When an order is created or updated, Fleet-Ops evaluates all Service Rates to find matches based on:
+
+- The order's origin and destination (service area and zone)
+- The order type (Order Config)
+- The order's payload weight and volume (for weight/volume-based rates)
+- The COD amount (for COD-enabled rates)
+- The current time (for peak hour rates)
+
+If a matching rate is found, a Service Quote is generated with:
+
+- **Amount** — the calculated total including base fee, distance component, surcharges
+- **Currency** — from the service rate's currency setting
+- **Expiry** — quotes expire after a configurable period (e.g., 30 minutes) to prevent stale pricing
+
+## Viewing Quotes on an Order
+
+Active quotes for an order appear in the **Order Detail Panel** under the **Quote** section. The panel shows:
+
+- The calculated amount and currency
+- Which rate was applied
+- The quote expiry time
+- An **Accept** button if the customer needs to confirm before dispatch
+
+## Quote Workflow
+
+### Automatic Quote (Operator-Managed)
+For internal operations where pricing is not customer-facing:
+1. Order is created → quote is generated automatically
+2. Operator reviews the quote in the order detail
+3. Order is dispatched — the quote is attached to the transaction record
+
+### Customer-Facing Quote (Storefront Integration)
+For customer portals and API integrations:
+1. Customer submits an order request with payload details
+2. API returns the available quotes for the customer to choose from
+3. Customer selects a quote and confirms
+4. Order is created with the selected quote linked
+
+## Generating a Quote via API
+
+```bash
+POST /v1/service-quotes
+Content-Type: application/json
+Authorization: Bearer flb_live_...
+
+{
+  "payload": {
+    "pickup": {
+      "street1": "123 Orchard Road",
+      "city": "Singapore",
+      "country": "SG"
+    },
+    "dropoff": {
+      "street1": "456 Marina Bay",
+      "city": "Singapore",
+      "country": "SG"
+    },
+    "entities": [
+      { "description": "Electronics", "weight_value": 2.5, "weight_unit": "kg" }
+    ]
+  },
+  "service_rate_uuid": "rate_01H..."
+}
+```
+
+Response includes the quote `amount`, `currency`, and `expired_at`.
+
+## Quote Expiry
+
+Quotes have a configurable expiry time. After expiry, the quote is no longer valid and must be regenerated. This prevents customers from locking in a price that may have changed (e.g., after peak hours end or if the payload changes).
+
+## Multiple Quotes
+
+When multiple service rates match an order, Fleet-Ops can generate multiple quotes — one per matching rate. This allows customers to choose between service tiers (e.g., Standard vs. Express). The customer selects their preferred quote before the order is confirmed.
+
+## Payment Integration
+
+Accepted quotes can be connected to a payment gateway (Stripe) to charge customers online. When payment settings are configured in **Fleet-Ops → Settings → Payments**, accepted quotes generate a checkout session URL that can be shared with the customer or embedded in a customer portal.
+
+See [Settings → Payments](/docs/fleet-ops/settings/payments) for payment integration setup.

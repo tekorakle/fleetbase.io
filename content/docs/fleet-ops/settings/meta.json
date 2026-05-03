@@ -1,12 +1,14 @@
 {
   "title": "Settings",
   "pages": [
-    "routing",
-    "scheduling",
-    "orchestrator",
     "navigator-app",
     "payments",
     "notifications",
-    "custom-fields"
+    "routing",
+    "map",
+    "orchestrator",
+    "scheduling",
+    "custom-fields",
+    "avatars"
   ]
 }

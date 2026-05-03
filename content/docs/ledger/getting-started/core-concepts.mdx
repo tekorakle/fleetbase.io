@@ -1,0 +1,128 @@
+---
+title: Core Concepts
+description: Understand the foundational concepts of Ledger — double-entry bookkeeping, accounts, wallets, invoices, and how it all fits together.
+---
+
+# Core Concepts
+
+Ledger implements proper double-entry bookkeeping. Understanding the core accounting model helps you use the system correctly and interpret your financial reports.
+
+## The Accounting Equation
+
+Everything in Ledger follows this fundamental rule:
+
+```
+Assets = Liabilities + Equity
+```
+
+Every financial event is recorded as a **journal entry** that debits one account and credits another — the equation always stays balanced.
+
+## Account Types
+
+Ledger uses five standard account types:
+
+| Type | Normal Balance | Examples |
+| :--- | :--- | :--- |
+| **Asset** | Debit | Cash, Checking, Accounts Receivable |
+| **Liability** | Credit | Accounts Payable, Loans, Wallet Balances |
+| **Equity** | Credit | Retained Earnings, Owner's Capital |
+| **Revenue** | Credit | Sales Revenue, Service Revenue |
+| **Expense** | Debit | Cost of Goods Sold, Wages, Rent |
+
+**Debit-normal** accounts (Assets, Expenses): debits increase the balance; credits decrease it.
+**Credit-normal** accounts (Liabilities, Equity, Revenue): credits increase the balance; debits decrease it.
+
+## Journal Entries
+
+Every financial event creates one journal entry with:
+- A **debit account** — the account receiving the debit
+- A **credit account** — the account receiving the credit
+- An **amount** in the smallest currency unit
+- A **type** — `general`, `adjusting`, `closing`, `wallet_transfer`, `wallet_deposit`, etc.
+- A **status** — `posted`, `reversed`, or `voided`
+- An **is_system_entry** flag — `true` for automated entries, `false` for manual ones
+
+Example — customer pays an invoice:
+```
+DEBIT  Cash (Asset)               +$100
+CREDIT Accounts Receivable (Asset) -$100
+```
+
+## Wallets
+
+A **Wallet** is a digital balance tracked in Ledger. Wallets are polymorphic — they can belong to any entity:
+
+| Wallet Type | Owner | Use Case |
+| :--- | :--- | :--- |
+| **Driver** | Fleet-Ops Driver | Track earnings from completed deliveries |
+| **Customer** | Storefront Customer | Prepaid credit or store loyalty balance |
+| **Company** | Your organization | Operating account, platform revenue |
+| **User** | Individual user | Personal account |
+
+Wallet operations:
+- **Deposit / Top-up** — credit the wallet
+- **Withdrawal / Payout** — debit the wallet
+- **Transfer** — move funds between wallets
+- **Freeze** — block debits (credits still allowed)
+
+Every wallet operation automatically creates a journal entry:
+```
+Deposit:    DEBIT Cash → CREDIT Wallet Liability
+Withdrawal: DEBIT Wallet Liability → CREDIT Cash
+```
+
+## Invoices
+
+An **Invoice** is a formal payment request with a lifecycle:
+
+```
+draft → sent → viewed → partial/paid/overdue/cancelled/void
+```
+
+Key invoice fields:
+- **Number** — auto-generated unique identifier (e.g., `INV-0001`)
+- **Customer** — polymorphic reference (contact, driver, company, etc.)
+- **Line Items** — description, quantity, unit price, tax rate
+- **Totals** — subtotal, tax, total_amount, amount_paid, balance (all computed)
+- **Due Date** — auto-calculated from company payment terms if set
+
+When an invoice is saved, Ledger recognizes the revenue:
+```
+DEBIT  Accounts Receivable (Asset increases)
+CREDIT Sales Revenue (Revenue increases)
+```
+
+When payment is recorded:
+```
+DEBIT  Cash (Asset increases)
+CREDIT Accounts Receivable (Asset decreases)
+```
+
+## Transactions
+
+A **Transaction** is the immutable record of money moving relative to a wallet. Transactions are never edited or deleted — they are the complete audit trail. Key fields:
+
+- `direction` — `credit` (money in) or `debit` (money out)
+- `status` — `pending`, `completed`, `failed`, `reversed`, `voided`
+- `type` — `deposit`, `withdrawal`, `transfer`, `payment`, `refund`, etc.
+- `amount`, `fee_amount`, `tax_amount`, `net_amount` — full cost breakdown
+- `gateway` — which payment processor handled this, if any
+
+## Payment Gateways
+
+**Gateways** are payment processors with encrypted credentials. Ledger supports Stripe, QPay, and Cash. Every gateway interaction creates a `GatewayTransaction` audit record — used for idempotency (duplicate webhook protection) and debugging.
+
+## How It All Connects
+
+```
+Fleet-Ops Order completes
+  → Invoice auto-created (if configured)
+    → Revenue recognized (DEBIT AR, CREDIT Revenue)
+      → Invoice sent to customer
+        → Customer pays via gateway
+          → GatewayTransaction created
+            → Ledger Transaction recorded
+              → Journal Entry: DEBIT Cash, CREDIT AR
+                → Invoice marked paid
+                  → AR Aging cleared for this invoice
+```

@@ -1,0 +1,80 @@
+---
+title: Parts
+description: Track parts inventory used in fleet maintenance — log parts used in work orders, manage supplier info, and track costs.
+---
+
+# Parts
+
+**Parts** is the inventory management section for maintenance components. It tracks the parts available for vehicle and equipment maintenance — oil filters, brake pads, belts, fluids, and any other consumables used in work orders.
+
+![Parts inventory list — part name, SKU, supplier, cost per unit, quantity](/images/placeholder.png)
+
+## Part Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Part name (e.g., "Oil Filter – Toyota Hiace") |
+| **Part Number** | Manufacturer part number or OEM code |
+| **SKU** | Internal stock keeping unit |
+| **Description** | Detailed description of the part |
+| **Supplier** | Vendor or supplier who provides this part |
+| **Unit Cost** | Cost per unit |
+| **Currency** | Currency of the unit cost |
+| **Quantity On Hand** | Current stock level (optional — for basic inventory tracking) |
+| **Minimum Stock Level** | Alert threshold — notify when stock drops below this |
+
+## Creating a Part Record
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Maintenance → Parts**.
+  </Step>
+  <Step>
+    Click **+ New Part**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Part Number**, and **SKU**.
+  </Step>
+  <Step>
+    Set the **Supplier** and **Unit Cost**.
+  </Step>
+  <Step>
+    Optionally set the **Quantity on Hand** if you want to track stock levels.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Using Parts in Work Orders
+
+When completing a work order, the assignee can log which parts were used:
+
+1. In the work order detail, click **+ Add Part**
+2. Select the part from the inventory
+3. Enter the quantity used
+4. The part cost is automatically added to the work order's **Actual Cost**
+
+Parts used in completed work orders are recorded in the maintenance history, giving a full record of what components were replaced in each vehicle over its lifetime.
+
+## Cost Tracking
+
+Parts costs flow into the work order cost breakdown:
+
+```
+Work Order Actual Cost = Labor Cost + Parts Cost + Other Costs
+```
+
+Parts selected from the inventory carry their unit cost, which multiplied by quantity gives the line item cost in the work order's cost breakdown.
+
+## Supplier Management
+
+Each part can be linked to a **Vendor** (supplier) record from **Fleet-Ops → Resources → Vendors**. This lets you:
+
+- Track which supplier provides each part
+- Identify the preferred supplier for reorders
+- Reference supplier contact information when placing orders
+
+## Importing Parts
+
+Click **Import** in the parts list to bulk-upload your parts inventory from a CSV file. This is useful when onboarding an existing parts catalog.

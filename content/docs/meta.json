@@ -2,14 +2,8 @@
   "title": "Platform",
   "pages": [
     "index",
-    "quick-start",
-    "$separator:Getting Started",
-    "getting-started",
-    "$separator:Platform",
-    "platform",
-    "$separator:Guides",
-    "guides",
-    "$separator:Community",
-    "community"
+    "...platform",
+    "---Community & Support---",
+    "...community"
   ]
 }

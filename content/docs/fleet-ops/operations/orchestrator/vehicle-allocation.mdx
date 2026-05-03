@@ -1,0 +1,59 @@
+---
+title: Vehicle Allocation
+description: How the Orchestrator matches vehicles to orders — availability, location proximity, and driver assignment.
+---
+
+# Vehicle Allocation
+
+Vehicle allocation is the process of matching available vehicles to orders during an Orchestrator run. The Orchestrator considers a vehicle's availability, current location, assigned driver, and — for capacity-constrained optimization — its payload capacity.
+
+## How Vehicle Allocation Works
+
+When the Orchestrator runs, it evaluates each available vehicle against the orders in the pool:
+
+1. **Availability check** — vehicle must have `status = active` and `online = true`
+2. **Driver link** — if a driver is already assigned to the vehicle, the vehicle is paired with that driver
+3. **Location** — the vehicle's current location is used as the route starting point for distance calculations
+4. **Capacity** — if orders have weight or volume values, the vehicle's `capacity_weight` and `capacity_volume` fields are used to enforce load limits
+
+## Vehicle Attributes Used in Allocation
+
+| Attribute | Effect on allocation |
+| :--- | :--- |
+| `status` | Only `active` vehicles are eligible |
+| `online` | Only online vehicles are considered |
+| `location` | Route starting point for distance/time calculations |
+| `capacity_weight` | Maximum weight load (kg) — enforced when orders have weight values |
+| `capacity_volume` | Maximum volume load (m³) — enforced when orders have volume values |
+| `vehicle_assigned_uuid` (driver) | Vehicle is pre-paired with its assigned driver |
+
+## Assigning Vehicles to Drivers
+
+For optimal Orchestrator results, assign vehicles to drivers before running optimization:
+
+1. Open **Fleet-Ops → Resources → Drivers**
+2. Open a driver record and set their **Vehicle** to a specific vehicle
+3. The Orchestrator will route that driver+vehicle pair together
+
+If a driver has no vehicle assigned, the Orchestrator will use only driver-level constraints (skills, time window, max distance) without capacity enforcement.
+
+## Fleet-Based Scoping
+
+In the Orchestrator Workbench, you can scope vehicle allocation to a specific **Fleet**. Only vehicles that belong to the selected fleet will be included in the resource pool. This is useful for running separate optimization passes for different operational zones or service types.
+
+## Online Vehicle Status
+
+Vehicles become "online" when their assigned driver goes online in the Navigator app, or when a connected telematics device reports active. The Orchestrator's resource panel shows:
+
+- **Online vehicles** — available for allocation
+- **Offline vehicles** — excluded from the current run
+- **In-use vehicles** — already assigned to an active order (excluded from new allocation)
+
+## Manual Vehicle Override
+
+Even after an Orchestrator run, vehicle assignments can be changed manually. In the Workbench results panel, click an assigned order and use the **Vehicle** dropdown to select a different vehicle before committing. In the order detail panel, you can also reassign the vehicle directly on any order.
+
+## Next Steps
+
+- [Payload & Capacity Allocation](/docs/fleet-ops/operations/orchestrator/payload-capacity-allocation) — configuring weight and volume constraints
+- [Settings → Orchestrator](/docs/fleet-ops/settings/orchestrator) — set default engine and capacity enforcement rules

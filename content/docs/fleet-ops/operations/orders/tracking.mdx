@@ -1,0 +1,85 @@
+---
+title: Tracking
+description: Track live order progress, driver position, and ETA from the order detail view and live map.
+---
+
+# Tracking
+
+Fleet-Ops provides real-time tracking of order progress and driver location from the moment an order is dispatched until delivery is confirmed. Tracking is visible to operators in the console and optionally to customers via a public tracking link.
+
+## Live Map
+
+The live map (**Fleet-Ops → Live Map** or the map visible from the dashboard) shows:
+
+- **Driver markers** — real-time position of all active drivers, updated continuously via the Navigator app or telematics devices
+- **Order routes** — the calculated route for each active order, shown as a polyline
+- **Pickup and dropoff markers** — origin and destination pins for active orders
+- **Waypoint markers** — intermediate stop markers for multi-drop orders
+
+Click a driver marker to see:
+- Driver name, photo, and status
+- Current speed and heading
+- Active order assignment
+- ETA to next stop
+
+![Live map — driver markers, active route polylines, pickup and dropoff pins](/images/placeholder.png)
+
+## Order Detail Tracking
+
+From the order detail panel, the tracking section shows:
+
+| Field | Description |
+| :--- | :--- |
+| **Driver Location** | Real-time map with driver position |
+| **ETA** | Estimated time of arrival at the next stop |
+| **Distance Remaining** | Distance from driver to dropoff |
+| **Status** | Current order status |
+| **Activity Timeline** | All status transitions with timestamps and locations |
+
+The activity timeline records every action with:
+- The event (dispatched, picked-up, in-transit, arrived, completed)
+- The timestamp
+- The driver's GPS coordinates at the time of the event
+- Any attached proof (photo, signature)
+
+## Tracking Number & Customer Tracking
+
+Every order has a **Tracking Number** (e.g., `FO-XXXXXXXX`) that customers can use on a public tracking page to view the order's current status without logging in.
+
+The tracking page shows:
+- Current status and recent activity
+- Estimated delivery time
+- Map with current driver position (when active)
+- Proof of delivery once completed
+
+<Callout type="info">
+The public tracking page URL is: `https://yourdomain.com/tracking/{tracking_number}`. For Fleetbase Cloud: `https://console.fleetbase.io/tracking/{tracking_number}`.
+</Callout>
+
+## Entity-Level Tracking
+
+Each **entity** (item) in an order has its own tracking number and status. For orders with multiple items, each item's status is tracked independently — so you can see which items have been picked up, which are in transit, and which have been delivered, even within a single order.
+
+This is particularly useful for partial delivery scenarios where some items are delivered but others fail or require return.
+
+## WebSocket Real-Time Updates
+
+For custom applications, driver location and order status updates are available in real time via the SocketCluster WebSocket channel.
+
+Subscribe to `company.{company_id}` to receive:
+
+| Event | Payload |
+| :--- | :--- |
+| `driver.location_changed` | Current driver coordinates, speed, heading |
+| `order.dispatched` | Order dispatched to driver |
+| `order.started` | Driver began the order |
+| `order.completed` | Order delivered |
+| `order.cancelled` | Order cancelled |
+
+See [Socket Events](/docs/platform/developer-console/socket-events) for subscription details and payload schemas.
+
+## Position History
+
+For historical analysis, Fleet-Ops stores all driver position data. You can view a driver's position history in **Fleet-Ops → Resources → Drivers → [Driver] → Positions** — or use the position replay feature to re-watch a past route on the map.
+
+Position data includes: latitude, longitude, heading, speed, altitude, and timestamp per reading.

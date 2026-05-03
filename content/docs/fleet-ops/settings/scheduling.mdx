@@ -1,10 +1,74 @@
 ---
 title: Scheduling Settings
-description: Configure scheduling constraints, availability windows, and calendar preferences.
+description: Configure shift defaults, HOS compliance rules, and scheduling horizon — controls the Scheduler and Orchestrator time window behavior.
 ---
 
 # Scheduling Settings
 
-Configure scheduling constraints, availability windows, and calendar preferences.
+**Scheduling Settings** control the rules the Scheduler and Orchestrator use for driver shift management and Hours of Service (HOS) compliance.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Fleet-Ops → Settings → Scheduling**.
+
+![Scheduling settings panel — HOS limits, break requirements, default shift hours](/images/placeholder.png)
+
+## Available Settings
+
+### Default Shift Hours
+
+Set the default start and end times used when creating new shift entries for drivers. These defaults apply when adding a shift in the Scheduler without specifying custom times.
+
+| Setting | Description |
+| :--- | :--- |
+| **Default Shift Start** | Default shift start time (e.g., 08:00) |
+| **Default Shift End** | Default shift end time (e.g., 17:00) |
+| **Default Timezone** | Timezone used for shift times when none is set on the driver |
+
+### HOS (Hours of Service) Limits
+
+HOS rules enforce regulatory driving time limits for commercial vehicle operators.
+
+| Setting | Description |
+| :--- | :--- |
+| **Daily Driving Limit** | Maximum driving hours per day (e.g., 11 hours) |
+| **Daily On-Duty Limit** | Maximum on-duty hours per day (e.g., 14 hours) |
+| **Weekly Hours Limit** | Maximum hours in a rolling 7-day period |
+| **Required Rest Period** | Minimum consecutive rest hours between shifts |
+| **Mandatory Break** | Break required after continuous driving (e.g., 30 min after 8 hours) |
+
+When a driver approaches their HOS limit, Fleet-Ops flags them in the Scheduler and excludes them from Orchestrator assignment for that period.
+
+### Scheduling Horizon
+
+| Setting | Description |
+| :--- | :--- |
+| **Planning Horizon (days)** | How many days forward the Scheduler displays and plans |
+| **Auto-Schedule Advance** | How far in advance orders are eligible for automatic scheduling |
+
+### Break and Overtime Rules
+
+| Setting | Description |
+| :--- | :--- |
+| **Enable Break Scheduling** | Include break periods in shift calculations |
+| **Overtime Threshold** | Hours after which overtime tracking begins |
+| **Alert Threshold (%)** | Percentage of HOS limit at which warnings appear |
+
+## How These Settings Affect the Orchestrator
+
+When the Orchestrator assigns orders to drivers:
+
+1. It reads each driver's shift schedule to determine their time window
+2. It checks HOS status to exclude drivers at or near their limit
+3. It enforces the daily driving limit to prevent over-assignment
+4. Orders that cannot fit within available hours are returned to the unassigned pool
+
+Stricter HOS settings result in fewer orders per driver per run — adjust based on your regulatory requirements and operational context.
+
+## HOS Compliance Monitoring
+
+The Scheduler calendar shows HOS status indicators for each driver:
+
+- **Green** — well within limits
+- **Yellow** — approaching limit (within alert threshold)
+- **Red** — at or exceeding limit — no new assignments
+
+HOS status is also visible in the driver detail panel under the **Schedule** tab.

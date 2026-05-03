@@ -1,0 +1,116 @@
+---
+title: Work Orders
+description: Create, assign, and track maintenance work orders — from initial task assignment through checklist completion and cost tracking to closure.
+---
+
+# Work Orders
+
+A **Work Order** is an assigned maintenance or repair task. Work orders can be generated automatically from maintenance schedules when service thresholds are reached, or created manually for ad-hoc repairs and inspections. Each work order is tracked from open to completion with a full cost record.
+
+![Work orders list — code, subject, target, assignee, priority, status, and due date](/images/placeholder.png)
+
+## Work Order Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Code** | Auto-generated reference code (e.g., WO-00123) |
+| **Subject** | Title of the task (e.g., "Oil Change", "Brake Pad Replacement") |
+| **Target** | The vehicle, driver, or equipment the work is performed on |
+| **Assignee** | Who is responsible for completing the task |
+| **Priority** | low, medium, high, critical |
+| **Status** | Current stage in the workflow |
+| **Opened At** | When the work order was created |
+| **Due At** | Deadline for completion |
+| **Closed At** | When the work order was completed and closed |
+| **Instructions** | Detailed task instructions |
+| **Checklist** | Structured list of sub-tasks to complete |
+| **Estimated Cost** | Pre-work cost estimate |
+| **Approved Budget** | Authorized spend amount |
+| **Actual Cost** | Real cost after completion |
+| **Currency** | Currency for all cost fields |
+| **Cost Center** | Budget code/department for accounting |
+
+## Work Order Status Flow
+
+```
+open → assigned → in_progress → pending_review → completed
+                                       │
+                                   cancelled
+```
+
+| Status | Meaning |
+| :--- | :--- |
+| `open` | Created, not yet assigned |
+| `assigned` | Assigned to a mechanic or team |
+| `in_progress` | Work has begun |
+| `pending_review` | Work complete, awaiting supervisor sign-off |
+| `completed` | Closed with all checklist items done |
+| `cancelled` | Cancelled before completion |
+
+## Creating a Work Order
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Maintenance → Work Orders**.
+  </Step>
+  <Step>
+    Click **+ New Work Order**.
+  </Step>
+  <Step>
+    Set the **Subject** and **Priority**.
+  </Step>
+  <Step>
+    Select the **Target** — a Vehicle, Driver, or Equipment record.
+  </Step>
+  <Step>
+    Set the **Assignee** — a user or team responsible for completing the work.
+  </Step>
+  <Step>
+    Set the **Due At** date.
+  </Step>
+  <Step>
+    Add **Instructions** describing what needs to be done.
+  </Step>
+  <Step>
+    Build the **Checklist** — add individual task items the assignee must check off (e.g., "Drain old oil", "Replace oil filter", "Refill with new oil", "Run engine and check for leaks").
+  </Step>
+  <Step>
+    Set the **Estimated Cost** and **Approved Budget**.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Checklist
+
+The checklist breaks the work order into discrete, trackable steps. Assignees check off each item as they complete it. The work order cannot move to `pending_review` until all checklist items are marked done.
+
+Checklist items can include:
+- Inspection steps
+- Parts replacement
+- Fluid top-ups
+- Sensor calibration
+- Road test
+
+## Cost Tracking
+
+Work orders track three cost values:
+
+| Field | When set |
+| :--- | :--- |
+| **Estimated Cost** | Set at creation by the scheduler or manager |
+| **Approved Budget** | Authorized by a supervisor before work begins |
+| **Actual Cost** | Recorded by the assignee during or after work completion |
+
+Cost breakdown can be itemized using line items — listing parts, labor, and other expenses separately. Parts used from the Parts inventory are automatically linked and their cost added to the actual cost.
+
+## Email Notifications
+
+From the work order detail, click **Send Email** to notify the assignee or stakeholders about the work order status, due date, or instructions. The email includes the work order code, subject, instructions, and a link to the work order in the console.
+
+## Attaching Work Orders to Vehicles
+
+Work orders are linked to their target vehicle and appear in:
+- **Fleet-Ops → Resources → Vehicles → [Vehicle] → Work Orders** tab
+- The vehicle's maintenance cost history

@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
  title: 'Terms of Service | Fleetbase',
  description: 'Fleetbase Terms of Service for SaaS and Cloud customers. Read our terms covering usage, data, billing, and your rights as a customer.',
+ alternates: { canonical: 'https://fleetbase.io/terms' },
  openGraph: {
  title: 'Terms of Service | Fleetbase',
  description: 'Fleetbase Terms of Service for SaaS and Cloud customers.',

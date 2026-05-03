@@ -3,15 +3,10 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
- FaAngular,
- FaGithub,
- FaInstagram,
- FaJs,
- FaNodeJs,
- FaReact,
- FaVuejs,
- FaWhatsapp,
- FaXTwitter,
+  FaGithub,
+  FaInstagram,
+  FaWhatsapp,
+  FaXTwitter,
 } from 'react-icons/fa6';
 
 import Logo from '@/components/layout/logo';
@@ -40,46 +35,19 @@ const SOCIAL_LINKS = [
  },
 ];
 
-const TECH_ICONS = [
- {
- name: 'React',
- icon: <FaReact className="size-7 lg:size-10" />,
- },
- {
- name: 'Vue',
- icon: <FaVuejs className="size-7 lg:size-10" />,
- },
- {
- name: 'JavaScript',
- icon: <FaJs className="size-7 lg:size-10" />,
- },
- {
- name: 'Node.js',
- icon: <FaNodeJs className="size-7 lg:size-10" />,
- },
- {
- name: 'Angular',
- icon: <FaAngular className="size-7 lg:size-10" />,
- },
- {
- name: 'GitHub',
- icon: <FaGithub className="size-7 lg:size-10" />,
- },
-];
-
 const FOOTER_LINKS = [
  {
  title: 'Platform',
  links: [
  { label: 'Platform Overview', href: '/platform' },
- { label: 'FleetOps', href: '/platform/fleetops' },
+ { label: 'Fleet-Ops', href: '/platform/fleetops' },
  { label: 'Navigator App', href: '/platform/navigator' },
  { label: 'Storefront', href: '/platform/storefront' },
  { label: 'Pallet', href: '/platform/pallet' },
  { label: 'Ledger', href: '/platform/ledger' },
  { label: 'Mobile Apps', href: '/platform/mobile' },
  { label: 'Extensions Marketplace', href: '/extensions' },
- { label: 'Logistics AI', href: '/ai' },
+ { label: 'Logistics AI', href: '/platform/ai' },
  { label: 'Security & Compliance', href: '/platform/security' },
  ],
  },
@@ -101,7 +69,7 @@ const FOOTER_LINKS = [
  links: [
  { label: 'API Documentation', href: '/docs/api' },
  { label: 'SDKs & Libraries', href: '/developers/sdks' },
- { label: 'Developer Console', href: '/developers/console' },
+ { label: 'Developer Console', href: '/platform/developer-console' },
  { label: 'Webhooks & Events', href: '/docs/webhooks' },
  { label: 'Build an Extension', href: '/developers/extensions' },
  { label: 'GitHub Repository', href: 'https://github.com/fleetbase/fleetbase', external: true },
@@ -141,7 +109,7 @@ const Footer = () => {
  if (hideFooter) return null;
 
  return (
- <footer className="section-padding relative overflow-hidden bg-black/90">
+ <footer className="section-padding relative overflow-hidden border-t bg-card">
  <div className="container text-center">
       <Logo
  className="mt-20 justify-center gap-3 text-3xl lg:mt-30"
@@ -168,7 +136,7 @@ const Footer = () => {
  </Button>
  </div>
 
- <p className="mt-3 text-sm">1.8k+ stars · 500+ active installs</p>
+ <p className="mt-3 text-sm">Open source · Modular platform · Self-hosted or cloud</p>
  </div>
 
  {/* Footer Navigation Links */}
@@ -235,7 +203,7 @@ const Footer = () => {
  </div>
  </div>
 
- <GradientSVG className="absolute right-0 bottom-0 -z-10 origin-bottom-right scale-50 rotate-30 md:scale-100 md:rotate-0" />
+ <GradientSVG className="absolute right-0 bottom-0 -z-10 hidden origin-bottom-right scale-50 rotate-30 dark:block md:scale-100 md:rotate-0" />
  </footer>
  );
 };

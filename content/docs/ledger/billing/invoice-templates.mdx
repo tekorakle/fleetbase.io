@@ -1,10 +1,64 @@
 ---
 title: Invoice Templates
-description: Design reusable invoice templates to standardize your billing documents.
+description: Design reusable invoice templates with company branding, custom layouts, and default payment terms.
 ---
 
 # Invoice Templates
 
-Design reusable invoice templates to standardize your billing documents.
+**Invoice Templates** control how invoices look when rendered as PDFs or viewed in the public online portal. Templates let you add company branding, set default payment terms and notes, and customize the invoice layout.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Billing → Invoice Templates**.
+
+![Invoice template list — template name, default badge, and preview button](/images/placeholder.png)
+
+## Creating a Template
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Billing → Invoice Templates**.
+  </Step>
+  <Step>
+    Click **New Template**.
+  </Step>
+  <Step>
+    Enter a **Name** for the template (e.g., "Standard Invoice", "Service Agreement").
+  </Step>
+  <Step>
+    Configure the template fields (see below).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Template Fields
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Internal template name |
+| **Logo** | Upload your company logo — displayed in the invoice header |
+| **Default Notes** | Text printed at the bottom of every invoice using this template (e.g., bank details, thank-you message) |
+| **Default Terms** | Payment terms text (e.g., "Payment due within 30 days of invoice date") |
+| **Layout** | Template style/layout selection |
+
+## Setting the Default Template
+
+To automatically apply a template to all new invoices:
+
+1. Navigate to **Ledger → Settings → Invoice Settings**
+2. Select your preferred template in the **Default Template** field
+3. Save
+
+New invoices will pre-populate with this template. Individual invoices can override the default by selecting a different template in the invoice detail.
+
+## Template on Individual Invoices
+
+When creating or editing an invoice, the **Template** field lets you choose which template to use for that specific invoice. If your organization issues different document types (e.g., standard invoices vs. credit notes), you can maintain separate templates for each.
+
+## Previewing a Template
+
+1. Open any invoice
+2. Click **Preview** — the invoice is rendered using the assigned template
+3. Review the layout before sending to the customer
+
+Click **Download PDF** to generate the actual PDF file.

@@ -1,0 +1,88 @@
+---
+title: Orchestrator Overview
+description: The Orchestrator automatically assigns orders to drivers and vehicles using route optimization — preview proposed plans before committing.
+---
+
+# Orchestrator Overview
+
+The **Orchestrator** is Fleet-Ops's automated batch assignment and route optimization engine. Instead of manually assigning each order to a driver, the Orchestrator takes a pool of unassigned orders and a set of available drivers and vehicles, runs an optimization algorithm, and proposes a full assignment plan. You preview the plan before committing — once committed, Manifests are created for each driver and orders are dispatched.
+
+![Orchestrator workbench — order pool on left, proposed assignments on right, driver/vehicle cards below](/images/placeholder.png)
+
+## When to Use the Orchestrator
+
+The Orchestrator is designed for high-volume operations where manual assignment is impractical:
+
+- Dispatching a morning batch of 50+ deliveries across 10 drivers
+- Rebalancing mid-day when new urgent orders come in
+- Optimizing routes for multi-stop delivery runs
+- Allocating orders based on driver skills, vehicle capacity, and time windows
+
+For single orders or ad-hoc assignments, manual assignment from the order detail panel is simpler.
+
+## Optimization Engines
+
+Fleet-Ops supports multiple optimization algorithms:
+
+| Engine | Best for |
+| :--- | :--- |
+| **VROOM** | Large fleets with complex constraints — time windows, capacities, skills |
+| **Greedy** | Small fleets where speed matters more than perfect optimization |
+| **Driver Assignment** | Manual-guided assignment — select specific drivers for specific orders |
+| **Route Sequencing** | Given a driver with orders, find the optimal stop sequence |
+
+The default engine is configured in **Settings → Orchestrator**. You can override it per run in the Workbench.
+
+## Constraints the Orchestrator Respects
+
+### Order Constraints
+- **Priority** (0–100) — higher priority orders are assigned first
+- **Required Skills** — order requires a driver with specific certifications or skills
+- **Time Window Start / End** — earliest pickup and latest delivery times
+- **Scheduled At** — don't dispatch before this time
+
+### Driver Constraints
+- **Skills** — array of certifications the driver has
+- **Max Travel Time** — maximum driving time per shift
+- **Max Distance** — maximum route distance
+- **Time Window** — shift start and end times
+- **Online Status** — only assign to online/available drivers
+
+### Vehicle Constraints
+- **Capacity Weight** — maximum load in kg
+- **Capacity Volume** — maximum load in m³
+- **Current Location** — used for routing efficiency
+
+## Workflow
+
+1. Open **Operations → Orchestrator** to enter the Orchestrator Workbench
+2. The order pool shows all unassigned orders
+3. Select the optimization engine and parameters
+4. Click **Run Optimization** — the engine processes and proposes assignments
+5. Review the proposed plan in the results panel
+6. Adjust if needed (drag orders between drivers, exclude orders)
+7. Click **Commit** to finalize — Manifests are created and orders are dispatched
+
+See [Workbench](/docs/fleet-ops/operations/orchestrator/workbench) for the detailed Workbench UI guide.
+
+## Manifest Output
+
+When you commit an Orchestrator plan, it creates a **Manifest** for each assigned driver. A manifest is an ordered list of stops (orders) the driver must complete, with:
+
+- Total estimated distance and duration
+- Sequence number for each stop
+- Estimated arrival time per stop
+- The driver and vehicle assigned
+
+Drivers see their manifest in the Navigator app as their active job list.
+
+## Unassigned Orders
+
+The Orchestrator will flag any orders it could not assign in the results panel, with a reason (no available driver, capacity exceeded, time window impossible, no driver with required skills). These remain in the pending pool for the next run or manual assignment.
+
+## Related Pages
+
+- [Workbench](/docs/fleet-ops/operations/orchestrator/workbench) — detailed Workbench usage
+- [Vehicle Allocation](/docs/fleet-ops/operations/orchestrator/vehicle-allocation) — how vehicles are matched to orders
+- [Payload & Capacity Allocation](/docs/fleet-ops/operations/orchestrator/payload-capacity-allocation) — capacity constraints and payload matching
+- [Settings → Orchestrator](/docs/fleet-ops/settings/orchestrator) — configure the default engine and parameters

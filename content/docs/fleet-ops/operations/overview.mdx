@@ -1,0 +1,50 @@
+---
+title: Operations Overview
+description: An overview of Fleet-Ops operational capabilities — orders, dispatch, scheduling, and automation.
+---
+
+# Operations Overview
+
+The Operations section of Fleet-Ops is the day-to-day control center for your logistics operation. It covers everything from creating and dispatching individual orders to running automated batch assignment across your entire fleet.
+
+![Fleet-Ops operations panel — orders list with filter bar and live map](/images/placeholder.png)
+
+## What's in Operations
+
+| Section | Purpose |
+| :--- | :--- |
+| **Orders** | Create, manage, assign, dispatch, and track all deliveries |
+| **Order Configurations** | Define custom order types with configurable workflows and entity fields |
+| **Orchestrator** | Batch order assignment and route optimization engine |
+| **Scheduler** | Driver shift scheduling and order timeline management |
+| **Service Rates** | Pricing rules for calculating order costs |
+| **Service Quotes** | On-demand price quotation for orders |
+
+## The Order Workflow
+
+Orders are the core unit of work in Fleet-Ops. A typical order lifecycle looks like this:
+
+1. **Create** — An operator (or external system via API) creates an order with a pickup and dropoff address, items, and an order config
+2. **Schedule** (optional) — Set a specific date and time window for the order
+3. **Assign** — Manually assign a driver and vehicle, or use the Orchestrator to auto-assign in bulk
+4. **Dispatch** — Send the order to the driver's Navigator app
+5. **Execute** — The driver navigates to pickup, updates status at each stop, and captures proof of delivery
+6. **Complete** — Order is marked delivered with POD captured
+
+## Automation with the Orchestrator
+
+For high-volume operations, manually assigning each order is not practical. The **Orchestrator** takes a pool of unassigned orders and available drivers/vehicles, runs a route optimization algorithm, and proposes an assignment plan. You preview the plan before committing — once committed, Manifests are created for each driver and orders are dispatched automatically.
+
+See [Orchestrator Overview](/docs/fleet-ops/operations/orchestrator/overview) for details.
+
+## Shift Scheduling with the Scheduler
+
+The **Scheduler** provides a calendar view of all driver shifts and order assignments. Use it to plan which drivers are working on which days, and to visualize how orders are distributed across your fleet.
+
+See [Scheduler Overview](/docs/fleet-ops/operations/scheduler/overview) for details.
+
+## Pricing with Service Rates
+
+**Service Rates** define how order costs are calculated — flat fees, distance-based, weight-based, zone-based, or tiered. Rates can be scoped to specific service areas, zones, or order types. When a rate matches an order, a **Service Quote** is generated showing the estimated cost.
+
+See [Service Rates](/docs/fleet-ops/operations/service-rates/overview) and [Service Quotes](/docs/fleet-ops/operations/service-quotes/overview) for details.

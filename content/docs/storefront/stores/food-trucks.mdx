@@ -1,44 +1,72 @@
 ---
 title: Food Trucks
-description: Manage mobile store locations such as food trucks with dynamic positioning.
+description: Configure mobile store locations — food trucks and pop-up shops with GPS-linked positioning via Fleet-Ops vehicles.
 ---
 
 # Food Trucks
 
-Storefront is uniquely positioned to handle mobile merchants, such as food trucks, pop-up shops, or mobile service providers.
+Storefront supports **mobile stores** — food trucks, pop-up shops, and any merchant whose location changes day to day. A food truck in Storefront is a store with a location linked directly to a **Fleet-Ops Vehicle**, so its position updates in real-time as the vehicle moves.
 
-Because Storefront is built on top of FleetOps (a logistics engine), it natively understands that a "Store" doesn't have to be a fixed building.
+Navigate to **Storefront → Food Trucks** to manage mobile stores.
 
-## How Mobile Stores Work
+![Food trucks list — store name, vehicle, current location, and status](/images/placeholder.png)
 
-In a traditional e-commerce system, a store's address is static. In Storefront, a Store's [Location](/docs/storefront/stores/store-locations) can be updated dynamically.
+## How Food Trucks Work
 
-When a food truck moves to a new spot for the day, the owner simply updates their Location in the Fleetbase Console (or via a custom merchant app using the [Storefront API](/docs/api-reference/storefront)).
+A food truck is a **FoodTruck** record that links:
+- A **Store** — the merchant and catalog
+- A **Vehicle** — from Fleet-Ops Resources, providing the live GPS position
+- An optional **Catalog** — the specific menu available from this truck (useful when one store runs multiple trucks with different menus)
+- An optional **Service Area** or **Zone** — restricts where the truck accepts orders
 
-1. The owner updates the Location's coordinates (Latitude/Longitude) to their current spot.
-2. Storefront instantly updates the Store's position in the customer-facing app.
-3. Customers browsing the app will now see the food truck if they are within its delivery radius.
-4. When an order is placed, FleetOps uses the *new* coordinates as the Pickup Address for the delivery driver.
+When a customer places an order, the truck's current GPS position from the Fleet-Ops vehicle is used as the pickup address.
 
-## Setting Up a Food Truck
+## Creating a Food Truck
 
-To configure a Store as a mobile merchant:
+<Steps>
+  <Step>
+    Ensure the vehicle that represents the food truck exists in **Fleet-Ops → Resources → Vehicles**.
+  </Step>
+  <Step>
+    Navigate to **Storefront → Food Trucks**.
+  </Step>
+  <Step>
+    Click **New Food Truck**.
+  </Step>
+  <Step>
+    Select the **Store** this food truck belongs to.
+  </Step>
+  <Step>
+    Select the **Vehicle** from Fleet-Ops that represents the physical truck.
+  </Step>
+  <Step>
+    Optionally assign a **Catalog** — if this truck serves a specific subset menu.
+  </Step>
+  <Step>
+    Optionally assign a **Service Area** or **Zone** to restrict the delivery area.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
 
-1. Create a [Store](/docs/storefront/stores/stores-and-networks) as normal.
-2. Add a single [Location](/docs/storefront/stores/store-locations) to the Store.
-3. Instead of entering a fixed street address, you can leave the address blank and rely entirely on the Coordinates (Latitude/Longitude).
-4. Ensure the Store's [Operating Hours](/docs/storefront/stores/operating-hours) are updated to reflect when the truck is open for business at that specific location.
+## Catalogs for Food Trucks
 
-## Dynamic Delivery Zones
+A **Catalog** is a named collection of product categories. You can create multiple catalogs for the same store and assign different catalogs to different food trucks — useful when one brand operates trucks with different menus (e.g., a BBQ truck and a taco truck under the same store).
 
-If a food truck moves across the city, its delivery area needs to move with it.
+To create a catalog:
+1. Navigate to **Storefront → Catalogs**
+2. Click **New Catalog**
+3. Select the categories and products to include
+4. Set availability hours for the catalog if needed
+5. Assign the catalog to a food truck
 
-By default, Storefront uses a simple radius around the Store's current Location (e.g., "Deliver within 5 miles"). This is ideal for mobile merchants, as the delivery zone automatically shifts whenever the Location coordinates are updated.
+## Real-Time Location Updates
 
-If you use fixed geographic [Zones](/docs/fleetops/operations/zones) (e.g., "Only deliver to the Downtown zone"), you must remember to update the Store's assigned Zone when it moves to a new neighborhood.
+The food truck's position in the customer-facing app comes directly from the Fleet-Ops vehicle's GPS telemetry. As the vehicle moves, the truck's position updates automatically — no manual location entry required.
 
-## Real-Time Tracking (Advanced)
+Customers browsing the network will see the food truck's current live position on the map.
 
-For advanced implementations, you can integrate a GPS [Device](/docs/fleetops/connectivity/devices) directly into the food truck.
+## Operating Hours for Food Trucks
 
-By linking the GPS device to the Store's Location via the Fleetbase API, the Store's position in your customer app can update in real-time as the truck drives down the street, creating a truly dynamic marketplace experience.
+Set operating hours on the **store location** or **catalog** to define when the truck accepts orders at a given position. If the truck moves to a new neighborhood, update its zone assignment if you use zone-based delivery restrictions.

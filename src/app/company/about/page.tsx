@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Globe, Heart, Zap, Shield, Code2, MapPin, Linkedin } from 'lucide-react';
+import { ArrowRight, Globe, Heart, Zap, Shield, Code2, MapPin, Linkedin, Puzzle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -48,7 +48,7 @@ const values = [
  'We ship fast, iterate based on real operator feedback, and prioritize features that solve real problems over features that look good in demos. Logistics is a practical business — our software should be too.',
  },
  {
- icon: ArrowRight,
+ icon: Puzzle,
  title: 'Extensible by design',
  description:
  'No two logistics operations are the same. Fleetbase is built as a platform — with a full API, Extensions SDK, and modular architecture — so it can be shaped to fit any operation, not the other way around.',

@@ -1,10 +1,70 @@
 ---
-title: Notifications
-description: Configure notification channels and templates for order and customer events.
+title: Notification Settings
+description: Configure APNs and FCM notification channels for push notifications to your customers.
 ---
 
-# Notifications
+# Notification Settings
 
-Configure notification channels and templates for order and customer events.
+**Notification channels** connect Storefront to Apple Push Notification service (APNs) or Firebase Cloud Messaging (FCM) so you can send push notifications to your customers' mobile devices.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Storefront → Settings → Notifications** to manage channels.
+
+## Adding a Notification Channel
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Settings → Notifications**.
+  </Step>
+  <Step>
+    Click **Add Channel**.
+  </Step>
+  <Step>
+    Enter a **Name** for the channel (e.g., "iOS APNs Production").
+  </Step>
+  <Step>
+    Select the **Scheme**: `apn` for iOS or `fcm` for Android.
+  </Step>
+  <Step>
+    Enter the credentials for the selected scheme (see below).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## APNs (Apple Push Notification service)
+
+Required for sending push notifications to iOS devices.
+
+| Field | Description |
+| :--- | :--- |
+| **Key ID** | The 10-character key ID from your Apple Developer account |
+| **Team ID** | Your Apple Developer Team ID |
+| **Bundle ID** | Your app's bundle identifier (e.g., `com.yourcompany.app`) |
+| **Certificate (.p8)** | Upload the APNs authentication key file downloaded from Apple Developer |
+| **Production** | Toggle for production vs. sandbox APNs endpoint |
+
+Download the `.p8` key from **Apple Developer → Certificates, Identifiers & Profiles → Keys**.
+
+## FCM (Firebase Cloud Messaging)
+
+Required for sending push notifications to Android devices.
+
+| Field | Description |
+| :--- | :--- |
+| **Server Key** | Firebase Cloud Messaging server key from your Firebase project console |
+| **Sender ID** | FCM Sender ID (also called Project Number) |
+
+Find these in **Firebase Console → Project Settings → Cloud Messaging**.
+
+## App Key
+
+Each notification channel has an auto-generated **App Key** — a unique identifier that your frontend app uses to register device tokens with Storefront. When a customer installs your app and grants notification permission, send their device token along with this App Key to the registration endpoint.
+
+## Testing Notifications
+
+After configuring a channel, send a test notification from **Storefront → Promotions → Push Notifications** to verify the setup before deploying to production.
+
+<Callout type="info">
+Notification channels can be configured at the store level or the network level. Network-level channels are shared across all stores in the network.
+</Callout>

@@ -1,211 +1,158 @@
 'use client';
 
-import {
- Code,
- Database,
- GitBranch,
- Lock,
- Server,
- Users,
-} from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card';
+import { Code, Database, GitBranch, Lock, Server, Workflow } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 const FEATURES = [
- {
- icon: Database,
- title: 'Your Data',
- description: 'Complete ownership and control of all your logistics data.',
- },
- {
- icon: Code,
- title: 'Your Custom Code',
- description: 'Extend and modify the platform to fit your exact needs.',
- },
- {
- icon: Users,
- title: 'Community Extensions',
- description: 'Access hundreds of community-built extensions and integrations.',
- },
- {
- icon: Server,
- title: 'Self-Hosted or Cloud',
- description: 'Deploy anywhere - your servers, private cloud, or our managed hosting.',
- },
+  {
+    icon: Database,
+    title: 'Your Data',
+    description: 'Keep your operational data in infrastructure you control — not ours.',
+  },
+  {
+    icon: Workflow,
+    title: 'Your Workflows',
+    description: 'Model how your team actually operates, not how a vendor decided it should.',
+  },
+  {
+    icon: Code,
+    title: 'Your Code',
+    description: 'Extend the platform, fork it, audit it. Every line is readable and modifiable.',
+  },
+  {
+    icon: Server,
+    title: 'Your Infrastructure',
+    description: 'Deploy to your cloud, your servers, or our managed hosting — your choice.',
+  },
 ];
 
 const GITHUB_STATS = [
- { label: 'GitHub Stars', value: '1.3k+' },
- { label: 'Contributors', value: '50+' },
- { label: 'Forks', value: '200+' },
- { label: 'Organizations', value: '8,000+' },
+  { label: 'GitHub Stars', value: '1.8k+' },
+  { label: 'Contributors', value: '50+' },
+  { label: 'Forks', value: '200+' },
+  { label: 'Active Instances', value: '8,000+' },
+];
+
+const WHY_POINTS = [
+  {
+    title: 'No hidden behavior',
+    description: 'The code is public. Audit the security model, data handling, and logic yourself.',
+  },
+  {
+    title: 'No migration trap',
+    description: "Your data is portable. Switch providers or self-host — you're never locked in.",
+  },
+  {
+    title: 'Survives us',
+    description: 'Even if we disappeared tomorrow, your deployment keeps running. Your code, your call.',
+  },
 ];
 
 const OpenSourceAdvantage = () => {
- return (
- <section className="section-padding">
- <div className="container space-y-12">
- {/* Header */}
- <div className="mx-auto max-w-3xl text-center space-y-4">
- <h2 className="text-4xxl leading-none tracking-tight text-balance md:text-5xl lg:text-6xl">
- Freedom from Vendor Lock-In
- </h2>
- <p className="text-muted-foreground text-lg lg:text-xl">
- Own your data, your code, and your infrastructure. Our open-source
- model gives you the ultimate control and transparency.
- </p>
- </div>
+  return (
+    <section className="section-padding">
+      <div className="container space-y-14">
+        {/* Header */}
+        <div className="mx-auto max-w-3xl space-y-4 text-center">
+          <h2 className="text-4xxl leading-none tracking-tight text-balance md:text-5xl lg:text-6xl">
+            Freedom from Vendor Lock-In
+          </h2>
+          <p className="text-lg text-muted-foreground lg:text-xl">
+            Own your data, your code, and your infrastructure. With Fleetbase, you're not
+            dependent on our roadmap, our pricing, or our servers. Audit everything,
+            self-host anywhere, and extend it however you need.
+          </p>
+        </div>
 
- {/* Main Grid */}
- <div className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
- {/* Left: Core Diagram */}
- <Card className="dark:to-muted/30 dark:via-muted/10 to-background via-card from-card relative overflow-hidden bg-gradient-to-br p-8 lg:p-10 dark:from-transparent">
- <CardContent className="flex flex-col items-center justify-center gap-8 p-0">
- {/* Central Core */}
- <div className="relative">
- <div className="from-primary/20 via-primary/10 to-primary/5 flex h-32 w-32 items-center justify-center rounded-full border-2 border-primary/30 bg-gradient-to-br">
- <GitBranch className="h-16 w-16 text-primary" />
- </div>
- <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-primary px-3 py-1 text-sm font-semibold text-primary-foreground">
- Fleetbase Core
- </div>
- </div>
+        {/* GitHub proof strip */}
+        <div className="grid grid-cols-2 overflow-hidden rounded-xl border bg-border md:grid-cols-4" style={{ gap: '1px' }}>
+          {GITHUB_STATS.map((stat, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center justify-center gap-1 bg-card px-6 py-8 text-center"
+            >
+              <span className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
+                {stat.value}
+              </span>
+              <span className="text-xs text-muted-foreground">{stat.label}</span>
+            </div>
+          ))}
+        </div>
 
- {/* Connection Lines & Feature Nodes */}
- <div className="grid grid-cols-2 gap-6 w-full">
- {FEATURES.map((feature, index) => {
- const Icon = feature.icon;
- return (
- <div
- key={index}
- className="flex flex-col items-center gap-2 text-center"
- >
- <div className="from-muted/30 via-muted/10 to-card flex h-12 w-12 items-center justify-center rounded-lg border bg-gradient-to-r">
- <Icon className="h-6 w-6" />
- </div>
- <div>
- <h4 className="text-accent-foreground text-sm font-semibold">
- {feature.title}
- </h4>
- <p className="text-muted-foreground text-xs leading-tight">
- {feature.description}
- </p>
- </div>
- </div>
- );
- })}
- </div>
- </CardContent>
- </Card>
+        {/* Two-column split */}
+        <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
+          {/* Left: What you own (3 cols) */}
+          <div className="lg:col-span-3">
+            <p className="mb-6 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              What ownership actually means
+            </p>
+            <div className="divide-y">
+              {FEATURES.map((feature, i) => {
+                const Icon = feature.icon;
+                return (
+                  <div key={i} className="flex gap-4 py-5">
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-md border bg-muted/30">
+                      <Icon className="size-4" />
+                    </div>
+                    <div className="space-y-0.5">
+                      <h4 className="font-semibold text-accent-foreground">{feature.title}</h4>
+                      <p className="text-sm leading-snug text-muted-foreground">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
 
- {/* Right: GitHub Stats & Benefits */}
- <div className="flex flex-col gap-6">
- {/* GitHub Stats Card */}
- <Card className="dark:to-muted/30 dark:via-muted/10 to-background via-card from-card overflow-hidden bg-gradient-to-br p-6 lg:p-8 dark:from-transparent">
- <CardContent className="space-y-6 p-0">
- <div className="flex items-center gap-3">
- <div className="from-muted/30 via-muted/10 to-card flex h-10 w-10 items-center justify-center rounded-md border bg-gradient-to-r">
- <GitBranch className="h-5 w-5" />
- </div>
- <div>
- <h3 className="text-accent-foreground text-lg font-bold">
- Backed by a Thriving Community
- </h3>
- </div>
- </div>
+          {/* Right: Why it matters (2 cols) */}
+          <div className="flex flex-col gap-5 lg:col-span-2">
+            <div className="rounded-xl border bg-muted/10 p-6">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-md border bg-muted/30">
+                  <Lock className="size-4" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-accent-foreground">Open source, verified.</h3>
+                  <p className="text-xs text-muted-foreground">
+                    Public code means real transparency.
+                  </p>
+                </div>
+              </div>
 
- <div className="grid grid-cols-2 gap-4">
- {GITHUB_STATS.map((stat, index) => (
- <div
- key={index}
- className="flex flex-col gap-1 rounded-lg border bg-card/50 p-4"
- >
- <div className="text-2xl font-bold text-primary">
- {stat.value}
- </div>
- <div className="text-muted-foreground text-sm">
- {stat.label}
- </div>
- </div>
- ))}
- </div>
+              <ul className="mb-6 space-y-4">
+                {WHY_POINTS.map((item, i) => (
+                  <li key={i} className="flex gap-3">
+                    <div className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                    <div>
+                      <p className="text-sm font-medium text-accent-foreground">{item.title}</p>
+                      <p className="text-xs leading-snug text-muted-foreground">
+                        {item.description}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
 
- <Button className="w-full" size="lg" asChild>
- <a
- href="https://github.com/fleetbase/fleetbase"
- target="_blank"
- rel="noopener noreferrer"
- >
- <GitBranch className="mr-2 h-4 w-4" />
- View on GitHub
- </a>
- </Button>
- </CardContent>
- </Card>
-
- {/* Key Benefits Card */}
- <Card className="dark:to-muted/30 dark:via-muted/10 to-background via-card from-card overflow-hidden bg-gradient-to-br p-6 lg:p-8 dark:from-transparent">
- <CardContent className="space-y-4 p-0">
- <div className="flex items-center gap-3">
- <div className="from-muted/30 via-muted/10 to-card flex h-10 w-10 items-center justify-center rounded-md border bg-gradient-to-r">
- <Lock className="h-5 w-5" />
- </div>
- <div>
- <h3 className="text-accent-foreground text-lg font-bold">
- Why Open Source Matters
- </h3>
- </div>
- </div>
-
- <ul className="space-y-3">
- <li className="flex gap-3">
- <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
- <div className="h-2 w-2 rounded-full bg-primary" />
- </div>
- <div>
- <p className="text-accent-foreground text-sm font-medium">
- No Vendor Lock-In
- </p>
- <p className="text-muted-foreground text-xs">
- Switch hosting providers or self-host anytime
- </p>
- </div>
- </li>
- <li className="flex gap-3">
- <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
- <div className="h-2 w-2 rounded-full bg-primary" />
- </div>
- <div>
- <p className="text-accent-foreground text-sm font-medium">
- Full Transparency
- </p>
- <p className="text-muted-foreground text-xs">
- Audit the code, verify security, understand every feature
- </p>
- </div>
- </li>
- <li className="flex gap-3">
- <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10">
- <div className="h-2 w-2 rounded-full bg-primary" />
- </div>
- <div>
- <p className="text-accent-foreground text-sm font-medium">
- Future-Proof
- </p>
- <p className="text-muted-foreground text-xs">
- Your investment is protected even if we disappear
- </p>
- </div>
- </li>
- </ul>
- </CardContent>
- </Card>
- </div>
- </div>
- </div>
- </section>
- );
+              <Button className="w-full" asChild>
+                <a
+                  href="https://github.com/fleetbase/fleetbase"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <GitBranch className="mr-2 h-4 w-4" />
+                  View on GitHub
+                </a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default OpenSourceAdvantage;

@@ -1,9 +1,0 @@
-{
-  "title": "Order Fulfillment",
-  "pages": [
-    "purchase-orders",
-    "sales-orders",
-    "pick-lists",
-    "waves-and-batches"
-  ]
-}

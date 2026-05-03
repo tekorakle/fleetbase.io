@@ -1,0 +1,126 @@
+---
+title: Activity Flows
+description: Define the step-by-step activity workflow that drivers execute for each order type — status transitions, logic conditions, and event triggers.
+---
+
+# Activity Flows
+
+An **Activity Flow** is the step-by-step workflow that defines how an order of a given type is executed. It specifies the sequence of status transitions a driver moves through — from when they receive the order in Navigator, to each pickup and delivery step, to the final completion event.
+
+Every Order Configuration has exactly one activity flow. The flow is a tree of **activities**, where each activity represents a status event in the order's lifecycle.
+
+![Activity flow editor — tree of activity steps with conditions and event triggers](/images/placeholder.png)
+
+## Activity Steps
+
+Each step in the activity flow is an **Activity** node with:
+
+| Property | Description |
+| :--- | :--- |
+| **Label** | The name shown to operators in the activity timeline |
+| **Code** | The status code sent to the API and used in webhooks/events |
+| **Color** | Status indicator color for the console UI |
+| **Logic** | Optional conditions that must be met before this step executes |
+| **Events** | Webhooks and notifications fired when this step is reached |
+| **POD** | Whether proof of delivery is required at this step |
+| **Skippable** | Whether the driver can skip this step if circumstances require |
+| **Child activities** | Sub-steps within this step (for waypoint-level activities) |
+
+## Default Activity Sequence
+
+A standard delivery flow looks like this:
+
+```
+created
+  └─► dispatched
+        └─► started
+              ├─► picked-up (at pickup location)
+              │     └─► in-transit (moving to dropoff)
+              │           └─► arrived (at dropoff)
+              │                 └─► completed (with POD)
+              └─► cancelled (at any point)
+```
+
+For multi-stop orders, the sequence includes waypoint activities between pickup and final delivery:
+
+```
+started
+  └─► picked-up
+        └─► in-transit to waypoint 1
+              └─► arrived at waypoint 1
+                    └─► delivered at waypoint 1 (POD)
+                          └─► in-transit to dropoff
+                                └─► arrived at dropoff
+                                      └─► completed (POD)
+```
+
+## Configuring the Flow
+
+In the **Order Configuration** editor, navigate to the **Activity Flow** tab:
+
+<Steps>
+  <Step>
+    ### View the default flow
+
+    The flow editor shows the current activity tree. Each node is an activity step. Drag to reorder steps within a level, or add child steps.
+  </Step>
+  <Step>
+    ### Add an activity
+
+    Click **+ Add Activity** within any step to add a child activity. Set the label, code, and color.
+  </Step>
+  <Step>
+    ### Set logic conditions
+
+    Logic conditions control when an activity step is available. Conditions use AND/OR/NOT/IF operators to evaluate order properties. For example, a "COD Collection" step can be conditioned on `order.cod_amount > 0`.
+  </Step>
+  <Step>
+    ### Configure events
+
+    For each activity, set what happens when the driver reaches that step:
+    - **Webhook** — fire an outbound webhook to an external system
+    - **Notification** — send a push, SMS, or email notification to the customer or operator
+  </Step>
+  <Step>
+    ### Require POD
+
+    Toggle **Require POD** on any activity step that should require proof before progressing. The driver cannot advance past this step in Navigator until POD is captured.
+  </Step>
+  <Step>
+    ### Save
+
+    Click **Save Configuration**. The updated flow applies to all new orders created with this config. Existing orders-in-progress continue on their current flow version.
+  </Step>
+</Steps>
+
+## Logic Conditions
+
+Logic blocks make activity steps conditional. Operators are:
+
+| Operator | Behavior |
+| :--- | :--- |
+| **AND** | All child conditions must be true |
+| **OR** | Any child condition must be true |
+| **NOT** | The child condition must be false |
+| **IF** | Evaluates the condition and branches to child or sibling |
+
+Conditions reference order properties: `order.type`, `order.cod_amount`, `order.status`, payload attributes, or custom field values.
+
+## Events at Each Step
+
+When the driver reaches an activity step, Fleet-Ops can fire outbound events:
+
+- **Webhook** — HTTP POST to your registered webhook endpoint with the order payload and the activity event
+- **Customer SMS** — send a delivery notification to the customer's phone
+- **Customer email** — send a status update email
+- **Push notification** — send a push to the customer's app (if using Storefront or a custom integration)
+
+Events are configured per activity step — for example, send an SMS when "in-transit to dropoff" is reached, and another SMS when "completed" fires.
+
+## Waypoint Activities
+
+For multi-stop orders, each waypoint can have its own sub-flow of activities. The waypoint activity sequence runs between the main "in-transit" and "arrived" steps for that stop. This lets you track granular events at each delivery point independently.
+
+## Version Control
+
+When you update an activity flow, the new version applies only to new orders. In-progress orders continue executing on the version of the flow that was active when they were created. The configuration stores the version number (`version` field) for this reason.

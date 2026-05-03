@@ -4,6 +4,7 @@ import Link from 'next/link';
 export const metadata: Metadata = {
  title: 'Privacy Policy | Fleetbase',
  description: 'Fleetbase Privacy Policy — how we collect, use, and protect your data when using Fleetbase Cloud and SaaS services.',
+ alternates: { canonical: 'https://fleetbase.io/privacy' },
  openGraph: {
  title: 'Privacy Policy | Fleetbase',
  description: 'How Fleetbase collects, uses, and protects your data.',

@@ -3,7 +3,8 @@
   "pages": [
     "api-keys",
     "webhooks",
-    "socket-events",
-    "request-logs"
+    "request-logs",
+    "system-events",
+    "socket-events"
   ]
 }

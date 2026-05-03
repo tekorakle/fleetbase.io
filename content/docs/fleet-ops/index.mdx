@@ -1,50 +1,58 @@
 ---
 title: Fleet-Ops
-description: FleetOps is the flagship fleet and transport management extension for Fleetbase — covering dispatch, tracking, routing, and more.
+description: Fleet-Ops is the flagship fleet and transport management extension for Fleetbase — covering dispatch, live tracking, routing, driver management, and delivery automation.
 ---
 
-# FleetOps
+# Fleet-Ops
 
-**FleetOps** is the flagship extension for Fleetbase. It transforms the core platform into a comprehensive Transport Management System (TMS) and fleet dispatch solution.
+Fleet-Ops is the core logistics and fleet management extension for the Fleetbase platform. It gives operations teams a full dispatch console for managing orders, drivers, vehicles, and routes — plus a mobile driver app (Navigator) that handles real-time GPS tracking, turn-by-turn navigation, and proof of delivery capture.
 
-Whether you are managing a small local delivery fleet, a nationwide long-haul operation, or an on-demand courier network, FleetOps provides the tools you need to manage drivers, vehicles, orders, and real-time tracking.
+![Fleet-Ops dashboard — live map with active driver positions and order status panel](/images/placeholder.png)
 
-## Core Capabilities
+## What Fleet-Ops Does
 
-FleetOps is divided into several key operational areas:
+Fleet-Ops covers the full delivery and fleet operations lifecycle in one place:
 
-### [Management](/docs/fleetops/management)
-The foundation of your operations. Manage your core resources, including:
-- **Drivers**: Profiles, schedules, and compliance documents.
-- **Vehicles**: Fleet inventory, specifications, and assignments.
-- **Contacts & Vendors**: Customers, partners, and third-party logistics providers.
-- **Places**: Warehouses, stores, and delivery locations.
+| Capability | What it covers |
+| :--- | :--- |
+| **Order Management** | Create, assign, dispatch, and track deliveries end to end |
+| **Live Map** | Real-time driver and vehicle positions with route overlays |
+| **Driver App (Navigator)** | Mobile app for drivers — navigation, status updates, POD capture |
+| **Fleet & Driver Management** | Organize drivers and vehicles into fleets, track availability and status |
+| **Orchestrator** | Automated batch order assignment with route optimization |
+| **Scheduler** | Driver shift scheduling and order timeline management |
+| **Order Configurations** | Custom order types with configurable workflows and entity fields |
+| **Service Rates & Quotes** | Pricing rules and on-demand quotation for orders |
+| **Maintenance** | Preventive schedules, work orders, and parts inventory |
+| **Telematics & Connectivity** | Device, sensor, and telematics modem integration |
+| **Analytics** | Fleet performance dashboards and custom reports |
 
-### [Operations](/docs/fleetops/operations)
-The day-to-day execution of your logistics network.
-- **Orders**: Create, dispatch, and track deliveries.
-- **Service Rates**: Define pricing models based on distance, weight, or custom zones.
-- **Zones & Service Areas**: Geofence your operational regions.
+## Key Concepts
 
-### [Connectivity](/docs/fleetops/connectivity)
-Integrate your fleet with external systems.
-- **Integrated Vendors**: Connect with third-party delivery networks (e.g., Lalamove, Stuart) to overflow orders when your own fleet is at capacity.
-- **Networks**: Manage complex multi-tenant logistics networks.
+Fleet-Ops is organized around a few core entities:
 
-### [Maintenance](/docs/fleetops/maintenance)
-Keep your fleet on the road.
-- **Issues**: Track vehicle defects and driver reports.
-- **Fuel Reports**: Monitor fuel consumption and expenses.
+- **Order** — a delivery or service task with a pickup location, a destination, and items (entities). Orders move through a configurable status lifecycle and are captured with proof of delivery.
+- **Driver** — a person who executes orders using the Navigator app. Drivers have real-time location, shift schedules, and skill constraints that the Orchestrator uses for assignment.
+- **Vehicle** — a fleet asset with capacity, location tracking, and maintenance history.
+- **Fleet** — a logical group of drivers and vehicles, typically scoped to a route, region, or service type.
+- **Order Configuration** — a template that defines a custom order type: its activity flow, the entity fields required, and the proof of delivery method.
 
-### [Analytics](/docs/fleetops/analytics)
-Gain insights into your performance.
-- **Dashboards**: Real-time operational metrics.
-- **Reports**: Historical data on delivery times, driver performance, and costs.
+See [Core Concepts](/docs/fleet-ops/getting-started/core-concepts) for a full introduction.
 
-## The Navigator App
+## Getting Started
 
-FleetOps is designed to work seamlessly with the **Navigator** mobile app.
+<Cards>
+  <Card title="Quickstart" href="/docs/fleet-ops/getting-started/quickstart">
+    Create your first order, assign a driver, and dispatch in under 10 minutes.
+  </Card>
+  <Card title="Core Concepts" href="/docs/fleet-ops/getting-started/core-concepts">
+    Understand the key entities — orders, drivers, vehicles, fleets, and order configs.
+  </Card>
+  <Card title="Navigator App Setup" href="/docs/fleet-ops/getting-started/navigator-app-setup">
+    Install and connect the driver mobile app before your first dispatch.
+  </Card>
+</Cards>
 
-When an order is dispatched in the FleetOps console, it is instantly pushed to the assigned driver's Navigator app. The app provides the driver with turn-by-turn navigation, proof of delivery capture (signatures, photos), and real-time location tracking that feeds back into the FleetOps console.
-
-To learn more about the driver experience, see the [Navigator App](/docs/apps/navigator-app) documentation.
+<Callout type="info">
+Fleet-Ops comes pre-installed with every Fleetbase instance — both Cloud and self-hosted. No separate installation is required. If you need to set up the Fleetbase platform itself, see [Running Locally](/docs/platform/quickstart/running-locally) or [Deploy in Cloud](/docs/platform/quickstart/deploy-in-cloud).
+</Callout>

@@ -1,74 +1,93 @@
 ---
 title: Managing Extensions
-description: View, update, and uninstall extensions on your Fleetbase instance.
+description: View installed extensions, uninstall them, and manage developer credentials for publishing to the registry.
 ---
 
 # Managing Extensions
 
-Once you have installed extensions to your Fleetbase instance, you can manage them through the Fleetbase Console or the Fleetbase CLI. This includes viewing installed extensions, updating them to the latest versions, and uninstalling them if they are no longer needed.
+Once extensions are installed you can view, remove, and manage them from the **Extensions** section in the top navigation bar.
 
-## Viewing Installed Extensions
+## Installed Extensions
 
-To see which extensions are currently installed and active on your instance:
+Click **Installed** in the Extensions sidebar to see every extension currently active on your instance.
 
-1. Navigate to **Extensions** in the Fleetbase Console.
-2. Click on the **Installed** tab.
-3. This view displays all active extensions, their current version numbers, and a brief description of their functionality.
+![Installed extensions — card grid with extension icon, name, description, About and Uninstall buttons](/images/placeholder.png)
 
-From this view, you can also access the specific settings or documentation for each installed extension.
+Each card has two actions:
 
-## Updating Extensions
+| Action | Description |
+| :--- | :--- |
+| **About extension** | Opens a detail modal showing the extension's description, version, and publisher |
+| **Uninstall** | Begins the uninstall process for this extension |
 
-The Fleetbase team and community developers regularly release updates to extensions to add new features, improve performance, and fix bugs.
+## Uninstalling an Extension
 
-### Updating via the Console (Fleetbase Cloud)
+Click **Uninstall** on any installed extension card. A confirmation dialog appears before anything is removed.
 
-If you are using Fleetbase Cloud, extensions are typically updated automatically. However, if a major version update requires your approval (e.g., due to significant changes in functionality or pricing), you will see an **Update Available** badge next to the extension in the **Installed** tab.
+![Uninstall confirmation modal — extension name, warning text, and 3-step progress bar](/images/placeholder.png)
 
-Click the badge to review the release notes and apply the update.
+Uninstalling runs three steps tracked via a real-time progress bar:
 
-### Updating via the CLI (Self-Hosted)
+1. **(1/3) Uninstalling server package** — removes the Laravel backend package
+2. **(2/3) Uninstalling engine** — removes the Ember.js frontend engine
+3. **(3/3) Rebuilding console** — rebuilds the frontend to remove the extension's UI
 
-If you are self-hosting Fleetbase, you must manually update extensions using the Fleetbase CLI. This ensures you have full control over when changes are applied to your production environment.
+The console reloads automatically when the process completes.
 
-To update an extension, simply run the install command again. The CLI will detect the existing installation and pull the latest version from the registry:
-
-```bash
-flb install @fleetbase/fleetops
-```
-
-The CLI will download the updated packages, run any new database migrations, and rebuild the frontend console.
-
-## Uninstalling Extensions
-
-If you no longer need an extension, you can uninstall it to remove its features from your console and free up system resources.
-
-### Important Considerations Before Uninstalling
-
-- **Data Loss**: Uninstalling an extension may permanently delete the data associated with it (e.g., uninstalling FleetOps may delete your drivers and vehicles). Always ensure you have backed up any necessary data before proceeding.
-- **Dependencies**: Some extensions may depend on others. The system will warn you if uninstalling an extension will break another installed extension.
-
-### Uninstalling via the Console
-
-1. Navigate to **Extensions** > **Installed**.
-2. Find the extension you want to remove.
-3. Click the **Uninstall** button.
-4. Confirm the action in the warning dialog.
+<Callout type="warn">Uninstalling an extension may permanently delete the data it managed — for example, uninstalling FleetOps removes driver and vehicle records. Back up any data you need before proceeding.</Callout>
 
 ### Uninstalling via the CLI
 
-To uninstall an extension from a self-hosted instance, use the `uninstall` command:
+On a self-hosted instance you can also uninstall from the command line:
 
 ```bash
-flb uninstall @fleetbase/fleetops
+flb uninstall fleetbase/fleetops
+
+# Target a specific instance directory
+flb uninstall fleetbase/fleetops --path /opt/fleetbase
 ```
 
-The CLI will remove the extension's backend package and frontend engine, roll back its database migrations (if applicable), and rebuild the console to remove its UI components.
+## Developers Section
 
-## Troubleshooting
+The **Developers** section in the Extensions sidebar is available on instances running a self-hosted registry. It provides tools for publishing and managing your own extensions.
 
-If you encounter issues after installing, updating, or uninstalling an extension:
+### Extensions
 
-1. **Check the Request Logs**: Navigate to **Developers** > **Request Logs** to see if the extension's API routes are returning errors.
-2. **Rebuild the Console**: If UI components are missing or displaying incorrectly, try forcing a rebuild of the frontend console (for self-hosted instances).
-3. **Review Permissions**: Ensure that your user role has the necessary permissions to access the extension's features. New permissions are often added during updates.
+Lists the extensions you have published to the registry. Click **Create new extension** to register a new one — provide a name and description to get started, then manage distribution from the extension's edit page.
+
+Each extension's edit page has tabs for:
+
+| Tab | Description |
+| :--- | :--- |
+| **Details** | Name, description, icon, category, and visibility settings |
+| **Bundles** | Upload and manage release bundles for the extension |
+| **Monetize** | Pricing configuration — free, one-time purchase, or subscription |
+
+### Analytics
+
+Usage metrics for your published extensions — installs, active instances, and engagement over time.
+
+### Payments
+
+Stripe-powered payment onboarding and settings for extensions you sell through the registry. Set up your payout account here before enabling paid pricing on an extension.
+
+### Credentials
+
+Registry tokens used to authenticate CLI operations (`flb publish`, `flb bundle-upload`, etc.).
+
+![Credentials table — Owner, Fleetbase Token, Registry Token, Expiry columns](/images/placeholder.png)
+
+| Column | Description |
+| :--- | :--- |
+| **Owner** | The user who created the credentials |
+| **Fleetbase Token** | Your Fleetbase account token (click to copy) |
+| **Registry Token** | The registry-specific token used for CLI auth (click to reveal and copy) |
+| **Expiry** | When the credentials expire |
+
+Click **Create new credentials** to generate a new token pair. Use the **⋯ → Delete** action to revoke credentials — any CLI session using them will lose registry access immediately.
+
+To authenticate the CLI with your registry token:
+
+```bash
+flb set-auth your-registry-token-here
+```

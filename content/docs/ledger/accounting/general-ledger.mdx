@@ -1,10 +1,55 @@
 ---
 title: General Ledger
-description: View and manage the general ledger — a complete record of all financial transactions.
+description: View the master record of all journal entries — a complete chronological history of every financial transaction.
 ---
 
 # General Ledger
 
-View and manage the general ledger — a complete record of all financial transactions.
+The **General Ledger** is the master record of all journal entries across your organization. It provides a complete, chronological view of every financial event — debits, credits, amounts, and running balances.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Accounting → General Ledger**.
+
+![General ledger view — date, journal number, description, debit, credit, and running balance columns](/images/placeholder.png)
+
+## What the General Ledger Shows
+
+The general ledger view aggregates all journal entries across all accounts. For each entry you see:
+
+| Column | Description |
+| :--- | :--- |
+| **Date** | Date of the journal entry |
+| **Journal #** | Auto-generated entry number (e.g., `JE-00042`) |
+| **Reference** | Human-readable reference (e.g., invoice number, order ID) |
+| **Description** | What the entry records |
+| **Debit Account** | Account receiving the debit |
+| **Credit Account** | Account receiving the credit |
+| **Amount** | Transaction amount |
+| **Type** | Entry type (general, wallet_deposit, invoice_payment, etc.) |
+| **Source** | System (automated) or Manual |
+| **Status** | posted, reversed, or voided |
+
+## Filtering the General Ledger
+
+Use the filters at the top of the page to narrow the view:
+
+- **Date range** — filter entries between a start and end date
+- **Account** — show only entries involving a specific account
+- **Type** — filter by journal entry type
+- **Status** — show only posted, reversed, or voided entries
+
+## Account-Level Ledger
+
+To view the ledger for a single account with a running balance:
+
+1. Navigate to **Ledger → Accounting → Accounts**
+2. Click an account row
+3. The account detail panel shows the account's journal history with a debit/credit/running-balance table
+
+This is useful for reconciling specific accounts (e.g., Accounts Receivable) or producing account statements for audits.
+
+## System vs. Manual Entries
+
+- **System entries** (`is_system_entry: true`) are created automatically by Ledger in response to wallet operations, invoice payments, and gateway transactions
+- **Manual entries** are created by operators via **Ledger → Accounting → Journal Entries → New Manual Entry**
+
+Both types appear in the general ledger. System entries cannot be edited but can be reversed.

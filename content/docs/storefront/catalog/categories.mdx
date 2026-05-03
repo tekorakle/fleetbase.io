@@ -1,54 +1,71 @@
 ---
 title: Categories
-description: Organize your products into categories for better discoverability and navigation.
+description: Organize your products into categories for navigation and discoverability in your Storefront app.
 ---
 
 # Categories
 
-A **Category** is a logical grouping of [Products](/docs/storefront/catalog/products).
+**Categories** organize products into logical groups for customer navigation. A category can represent a menu section ("Appetizers", "Mains", "Desserts"), a product type ("Electronics", "Clothing"), or any grouping that makes sense for your store.
 
-Categories are essential for organizing your catalog and making it easy for customers to navigate your Storefront application.
+Navigate to **Storefront → Products** and use the category sidebar to manage categories.
+
+![Categories panel — category list with product counts and edit controls](/images/placeholder.png)
 
 ## Creating a Category
 
-To add a new category to your catalog:
-
-1. Navigate to **Storefront** > **Categories** in the Fleetbase Console.
-2. Ensure you have selected the correct Store from the context switcher at the top of the screen.
-3. Click the **New Category** button.
-4. Provide the basic details:
-   - **Name**: The public-facing name of the category (e.g., "Appetizers", "T-Shirts", "Electronics").
-   - **Description**: A brief description of the category.
-5. Upload an **Image**: A high-quality photo representing the category. This is often used as a thumbnail in your frontend application's navigation menu.
-6. Click **Save**.
+<Steps>
+  <Step>
+    Navigate to **Storefront → Products**.
+  </Step>
+  <Step>
+    In the category sidebar, click **New Category** (or the **+** icon).
+  </Step>
+  <Step>
+    Enter the **Name** and an optional **Description**.
+  </Step>
+  <Step>
+    Upload an optional **Image** — used as a thumbnail in your app's navigation menu.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
 
 ## Assigning Products to Categories
 
-Once you have created a category, you can assign products to it.
+A single product can belong to multiple categories. Assign a category when creating or editing a product by selecting it in the **Category** dropdown.
 
-1. Navigate to **Storefront** > **Products** in the Fleetbase Console.
-2. Open the product you want to categorize.
-3. In the **Categories** field, select the appropriate category from the dropdown list.
-4. Click **Save**.
+Example: "Cheeseburger" → both "Burgers" and "Lunch Specials" categories.
 
-A single product can belong to multiple categories. For example, a "Cheeseburger" might belong to both the "Burgers" category and the "Lunch Specials" category.
+## Nested Categories (Subcategories)
 
-## Subcategories (Nested Categories)
+Storefront supports hierarchical categories. When creating a category, set a **Parent Category** to make it a subcategory.
 
-Storefront supports hierarchical categories, allowing you to create complex catalog structures.
+Example structure:
+```
+Clothing
+├── Men's
+│   ├── T-Shirts
+│   └── Trousers
+└── Women's
+    ├── Dresses
+    └── Tops
+```
 
-For example, you might have a top-level category called "Clothing", with subcategories for "Men's", "Women's", and "Children's".
+Your frontend app can use the parent/child relationship to build a multi-level navigation menu.
 
-To create a subcategory:
+## Categories in Catalogs
 
-1. Create a new category as described above.
-2. In the **Parent Category** field, select the top-level category you want to nest this new category under.
-3. Click **Save**.
+Categories also play a role in **Catalogs** — named collections of categories and products used for things like food truck menus or seasonal specials. See [Food Trucks](/docs/storefront/stores/food-trucks) for how catalogs are assigned to mobile stores.
 
-When you fetch categories via the [Storefront API](/docs/api-reference/storefront), the response will include the hierarchical structure, allowing your frontend application to render nested navigation menus or breadcrumbs.
+## Category API
 
-## Category Ordering
+Fetch all categories for a store using the public API:
 
-The order in which categories are displayed in your frontend application is determined by the **Order** field.
+```
+GET /storefront/v1/categories
+Headers:
+  Storefront-Key: store_your_public_key
+```
 
-You can manually set the order of your categories in the Fleetbase Console to ensure that your most popular or highest-margin categories appear first.
+The response includes each category's `id`, `name`, `description`, `image_url`, `parent_id`, and `products_count`.

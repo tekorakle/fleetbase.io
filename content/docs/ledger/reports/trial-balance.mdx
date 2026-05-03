@@ -1,10 +1,53 @@
 ---
 title: Trial Balance
-description: Verify that total debits equal total credits across all accounts.
+description: Verify your books — a list of all accounts with their total debits and credits confirming they are equal.
 ---
 
 # Trial Balance
 
-Verify that total debits equal total credits across all accounts.
+The **Trial Balance** lists all accounts in your chart of accounts with their total debit and credit activity for a period. Its primary purpose is to verify that total debits equal total credits — confirming that every journal entry was recorded correctly.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Reports → Trial Balance**.
+
+![Trial balance — account list with debit column, credit column, and totals row](/images/placeholder.png)
+
+## Report Structure
+
+| Column | Description |
+| :--- | :--- |
+| **Account Code** | Account identifier from your chart of accounts |
+| **Account Name** | Account name |
+| **Type** | Asset, Liability, Equity, Revenue, or Expense |
+| **Debit Total** | Sum of all debit entries for this account in the period |
+| **Credit Total** | Sum of all credit entries for this account in the period |
+
+At the bottom:
+- **Total Debits** — sum of all debit totals across all accounts
+- **Total Credits** — sum of all credit totals across all accounts
+
+If the books are balanced: `Total Debits = Total Credits`
+
+## Using the Trial Balance
+
+A trial balance is typically run:
+
+- **At period end** — before generating income statements and balance sheets
+- **When discrepancies are suspected** — to locate the source of a reporting mismatch
+- **For external audit preparation** — auditors often request a trial balance as the starting point
+
+## When Debits ≠ Credits
+
+If the totals do not match, there is a recording error. Common causes:
+- A manual journal entry was entered with unequal debit and credit amounts
+- A transaction was recorded without a corresponding journal entry
+- A journal entry was partially reversed
+
+Use the [General Ledger](/docs/ledger/accounting/general-ledger) to filter by specific accounts and dates to identify the discrepancy.
+
+## Setting the Report Date
+
+1. Navigate to **Ledger → Reports → Trial Balance**
+2. Set the **As of Date** (balance reflects all entries up to end of that date)
+3. Click **Generate**
+
+For a period-specific trial balance, set both a start and end date to scope entries to that window.

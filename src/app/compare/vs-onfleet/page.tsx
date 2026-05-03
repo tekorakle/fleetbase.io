@@ -176,8 +176,8 @@ export default function VsOnfleetPage() {
  <div className="grid md:grid-cols-2 gap-6">
  <div className="rounded-xl border bg-card p-8">
  <div className="text-primary font-semibold text-sm mb-2">Fleetbase</div>
- <div className="text-4xl font-bold mb-1">$50<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
- <p className="text-sm text-muted-foreground mb-6">Starter cloud plan — 100 resource units included. Scale up as you grow. Self-hosted from $2,500 one-time.</p>
+ <div className="text-4xl font-bold mb-1">$25<span className="text-lg font-normal text-muted-foreground">/mo</span></div>
+ <p className="text-sm text-muted-foreground mb-6">Micro cloud plan — 100 resource units included. Scale up as you grow. Self-hosted from $2,500 one-time.</p>
  <ul className="space-y-2 text-sm">
  {['Usage-based, not per-task', 'No seat fees', 'Self-hosting available', 'Full API access', 'Open source — free forever if self-hosted'].map(f => (
  <li key={f} className="flex items-center gap-2">

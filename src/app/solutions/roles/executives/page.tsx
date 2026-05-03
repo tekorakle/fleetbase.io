@@ -1,135 +1,156 @@
 import type { Metadata } from 'next';
-import { TrendingUp, DollarSign, BarChart3, Shield, Zap, Globe } from 'lucide-react';
+import { TrendingUp, DollarSign, BarChart3, Shield, Zap, Globe, Users, Bell, FileCheck, Settings } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Logistics Platform for Executives & Leadership | Fleetbase',
- description:
- 'Give executives real-time visibility into logistics performance, cost efficiency, and growth metrics. Open-source logistics infrastructure that scales with your business without vendor lock-in.',
- keywords: ['logistics software for executives', 'logistics ROI platform', 'logistics cost reduction', 'supply chain executive dashboard', 'logistics business intelligence'],
- openGraph: {
- title: 'Logistics Platform for Executives & Leadership | Fleetbase',
- description: 'Real-time visibility into logistics performance, cost efficiency, and growth metrics.',
- },
+  title: 'Logistics Platform for Executives & Business Leaders | Fleetbase',
+  description: 'Give leadership real-time visibility into logistics performance, cost efficiency, and growth metrics. Open-source logistics infrastructure that scales without vendor lock-in.',
+  keywords: ['logistics software for executives', 'logistics ROI platform', 'logistics cost reduction', 'supply chain executive dashboard', 'logistics business intelligence', 'fleet cost management'],
+  openGraph: {
+    title: 'Logistics Platform for Executives | Fleetbase',
+    description: 'The logistics infrastructure that delivers ROI, not just functionality.',
+  },
 };
 
 export default function ExecutivesPage() {
- return (
- <SolutionPageLayout
- badge="For Executives & Leadership"
- title={<>Logistics That Drives <span className="text-gradient">Business Performance.</span></>}
- description="Executives need logistics infrastructure that reduces costs, scales with growth, and doesn't create vendor dependency. Fleetbase delivers measurable ROI, executive-level visibility, and the strategic flexibility of open-source ownership."
- stats={[
- { value: '30%', label: 'Average operational cost reduction' },
- { value: '3×', label: 'Faster time to new market' },
- { value: '100%', label: 'Data ownership — no vendor lock-in' },
- { value: '99.9%', label: 'Platform uptime SLA' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-kanban-board-detail.webp"
- heroScreenshotAlt="Fleetbase FleetOps executive view showing order pipeline performance across all delivery stages"
- heroScreenshotNeeded="FleetOps executive dashboard — high-level KPI cards showing cost per delivery, on-time rate, fleet utilization, and revenue impact"
- painPoints={{
- heading: 'Strategic risks in your current logistics setup',
- items: [
- 'Logistics costs growing faster than revenue as you scale',
- 'Vendor lock-in with no ability to switch or negotiate',
- 'No visibility into logistics performance at the executive level',
- 'Technology debt from legacy systems slowing down innovation',
- 'Inability to expand to new markets without rebuilding your stack',
- 'Data locked in vendor systems you do not own or control',
- ],
- }}
- features={[
- {
- title: 'Executive Performance Dashboard',
- description:
- 'See the metrics that matter at the business level — cost per delivery, on-time rate, fleet utilization, customer satisfaction, and revenue impact — in a single executive dashboard updated in real-time.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
- screenshotAlt: 'Executive Performance Dashboard',
- screenshotNeeded: 'FleetOps executive dashboard — high-level KPI cards with trend indicators and period comparison',
- },
- {
- title: 'Cost Reduction & ROI Visibility',
- description:
- 'Track cost-per-order, cost-per-mile, and total logistics spend over time. Fleetbase customers average a 30% reduction in operational costs within the first year through route optimization, automation, and reduced overhead.',
- icon: DollarSign,
- screenshot: '/images/console-screenshots/fleetops-issues.webp',
- screenshotAlt: 'Cost Reduction & ROI Visibility',
- screenshotNeeded: 'FleetOps cost analytics — total logistics spend trend with cost-per-order breakdown',
- },
- {
- title: 'Scalable Infrastructure Without Vendor Lock-In',
- description:
- 'Fleetbase is fully open-source. You own the code, the data, and the deployment. Scale to new markets, add new order types, and build custom integrations — without asking a vendor for permission or paying for custom development.',
- icon: Globe,
- screenshot: '/images/console-screenshots/fleetops-vendors.webp',
- screenshotAlt: 'Scalable Infrastructure Without Vendor Lock-In',
- screenshotNeeded: 'Fleetbase architecture overview — showing modular extensions and self-hosted deployment options',
- },
- {
- title: 'Operational Efficiency at Scale',
- description:
- 'Automated dispatch, intelligent routing, and digital workflows replace manual coordination. As your order volume grows, your team size does not have to grow proportionally.',
- icon: Zap,
- screenshot: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
- screenshotAlt: 'Operational Efficiency at Scale',
- screenshotNeeded: 'FleetOps automation dashboard — showing automated workflows and their time/cost savings',
- },
- {
- title: 'Data Ownership & Security',
- description:
- 'Your logistics data stays in your infrastructure. No third-party access, no data sharing with competitors, no surprise policy changes. Full data sovereignty with enterprise-grade security controls.',
- icon: Shield,
- screenshot: '/images/console-screenshots/iam-users-create.webp',
- screenshotAlt: 'Data Ownership & Security',
- screenshotNeeded: 'Fleetbase security overview — data residency, encryption status, and access control summary',
- },
- {
- title: 'Business Growth Analytics',
- description:
- 'Track market expansion performance, new zone profitability, and customer retention metrics tied to delivery performance. Understand the direct relationship between logistics quality and business growth.',
- icon: TrendingUp,
- screenshot: '/images/console-screenshots/fleetops-fleets.webp',
- screenshotAlt: 'Business Growth Analytics',
- screenshotNeeded: 'FleetOps growth analytics — zone expansion performance and customer retention correlation chart',
- },
- ]}
- testimonial={{
- quote:
- "Switching to Fleetbase was one of the best infrastructure decisions we made. We reduced logistics costs by 28%, expanded to three new cities in four months, and we own our entire stack.",
- author: 'Elena V.',
- role: 'CEO',
- company: 'Nexus Delivery Group',
- }}
- faqs={[
- {
- q: 'What is the typical ROI timeline for Fleetbase?',
- a: 'Most operations see measurable cost reductions within the first 90 days through route optimization and dispatch automation. Full ROI is typically achieved within 6-12 months depending on operation size and baseline efficiency.',
- },
- {
- q: 'How does open-source reduce our vendor risk?',
- a: 'With Fleetbase, you have full access to the source code and can self-host on your own infrastructure. You are never dependent on a vendor\'s pricing decisions, product roadmap, or business continuity. You can fork, modify, and maintain the platform independently.',
- },
- {
- q: 'How does Fleetbase scale as our business grows?',
- a: 'Fleetbase scales horizontally on cloud or on-premise infrastructure. There are no per-driver or per-vehicle fees — you pay for resource units on a flat monthly plan. Adding new markets, order types, or integrations requires no additional development.',
- },
- {
- q: 'What does implementation look like?',
- a: 'Most operations are live within 2-4 weeks. Fleetbase provides onboarding support, documentation, and implementation guidance. Complex enterprise deployments with custom integrations typically take 4-8 weeks.',
- },
- {
- q: 'Is Fleetbase suitable for enterprise-scale operations?',
- a: 'Yes. Fleetbase serves operations ranging from small regional fleets to large enterprise logistics networks. Enterprise plans include dedicated support, custom SLAs, and professional services for complex deployments.',
- },
- ]}
- ctaHeading="Make logistics a competitive advantage"
- ctaBody="Reduce costs, eliminate vendor lock-in, and scale your logistics operation with open-source infrastructure you own completely. Talk to our team about your business."
- ctaPrimary="Talk to Sales"
- ctaPrimaryHref="/contact/sales"
- ctaSecondary="Start Free Trial"
- ctaSecondaryHref="/trial"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="For Executives & Business Leaders"
+      title={<>Logistics Infrastructure That<br /><span className="text-gradient">Delivers ROI, Not Invoices.</span></>}
+      description="Most logistics software is sold on features and delivers on functionality — but the business outcomes are an afterthought. Fleetbase is built differently: open-source infrastructure with no per-seat pricing, no vendor lock-in, and no data held hostage by a third party. For business leaders, that means lower cost of ownership, complete data sovereignty, and a platform that scales with your operation rather than taxing it."
+      stats={[
+        { value: '40%', label: 'Average operational cost reduction in year one' },
+        { value: '0', label: 'Per-seat fees — flat pricing or self-hosted' },
+        { value: '8,000+', label: 'Active logistics operations worldwide' },
+        { value: '10M+', label: 'Orders processed on Fleetbase globally' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase executive dashboard — operational performance, cost analytics, and growth metrics"
+      painPoints={{
+        heading: 'What your current logistics platform is costing you beyond the subscription',
+        items: [
+          'Per-seat pricing that penalises growth — your costs scale with your headcount, not your value delivered',
+          'Data locked in a vendor\'s cloud with no practical export path if you want to leave',
+          'No visibility into what the platform is actually costing your operation to run vs. what it\'s delivering',
+          'Vendor feature roadmap decides your capabilities — you wait quarters for functionality your operation needs now',
+          'Security and compliance reviews blocked by a closed-source platform you can\'t inspect',
+          'Commercial SaaS data sovereignty incompatible with regulated industry or government contract requirements',
+        ],
+      }}
+      featuresHeading="Logistics infrastructure built for business outcomes"
+      featuresSubheading="Lower cost, higher control, and the data sovereignty your business requires."
+      features={[
+        {
+          title: 'Total Cost of Ownership Advantage',
+          description: 'Fleetbase\'s pricing model is designed for scale — flat pricing tiers on cloud, or self-hosted with no recurring per-seat fees. As your fleet and team grow, your platform cost doesn\'t grow proportionally. That\'s a structural cost advantage that compounds over time.',
+          bullets: [
+            'Flat cloud pricing — no per-seat, per-driver, or per-order fees',
+            'Self-hosted option eliminates vendor subscription entirely',
+            'Open-source licence means your development investment stays with you',
+          ],
+          icon: DollarSign,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Executive Performance Dashboard',
+          description: 'The operational and financial metrics that matter at leadership level — delivery performance, cost-per-order, fleet utilization, SLA adherence, and revenue by service line — presented in a single dashboard that gives you the picture you need without a briefing call.',
+          bullets: [
+            'High-level KPI dashboard configurable for board and leadership reporting',
+            'Cost-per-delivery and operational margin analysis by service line',
+            'Period-over-period performance comparison for growth tracking',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Data Sovereignty & Compliance Readiness',
+          description: 'Your operational data is one of your most valuable business assets. Fleetbase\'s self-hosted deployment option means your data lives in your own infrastructure — not a vendor\'s cloud. Critical for regulated industries, government contracts, and organisations where data residency is a requirement.',
+          bullets: [
+            'Self-hosted deployment keeps all data within your own infrastructure',
+            'No third-party vendor access to your operational or customer data',
+            'Audit-ready data export for compliance, legal holds, and regulatory review',
+          ],
+          icon: Shield,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Operational Scalability Without Re-Platforming',
+          description: 'As your operation grows — more vehicles, more depots, more order types, more geographies — Fleetbase scales with you. No re-platforming when you cross a threshold. No commercial renegotiation when you add a depot. The same platform handles 10 vehicles and 10,000.',
+          bullets: [
+            'Horizontal scaling on cloud or self-hosted Kubernetes infrastructure',
+            'Multi-depot and multi-region support built in from day one',
+            'Extension system allows operational capability to grow without core platform changes',
+          ],
+          icon: Globe,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Vendor Independence & Strategic Control',
+          description: 'Open-source licensing means Fleetbase can\'t hold your operation hostage. Your team can read, modify, and own the platform. You can contribute to the community, fork the codebase, or switch to a commercial licence — on your terms, not a vendor\'s renewal deadline.',
+          bullets: [
+            'Full source code access — read, inspect, and modify without restriction',
+            'No vendor lock-in — data is exportable and infrastructure is portable',
+            'Commercial licence available for proprietary modifications to the codebase',
+          ],
+          icon: Settings,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'ROI Reporting & Business Intelligence',
+          description: 'Measure what the platform is delivering. Track operational cost reduction vs. baseline, SLA improvement, delivery volume growth, and revenue per vehicle over time. Present the business case for logistics investment with data that goes beyond operational metrics to financial outcomes.',
+          bullets: [
+            'Cost reduction tracking vs. pre-Fleetbase operational baseline',
+            'Revenue per vehicle and fleet ROI calculation tools',
+            'Exportable financial and operational reports for board presentations',
+          ],
+          icon: TrendingUp,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Zap, label: 'Rapid deployment' },
+        { icon: Users, label: 'Unlimited users' },
+        { icon: Bell, label: 'Executive alerts' },
+        { icon: FileCheck, label: 'Board-ready reports' },
+        { icon: Globe, label: 'Multi-region support' },
+        { icon: Shield, label: 'Data sovereignty' },
+        { icon: BarChart3, label: 'ROI analytics' },
+        { icon: DollarSign, label: 'No per-seat pricing' },
+      ]}
+      testimonial={{
+        quote: "We evaluated five logistics platforms and Fleetbase was the only one that didn't charge us per driver. As we scaled from 40 to 120 drivers, our platform cost barely moved. The open-source model also means we're not held hostage at renewal time.",
+        author: 'Diane O.',
+        role: 'COO',
+        company: 'Pulse Logistics Group',
+      }}
+      faqs={[
+        {
+          q: 'What does Fleetbase actually cost to run?',
+          a: 'Cloud plans are flat-fee by operational scale — not per seat or per driver. Self-hosted deployments have no recurring platform fee. Either way, as you scale, your per-unit platform cost decreases.',
+        },
+        {
+          q: 'What happens if we want to switch platforms or migrate our data?',
+          a: 'All operational data is exportable via the API and in standard formats. Self-hosted deployments give you direct database access. There is no vendor-imposed data lock-in.',
+        },
+        {
+          q: 'Can Fleetbase be deployed in our own cloud environment for data sovereignty?',
+          a: 'Yes. Fleetbase is open source and designed for self-hosting on AWS, Azure, GCP, or on-premise infrastructure. No operational or customer data is sent to Fleetbase servers in a self-hosted deployment.',
+        },
+        {
+          q: 'How does open source licensing work for commercial use?',
+          a: 'Fleetbase is licensed under AGPL-3.0 for open-source use. A commercial licence is available for organisations that need to run proprietary modifications without open-source disclosure obligations.',
+        },
+        {
+          q: 'What security certifications does Fleetbase have?',
+          a: "As open-source software, Fleetbase's complete codebase is available for your security team to inspect and assess. For organisations requiring formal certifications on hosted infrastructure, cloud plans can be deployed in certified cloud environments.",
+        },
+      ]}
+      ctaHeading="Lower cost. More control. Real business outcomes."
+      ctaBody="The logistics platform that delivers ROI instead of just invoices. Start your free trial or talk to our team about an enterprise deployment that fits your requirements."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

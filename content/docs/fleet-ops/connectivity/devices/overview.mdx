@@ -1,0 +1,91 @@
+---
+title: Devices
+description: Manage GPS trackers, OBD-II scanners, dash cameras, and other IoT devices connected to your fleet vehicles.
+---
+
+# Devices
+
+**Devices** are the physical hardware units connected to your fleet vehicles — GPS trackers, OBD-II scanners, dash cameras, and IoT sensors. While telematics modems are managed in the Telematics section (they bridge to a provider's cloud), Devices tracks the individual hardware installed in or on vehicles.
+
+Navigate to **Fleet-Ops → Connectivity → Devices**.
+
+![Devices list — device name, type, category, linked vehicle, status, and last event time](/images/placeholder.png)
+
+## Device Categories
+
+| Category | Examples |
+| :--- | :--- |
+| **GPS Tracker** | Standalone GPS tracker (non-OBD), asset tracker |
+| **OBD-II Scanner** | Engine diagnostic reader via OBD-II port |
+| **Dash Camera** | Front/rear facing cameras, event-triggered video |
+| **Temperature Sensor** | Cold chain monitoring sensor |
+| **Humidity Sensor** | Cargo humidity monitoring |
+| **Door Sensor** | Cargo door open/close detection |
+| **Motion Sensor** | Impact or vibration detection |
+| **Pressure Sensor** | Tire pressure monitoring (TPMS) |
+| **Fuel Level Sensor** | Tank-mounted fuel gauge |
+
+## Device Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Device identifier |
+| **Type** | Specific hardware type |
+| **Category** | Device category (GPS, OBD-II, camera, etc.) |
+| **Vendor** | Manufacturer or supplier |
+| **Description** | Notes about the device |
+| **Status** | active, inactive, offline, faulty |
+| **Meta** | Additional key-value data (IMEI, firmware, etc.) |
+
+## Adding a Device
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Connectivity → Devices**.
+  </Step>
+  <Step>
+    Click **+ New Device**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Type**, and **Category**.
+  </Step>
+  <Step>
+    Set the **Vendor** and any identifying information in **Meta** (e.g., IMEI, serial number, firmware version).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Linking Devices to Vehicles
+
+Devices are linked to vehicles through the vehicle record:
+
+1. Open **Fleet-Ops → Resources → Vehicles → [Vehicle]**
+2. Click the **Devices** tab
+3. Click **+ Add Device** and select from the devices list
+4. Set the **Mounting Location** (e.g., dashboard, cargo area, wheel well)
+5. Save
+
+A vehicle can have multiple devices — e.g., one GPS tracker, one OBD-II scanner, and one temperature sensor.
+
+## Device Events
+
+Every time a device sends data, a **DeviceEvent** is recorded. These events are visible in the device detail panel:
+
+- GPS coordinates and timestamp
+- OBD-II readings (RPM, fuel level, coolant temperature, fault codes)
+- Sensor readings (temperature values, door status, motion events)
+- Alert events (speeding, harsh braking, engine fault)
+
+View device events at **Fleet-Ops → Connectivity → Devices → [Device] → Events**.
+
+## Device Status Monitoring
+
+Device status is updated based on data received:
+
+- `active` — data received within the expected interval
+- `offline` — no data received beyond the expected interval
+- `faulty` — reporting error codes or data quality issues
+
+Offline devices can be flagged to create an Issue automatically, alerting the fleet manager to investigate.

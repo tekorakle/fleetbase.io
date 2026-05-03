@@ -1,68 +1,84 @@
 ---
 title: Checkout
-description: Configure and manage the checkout flow, including delivery options and order confirmation.
+description: How the Storefront checkout flow works — delivery address, service quotes, payment, and order creation.
 ---
 
 # Checkout
 
-The **Checkout** phase is where a customer finalizes their purchase, provides delivery details, and completes payment.
+**Checkout** is the process of converting a cart into a paid order. It captures the customer's delivery address, calculates the delivery fee, processes payment, and creates a Fleet-Ops order — all in one atomic flow.
 
-In Storefront, Checkout is not a separate entity from the [Cart](/docs/storefront/orders/cart). Instead, it is a process that transitions the Cart into a finalized Order.
+## Checkout Flow
 
-## The Checkout Flow
+### Step 1 — Delivery Address
 
-When a customer is ready to pay, your frontend application should guide them through the following steps:
+The customer provides their delivery address (or selects a saved address). This is required before the delivery fee can be calculated.
 
-### 1. Delivery Details
-The customer must provide a delivery address.
+### Step 2 — Service Quote
 
-If the customer is a registered user, they can select from their [Saved Addresses](/docs/storefront/customers). If they are a guest, they must enter a new address.
+Storefront calls Fleet-Ops to request a **Service Quote** — the calculated delivery fee based on:
+- Distance between the store location and the customer's delivery address
+- The applicable Service Rate configured in Fleet-Ops
 
-Your frontend application sends this address to the [Storefront API](/docs/api-reference/storefront).
+The quote is returned to the frontend and displayed to the customer as the `delivery_fee`.
 
-### 2. Calculating the Delivery Fee
-Once Storefront has the delivery address, it communicates with FleetOps to calculate the delivery fee.
+### Step 3 — Apply Promotions
 
-FleetOps uses its [Routing & Dispatching](/docs/fleetops/operations/routing-and-dispatching) engine to determine the distance between the Store's [Location](/docs/storefront/stores/store-locations) and the customer's delivery address. It then applies the appropriate [Service Rates](/docs/fleetops/operations/service-rates) to generate a **Service Quote**.
+If the customer has a discount code, it is validated now:
+- Is the promotion currently active?
+- Has the usage limit been reached?
+- Does the cart meet the minimum spend requirement?
 
-This Service Quote is returned to Storefront and added to the Cart's total as the `delivery_fee`.
+If valid, the discount is applied to the subtotal.
 
-### 3. Applying Promotions
-If the customer has a discount code, they can enter it now.
+### Step 4 — Payment
 
-Storefront validates the code against active [Promotions](/docs/storefront/promotions). If valid, the discount is applied to the Cart's subtotal.
+The customer selects a payment method. Depending on the configured gateways:
+- **Stripe** — frontend collects card details via Stripe SDK, sends directly to Stripe
+- **QPay** — customer is redirected to QPay payment page
+- **Cash on Delivery** — no payment now; driver collects cash on delivery
 
-### 4. Payment
-The customer selects a payment method (e.g., Credit Card, Apple Pay, Cash on Delivery).
+### Step 5 — Order Creation
 
-If they choose a digital payment method, your frontend application securely collects their payment details and processes the transaction via your configured [Payment Gateway](/docs/storefront/orders/payment-gateways).
+On payment success, your frontend calls the checkout capture endpoint. Storefront performs final validation:
+- Is the store still online?
+- Are all cart products still active?
+- Was payment confirmed?
 
-### 5. Order Creation
-Once payment is successful, your frontend application sends a final `POST /v1/checkout` request to the Storefront API.
+If everything is valid:
+1. The cart is finalized
+2. A **Checkout** record is created (snapshot of cart state + payment)
+3. A **Fleet-Ops Order** is created with pickup = store location, dropoff = customer address, payload = cart items
+4. The order ID is returned to the frontend for the confirmation screen
 
-Storefront performs a final validation:
-- Is the Store still open?
-- Are all products still active?
-- Was the payment successful?
+## Pickup Orders
 
-If everything is valid, Storefront destroys the Cart and creates a formal **Order**.
+If the customer selects **in-store pickup** (supported stores only):
+- No delivery fee is calculated
+- No Fleet-Ops driver dispatch occurs
+- The order status transitions based on store preparation and customer pickup confirmation
 
-## The Order Object
+## Checkout API
 
-The newly created Order object contains all the details of the transaction:
-- A unique `order_id` (e.g., `ORD-12345`).
-- The customer's details.
-- The delivery address.
-- The purchased items (the Payload).
-- The financial breakdown (Subtotal, Delivery Fee, Discount, Taxes, Total).
-- The current status (`created`).
+```http
+POST /storefront/v1/checkouts/capture
+Storefront-Key: store_your_key
+Authorization: Bearer customer_token
 
-Your frontend application should display an Order Confirmation screen to the customer, showing them their receipt and an estimated delivery time.
+{
+  "cart_id": "cart_abc123",
+  "delivery_address": {
+    "street": "123 Main St",
+    "city": "San Francisco",
+    "country": "US",
+    "coordinates": [-122.4194, 37.7749]
+  },
+  "gateway_id": "gateway_stripe_id",
+  "is_pickup": false
+}
+```
 
-## Integration with FleetOps
+On success, returns the created Fleet-Ops order object with tracking information.
 
-As soon as the Storefront Order is created, it is instantly visible in the FleetOps Console.
+## Required Minimum Amount
 
-The dispatcher (or the automated [Orchestrator](/docs/fleetops/operations/orchestrator)) can now assign a driver to pick up the order from the Store and deliver it to the customer.
-
-As the driver progresses (e.g., "Dispatched", "In Transit", "Completed"), the status of the Storefront Order updates automatically, allowing your frontend application to provide real-time tracking updates to the customer.
+Stores can optionally configure a **Minimum Checkout Amount** in **Storefront → [Store] → Details → Options**. If the cart subtotal is below this threshold, checkout is blocked.

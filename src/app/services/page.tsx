@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import {
- ArrowRight, Check, MessageCircle, Mail, Phone, Github,
- Twitter, Linkedin, Youtube, Globe, Headphones,
- Wrench, Code2, GraduationCap, Shield, Zap, Users, Server,
+ ArrowRight, Check, Calendar,
+ Wrench, Code2, GraduationCap, Shield, Zap, Server,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -140,6 +139,7 @@ const PROFESSIONAL_SERVICES = [
  icon: Server,
  title: 'Self-Hosted Implementation',
  price: '$2,500 one-time',
+ href: '/services/installation',
  description: 'We deploy Fleetbase on your own infrastructure — AWS, GCP, Azure, or bare metal. Includes CI/CD setup, configuration, custom branding, and a go-live handover session.',
  deliverables: [
  'Server deployment & configuration',
@@ -216,88 +216,6 @@ const PROFESSIONAL_SERVICES = [
  },
 ];
 
-// ─── Social & Contact Links ───────────────────────────────────────────────────
-const SOCIAL_LINKS = [
- {
- name: 'Discord Community',
- description: 'Join 1,000+ developers and operators in our Discord server.',
- icon: MessageCircle,
- href: 'https://discord.com/invite/HnTqQ6zAVn',
- label: 'Join Discord',
- color: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
- },
- {
- name: 'GitHub',
- description: 'Star the repo, report issues, and contribute to the open-source platform.',
- icon: Github,
- href: 'https://github.com/fleetbase',
- label: 'View on GitHub',
- color: 'bg-gray-500/10 text-gray-700 dark:text-gray-300',
- },
- {
- name: 'LinkedIn',
- description: 'Follow us for product updates, industry news, and company announcements.',
- icon: Linkedin,
- href: 'https://www.linkedin.com/company/fleetbase',
- label: 'Follow on LinkedIn',
- color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
- },
- {
- name: 'X (Twitter)',
- description: 'Real-time updates, tips, and conversations with the Fleetbase team.',
- icon: Twitter,
- href: 'https://twitter.com/fleetbase_io',
- label: 'Follow on X',
- color: 'bg-sky-500/10 text-sky-600 dark:text-sky-400',
- },
- {
- name: 'YouTube',
- description: 'Product demos, tutorials, and webinar recordings.',
- icon: Youtube,
- href: 'https://www.youtube.com/@fleetbase',
- label: 'Watch on YouTube',
- color: 'bg-red-500/10 text-red-600 dark:text-red-400',
- },
- {
- name: 'Website',
- description: 'Browse documentation, blog posts, and product pages.',
- icon: Globe,
- href: 'https://fleetbase.io',
- label: 'Visit fleetbase.io',
- color: 'bg-primary/10 text-primary',
- },
-];
-
-const CONTACT_CHANNELS = [
- {
- icon: Mail,
- label: 'General Enquiries',
- value: 'hello@fleetbase.io',
- href: 'mailto:hello@fleetbase.io',
- description: 'Sales, partnerships, press, and general questions.',
- },
- {
- icon: Headphones,
- label: 'Technical Support',
- value: 'support@fleetbase.io',
- href: 'mailto:support@fleetbase.io',
- description: 'Bug reports, platform issues, and technical help.',
- },
- {
- icon: Phone,
- label: 'WhatsApp',
- value: '+65 8834 5437',
- href: 'https://wa.me/6588345437?text=Hi%20Fleetbase%20team!%20I%27d%20like%20to%20learn%20more%20about%20your%20services.',
- description: 'Quick questions and sales conversations.',
- },
- {
- icon: MessageCircle,
- label: 'Discord',
- value: 'discord.com/invite/HnTqQ6zAVn',
- href: 'https://discord.com/invite/HnTqQ6zAVn',
- description: 'Community support and developer discussions.',
- },
-];
 
 export default function ServicesPage() {
  return (
@@ -327,6 +245,30 @@ export default function ServicesPage() {
  <Link href="https://discord.com/invite/HnTqQ6zAVn">Join Discord Community</Link>
  </Button>
  </div>
+ </div>
+ </section>
+
+ {/* Cloud Providers */}
+ <section className="py-10 border-y bg-muted/10">
+ <div className="container mx-auto px-4 text-center">
+ <p className="text-sm text-muted-foreground mb-5 font-medium">First-class deployment support on</p>
+ <div className="flex flex-wrap items-center justify-center gap-3">
+ {[
+ { label: 'Amazon Web Services', abbr: 'AWS', className: 'text-orange-600 dark:text-orange-400 border-orange-200 dark:border-orange-800 bg-orange-50 dark:bg-orange-950/30' },
+ { label: 'Google Cloud', abbr: 'GCP', className: 'text-blue-600 dark:text-blue-400 border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/30' },
+ { label: 'Microsoft Azure', abbr: 'Azure', className: 'text-sky-600 dark:text-sky-400 border-sky-200 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/30' },
+ { label: 'DigitalOcean', abbr: 'DO', className: 'text-cyan-600 dark:text-cyan-400 border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/30' },
+ ].map(({ label, abbr, className }) => (
+ <div key={label} className={cn('flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium', className)}>
+ <span className="font-bold">{abbr}</span>
+ <span className="text-muted-foreground hidden sm:inline">·</span>
+ <span className="hidden sm:inline">{label}</span>
+ </div>
+ ))}
+ </div>
+ <p className="text-xs text-muted-foreground mt-4">
+ Also supported: Hetzner, Linode, and any bare-metal or VPS server with Docker.
+ </p>
  </div>
  </section>
 
@@ -365,10 +307,16 @@ export default function ServicesPage() {
  ))}
  </ul>
  </CardContent>
- <CardFooter>
+ <CardFooter className="flex flex-col gap-2">
+ {service.href ? (
+ <Button className="w-full" asChild>
+ <Link href={service.href}>Learn More <ArrowRight className="ml-2 w-4 h-4" /></Link>
+ </Button>
+ ) : (
  <Button className="w-full" variant="outline" asChild>
  <Link href="https://cal.com/shivthakker/enquiry">Request a Quote</Link>
  </Button>
+ )}
  </CardFooter>
  </Card>
  ))}
@@ -436,71 +384,11 @@ export default function ServicesPage() {
  </div>
  </section>
 
- {/* Community & Social Links */}
+ {/* CTA */}
  <section className="py-16 bg-muted/20">
  <div className="container mx-auto px-4">
- <div className="text-center mb-10">
- <h2 className="text-3xl font-bold mb-2">Join the Community</h2>
- <p className="text-muted-foreground max-w-2xl mx-auto">
- Fleetbase is built in the open. Connect with our team and thousands of developers and operators across our community channels.
- </p>
- </div>
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
- {SOCIAL_LINKS.map((social) => (
- <Link
- key={social.name}
- href={social.href}
- target="_blank"
- rel="noopener noreferrer"
- className="group flex items-start gap-4 p-4 rounded-xl border bg-card hover:border-primary/50 hover:shadow-sm transition-all"
- >
- <div className={cn('w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0', social.color)}>
- <social.icon className="w-5 h-5" />
- </div>
- <div className="flex-1 min-w-0">
- <div className="font-semibold text-sm mb-0.5 group-hover:text-primary transition-colors">{social.name}</div>
- <div className="text-xs text-muted-foreground leading-relaxed">{social.description}</div>
- <div className="text-xs text-primary mt-1.5 font-medium">{social.label} →</div>
- </div>
- </Link>
- ))}
- </div>
- </div>
- </section>
-
- {/* Contact Channels */}
- <section className="py-16">
- <div className="container mx-auto px-4">
- <div className="text-center mb-10">
- <h2 className="text-3xl font-bold mb-2">Get in Touch</h2>
- <p className="text-muted-foreground max-w-xl mx-auto">
- Whether you&apos;re evaluating Fleetbase, need technical help, or want to discuss a custom engagement — we&apos;re here.
- </p>
- </div>
- <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto mb-10">
- {CONTACT_CHANNELS.map((channel) => (
- <Link
- key={channel.label}
- href={channel.href}
- target={channel.href.startsWith('mailto') ? undefined : '_blank'}
- rel={channel.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
- className="group flex flex-col gap-3 p-5 rounded-xl border bg-card hover:border-primary/50 hover:shadow-sm transition-all"
- >
- <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
- <channel.icon className="w-5 h-5 text-primary" />
- </div>
- <div>
- <div className="text-xs text-muted-foreground mb-0.5">{channel.label}</div>
- <div className="font-semibold text-sm group-hover:text-primary transition-colors break-all">{channel.value}</div>
- <div className="text-xs text-muted-foreground mt-1 leading-relaxed">{channel.description}</div>
- </div>
- </Link>
- ))}
- </div>
-
- {/* CTA Card */}
  <div className="max-w-2xl mx-auto bg-primary/5 border border-primary/20 rounded-2xl p-8 text-center">
- <Users className="w-10 h-10 text-primary mx-auto mb-4" />
+ <Calendar className="w-10 h-10 text-primary mx-auto mb-4" />
  <h3 className="text-2xl font-bold mb-2">Not sure where to start?</h3>
  <p className="text-muted-foreground mb-6">
  Book a free 30-minute discovery call with our team. We&apos;ll understand your operations and recommend the right deployment, support tier, and services for your needs.

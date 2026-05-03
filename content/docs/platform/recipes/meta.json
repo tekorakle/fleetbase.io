@@ -1,0 +1,9 @@
+{
+  "title": "Recipes",
+  "pages": [
+    "connect-your-first-webhook",
+    "set-up-real-time-tracking",
+    "configure-custom-fields",
+    "build-a-custom-integration"
+  ]
+}

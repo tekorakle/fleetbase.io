@@ -1,0 +1,68 @@
+---
+title: Billing & Invoicing
+description: Create, send, and collect payment on invoices — manually or automatically from Fleet-Ops orders.
+---
+
+# Billing & Invoicing
+
+The **Billing** module handles invoice creation, delivery, and payment collection. Whether you are billing a B2B logistics client for a month of deliveries or generating per-order receipts from Storefront, Ledger is the invoicing engine.
+
+Navigate to **Ledger → Billing** to access invoices and templates.
+
+![Billing overview — invoice list with status badges, customer names, amounts, and due dates](/images/placeholder.png)
+
+## Core Components
+
+### [Invoices](/docs/ledger/billing/invoices)
+
+Formal payment requests with line items, tax, totals, and a lifecycle from `draft` through `paid`. Invoices can be created manually or auto-generated from Fleet-Ops orders. Customers can pay invoices online via a public URL (no login required).
+
+### [Invoice Templates](/docs/ledger/billing/invoice-templates)
+
+Reusable templates that define the layout and default content of your invoices — company logo, payment terms, notes, and custom styling. Set a default template in invoice settings so every new invoice uses your branding automatically.
+
+## The Invoicing Lifecycle
+
+```
+draft → sent → viewed → partial → paid
+                      ↘ overdue
+                      ↘ cancelled / void
+```
+
+| Status | Meaning |
+| :--- | :--- |
+| `draft` | Created but not yet sent to the customer |
+| `sent` | Sent to customer; awaiting payment |
+| `viewed` | Customer opened the invoice via the public link |
+| `partial` | Partial payment received; balance remains |
+| `paid` | Fully paid (`amount_paid ≥ total_amount`) |
+| `overdue` | Past due date; not yet paid |
+| `cancelled` | Cancelled; should not be paid |
+| `void` | Voided; removed from AR reports |
+
+## Automated Invoicing
+
+Ledger can auto-generate invoices in two scenarios:
+
+### From Fleet-Ops Orders
+When a Fleet-Ops order reaches a configured status (e.g., `completed`), Ledger's observer creates an invoice. Line items are extracted from:
+1. Order payload entities (items in the delivery)
+2. The order's service/purchase rate
+3. A summary fallback line item
+
+### From Storefront Checkouts
+When a Storefront customer completes a checkout, an invoice can be generated and emailed as a receipt. Configure this in the Storefront order configuration settings.
+
+## Revenue Recognition
+
+When an invoice is created and saved, Ledger automatically recognizes the revenue:
+```
+DEBIT  Accounts Receivable (asset increases — customer owes you)
+CREDIT Sales Revenue (revenue increases)
+```
+
+When payment is recorded:
+```
+DEBIT  Cash (asset increases — you received cash)
+CREDIT Accounts Receivable (asset decreases — debt cleared)
+```

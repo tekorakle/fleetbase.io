@@ -1,0 +1,107 @@
+---
+title: Core Concepts
+description: Understand the key building blocks of Storefront — stores, networks, products, cart, checkout, and how they integrate with Fleet-Ops.
+---
+
+# Core Concepts
+
+Storefront is built on a small set of entities that work together to power the full commerce lifecycle — from product browsing to order fulfillment via Fleet-Ops.
+
+## Store
+
+A **Store** is the top-level entity representing a single merchant or brand. Every store has:
+
+- Its own **product catalog** (products and categories)
+- One or more **physical locations** used as pickup addresses for delivery
+- **Operating hours** per location
+- A **currency** and **timezone**
+- An auto-generated **API key** (`store_*`) for public API access
+- **Payment gateways** and **notification channels**
+
+If you are building a D2C app for a single brand — one store is all you need.
+
+## Network
+
+A **Network** groups multiple stores into a marketplace. Networks are for multi-vendor platforms like food delivery apps or local marketplace aggregators.
+
+- A network has its own branding, currency, and API key
+- Stores join a network as members with optional category assignments
+- Customers browse the network to discover stores; they check out from an individual store
+- Networks can share payment gateways and push notification channels across all member stores
+
+## Product
+
+A **Product** is an item for sale. Key attributes:
+
+| Field | Description |
+| :--- | :--- |
+| **Name / Description** | Display information |
+| **Price / Sale Price** | Base pricing; sale price activates when `is_on_sale` is true |
+| **SKU** | Optional internal identifier |
+| **Status** | `available` (visible) or `draft` (hidden) |
+| **Category** | The category this product belongs to |
+| **Images** | Primary image plus additional media files |
+| **Variants** | Required customer choices (e.g., Size: S, M, L) |
+| **Addons** | Optional extras grouped by addon categories (e.g., Toppings) |
+| **Hours** | Per-product availability windows |
+
+When a customer purchases a product, Storefront converts it to a Fleet-Ops Entity in the order payload — carrying the name, price, quantity, and selected variants/addons.
+
+## Category
+
+**Categories** organize products for navigation. A product can belong to multiple categories. Categories can be nested to create subcategory hierarchies (e.g., Clothing → Men's → Shirts).
+
+## Variant
+
+A **Variant** defines required customer selections before purchasing. Each variant has:
+- A **name** (e.g., "Size")
+- An **is_required** flag
+- **min / max** selection limits
+- A list of **options** (e.g., Small, Medium, Large) each with an optional additional cost
+
+## Addon
+
+**Addons** are optional extras. They are organized into **Addon Categories** (e.g., "Toppings") which are then linked to products. Each product-addon category link has:
+- `max_selectable` — how many addons from this category the customer can pick
+- `is_required` — whether a selection is mandatory
+- `excluded_addons` — specific addons to hide for this product
+
+## Cart
+
+A **Cart** is a persistent shopping session. Carts are stored in the database — a customer can abandon and return. Key behavior:
+
+- Carts are tied to an authenticated customer or a guest session ID
+- Each cart item records the product, quantity, selected variants, selected addons, and computed subtotal
+- Carts expire after **7 days**
+- Multi-store checkout: by default a cart can only hold items from one store at a time
+
+## Checkout
+
+A **Checkout** is a snapshot of the cart at purchase time, augmented with:
+- The customer's delivery address
+- A Fleet-Ops **Service Quote** for the delivery fee
+- The selected **Payment Gateway**
+- An optional discount code
+
+On successful payment, the checkout creates a Fleet-Ops **Order**. The store location becomes the pickup address; the customer's address becomes the dropoff.
+
+## Customer
+
+A **Customer** is an end-user registered with your store or network. Customers authenticate via phone (SMS OTP), email/password, or social login (Apple, Google). Customer records hold:
+- Contact details (name, email, phone)
+- Order history (linked Fleet-Ops orders)
+- Reviews and votes
+
+## The Order Lifecycle
+
+```
+Customer browses products
+  → Adds items to Cart (variants, addons, quantity)
+    → Proceeds to Checkout (delivery address, service quote, payment)
+      → Payment captured via Gateway
+        → Storefront creates Fleet-Ops Order
+          → Fleet-Ops dispatches driver for pickup & delivery
+            → Customer tracks order in real-time
+```
+
+Fleet-Ops handles all dispatch, routing, and proof of delivery. Storefront handles the catalog, cart, checkout, and customer experience.

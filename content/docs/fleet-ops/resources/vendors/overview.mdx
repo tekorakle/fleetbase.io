@@ -1,0 +1,91 @@
+---
+title: Vendors
+description: Manage third-party carriers and service providers — assign drivers, configure integrations, and relay orders to partner logistics platforms.
+---
+
+# Vendors
+
+**Vendors** are third-party carriers or service providers in your logistics network. Unlike internal drivers and vehicles, a vendor represents an external company that provides their own drivers and fleet. Orders can be assigned to a vendor, who then dispatches using their own resources.
+
+![Vendors list — vendor name, type, driver count, status badge, and integration indicator](/images/placeholder.png)
+
+## Vendor Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Vendor company name |
+| **Email** | Contact email |
+| **Phone** | Contact phone |
+| **Website** | Vendor's website URL |
+| **Country** | Primary operating country |
+| **Business ID** | Business registration number |
+| **Type** | Carrier, courier, partner, etc. |
+| **Place** | Vendor's physical address/headquarters |
+| **Status** | active, inactive, suspended |
+| **Notes** | Internal notes about the vendor |
+
+## Vendor vs. Contact
+
+Contacts represent individuals (customers, suppliers). Vendors represent companies that provide logistics services — they can have their own driver pools and fleet, and can be integrated with external APIs.
+
+## Creating a Vendor
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Resources → Vendors**.
+  </Step>
+  <Step>
+    Click **+ New Vendor**.
+  </Step>
+  <Step>
+    Enter the vendor name, contact details, and type.
+  </Step>
+  <Step>
+    Link a **Place** for the vendor's headquarters or dispatch hub.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Assigning Drivers and Fleets to a Vendor
+
+External carriers can have their own drivers and vehicles registered in Fleet-Ops:
+
+1. Open the vendor record
+2. Navigate to the **Drivers** tab → click **Add Driver**
+3. Navigate to the **Fleets** tab → click **Add Fleet**
+
+Vendor-assigned drivers and vehicles are included in Orchestrator runs when the vendor's fleet is selected.
+
+## Integrated Vendors
+
+**Integrated Vendors** are external logistics platforms (like Lalamove) connected via their API. When an order is assigned to an integrated vendor:
+
+1. Fleet-Ops sends the order details to the partner's API
+2. The partner platform assigns their own driver
+3. Fleet-Ops receives status updates and driver location back via webhooks
+4. The order lifecycle and tracking continue within Fleet-Ops as normal
+
+### Setting Up an Integration
+
+1. Open the vendor record
+2. Click **Set Up Integration** (or navigate to the integration tab)
+3. Enter the partner API credentials (API key, secret, region)
+4. Configure the webhook callback URL for status updates
+5. Test the connection
+
+Supported integrations include Lalamove and other logistics API partners. Custom integrations can be built using the Fleet-Ops extension system.
+
+## Using Vendors as Order Facilitators
+
+When creating an order, you can assign a vendor as the **Facilitator** — the entity responsible for executing the delivery. The facilitator role is separate from the driver assignment: the vendor is the company, the driver is the individual executing the job.
+
+This is useful for:
+- Third-party carrier orders where the vendor dispatches internally
+- Integrated vendor orders relayed to a partner platform
+- Sub-contracting specific order types to specialist carriers
+
+## Sub-Organizations
+
+If your Fleetbase instance is part of a multi-tenant setup, a vendor can be linked to another Fleetbase organization via the `connect_company_uuid` field. This enables cross-organization order relay and tracking.

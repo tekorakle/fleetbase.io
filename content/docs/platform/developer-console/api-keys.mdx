@@ -1,58 +1,82 @@
 ---
 title: API Keys
-description: Create and manage API keys for authenticating requests to the Fleetbase API. Understand test vs. live mode keys.
+description: Generate and manage API credentials for authenticating requests to the Fleetbase REST API.
 ---
 
 # API Keys
 
-API keys are the primary method for authenticating requests to the Fleetbase REST API. Whether you are integrating an external ERP system, building a custom mobile app, or automating workflows, you will need an API key to securely interact with your Fleetbase instance.
+API keys are the credentials used to authenticate requests to the Fleetbase REST API. Each key belongs to either the **Test** or **Live** environment and can be scoped to a specific expiry window. Navigate to **Developers → API Keys** to manage them.
+
+![API Keys list — Name, Public Key, Secret Key, Environment badge, Expiry, Last Used columns](/images/placeholder.png)
+
+## Test Mode Toggle
+
+The header contains a **Test mode** toggle. When active, the table switches to show only test keys and the console enters sandbox mode — no changes affect production data. When test mode is on you can also select a specific test key from the dropdown next to the toggle; this controls which test key is sent as the active credential when making requests from the console.
 
 ## Creating an API Key
 
-To generate a new API key:
+Click **New** to create a key. The environment is set automatically based on whether test mode is currently on or off.
 
-1. Navigate to **Developers** > **API Keys** in the Fleetbase Console.
-2. Click **Create API Key**.
-3. Provide a descriptive **Name** for the key (e.g., "ERP Integration", "Mobile App Backend").
-4. Select the **Environment** (Test or Live).
-5. (Optional) Enter an **IP Whitelist** to restrict usage to specific IP addresses.
-6. Click **Save**.
+![API Key form — Name field, Expiration dropdown, and Test/Live environment badge](/images/placeholder.png)
 
-Once created, the API key will be displayed. **Copy this key and store it securely.** For security reasons, you will not be able to view the full key again after leaving the page.
+| Field | Description |
+| :--- | :--- |
+| **Name** | A descriptive label for the key (e.g. `Mobile App`, `ERP Integration`) |
+| **Expiration** | When the key expires — choose from `never`, `immediately`, `in 1 hour`, `in 24 hours`, `in 3 days`, or `in 7 days` |
+| **Environment** | Set automatically — `test` when test mode is on, `live` when off |
 
-## Authentication
+Click **Save** to generate the key. The public key and secret are shown in the table immediately after creation.
 
-Fleetbase uses Bearer token authentication. To authenticate an API request, include your API key in the `Authorization` header of your HTTP request.
+## Key Fields
+
+| Column | Description |
+| :--- | :--- |
+| **Name** | The label you gave the key — click to edit |
+| **Public Key** | The `flb_test_…` or `flb_live_…` token — click to copy |
+| **Secret Key** | The corresponding secret — click to reveal, then copy |
+| **Environment** | `test` or `live` |
+| **Expiry** | When the key becomes invalid, or blank if it never expires |
+| **Last Used** | Timestamp of the most recent authenticated request |
+
+## Using a Key
+
+Include the public key as a Bearer token in every API request:
 
 ```http
-Authorization: Bearer flb_test_your_api_key_here
+Authorization: Bearer flb_live_your_public_key_here
 ```
 
-### Example Request
-
-Here is an example of authenticating a request to retrieve a list of orders using cURL:
+Example with cURL:
 
 ```bash
-curl -X GET "https://api.fleetbase.io/fleet-ops/v1/orders" \
-  -H "Authorization: Bearer flb_test_your_api_key_here" \
+curl -X GET "https://api.fleetbase.io/v1/orders" \
+  -H "Authorization: Bearer flb_live_your_public_key_here" \
   -H "Content-Type: application/json"
 ```
 
-## Test vs. Live Keys
+## Key Actions
 
-Every API key is scoped to a specific environment, indicated by its prefix:
+Right-click or use the **⋯** menu on any row to access key actions:
 
-- **Test Keys** (`flb_test_...`): These keys operate on a separate, isolated dataset. Actions performed with a Test key do not affect your production data. Use Test keys during development, integration testing, and experimentation.
-- **Live Keys** (`flb_live_...`): These keys operate on your production data. Use Live keys only for actual operations and production deployments.
+| Action | Description |
+| :--- | :--- |
+| **Edit** | Update the key name or expiration |
+| **Rename** | Quickly rename the key without opening the full form |
+| **Roll** | Generate a new public/secret pair — requires your account password. Use this to rotate credentials after a suspected leak without deleting the key record |
+| **View Request Logs** | Jump directly to Request Logs pre-filtered to this key |
+| **Delete** | Permanently remove the key — any integrations using it will stop authenticating immediately |
 
-When viewing the API Keys panel in the Developer Console, you can toggle between Test and Live modes using the switch in the top navigation bar to view the respective keys.
+## Bulk Actions
 
-## Security Best Practices
+Select multiple keys and use the **Bulk Action** dropdown to delete them in one operation.
 
-To ensure the security of your Fleetbase instance, follow these best practices when managing API keys:
+## Exporting Keys
 
-1. **Never share your API keys publicly.** Do not commit them to version control systems (like GitHub) or embed them in client-side code (like JavaScript or mobile apps) where they can be easily extracted.
-2. **Use IP Whitelisting.** If your integration runs on a server with a static IP address, restrict the API key to that IP address. This prevents unauthorized use even if the key is compromised.
-3. **Rotate keys regularly.** Periodically generate new API keys, update your integrations, and delete the old keys.
-4. **Use descriptive names.** Clearly name your API keys so you can easily identify their purpose and revoke them if necessary.
-5. **Monitor usage.** Regularly review the [Request Logs](/docs/platform/developer-console/request-logs) to monitor API traffic and detect any unusual activity.
+Click **Export** to download the API key list in your chosen format (CSV, XLSX, XLS, HTML, PDF). The export includes key names, environments, and expiry dates — not the secret values.
+
+## Security
+
+- Never commit keys to version control or embed them in client-side code
+- Rotate keys periodically using the Roll action
+- Use descriptive names so you know which system each key belongs to and can revoke the right one quickly
+- Monitor usage in [Request Logs](/docs/platform/developer-console/request-logs) to detect unexpected activity

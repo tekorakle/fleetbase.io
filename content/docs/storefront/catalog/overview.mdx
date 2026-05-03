@@ -1,0 +1,55 @@
+---
+title: Catalog Management
+description: Manage your product catalog — products, categories, variants, addons, and pricing.
+---
+
+# Catalog Management
+
+The **Catalog** is the core of your Storefront. It contains every item you sell, how items are organized, and how they are priced — including optional customizations like sizes, colors, and extra toppings.
+
+Navigate to **Storefront → Products** to manage your catalog.
+
+![Storefront catalog — product grid with categories sidebar and status indicators](/images/placeholder.png)
+
+## Catalog Entities
+
+| Entity | Purpose |
+| :--- | :--- |
+| **Product** | An individual item for sale — with price, images, SKU, and availability |
+| **Category** | A grouping of products for navigation (e.g., "Burgers", "Drinks") |
+| **Variant** | A required product option (e.g., Size: S / M / L) — customer must choose |
+| **Addon** | An optional extra (e.g., Extra Cheese +$1) — customer may choose |
+| **Addon Category** | A group of addons assigned to a product (e.g., "Toppings") with selection limits |
+| **Product Hours** | Time windows when a product is available (e.g., breakfast items: 7am–11am) |
+| **Catalog** | A named grouping of categories/products — used for food trucks and special menus |
+
+## Managing Your Catalog
+
+Products and categories are managed from **Storefront → Products** in the Fleetbase Console. Select the correct store from the store switcher at the top of the screen if you manage multiple stores.
+
+### Quick reference
+
+- **Create product**: Click **New Product**, fill in details, upload images, assign a category
+- **Create category**: Click **New Category**, add a name and optional image
+- **Add variants**: Open a product → **Variants** tab → **Add Variant**
+- **Add addons**: Open a product → **Addons** tab → **Add Addon Category**
+- **Set availability hours**: Open a product → **Hours** tab
+
+## Product Status
+
+| Status | Effect |
+| :--- | :--- |
+| `available` | Visible to customers; can be added to cart |
+| `draft` | Hidden from the storefront; use while setting up |
+
+Toggle status when a product is temporarily out of stock — there is no real-time inventory counter. If you need warehouse-level inventory management, use [Pallet](/docs/pallet) alongside Storefront.
+
+## Headless Catalog API
+
+For custom frontends (mobile apps or web), the Storefront API provides catalog endpoints authenticated with your store's public key:
+
+- `GET /storefront/v1/products` — list products with category filter
+- `GET /storefront/v1/products/{id}` — product detail with variants and addons
+- `GET /storefront/v1/categories` — list all categories
+
+See [API Settings](/docs/storefront/settings/api) for your store's public key.

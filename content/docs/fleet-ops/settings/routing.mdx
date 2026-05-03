@@ -1,10 +1,64 @@
 ---
-title: Routing
-description: Configure routing preferences, map providers, and optimization settings for order dispatch.
+title: Routing Settings
+description: Configure the routing engine — OSRM, Google Maps, or Mapbox — used for route calculation, ETAs, and Orchestrator optimization.
 ---
 
-# Routing
+# Routing Settings
 
-Configure routing preferences, map providers, and optimization settings for order dispatch.
+**Routing Settings** control which routing engine Fleet-Ops uses to calculate routes, ETAs, and distance matrices for orders and the Orchestrator.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Fleet-Ops → Settings → Routing**.
+
+![Routing settings panel — engine selector, API key field, routing mode options](/images/placeholder.png)
+
+## Routing Engines
+
+| Engine | Type | Notes |
+| :--- | :--- | :--- |
+| **OSRM** | Open-source, self-hosted | No API cost. Requires a running OSRM server. Default for self-hosted instances. |
+| **Google Maps** | Third-party API | Traffic-aware routing, real-time ETAs. Requires Google Maps API key. |
+| **Mapbox** | Third-party API | Alternative to Google Maps. Requires Mapbox access token. |
+
+## Configuring the Engine
+
+<Steps>
+  <Step>
+    Select the **Routing Engine** from the dropdown.
+  </Step>
+  <Step>
+    Enter the API key or endpoint URL:
+    - **OSRM** — base URL of your OSRM server (e.g., `http://router.project-osrm.org`)
+    - **Google Maps** — your Google Maps Directions API key
+    - **Mapbox** — your Mapbox access token
+  </Step>
+  <Step>
+    Set the **Routing Mode**:
+    - **Driving** (default) — road vehicles
+    - **Walking** — pedestrian routes
+    - **Cycling** — bicycle routing
+  </Step>
+  <Step>
+    Configure routing preferences if desired:
+    - **Avoid Tolls**
+    - **Avoid Highways**
+    - **Avoid Ferries**
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Where Routing is Used
+
+- **Order route calculation** — when an order is assigned, the route from pickup through waypoints to dropoff is calculated
+- **ETA calculation** — real-time ETA from the driver's current position to the next stop
+- **Orchestrator distance matrix** — the VROOM engine uses routing data for accurate assignment optimization
+- **Distance-based service rates** — per-km pricing uses the calculated route distance
+
+## OSRM Self-Hosted
+
+For self-hosted Fleet-Ops instances using OSRM, you need a running OSRM server with map data for your region. The Fleetbase Docker deployment includes a pre-configured OSRM container.
+
+<Callout type="info">
+For Fleetbase Cloud instances, routing is pre-configured and does not require additional setup.
+</Callout>
