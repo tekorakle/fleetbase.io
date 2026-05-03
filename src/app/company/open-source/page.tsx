@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Github, Code2, Users, Shield, GitBranch, BookOpen } from 'lucide-react';
+import { ArrowRight, Github, Code2, Users, Shield, GitBranch, BookOpen, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ const reasons = [
  'Open-source software is reviewed, tested, and improved by thousands of developers worldwide. The community finds bugs faster, suggests better solutions, and builds extensions that benefit everyone.',
  },
  {
- icon: Shield,
+ icon: Database,
  title: 'Data sovereignty',
  description:
  'Self-host Fleetbase on your own servers, in your own cloud account, or in any jurisdiction you choose. Your logistics data never has to leave your control.',

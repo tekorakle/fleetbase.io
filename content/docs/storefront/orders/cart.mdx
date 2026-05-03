@@ -1,51 +1,77 @@
 ---
 title: Cart
-description: Understand how the Storefront cart works — adding items, managing quantities, and applying addons.
+description: Understand how the Storefront cart works — persistent cart sessions, item management, multi-store behavior, and calculations.
 ---
 
 # Cart
 
-The **Cart** is the first step in the checkout process. It acts as a temporary holding area for the items a customer intends to purchase.
+The **Cart** is a persistent shopping session. Cart state is stored in the database, so customers can abandon and return without losing their selections. Carts expire after **7 days** of inactivity.
 
-In Storefront, Carts are persisted in the database. This means that if a customer adds items to their cart on their mobile phone, they can log into your web application later and see the exact same items waiting for them.
+## Cart Sessions
 
-## Creating a Cart
+Carts are tied to one of:
+- An **authenticated customer** — retrieved automatically when the customer logs in
+- A **guest session** — a unique identifier your app generates and stores locally (e.g., in `AsyncStorage`). Pass this as `unique_identifier` when making cart API requests.
 
-When a customer first interacts with your frontend application, you should use the [Storefront API](/docs/api-reference/storefront) to create a new Cart or retrieve their existing one.
+## Cart Item Structure
 
-If the customer is authenticated (logged in), the API will automatically return their saved Cart. If they are a guest, the API will create a new, anonymous Cart and return a unique `cart_id`. Your frontend application must store this `cart_id` (e.g., in local storage) to reference the Cart in subsequent requests.
+Each item in the cart records:
+- `product_id` — the product
+- `store_id` and `store_location_id` — which store and location this item is from
+- `quantity` — how many units
+- `price` — unit price at time of adding
+- `subtotal` — unit price × quantity + addon costs
+- `variants` — array of selected variant option names
+- `addons` — array of selected addon names and prices
+- `scheduled_at` — optional future scheduling timestamp
 
-## Adding Items to the Cart
+## Adding Items
 
-When a customer clicks "Add to Cart", your frontend application sends a request to the API with the following information:
+```http
+POST /storefront/v1/carts/{cart_id}/{product_id}
+Storefront-Key: store_your_key
 
-- The `product_id` of the item.
-- The `quantity` desired.
-- The `variant_id` (if the product has [Variants](/docs/storefront/catalog/variants-and-addons)).
-- An array of `addon_ids` (if the customer selected any optional [Add-ons](/docs/storefront/catalog/variants-and-addons)).
+{
+  "quantity": 2,
+  "variants": [{ "id": "variant_option_id" }],
+  "addons": [{ "id": "addon_id" }, { "id": "addon_id_2" }]
+}
+```
 
-Storefront validates the request (ensuring the product is active and the store is open) and adds the item to the Cart as a new "Line Item".
+Storefront validates that:
+- The product is active (`status = available`)
+- The store is currently open (within operating hours)
+- The product is within its own availability hours (if set)
+
+## Updating & Removing Items
+
+```http
+PUT /storefront/v1/carts/{cart_id}
+```
+
+Pass updated `quantity`, `variants`, or `addons` for an existing cart item. To remove an item, set `quantity` to `0` or call DELETE on the specific cart item.
 
 ## Cart Calculations
 
-One of the primary benefits of using Storefront is that it handles all the complex pricing math for you.
+Cart totals are recalculated after every modification:
 
-Every time you add, update, or remove an item from the Cart, the API recalculates the totals and returns the updated Cart object.
+```
+Item Subtotal = (Base Price + Variant Additional Costs + Addon Prices) × Quantity
+Cart Subtotal = Sum of all item subtotals
+```
 
-The Cart object includes:
-- **Subtotal**: The sum of all line items (Base Price + Variant Price + Add-on Prices) multiplied by their quantities.
-- **Discount**: The total amount deducted by any applied [Promotions](/docs/storefront/promotions).
-- **Taxes**: Calculated based on the Store's tax settings.
-- **Total**: The final amount the customer needs to pay (Subtotal - Discount + Taxes).
+<Callout type="info">
+The delivery fee is **not** included in the cart. It is calculated during [Checkout](/docs/storefront/orders/checkout) once the customer provides a delivery address and Storefront requests a Fleet-Ops Service Quote.
+</Callout>
 
-*Note: The delivery fee is not calculated during the Cart phase. It is calculated during the [Checkout](/docs/storefront/orders/checkout) phase once the customer provides their delivery address.*
+## Multi-Store Cart Behavior
 
-## Multi-Store Carts
+By default, a cart holds items from **one store only**. If a customer has items from Store A and tries to add an item from Store B, the API returns an error. Your frontend should handle this by prompting:
 
-If you are operating a multi-vendor [Network](/docs/storefront/stores/stores-and-networks) (like a food delivery app), a common question is whether a customer can add items from multiple different Stores into a single Cart.
+> "Your cart has items from another store. Clear your cart to start a new order?"
 
-By default, Storefront **does not** support multi-store carts.
+This restriction exists because each store has its own location, operating hours, and dispatch requirements.
 
-If a customer has items from "Store A" in their cart and attempts to add an item from "Store B", the API will return an error. Your frontend application should catch this error and prompt the customer: "You already have items from another store in your cart. Would you like to clear your cart and start a new order with this store?"
+## Applying Discount Codes
 
-This restriction exists because each Store operates independently, with its own location, operating hours, and dispatch requirements. Fulfilling a single order from multiple physical locations simultaneously is logistically complex and generally avoided in on-demand delivery models.
+Pass a `discount_code` on the cart to apply a promotion. If valid, the discount amount is reflected in the cart's total. See [Promotions](/docs/storefront/promotions/overview).

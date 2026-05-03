@@ -1,134 +1,156 @@
 import type { Metadata } from 'next';
-import { Package, MapPin, FileCheck, BarChart3, Zap, Smartphone } from 'lucide-react';
+import { Package, MapPin, FileCheck, BarChart3, Smartphone, Zap, Bell, Clock, Users, RefreshCw } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Courier & Parcel Delivery Management Software',
- description: 'Open-source courier and parcel delivery management software. Automate dispatch, track packages in real time, manage drivers, and send customer notifications. Onfleet alternative.',
- keywords: ['courier management software', 'parcel delivery platform', 'last mile courier', 'proof of delivery software', 'courier dispatch system'],
- openGraph: {
- title: 'Courier & Parcel Delivery Software | Fleetbase',
- description: 'Automate courier dispatch, proof of delivery, and last-mile optimization.',
- },
+  title: 'Courier & Parcel Delivery Management Software | Fleetbase',
+  description: 'Maximize first-attempt delivery rates, automate dispatch, and give customers real-time parcel tracking. Open-source courier management software built for scale.',
+  keywords: ['courier management software', 'parcel delivery platform', 'last mile courier', 'proof of delivery software', 'delivery management system'],
+  openGraph: {
+    title: 'Courier & Parcel Services Software | Fleetbase',
+    description: 'Maximize first-attempt delivery rates and scale your courier business with Fleetbase.',
+  },
 };
 
 export default function CourierServicesPage() {
- return (
- <SolutionPageLayout
- badge="Courier & Parcel Services"
- title={<>More Parcels. <span className="text-gradient">Fewer Headaches. Zero Disputes.</span></>}
- description="Fleetbase gives courier and parcel operators the tools to automate dispatch, capture digital proof of delivery, and optimize last-mile routes — so you can handle more volume without adding overhead."
- stats={[
- { value: '50%', label: 'Reduction in dispatch time' },
- { value: '0', label: 'Billing disputes with digital POD' },
- { value: '25%', label: 'More stops per driver per day' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
- heroScreenshotAlt="Fleetbase FleetOps order table showing courier parcel orders with pickup, dropoff, driver and status columns"
- heroScreenshotNeeded="FleetOps order list view — parcel orders with statuses, driver assignments, and tracking links"
- painPoints={{
- heading: 'What slows courier operations down',
- items: [
- 'Manual dispatch eating hours every morning',
- 'Drivers completing wrong addresses with no accountability',
- 'Paper POD forms lost or disputed by recipients',
- 'No visibility into where parcels are between pickup and delivery',
- 'Scaling volume means hiring more coordinators',
- 'Customers demanding real-time tracking you cannot provide',
- ],
- }}
- features={[
- {
- title: 'Automated Multi-Stop Dispatch',
- description:
- 'Fleetbase automatically groups parcels into optimized runs and assigns them to the right driver based on zone, capacity, and availability. What used to take an hour takes seconds.',
- icon: Zap,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Automated Multi-Stop Dispatch',
- screenshotNeeded: 'FleetOps dispatch view — auto-grouped parcel runs assigned to drivers with stop counts',
- },
- {
- title: 'Digital Proof of Delivery',
- description:
- 'Drivers capture signatures, photos, and recipient names directly in the Navigator app. Every POD is timestamped, geotagged, and stored against the order — accessible instantly from the console.',
- icon: FileCheck,
- screenshot: '/images/console-screenshots/fleetops-order-label.webp',
- screenshotAlt: 'Digital Proof of Delivery',
- screenshotNeeded: 'Navigator app POD capture — signature pad, photo, and recipient name fields',
- },
- {
- title: 'Live Parcel Tracking for Customers',
- description:
- 'Every order generates a shareable tracking link with live driver position and ETA. Send it automatically via SMS or email at dispatch. Eliminate "where is my parcel?" calls entirely.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Live Parcel Tracking for Customers',
- screenshotNeeded: 'Customer-facing tracking page — live map with driver dot, ETA, and order status',
- },
- {
- title: 'Route Optimization for Multi-Stop Runs',
- description:
- 'Optimize delivery sequences across dozens of stops per driver run, factoring in time windows, traffic, and vehicle capacity. Cut fuel costs and increase stops-per-hour.',
- icon: Package,
- screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
- screenshotAlt: 'Route Optimization for Multi-Stop Runs',
- screenshotNeeded: 'FleetOps route view — optimized multi-stop sequence on map with stop numbers',
- },
- {
- title: 'Driver App with Offline Mode',
- description:
- 'The Navigator app works in low-connectivity areas and syncs when back online. Drivers never lose their job list or miss a delivery due to a signal drop.',
- icon: Smartphone,
- screenshot: '/images/console-screenshots/fleetops-drivers-create.webp',
- screenshotAlt: 'Driver App with Offline Mode',
- screenshotNeeded: 'Navigator app — job list screen with offline indicator and sync status',
- },
- {
- title: 'Courier Performance Analytics',
- description:
- 'Track first-attempt delivery rate, average stops per hour, and on-time performance by driver, zone, and time period. Identify inefficiencies and reward top performers.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
- screenshotAlt: 'Courier Performance Analytics',
- screenshotNeeded: 'FleetOps analytics — first-attempt delivery rate and stops-per-hour by driver chart',
- },
- ]}
- testimonial={{
- quote:
- "Digital POD alone paid for the platform in the first month. We had three billing disputes a week before Fleetbase. Now we have zero.",
- author: 'Tom B.',
- role: 'Operations Director',
- company: 'SwiftParcel UK',
- }}
- faqs={[
- {
- q: 'Can Fleetbase handle same-day and next-day delivery in the same system?',
- a: 'Yes. You can configure separate order types, workflows, and SLAs for same-day, next-day, and scheduled deliveries — all managed from the same console.',
- },
- {
- q: 'Does it support barcode or QR code scanning for parcel intake?',
- a: 'Yes. The Navigator app supports barcode and QR code scanning for parcel intake and confirmation. Custom scan workflows can be configured per order type.',
- },
- {
- q: 'Can we white-label the customer tracking page?',
- a: 'Yes. The customer tracking experience can be customised with your branding, colours, and domain. Enterprise plans include full white-label support.',
- },
- {
- q: 'How does Fleetbase handle returns and failed deliveries?',
- a: 'Drivers can mark deliveries as failed with reason codes and evidence. The system triggers configurable re-delivery or return workflows automatically, and all events are logged against the order.',
- },
- {
- q: 'Can I import orders from our existing system?',
- a: 'Yes. Fleetbase accepts order imports via CSV, REST API, and webhooks. Most courier operations connect their existing order management or e-commerce systems via the API.',
- },
- ]}
- ctaHeading="Scale your courier operation without scaling your team"
- ctaBody="Automate dispatch, eliminate paper POD, and give customers the tracking experience they expect — all on one open-source platform."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Talk to Sales"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Courier & Parcel Services"
+      title={<>More First-Attempt Deliveries.<br /><span className="text-gradient">Less Cost Per Parcel.</span></>}
+      description="Every failed delivery attempt costs you $17 or more. Fleetbase helps courier and parcel operators maximize first-attempt success rates with intelligent route density optimization, proactive customer notifications, and real-time tracking — on open-source infrastructure that scales with your volume."
+      stats={[
+        { value: '94%', label: 'First-attempt delivery rate' },
+        { value: '25%', label: 'Reduction in cost-per-parcel' },
+        { value: '60%', label: 'Fewer WISMO support tickets' },
+        { value: '3×', label: 'More parcels per driver per day' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase courier operations — parcel tracking and route management"
+      painPoints={{
+        heading: 'Every courier operator knows these problems',
+        items: [
+          'Failed delivery attempts draining margins — at $17+ per re-attempt, it adds up fast',
+          'Customers calling support because they have no idea where their parcel is',
+          'Drivers taking inefficient routes, burning fuel, and missing time windows',
+          'Paper or photo PODs getting disputed because evidence quality is poor',
+          'No visibility into driver productivity, stop counts, or daily exception rates',
+          'Scaling volume requires adding operational headcount at the same rate',
+        ],
+      }}
+      featuresHeading="Courier operations at peak efficiency"
+      featuresSubheading="The tools that move more parcels with the same number of drivers."
+      features={[
+        {
+          title: 'Route Density Optimization',
+          description: 'Fleetbase clusters deliveries by proximity and calculates the highest-density routes to maximize parcel count per driver per shift. Cover more ground, use less fuel, and hit more time windows — without adding drivers.',
+          bullets: [
+            'Automatic clustering of parcels by delivery zone and postcode',
+            'Time-window constraints and priority parcel sequencing',
+            'Dynamic re-sequencing when new parcels are added mid-route',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Proactive Delivery Notifications',
+          description: 'The single biggest driver of first-attempt success is a customer who knows their parcel is coming. Fleetbase sends automated SMS, push, and email alerts including a precise arrival window — so customers are home when you knock.',
+          bullets: [
+            'Automated "Your parcel is 30 minutes away" SMS alerts',
+            'Live tracking link with real-time driver position and ETA',
+            'Delivery confirmation with photo proof sent to recipient',
+          ],
+          icon: Bell,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Digital Proof of Delivery',
+          description: 'Eliminate POD disputes permanently. Drivers capture signatures, photos, barcodes, and GPS-stamped delivery evidence in the Navigator app. Every delivery is legally defensible and accessible in the console within seconds of completion.',
+          bullets: [
+            'Signature, photo, and QR/barcode scan capture',
+            'GPS coordinates and timestamp on every POD record',
+            'Automated PDF generation emailed to sender and recipient',
+          ],
+          icon: FileCheck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Sender & Recipient Tracking Portal',
+          description: 'Give your business clients a branded tracking portal for their end customers. Every parcel gets a unique tracking reference. Senders monitor their batch. Recipients follow their parcel in real-time.',
+          bullets: [
+            'White-label tracking portal with your branding',
+            'Batch tracking for business sender accounts',
+            'Recipient-managed delivery notification preferences',
+          ],
+          icon: Package,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Driver Productivity Analytics',
+          description: 'Know which drivers are hitting target parcel counts, which are running behind, and what\'s causing exceptions. Identify systemic route problems before they compound across your fleet.',
+          bullets: [
+            'Parcels-per-hour and stops-per-day by driver',
+            'Exception rate tracking — missed, damaged, refused',
+            'Planned vs. actual route efficiency comparison',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Returns & Failed Delivery Workflows',
+          description: 'Automate what happens when a delivery fails. Configure re-attempt rules, safe-place delivery, neighbour delivery, and collection point redirection — all without manual dispatcher intervention.',
+          bullets: [
+            'Configurable re-attempt rules per client or parcel type',
+            'Safe-place and alternate-address delivery capture',
+            'Reverse dispatch for returns logistics',
+          ],
+          icon: RefreshCw,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Clock, label: 'Time-slot delivery' },
+        { icon: Users, label: 'Multi-client accounts' },
+        { icon: Zap, label: 'Auto-dispatch engine' },
+        { icon: Smartphone, label: 'Driver mobile app' },
+        { icon: MapPin, label: 'Multi-depot support' },
+        { icon: Package, label: 'Batch parcel import' },
+        { icon: BarChart3, label: 'SLA dashboards' },
+        { icon: FileCheck, label: 'Compliance reports' },
+      ]}
+      testimonial={{
+        quote: 'Our first-attempt delivery rate jumped from 78% to 94% in 60 days. The proactive customer notifications alone paid for the platform many times over.',
+        author: 'Daniel K.',
+        role: 'Operations Director',
+        company: 'SwiftParcel UK',
+      }}
+      faqs={[
+        {
+          q: 'Can Fleetbase handle high parcel volumes — tens of thousands per day?',
+          a: 'Yes. Fleetbase scales horizontally and is built for high-volume operations. The API-first architecture allows real-time batch parcel import and automated dispatch at any volume.',
+        },
+        {
+          q: 'Can business clients track their own shipment batches?',
+          a: 'Yes. Business clients can access a branded tracking portal to monitor all their parcels, export delivery reports, and manage their account independently.',
+        },
+        {
+          q: 'Does Fleetbase support multiple depot locations?',
+          a: 'Yes. Multiple depots each with their own driver pools, delivery zones, and operational rules. Cross-depot transfers and zone overlap rules are fully configurable.',
+        },
+        {
+          q: 'How do parcels get imported from our ordering system?',
+          a: 'Via REST API for real-time creation from any ordering or WMS system. Bulk CSV import is also supported for batch loading at the start of each shift.',
+        },
+        {
+          q: 'Can we white-label the tracking experience for our clients?',
+          a: 'Yes. The customer tracking portal and notification templates are fully brandable with your logo, colours, and domain — your brand, not ours.',
+        },
+      ]}
+      ctaHeading="Ready to deliver more for less?"
+      ctaBody="Join courier and parcel operators who are moving more volume, with fewer failed attempts, on Fleetbase. Start your free trial today."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Book a Demo"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

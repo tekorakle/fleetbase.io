@@ -4,7 +4,7 @@ import PricingClient from './pricing-client';
 export const metadata: Metadata = {
  title: 'Pricing | Open-Source Fleet Management Software',
  description:
- 'Fleetbase pricing starts at $50/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
+ 'Fleetbase pricing starts at $25/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
  keywords: [
  'fleet management software pricing',
  'logistics software pricing',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  openGraph: {
  title: 'Pricing | Open-Source Fleet Management Software',
  description:
- 'Fleetbase pricing starts at $50/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
+ 'Fleetbase pricing starts at $25/month for cloud. Self-hosted implementation from $2,500 one-time. No per-seat fees. Usage-based pricing that scales with your operations.',
  },
 };
 

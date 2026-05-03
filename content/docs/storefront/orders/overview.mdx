@@ -1,0 +1,65 @@
+---
+title: Orders & Checkout
+description: Manage the full order lifecycle from cart through checkout, payment, and Fleet-Ops fulfillment.
+---
+
+# Orders & Checkout
+
+The **Orders & Checkout** system handles the complete purchase lifecycle — from a customer adding items to their cart through to a dispatched Fleet-Ops delivery.
+
+Navigate to **Storefront → Orders** to view and manage orders.
+
+![Storefront orders list — order ID, customer, items, total, status, created time](/images/placeholder.png)
+
+## The Transaction Lifecycle
+
+```
+Cart → Checkout → Payment → Fleet-Ops Order → Fulfillment
+```
+
+### 1. Cart
+
+The customer browses the catalog and adds products to a persistent **Cart**. The cart stores product selections, variants, addons, and quantities. See [Cart](/docs/storefront/orders/cart).
+
+### 2. Checkout
+
+When ready to buy, the customer enters a delivery address. Storefront requests a **Service Quote** from Fleet-Ops to calculate the delivery fee based on distance. Any promo codes are applied here. See [Checkout](/docs/storefront/orders/checkout).
+
+### 3. Payment
+
+The customer pays via a configured **Payment Gateway** (Stripe, QPay, or Cash on Delivery). On payment success, Storefront creates a Fleet-Ops Order. See [Payment Gateways](/docs/storefront/orders/payment-gateways).
+
+### 4. Fleet-Ops Fulfillment
+
+The order appears instantly in **Fleet-Ops → Operations → Orders**. A dispatcher (or the Orchestrator) assigns a driver. The driver picks up from the store location and delivers to the customer's address.
+
+## Order Statuses
+
+Storefront orders share their status with the underlying Fleet-Ops order:
+
+| Status | Meaning |
+| :--- | :--- |
+| **created** | Payment received; order created, awaiting merchant preparation |
+| **preparing** | Merchant accepted and is preparing items |
+| **dispatched** | Driver assigned and heading to pickup |
+| **started** / **in transit** | Driver collected items, en route to customer |
+| **completed** | Delivery confirmed, proof of delivery captured |
+| **cancelled** | Cancelled by merchant, customer, or dispatcher |
+
+## Managing Orders in the Console
+
+From **Storefront → Orders**:
+- View all incoming orders in real-time with current status
+- Click an order to see full detail: customer info, line items, payment breakdown, delivery status
+- Track the driver's progress on the live map via the Fleet-Ops integration
+- View proof of delivery when the order is complete
+
+## Integration with Fleet-Ops
+
+When a Storefront checkout completes:
+- The **store location** becomes the Fleet-Ops order pickup address
+- The **customer's delivery address** becomes the dropoff address
+- Each cart item is converted to a Fleet-Ops **Entity** in the order payload
+- Status changes in Fleet-Ops automatically propagate back to the Storefront order
+
+No custom webhooks or sync logic are required — the integration is native.

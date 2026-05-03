@@ -1,10 +1,75 @@
 ---
 title: Balance Sheet
-description: View your organization's assets, liabilities, and equity at a point in time.
+description: View your organization's financial position — assets, liabilities, and equity at a specific point in time.
 ---
 
 # Balance Sheet
 
-View your organization's assets, liabilities, and equity at a point in time.
+The **Balance Sheet** is a snapshot of your organization's financial position at a specific date. It answers the question: what does your organization own (assets) and what does it owe (liabilities and equity)?
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Reports → Balance Sheet**.
+
+![Balance sheet report — assets section, liabilities section, equity section, totals row](/images/placeholder.png)
+
+## The Accounting Equation
+
+A balance sheet always satisfies:
+
+```
+Assets = Liabilities + Equity
+```
+
+If your books are in balance, total assets will equal total liabilities plus equity.
+
+## Report Structure
+
+### Assets
+
+All **asset** accounts from your chart of accounts, grouped and totaled:
+- Cash
+- Checking Account
+- Accounts Receivable
+- Wallet Asset
+- Other assets
+
+**Total Assets**
+
+### Liabilities
+
+All **liability** accounts:
+- Accounts Payable
+- Wallet Liability (money owed to wallet holders)
+- Loans
+- Other liabilities
+
+**Total Liabilities**
+
+### Equity
+
+All **equity** accounts:
+- Retained Earnings
+- Owner's Capital
+- Current Period Net Income
+
+**Total Equity**
+
+### Verification
+
+At the bottom, the report shows:
+```
+Total Assets = Total Liabilities + Total Equity
+```
+
+If these do not match, there is an accounting error — missing journal entries or an unbalanced entry.
+
+## Setting the Report Date
+
+1. Navigate to **Ledger → Reports → Balance Sheet**
+2. Set the **As of Date** — the balance sheet reflects account balances at end of that date
+3. Click **Generate**
+
+The default is today's date.
+
+## What Wallet Liabilities Mean
+
+The Wallet Liability account represents the total balance owed to all wallet holders (drivers, customers, vendors). It increases when wallets are credited and decreases when payouts are made. On the balance sheet, this appears as a liability — your organization owes this amount to its wallet holders.

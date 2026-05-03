@@ -2,6 +2,19 @@ import { createMDX } from 'fumadocs-mdx/next';
 import type { NextConfig } from 'next';
 
 const withMDX = createMDX();
+const ghostImageHostname = (() => {
+  const ghostUrl = process.env.GHOST_API_URL;
+
+  if (!ghostUrl) {
+    return null;
+  }
+
+  try {
+    return new URL(ghostUrl).hostname;
+  } catch {
+    return null;
+  }
+})();
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -53,6 +66,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: '*.manus.computer',
       },
+      ...(ghostImageHostname
+        ? [
+            {
+              protocol: 'https' as const,
+              hostname: ghostImageHostname,
+            },
+          ]
+        : []),
     ],
   },
 };

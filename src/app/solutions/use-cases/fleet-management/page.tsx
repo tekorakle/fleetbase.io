@@ -1,135 +1,156 @@
 import type { Metadata } from 'next';
-import { Truck, Wrench, MapPin, BarChart3, Shield, Smartphone } from 'lucide-react';
+import { Truck, Wrench, MapPin, BarChart3, Shield, Smartphone, Bell, FileCheck, Clock, Users } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Fleet Management Software | Fleetbase',
- description:
- 'Monitor vehicle health, driver performance, and fleet utilization from one dashboard. Open-source fleet management platform with real-time tracking, maintenance scheduling, and compliance management.',
- keywords: ['fleet management software', 'vehicle tracking system', 'fleet maintenance software', 'driver management platform', 'fleet compliance software'],
- openGraph: {
- title: 'Fleet Management Software | Fleetbase',
- description: 'Monitor vehicle health, driver performance, and fleet utilization from one dashboard.',
- },
+  title: 'Fleet Management Software | Fleetbase',
+  description: 'Monitor vehicle health, driver performance, and fleet utilization from one dashboard. Open-source fleet management with real-time tracking, maintenance scheduling, and compliance tools.',
+  keywords: ['fleet management software', 'vehicle tracking system', 'fleet maintenance software', 'driver management platform', 'fleet compliance software', 'vehicle health monitoring'],
+  openGraph: {
+    title: 'Fleet Management Software | Fleetbase',
+    description: 'Your entire fleet — every vehicle, every driver, every job — visible and under control.',
+  },
 };
 
 export default function FleetManagementPage() {
- return (
- <SolutionPageLayout
- badge="Use Case — Fleet Management"
- title={<>Every Vehicle. Every Driver. <span className="text-gradient">One Dashboard.</span></>}
- description="Fleetbase gives fleet managers complete visibility and control over their entire fleet — vehicle health, driver performance, compliance status, and real-time locations — all from a single operations dashboard."
- stats={[
- { value: '35%', label: 'Reduction in vehicle downtime' },
- { value: '22%', label: 'Lower maintenance costs' },
- { value: '100%', label: 'Fleet visibility in real-time' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-vehicles.webp"
- heroScreenshotAlt="Fleetbase FleetOps vehicle management panel showing fleet list with status, assignments, and plate numbers"
- heroScreenshotNeeded="FleetOps fleet dashboard — vehicle list with health status, location, driver assignment, and utilization"
- painPoints={{
- heading: 'What fleet managers deal with every day',
- items: [
- 'Vehicles breaking down because maintenance was missed',
- 'No visibility into which vehicles are idle vs. active',
- 'Driver compliance and licence checks managed in spreadsheets',
- 'Fuel costs rising with no data on consumption per vehicle',
- 'Incident reports filed on paper and impossible to retrieve',
- 'No single source of truth for vehicle history and costs',
- ],
- }}
- features={[
- {
- title: 'Real-Time Fleet Visibility',
- description:
- 'See every vehicle\'s live position, current driver, job status, and speed on a single interactive map. Filter by zone, vehicle type, or status to focus on what matters.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Real-Time Fleet Visibility',
- screenshotNeeded: 'FleetOps live map — fleet overview with vehicle type icons, driver names, and status indicators',
- },
- {
- title: 'Vehicle Maintenance Management',
- description:
- 'Schedule preventive maintenance, track service history, manage work orders, and receive automated reminders before service deadlines. Reduce unplanned breakdowns and extend vehicle lifespan.',
- icon: Wrench,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Vehicle Maintenance Management',
- screenshotNeeded: 'FleetOps vehicle maintenance panel — service schedule, work order list, and upcoming reminders',
- },
- {
- title: 'Driver Management & Performance',
- description:
- 'Manage driver profiles, licence expiry dates, and certifications in one place. Track on-time rate, delivery completion rate, and customer ratings per driver.',
- icon: Truck,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Driver Management & Performance',
- screenshotNeeded: 'FleetOps driver management panel — driver list with licence status, performance metrics, and assignment history',
- },
- {
- title: 'Fleet Compliance Tracking',
- description:
- 'Monitor vehicle compliance certificates, insurance expiry, and regulatory requirements. Receive automated alerts before deadlines and maintain a complete compliance history per vehicle.',
- icon: Shield,
- screenshot: '/images/console-screenshots/fleetops-issues.webp',
- screenshotAlt: 'Fleet Compliance Tracking',
- screenshotNeeded: 'FleetOps compliance panel — vehicle compliance status with expiry dates and alert indicators',
- },
- {
- title: 'Driver Mobile App (Navigator)',
- description:
- 'Drivers report vehicle faults, complete pre-trip inspections, and submit incident reports directly in the Navigator app. All reports are logged against the vehicle and available instantly in the console.',
- icon: Smartphone,
- screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
- screenshotAlt: 'Driver Mobile App (Navigator)',
- screenshotNeeded: 'Navigator app — vehicle inspection checklist and fault reporting screen',
- },
- {
- title: 'Fleet Analytics & Cost Reporting',
- description:
- 'Analyse fleet utilization, fuel consumption, maintenance costs, and driver performance over time. Identify your most and least efficient vehicles and make data-driven fleet investment decisions.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-vehicles-detail.webp',
- screenshotAlt: 'Fleet Analytics & Cost Reporting',
- screenshotNeeded: 'FleetOps analytics — fleet utilization chart, cost per vehicle, and maintenance spend over time',
- },
- ]}
- testimonial={{
- quote:
- "We cut our unplanned vehicle downtime by 35% in six months. The automated maintenance reminders alone have saved us more than the cost of the platform.",
- author: 'Kevin O.',
- role: 'Fleet Manager',
- company: 'National Distribution Ltd.',
- }}
- faqs={[
- {
- q: 'Does Fleetbase support GPS hardware integration?',
- a: 'Yes. Fleetbase integrates with hardware GPS trackers via the API. The Navigator app also provides GPS tracking without additional hardware for driver-operated vehicles.',
- },
- {
- q: 'Can I track fuel consumption per vehicle?',
- a: 'Yes. Fuel consumption can be logged manually or via integration with fuel card systems. Analytics show consumption per vehicle, per route, and over time.',
- },
- {
- q: 'How does the maintenance scheduling work?',
- a: 'You can set maintenance schedules based on mileage, engine hours, or calendar intervals. The system generates work orders automatically and sends reminders to fleet managers and drivers.',
- },
- {
- q: 'Can drivers report faults from their mobile app?',
- a: 'Yes. The Navigator app includes a fault reporting feature where drivers can describe issues, attach photos, and flag severity. Reports are immediately visible in the fleet console.',
- },
- {
- q: 'Does Fleetbase support electric vehicle fleet management?',
- a: 'Yes. Fleetbase supports EV fleet management including range tracking, charging schedule management, and energy consumption analytics.',
- },
- ]}
- ctaHeading="Take full control of your fleet"
- ctaBody="Real-time visibility, proactive maintenance, and driver performance data — all in one open-source platform. Start your free trial today."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Book a Demo"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Use Case — Fleet Management"
+      title={<>Every Vehicle. Every Driver.<br /><span className="text-gradient">Complete Control.</span></>}
+      description="Fleet management without visibility is just expensive guesswork. Breakdowns you didn't see coming. Drivers you can't locate. Compliance documents that are somewhere in a filing cabinet. Fleetbase gives you a single operations platform for real-time fleet tracking, preventive maintenance, driver management, and compliance documentation — so nothing slips through the cracks."
+      stats={[
+        { value: '31%', label: 'Reduction in unplanned vehicle breakdowns' },
+        { value: '20%', label: 'Improvement in fleet utilization rates' },
+        { value: '45%', label: 'Less time spent on compliance documentation' },
+        { value: '8,000+', label: 'Active fleet instances running on Fleetbase' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase fleet management dashboard — real-time vehicle tracking, driver status, and maintenance alerts"
+      painPoints={{
+        heading: 'The hidden costs of poor fleet visibility',
+        items: [
+          'Vehicles breaking down without warning because preventive maintenance was missed',
+          'No real-time visibility into where vehicles are and whether they\'re on schedule',
+          'Driver compliance documents — licences, certifications — expiring without anyone noticing',
+          'Fleet utilization guesswork with no data on which vehicles are underused or overloaded',
+          'Accident and incident reports managed by email and spreadsheet with no central record',
+          'Fuel card abuse and unauthorized usage going undetected for months',
+        ],
+      }}
+      featuresHeading="Fleet management built for operators who can't afford surprises"
+      featuresSubheading="Real-time visibility, predictive maintenance, and compliance tracking — in one platform."
+      features={[
+        {
+          title: 'Real-Time Vehicle Tracking',
+          description: 'See your entire fleet on a live map at any moment. Track vehicle positions, speed, idling time, and route adherence in real-time. Geofence alerts notify you when vehicles enter or leave defined zones — whether that\'s a customer site, depot boundary, or restricted area.',
+          bullets: [
+            'Live map with real-time position, speed, and status for every vehicle',
+            'Geofencing with configurable entry/exit alerts per zone',
+            'Trip history and replay for any vehicle and time period',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Preventive Maintenance Scheduling',
+          description: 'Stop reacting to breakdowns and start preventing them. Fleetbase tracks mileage, engine hours, and calendar intervals for each vehicle and automatically schedules the maintenance events that keep your fleet roadworthy — with driver and workshop notifications built in.',
+          bullets: [
+            'Mileage and date-triggered maintenance scheduling per vehicle type',
+            'Driver defect reporting via Navigator app with photo evidence',
+            'Maintenance history log with cost tracking per vehicle',
+          ],
+          icon: Wrench,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Driver Management & Performance',
+          description: 'Manage driver profiles, licences, and certifications in one place. Track driver performance metrics — on-time rate, speeding incidents, idle time, and customer ratings — and identify coaching opportunities before small issues become compliance problems.',
+          bullets: [
+            'Driver profiles with licence expiry alerts and document storage',
+            'Performance scorecards: on-time %, speeding, idle time, POD rate',
+            'Shift scheduling and availability management',
+          ],
+          icon: Users,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Compliance & Documentation Management',
+          description: 'Keep your compliance documentation organised and audit-ready. Vehicle inspection records, DVSA compliance forms, driver hour logs, and incident reports are all stored centrally, with automated reminders for upcoming renewals and regulatory submissions.',
+          bullets: [
+            'Digital vehicle inspection checklists with photo and signature capture',
+            'Driver hour logging with automated HOS compliance checking',
+            'Scheduled renewal reminders for licences, MOTs, and insurance',
+          ],
+          icon: FileCheck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Fleet Utilization Analytics',
+          description: 'Understand exactly how your fleet assets are being used. Identify underutilized vehicles that could be redeployed or sold, spot overloaded routes that need additional capacity, and make fleet sizing decisions based on real utilization data rather than gut feel.',
+          bullets: [
+            'Utilization rate per vehicle, fleet, and time period',
+            'Idle time analysis and cost quantification per vehicle',
+            'Fleet capacity vs. demand modelling for planning decisions',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Driver Mobile App — Navigator',
+          description: 'The Navigator app connects drivers to operations. Pre-trip vehicle checks, job assignments, navigation, proof-of-delivery capture, and defect reporting — all in one app on the driver\'s own smartphone. No dedicated hardware, no manual paperwork.',
+          bullets: [
+            'Pre-trip and post-trip vehicle inspection checklists',
+            'Job list with navigation, delivery instructions, and customer contact',
+            'Defect and incident reporting with photo evidence from the cab',
+          ],
+          icon: Smartphone,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Bell, label: 'Maintenance alerts' },
+        { icon: Shield, label: 'Compliance tracking' },
+        { icon: Clock, label: 'Driver hour logging' },
+        { icon: Truck, label: 'Multi-depot support' },
+        { icon: MapPin, label: 'Geofence alerting' },
+        { icon: FileCheck, label: 'Inspection records' },
+        { icon: BarChart3, label: 'Utilization reports' },
+        { icon: Users, label: 'Driver scorecards' },
+      ]}
+      testimonial={{
+        quote: "We went from one unplanned breakdown per fortnight to one every three months. Fleetbase's maintenance scheduling caught what our manual system kept missing — and the compliance documentation alone has saved us hours every week.",
+        author: 'David M.',
+        role: 'Fleet Manager',
+        company: 'Midlands Haulage Group',
+      }}
+      faqs={[
+        {
+          q: 'Does Fleetbase integrate with vehicle GPS trackers and telematics devices?',
+          a: 'Yes. Fleetbase integrates with GPS tracking hardware via API, allowing vehicle telemetry data to feed into the live map and analytics dashboards.',
+        },
+        {
+          q: 'Can drivers submit vehicle defect reports from the field?',
+          a: 'Yes. The Navigator app includes a defect reporting workflow where drivers photograph and describe issues directly from their vehicle before or after a shift.',
+        },
+        {
+          q: 'How does licence and certification expiry tracking work?',
+          a: 'Driver documents and vehicle compliance records are stored with expiry dates. Fleetbase sends automated reminders at configurable intervals before expiry — to the driver, the fleet manager, or both.',
+        },
+        {
+          q: 'Can we manage multiple depots and vehicle types in one account?',
+          a: 'Yes. Fleetbase supports multi-depot fleet structures with separate vehicle groups, driver pools, and reporting per location — all accessible from one central console.',
+        },
+        {
+          q: 'Is Fleetbase suitable for mixed fleets including vans, trucks, and specialist vehicles?',
+          a: 'Yes. Vehicle profiles are fully configurable with custom attributes for vehicle type, capacity, equipment, and compliance requirements — so mixed fleets of any configuration are supported.',
+        },
+      ]}
+      ctaHeading="Get complete visibility and control over your fleet"
+      ctaBody="Stop guessing about vehicle health, driver performance, and compliance status. Start your free trial and have your entire fleet visible from one dashboard in under an hour."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

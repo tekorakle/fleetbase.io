@@ -1,10 +1,83 @@
 ---
 title: Chart of Accounts
-description: Define and manage your chart of accounts to structure your financial reporting.
+description: Define and manage your chart of accounts — the structured list of accounts used to record all financial transactions.
 ---
 
 # Chart of Accounts
 
-Define and manage your chart of accounts to structure your financial reporting.
+The **Chart of Accounts** is the structured list of all accounts used by your organization to record financial transactions. It is the foundation of your accounting system — every financial event is categorized into one of these accounts.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Accounting → Accounts**.
+
+![Chart of accounts — accounts grouped by type with codes, names, and balances](/images/placeholder.png)
+
+## Default Accounts
+
+When your Fleetbase company is created, Ledger automatically provisions a default chart of accounts. You will see accounts for:
+
+- **Assets**: Cash, Checking Account, Accounts Receivable, Wallet Asset
+- **Liabilities**: Accounts Payable, Wallet Liability
+- **Equity**: Retained Earnings, Owner's Capital
+- **Revenue**: Sales Revenue, Service Revenue, Interest Income
+- **Expenses**: Cost of Goods Sold, Operating Expenses, Bank Fees
+
+System accounts created automatically are marked `is_system_account: true` and cannot be deleted.
+
+## Account Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Descriptive account name (e.g., "Sales Revenue") |
+| **Code** | Short identifier for the account (e.g., "4000") |
+| **Type** | asset, liability, equity, revenue, or expense |
+| **Currency** | ISO 4217 currency code for this account |
+| **Status** | active or inactive |
+| **Description** | Optional notes about the account's purpose |
+| **Balance** | Computed from journal entries; automatically updated |
+
+## Creating an Account
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Accounting → Accounts**.
+  </Step>
+  <Step>
+    Click **New Account**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Code**, and select the **Type**.
+  </Step>
+  <Step>
+    Set the **Currency** (defaults to your company currency).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Account Codes
+
+Account codes provide a structured namespace for your chart. A common convention:
+
+| Code Range | Type |
+| :--- | :--- |
+| 1000–1999 | Assets |
+| 2000–2999 | Liabilities |
+| 3000–3999 | Equity |
+| 4000–4999 | Revenue |
+| 5000–5999 | Expenses |
+
+Codes are unique per company. Your frontend reports use codes to group and sort accounts in standard financial statement order.
+
+## Balance Calculation
+
+Account balances are computed from the sum of all posted journal entries:
+
+- **Asset & Expense accounts** (debit-normal): `Balance = Total Debits - Total Credits`
+- **Liability, Equity & Revenue accounts** (credit-normal): `Balance = Total Credits - Total Debits`
+
+You can force a balance recalculation from the account detail panel by clicking **Recalculate Balance**.
+
+## Viewing the Account Ledger
+
+Click any account in the chart to open its **Account Ledger** — a chronological list of all journal entries for that account with a running balance column. Filter by date range to see activity for a specific period.

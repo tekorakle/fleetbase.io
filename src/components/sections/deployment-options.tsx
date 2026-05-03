@@ -19,7 +19,7 @@ const deploymentOptions = [
  name: 'Fleetbase Cloud',
  type: 'cloud' as const,
  description: 'Fully managed platform with automatic updates and enterprise-grade reliability',
- price: 'Starting at $50/mo',
+ price: 'From $25/mo',
  cta: {
  text: 'Try Fleetbase Cloud',
  href: 'https://console.fleetbase.io/onboard',
@@ -173,9 +173,15 @@ const DeploymentCard = ({
  const isCloud = option.type === 'cloud';
 
  return (
+ <div className="relative h-full">
+ {isCloud && (
+ <span className="absolute -right-1 -top-1 z-30 rounded-md bg-primary px-3 py-1 text-xs font-semibold text-primary-foreground shadow-sm">
+ Recommended
+ </span>
+ )}
  <Card
  className={cn(
- 'relative overflow-hidden shadow-none dark:bg-[#07070e]',
+ 'relative h-full overflow-hidden shadow-none dark:bg-[#07070e]',
  isCloud &&
  'before:absolute before:inset-0 before:rounded-md before:bg-gradient-to-tr before:from-[var(--chart-1)]/10 before:via-[var(--chart-2)] before:to-[var(--chart-3)] before:mask-b-from-40% before:mask-b-to-80%',
  isCloud &&
@@ -183,18 +189,12 @@ const DeploymentCard = ({
  )}
  >
  <div className="relative z-10 flex h-full flex-col">
- {isCloud && (
- <div className="absolute top-4 right-4 z-20 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">
- Recommended
- </div>
- )}
-
  <CardHeader className="gap-4">
+ <div className="flex items-start gap-3">
  <div className="flex items-center gap-3">
  <div className="flex size-12 items-center justify-center rounded-lg bg-primary/10">
  <IconComponent className="size-6 text-primary" />
  </div>
- <div>
  <CardTitle className="text-2xl tracking-tight md:text-3xl">
  {option.name}
  </CardTitle>
@@ -254,10 +254,8 @@ const DeploymentCard = ({
  </h4>
  <ul className="space-y-1.5">
  {option.pros.map((pro) => (
- <li key={pro} className="flex items-start gap-2">
- <span className="text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5">
- +
- </span>
+ <li key={pro} className="flex items-center gap-2">
+ <span className="shrink-0 font-bold text-emerald-600 dark:text-emerald-400">+</span>
  <span className="text-sm leading-snug">{pro}</span>
  </li>
  ))}
@@ -265,7 +263,7 @@ const DeploymentCard = ({
  </div>
  </CardContent>
 
- <CardFooter>
+ <CardFooter className="pt-6">
  <Button
  variant={option.cta.variant}
  className="h-12 w-full"
@@ -281,5 +279,6 @@ const DeploymentCard = ({
  </CardFooter>
  </div>
  </Card>
+ </div>
  );
 };

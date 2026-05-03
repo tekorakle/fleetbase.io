@@ -1,0 +1,106 @@
+---
+title: Order Lifecycle
+description: Understand each stage of an order — from creation through dispatch, execution, and completion.
+---
+
+# Order Lifecycle
+
+Every order in Fleet-Ops moves through a defined set of statuses from creation to completion. The exact activity steps within each status are customized per Order Configuration — but the core lifecycle is consistent across all order types.
+
+## Status Flow
+
+```
+draft ──► pending ──► scheduled ──► assigned ──► dispatched ──► started ──► completed
+                                                                    │
+                                                               cancelled
+```
+
+### Draft
+
+An order is in **draft** when it is being composed but has not been submitted. Draft orders are visible to operators but not yet in the dispatch queue. Use drafts to pre-stage orders before a run.
+
+### Pending
+
+Once saved, an order moves to **pending**. It is waiting for driver and vehicle assignment. Pending orders appear in the Orchestrator's order pool for batch allocation.
+
+### Scheduled
+
+If a pickup date/time is set during order creation, the order moves to **scheduled** instead of pending. It will automatically become eligible for dispatch when the scheduled window opens.
+
+See [Scheduling Orders](/docs/fleet-ops/operations/orders/scheduling-orders) for details.
+
+### Assigned
+
+When a driver and vehicle are assigned (manually or via the Orchestrator), the order moves to **assigned**. The driver can see the upcoming order in their Navigator app but has not yet received a dispatch notification.
+
+### Dispatched
+
+When an operator clicks **Dispatch**, the order is pushed to the driver's Navigator app with a push notification. The order status moves to **dispatched**.
+
+At this point:
+- The driver receives a notification and can accept or decline
+- The order becomes visible in the driver's active jobs list
+- The live map shows the order status
+
+### Started
+
+When the driver accepts and begins the order in Navigator, the status moves to **started**. From this point:
+
+- The driver's GPS position updates continuously on the live map
+- The order's activity flow executes as the driver progresses through stops
+- Status sub-steps (picked-up, in-transit, arrived, etc.) are updated by the driver in the app
+
+### Completed
+
+The order moves to **completed** when:
+
+1. The driver marks the final delivery as done in Navigator
+2. Proof of delivery is captured (if required by the Order Config)
+
+Completion triggers:
+- Webhook events (`order.completed`)
+- Customer notifications (SMS, email, push — based on notification settings)
+- Tracking status record with final location
+
+### Cancelled
+
+An order can be **cancelled** at any point before completion. Cancellation reasons can be recorded. Cancelled orders remain in the list for audit and reporting purposes.
+
+## Activity Flow vs. Status
+
+The order **status** (pending, dispatched, completed, etc.) is the top-level lifecycle stage visible everywhere in the console and API.
+
+The **activity flow** defined in the Order Configuration adds sub-steps within each status. For example, within a "started" order, the activity flow might include:
+
+1. Driver at pickup location
+2. Items picked up
+3. In transit to destination
+4. Arrived at destination
+5. Items delivered
+
+Each activity step is recorded with a timestamp, the driver's location at the time, and an optional proof attachment. This creates a detailed audit trail of the entire delivery.
+
+See [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows) for details on configuring these steps.
+
+## Waypoint Lifecycle
+
+For multi-stop orders, each **waypoint** has its own sub-lifecycle within the order. The order is only marked completed when all waypoints have been visited and their required POD captured.
+
+Each waypoint can have:
+- Its own POD method (signature or photo)
+- A time window (earliest and latest arrival)
+- A service time estimate (how long the driver will spend at the stop)
+
+## API Events
+
+Each status transition fires a corresponding webhook event:
+
+| Status | Event |
+| :--- | :--- |
+| assigned | `order.driver_assigned` |
+| dispatched | `order.dispatched` |
+| started | `order.started` |
+| completed | `order.completed` |
+| cancelled | `order.cancelled` |
+
+See [Webhooks](/docs/platform/developer-console/webhooks) for subscription details.

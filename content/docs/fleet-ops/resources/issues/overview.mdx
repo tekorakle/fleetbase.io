@@ -1,0 +1,109 @@
+---
+title: Issues
+description: Log, track, and resolve operational issues — vehicle faults, driver incidents, accidents, and delivery exceptions — with priority and status tracking.
+---
+
+# Issues
+
+**Issues** are operational incidents, faults, and exceptions that need to be tracked and resolved. Drivers can report issues from the Navigator app, and operators can log them from the console. Issues are linked to the driver, vehicle, or location involved and tracked through a resolution workflow.
+
+![Issues list — issue title, category, priority badge, status, assigned to, and reported date](/images/placeholder.png)
+
+## Issue Categories
+
+| Category | Examples |
+| :--- | :--- |
+| **Mechanical** | Breakdown, flat tire, engine fault, warning light |
+| **Accident** | Collision, near-miss, vehicle damage |
+| **Behavioral** | Speeding, unsafe driving, customer complaint |
+| **Traffic** | Traffic violation, parking fine |
+| **Fuel** | Fuel discrepancy, suspected theft |
+| **Maintenance** | Overdue service, parts failure |
+| **Device** | GPS tracker offline, OBD-II disconnected |
+| **Customer** | Failed delivery, access issue, wrong address |
+
+## Issue Priority Levels
+
+| Priority | Response expectation |
+| :--- | :--- |
+| **Low** | No immediate action required |
+| **Medium** | Address within the working day |
+| **High** | Address within the hour |
+| **Critical** | Immediate response required — vehicle out of service |
+
+## Issue Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Title** | Short description of the issue |
+| **Report** | Detailed description |
+| **Category** | Type of issue (mechanical, behavioral, etc.) |
+| **Priority** | low, medium, high, critical |
+| **Driver** | Driver involved in the incident |
+| **Vehicle** | Vehicle involved (if applicable) |
+| **Location** | GPS coordinates where the issue occurred |
+| **Tags** | Labels for filtering and categorization |
+| **Reported By** | Who logged the issue (driver or operator) |
+| **Assigned To** | Who is responsible for resolving it |
+| **Status** | Current resolution stage |
+| **Resolved At** | Timestamp when the issue was closed |
+
+## Issue Statuses
+
+| Status | Meaning |
+| :--- | :--- |
+| `open` | Logged, not yet assigned |
+| `assigned` | Assigned to a resolver |
+| `in_progress` | Being actively worked on |
+| `resolved` | Resolution applied, pending confirmation |
+| `closed` | Fully resolved and closed |
+
+## Creating an Issue
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Resources → Issues**.
+  </Step>
+  <Step>
+    Click **+ New Issue**.
+  </Step>
+  <Step>
+    Set the **Title**, **Category**, and **Priority**.
+  </Step>
+  <Step>
+    Write the **Report** — a detailed description of what happened.
+  </Step>
+  <Step>
+    Link the **Driver** and/or **Vehicle** involved.
+  </Step>
+  <Step>
+    Assign to an **Assignee** responsible for resolution.
+  </Step>
+  <Step>
+    Add **Tags** for grouping (e.g., "fleet-north", "urgent").
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Driver-Reported Issues
+
+Drivers can report issues directly from the Navigator app. When a driver submits a report:
+
+- The issue is created in Fleet-Ops with the driver and their current location automatically set
+- Photo evidence can be attached from the app
+- Operators receive a notification based on priority
+
+## Resolving Issues
+
+1. Open an issue and click **Assign** to set a resolver
+2. As work progresses, update the status through the workflow
+3. When resolved, click **Resolve** and add resolution notes
+4. Click **Close** to finalize
+
+Resolved and closed issues remain in the list for reporting and audit purposes.
+
+## Issue Reporting
+
+Export issues from the list to CSV for reporting. Filter by date range, category, priority, driver, or vehicle to generate targeted reports on fleet incidents.

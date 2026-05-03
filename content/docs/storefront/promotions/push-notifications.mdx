@@ -1,62 +1,74 @@
 ---
 title: Push Notifications
-description: Send targeted push notifications to your customers to promote products and announce offers.
+description: Send targeted push notifications to customers via APNs (iOS) and FCM (Android) to promote products and drive engagement.
 ---
 
 # Push Notifications
 
-Push notifications are a powerful tool for re-engaging customers, announcing new products, and driving immediate sales through [Promotions](/docs/storefront/promotions).
-
-Storefront includes a built-in push notification engine that allows you to send targeted messages directly to your customers' mobile devices.
+Push notifications let you re-engage customers, announce new products, and alert them about active promotions. Storefront's notification engine supports **Apple Push Notification service (APNs)** for iOS and **Firebase Cloud Messaging (FCM)** for Android.
 
 ## Prerequisites
 
-To send push notifications, you must first configure a notification provider.
+Before sending push notifications you must configure a notification channel.
 
-Storefront officially supports **Firebase Cloud Messaging (FCM)** and **Apple Push Notification service (APNs)**.
+Navigate to **Storefront → Settings → Notifications** and add a channel. See [Notification Settings](/docs/storefront/settings/notifications) for setup.
 
-1. Navigate to **Storefront** > **Settings** > **Notifications** in the Fleetbase Console.
-2. Select your provider (e.g., FCM).
-3. Enter your server credentials (e.g., your Firebase Server Key).
-4. Click **Save**.
-
-Your frontend application (such as the [Storefront App](/docs/apps/storefront-app)) must also be configured to request notification permissions from the user and register their device token with the [Storefront API](/docs/api-reference/storefront).
+Your frontend app must also:
+1. Request notification permissions from the customer
+2. Obtain the device token from APNs or FCM
+3. Register the device token with the Storefront API so the system knows which devices belong to which customer
 
 ## Sending a Broadcast Notification
 
-A broadcast notification is sent to all registered customers who have opted in to receive push notifications.
+A **broadcast** sends to all customers who have opted in to notifications.
 
-To send a broadcast:
+<Steps>
+  <Step>
+    Navigate to **Storefront → Promotions → Push Notifications**.
+  </Step>
+  <Step>
+    Click **New Notification**.
+  </Step>
+  <Step>
+    Enter the **Title** (bold headline) and **Body** (message text).
+  </Step>
+  <Step>
+    Optionally attach an **Image** for rich media notifications.
+  </Step>
+  <Step>
+    Optionally set a **Deep Link** — the route within your app that opens when the customer taps the notification (e.g., `myapp://category/pizza`).
+  </Step>
+  <Step>
+    Click **Send**. Storefront queues the notification and dispatches it to all registered devices.
+  </Step>
+</Steps>
 
-1. Navigate to **Storefront** > **Promotions** > **Push Notifications** in the Fleetbase Console.
-2. Click the **New Notification** button.
-3. Provide the details:
-   - **Title**: The bold headline of the notification (e.g., "Flash Sale! 🍕").
-   - **Body**: The main text of the message (e.g., "Get 20% off all pizzas for the next 2 hours. Use code PIZZA20 at checkout.").
-4. (Optional) Attach an **Image**: A rich media image to display alongside the notification.
-5. (Optional) Set a **Deep Link**: A specific URL or route within your app that the notification should open when tapped (e.g., `myapp://category/pizza`).
-6. Click **Send**.
-
-Storefront will queue the notification and dispatch it to all eligible devices via your configured provider.
+![Push notification form — title, body, image, and deep link fields](/images/placeholder.png)
 
 ## Targeted Notifications
 
-Instead of broadcasting to everyone, you can send targeted notifications to specific segments of your customer base.
+Instead of broadcasting to everyone, send to specific customers:
 
-When creating a new notification, you can select specific [Customers](/docs/storefront/customers) from the list.
+1. When creating a notification, use the **Recipients** selector
+2. Search for and select specific customers
+3. Only those customers' devices receive the notification
 
-This is useful for:
-- Re-engaging customers who haven't placed an order in the last 30 days.
-- Sending a special offer to your top 10% most frequent buyers.
-- Apologizing for a service disruption to a specific group of users.
+Use targeted notifications to:
+- Re-engage customers who haven't ordered in 30+ days
+- Send special offers to your top buyers
+- Notify specific customers of a resolution to a service issue
 
 ## Automated Transactional Notifications
 
-In addition to marketing broadcasts, Storefront automatically sends transactional push notifications to keep customers informed about their active orders.
+Storefront automatically sends order status notifications as the Fleet-Ops order progresses — no manual setup required:
 
-These include:
-- "Your order has been accepted and is being prepared."
-- "Your driver is on the way!"
-- "Your order has been delivered. Enjoy!"
+- **Order accepted** — merchant accepted the order and is preparing
+- **Driver dispatched** — driver heading to pickup
+- **Order in transit** — driver collected items, en route
+- **Order delivered** — delivery confirmed
 
-These automated notifications are triggered by status changes in the underlying FleetOps Order (see [Orders & Checkout](/docs/storefront/orders)). You do not need to manually configure these, provided your notification provider is set up correctly.
+These are triggered by Fleet-Ops order status changes and delivered via your configured notification channel.
+
+<Callout type="info">
+Transactional notifications fire automatically as long as a notification channel is configured and the customer's device token is registered. They do not require any manual action.
+</Callout>

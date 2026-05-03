@@ -1,0 +1,67 @@
+---
+title: Stores & Networks
+description: Understand the Store and Network architecture — single-brand stores vs. multi-vendor marketplace networks.
+---
+
+# Stores & Networks
+
+The two foundational entities in Storefront are **Stores** and **Networks**. Understanding them is the first step to setting up your commerce platform correctly.
+
+## What is a Store?
+
+A **Store** represents a single brand or merchant. Every store has:
+
+- Its own **product catalog** (products and categories)
+- One or more **physical locations** used as pickup addresses for Fleet-Ops delivery orders
+- **Operating hours** per location
+- **Currency** and **timezone** settings
+- An auto-generated **API key** (`store_*`) for public access
+- Its own **payment gateways** and **notification channels**
+
+If you are building a D2C app for a single restaurant, shop, or service provider — one store is everything you need.
+
+## What is a Network?
+
+A **Network** is a collection of stores grouped into a marketplace. Networks are the right choice when you are building a platform that hosts multiple independent merchants — think food delivery apps or local marketplace aggregators.
+
+- Customers browse the network to discover available stores
+- Each store manages its own catalog and locations
+- The network can share payment gateways and push notification channels across all member stores
+- Networks have their own API key (`network_*`) for public access
+- Stores can be categorized within a network (e.g., "Italian", "Fast Food")
+
+## Key Differences
+
+| Feature | Store | Network |
+| :--- | :--- | :--- |
+| **Use case** | Single brand or merchant | Multi-vendor marketplace |
+| **Catalog** | Owns products and categories | Aggregates stores; no direct catalog |
+| **Locations** | Has physical pickup addresses | No physical locations |
+| **API key** | `store_*` | `network_*` |
+| **Checkout** | Customer checks out from this store | Customer checks out from an individual store within the network |
+
+## Architecture Examples
+
+### Single-brand, single location
+*Example: a neighborhood café.*
+- Create **1 Store** with **1 Location**
+- No network needed
+
+### Single-brand, multiple locations (franchise)
+*Example: a coffee chain with 5 city locations.*
+- Create **1 Store** with **5 Locations**
+- Orders route to the nearest open location automatically
+- No network needed
+
+### Multi-vendor marketplace
+*Example: a food delivery app with 50 restaurants.*
+- Create **1 Network**
+- Create **50 Stores** (one per restaurant)
+- Add each store to the network with a category assignment
+
+## Next Steps
+
+- [Stores & Networks setup](/docs/storefront/stores/stores-and-networks) — create and configure stores and networks in the console
+- [Store Locations](/docs/storefront/stores/store-locations) — add physical addresses for pickup
+- [Operating Hours](/docs/storefront/stores/operating-hours) — set when your store accepts orders
+- [Food Trucks](/docs/storefront/stores/food-trucks) — configure mobile stores with GPS-linked locations

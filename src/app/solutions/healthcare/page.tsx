@@ -1,134 +1,156 @@
 import type { Metadata } from 'next';
-import { Heart, Shield, FileCheck, MapPin, ClipboardList, Lock } from 'lucide-react';
+import { Heart, Shield, FileCheck, MapPin, ClipboardList, Lock, Bell, BarChart3, Clock, Users } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Healthcare & Medical Logistics Management Software',
- description: 'Manage medical supply chains, pharmacy deliveries, and patient transport with Fleetbase. HIPAA-friendly, self-hosted deployment, real-time tracking, and chain-of-custody proof of delivery.',
- keywords: ['healthcare logistics software', 'pharmacy delivery platform', 'HIPAA compliant logistics', 'medical supply chain', 'chain of custody tracking'],
- openGraph: {
- title: 'Healthcare & Pharmacy Logistics Software | Fleetbase',
- description: 'HIPAA-compliant logistics for healthcare and pharmacy delivery with chain-of-custody tracking.',
- },
+  title: 'Healthcare & Pharmacy Logistics Software | Fleetbase',
+  description: 'HIPAA-conscious logistics management for healthcare and pharmacy delivery. Chain-of-custody tracking, temperature monitoring, priority dispatch, and encrypted audit trails.',
+  keywords: ['healthcare logistics software', 'pharmacy delivery management', 'medical courier software', 'HIPAA logistics', 'chain of custody tracking', 'cold chain delivery'],
+  openGraph: {
+    title: 'Healthcare & Pharmacy Logistics | Fleetbase',
+    description: 'Chain-of-custody you can prove. Compliance you can afford. Patients you can trust.',
+  },
 };
 
 export default function HealthcarePage() {
- return (
- <SolutionPageLayout
- badge="Healthcare & Pharmacy"
- title={<>Deliver Medical Supplies <span className="text-gradient">Securely. Compliantly. On Time.</span></>}
- description="Fleetbase provides healthcare and pharmacy operators with a HIPAA-compliant logistics platform featuring chain-of-custody tracking, audit logs, and the security controls required for sensitive medical deliveries."
- stats={[
- { value: '100%', label: 'Chain-of-custody visibility' },
- { value: '0', label: 'Compliance violations reported' },
- { value: '99.9%', label: 'Platform uptime' },
- { value: '30%', label: 'Reduction in delivery exceptions' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-orders-table-detail.webp"
- heroScreenshotAlt="Fleetbase FleetOps order management for healthcare delivery showing chain-of-custody order tracking"
- heroScreenshotNeeded="FleetOps order detail — healthcare delivery with chain-of-custody timeline and compliance fields"
- painPoints={{
- heading: 'The compliance and operational risks you face daily',
- items: [
- 'No audit trail for who handled a delivery and when',
- 'Temperature-sensitive shipments with no monitoring capability',
- 'Patient data exposed in non-compliant delivery systems',
- 'Manual chain-of-custody forms that are incomplete or lost',
- 'No way to prove delivery compliance during audits',
- 'Drivers unaware of special handling requirements per order',
- ],
- }}
- features={[
- {
- title: 'Chain-of-Custody Tracking',
- description:
- 'Every handoff is recorded — from pharmacy to driver to patient. Timestamps, GPS coordinates, and digital signatures are captured at each stage and stored in an immutable audit log.',
- icon: ClipboardList,
- screenshot: '/images/console-screenshots/fleetops-order-label.webp',
- screenshotAlt: 'Chain-of-Custody Tracking',
- screenshotNeeded: 'FleetOps order timeline — chain-of-custody events with timestamps, GPS, and signatures',
- },
- {
- title: 'HIPAA-Compliant Data Handling',
- description:
- 'Patient information is encrypted at rest and in transit. Role-based access controls ensure only authorised personnel can view sensitive delivery details. Fleetbase supports HIPAA, GDPR, and SOC 2 compliance requirements.',
- icon: Lock,
- screenshot: '/images/console-screenshots/iam-users-create.webp',
- screenshotAlt: 'HIPAA-Compliant Data Handling',
- screenshotNeeded: 'Fleetbase security settings — showing role permissions and data encryption status',
- },
- {
- title: 'Digital Proof of Delivery with ID Verification',
- description:
- 'Drivers capture recipient signatures, photos, and — where required — ID verification directly in the Navigator app. All evidence is stored against the order and available for compliance review.',
- icon: FileCheck,
- screenshot: '/images/console-screenshots/fleetops-order-label.webp',
- screenshotAlt: 'Digital Proof of Delivery with ID Verification',
- screenshotNeeded: 'Navigator app — POD screen with signature, photo, and ID verification fields for medical delivery',
- },
- {
- title: 'Custom Compliance Fields per Order Type',
- description:
- 'Configure custom fields for each order type — temperature logs, handling instructions, controlled substance confirmations, or any other compliance requirement. No code required.',
- icon: ClipboardList,
- screenshot: '/images/console-screenshots/fleetops-telematics.webp',
- screenshotAlt: 'Custom Compliance Fields per Order Type',
- screenshotNeeded: 'FleetOps order config — custom fields panel showing temperature log and handling instruction fields',
- },
- {
- title: 'Real-Time Delivery Visibility',
- description:
- 'Pharmacy coordinators and healthcare administrators see live driver positions and order statuses on a single map. Proactively manage exceptions before they become compliance issues.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Real-Time Delivery Visibility',
- screenshotNeeded: 'FleetOps live map — healthcare delivery routes with order status indicators',
- },
- {
- title: 'Audit-Ready Reporting',
- description:
- 'Generate complete delivery audit reports for any time period, order type, or driver. Export to PDF or CSV for regulatory submissions, internal reviews, or insurance claims.',
- icon: Shield,
- screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
- screenshotAlt: 'Audit-Ready Reporting',
- screenshotNeeded: 'FleetOps reports panel — showing audit report export with date range and order type filters',
- },
- ]}
- testimonial={{
- quote:
- "Our last compliance audit took two hours instead of two days. Every delivery record, signature, and timestamp was in Fleetbase — complete and exportable.",
- author: 'Dr. Amara N.',
- role: 'Director of Operations',
- company: 'MedLogix Health',
- }}
- faqs={[
- {
- q: 'Is Fleetbase HIPAA compliant?',
- a: 'Fleetbase is designed with HIPAA compliance requirements in mind, including data encryption at rest and in transit, role-based access controls, and audit logging. Enterprise plans include a Business Associate Agreement (BAA).',
- },
- {
- q: 'Can we configure different compliance requirements for different order types?',
- a: 'Yes. Fleetbase supports fully configurable order types with custom fields, validation rules, and activity flows. You can create separate workflows for controlled substances, cold chain, and standard pharmacy deliveries.',
- },
- {
- q: 'Does Fleetbase support temperature monitoring?',
- a: 'Fleetbase supports custom temperature log fields that drivers complete in the Navigator app. Integration with IoT temperature sensors is available via the API for automated temperature recording.',
- },
- {
- q: 'Can we restrict which drivers see which patient information?',
- a: 'Yes. Role-based access controls allow you to limit what information drivers see in the Navigator app. Sensitive patient details can be hidden or masked based on driver role.',
- },
- {
- q: 'How does Fleetbase handle controlled substance deliveries?',
- a: 'Fleetbase supports custom confirmation steps, ID verification capture, and mandatory signature requirements for controlled substance order types. All events are logged in the chain-of-custody audit trail.',
- },
- ]}
- ctaHeading="Deliver with confidence. Comply with ease."
- ctaBody="Healthcare and pharmacy operators trust Fleetbase to keep sensitive deliveries secure, compliant, and on time. Start your free trial or talk to our team."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Talk to Sales"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Healthcare & Pharmacy"
+      title={<>Chain-of-Custody You Can Prove.<br /><span className="text-gradient">Compliance You Can Afford.</span></>}
+      description="Healthcare and pharmacy logistics demand an audit trail for everything, zero tolerance for delivery failure, and data privacy you can defend in front of any regulator. Fleetbase delivers all three — with encrypted chain-of-custody records, priority dispatch for time-sensitive items, and self-hosted deployment that keeps patient data within your own infrastructure."
+      stats={[
+        { value: '100%', label: 'Chain-of-custody traceability' },
+        { value: '99.97%', label: 'On-time delivery rate for urgent items' },
+        { value: '0', label: 'Patient data stored on third-party servers (self-hosted)' },
+        { value: '4 hr', label: 'Average urgent delivery dispatch time' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase healthcare logistics — chain-of-custody and delivery management"
+      painPoints={{
+        heading: 'The compliance and operational gaps keeping you up at night',
+        items: [
+          'No auditable chain-of-custody record for controlled substances and samples',
+          'Patient data being processed by third-party cloud logistics software without your knowledge',
+          'Critical deliveries — blood, medications, urgent supplies — missing time windows',
+          'No temperature monitoring integration for cold-chain pharmaceutical logistics',
+          'Manual, paper-based delivery confirmation that doesn\'t hold up to audit scrutiny',
+          'Compliance reporting taking days of manual data extraction every quarter',
+        ],
+      }}
+      featuresHeading="Logistics infrastructure built for healthcare compliance"
+      featuresSubheading="Every delivery tracked, every handoff documented, every record encrypted and audit-ready."
+      features={[
+        {
+          title: 'End-to-End Chain-of-Custody Tracking',
+          description: 'Every delivery — from collection to final recipient — generates an immutable, timestamped, GPS-anchored chain-of-custody record. Signature capture at each handoff. Photo evidence at every stage. Audit-ready exports on demand.',
+          bullets: [
+            'Immutable delivery records with GPS coordinates at each handoff',
+            'Multi-party signature capture for controlled substance transfers',
+            'One-click compliance export for regulatory audits',
+          ],
+          icon: FileCheck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Priority Dispatch for Urgent Items',
+          description: 'When a patient\'s medication or a lab sample can\'t wait, Fleetbase\'s priority dispatch engine assigns the nearest available driver immediately — overriding normal queue order and notifying the relevant clinical team in real-time.',
+          bullets: [
+            'Configurable urgency tiers with automatic driver escalation',
+            'Clinical team notification at dispatch, collection, and delivery',
+            'SLA breach alerting before the window closes, not after',
+          ],
+          icon: Bell,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Self-Hosted & Data-Sovereign Deployment',
+          description: 'Patient data belongs in your infrastructure, not a third-party cloud. Fleetbase\'s open-source architecture means you can deploy on your own servers, your own cloud account, or your own air-gapped network — with complete control over where data lives.',
+          bullets: [
+            'Deploy on AWS, Azure, GCP, or on-premise hardware',
+            'No patient data ever leaves your environment',
+            'RBAC controls limit data access to authorised personnel only',
+          ],
+          icon: Lock,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Role-Based Access & Compliance Controls',
+          description: 'Granular access controls ensure clinical staff, couriers, administrators, and auditors each see only what they\'re authorised to see. Every access event is logged for compliance reporting.',
+          bullets: [
+            'Per-role data visibility rules across all platform modules',
+            'Full user access audit trail exportable per compliance period',
+            'Two-factor authentication enforceable system-wide',
+          ],
+          icon: Shield,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Temperature & Condition Monitoring',
+          description: 'For cold-chain pharmaceutical deliveries, Fleetbase integrates with IoT temperature sensors to log environmental conditions at each delivery stage. Out-of-range alerts trigger immediate escalation before product is compromised.',
+          bullets: [
+            'IoT sensor integration via API for temperature and humidity data',
+            'Real-time out-of-range alerts to operations and clinical managers',
+            'Full temperature log appended to each delivery\'s chain-of-custody record',
+          ],
+          icon: Heart,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Compliance Reporting & Audit Exports',
+          description: 'Generate the compliance reports your regulators require in minutes, not days. All delivery data, access logs, and chain-of-custody records are structured for direct export in the formats required by healthcare regulatory bodies.',
+          bullets: [
+            'Pre-built report templates for common healthcare regulatory frameworks',
+            'Scheduled automated report delivery to compliance officers',
+            'Data retention policies configurable per jurisdiction',
+          ],
+          icon: ClipboardList,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: MapPin, label: 'Live delivery tracking' },
+        { icon: Users, label: 'Multi-facility support' },
+        { icon: Clock, label: 'Urgent escalation rules' },
+        { icon: Lock, label: 'Data encryption at rest' },
+        { icon: BarChart3, label: 'Compliance dashboards' },
+        { icon: FileCheck, label: 'Digital chain-of-custody' },
+        { icon: Shield, label: 'Role-based access control' },
+        { icon: Bell, label: 'SLA breach alerting' },
+      ]}
+      testimonial={{
+        quote: 'The chain-of-custody records alone have saved us from three potential regulatory issues. We can prove exactly where every item was at every moment, and we own the data entirely.',
+        author: 'Dr. M. Patel',
+        role: 'Head of Laboratory Logistics',
+        company: 'Regional NHS Trust',
+      }}
+      faqs={[
+        {
+          q: 'Is Fleetbase HIPAA compliant?',
+          a: 'Fleetbase\'s self-hosted deployment keeps all patient and operational data within your own infrastructure — meaning you remain the data controller. The platform provides the access controls, audit logs, and encryption required to support HIPAA compliance programmes. Always confirm specific compliance obligations with your legal and compliance team.',
+        },
+        {
+          q: 'Can Fleetbase be deployed in our own cloud environment?',
+          a: 'Yes. Fleetbase is open source and designed for self-hosting on AWS, Azure, GCP, or on-premise infrastructure. No patient or operational data is sent to Fleetbase servers in a self-hosted deployment.',
+        },
+        {
+          q: 'Does it support controlled substance delivery tracking?',
+          a: 'Yes. The chain-of-custody module captures multi-party signatures and GPS-stamped handoff records at every transfer point, providing the documentation required for controlled substance logistics.',
+        },
+        {
+          q: 'How does temperature monitoring integration work?',
+          a: 'Fleetbase integrates with IoT temperature monitoring devices via API. Sensor data is appended to each delivery record and out-of-range conditions trigger configurable alerts.',
+        },
+        {
+          q: 'Can different teams have different access levels?',
+          a: 'Yes. Role-based access control allows you to define exactly what each role — courier, clinical, administrative, audit — can view and action within the platform.',
+        },
+      ]}
+      ctaHeading="Logistics your compliance team will actually approve"
+      ctaBody="Deploy a healthcare logistics platform that keeps your data in your hands, your deliveries on time, and your audit trail airtight."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

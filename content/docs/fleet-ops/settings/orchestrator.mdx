@@ -1,10 +1,72 @@
 ---
 title: Orchestrator Settings
-description: Configure the automated order routing and assignment rules for the FleetOps Orchestrator.
+description: Configure the default optimization engine, capacity enforcement, workload balancing, and route geometry for the Orchestrator.
 ---
 
 # Orchestrator Settings
 
-Configure the automated order routing and assignment rules for the FleetOps Orchestrator.
+**Orchestrator Settings** control the default behavior of the automated assignment and route optimization engine — which algorithm runs, how capacity is enforced, and how routes are calculated.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Fleet-Ops → Settings → Orchestrator**.
+
+![Orchestrator settings panel — engine selector, capacity toggles, geometry type, max distance fields](/images/placeholder.png)
+
+## Optimization Engine
+
+Select the default optimization engine used when running the Orchestrator:
+
+| Engine | Description |
+| :--- | :--- |
+| **VROOM** | Advanced vehicle routing optimization. Handles time windows, capacities, skills, and multiple depots. Recommended for most operations. |
+| **Greedy** | Simple nearest-fit allocation. Fast for small fleets but not globally optimal. |
+| **Driver Assignment** | Manual-guided — select specific drivers for specific orders in the Workbench. |
+| **Route Sequencing** | Given an existing driver-order assignment, find the optimal stop order. |
+
+The engine selected here is the default for new Workbench sessions. You can override it per run in the Workbench toolbar.
+
+## Capacity Enforcement
+
+| Setting | Description |
+| :--- | :--- |
+| **Enforce Weight Capacity** | Prevent assigning orders that would exceed a vehicle's `capacity_weight` |
+| **Enforce Volume Capacity** | Prevent assigning orders that would exceed a vehicle's `capacity_volume` |
+| **Max Orders Per Driver** | Hard cap on number of orders per driver per run |
+
+When capacity enforcement is enabled, orders that cannot fit any available vehicle are returned to the unassigned pool with a `capacity_exceeded` reason.
+
+## Workload Balancing
+
+| Setting | Description |
+| :--- | :--- |
+| **Balance Workload** | Attempt to distribute orders evenly across drivers rather than front-loading |
+| **Max Distance Per Driver** | Cap the total route distance per driver during a run |
+| **Max Travel Time Per Driver** | Cap the total driving time per driver during a run |
+
+## Route Geometry
+
+| Setting | Description |
+| :--- | :--- |
+| **Geometry Type** | **Simple** (straight-line distances) or **Full Routes** (actual road routes from routing engine) |
+
+**Simple** is faster and suitable for planning previews or large-batch runs where approximate distances are acceptable. **Full Routes** uses the configured routing engine for accurate ETAs and turn-by-turn routes — recommended for production operations.
+
+<Callout type="info">
+Full Routes requires the routing engine (OSRM, Google Maps, or Mapbox) to be configured in **Settings → Routing**. Simple mode works without a routing engine.
+</Callout>
+
+## Orchestrator Card Fields
+
+The Orchestrator Workbench shows order cards in the order pool and assignment results. You can customize which fields appear on these cards in **Settings → Orchestrator → Card Fields**:
+
+- Order ID
+- Customer name
+- Distance estimate
+- Priority
+- Time window
+- Required skills
+
+Deselect fields that aren't relevant to your operation to reduce visual noise in the Workbench.
+
+## Applying Settings
+
+Click **Save** after making changes. Updated settings apply to the next Orchestrator run. In-progress runs are not affected.

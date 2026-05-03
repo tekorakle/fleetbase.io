@@ -1,0 +1,93 @@
+---
+title: Menu Service
+description: Register your extension's navigation links in the sidebar, header, settings panel, admin area, and organization menu.
+---
+
+# Menu Service
+
+To make your extension accessible to users, you need to register its navigation links within the Fleetbase Console.
+
+This is done using the **Universe Service** in your frontend Ember Engine. The Universe Service acts as a central registry for all UI elements, allowing you to inject links into various menus across the platform.
+
+## Registering Menu Items
+
+You typically register menu items in an initializer or within the `init` method of your engine's application route.
+
+The primary method for adding a link is `registerMenuItem(menuName, itemConfig)`.
+
+### The Sidebar Menu
+
+The most common place to add a link is the main sidebar navigation. The menu name for the sidebar is `console.sidebar`.
+
+```javascript
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+    @service universe;
+
+    init() {
+        super.init(...arguments);
+
+        this.universe.registerMenuItem('console.sidebar', {
+            title: 'My Extension',
+            icon: 'box',
+            route: 'console.my-extension',
+            priority: 10, // Optional: Determines the order in the menu
+        });
+    }
+}
+```
+
+### The Settings Menu
+
+If your extension has configuration options, you should add a link to the Settings panel. The menu name is `console.settings`.
+
+```javascript
+this.universe.registerMenuItem('console.settings', {
+    title: 'My Extension Settings',
+    icon: 'cog',
+    route: 'console.settings.my-extension',
+});
+```
+
+### The Admin Menu
+
+If your extension includes administrative tools (e.g., managing users or global configurations), you can add a link to the Admin panel. The menu name is `console.admin`.
+
+```javascript
+this.universe.registerMenuItem('console.admin', {
+    title: 'My Extension Admin',
+    icon: 'shield-alt',
+    route: 'console.admin.my-extension',
+});
+```
+
+## Menu Item Configuration
+
+The `itemConfig` object passed to `registerMenuItem` accepts several properties:
+
+- **`title`** (String): The human-readable text displayed in the menu.
+- **`icon`** (String): The name of the FontAwesome icon to display next to the title (e.g., `box`, `cog`, `users`).
+- **`route`** (String): The Ember route to transition to when the item is clicked. This should be the fully qualified route name, including the `console.` prefix and your extension's namespace.
+- **`priority`** (Number, optional): Determines the order of the item in the menu. Lower numbers appear higher in the list.
+- **`component`** (String, optional): Instead of a simple link, you can render a custom Ember component within the menu. This is useful for complex navigation structures or dropdowns.
+
+## Virtual Routes
+
+In some cases, you may want to register a menu item that doesn't correspond to a physical route in your extension, but rather a "virtual" route that is handled dynamically by the core platform or another extension.
+
+For example, if you are building a module that integrates with FleetOps, you might want to add a link to the FleetOps operations menu.
+
+You can do this by setting the `_virtual` property to `true` on the menu item configuration.
+
+```javascript
+this.universe.registerMenuItem('fleetops.operations', {
+    title: 'My Custom Operation',
+    icon: 'truck',
+    route: 'console.fleetops.operations.custom',
+    _virtual: true,
+});
+```
+
+*See [Virtual Routes](/docs/sdk/frontend/virtual-routes) for more details on how virtual routing works.*

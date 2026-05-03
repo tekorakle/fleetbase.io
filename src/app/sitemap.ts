@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next';
 
+import { getAllBlogPosts } from '@/lib/ghost';
+
 const BASE_URL = 'https://fleetbase.io';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -61,7 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Developers
     { url: `${BASE_URL}/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE_URL}/developers/api`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/developers/console`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE_URL}/platform/developer-console`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/developers/extensions`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/developers/sdks`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE_URL}/developers/webhooks`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
@@ -84,5 +86,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
   ];
 
-  return staticRoutes;
+  const blogPosts = await getAllBlogPosts();
+  const blogRoutes = blogPosts.map((post) => ({
+    url: `${BASE_URL}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...blogRoutes];
 }

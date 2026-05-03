@@ -1,0 +1,64 @@
+---
+title: Accounting
+description: Manage your chart of accounts, general ledger, and journal entries — the foundation of Ledger's double-entry bookkeeping system.
+---
+
+# Accounting
+
+The **Accounting** module provides the double-entry bookkeeping foundation of Ledger. It manages the chart of accounts, records all financial activity as journal entries, and aggregates them in the general ledger.
+
+Navigate to **Ledger → Accounting** to access accounting features.
+
+![Accounting section — chart of accounts list with account codes, types, and balances](/images/placeholder.png)
+
+## Core Components
+
+### [Chart of Accounts](/docs/ledger/accounting/chart-of-accounts)
+
+A structured list of all accounts used to categorize financial activity. Ledger provisions a default chart of accounts when your company is created — you can extend it with custom accounts for your business.
+
+Five account types:
+- **Asset** — what your organization owns (cash, receivables)
+- **Liability** — what your organization owes (payables, wallet balances)
+- **Equity** — owner's stake in the business
+- **Revenue** — income from operations
+- **Expense** — costs incurred
+
+### [Journal Entries](/docs/ledger/accounting/journal-entries)
+
+The atomic records of every financial event. Each journal entry debits one account and credits another. Ledger creates journal entries automatically for wallet operations, invoice payments, and gateway transactions. You can also create manual entries for adjustments.
+
+### [General Ledger](/docs/ledger/accounting/general-ledger)
+
+The master record of all journal entries. The general ledger view shows every entry for a selected account in chronological order with a running balance.
+
+## Automated Accounting
+
+Most journal entries in Ledger are created automatically:
+
+| Event | Journal Entry Created |
+| :--- | :--- |
+| Invoice saved | DEBIT Accounts Receivable, CREDIT Sales Revenue |
+| Invoice payment recorded | DEBIT Cash, CREDIT Accounts Receivable |
+| Wallet deposit | DEBIT Cash, CREDIT Wallet Liability |
+| Wallet withdrawal | DEBIT Wallet Liability, CREDIT Cash |
+| Wallet transfer (A → B) | DEBIT Wallet A, CREDIT Wallet B (via intermediate account) |
+
+Manual journal entries can be created for one-off adjustments, closing entries, or corrections.
+
+## Accounting Lifecycle
+
+```
+Financial event occurs
+  → Ledger creates Journal Entry (debit + credit)
+    → Account balances updated
+      → General Ledger reflects updated history
+        → Financial reports draw from General Ledger
+```
+
+## Settings
+
+Configure accounting defaults in **Ledger → Settings → Accounting**:
+- Default currency for new accounts
+- Default account assignments for automatic entries
+- Accounting period settings

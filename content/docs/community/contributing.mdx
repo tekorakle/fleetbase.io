@@ -1,53 +1,126 @@
 ---
 title: Contributing to Fleetbase
-description: Learn how to contribute to Fleetbase — from bug reports and feature requests to pull requests and extensions.
+description: How to contribute to Fleetbase — bug reports, pull requests, documentation, and building extensions.
 ---
 
 # Contributing to Fleetbase
 
-We love your input! We want to make contributing to Fleetbase as easy and transparent as possible, whether it's:
+Fleetbase is open-source and welcomes contributions from the community. Whether you're fixing a typo, reporting a bug, or building a new feature, every contribution matters.
 
-- Reporting a bug
-- Discussing the current state of the code
-- Submitting a fix
-- Proposing new features
-- Becoming a maintainer
+## Ways to Contribute
 
-## We Develop with GitHub
+| Contribution type | Where to start |
+| :--- | :--- |
+| **Bug report** | [Open an issue](https://github.com/fleetbase/fleetbase/issues/new) on the relevant repo |
+| **Feature request** | [Start a discussion](https://github.com/fleetbase/fleetbase/discussions) before opening a PR |
+| **Code fix or feature** | Fork → branch → PR (see below) |
+| **Documentation** | Same PR flow — docs live in this repo |
+| **Extension** | See [Building Extensions](/docs/extending-fleetbase) |
+| **Translation** | Edit `translations/*.yaml` files in the console repo |
 
-We use GitHub to host code, to track issues and feature requests, as well as accept pull requests.
+## Reporting Bugs
 
-## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html)
+A good bug report makes it easy for maintainers to reproduce and fix the problem. Include:
 
-All code changes happen through pull requests. Pull requests are the best way to propose changes to the codebase.
+- **Summary** — what you expected to happen and what actually happened
+- **Steps to reproduce** — specific, numbered steps
+- **Environment** — Fleetbase version, deployment method (Docker, cloud, local), OS
+- **Logs or error messages** — paste relevant output from `docker compose logs`
+- **Code sample** — if relevant, a minimal reproducer
 
-1. Fork the repo and create your branch from `master`.
-2. If you've added code that should be tested, add tests.
-3. If you've changed APIs, update the documentation.
-4. Ensure the test suite passes.
-5. Make sure your code lints.
-6. Issue that pull request!
+Open the report on the GitHub repository for the affected component:
 
-## Any contributions you make will be under the AGPL-3.0 License
+| Repository | What it covers | Issues |
+| :--- | :--- | :--- |
+| **fleetbase/fleetbase** | Core platform — API, Console, IAM, Developer Console | [Open issue →](https://github.com/fleetbase/fleetbase/issues/new) |
+| **fleetbase/fleetops** | FleetOps extension — fleet management, dispatch, tracking | [Open issue →](https://github.com/fleetbase/fleetops/issues/new) |
+| **fleetbase/storefront** | Storefront extension — e-commerce, catalog, orders | [Open issue →](https://github.com/fleetbase/storefront/issues/new) |
+| **fleetbase/pallet** | Pallet extension — warehouse and inventory management | [Open issue →](https://github.com/fleetbase/pallet/issues/new) |
+| **fleetbase/ledger** | Ledger extension — accounting and invoicing | [Open issue →](https://github.com/fleetbase/ledger/issues/new) |
+| **fleetbase/navigator-app** | Navigator driver mobile app (React Native) | [Open issue →](https://github.com/fleetbase/navigator-app/issues/new) |
+| **fleetbase/storefront-app** | Storefront customer mobile app (React Native) | [Open issue →](https://github.com/fleetbase/storefront-app/issues/new) |
+| **fleetbase/fleetbase-cli** | Fleetbase CLI | [Open issue →](https://github.com/fleetbase/fleetbase-cli/issues/new) |
+| **fleetbase/ember-ui** | Console UI component library | [Open issue →](https://github.com/fleetbase/ember-ui/issues/new) |
 
-In short, when you submit code changes, your submissions are understood to be under the same [AGPL-3.0 License](http://choosealicense.com/licenses/agpl-3.0/) that covers the project. Feel free to contact the maintainers if that's a concern.
+## Submitting a Pull Request
 
-## Report bugs using GitHub's [issues](https://github.com/fleetbase/fleetbase/issues)
+<Steps>
+  <Step>
+    ### Fork and clone
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/fleetbase/fleetbase/issues/new); it's that easy!
+    Fork the repository you want to contribute to on GitHub, then clone your fork:
 
-## Write bug reports with detail, background, and sample code
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/fleetbase.git
+    cd fleetbase
+    ```
+  </Step>
+  <Step>
+    ### Create a branch
 
-**Great Bug Reports** tend to have:
+    Branch from `main` with a descriptive name:
 
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can.
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
+    ```bash
+    git checkout -b fix/order-status-not-updating
+    # or
+    git checkout -b feat/add-bulk-driver-import
+    ```
+  </Step>
+  <Step>
+    ### Make your changes
+
+    Follow the coding conventions for the component you're changing:
+
+    - **PHP/Laravel (core-api)** — PSR-12 coding standard, type hints, docblocks on public methods
+    - **Ember.js (console, extensions)** — follow the existing component and service patterns, native classes, no jQuery
+    - **React Native (mobile apps)** — functional components, hooks, no class components
+  </Step>
+  <Step>
+    ### Run tests
+
+    ```bash
+    # PHP tests (from the api container)
+    docker compose exec application php artisan test
+
+    # Ember tests (from the console directory)
+    cd console && ember test
+    ```
+
+    Ensure all existing tests pass before submitting.
+  </Step>
+  <Step>
+    ### Open the pull request
+
+    Push your branch and open a PR against the `main` branch of the upstream repository. In the PR description:
+
+    - Reference the issue it closes (e.g. `Closes #1234`)
+    - Describe what changed and why
+    - Note any breaking changes
+    - Include screenshots for UI changes
+  </Step>
+</Steps>
+
+## Good First Issues
+
+If you're new to the codebase, look for issues labelled **`good first issue`** on GitHub. These are scoped to be approachable without deep platform knowledge:
+
+| Repository | Good first issues |
+| :--- | :--- |
+| **fleetbase/fleetbase** | [View issues →](https://github.com/fleetbase/fleetbase/labels/good%20first%20issue) |
+| **fleetbase/fleetops** | [View issues →](https://github.com/fleetbase/fleetops/labels/good%20first%20issue) |
+| **fleetbase/storefront** | [View issues →](https://github.com/fleetbase/storefront/labels/good%20first%20issue) |
+| **fleetbase/pallet** | [View issues →](https://github.com/fleetbase/pallet/labels/good%20first%20issue) |
+| **fleetbase/navigator-app** | [View issues →](https://github.com/fleetbase/navigator-app/labels/good%20first%20issue) |
+| **fleetbase/fleetbase-cli** | [View issues →](https://github.com/fleetbase/fleetbase-cli/labels/good%20first%20issue) |
+
+## Building Extensions
+
+The most impactful way to contribute is building extensions that other operators can install. Extensions are full-stack packages — a Laravel backend package and an Ember.js frontend engine — registered through the Fleetbase extension system.
+
+See [Building Extensions](/docs/extending-fleetbase) for the full developer guide, including how to scaffold, test, and publish an extension to the registry.
 
 ## License
 
-By contributing, you agree that your contributions will be licensed under its AGPL-3.0 License.
+By submitting a contribution, you agree that your code will be licensed under the [AGPL-3.0 License](https://github.com/fleetbase/fleetbase/blob/master/LICENSE.md) that covers the project.
+
+If you have questions about the licensing implications of your contribution, see the [Licensing](/docs/community/licensing) page or ask in [Discord](/docs/community/discord).

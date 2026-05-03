@@ -1,0 +1,118 @@
+---
+title: Quickstart
+description: Get your Storefront up and running — create a store, add products, configure a payment gateway, and process your first order.
+---
+
+# Quickstart
+
+This guide walks you through setting up a Storefront store, adding products, configuring a payment gateway, and receiving your first order — all from the Fleetbase Console.
+
+## Step 1 — Create a Store
+
+<Steps>
+  <Step>
+    Navigate to **Storefront** in the Fleetbase Console sidebar.
+  </Step>
+  <Step>
+    Click **New Store**.
+  </Step>
+  <Step>
+    Enter a **Name**, **Description**, and select your **Currency** and **Timezone**.
+  </Step>
+  <Step>
+    Upload a **Logo** and **Backdrop** image for branding.
+  </Step>
+  <Step>
+    Click **Save**. Your store is created and assigned a unique API key automatically.
+  </Step>
+</Steps>
+
+![New store form — name, currency, timezone, and branding upload fields](/images/placeholder.png)
+
+## Step 2 — Add a Store Location
+
+A store location provides the pickup address when Fleet-Ops creates delivery orders.
+
+<Steps>
+  <Step>
+    Open your store and click the **Locations** tab.
+  </Step>
+  <Step>
+    Click **Add Location**.
+  </Step>
+  <Step>
+    Enter a **Name** (e.g., "Main Branch") and a **Street Address**. Fleetbase geocodes the address and pins it on the map.
+  </Step>
+  <Step>
+    Set **Operating Hours** for the location — the days and time windows when orders can be placed.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Step 3 — Create a Category and Product
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Products**.
+  </Step>
+  <Step>
+    Click **New Category**, enter a name (e.g., "Burgers"), and save.
+  </Step>
+  <Step>
+    Click **New Product**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Description**, **Price**, and assign it to your category.
+  </Step>
+  <Step>
+    Upload a **Product Image**.
+  </Step>
+  <Step>
+    Set **Status** to **Active** so the product is visible to customers.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Step 4 — Configure a Payment Gateway
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Settings → Gateways**.
+  </Step>
+  <Step>
+    Click **Add Gateway** and select **Stripe** (or **Cash** for testing without a real gateway).
+  </Step>
+  <Step>
+    Enter your Stripe **Publishable Key** and **Secret Key**. Use test keys while building.
+  </Step>
+  <Step>
+    Enable **Sandbox Mode** for testing.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Step 5 — Get Your API Key
+
+Your custom frontend app (mobile or web) authenticates to the Storefront API using the store's public key.
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Settings → API**.
+  </Step>
+  <Step>
+    Copy the **Public Key** (prefixed with `store_`). This is passed in the `Storefront-Key` header of all API requests.
+  </Step>
+</Steps>
+
+## Next Steps
+
+- [Core Concepts](/docs/storefront/getting-started/core-concepts) — understand how stores, networks, catalogs, and orders work together
+- [Variants & Addons](/docs/storefront/catalog/variants-and-addons) — add customization options to your products
+- [Stores & Networks](/docs/storefront/stores/stores-and-networks) — build a multi-vendor marketplace
+- [Customer Authentication](/docs/storefront/customers/authentication) — implement login for your customer app

@@ -1,135 +1,156 @@
 import type { Metadata } from 'next';
-import { LayoutDashboard, Zap, BarChart3, Bell, Settings, Users } from 'lucide-react';
+import { LayoutDashboard, Zap, BarChart3, Bell, Settings, Users, MapPin, FileCheck, Clock, Shield } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Logistics Software for Operations Managers | Fleetbase',
- description:
- 'Give operations managers a single dashboard to oversee dispatch, monitor SLAs, manage exceptions, and report on performance — without switching between systems.',
- keywords: ['logistics software for operations managers', 'operations management platform', 'logistics operations dashboard', 'dispatch management software'],
- openGraph: {
- title: 'Logistics Software for Operations Managers | Fleetbase',
- description: 'A single dashboard to oversee dispatch, monitor SLAs, and manage exceptions.',
- },
+  title: 'Logistics Software for Operations Managers | Fleetbase',
+  description: 'Give operations managers a single dashboard to oversee dispatch, monitor SLAs, manage exceptions, and report on performance — without switching between systems.',
+  keywords: ['logistics software for operations managers', 'operations management platform', 'logistics operations dashboard', 'dispatch management software', 'SLA monitoring software'],
+  openGraph: {
+    title: 'Logistics Software for Operations Managers | Fleetbase',
+    description: 'Everything you need to run your operation in one place — live, accurate, and actionable.',
+  },
 };
 
 export default function OperationsManagersPage() {
- return (
- <SolutionPageLayout
- badge="For Operations Managers"
- title={<>Run Your Entire Operation <span className="text-gradient">From One Screen.</span></>}
- description="Operations managers need visibility across every moving part — orders, drivers, vehicles, and SLAs — without toggling between five different systems. Fleetbase gives you a single command centre for your entire logistics operation."
- stats={[
- { value: '60%', label: 'Less time spent on manual coordination' },
- { value: '40%', label: 'Fewer SLA breaches' },
- { value: '2×', label: 'Faster exception resolution' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-kanban-board-detail.webp"
- heroScreenshotAlt="Fleetbase FleetOps operations board showing live order pipeline for operations managers"
- heroScreenshotNeeded="FleetOps operations dashboard — live order count, SLA status, active drivers, and exception alerts in one view"
- painPoints={{
- heading: 'What makes operations management harder than it needs to be',
- items: [
- 'Switching between dispatch, tracking, and reporting tools constantly',
- 'Finding out about SLA breaches after the customer has already complained',
- 'No single view of what every driver and vehicle is doing right now',
- 'Exception management happening over WhatsApp and phone calls',
- 'Weekly performance reports taking half a day to compile',
- 'Scaling operations means adding headcount, not just software',
- ],
- }}
- features={[
- {
- title: 'Live Operations Command Centre',
- description:
- 'See every active order, driver position, vehicle status, and SLA health on one live dashboard. No refreshing, no switching tabs — your entire operation at a glance, updated in real-time.',
- icon: LayoutDashboard,
- screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
- screenshotAlt: 'Live Operations Command Centre',
- screenshotNeeded: 'FleetOps live operations dashboard — KPI cards, map view, order list, and driver status panel',
- },
- {
- title: 'Automated Dispatch & Workflow Execution',
- description:
- 'Configure dispatch rules and order workflows that run automatically. Fleetbase handles routine assignment, notification, and escalation tasks so your team focuses on exceptions, not administration.',
- icon: Zap,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Automated Dispatch & Workflow Execution',
- screenshotNeeded: 'FleetOps automation rules panel — showing dispatch rules and workflow triggers',
- },
- {
- title: 'SLA Monitoring & Proactive Alerts',
- description:
- 'Set SLA targets per order type and receive alerts before a breach occurs — not after. Fleetbase flags at-risk orders in real-time so you can intervene while there is still time.',
- icon: Bell,
- screenshot: '/images/console-screenshots/fleetops-issues.webp',
- screenshotAlt: 'SLA Monitoring & Proactive Alerts',
- screenshotNeeded: 'FleetOps SLA monitor — at-risk orders highlighted with time-to-breach countdown',
- },
- {
- title: 'Exception Management',
- description:
- 'All exceptions — failed deliveries, driver delays, vehicle faults — are surfaced in one exception queue with context and suggested actions. Resolve issues faster without hunting through emails and messages.',
- icon: Settings,
- screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
- screenshotAlt: 'Exception Management',
- screenshotNeeded: 'FleetOps exception queue — list of active exceptions with type, severity, and resolution options',
- },
- {
- title: 'Team & Driver Management',
- description:
- 'Manage driver availability, assignments, and performance from the same console. See who is on shift, who is available for new jobs, and who needs attention based on performance data.',
- icon: Users,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Team & Driver Management',
- screenshotNeeded: 'FleetOps driver management panel — shift status, current assignment, and performance indicators',
- },
- {
- title: 'Operations Performance Reporting',
- description:
- 'Generate daily, weekly, and monthly performance reports automatically. Track on-time rate, exception rate, cost-per-order, and driver utilization — and share with leadership in one click.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
- screenshotAlt: 'Operations Performance Reporting',
- screenshotNeeded: 'FleetOps operations report — weekly summary with on-time rate, exception count, and cost metrics',
- },
- ]}
- testimonial={{
- quote:
- "I used to start every morning firefighting. Now I open Fleetbase, see exactly what needs attention, and my team handles the rest. It changed how I manage completely.",
- author: 'Lisa M.',
- role: 'Head of Operations',
- company: 'Metro Logistics Group',
- }}
- faqs={[
- {
- q: 'Can I configure what appears on my operations dashboard?',
- a: 'Yes. The Fleetbase dashboard is configurable. You can choose which KPI cards, map views, and data panels are visible, and create separate dashboards for different operational views.',
- },
- {
- q: 'How does the SLA alert system work?',
- a: 'You configure SLA targets per order type. Fleetbase monitors every active order against its SLA in real-time and sends alerts — via the console, email, or webhook — when an order is at risk of breaching.',
- },
- {
- q: 'Can I manage multiple teams or depots from one account?',
- a: 'Yes. Fleetbase supports multi-team and multi-depot operations. You can manage separate teams with their own driver pools, order queues, and performance dashboards within one account.',
- },
- {
- q: 'How do I handle driver absences or vehicle breakdowns mid-shift?',
- a: 'Fleetbase allows you to reassign orders from one driver to another in seconds. The system re-optimizes affected routes automatically and notifies the new driver via the Navigator app.',
- },
- {
- q: 'Can Fleetbase replace our current dispatch and tracking tools?',
- a: 'Yes. Fleetbase is a complete operations platform covering dispatch, tracking, order management, driver management, and reporting. Most operations consolidate from 3-5 tools into Fleetbase alone.',
- },
- ]}
- ctaHeading="Run a tighter operation with less effort"
- ctaBody="One dashboard. Real-time visibility. Automated workflows. Fleetbase gives operations managers the control they need to run efficiently at scale."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Book a Demo"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="For Operations Managers"
+      title={<>Run Your Operation<br /><span className="text-gradient">From One Dashboard.</span></>}
+      description="Operations managers are stretched across dispatch decisions, SLA monitoring, driver coordination, and performance reporting — often across multiple tools that don't talk to each other. Fleetbase gives you a single operations control centre: live dispatch visibility, automated SLA alerting, exception management, and performance reporting — without the context-switching that burns your day."
+      stats={[
+        { value: '50%', label: 'Reduction in time spent on manual dispatch' },
+        { value: '3×', label: 'Faster exception resolution with live visibility' },
+        { value: '40%', label: 'Less time on status update requests from stakeholders' },
+        { value: '98%', label: 'On-time SLA rate for operations running Fleetbase' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase operations management dashboard — live dispatch, SLA tracking, and driver overview"
+      painPoints={{
+        heading: 'The operational fire-fighting that fills your day',
+        items: [
+          'Dispatchers manually assigning orders while you field escalations from every direction',
+          'SLA breaches you find out about from the client before your own system alerts you',
+          'No live view of where every driver and order is — you\'re working from delayed snapshots',
+          'Performance reports assembled manually from multiple systems every reporting period',
+          'Exception management done by phone and email with no audit trail',
+          'Team coordination across depots or shifts with no shared operational view',
+        ],
+      }}
+      featuresHeading="The operational control centre you've always needed"
+      featuresSubheading="From live dispatch to end-of-day reporting — everything in one place."
+      features={[
+        {
+          title: 'Live Dispatch & Fleet Visibility',
+          description: 'See your entire operation in real time — every active driver, every order in progress, every vehicle on the map. Identify bottlenecks, manage driver capacity, and make dispatch decisions from a single view without calling a single driver.',
+          bullets: [
+            'Real-time driver positions and order status on live map',
+            'Active order pipeline with status, driver assignment, and ETA',
+            'Driver availability and capacity view for same-day demand management',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Automated SLA Monitoring & Alerting',
+          description: 'Fleetbase watches every active order against its committed delivery window. When an order is at risk of breaching its SLA — not when it already has — the right person gets an alert with enough time to act. You manage by exception, not by constant monitoring.',
+          bullets: [
+            'Configurable SLA warning thresholds per order type and customer',
+            'Automated escalation to the right team member based on breach severity',
+            'SLA breach log for post-incident review and client reporting',
+          ],
+          icon: Bell,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Smart Dispatch Automation',
+          description: 'Reduce the manual load on your dispatch team without losing operational control. Fleetbase\'s auto-assignment engine handles routine order-to-driver matching based on proximity, zone, and capacity — freeing dispatchers to focus on exceptions and priority jobs.',
+          bullets: [
+            'Configurable auto-assignment rules per depot, order type, and service level',
+            'Manual override available at any point for dispatcher control',
+            'Dispatch queue prioritization by SLA risk and order urgency',
+          ],
+          icon: Zap,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Exception Management & Resolution',
+          description: 'When something goes wrong — failed delivery, driver delay, vehicle breakdown — Fleetbase surfaces the exception immediately with the context needed to act. Log resolutions, reassign orders, and track exception patterns to prevent recurrence.',
+          bullets: [
+            'Exception dashboard with active issues, impact, and resolution status',
+            'One-click order reassignment to available drivers',
+            'Exception history and root cause tracking for operational improvement',
+          ],
+          icon: Settings,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Team & Depot Management',
+          description: 'Manage drivers, dispatchers, and depot staff with role-based access that gives each team member exactly the view and permissions they need. Multi-depot operations get separate views per location with consolidated reporting at management level.',
+          bullets: [
+            'Role-based console access for drivers, dispatchers, and managers',
+            'Multi-depot support with per-depot operational views',
+            'Shift scheduling and driver availability management',
+          ],
+          icon: Users,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Operational Performance Reporting',
+          description: 'End-of-day, weekly, and monthly performance reports generated automatically from your operational data — on-time rate, completion rate, cost-per-delivery, driver performance, and SLA adherence — presented in formats ready for leadership review or client delivery.',
+          bullets: [
+            'Automated daily and weekly operational performance summaries',
+            'Client-ready SLA compliance reports on demand',
+            'Driver and depot performance benchmarking for team reviews',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Clock, label: 'SLA breach prevention' },
+        { icon: Shield, label: 'Role-based access' },
+        { icon: FileCheck, label: 'Digital POD records' },
+        { icon: LayoutDashboard, label: 'Custom dashboards' },
+        { icon: MapPin, label: 'Multi-depot operations' },
+        { icon: Bell, label: 'Escalation workflows' },
+        { icon: Zap, label: 'Auto-dispatch engine' },
+        { icon: BarChart3, label: 'KPI reporting' },
+      ]}
+      testimonial={{
+        quote: "I used to spend my mornings chasing status updates from drivers and dispatchers. Now I open Fleetbase and I can see everything in one place. My team spends time solving problems rather than finding them.",
+        author: 'Claire M.',
+        role: 'Head of Operations',
+        company: 'Citywide Logistics',
+      }}
+      faqs={[
+        {
+          q: 'Can Fleetbase handle multi-depot operations from one console?',
+          a: 'Yes. Multiple depots are managed from a single account with per-depot views for operations teams and consolidated reporting at management level.',
+        },
+        {
+          q: 'How does SLA alerting work in practice?',
+          a: 'You define SLA windows per order type and configurable warning thresholds. When an active order hits the warning threshold, Fleetbase alerts the designated escalation contact via console notification and optionally email or SMS — before the breach occurs.',
+        },
+        {
+          q: 'Can we automate dispatch without losing dispatcher control?',
+          a: 'Yes. Auto-assignment rules handle routine assignment automatically while dispatchers focus on exceptions. Any auto-assigned order can be manually reassigned at any point.',
+        },
+        {
+          q: 'How are operational reports generated?',
+          a: 'Reports are generated automatically from your operational data on a schedule you configure — daily summaries, weekly KPI reviews, monthly SLA reports — and can be emailed to your team or stakeholders automatically.',
+        },
+        {
+          q: 'Can I give clients visibility into their orders without exposing internal operations data?',
+          a: 'Yes. Client-facing tracking portals show order status, live tracking, and delivery confirmation for orders relevant to that client — without any access to internal operations data.',
+        },
+      ]}
+      ctaHeading="Run your operation with confidence, not guesswork"
+      ctaBody="Live visibility, automated alerting, and the reporting your leadership needs — all from one operations platform. Start your free trial today."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

@@ -1,9 +1,0 @@
-{
-  "title": "Settings",
-  "pages": [
-    "api",
-    "gateways",
-    "locations",
-    "notifications"
-  ]
-}

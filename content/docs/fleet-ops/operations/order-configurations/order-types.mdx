@@ -1,0 +1,84 @@
+---
+title: Order Types
+description: Create and manage custom order types — define entity fields, constraints, and service categories per order configuration.
+---
+
+# Order Types
+
+**Order Types** refer to the different categories of orders your operation handles, each backed by an **Order Configuration**. An order type determines what data is collected on each delivery, what fields appear on each item, and how drivers execute the workflow.
+
+## What Defines an Order Type
+
+Each Order Configuration defines an order type through:
+
+1. **Entity definitions** — what fields are required on each item in the payload
+2. **Tags** — for categorizing and filtering
+3. **Activity flow** — the sequence of steps drivers execute
+4. **POD requirements** — what proof is needed to complete the order
+
+## Entity Definitions
+
+Entity definitions specify what data must be filled in for each item (entity) added to an order of this type. You configure these inside the Order Configuration editor.
+
+### Available Entity Fields
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| **Description** | Text | Item description (e.g., "Laptop") |
+| **SKU** | Text | Stock Keeping Unit identifier |
+| **Barcode** | Text | Barcode for scanning |
+| **Quantity** | Number | Number of units |
+| **Weight** | Number + Unit | Weight in kg or lb |
+| **Length / Width / Height** | Number + Unit | Physical dimensions in cm, m, or inches |
+| **Photo** | File | Item photo |
+| **Customer** | Contact | Recipient for this specific item |
+| **Destination** | Place | Delivery location (for multi-drop) |
+| **Custom Fields** | Various | Additional fields specific to your operation |
+
+You can mark fields as **required** or **optional** per order type. Required fields must be completed before an order can be saved.
+
+### Custom Entity Fields
+
+Beyond the standard fields, each entity definition can include custom fields created through **Fleet-Ops → Settings → Custom Fields**. For example, a cold-chain logistics operation might add:
+
+- Temperature requirement (select: ambient, refrigerated, frozen)
+- Fragile flag (toggle)
+- Handling instructions (text)
+
+## Built-In Order Type Examples
+
+### Standard Delivery
+
+- **Pickup → Dropoff** route
+- Entities: description, weight, dimensions optional
+- POD: signature required at dropoff
+
+### Pickup & Delivery (P&D)
+
+- Driver collects from a supplier then delivers to a customer
+- Entities: description, barcode
+- POD: signature at dropoff
+
+### Return to Sender (RTS)
+
+- Driver collects an undeliverable item from a customer and returns it to origin
+- Entities: original order reference, reason for return
+- POD: photo at collection point
+
+### Multi-Drop Courier
+
+- Single pickup, multiple dropoffs
+- Entities: destination override per item (each entity routes to a different waypoint)
+- POD: signature at each dropoff waypoint
+
+## Creating a Custom Order Type
+
+Order types are created by creating a new **Order Configuration**. Navigate to **Fleet-Ops → Operations → Order Configurations → + New Configuration**.
+
+For the entity definitions section, add the fields your drivers need to collect and mark which are required. Save the configuration — it immediately becomes available as an option when creating new orders.
+
+## Filtering Orders by Type
+
+In the Orders list, use the **Order Config** filter to show only orders of a specific type. This is useful for separating same-day orders from scheduled deliveries, or express from standard.
+
+In the API, orders include the `type` field (the namespace key of their Order Config) for filtering and sorting.

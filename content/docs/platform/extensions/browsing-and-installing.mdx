@@ -1,97 +1,120 @@
 ---
-title: Browsing & Installing Extensions
-description: Browse the Fleetbase extension marketplace and install extensions using the CLI or the console UI.
+title: Browsing & Installing
+description: Browse the Fleetbase extension registry and install extensions via the console or the CLI.
 ---
 
 # Browsing & Installing Extensions
 
-Extensions are the building blocks of Fleetbase, adding specific logistics capabilities to the core platform. You can browse and install extensions from the Fleetbase Registry using either the Fleetbase Console UI or the Fleetbase CLI.
+Extensions are discovered and installed from the **Extensions** section in the top navigation bar of the Fleetbase Console, or using the `flb` CLI on a self-hosted instance.
 
-## Browsing Extensions
+## Browsing the Registry
 
-The Fleetbase Registry hosts both official extensions built by the Fleetbase team and third-party extensions built by the community.
+### Via the Console
 
-### Via the Console UI
+Click **Extensions** in the top navbar to open the Extensions section. The default view is **Explore**, which shows extension cards in a grid.
 
-If you are using Fleetbase Cloud or have a self-hosted instance running, you can browse extensions directly from the web interface:
+![Extensions Explore view — extension card grid with search bar and category sidebar](/images/placeholder.png)
 
-1. Log into the Fleetbase Console.
-2. In the left sidebar, navigate to **Extensions**.
-3. The marketplace will display featured, popular, and newly released extensions.
-4. Use the search bar or category filters to find specific extensions (e.g., "fleet management", "accounting").
+The sidebar shows:
+- **Explore All** — the full registry catalogue
+- **Categories** — browse by type (e.g. Fleet Management, Commerce, Finance)
+
+Use the **search bar** in the section header to filter by keyword. Click a category in the sidebar to narrow results to that type.
+
+Each extension card shows the extension name, icon, and description. Click a card to view full details before installing.
 
 ### Via the CLI
 
-If you prefer the command line, you can search the registry using the Fleetbase CLI (`flb`):
-
 ```bash
-# List all available extensions
+# Browse all available extensions
 flb search
 
 # Search by keyword
-flb search fleet
+flb search routing
 
-# Search by category
+# Filter by category
 flb search --category logistics
 
-# Filter for free extensions only
+# Show only free extensions
 flb search --free
 
-# Output results in JSON format (useful for scripting)
+# Output as JSON (for scripting)
 flb search --json
+
+# Output one extension per line (slug, name, version, price)
+flb search --simple
 ```
 
 ## Installing Extensions
 
-The installation process differs slightly depending on whether you are using Fleetbase Cloud or a self-hosted instance.
+### Via the Console
 
-### Installing on Fleetbase Cloud
+From the **Explore** view, find the extension you want and click **Install**. The console handles the rest — downloading the backend package, running database migrations, and rebuilding the frontend to include the new UI.
 
-For Fleetbase Cloud users, installing an extension is a one-click process:
+Once installation completes the extension's features and navigation appear immediately. You may need to refresh the page.
 
-1. Navigate to **Extensions** in the Fleetbase Console.
-2. Find the extension you want to install (e.g., FleetOps).
-3. Click the **Install** button.
-4. The platform will automatically provision the extension for your organization. Once complete, the extension's menus and features will appear in your console.
+![Extension card with Install button and installation progress indicator](/images/placeholder.png)
 
-### Installing on a Self-Hosted Instance
+### Via the CLI (Self-Hosted)
 
-If you are self-hosting Fleetbase, you must use the Fleetbase CLI to install extensions. This ensures that the necessary backend packages and frontend engines are properly downloaded and wired into your infrastructure.
-
-Before installing an extension, you must authenticate your CLI with the Fleetbase Registry:
-
-1. **Register an account** (one-time setup):
-   ```bash
-   flb register
-   ```
-2. **Verify your email**:
-   ```bash
-   flb verify -e your-email@example.com -c verification-code
-   ```
-3. **Generate your registry token**:
-   ```bash
-   flb generate-token -e your-email@example.com
-   ```
-4. **Set your authentication token**:
-   ```bash
-   flb set-auth your-registry-token-here
-   ```
-
-Once authenticated, you can install extensions by their package name:
+On a self-hosted instance, use the Fleetbase CLI to install extensions. The extension identifier uses the format `publisher/extension-name` — no `@` prefix.
 
 ```bash
-# Install the official FleetOps extension
-flb install @fleetbase/fleetops
+# Install an extension by name
+flb install fleetbase/fleetops
 
-# Install the official Storefront extension
-flb install @fleetbase/storefront
+# Install to a specific Fleetbase instance directory
+flb install fleetbase/fleetops --path /opt/fleetbase
 ```
 
-The CLI will automatically download the extension, run any necessary database migrations, and rebuild the frontend console to include the new UI components.
+The CLI downloads the extension, runs any required database migrations, and rebuilds the frontend console to wire in the new UI components.
+
+## Authenticating the CLI
+
+Before you can install extensions from the CLI you must authenticate with the Fleetbase Registry.
+
+<Steps>
+  <Step>
+    ### Register an account
+
+    ```bash
+    flb register
+    ```
+  </Step>
+  <Step>
+    ### Verify your email
+
+    ```bash
+    flb verify -e your@email.com -c verification-code
+    ```
+  </Step>
+  <Step>
+    ### Generate a registry token
+
+    ```bash
+    flb generate-token -e your@email.com
+    ```
+  </Step>
+  <Step>
+    ### Set your auth token
+
+    ```bash
+    flb set-auth your-registry-token-here
+    ```
+  </Step>
+</Steps>
+
+You only need to do this once per machine. After authenticating, `flb install` and all other registry commands work without further prompts.
+
+## Purchased Extensions
+
+Extensions you have purchased but not yet installed appear under **Purchased** in the Extensions sidebar. Each card shows an **Installed** badge if the extension is already active, or allows you to install it if not.
+
+![Purchased tab — extension cards with Installed badges for active extensions](/images/placeholder.png)
 
 ## Post-Installation
 
-After an extension is installed, it may require additional configuration.
+After installing an extension:
 
-- **Permissions**: The extension will automatically register new permissions in the IAM system. You may need to update your [Roles](/docs/platform/iam/users-roles-permissions) to grant users access to the new features.
-- **Settings**: Many extensions add new configuration panels under the **Settings** menu. Review these settings to tailor the extension to your operational needs.
+- **Permissions** — the extension registers new permission strings in IAM. Update your [Roles & Permissions](/docs/platform/identity-and-access/roles-and-permissions) to grant users access to the new features.
+- **Settings** — many extensions add configuration panels under their own settings section. Review these after installation.

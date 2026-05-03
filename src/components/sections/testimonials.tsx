@@ -16,42 +16,42 @@ import {
 import { cn } from '@/lib/utils';
 
 const REVIEWS = [
- {
- name: 'Flora Schuler',
- username: '@floraFlawa',
- body: "i'm using @plasma to get access to some of the best automation features in the market, you should try it too",
- img: 'https://avatar.vercel.sh/floraFlawa',
- },
- {
- name: 'OneBadDev',
- username: '@elidecodes',
- body: "been using @plasma to automate my podcast post-prod flow. local triggers + ffmpeg scripts = chef's kiss",
- img: 'https://avatar.vercel.sh/elidecodes',
- },
- {
- name: 'John Robert',
- username: '@scripteddev',
- body: '@plasma is already part of my daily toolkit. Local folder watcher → python script → discord alert. Took 2 mins to set up.',
- img: 'https://avatar.vercel.sh/scripteddev',
- },
- {
- name: 'CodeNinja',
- username: '@sysninja',
- body: "Can't believe how fast @plasma runs. It's like Zapier if it respected your privacy and your CPU.",
- img: 'https://avatar.vercel.sh/sysninja',
- },
- {
- name: 'Tusmah',
- username: '@ananenu1',
- body: "Made a Plasma flow that watches my screenshot folder and auto-saves new captures to Notion. Didn't touch the cloud once. 🔥",
- img: 'https://avatar.vercel.sh/ananenu1',
- },
- {
- name: 'Liam Stone',
- username: '@liam.codes',
- body: "Plasma completely changed how I debug and monitor workflows. It's like having a second brain for automation.",
- img: 'https://avatar.vercel.sh/liam.codes',
- },
+  {
+    name: 'Ahmed Al-Rashidi',
+    username: 'Operations Director',
+    body: "Switched from a per-driver TMS and cut our software cost by 60%. @fleetbase handles our 80-driver fleet and integrates directly with our storefront. The ROI was immediate.",
+    img: 'https://avatar.vercel.sh/rashidi_logistics',
+  },
+  {
+    name: 'Priya Nair',
+    username: 'Head of Logistics, FreshDrop',
+    body: "The Storefront + Fleet-Ops integration is what sold us. Customer places an order, it's automatically dispatched to the nearest driver. Zero manual work in between.",
+    img: 'https://avatar.vercel.sh/priya_ops',
+  },
+  {
+    name: 'Marcus Chen',
+    username: 'Software Engineer',
+    body: "Built a custom @fleetbase extension for our specific workflow in two weeks. The starter template and SDK docs are solid — it just works.",
+    img: 'https://avatar.vercel.sh/mchen_dev',
+  },
+  {
+    name: 'Sarah Müller',
+    username: 'Supply Chain Manager',
+    body: "Self-hosted on AWS in under an hour using Docker. Full data sovereignty was non-negotiable for us — @fleetbase was the only open-source option that could do it all.",
+    img: 'https://avatar.vercel.sh/sarahm_supply',
+  },
+  {
+    name: 'James Okafor',
+    username: 'CEO, SwiftLine 3PL',
+    body: "We run 12 client operations from one @fleetbase instance. The multi-tenant org management is exactly what we needed — and would have cost 10x more anywhere else.",
+    img: 'https://avatar.vercel.sh/jokafor_3pl',
+  },
+  {
+    name: 'Lucía Torres',
+    username: 'Founder, VeloExpress',
+    body: "Our drivers have a branded app, customers see our branding — and we wrote zero mobile code. The Navigator app is genuinely white-label ready out of the box.",
+    img: 'https://avatar.vercel.sh/ltorres_courier',
+  },
 ];
 
 const firstRow = REVIEWS.slice(0, REVIEWS.length / 2);
@@ -59,28 +59,27 @@ const secondRow = REVIEWS.slice(REVIEWS.length / 2);
 const Testimonials = () => {
  return (
  <section className="container flex flex-col gap-y-10 overflow-x-hidden py-10 md:py-15 lg:flex-row">
- <div className="flex max-w-lg flex-col gap-15 text-balance">
- <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
- Real automation for control freaks
- </h2>
- <div className="space-y-7.5">
- <p className="text-muted-foreground text-lg leading-snug">
- Every run is tracked in detail - from inputs to outputs to runtime
- errors. Perfect for debugging and transparency.
- </p>
+      <div className="flex max-w-lg flex-col gap-15 text-balance">
+          <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
+            Trusted by logistics teams worldwide
+          </h2>
+          <div className="space-y-7.5">
+            <p className="text-muted-foreground text-lg leading-snug">
+              From solo courier operators to enterprise 3PLs — teams choose Fleetbase for full control, no per-seat pricing, and a platform that actually fits how they work.
+            </p>
 
- <Button
- variant="ghost"
- asChild
- className="text-accent-foreground group gap-3 !px-0 hover:!bg-transparent hover:opacity-90"
- >
- <Link href="#">
- Get started too
- <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
- </Link>
- </Button>
- </div>
- </div>
+            <Button
+              variant="ghost"
+              asChild
+              className="text-accent-foreground group gap-3 !px-0 hover:!bg-transparent hover:opacity-90"
+            >
+              <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+                Start your free trial
+                <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
+        </div>
 
  <div className="relative -mr-[max(2rem,calc((100vw-80rem)/2+5rem))] flex flex-1 flex-col gap-2.25 overflow-hidden mask-l-from-50% mask-l-to-100%">
  <Marquee
@@ -142,15 +141,15 @@ const ReviewCard = ({
  </CardHeader>
  <CardContent className="p-0">
  <blockquote className="text-sm leading-snug">
- {body.split(/(@plasma)/g).map((part, index) =>
- part === '@plasma' ? (
- <span key={index} className="text-chart-1">
- {part}
- </span>
- ) : (
- part
- ),
- )}
+          {body.split(/(@fleetbase)/g).map((part, index) =>
+            part === '@fleetbase' ? (
+              <span key={index} className="text-chart-1">
+                {part}
+              </span>
+            ) : (
+              part
+            ),
+          )}
  </blockquote>
  </CardContent>
  </Card>

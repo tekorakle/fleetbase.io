@@ -1,134 +1,156 @@
 import type { Metadata } from 'next';
-import { ShoppingCart, Package, Zap, BarChart3, Webhook, Store } from 'lucide-react';
+import { ShoppingCart, Package, Zap, BarChart3, RefreshCw, Bell, MapPin, Code, Clock, Store } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'E-commerce Delivery & Fulfillment Management Software',
- description: 'Connect your e-commerce store to a powerful delivery management platform. Automate order fulfillment, dispatch drivers, and track deliveries in real time with Fleetbase.',
- keywords: ['ecommerce logistics software', 'retail fulfillment platform', 'order fulfillment software', 'ecommerce delivery management', 'WMS for ecommerce'],
- openGraph: {
- title: 'E-commerce & Retail Logistics Software | Fleetbase',
- description: 'Sync inventory, fulfill orders faster, and delight customers with real-time delivery tracking.',
- },
+  title: 'E-commerce & Retail Delivery Management Software | Fleetbase',
+  description: 'Power same-day and next-day delivery for your e-commerce or retail operation. Open-source delivery management with headless API, real-time tracking, and returns logistics.',
+  keywords: ['ecommerce delivery software', 'retail logistics platform', 'same-day delivery', 'last mile ecommerce', 'headless delivery API', 'returns management'],
+  openGraph: {
+    title: 'E-commerce & Retail Delivery Software | Fleetbase',
+    description: 'Give your customers the delivery experience they expect — and keep the margins that make it worth it.',
+  },
 };
 
 export default function EcommercePage() {
- return (
- <SolutionPageLayout
- badge="E-commerce & Retail"
- title={<>From Cart to Doorstep. <span className="text-gradient">Seamlessly.</span></>}
- description="Fleetbase connects your online store to your fulfillment and delivery operation — syncing inventory, automating order routing, and giving customers the real-time delivery experience they expect."
- stats={[
- { value: '60%', label: 'Faster order fulfillment' },
- { value: '45%', label: 'Reduction in delivery errors' },
- { value: '4.9★', label: 'Post-delivery customer rating' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/storefront-products-grid.webp"
- heroScreenshotAlt="Fleetbase Storefront product catalogue integrated with FleetOps dispatch for e-commerce fulfilment"
- heroScreenshotNeeded="FleetOps + Pallet side-by-side — e-commerce orders flowing from Storefront into dispatch"
- painPoints={{
- heading: 'Where e-commerce logistics breaks down',
- items: [
- 'Orders sitting in a queue because dispatch is manual',
- 'Inventory counts out of sync between your store and warehouse',
- 'Customers getting no updates after they place an order',
- 'Returns and exchanges handled in a completely separate system',
- 'Carrier integrations that break every time a platform updates',
- 'No single view of orders, inventory, and deliveries',
- ],
- }}
- features={[
- {
- title: 'Storefront to Dispatch in One Click',
- description:
- 'Fleetbase Storefront connects directly to FleetOps. When a customer places an order, it flows automatically into your dispatch queue — no manual data entry, no delays, no errors.',
- icon: Store,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Storefront to Dispatch in One Click',
- screenshotNeeded: 'Storefront order panel — showing new orders auto-populating into FleetOps dispatch queue',
- },
- {
- title: 'Inventory Sync with Pallet WMS',
- description:
- 'Keep your online store inventory in sync with your warehouse in real-time. When stock is picked and packed in Pallet, your Storefront product counts update automatically.',
- icon: Package,
- screenshot: '/images/console-screenshots/storefront-products-grid.webp',
- screenshotAlt: 'Inventory Sync with Pallet WMS',
- screenshotNeeded: 'Pallet WMS inventory view — showing stock levels synced with Storefront product listings',
- },
- {
- title: 'Automated Order Routing',
- description:
- 'Route orders to the right warehouse, fulfillment centre, or carrier based on customer location, stock availability, and delivery SLA. Handle multi-location fulfillment without complexity.',
- icon: Zap,
- screenshot: '/images/console-screenshots/developers-monitoring-detail.webp',
- screenshotAlt: 'Automated Order Routing',
- screenshotNeeded: 'FleetOps order routing rules panel — showing warehouse selection logic',
- },
- {
- title: 'Customer Delivery Tracking',
- description:
- 'Every order generates a live tracking link sent automatically at dispatch. Customers see real-time driver position, ETA, and delivery confirmation — reducing support tickets by up to 40%.',
- icon: ShoppingCart,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Customer Delivery Tracking',
- screenshotNeeded: 'Customer tracking page — branded with live map, ETA, and order summary',
- },
- {
- title: 'API & Platform Integrations',
- description:
- 'Connect Fleetbase to Shopify, WooCommerce, Magento, or any custom platform via REST API and webhooks. Sync orders, inventory, and fulfilment status bidirectionally.',
- icon: Webhook,
- screenshot: '/images/console-screenshots/developers-api-keys.webp',
- screenshotAlt: 'API & Platform Integrations',
- screenshotNeeded: 'Fleetbase developer console — showing active Shopify webhook integration',
- },
- {
- title: 'Returns & Reverse Logistics',
- description:
- 'Manage returns end-to-end — from customer return request to driver collection, warehouse receipt, and inventory restock. All tracked in the same system as your outbound orders.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/developers-monitoring-detail.webp',
- screenshotAlt: 'Returns & Reverse Logistics',
- screenshotNeeded: 'FleetOps return order flow — showing return request, driver collection, and warehouse receipt steps',
- },
- ]}
- testimonial={{
- quote:
- "We used to have three separate systems for our store, warehouse, and delivery. Fleetbase replaced all of them. Order errors dropped 45% in the first month.",
- author: 'Sarah K.',
- role: 'Head of Fulfilment',
- company: 'Bloom & Co.',
- }}
- faqs={[
- {
- q: 'Does Fleetbase integrate with Shopify or WooCommerce?',
- a: 'Yes. Fleetbase connects to Shopify, WooCommerce, Magento, and any platform with a REST API or webhook support. Orders, inventory, and fulfilment status sync bidirectionally.',
- },
- {
- q: 'Can Fleetbase handle multi-warehouse fulfilment?',
- a: 'Yes. You can configure multiple warehouses or fulfilment centres and set routing rules to determine which location fulfils each order based on stock availability, customer location, and SLA.',
- },
- {
- q: 'Does it support click-and-collect or in-store pickup?',
- a: 'Yes. Fleetbase Storefront supports click-and-collect order types with configurable pickup workflows and customer notification at each stage.',
- },
- {
- q: 'How does Fleetbase handle peak season volume?',
- a: 'Fleetbase scales horizontally on cloud infrastructure. The automated dispatch and routing engine handles high order volumes without manual intervention, making peak seasons manageable.',
- },
- {
- q: 'Can we use Fleetbase for our own delivery fleet and third-party carriers?',
- a: 'Yes. Fleetbase supports both own-fleet delivery (via FleetOps and Navigator) and third-party carrier integrations. You can mix both within the same order management workflow.',
- },
- ]}
- ctaHeading="Connect your store to your logistics operation"
- ctaBody="Stop managing orders in one system and deliveries in another. Fleetbase brings it all together — from checkout to doorstep."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Book a Demo"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="E-commerce & Retail"
+      title={<>Own Your Last Mile.<br /><span className="text-gradient">Stop Paying Carrier Fees.</span></>}
+      description="Carrier dependency is costing your e-commerce business more than you think — in fees, in brand experience, and in customer loyalty. Fleetbase gives you a complete owned-delivery platform: headless API, real-time customer tracking, same-day dispatch, and returns management — built to plug into your existing stack."
+      stats={[
+        { value: '2-day', label: 'To same-day delivery capability' },
+        { value: '45%', label: 'Reduction in carrier costs for own-fleet operators' },
+        { value: '3.2×', label: 'Higher repeat purchase rate with live tracking' },
+        { value: '98%', label: 'API uptime SLA' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase e-commerce delivery operations dashboard"
+      painPoints={{
+        heading: 'The delivery gap that\'s costing you customers',
+        items: [
+          'Carrier fees eating into margins with no control over service quality',
+          'Customers getting generic tracking pages that erode your brand identity',
+          'No visibility into where orders are once they leave your warehouse',
+          'Returns processes that are slow, manual, and costly to manage',
+          'Same-day delivery promises that are impossible to keep with 3PL carriers',
+          'Disconnected systems requiring manual data entry between order and dispatch',
+        ],
+      }}
+      featuresHeading="Your delivery operation. Your brand. Your data."
+      featuresSubheading="The delivery infrastructure layer that plugs directly into your e-commerce stack."
+      features={[
+        {
+          title: 'Headless Delivery API',
+          description: 'Fleetbase\'s REST API integrates directly into your Shopify, WooCommerce, Magento, or custom storefront. Orders flow from checkout to dispatch automatically — no manual data entry, no middleware hacks.',
+          bullets: [
+            'REST API with full order lifecycle management',
+            'Native Shopify, WooCommerce, and Magento connectors',
+            'Webhooks for every delivery event to update your OMS in real-time',
+          ],
+          icon: Code,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Branded Customer Tracking',
+          description: 'Replace the generic carrier tracking page with your own branded experience. Customers see your logo, your colours, and your messaging — while tracking their order\'s real-time position on a live map.',
+          bullets: [
+            'Fully brandable tracking page — your domain, your design',
+            'Live driver position and accurate ETA',
+            'Delivery confirmation with photo proof of delivery',
+          ],
+          icon: MapPin,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Same-Day Dispatch Engine',
+          description: 'Offer same-day delivery as a competitive differentiator, not a logistics headache. Fleetbase\'s automated dispatch assigns orders to the nearest available driver the moment they\'re ready to ship — with zero manual coordination.',
+          bullets: [
+            'Automatic order-to-driver assignment based on proximity and capacity',
+            'Configurable cutoff times per delivery zone',
+            'Real-time capacity management to avoid over-promising',
+          ],
+          icon: Zap,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Delivery Notifications That Convert',
+          description: 'Proactive delivery communication isn\'t just good service — it drives repeat purchases. Customers who track a delivery are 3.2× more likely to reorder. Every Fleetbase notification is an opportunity to bring them back.',
+          bullets: [
+            'Automated SMS, email, and push at every order milestone',
+            'Promotional message injection at delivery confirmation',
+            'NPS and review request triggers post-delivery',
+          ],
+          icon: Bell,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Returns & Reverse Logistics',
+          description: 'Returns are the silent margin killer. Fleetbase automates reverse dispatch — scheduling pick-ups, tracking inbound returns, and updating your WMS when goods are received — so your team spends zero time on manual returns coordination.',
+          bullets: [
+            'Customer-initiated return request portal',
+            'Automated pick-up scheduling and driver assignment',
+            'Real-time inbound tracking updated to your WMS via webhook',
+          ],
+          icon: RefreshCw,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Fulfilment & Inventory Sync',
+          description: 'Connect Fleetbase to your warehouse or Pallet inventory module for end-to-end fulfilment visibility. Know when stock is picked, packed, and dispatched — and catch fulfilment bottlenecks before they become delays.',
+          bullets: [
+            'Pick-and-pack workflow integration with Pallet WMS',
+            'Inventory reservation at order placement',
+            'Fulfilment SLA tracking and breach alerting',
+          ],
+          icon: Package,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: Clock, label: 'Delivery time slots' },
+        { icon: Store, label: 'Multi-store support' },
+        { icon: ShoppingCart, label: 'Storefront module' },
+        { icon: BarChart3, label: 'Revenue analytics' },
+        { icon: RefreshCw, label: 'Returns management' },
+        { icon: MapPin, label: 'Zone-based pricing' },
+        { icon: Bell, label: 'Post-delivery NPS' },
+        { icon: Code, label: 'Full REST API' },
+      ]}
+      testimonial={{
+        quote: 'We built our own same-day delivery proposition on Fleetbase in three weeks. We\'ve since removed two third-party carriers from our stack and cut delivery costs by 40%.',
+        author: 'Sarah L.',
+        role: 'Head of Logistics',
+        company: 'UrbanStore',
+      }}
+      faqs={[
+        {
+          q: 'Does Fleetbase work with Shopify, WooCommerce, and other platforms?',
+          a: 'Yes. The REST API integrates with any e-commerce platform. Native connectors are available for Shopify and WooCommerce, and webhook events keep your OMS updated in real-time.',
+        },
+        {
+          q: 'Can I offer both carrier and own-fleet delivery from one system?',
+          a: 'Yes. Fleetbase manages own-fleet dispatch natively and can receive webhook events from carrier tracking systems, giving you a single operations view regardless of delivery method.',
+        },
+        {
+          q: 'How do I give customers a branded tracking experience?',
+          a: 'The customer tracking portal is fully customizable with your brand assets and can be served from your own domain. Notification templates are also fully editable.',
+        },
+        {
+          q: 'Can Fleetbase handle peak sale periods like Black Friday?',
+          a: 'Yes. Fleetbase scales horizontally. Cloud plans handle spikes automatically. Self-hosted deployments can be right-sized for peak capacity.',
+        },
+        {
+          q: 'Does it support international or cross-border deliveries?',
+          a: 'Fleetbase supports multi-currency, multi-language, and multi-region configurations. International carrier integration is available via the API.',
+        },
+      ]}
+      ctaHeading="Take ownership of your delivery experience"
+      ctaBody="Stop letting carriers define your brand's most important touchpoint. Build your own delivery operation on Fleetbase and keep the margin, the data, and the customer relationship."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

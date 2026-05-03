@@ -128,11 +128,13 @@ const IntegrationsEcosystem = () => {
  <section className="container flex flex-col gap-y-10 overflow-x-hidden py-10 md:py-15 lg:flex-row">
  <div className="flex max-w-lg flex-col gap-15 text-balance">
  <h2 className="text-4xxl leading-tight tracking-tight md:text-5xl">
- Connect Your Entire Logistics Stack
+ Works with the Stack You Already Have
  </h2>
  <div className="space-y-7.5">
  <p className="text-muted-foreground text-lg leading-snug">
- Don't rip and replace your existing systems. Fleetbase works with the tools you already use—your accounting software, communication platforms, analytics dashboards, and more. Build a connected logistics ecosystem without starting from scratch.
+ Fleetbase is built to sit inside real-world operations, not greenfield demos. Connect your ERP,
+ accounting, communications, analytics, cloud infrastructure, and custom apps without rebuilding
+ your business around a black box.
  </p>
 
  <Button
@@ -140,7 +142,7 @@ const IntegrationsEcosystem = () => {
  asChild
  className="text-accent-foreground group gap-3 !px-0 hover:!bg-transparent hover:opacity-90"
  >
- <Link href="https://docs.fleetbase.io">
+ <Link href="/developers/api">
  View API Documentation
  <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
  </Link>

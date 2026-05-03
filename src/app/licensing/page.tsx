@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Shield, Code2, Building2, Check, X } from 'lucide-react';
+import { ArrowRight, Shield, Code2, Building2, Check, X, Home, Globe, Lock } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -185,17 +186,23 @@ export default function LicensingPage() {
  </p>
  <div className="grid gap-6 md:grid-cols-3">
  <div className="rounded-xl border bg-card p-6">
- <div className="mb-3 text-2xl">🏠</div>
+ <div className="mb-4 flex size-10 items-center justify-center rounded-lg border bg-background">
+ <Home className="size-5 text-primary" />
+ </div>
  <h3 className="mb-2 font-semibold">Internal use</h3>
  <p className="text-sm text-muted-foreground">Running Fleetbase for your own organisation with no external users. No AGPL obligations. Free forever.</p>
  </div>
  <div className="rounded-xl border bg-card p-6">
- <div className="mb-3 text-2xl">🌐</div>
+ <div className="mb-4 flex size-10 items-center justify-center rounded-lg border bg-background">
+ <Globe className="size-5 text-primary" />
+ </div>
  <h3 className="mb-2 font-semibold">Network deployment with changes</h3>
  <p className="text-sm text-muted-foreground">Deploying a modified Fleetbase as a service to external users. AGPL requires you to publish your modifications under AGPL-3.0.</p>
  </div>
  <div className="rounded-xl border border-primary bg-primary/5 p-6">
- <div className="mb-3 text-2xl">🔒</div>
+ <div className="mb-4 flex size-10 items-center justify-center rounded-lg border bg-background">
+ <Lock className="size-5 text-primary" />
+ </div>
  <h3 className="mb-2 font-semibold">Proprietary modifications</h3>
  <p className="text-sm text-muted-foreground">Want to keep your changes private? A commercial licence removes all AGPL obligations and lets you build proprietary products.</p>
  </div>
@@ -211,14 +218,18 @@ export default function LicensingPage() {
  <h2 className="mb-8 text-2xl font-bold tracking-tight md:text-3xl">
  Licensing FAQ
  </h2>
- <div className="space-y-4">
- {faqs.map((faq) => (
- <div key={faq.q} className="rounded-xl border bg-card p-6">
- <div className="mb-2 font-semibold">{faq.q}</div>
- <div className="text-sm leading-relaxed text-muted-foreground">{faq.a}</div>
- </div>
+ <Accordion type="single" collapsible className="space-y-3">
+ {faqs.map((faq, i) => (
+ <AccordionItem key={i} value={`faq-${i}`} className="rounded-xl border bg-card px-6">
+ <AccordionTrigger className="py-5 text-left font-semibold hover:no-underline">
+ {faq.q}
+ </AccordionTrigger>
+ <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+ {faq.a}
+ </AccordionContent>
+ </AccordionItem>
  ))}
- </div>
+ </Accordion>
  <p className="mt-8 text-sm text-muted-foreground">
  Still unsure which licence applies to your use case?{' '}
  <Link href="https://cal.com/shivthakker/enquiry" className="text-primary hover:underline">

@@ -1,0 +1,12 @@
+{
+  "title": "Orders",
+  "pages": [
+    "overview",
+    "order-lifecycle",
+    "managing-orders",
+    "kanban-board",
+    "scheduling-orders",
+    "proof-of-delivery",
+    "tracking"
+  ]
+}

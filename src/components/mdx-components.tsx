@@ -1,6 +1,7 @@
 // Import individual fumadocs-ui components
 import { Accordion, Accordions } from 'fumadocs-ui/components/accordion';
 import { Banner } from 'fumadocs-ui/components/banner';
+import { Callout } from 'fumadocs-ui/components/callout';
 import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import { File, Files, Folder } from 'fumadocs-ui/components/files';
 import { Step, Steps } from 'fumadocs-ui/components/steps';
@@ -25,6 +26,7 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
  Accordion,
  Accordions,
  Banner,
+ Callout,
  CodeBlock,
  Files,
  File,

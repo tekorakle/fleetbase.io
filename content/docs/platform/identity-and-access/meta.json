@@ -1,0 +1,11 @@
+{
+  "title": "Identity & Access",
+  "pages": [
+    "users",
+    "roles-and-permissions",
+    "policies",
+    "groups",
+    "organizations",
+    "two-factor-authentication"
+  ]
+}

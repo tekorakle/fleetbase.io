@@ -1,101 +1,90 @@
 ---
 title: Socket Events
-description: Subscribe to real-time socket events for live updates on orders, drivers, and other platform activity.
+description: Monitor live WebSocket channels and subscribe to real-time event streams from your Fleetbase instance.
 ---
 
 # Socket Events
 
-Logistics operations require real-time visibility. Fleetbase uses **SocketCluster** to provide a highly scalable WebSocket server that broadcasts live updates across the platform.
+Fleetbase uses **SocketCluster** to broadcast real-time events over WebSocket connections. The Socket Events panel in the Developer Console lets you browse available channels and watch live event output directly in the console. Navigate to **Developers → Socket Events**.
 
-By subscribing to socket events, you can build real-time dashboards, live-tracking interfaces for customers, or mobile apps that react instantly to changes in driver locations or order statuses.
+![Socket Events list — Listen button and Channel name columns for each available channel](/images/placeholder.png)
 
-## How Socket Events Work
+## Available Channels
 
-When an event occurs in the Fleetbase backend (e.g., a driver updates their location via the Navigator app), the backend publishes the event to a Redis channel. The SocketCluster server subscribes to these channels and broadcasts the events to all connected WebSocket clients.
+The panel lists all channels available for your organization:
 
-### Channels and Events
+| Channel | Description |
+| :--- | :--- |
+| `api.{key_id}` | One channel per API key — broadcasts events scoped to that credential |
+| `company.{company_id}` | Your organization's main channel — broadcasts all events for your org regardless of which key triggered them |
 
-Socket communication in Fleetbase is organized around **Channels** and **Events**.
+## Listening on a Channel
 
-- **Channels**: Represent a specific resource or context (e.g., a specific order, a specific driver, or a company-wide channel).
-- **Events**: Represent the specific action that occurred within that channel (e.g., `driver.location_updated`, `order.dispatched`).
+Click **Listen** on any row to open the real-time event view for that channel.
 
-## Connecting to the Socket Server
+![Channel live view — black terminal panel with green monospace event output and timestamps](/images/placeholder.png)
 
-To receive real-time updates, your client application must connect to the Fleetbase SocketCluster server.
+The channel view displays a black terminal-style output panel. As events arrive they appear as timestamped lines in green monospace text. If no events have fired yet a spinner shows **Awaiting events…**.
 
-If you are building a web application, you can use the official `socketcluster-client` library.
+Each line shows the time the event was received and its JSON payload, formatted for readability.
+
+## Listening on a Custom Channel
+
+Click **Listen on custom channel** in the header to enter any channel name manually — useful when you know the exact channel identifier you want to observe.
+
+![Listen on custom channel modal — channel ID input and Listen button](/images/placeholder.png)
+
+## Connecting Programmatically
+
+To receive socket events in your own application, connect to the Fleetbase SocketCluster server using the `socketcluster-client` library.
 
 ```javascript
 import socketClusterClient from 'socketcluster-client';
 
-// Initialize the connection
 const socket = socketClusterClient.create({
-  hostname: 'socket.fleetbase.io', // Or your self-hosted socket domain
-  secure: true,
-  port: 443,
+    hostname: 'socket.your-instance.com',
+    secure: true,
+    port: 443,
 });
 
-// Listen for connection events
 socket.on('connect', () => {
-  console.log('Connected to Fleetbase Socket Server');
+    console.log('Connected to Fleetbase socket server');
 });
 ```
 
-## Subscribing to Channels
-
-Once connected, you can subscribe to specific channels to receive events.
-
-### Company Channel
-
-The company channel broadcasts events relevant to your entire organization. The channel name is typically your organization's unique identifier (UUID).
+### Subscribing to a Channel
 
 ```javascript
-// Subscribe to the company channel
-const companyChannel = socket.subscribe('company_uuid_here');
+// Listen on the company-wide channel
+const channel = socket.subscribe('company.your-company-uuid');
 
-// Listen for specific events on this channel
-companyChannel.on('driver.location_updated', (data) => {
-  console.log('Driver moved:', data.driver_id, data.location);
-  // Update map marker...
-});
-
-companyChannel.on('order.status_changed', (data) => {
-  console.log('Order status updated:', data.order_id, data.status);
-  // Update UI...
-});
+(async () => {
+    for await (const data of channel) {
+        console.log('Event received:', data);
+    }
+})();
 ```
 
-### Resource-Specific Channels
-
-You can also subscribe to channels for specific resources, such as a single order. This is useful for building customer-facing tracking pages where the user only needs updates for their specific delivery.
+### Subscribing to an API Key Channel
 
 ```javascript
-// Subscribe to a specific order's channel
-const orderChannel = socket.subscribe('order_uuid_here');
+// Listen on a specific API key channel
+const channel = socket.subscribe('api.your-api-key-id');
 
-orderChannel.on('order.dispatched', (data) => {
-  console.log('Your order is on the way!');
-});
+(async () => {
+    for await (const data of channel) {
+        console.log('Event received:', data);
+    }
+})();
 ```
 
-## Monitoring Socket Events
+## Origin Restrictions
 
-The Fleetbase Console provides a built-in tool for monitoring real-time socket traffic.
-
-1. Navigate to **Developers** > **Socket Events**.
-2. The panel will display a live feed of all events being broadcasted on your organization's channel.
-3. You can click on individual events to inspect the JSON payload.
-
-This tool is invaluable for debugging real-time integrations and verifying that events are being fired correctly.
-
-## Security Considerations
-
-When deploying Fleetbase, the `SOCKETCLUSTER_OPTIONS` environment variable controls which domains are allowed to connect to the WebSocket server.
-
-**Always restrict origins to your specific domains in production** to prevent unauthorized clients from connecting to your socket server and listening to events.
+In production, restrict which origins can connect to your socket server. Configure this via the `SOCKETCLUSTER_OPTIONS` environment variable in your `docker-compose.override.yml`:
 
 ```yaml
-# Example production configuration in docker-compose.override.yml
-SOCKETCLUSTER_OPTIONS: '{"origins":"https://yourdomain.com:*,wss://yourdomain.com:*"}'
+environment:
+    SOCKETCLUSTER_OPTIONS: '{"origins":"https://yourdomain.com:*"}'
 ```
+
+Without this restriction, any client that knows your socket server address can connect and receive event data. See [System Setup → Socket](/docs/platform/system-setup/socket) for full configuration details.

@@ -1,51 +1,56 @@
 ---
 title: Storefront
-description: Storefront is the headless e-commerce and marketplace extension for Fleetbase — power your own on-demand platform.
+description: Storefront is the headless e-commerce and marketplace extension for Fleetbase — power on-demand delivery apps, multi-vendor marketplaces, and D2C platforms.
 ---
 
 # Storefront
 
-**Storefront** is the headless e-commerce and marketplace extension for Fleetbase.
+**Storefront** is the headless commerce and marketplace extension for Fleetbase. It provides the complete backend infrastructure to build on-demand delivery apps, multi-vendor marketplaces, or direct-to-consumer e-commerce platforms — all deeply integrated with Fleet-Ops so orders flow automatically into your dispatch system.
 
-While [FleetOps](/docs/fleetops) handles the *execution* of deliveries, Storefront handles the *creation* of demand. It provides the backend infrastructure needed to build on-demand delivery apps, multi-vendor marketplaces, or direct-to-consumer (D2C) e-commerce platforms.
+![Storefront console — store overview with products, orders, and live customer activity](/images/placeholder.png)
 
-Because Storefront is deeply integrated with FleetOps, the moment a customer completes a checkout, the order is instantly routed to your dispatch system for fulfillment.
+## What Storefront Does
 
-## Headless Architecture
+| Capability | What it covers |
+| :--- | :--- |
+| **Stores & Networks** | Single-store or multi-vendor marketplace architecture |
+| **Product Catalog** | Products, categories, variants, addons, availability hours |
+| **Orders & Cart** | Persistent cart, multi-store checkout, order lifecycle management |
+| **Payment Gateways** | Stripe, QPay, and Cash on Delivery |
+| **Customer Management** | Registration, authentication, order history, saved addresses |
+| **Push Notifications** | APNs and FCM notification channels for mobile apps |
+| **Promotions** | Discount codes, automated promotions, broadcast notifications |
+| **Reviews & Ratings** | Customer reviews on products and stores with vote/moderation support |
+| **Food Trucks** | Mobile store locations linked to Fleet-Ops vehicles with GPS |
+| **Catalogs** | Group products into shareable catalogs, assign to food trucks |
+| **Headless API** | Full REST API for powering custom mobile or web frontends |
+| **Fleet-Ops Integration** | Checkouts create Fleet-Ops orders for fulfillment automatically |
 
-Storefront is "headless," meaning it provides a robust set of APIs (the [Storefront API](/docs/api-reference/storefront)) for managing products, carts, and checkouts, but it does not dictate how your frontend should look.
+## Key Concepts
 
-You can use the Storefront API to power:
-- A custom React/Vue web application.
-- A native iOS/Android mobile app (like the open-source [Storefront App](/docs/apps/storefront-app)).
-- A conversational commerce bot (e.g., ordering via WhatsApp or SMS).
+Storefront is built around a few core entities:
 
-## Core Capabilities
+- **Store** — a single brand or merchant with its own catalog, locations, operating hours, and branding. Each store has an auto-generated API key for secure public access.
+- **Network** — a collection of stores forming a marketplace. Networks aggregate stores with shared payment gateways and notification channels.
+- **Product** — an item for sale with variants (required selections like size/color), addons (optional extras like toppings), and per-product availability hours.
+- **Cart** — a persistent shopping session. Carts expire after 7 days and are tied to the customer or session.
+- **Checkout** — a finalized cart with payment, delivery address, and service quote. A successful checkout creates a Fleet-Ops order.
+- **Customer** — an end-user who can register, authenticate via phone/email/social login, and track their orders.
 
-### [Networks & Stores](/docs/storefront/networks-and-stores)
-Storefront supports both single-vendor and multi-vendor models. You can create a single Store for your own brand, or create a Network that hosts hundreds of independent Stores (like UberEats or DoorDash).
+## Getting Started
 
-### [Catalog Management](/docs/storefront/catalog)
-Manage the items you sell. Create Products, organize them into Categories, and define complex Product Variants (e.g., Size, Color) and Add-ons (e.g., "Extra Cheese").
+<Cards>
+  <Card title="Quickstart" href="/docs/storefront/getting-started/quickstart">
+    Create your store, add products, and process your first order.
+  </Card>
+  <Card title="Core Concepts" href="/docs/storefront/getting-started/core-concepts">
+    Understand stores, networks, products, cart, and checkout.
+  </Card>
+  <Card title="Catalog Management" href="/docs/storefront/catalog/overview">
+    Build your product catalog with variants, addons, and categories.
+  </Card>
+</Cards>
 
-### [Customers](/docs/storefront/customers)
-Manage the end-users who purchase from your platform. Track their order history, saved delivery addresses, and saved payment methods.
-
-### [Orders & Checkout](/docs/storefront/orders-and-checkout)
-The core transactional engine. Storefront handles the Cart lifecycle, calculates dynamic delivery fees (via FleetOps [Service Quotes](/docs/fleetops/operations/service-quotes)), processes payments, and generates the final Order.
-
-### [Promotions](/docs/storefront/promotions)
-Drive sales by creating discount codes, percentage-off sales, or free delivery promotions.
-
-### [Reviews](/docs/storefront/reviews)
-Collect and display customer feedback on both individual Products and entire Stores.
-
-## The Storefront Workflow
-
-A typical customer journey using Storefront looks like this:
-
-1. **Browsing**: A customer opens your app and browses the [Networks & Stores](/docs/storefront/networks-and-stores) available in their area.
-2. **Selection**: They view a Store's [Catalog](/docs/storefront/catalog) and add Products to their Cart.
-3. **Checkout**: They proceed to [Checkout](/docs/storefront/orders-and-checkout). Storefront calculates the subtotal, applies any [Promotions](/docs/storefront/promotions), and requests a delivery fee quote from FleetOps based on the customer's address.
-4. **Payment**: The customer pays via an integrated gateway (e.g., Stripe).
-5. **Fulfillment**: Upon successful payment, Storefront creates an Order in FleetOps. The Store is notified to prepare the items, and a driver is dispatched to pick them up.
+<Callout type="info">
+Storefront comes pre-installed with every Fleetbase instance — no separate installation is required. Navigate to **Storefront** in the console sidebar to begin.
+</Callout>

@@ -1,10 +1,82 @@
 ---
-title: Payments
-description: Set up payment gateway integrations for driver payouts and order billing within FleetOps.
+title: Payment Settings
+description: Configure payment gateway integration — connect Stripe to collect payments for service quotes and set up the customer payment portal.
 ---
 
-# Payments
+# Payment Settings
 
-Set up payment gateway integrations for driver payouts and order billing within FleetOps.
+**Payment Settings** connect Fleet-Ops to a payment gateway so customers can pay for orders online. When configured, accepted service quotes generate checkout sessions that customers can use to pay before dispatch.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Fleet-Ops → Settings → Payments**.
+
+![Payment settings panel — Stripe account connection, payment method selection, currency settings](/images/placeholder.png)
+
+## Payment Gateway
+
+Fleet-Ops uses **Stripe** as the payment gateway. Stripe handles payment processing, customer management, and checkout session creation.
+
+### Connecting Stripe
+
+<Steps>
+  <Step>
+    In **Settings → Payments**, click **Connect with Stripe**.
+  </Step>
+  <Step>
+    You are redirected to Stripe's OAuth flow. Log in to your Stripe account (or create one).
+  </Step>
+  <Step>
+    Authorize Fleet-Ops to connect to your Stripe account.
+  </Step>
+  <Step>
+    You are returned to Fleet-Ops with the connection confirmed. Your Stripe account ID is shown.
+  </Step>
+</Steps>
+
+### Using Stripe Keys Directly
+
+Alternatively, enter your Stripe API keys manually:
+
+1. Enter your **Stripe Publishable Key** (`pk_live_...`)
+2. Enter your **Stripe Secret Key** (`sk_live_...`)
+3. Click **Save**
+
+<Callout type="warn">
+Use live keys (`pk_live_...`, `sk_live_...`) for production. Use test keys (`pk_test_...`, `sk_test_...`) during development. Test keys process test payments only.
+</Callout>
+
+## Payment Configuration
+
+| Setting | Description |
+| :--- | :--- |
+| **Default Currency** | The currency for all payment transactions (e.g., USD, SGD, AUD) |
+| **Payment Methods** | Which payment methods to accept: card, bank transfer, SEPA, etc. |
+| **Capture Mode** | **Automatic** (charge immediately) or **Manual** (authorize now, capture later) |
+
+## Customer Portal Payment Setup
+
+The **Customer Portal** (Onboard) tab configures how customers pay when using the Storefront or a custom customer-facing interface:
+
+- **Require Payment Before Dispatch** — toggle to require payment confirmation before the order is dispatched to a driver
+- **Quote Acceptance** — require the customer to accept a service quote before payment proceeds
+- **Checkout URL** — the URL of the checkout page in your customer application
+
+## Payment Flow
+
+1. Order is created and a Service Quote is generated
+2. Customer is sent a checkout link (via notification or API response)
+3. Customer completes payment on the Stripe checkout page
+4. Fleet-Ops receives the payment confirmation webhook from Stripe
+5. A Transaction record is created linked to the order
+6. Order is eligible for dispatch
+
+## Test Mode
+
+Toggle between **Live** and **Test** mode in the payments panel to use test Stripe credentials. In test mode:
+
+- Use Stripe test card numbers (e.g., `4242 4242 4242 4242`) to simulate payments
+- Payments are not real and no money changes hands
+- Transaction records are created with a test flag
+
+## Viewing Transactions
+
+Payment transactions are visible in the order detail panel under the **Transaction** section. Each transaction shows the amount, currency, payment method, status, and Stripe transaction ID.

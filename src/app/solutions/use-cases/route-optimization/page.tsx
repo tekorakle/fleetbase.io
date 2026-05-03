@@ -1,135 +1,156 @@
 import type { Metadata } from 'next';
-import { Navigation, Truck, BarChart3, Zap, MapPin, Clock } from 'lucide-react';
+import { Navigation, Truck, BarChart3, Zap, MapPin, Clock, RefreshCw, Bell, Shield, FileCheck } from 'lucide-react';
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
- title: 'Route Optimization Software | Fleetbase',
- description:
- 'Cut fuel costs and improve on-time delivery rates with AI-powered route optimization. Fleetbase optimizes multi-stop routes in real-time, factoring in traffic, time windows, and vehicle capacity.',
- keywords: ['route optimization software', 'delivery route planner', 'multi-stop route optimization', 'fleet route planning', 'dynamic route optimization'],
- openGraph: {
- title: 'Route Optimization Software | Fleetbase',
- description: 'Cut fuel costs and improve on-time rates with AI-powered route optimization.',
- },
+  title: 'Route Optimization Software | Fleetbase',
+  description: 'Cut fuel costs by 28% and improve on-time rates with intelligent multi-stop route optimization. Real-time traffic, time windows, vehicle capacity — all factored in automatically.',
+  keywords: ['route optimization software', 'delivery route planner', 'multi-stop route optimization', 'fleet route planning', 'dynamic route optimization', 'last mile routing'],
+  openGraph: {
+    title: 'Route Optimization Software | Fleetbase',
+    description: 'Stop planning routes by hand. Let Fleetbase optimize every run for time, fuel, and capacity.',
+  },
 };
 
 export default function RouteOptimizationPage() {
- return (
- <SolutionPageLayout
- badge="Use Case — Route Optimization"
- title={<>Stop Wasting Fuel on <span className="text-gradient">Routes That Could Be Better.</span></>}
- description="Fleetbase's route optimization engine calculates the most efficient delivery sequences in seconds — factoring in traffic, time windows, vehicle capacity, and driver availability. The result: fewer miles, lower costs, and more on-time deliveries."
- stats={[
- { value: '30%', label: 'Average fuel cost reduction' },
- { value: '25%', label: 'More stops per driver per day' },
- { value: '15 sec', label: 'Average route calculation time' },
- { value: '99.9%', label: 'Platform uptime' },
- ]}
- heroScreenshot="/images/console-screenshots/fleetops-live-map-singapore.png"
- heroScreenshotAlt="Fleetbase FleetOps route optimization showing driver routes with multi-stop sequencing and ETAs"
- heroScreenshotNeeded="FleetOps route optimization panel — showing before/after route comparison with distance and time savings"
- painPoints={{
- heading: 'What poor routing costs you',
- items: [
- 'Drivers backtracking across zones due to unoptimized sequences',
- 'Fuel bills rising with no visibility into route efficiency',
- 'Time windows missed because routes were planned without traffic data',
- 'Dispatchers spending hours manually planning routes every morning',
- 'Vehicles running over capacity on some routes, underutilized on others',
- 'No way to re-optimize dynamically when conditions change mid-day',
- ],
- }}
- features={[
- {
- title: 'Constraint-Based Route Optimization',
- description:
- 'Fleetbase optimizes routes against multiple real-world constraints simultaneously — delivery time windows, vehicle load capacity, driver shift hours, and traffic conditions. Every route is the best possible route given your constraints.',
- icon: Navigation,
- screenshot: '/images/console-screenshots/fleetops-live-map-full.webp',
- screenshotAlt: 'Constraint-Based Route Optimization',
- screenshotNeeded: 'FleetOps route optimizer — constraint settings panel showing time windows, capacity, and traffic options',
- },
- {
- title: 'Dynamic Re-Optimization',
- description:
- 'When a new order comes in, a driver is delayed, or traffic conditions change, Fleetbase re-optimizes affected routes in real-time. Dispatchers are notified of changes and can approve or override.',
- icon: Zap,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Dynamic Re-Optimization',
- screenshotNeeded: 'FleetOps live dispatch — dynamic re-optimization alert with updated route suggestion',
- },
- {
- title: 'Multi-Vehicle Load Balancing',
- description:
- 'Distribute orders across your available fleet to balance workload, minimize total distance, and ensure no vehicle exceeds capacity. Optimize across your entire fleet simultaneously.',
- icon: Truck,
- screenshot: '/images/console-screenshots/fleetops-scheduler.webp',
- screenshotAlt: 'Multi-Vehicle Load Balancing',
- screenshotNeeded: 'FleetOps fleet dispatch view — load balancing across multiple vehicles with capacity indicators',
- },
- {
- title: 'Time Window Management',
- description:
- 'Set delivery time windows per order and let Fleetbase sequence stops to meet them all. Receive alerts when a time window is at risk and see which orders need priority re-routing.',
- icon: Clock,
- screenshot: '/images/console-screenshots/fleetops-orders-table-detail.webp',
- screenshotAlt: 'Time Window Management',
- screenshotNeeded: 'FleetOps order list — time window column with at-risk indicators and ETA vs window comparison',
- },
- {
- title: 'Live Route Monitoring',
- description:
- 'Track driver progress against the optimized route in real-time. See which stops have been completed, which are next, and where drivers are deviating from the planned route.',
- icon: MapPin,
- screenshot: '/images/console-screenshots/fleetops-live-map-singapore.png',
- screenshotAlt: 'Live Route Monitoring',
- screenshotNeeded: 'FleetOps live map — driver on optimized route with completed stops (green), current stop (blue), remaining (grey)',
- },
- {
- title: 'Route Performance Analytics',
- description:
- 'Compare planned vs. actual routes to measure optimization effectiveness. Track fuel consumption, on-time rate, and distance per stop over time to continuously improve your routing strategy.',
- icon: BarChart3,
- screenshot: '/images/console-screenshots/fleetops-fuel-reports.webp',
- screenshotAlt: 'Route Performance Analytics',
- screenshotNeeded: 'FleetOps analytics — planned vs actual route comparison chart with fuel and time variance',
- },
- ]}
- testimonial={{
- quote:
- "We reduced our total fleet mileage by 28% in the first month. The route optimization engine handles what used to take our dispatch team two hours in about 30 seconds.",
- author: 'David L.',
- role: 'Fleet Operations Manager',
- company: 'FastTrack Logistics',
- }}
- faqs={[
- {
- q: 'How does Fleetbase\'s route optimization work?',
- a: 'Fleetbase uses constraint-based optimization algorithms that consider delivery time windows, vehicle capacity, driver hours, and real-time traffic data to calculate the most efficient route sequence for each vehicle.',
- },
- {
- q: 'Can Fleetbase optimize routes across multiple vehicles simultaneously?',
- a: 'Yes. Fleetbase optimizes across your entire available fleet simultaneously, balancing workload and minimizing total distance across all vehicles.',
- },
- {
- q: 'How does dynamic re-optimization work?',
- a: 'When conditions change — a new order arrives, a driver is delayed, or traffic worsens — Fleetbase automatically recalculates affected routes and presents updated suggestions to dispatchers for approval.',
- },
- {
- q: 'Does route optimization account for vehicle type and capacity?',
- a: 'Yes. Each vehicle can have its own capacity, speed profile, and operational constraints. The optimizer assigns orders to vehicles based on compatibility and capacity.',
- },
- {
- q: 'Can drivers deviate from the optimized route?',
- a: 'Yes. Drivers can deviate from the suggested route in the Navigator app. Deviations are tracked and reported in analytics so you can understand where and why drivers are not following optimized routes.',
- },
- ]}
- ctaHeading="Cut fuel costs and deliver more on time"
- ctaBody="Route optimization is one of the highest-ROI investments in logistics. Start your free trial and see how much Fleetbase can save your operation."
- ctaPrimary="Start Free Trial"
- ctaPrimaryHref="https://console.fleetbase.io/onboard"
- ctaSecondary="Book a Demo"
- ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
- />
- );
+  return (
+    <SolutionPageLayout
+      badge="Use Case — Route Optimization"
+      title={<>Stop Planning Routes<br /><span className="text-gradient">by Hand. Start Winning.</span></>}
+      description="Manual route planning is costing you more than you realize. Your drivers are taking inefficient paths, missing delivery windows, and burning fuel on routes that haven't been reviewed in months. Fleetbase's route optimization engine sequences every run for maximum efficiency — automatically, in seconds, factoring in real-time traffic, delivery windows, vehicle capacity, and driver availability."
+      stats={[
+        { value: '28%', label: 'Average fuel reduction with optimized routing' },
+        { value: '35%', label: 'Fewer late deliveries vs. manual planning' },
+        { value: '15%', label: 'More stops completed per vehicle per day' },
+        { value: '2 min', label: 'Average time to optimize a 50-stop route' },
+      ]}
+      heroScreenshot="/images/placeholder.png"
+      heroScreenshotAlt="Fleetbase route optimization — multi-stop route sequencing on live map with efficiency metrics"
+      painPoints={{
+        heading: 'What inefficient routing is actually costing you',
+        items: [
+          'Drivers covering the same roads twice because no one reviewed the stop sequence',
+          'Fuel bills climbing with no data to explain why or identify which routes are responsible',
+          'Delivery time windows missed because routes weren\'t planned around them',
+          'Dispatchers spending 90 minutes every morning manually sequencing runs',
+          'Vehicles returning to depot half-empty while other vehicles are overloaded',
+          'No visibility into whether optimization is working — or degrading over time',
+        ],
+      }}
+      featuresHeading="Route optimization that works the way your operation does"
+      featuresSubheading="Multi-constraint, real-time, and built for the complexity of real-world logistics."
+      features={[
+        {
+          title: 'Multi-Constraint Route Optimization',
+          description: 'Fleetbase sequences routes by solving for the full picture simultaneously — delivery time windows, vehicle weight and volume capacity, driver work-hour limits, depot start and end constraints, and customer priority levels. Not one factor at a time. All at once.',
+          bullets: [
+            'Time-window constrained routing with hard and soft window support',
+            'Vehicle payload, volume, and refrigeration zone constraints',
+            'Driver shift-length and break-time compliance built in',
+          ],
+          icon: Navigation,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Real-Time Dynamic Re-Routing',
+          description: 'Routes don\'t survive first contact with the day. When a delivery is added, cancelled, or delayed — or when traffic blocks a critical road — Fleetbase recalculates the affected run automatically and pushes the updated route to the driver\'s Navigator app instantly.',
+          bullets: [
+            'Automatic re-optimization when orders are added or cancelled mid-run',
+            'Live traffic integration with proactive route adjustment',
+            'Driver app receives updated routes without interrupting navigation',
+          ],
+          icon: RefreshCw,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Multi-Vehicle Fleet Coordination',
+          description: 'Optimizing one route in isolation creates bottlenecks across your fleet. Fleetbase coordinates the entire fleet simultaneously — balancing workload across vehicles, eliminating zone overlap, and ensuring no driver finishes two hours early while another runs overtime.',
+          bullets: [
+            'Fleet-wide load balancing across all available vehicles',
+            'Zone and territory-aware routing to eliminate inefficient overlaps',
+            'Overtime risk flagging before routes are dispatched',
+          ],
+          icon: Truck,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Delivery Time Window Management',
+          description: 'Customer-promised delivery windows are constraints, not suggestions. Fleetbase builds routes that respect every committed window — and alerts dispatchers before a route is finalized if any window can\'t be met, so you can fix it before a customer is disappointed.',
+          bullets: [
+            'Hard and soft time window enforcement per order',
+            'Pre-dispatch alerts when windows can\'t be met with current vehicle allocation',
+            'Customer notification triggers when route plans confirm delivery ETAs',
+          ],
+          icon: Clock,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Route Performance Analytics',
+          description: 'Track planned vs. actual route execution to understand where optimization is working and where drivers are deviating. Identify recurring inefficiencies, flag problematic zones, and use real data to continuously improve your planning parameters.',
+          bullets: [
+            'Planned vs. actual route comparison per driver and zone',
+            'Fuel consumption per route with variance from optimized plan',
+            'Stop sequence adherence rate and deviation flagging',
+          ],
+          icon: BarChart3,
+          screenshot: '/images/placeholder.png',
+        },
+        {
+          title: 'Bulk Import & Planning Tools',
+          description: 'Feed Fleetbase orders from your OMS via API, CSV import, or manual entry. The optimization engine handles fleet routing for any volume — from 10 stops to 10,000 — and presents a complete optimized plan for dispatcher review before dispatch.',
+          bullets: [
+            'REST API, CSV, and manual order ingestion for route planning',
+            'Bulk plan review with one-click optimization trigger',
+            'What-if scenario modelling for fleet sizing and zone planning',
+          ],
+          icon: Zap,
+          screenshot: '/images/placeholder.png',
+        },
+      ]}
+      capabilities={[
+        { icon: MapPin, label: 'Multi-depot routing' },
+        { icon: Bell, label: 'ETA breach alerting' },
+        { icon: Shield, label: 'Compliance-aware scheduling' },
+        { icon: FileCheck, label: 'Route plan exports' },
+        { icon: Clock, label: 'Time window enforcement' },
+        { icon: RefreshCw, label: 'Dynamic re-routing' },
+        { icon: Truck, label: 'Fleet load balancing' },
+        { icon: BarChart3, label: 'Fuel cost analytics' },
+      ]}
+      testimonial={{
+        quote: "We reduced our daily driven distance by 22% in the first two weeks. What used to take our dispatcher 90 minutes every morning now takes 3 minutes. Fleetbase paid back its cost in fuel savings alone within the first month.",
+        author: 'James K.',
+        role: 'Fleet Operations Manager',
+        company: 'DirectRoute Logistics',
+      }}
+      faqs={[
+        {
+          q: 'How fast does Fleetbase optimize a route?',
+          a: 'Typical 20–50 stop routes optimize in under 30 seconds. Larger fleet plans of 200–500 stops across multiple vehicles typically complete in 2–4 minutes.',
+        },
+        {
+          q: 'Can optimization account for vehicle-specific constraints like refrigerated zones?',
+          a: 'Yes. Vehicle attributes including payload capacity, volume, temperature zones, and equipment type can all be defined and used as hard constraints in the optimization engine.',
+        },
+        {
+          q: 'What happens when a new order is added after routes are dispatched?',
+          a: "Fleetbase re-evaluates the affected route in real-time and updates the driver's Navigator app with the revised stop sequence — including re-optimized ETAs for all remaining stops.",
+        },
+        {
+          q: 'Does Fleetbase integrate with our existing OMS for order import?',
+          a: 'Yes. The REST API allows orders to flow directly from your OMS into Fleetbase for planning and dispatch. Webhooks return delivery events back to your system in real-time.',
+        },
+        {
+          q: 'Can we see the difference between our current routes and the optimized routes before committing?',
+          a: "Yes. The route planning interface shows the optimized plan with total distance, estimated duration, and fuel cost before you confirm. Dispatchers review and approve before routes are pushed to drivers.",
+        },
+      ]}
+      ctaHeading="Cut fuel costs. Deliver more. Start today."
+      ctaBody="Every day you plan routes manually is a day you're leaving fuel savings and delivery capacity on the table. Start your free trial and run your first optimized route in under 10 minutes."
+      ctaPrimary="Start Free Trial"
+      ctaPrimaryHref="https://console.fleetbase.io/onboard"
+      ctaSecondary="Talk to Sales"
+      ctaSecondaryHref="https://cal.com/shivthakker/enquiry"
+    />
+  );
 }

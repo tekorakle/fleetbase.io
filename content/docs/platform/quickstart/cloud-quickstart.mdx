@@ -1,0 +1,100 @@
+---
+title: Cloud Quickstart
+description: Sign up for Fleetbase Cloud, complete onboarding, and get to your first driver, order, and API call.
+---
+
+# Cloud Quickstart
+
+Fleetbase Cloud is the fastest way to get started. Your environment is provisioned and pre-configured during signup — no infrastructure or setup required. This guide walks you through what to expect and what to do first once you're in.
+
+<Steps>
+  <Step>
+    ### Create your account
+
+    Go to [console.fleetbase.io](https://console.fleetbase.io/onboard) and fill in your name, email, password, organisation name, phone number, and country. Your organisation is created at this step — there's no separate setup afterwards.
+
+    You'll receive a 6-digit verification code by email. Enter it to continue.
+  </Step>
+  <Step>
+    ### Configure your workspace
+
+    A short wizard collects your company size, industry, operational goals, and preferred integrations. This personalises your console — setting your dashboard layout, recommended integrations, and available presets before you ever log in. You can also add your first driver and vehicle here if you have them handy.
+  </Step>
+  <Step>
+    ### Start your 7-day trial
+
+    Select a plan and complete checkout to activate your trial. A payment method is required — your card won't be charged until the 7 days are up, and you can cancel any time from billing settings.
+  </Step>
+  <Step>
+    ### Complete (or skip) the guided tour
+
+    When you first land in the console, a guided tour starts automatically. It walks you through the interface and then takes you through creating your first driver and dispatching your first order. Complete it to get real data into the system, or skip it — it's available any time from **Help & Tours** in the console menu.
+  </Step>
+</Steps>
+
+## First things to do
+
+Once you're in the console, these are the three most useful things to get done:
+
+- **[Create an API Key](/docs/platform/developer-console/api-keys)** — Go to **Developer Console → API Keys** and generate your first key. You'll need this to connect any external system, app, or integration to your Fleetbase instance.
+
+- **[Add your first driver and get Navigator](/docs/fleet-ops/drivers)** — Go to **Fleet-Ops → Drivers** to add your driver roster. Each driver uses the **Fleetbase Navigator** mobile app to receive orders, update status, and submit proof of delivery — share the download link from the driver profile.
+
+- **[Create your first order](/docs/fleet-ops/orders)** — Go to **Fleet-Ops → Orders** and dispatch a delivery. Assign it to a driver and watch it move through the status lifecycle on the live map in real time.
+
+## Common resources
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-2 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Managing orders</CardTitle>
+      <CardDescription>Create, dispatch, and track orders through their full lifecycle.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/fleet-ops/orders" className="text-primary hover:underline">Orders overview →</a>
+        <a href="/docs/fleet-ops/orders/importing" className="text-primary hover:underline">How to import orders →</a>
+        <a href="/docs/fleet-ops/orders/order-config" className="text-primary hover:underline">How to configure order types →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Managing your fleet</CardTitle>
+      <CardDescription>Add drivers and vehicles, set up zones, and configure the Navigator app.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/fleet-ops/drivers" className="text-primary hover:underline">How to add drivers →</a>
+        <a href="/docs/fleet-ops/drivers/importing" className="text-primary hover:underline">How to import drivers →</a>
+        <a href="/docs/fleet-ops/service-areas" className="text-primary hover:underline">How to set up service areas →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Developer tools</CardTitle>
+      <CardDescription>Connect external systems, subscribe to events, and automate workflows.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/developer-console/api-keys" className="text-primary hover:underline">Making your first API call →</a>
+        <a href="/docs/platform/developer-console/webhooks" className="text-primary hover:underline">Setting up webhooks →</a>
+        <a href="/docs/platform/developer-console/socket-events" className="text-primary hover:underline">Real-time socket events →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Team & access</CardTitle>
+      <CardDescription>Invite your operations team and assign the right roles and permissions.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/identity-and-access/users" className="text-primary hover:underline">Inviting team members →</a>
+        <a href="/docs/platform/identity-and-access/roles" className="text-primary hover:underline">Managing roles →</a>
+        <a href="/docs/platform/identity-and-access/permissions" className="text-primary hover:underline">Configuring permissions →</a>
+      </div>
+    </CardContent>
+  </Card>
+</div>

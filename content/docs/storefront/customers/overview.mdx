@@ -1,10 +1,71 @@
 ---
-title: Customer Management
-description: View and manage your customer base, including profiles, order history, and saved places.
+title: Customers
+description: Manage customer accounts — view order history, contact details, and reviews from the Fleetbase Console.
 ---
 
-# Customer Management
+# Customers
 
-View and manage your customer base, including profiles, order history, and saved places.
+A **Customer** is an end-user registered with your store or network. Customer records track contact information, order history, reviews, and authentication credentials.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Storefront → Customers** to manage your customer base.
+
+![Customer list — name, email, phone, order count, registration date](/images/placeholder.png)
+
+## Customer Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Customer's full name |
+| **Email** | Contact email |
+| **Phone** | Mobile phone number (used for SMS OTP login) |
+| **Order History** | All Fleet-Ops orders placed through this store or network |
+| **Reviews** | Product and store reviews submitted by this customer |
+
+## Managing Customers
+
+From **Storefront → Customers** you can:
+
+- **View** a customer's full profile including order history and reviews
+- **Edit** contact information (name, email, phone)
+- **Delete** a customer account — removes the account and saved data; historical orders are retained for record-keeping
+
+Clicking a customer row opens their detail panel with tabs for **Orders**, **Reviews**, and **Details**.
+
+## Guest vs. Registered Customers
+
+### Guest Checkout
+
+If a customer completes an order without creating an account, Storefront still creates a customer record with the name, email, and phone provided at checkout. Guest customers:
+- Cannot save delivery addresses for future use
+- Cannot log in to view order history
+- Cannot submit reviews (only authenticated customers can review)
+
+### Registered Customers
+
+Registered customers authenticate via the API (see [Customer Authentication](/docs/storefront/customers/authentication)) and benefit from:
+- Faster checkout with saved delivery addresses
+- Access to order history and tracking
+- Ability to submit product and store reviews
+
+## Customer Reviews
+
+Customers can leave reviews on both products and stores. Reviews include:
+- A **rating** (1–5 stars)
+- Optional **text content**
+- Optional **photo/video uploads**
+
+Other customers can **vote** on reviews (helpful/not helpful). Administrators can **reject** reviews that violate platform guidelines — rejected reviews are hidden from the frontend but preserved in the system.
+
+View all reviews for a customer in their detail panel under the **Reviews** tab, or manage all platform reviews from **Storefront → Promotions → Reviews**.
+
+## Customer API
+
+If you are building a custom frontend, use the Storefront API to manage customers:
+
+- `POST /storefront/v1/customers` — register a new customer
+- `POST /storefront/v1/customers/login` — email/password login
+- `POST /storefront/v1/customers/login-with-sms` — SMS OTP login
+- `GET /storefront/v1/customers/{id}` — get customer profile
+- `PUT /storefront/v1/customers/{id}` — update profile
+
+See [Customer Authentication](/docs/storefront/customers/authentication) for full login flow documentation.

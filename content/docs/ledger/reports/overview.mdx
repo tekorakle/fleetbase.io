@@ -1,0 +1,56 @@
+---
+title: Financial Reports
+description: Generate standard financial reports — balance sheet, income statement, cash flow, trial balance, AR aging, and wallet summary.
+---
+
+# Financial Reports
+
+The **Reports** module generates standard financial statements from your Ledger data. Reports are computed on-the-fly from journal entries — always current and accurate. No pre-computation required.
+
+Navigate to **Ledger → Reports** to access all reports.
+
+![Reports section — report type cards with descriptions and date range selectors](/images/placeholder.png)
+
+## Available Reports
+
+| Report | What it shows |
+| :--- | :--- |
+| [Balance Sheet](/docs/ledger/reports/balance-sheet) | Assets, liabilities, and equity at a point in time |
+| [Income Statement](/docs/ledger/reports/income-statement) | Revenue, expenses, and net income for a period |
+| [Cash Flow Statement](/docs/ledger/reports/cash-flow) | Operating, financing, and investing cash flows |
+| [Trial Balance](/docs/ledger/reports/trial-balance) | All accounts with debit/credit totals — verifies books balance |
+| [AR Aging](/docs/ledger/reports/ar-aging) | Outstanding invoices bucketed by how overdue they are |
+| [Wallet Summary](/docs/ledger/reports/wallet-summary) | Wallet counts, total balances, and top wallets by balance |
+
+## Dashboard KPIs
+
+The **Ledger Dashboard** (home screen) shows key metrics at a glance:
+- **Total Revenue** — sum of revenue account credits for the period (with year-over-year comparison)
+- **Total Expenses** — sum of expense account debits
+- **Net Income** — Revenue − Expenses
+- **Outstanding AR** — total unpaid invoice balance
+- **Overdue AR** — unpaid invoices past due date
+- **Invoice Status Counts** — breakdown by status (draft, sent, paid, overdue)
+- **Revenue Trend** — daily revenue bar chart
+- **Recent Journal Entries** — last 10 entries
+
+## Date Filtering
+
+Most reports support a date range filter. Specify `start_date` and `end_date` to scope the report to a specific period (e.g., a financial quarter or fiscal year).
+
+Default periods:
+- Balance Sheet, Trial Balance: current date (point-in-time)
+- Income Statement, Cash Flow: current month
+- AR Aging: current date (outstanding invoices)
+- Wallet Summary: all time
+
+## How Reports Are Generated
+
+All reports draw from the journal entries in your chart of accounts:
+
+- **Balance Sheet**: aggregates asset, liability, and equity account balances as of a date
+- **Income Statement**: sums revenue and expense accounts for a period
+- **Cash Flow**: classifies transactions as operating, financing, or investing
+- **Trial Balance**: lists all accounts with their total debits and credits
+- **AR Aging**: groups open invoices by days past due date
+- **Wallet Summary**: aggregates wallet balances by type and status

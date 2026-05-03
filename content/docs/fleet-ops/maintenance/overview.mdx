@@ -1,0 +1,44 @@
+---
+title: Maintenance Overview
+description: Manage vehicle and equipment maintenance — preventive schedules, work orders, parts inventory, and maintenance history.
+---
+
+# Maintenance Overview
+
+The **Maintenance** section of Fleet-Ops provides tools to keep your fleet in operating condition. It covers preventive maintenance scheduling, work order assignment and tracking, parts inventory, and equipment management.
+
+![Fleet-Ops maintenance sidebar — Schedules, Work Orders, Maintenances, Equipment, Parts](/images/placeholder.png)
+
+## What's in Maintenance
+
+| Section | Purpose |
+| :--- | :--- |
+| [**Schedules**](/docs/fleet-ops/maintenance/schedules/overview) | Preventive maintenance rules — trigger work orders by mileage, engine hours, or date |
+| [**Work Orders**](/docs/fleet-ops/maintenance/work-orders/overview) | Task assignments for maintenance, repairs, and inspections |
+| **Maintenances** | Completed maintenance history records |
+| [**Equipment**](/docs/fleet-ops/maintenance/equipment/overview) | Tools, trailers, containers, and other fleet assets |
+| [**Parts**](/docs/fleet-ops/maintenance/parts/overview) | Parts inventory used in work orders |
+
+## How Maintenance Works
+
+The maintenance workflow has three stages:
+
+1. **Schedule** — define a preventive maintenance rule for a vehicle or piece of equipment. Set the trigger (every 10,000 km, every 6 months, every 500 engine hours). When the threshold is reached, a work order is automatically generated.
+
+2. **Work Order** — the work order is assigned to a mechanic or driver. It contains a checklist of tasks, cost estimates, and a due date. Status progresses from open → in_progress → completed.
+
+3. **History** — completed work orders create maintenance history records linked to the vehicle. These records show all services performed, parts used, and costs incurred over the vehicle's lifetime.
+
+## Integration with Vehicles
+
+Maintenance is tightly integrated with vehicle records:
+
+- Each vehicle has a **Schedules** tab showing all maintenance rules
+- Each vehicle has a **Work Orders** tab showing open and completed tasks
+- Each vehicle has a **Maintenance** tab showing the full service history
+
+When a vehicle is set to `maintenance` status, it is automatically excluded from Orchestrator allocation runs.
+
+## Accessing Maintenance
+
+Navigate to **Fleet-Ops → Maintenance** in the left sidebar. The sub-sections (Schedules, Work Orders, Equipment, Parts) are listed below.

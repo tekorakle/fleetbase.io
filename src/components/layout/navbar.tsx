@@ -96,7 +96,7 @@ export const NAV_LINKS: NavLink[] = [
  icon: Box,
  },
  {
- label: 'FleetOps',
+ label: 'Fleet-Ops',
  href: '/platform/fleetops',
  description: 'Manage fleets, orders, and routes with real-time optimization and tracking.',
  icon: Truck,
@@ -127,21 +127,15 @@ export const NAV_LINKS: NavLink[] = [
  },
  {
  label: 'Extensions Marketplace',
- href: '/extensions',
+ href: '/platform/extensions',
  description: 'Browse and install extensions to customize your logistics workflows.',
  icon: Boxes,
  },
  {
  label: 'Developer Console',
- href: '/developers/console',
+ href: '/platform/developer-console',
  description: 'Manage API keys, monitor webhooks, and debug integrations in real-time.',
  icon: Code,
- },
- {
- label: 'API & Integrations',
- href: '/developers/api',
- description: 'Connect Fleetbase to any system with our powerful REST API and SDKs.',
- icon: Webhook,
  },
  {
  label: 'Mobile Apps',
@@ -151,7 +145,7 @@ export const NAV_LINKS: NavLink[] = [
  },
  {
  label: 'Logistics AI',
- href: '/ai',
+ href: '/platform/ai',
  description: 'AI-powered route optimisation, autonomous dispatch, and predictive analytics — on infrastructure you own.',
  icon: Brain,
  },
@@ -323,22 +317,16 @@ export const NAV_LINKS: NavLink[] = [
  icon: FileCode,
  },
  {
+ label: 'API & Integrations',
+ href: '/developers/api',
+ description: 'Connect Fleetbase to any system with our powerful REST API and SDKs.',
+ icon: Webhook,
+ },
+ {
  label: 'SDKs & Libraries',
  href: '/developers/sdks',
  description: 'Official SDKs for JavaScript, PHP, Java, Python, and more languages.',
  icon: Library,
- },
- {
- label: 'Developer Console',
- href: '/developers/console',
- description: 'Manage API keys, monitor webhooks, and debug integrations in real-time.',
- icon: Terminal,
- },
- {
- label: 'Webhooks & Events',
- href: '/docs/webhooks',
- description: 'Build real-time integrations with event-driven webhooks and callbacks.',
- icon: Webhook,
  },
  {
  label: 'Build an Extension',
@@ -363,12 +351,6 @@ export const NAV_LINKS: NavLink[] = [
  label: 'Resources',
  href: '/resources',
  subitems: [
- {
- label: 'Documentation',
- href: '/docs',
- description: 'Complete guides, tutorials, and references for using Fleetbase.',
- icon: BookOpen,
- },
       {
         label: 'Blog',
  href: '/blog',
@@ -433,7 +415,7 @@ export const NAV_LINKS: NavLink[] = [
  label: 'Services',
  href: '/services',
  description: 'Implementation, custom development, training, and support services.',
- icon: Handshake,
+ icon: Briefcase,
  },
  {
  label: 'Terms of Service',
@@ -457,6 +439,7 @@ const ACTION_BUTTONS = [
 
 const Navbar = () => {
  const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const [isScrolled, setIsScrolled] = useState(false);
  const [ghStars, setGhStars] = useState<string>('Star');
  const pathname = usePathname();
 
@@ -470,6 +453,13 @@ const Navbar = () => {
  })
  .catch(() => {});
  }, []);
+ useEffect(() => {
+ const onScroll = () => setIsScrolled(window.scrollY > 16);
+ onScroll();
+ window.addEventListener('scroll', onScroll, { passive: true });
+ return () => window.removeEventListener('scroll', onScroll);
+ }, []);
+
  const hideNavbar = ['/signin', '/signup', '/otp'].some((route) =>
  pathname.includes(route),
  );
@@ -495,8 +485,12 @@ const Navbar = () => {
 
  return (
  <header className={cn(
- 'sticky top-0 z-50 lg:border-b',
- isDocsPage ? 'bg-fd-card' : 'bg-background/95 backdrop-blur-md',
+ 'sticky top-0 z-50 border-b transition-colors duration-300',
+ isDocsPage
+ ? 'border-border bg-fd-card'
+ : isScrolled
+ ? 'border-border/50 bg-background/60 backdrop-blur-xl'
+ : 'border-transparent bg-transparent',
  )}>
  <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
  

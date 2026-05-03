@@ -1,10 +1,135 @@
 ---
 title: Invoices
-description: Create and manage invoices, record payments, mark as sent, and generate PDF exports.
+description: Create and manage invoices — add line items, record payments, send to customers, and export as PDF.
 ---
 
 # Invoices
 
-Create and manage invoices, record payments, mark as sent, and generate PDF exports.
+An **Invoice** is a formal request for payment. It details the products or services provided, quantities, prices, and the total amount due. Invoices have a complete lifecycle from `draft` to `paid` with revenue recognition at each step.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Ledger → Billing → Invoices**.
+
+![Invoice detail — header with customer and dates, line items table, totals, and action buttons](/images/placeholder.png)
+
+## Invoice Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Number** | Auto-generated unique identifier (e.g., `INV-0001`). Prefix configurable in settings. |
+| **Customer** | Polymorphic reference — any contact, driver, company, or user |
+| **Status** | draft / sent / viewed / partial / paid / overdue / cancelled / void |
+| **Invoice Date** | Date the invoice was issued |
+| **Due Date** | Payment deadline; auto-calculated from payment terms if configured |
+| **Currency** | Invoice currency |
+| **Notes** | Free-text notes shown on the invoice |
+| **Terms** | Payment terms text shown on the invoice |
+| **Template** | Invoice template for PDF rendering |
+| **Subtotal** | Sum of line item amounts before tax (computed) |
+| **Tax** | Total tax across all line items (computed) |
+| **Total Amount** | Subtotal + Tax (computed) |
+| **Amount Paid** | Total payments received so far |
+| **Balance** | Total Amount − Amount Paid |
+
+## Creating an Invoice
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Billing → Invoices**.
+  </Step>
+  <Step>
+    Click **New Invoice**.
+  </Step>
+  <Step>
+    Select the **Customer** (search by name, email, or phone).
+  </Step>
+  <Step>
+    Set the **Invoice Date** and **Due Date**.
+  </Step>
+  <Step>
+    Add **Line Items** — click **Add Item** for each row:
+    - **Description** — what is being charged
+    - **Quantity** — number of units
+    - **Unit Price** — price per unit
+    - **Tax Rate** — percentage (e.g., `10` for 10%); tax amount is computed
+  </Step>
+  <Step>
+    Add optional **Notes** and **Terms** (e.g., "Payment due within 30 days").
+  </Step>
+  <Step>
+    Click **Save**. The invoice is created in `draft` and totals are calculated.
+  </Step>
+</Steps>
+
+## Sending an Invoice
+
+<Steps>
+  <Step>
+    Open the invoice.
+  </Step>
+  <Step>
+    Click **Mark as Sent** to update the status to `sent`.
+  </Step>
+  <Step>
+    Share the public invoice URL with the customer. They can view the invoice and pay online without logging in.
+  </Step>
+</Steps>
+
+The public invoice URL format: `/ledger/public/invoices/{public_id}`
+
+## Recording Payment
+
+When payment is received outside the online portal (e.g., bank transfer, cash):
+
+<Steps>
+  <Step>
+    Open the invoice.
+  </Step>
+  <Step>
+    Click **Record Payment**.
+  </Step>
+  <Step>
+    Enter the **Amount** received and select the **Payment Method**.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+Ledger updates `amount_paid`, recalculates `balance`, and transitions the invoice status:
+- If `balance = 0`: status → `paid`
+- If `balance > 0`: status → `partial`
+
+A [Transaction](/docs/ledger/payments/transactions) record is created automatically.
+
+## Creating an Invoice from a Fleet-Ops Order
+
+<Steps>
+  <Step>
+    Open the invoice list and click **Create from Order**.
+  </Step>
+  <Step>
+    Search for the Fleet-Ops order by ID or customer name.
+  </Step>
+  <Step>
+    Select the order. Ledger extracts line items from the order payload.
+  </Step>
+  <Step>
+    Review and adjust the generated invoice, then save.
+  </Step>
+</Steps>
+
+## Exporting as PDF
+
+Open any invoice and click **Download PDF** to render the invoice using the configured template. The PDF includes your company branding, line items, totals, and payment terms.
+
+## Online Payment by Customer
+
+Customers can pay invoices at the public URL without logging in:
+1. Customer opens the invoice link
+2. Sees available payment gateways
+3. Selects a gateway and completes payment
+4. Ledger creates a transaction, updates the invoice to `paid`, and creates the journal entry
+
+<Callout type="info">
+Invoice numbers are unique per company and auto-incrementing. You can configure the prefix (e.g., `INV-`, `REC-`) in **Ledger → Settings → Invoice Settings**.
+</Callout>

@@ -1,10 +1,103 @@
 ---
 title: Custom Fields
-description: Define custom fields for orders, drivers, vehicles, and other FleetOps resources.
+description: Define additional structured fields for drivers, vehicles, contacts, places, and other resources — and control which roles can edit entity fields on orders.
 ---
 
 # Custom Fields
 
-Define custom fields for orders, drivers, vehicles, and other FleetOps resources.
+**Custom Fields** let you attach additional structured data to Fleet-Ops resources — drivers, vehicles, contacts, places, vendors — without building an extension. Fields are defined in the Custom Fields Manager and rendered inline on resource detail views.
 
-> This page is coming soon. Content is actively being developed.
+<Callout type="info">
+Custom fields for **orders** are configured through **Order Configurations** (the activity flow and entity definitions), not through this Custom Fields Manager. This page covers resource-level custom fields only.
+</Callout>
+
+Navigate to **Fleet-Ops → Settings → Custom Fields**.
+
+![Custom Fields Manager — resource tabs across the top, field groups and fields below](/images/placeholder.png)
+
+## Supported Resources
+
+Custom fields can be added to:
+
+- **Drivers**
+- **Vehicles**
+- **Contacts**
+- **Vendors**
+- **Places**
+- **Fleets**
+
+## Field Types
+
+| Type | Best for |
+| :--- | :--- |
+| **Input** | Short single-line text — names, codes, identifiers |
+| **Phone Input** | Phone numbers with international dial code selector |
+| **Money Input** | Currency amounts |
+| **Date Time Input** | Combined date and time picker |
+| **Date Picker** | Date only (no time) |
+| **Radio Button** | Single selection shown as inline radio buttons |
+| **Select** | Single selection shown as a dropdown |
+| **File Upload** | Document or image attachment |
+
+## Creating Custom Fields
+
+<Steps>
+  <Step>
+    In the Custom Fields Manager, click the **resource tab** for the resource you want to extend (e.g., Driver).
+  </Step>
+  <Step>
+    Click **New field group**. Field groups are named sections that appear on the resource detail view. Name it descriptively (e.g., "Emergency Contact", "Compliance").
+  </Step>
+  <Step>
+    Set the **Grid Size** for the group:
+    - `1` — single column, full width
+    - `2` — two equal columns
+    - `3` — three equal columns
+  </Step>
+  <Step>
+    Click **Create new custom field** inside the group.
+  </Step>
+  <Step>
+    Set the field properties:
+    - **Field Label** — display name
+    - **Field Type** — input, select, date picker, etc.
+    - **Options** — for Select and Radio types, add the dropdown options
+    - **Field is Required** — whether the field must be filled
+    - **Field is Editable** — whether the field can be changed after creation
+    - **Column Span** — how many columns this field occupies in the group grid
+  </Step>
+  <Step>
+    Click **Save**. The field is immediately available on all records of that resource type.
+  </Step>
+</Steps>
+
+## Entity Field Editing Settings
+
+This setting controls which user roles can edit custom entity fields (item-level custom data) on orders in progress.
+
+Navigate to the **Entity Field Editing** tab in Custom Fields settings:
+
+- **Restrict editing to** — select the roles that can modify entity fields on dispatched orders
+- Use this to prevent drivers from changing item data after dispatch, or to allow supervisors to correct field values
+
+## API Access
+
+Custom field values are returned in API responses flattened onto the root resource object:
+
+```json
+{
+  "id": "driver_01H...",
+  "name": "Alex Tan",
+  "emergency_contact_name": "Sarah Tan",
+  "emergency_contact_phone": "+6598765432",
+  "custom_fields": ["emergency_contact_name", "emergency_contact_phone"],
+  "custom_field_values": [
+    { "key": "emergency_contact_name", "value": "Sarah Tan" },
+    { "key": "emergency_contact_phone", "value": "+6598765432" }
+  ]
+}
+```
+
+The `custom_fields` array lists the keys of all custom fields defined on this resource. The `custom_field_values` array provides the structured key-value pairs for iteration.
+
+For more detail on the API format, see the [Configure Custom Fields](/docs/platform/recipes/configure-custom-fields) recipe.

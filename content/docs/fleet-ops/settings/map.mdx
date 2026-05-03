@@ -1,0 +1,72 @@
+---
+title: Map Settings
+description: Configure the Fleet-Ops live map — default viewport, tile provider, marker clustering, and display options.
+---
+
+# Map Settings
+
+**Map Settings** control how the Fleet-Ops live map is rendered — which map tiles are used, where the map initially centers, and how markers are displayed.
+
+Navigate to **Fleet-Ops → Settings → Map**.
+
+![Map settings panel — provider selector, coordinates fields, clustering toggle, zoom level](/images/placeholder.png)
+
+## Map Provider
+
+Select the map tile source:
+
+| Provider | Notes |
+| :--- | :--- |
+| **OpenStreetMap** | Free, open-source tiles. Default for self-hosted instances. |
+| **Google Maps** | Requires a Google Maps API key with Maps JavaScript API enabled. |
+| **Mapbox** | Requires a Mapbox access token. Supports custom map styles. |
+| **Custom Tiles** | Enter a custom tile URL template (e.g., `https://{s}.tile.custom.com/{z}/{x}/{y}.png`) |
+
+## Default Viewport
+
+Set where the map centers when Fleet-Ops is first opened:
+
+| Setting | Description |
+| :--- | :--- |
+| **Default Latitude** | Center latitude of the initial map view |
+| **Default Longitude** | Center longitude of the initial map view |
+| **Default Zoom** | Initial zoom level (1–20; higher = more zoomed in) |
+
+Set these to the center of your primary operating region so dispatchers see the relevant area immediately.
+
+## Marker Clustering
+
+| Setting | Description |
+| :--- | :--- |
+| **Enable Clustering** | Group nearby driver/vehicle markers into clusters at low zoom levels |
+| **Cluster Radius** | Distance (pixels) within which markers are clustered |
+| **Max Cluster Zoom** | Zoom level at which clustering stops and individual markers are shown |
+
+Clustering is recommended for operations with many active drivers — it prevents marker overlap and improves map readability.
+
+## Display Options
+
+| Setting | Description |
+| :--- | :--- |
+| **Show Driver Labels** | Display driver name below their map marker |
+| **Show Vehicle Labels** | Display vehicle name/call sign below their marker |
+| **Show Routes** | Overlay active order routes as polylines |
+| **Show Service Areas** | Show service area and zone boundaries |
+| **Show Places** | Show saved Places as location pins |
+| **Map Theme** | Light or dark map theme |
+
+## Live Update Frequency
+
+| Setting | Description |
+| :--- | :--- |
+| **Position Update Interval** | How frequently the map refreshes driver/vehicle positions (seconds) |
+
+Lower values give more real-time updates but increase browser load. 5–10 seconds is typical for most operations.
+
+## Admin Map vs. Customer Map
+
+Fleet-Ops has two map configurations:
+- **Admin Map** — the map in the Fleet-Ops console (configured here)
+- **Customer Tracking Map** — the public tracking page map (configured separately in the same settings panel under the Customer Map tab)
+
+The customer tracking map can use a different provider and viewport than the admin map, which is useful for public-facing deployments.

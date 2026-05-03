@@ -1,10 +1,93 @@
 ---
-title: Notifications
-description: Set up operational notifications for order events, driver activity, and system alerts.
+title: Notification Settings
+description: Configure notification rules — which order and fleet events trigger alerts, the delivery channels (SMS, email, push), and the recipients.
 ---
 
-# Notifications
+# Notification Settings
 
-Set up operational notifications for order events, driver activity, and system alerts.
+**Notification Settings** control which events in Fleet-Ops trigger alerts, how they are delivered (SMS, email, push notification, or webhook), and who receives them.
 
-> This page is coming soon. Content is actively being developed.
+Navigate to **Fleet-Ops → Settings → Notifications**.
+
+![Notification settings panel — event list with channel toggles per recipient type](/images/placeholder.png)
+
+## Notification Events
+
+Fleet-Ops can send notifications for the following events:
+
+| Event | Description |
+| :--- | :--- |
+| **Order Dispatched** | Order sent to driver's Navigator app |
+| **Order Started** | Driver accepted and began the order |
+| **Order In Transit** | Driver is on the way to delivery location |
+| **Order Arrived** | Driver has arrived at the delivery location |
+| **Order Completed** | Delivery completed with POD captured |
+| **Order Cancelled** | Order was cancelled |
+| **Driver Online** | A driver has come online in Navigator |
+| **Driver Offline** | A driver has gone offline |
+| **Issue Reported** | A driver or operator reported an issue |
+| **Issue Assigned** | An issue was assigned to a resolver |
+| **Geofence Entry** | A driver entered a service area or zone |
+| **Geofence Exit** | A driver exited a service area or zone |
+
+## Notification Channels
+
+Each event can be configured to send notifications through multiple channels:
+
+| Channel | Description |
+| :--- | :--- |
+| **SMS** | Text message to the recipient's phone number |
+| **Email** | Email to the recipient's email address |
+| **Push** | Push notification to the Navigator app (drivers) or customer app |
+| **Webhook** | HTTP POST to a registered webhook endpoint |
+
+## Recipients
+
+For each notification event, configure who receives it:
+
+| Recipient Type | Who gets notified |
+| :--- | :--- |
+| **Customer** | The contact assigned as customer on the order |
+| **Driver** | The driver assigned to the order |
+| **Operator** | Internal operators/dispatch team (via email) |
+| **Vendor** | The vendor/facilitator if one is assigned |
+
+## Configuring Notifications
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Settings → Notifications**.
+  </Step>
+  <Step>
+    Find the event you want to configure (e.g., "Order Dispatched").
+  </Step>
+  <Step>
+    For each recipient type (Customer, Driver, Operator), toggle on the channels you want to use.
+  </Step>
+  <Step>
+    Optionally customize the message template for SMS and email notifications. Use placeholders like `{{driver_name}}`, `{{order_id}}`, `{{tracking_number}}` to insert dynamic values.
+  </Step>
+  <Step>
+    Click **Save**. Notifications apply to all future events matching the configured triggers.
+  </Step>
+</Steps>
+
+## Notification Registry
+
+The **Notification Registry** tab shows all registered notification types available in your Fleet-Ops instance, including any added by extensions. This is a read-only reference showing what notification events the system supports.
+
+## Rate Limiting
+
+To prevent notification flooding (e.g., many rapid status updates), notification rate limiting can be configured:
+
+- **Cooldown period** — minimum time between notifications of the same type for the same order
+- **Max per day** — cap on total notifications per recipient per day
+
+## Notification Prerequisites
+
+For notifications to work, the following platform settings must be configured:
+
+- **SMS** — mail/SMS provider configured in **Platform → Settings → Mail** and Twilio or similar SMS gateway
+- **Email** — mail provider configured in **Platform → Settings → Mail**
+- **Push** — push notification provider configured in **Platform → Settings → Push Notifications**
+- **Webhook** — webhook endpoint registered in **Platform → Developers → Webhooks**

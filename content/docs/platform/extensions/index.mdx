@@ -1,45 +1,42 @@
 ---
 title: Extensions
-description: Extend Fleetbase with modular extensions — install from the marketplace or build your own.
+description: Extend Fleetbase with modular extensions — install from the registry, manage installed extensions, or publish your own.
 ---
 
 # Extensions
 
-Fleetbase is built on a modular architecture. The core platform provides essential infrastructure—like identity management, API routing, and real-time events—but the actual logistics capabilities are provided by **Extensions**.
+Fleetbase is built on a modular architecture. The core platform provides identity management, API routing, and real-time events — the actual logistics capabilities are delivered by **Extensions**.
 
-Extensions are modular packages that you can install to add specific features, workflows, or integrations to your Fleetbase instance. This architecture allows you to tailor the platform to your exact operational needs without bloating the system with features you don't use.
+Extensions are installable packages that add specific features, workflows, or integrations to your instance. You can install official extensions, purchase community extensions, or build and publish your own.
 
-## How Extensions Work
+**Extensions** is accessible from the **top navigation bar** of the Fleetbase Console — not the sidebar. Clicking it opens the Extensions section with its own sidebar containing:
 
-An extension typically consists of two parts:
-
-1. **Backend Package**: A PHP Laravel package that registers new API routes, database models, and business logic.
-2. **Frontend Engine**: An Ember.js engine that registers new UI components, routes, and sidebar menus in the Fleetbase Console.
-
-When an extension is installed, the Fleetbase Extension Bridge automatically wires these components into the core platform. The new API routes become available, and the new UI components appear in the console.
+| Section | Description |
+| :--- | :--- |
+| **Installed** | Extensions currently active on your instance |
+| **Purchased** | Extensions you have purchased — install or reinstall from here |
+| **Explore** | Browse the registry by category or search |
+| **Developers** | Publish and manage your own extensions *(self-hosted registry only)* |
 
 ## Official Extensions
 
-Fleetbase provides several official extensions that cover common logistics use cases:
+| Extension | Description |
+| :--- | :--- |
+| **FleetOps** | Fleet management and dispatch — drivers, vehicles, orders, and real-time tracking |
+| **Storefront** | Headless e-commerce engine — products, categories, customers, and checkout |
+| **Ledger** | Accounting and billing — wallets, transactions, and invoicing |
+| **Pallet** | Warehouse and inventory management |
 
-- **[FleetOps](/docs/fleetops)**: A comprehensive fleet management and dispatch system. Manage drivers, vehicles, orders, and real-time tracking.
-- **[Storefront](/docs/storefront)**: A headless e-commerce engine. Manage products, categories, customers, and checkout flows.
-- **[Ledger](/docs/ledger)**: An accounting and billing module. Manage wallets, transactions, and invoicing.
-- **[Pallet](/docs/pallet)** *(Beta)*: A warehouse and inventory management system.
+## Installing Extensions
 
-## The Extension Registry
+Extensions can be installed directly from the console (Explore → Install) or from the command line using the Fleetbase CLI:
 
-The **Fleetbase Registry** is the official marketplace for extensions. It hosts both official extensions built by the Fleetbase team and third-party extensions built by the community.
+```bash
+flb install fleetbase/fleetops
+```
 
-You can browse and install extensions directly from the Fleetbase Console or using the Fleetbase CLI.
+See [Browsing & Installing](/docs/platform/extensions/browsing-and-installing) for full details.
 
-- **[Browsing & Installing](/docs/platform/extensions/browsing-and-installing)**: Learn how to find and install extensions to your instance.
-- **[Managing Extensions](/docs/platform/extensions/managing-extensions)**: Learn how to update, configure, or uninstall existing extensions.
+## Building Your Own
 
-## Building Custom Extensions
-
-If the available extensions don't meet your specific needs, you can build your own. Fleetbase provides a comprehensive set of tools and APIs for developers to create custom extensions that integrate seamlessly with the core platform.
-
-Custom extensions can be kept private for your organization's internal use, or published to the Fleetbase Registry to be shared with or sold to the community.
-
-To learn more about building custom extensions, see the **[Building & Extending Fleetbase](/docs/building-and-extending)** section.
+You can build a custom extension and keep it private or publish it to the registry. See the [Extending Fleetbase](/docs/extending-fleetbase) section to get started.

@@ -1,0 +1,127 @@
+---
+title: Navigator App Setup
+description: Set up the Navigator driver app and connect it to your Fleet-Ops account before your first dispatch.
+---
+
+# Navigator App Setup
+
+The Navigator app is the mobile application drivers use to receive dispatch orders, navigate routes, update delivery status, and capture proof of delivery. It is a React Native (Expo) app available for both iOS and Android.
+
+## Download the App
+
+Drivers can install Navigator from the app stores:
+
+- **iOS** — [App Store](https://apps.apple.com/app/fleetbase-navigator/id1562987952)
+- **Android** — [Google Play](https://play.google.com/store/apps/details?id=com.fleetbase.navigator)
+
+For white-labeled deployments, the Navigator source is available on GitHub and can be customized and published under your own app branding with a commercial license.
+
+## Configure the Server Connection
+
+By default, Navigator connects to Fleetbase Cloud. For self-hosted instances, drivers need to point the app at your server before logging in.
+
+<Steps>
+  <Step>
+    ### Open Navigator app settings
+
+    On the login screen, tap the **Settings** icon (gear) in the top right corner.
+  </Step>
+  <Step>
+    ### Enter your server hostname
+
+    Enter your Fleetbase API hostname — for example `api.yourcompany.com`. This is the same hostname used for the Fleetbase API.
+
+    For Fleetbase Cloud users, no change is needed — the default is correct.
+  </Step>
+  <Step>
+    ### Save and return to login
+
+    Tap **Save**. The app reconnects to your server and shows the login screen.
+  </Step>
+</Steps>
+
+## Create a Driver Account
+
+Before a driver can log in, you need to create their driver record in the console.
+
+<Steps>
+  <Step>
+    ### Open Fleet-Ops → Resources → Drivers
+
+    In the Fleetbase Console, navigate to **Fleet-Ops → Resources → Drivers**.
+  </Step>
+  <Step>
+    ### Click New Driver
+
+    Click **+ New Driver** and fill in the driver's details:
+
+    | Field | Notes |
+    | :--- | :--- |
+    | **Name** | Driver's full name |
+    | **Phone** | Mobile number — used for SMS login |
+    | **Email** | Optional, used for account notifications |
+    | **Vendor** | Optional — assign to a specific vendor/carrier |
+    | **Vehicle** | Optional — assign a default vehicle |
+
+  </Step>
+  <Step>
+    ### Save the driver
+
+    Click **Save**. The driver account is created with an auto-generated auth token.
+  </Step>
+</Steps>
+
+## Driver Login
+
+Drivers log into Navigator using their phone number. The app sends an SMS verification code.
+
+<Steps>
+  <Step>
+    ### Enter phone number
+
+    On the login screen, the driver enters their mobile phone number (the same one registered in the console).
+  </Step>
+  <Step>
+    ### Enter the verification code
+
+    The driver receives an SMS with a 6-digit code. They enter it in Navigator to complete login.
+  </Step>
+  <Step>
+    ### Allow location permissions
+
+    Navigator requires location access (always / background) to broadcast the driver's position to the console. The app prompts for this on first login — the driver must grant it.
+  </Step>
+</Steps>
+
+<Callout type="warn">
+Background location access is required for real-time tracking on the live map. If a driver denies background location, their position will not update while the app is in the background.
+</Callout>
+
+## Configure Navigator App Settings in the Console
+
+Fleet-Ops has a settings panel for controlling how Navigator behaves. Open **Fleet-Ops → Settings → Navigator App**.
+
+Key settings include:
+
+| Setting | Description |
+| :--- | :--- |
+| **Driver SMS verification** | Enable/disable SMS code login |
+| **Allow driver registration** | Let new drivers self-register via app |
+| **Driver online auto-start** | Automatically set driver online on login |
+| **Broadcast frequency** | How often driver location is sent (seconds) |
+| **Language** | Default app language for drivers |
+| **Order acceptance mode** | Auto-accept dispatches or require manual accept |
+
+See [Settings → Navigator App](/docs/fleet-ops/settings/navigator-app) for the full settings reference.
+
+## Test the Connection
+
+Once a driver is logged in, their status appears in **Fleet-Ops → Resources → Drivers** as **Online**, and their location marker appears on the live map.
+
+Create a test order and dispatch it to the driver. They will receive a push notification in Navigator and can accept the order to begin navigation.
+
+## Next Steps
+
+- [Quickstart](/docs/fleet-ops/getting-started/quickstart) — create and dispatch your first order
+- [Drivers](/docs/fleet-ops/resources/drivers/overview) — manage driver records, schedules, and permissions
+- [Settings → Navigator App](/docs/fleet-ops/settings/navigator-app) — configure app behavior and onboarding rules

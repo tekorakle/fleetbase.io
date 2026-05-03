@@ -1,49 +1,90 @@
 ---
 title: Products
-description: Create and manage products in your Storefront catalog, including images, descriptions, and availability.
+description: Create and manage products in your Storefront catalog — images, variants, addons, availability, and status.
 ---
 
 # Products
 
-A **Product** is the core entity of your catalog. It represents a single item or service that a customer can purchase from a Store.
+A **Product** is the core unit of your catalog — any item or service a customer can purchase. Products belong to a specific store and are organized into categories.
 
-Every product in Storefront is tied to a specific Store. If you operate a multi-vendor Network, each Store manages its own unique list of products.
+Navigate to **Storefront → Products** to manage your product list.
+
+![Product list — name, price, category, status, and primary image](/images/placeholder.png)
+
+## Product Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | The customer-facing product name |
+| **Description** | Detailed description of the item |
+| **Price** | Base price in the store's currency |
+| **Sale Price** | Reduced price; applied when `is_on_sale` is enabled |
+| **SKU** | Optional internal stock keeping unit |
+| **Category** | The category this product belongs to |
+| **Status** | `available` (visible) or `draft` (hidden) |
+| **Is Recommended** | Flag to surface this product as a recommendation in your app |
+| **Is Service** | Mark as a service product (non-physical) |
+| **Is Bookable** | Enable appointment/booking-style ordering |
+| **Can Pickup** | Allow customers to select in-store pickup for this product |
+| **Tags** | Freeform tags for filtering and search |
 
 ## Creating a Product
 
-To add a new product to your catalog:
+<Steps>
+  <Step>
+    Navigate to **Storefront → Products**.
+  </Step>
+  <Step>
+    Click **New Product**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Description**, and **Price**.
+  </Step>
+  <Step>
+    Select a **Category** from the dropdown (create one first if needed).
+  </Step>
+  <Step>
+    Upload a **Primary Image** and any additional photos.
+  </Step>
+  <Step>
+    Set **Status** to `available` when the product is ready for customers to see.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
 
-1. Navigate to **Storefront** > **Products** in the Fleetbase Console.
-2. Ensure you have selected the correct Store from the context switcher at the top of the screen.
-3. Click the **New Product** button.
-4. Provide the basic details:
-   - **Name**: The public-facing name of the product (e.g., "Classic Cheeseburger").
-   - **Description**: A detailed description of the item, including ingredients, materials, or features.
-   - **Price**: The base price of the product in the Store's currency.
-   - **SKU**: (Optional) A Stock Keeping Unit identifier for your internal tracking.
-5. Upload an **Image**: A high-quality photo of the product. This is crucial for driving conversions in your frontend application.
-6. Assign the product to one or more **Categories** (e.g., "Burgers", "Lunch Specials").
-7. Click **Save**.
+## Product Customization
 
-## Product Status
+### Variants
 
-You can control the visibility of a product using its **Status** toggle.
+Variants define required selections the customer must make before adding a product to the cart (e.g., selecting a size). See [Variants & Addons](/docs/storefront/catalog/variants-and-addons).
 
-- **Active**: The product is visible in your frontend application and customers can add it to their cart.
-- **Inactive**: The product is hidden from the frontend application. This is useful if an item is temporarily out of stock or out of season.
+### Addons
 
-## Advanced Configuration
+Addons are optional extras grouped into addon categories. See [Variants & Addons](/docs/storefront/catalog/variants-and-addons).
 
-While a basic product only needs a name, description, and price, Storefront supports more complex configurations:
+### Product Hours
 
-### [Variants & Add-ons](/docs/storefront/catalog/variants-and-addons)
-If your product comes in different sizes, colors, or allows for customization (e.g., "Extra Cheese"), you can configure these options.
+If a product is only available at certain times (e.g., a breakfast item available 7am–11am only):
 
-### [Pricing Rules](/docs/storefront/catalog/pricing)
-If you need to offer bulk discounts, wholesale pricing, or dynamic pricing based on the customer's location, you can configure advanced pricing rules.
+1. Open the product and click the **Hours** tab
+2. Click **Add Hours**
+3. Select the day and set the start/end time
+4. Save
 
-## The Product Payload
+When a customer tries to add an unavailable product to the cart outside its hours, the API will reject the request.
 
-When a customer purchases a product, Storefront automatically generates an Order in FleetOps.
+## How Products Flow to Fleet-Ops
 
-The details of the purchased product (Name, SKU, Quantity, Price) are passed to FleetOps and stored in the Order's **Payload**. This ensures that your dispatchers and drivers have a complete record of what needs to be delivered, without needing to cross-reference the Storefront catalog.
+When a customer completes checkout, each cart item is converted into a Fleet-Ops **Entity** in the order payload:
+
+- The entity carries the product name, SKU, quantity, price, and selected variants/addons
+- Dispatchers and drivers see exactly what needs to be picked up
+- Entities can have their own tracking numbers and QR codes
+
+This conversion happens automatically — no configuration required.
+
+## Importing Products
+
+To bulk-upload a product catalog from a spreadsheet, click **Import** in the products list. The CSV format requires at minimum: `name`, `price`, `currency`, and `category`.

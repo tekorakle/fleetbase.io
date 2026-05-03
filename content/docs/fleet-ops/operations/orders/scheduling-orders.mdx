@@ -1,0 +1,74 @@
+---
+title: Scheduling Orders
+description: Schedule an order for a specific date and time — set pickup windows, time constraints, and future dispatch rules.
+---
+
+# Scheduling Orders
+
+Orders can be scheduled for a specific future date and time rather than dispatched immediately. Scheduled orders stay in a holding state until their window opens, at which point they become eligible for dispatch.
+
+## Setting a Scheduled Pickup
+
+When creating or editing an order, enable **Schedule** in the order form:
+
+<Steps>
+  <Step>
+    Open the new order form (**Operations → Orders → + New Order**) or edit an existing order.
+  </Step>
+  <Step>
+    Toggle **Schedule Order** on.
+  </Step>
+  <Step>
+    Set the **Scheduled At** date and time — the target pickup time.
+  </Step>
+  <Step>
+    Optionally set a **Time Window Start** and **Time Window End** to define the acceptable pickup range (e.g., between 09:00 and 12:00).
+  </Step>
+  <Step>
+    Save the order. The order status moves to **scheduled**.
+  </Step>
+</Steps>
+
+![New order form — Schedule toggle with date/time picker and time window fields](/images/placeholder.png)
+
+## Scheduled Status
+
+A **scheduled** order behaves differently from a pending order:
+
+- It is visible in the orders list under the **Scheduled** filter tab
+- It appears in the Scheduler calendar view on its scheduled date
+- The Orchestrator can include scheduled orders in its optimization run
+- It will not appear in the active dispatch queue until the scheduled window is reached
+
+## Time Windows
+
+The **time window** (start and end time) defines when the order pickup can occur. This is distinct from the scheduled time — it gives the driver a range rather than an exact moment.
+
+Time windows are used by the **Orchestrator** as a hard constraint when assigning and routing orders. An order with a time window of 09:00–12:00 will only be assigned to a driver who can reach the pickup location before 12:00.
+
+For waypoints within an order, each stop can have its own independent time window.
+
+## Dispatching Scheduled Orders
+
+Scheduled orders are not automatically dispatched when their time arrives. An operator must still click **Dispatch** to send them to the driver — or the Orchestrator can be run to dispatch them in batch.
+
+<Callout type="info">
+If you want fully automatic dispatch at scheduled times, use the Orchestrator with the **Run on Schedule** option, which can be triggered via API or a scheduled job in your infrastructure.
+</Callout>
+
+## Viewing Scheduled Orders
+
+Scheduled orders appear in two places:
+
+1. **Orders List** — select the **Scheduled** tab to see all scheduled orders with their pickup dates
+2. **Scheduler Calendar** — navigate to **Operations → Scheduler** to see a timeline view of all scheduled orders organized by date and driver
+
+## Rescheduling
+
+To change the scheduled date or time:
+
+1. Open the order detail and click **Edit**
+2. Update the **Scheduled At** field and time window
+3. Save — the order remains in scheduled status with the updated time
+
+If the order has already been dispatched to a driver, rescheduling requires cancelling the dispatch and reassigning.
