@@ -11,44 +11,44 @@
 @variant dark (&:is(.dark *));
 
 :root {
-  /* Fleetbase brand: Direction A — Monochromatic Blue (Cobalt #3B82F6 → Navy #1E3A8A) */
-  --bg-glow-primary: oklch(0.625 0.214 258 / 0.07);
-  --bg-glow-accent: oklch(0.40 0.18 264 / 0.05);
+  --bg-glow-primary: oklch(0.65 0.165 251 / 0.07);
+  --bg-glow-accent: oklch(0.72 0.15 25 / 0.05);
 
-  --background: oklch(0.98 0.005 258);
-  --foreground: oklch(0.15 0.04 265);
-  --card-foreground: oklch(0.15 0.04 265);
-  --card: oklch(0.99 0.004 258);
-  --popover-foreground: oklch(0.15 0.04 265);
-  --popover: oklch(0.99 0.004 258);
-  --primary: oklch(0.625 0.214 258);
+  --background: oklch(0.87 0.02 320);
+  --foreground: oklch(0.05 0.02 290);
+  --card-foreground: oklch(0.05 0.02 290);
+  --card: oklch(0.95 0.01 320);
+  --popover-foreground: oklch(0.05 0.02 290);
+  --popover: oklch(0.95 0.01 320);
+  /* Fleetbase brand blue (#438DF1) — anchors primary CTAs and stat values */
+  --primary: oklch(0.65 0.165 251);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.34 0.16 265);
-  --secondary-foreground: oklch(1 0 0);
-  --muted: oklch(0.92 0.012 258 / 0.6);
-  --muted-foreground: oklch(0.45 0.04 260);
-  --accent: oklch(0.95 0.025 258);
-  --accent-foreground: oklch(0.34 0.16 265);
+  --secondary: oklch(0.62 0.15 230);
+  --secondary-foreground: oklch(0.05 0.02 290);
+  --muted: oklch(0.15 0.03 50 / 0.08);
+  --muted-foreground: oklch(0.35 0.03 50);
+  --accent: oklch(0.96 0.01 320);
+  --accent-foreground: oklch(0.08 0.02 290);
   --destructive: oklch(0.604 0.191 22.216);
-  --border: oklch(0.88 0.018 258);
-  --input: oklch(0.85 0.02 258);
-  --ring: oklch(0.625 0.214 258);
+  --border: oklch(0.84 0.01 240);
+  --input: oklch(0.75 0.02 50);
+  --ring: oklch(0.65 0.165 251 / 0.4);
 
-  /* Brand gradient stops (powers .text-gradient wordmark) */
-  --chart-1: oklch(0.625 0.214 258);
-  --chart-2: oklch(0.47 0.21 262);
-  --chart-3: oklch(0.34 0.16 265);
-  --chart-4: oklch(0.55 0.22 260);
-  --chart-5: oklch(0.40 0.18 264);
+  /* Wordmark gradient stops — brand-blue ramp (light → mid → deep) */
+  --chart-1: oklch(0.72 0.13 251);
+  --chart-2: oklch(0.65 0.165 251);
+  --chart-3: oklch(0.50 0.18 254);
+  --chart-4: oklch(0.58 0.18 252);
+  --chart-5: oklch(0.45 0.16 256);
 
-  --sidebar: oklch(0.97 0.012 258);
-  --sidebar-foreground: oklch(0.15 0.04 265);
-  --sidebar-primary: oklch(0.625 0.214 258);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.92 0.04 258);
-  --sidebar-accent-foreground: oklch(0.34 0.16 265);
-  --sidebar-border: oklch(0.88 0.018 258);
-  --sidebar-ring: oklch(0.625 0.214 258);
+  --sidebar: oklch(0.9 0.01 80);
+  --sidebar-foreground: oklch(0.05 0.02 290);
+  --sidebar-primary: oklch(0.60 0.12 230);
+  --sidebar-primary-foreground: oklch(0.05 0.02 290);
+  --sidebar-accent: oklch(0.731 0 0);
+  --sidebar-accent-foreground: oklch(0.05 0.02 290);
+  --sidebar-border: oklch(0 0 0 / 10%);
+  --sidebar-ring: oklch(0.43 0 0);
 
   --radius: 8px;
 
@@ -63,59 +63,45 @@
   --display-weight: 400;
   --text-weight: 400;
 
-  /* Fleetbase brand-blue ramp (replaces unused --fuchsia-* override).
-     Use as bg-brand-blue-500, text-brand-blue-700, etc. */
-  --color-brand-blue-50: oklch(0.97 0.012 258);
-  --color-brand-blue-100: oklch(0.92 0.04 258);
-  --color-brand-blue-200: oklch(0.85 0.07 258);
-  --color-brand-blue-300: oklch(0.77 0.12 258);
-  --color-brand-blue-400: oklch(0.70 0.16 258);
-  --color-brand-blue-500: oklch(0.625 0.214 258);
-  --color-brand-blue-600: oklch(0.55 0.22 260);
-  --color-brand-blue-700: oklch(0.47 0.21 262);
-  --color-brand-blue-800: oklch(0.40 0.18 264);
-  --color-brand-blue-900: oklch(0.34 0.16 265);
-  --color-brand-blue-950: oklch(0.22 0.10 266);
 }
 
 .dark {
-  /* Fleetbase brand: Direction A — Monochromatic Blue (dark mode) */
-  --bg-glow-primary: oklch(0.70 0.16 258 / 0.12);
-  --bg-glow-accent: oklch(0.55 0.22 260 / 0.08);
+  --bg-glow-primary: oklch(0.60 0.12 230 / 0.12);
+  --bg-glow-accent: oklch(0.72 0.15 25 / 0.08);
 
-  --background: oklch(0.10 0.015 265);
-  --foreground: oklch(0.97 0.012 258);
-  --card: oklch(0.13 0.02 265);
-  --card-foreground: oklch(0.97 0.012 258);
-  --popover: oklch(0.13 0.02 265);
-  --popover-foreground: oklch(0.97 0.012 258);
-  --primary: oklch(0.70 0.16 258);
-  --primary-foreground: oklch(0.10 0.015 265);
-  --secondary: oklch(0.34 0.16 265);
-  --secondary-foreground: oklch(0.97 0.012 258);
-  --muted: oklch(0.30 0.04 260 / 0.4);
-  --muted-foreground: oklch(0.75 0.04 258);
-  --accent: oklch(0.20 0.06 262);
-  --accent-foreground: oklch(0.85 0.07 258);
+  --background: oklch(0.05 0.02 290);
+  --foreground: oklch(1 0 0);
+  --card: oklch(0.02 0 0);
+  --card-foreground: oklch(1 0 0);
+  --popover: oklch(0.02 0 0);
+  --popover-foreground: oklch(1 0 0);
+  --primary: oklch(1 0 0);
+  --primary-foreground: oklch(0.08 0.02 290);
+  --secondary: oklch(0.55 0.12 230);
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(0.93 0.02 240 / 0.08);
+  --muted-foreground: oklch(0.73 0.01 240);
+  --accent: oklch(0.08 0.02 285);
+  --accent-foreground: oklch(0.94 0.01 240);
   --destructive: oklch(0.604 0.191 22.216);
-  --border: oklch(0.22 0.04 262);
-  --input: oklch(0.28 0.04 262);
-  --ring: oklch(0.70 0.16 258);
+  --border: oklch(0.15 0.01 240);
+  --input: oklch(0.32 0.01 240);
+  --ring: oklch(0.2 0.01 240);
 
-  --chart-1: oklch(0.70 0.16 258);
-  --chart-2: oklch(0.55 0.22 260);
-  --chart-3: oklch(0.40 0.18 264);
-  --chart-4: oklch(0.62 0.21 258);
-  --chart-5: oklch(0.47 0.21 262);
+  --chart-1: oklch(0.60 0.12 230);
+  --chart-2: oklch(0.65 0.10 220);
+  --chart-3: oklch(0.72 0.15 25);
+  --chart-4: oklch(0.5 0.15 240);
+  --chart-5: oklch(0.5 0.15 240);
 
-  --sidebar: oklch(0.13 0.02 265);
-  --sidebar-foreground: oklch(0.97 0.012 258);
-  --sidebar-primary: oklch(0.70 0.16 258);
-  --sidebar-primary-foreground: oklch(0.10 0.015 265);
-  --sidebar-accent: oklch(0.20 0.06 262);
-  --sidebar-accent-foreground: oklch(0.85 0.07 258);
-  --sidebar-border: oklch(0.22 0.04 262);
-  --sidebar-ring: oklch(0.70 0.16 258);
+  --sidebar: oklch(0.12 0.01 240);
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: oklch(0.60 0.12 230);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.57 0 0);
 }
 
 @theme inline {
@@ -145,6 +131,24 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* ── Fleetbase brand color ────────────────────────────────────────────────
+     Anchored on #438DF1 (the icon blue from blue-logo-full.png).
+     Use as bg-brand / text-brand / border-brand for any explicitly-branded UI,
+     and the bg-brand-blue-{50..950} ramp for tints, shades, and hover states. */
+  --color-brand: oklch(0.65 0.165 251);
+  --color-brand-foreground: oklch(1 0 0);
+  --color-brand-blue-50: oklch(0.97 0.014 251);
+  --color-brand-blue-100: oklch(0.93 0.035 251);
+  --color-brand-blue-200: oklch(0.87 0.065 251);
+  --color-brand-blue-300: oklch(0.80 0.10 251);
+  --color-brand-blue-400: oklch(0.73 0.135 251);
+  --color-brand-blue-500: oklch(0.65 0.165 251);
+  --color-brand-blue-600: oklch(0.58 0.18 252);
+  --color-brand-blue-700: oklch(0.50 0.18 254);
+  --color-brand-blue-800: oklch(0.42 0.16 256);
+  --color-brand-blue-900: oklch(0.34 0.13 258);
+  --color-brand-blue-950: oklch(0.22 0.085 260);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);

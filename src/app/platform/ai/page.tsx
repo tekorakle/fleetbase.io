@@ -262,7 +262,7 @@ export default function LogisticsAIPage() {
  {/* ── Hero ── */}
  <section className="section-padding relative overflow-hidden">
  {/* Background gradient */}
- <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/10 pointer-events-none" />
+ <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-purple-500/5 pointer-events-none" />
  <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl pointer-events-none" />
 
  <div className="container max-w-5xl mx-auto relative text-center">
@@ -593,7 +593,7 @@ export default function LogisticsAIPage() {
 
  {/* ── Early Access CTA ── */}
  <section className="section-padding relative overflow-hidden">
- <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-secondary/15 pointer-events-none" />
+ <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-purple-500/10 pointer-events-none" />
  <div className="container max-w-3xl mx-auto text-center relative">
  <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/5 px-4 py-1.5 text-sm mb-6">
  <Sparkles className="w-3.5 h-3.5 text-primary" />
