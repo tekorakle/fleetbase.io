@@ -20,7 +20,7 @@ export default function StorefrontPage() {
  <div className="flex flex-col">
  {/* Hero Section */}
  <section className="section-padding relative overflow-hidden">
- <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5 dark:from-blue-500/10 dark:via-purple-500/10 dark:to-pink-500/10"></div>
+ <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-primary/3 to-secondary/10 dark:from-primary/10 dark:via-primary/5 dark:to-secondary/15"></div>
  <div className="relative container">
  <div className="flex flex-col items-center text-center gap-8 max-w-5xl mx-auto">
  <div className="flex items-center rounded-full border p-1 text-xs">
