@@ -73,7 +73,7 @@ const OpenSourceAdvantage = () => {
               key={i}
               className="flex flex-col items-center justify-center gap-1 bg-card px-6 py-8 text-center"
             >
-              <span className="text-3xl font-bold tracking-tight text-primary md:text-4xl">
+              <span className="text-3xl font-bold tracking-tight text-brand-blue-700 dark:text-brand-blue-400 md:text-4xl">
                 {stat.value}
               </span>
               <span className="text-xs text-muted-foreground">{stat.label}</span>

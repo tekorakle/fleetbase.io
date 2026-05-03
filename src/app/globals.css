@@ -14,43 +14,43 @@
   --bg-glow-primary: oklch(0.65 0.154 254 / 0.07);
   --bg-glow-accent: oklch(0.72 0.15 25 / 0.05);
 
-  /* Light surfaces — slightly off-white (lightness 0.94) so the noise
-     overlay has something to texture against without going grey, and
-     so cards/popovers can lift cleanly above the background.
-     Chroma kept tiny (0.005) so no color wash returns. Brand hue 254. */
-  --background: oklch(0.94 0.005 254);
-  --foreground: oklch(0.05 0.02 254);
-  --card-foreground: oklch(0.05 0.02 254);
-  --card: oklch(0.98 0.004 254);
-  --popover-foreground: oklch(0.05 0.02 254);
-  --popover: oklch(0.98 0.004 254);
+  /* Light surfaces — true neutral (chroma 0) so the periwinkle wash
+     can't return regardless of brand-hue tweaks. Lightness preserved
+     from the previous step so the noise overlay still textures cleanly. */
+  --background: oklch(0.94 0 0);
+  --foreground: oklch(0.05 0 0);
+  --card-foreground: oklch(0.05 0 0);
+  --card: oklch(0.98 0 0);
+  --popover-foreground: oklch(0.05 0 0);
+  --popover: oklch(0.98 0 0);
   /* Fleetbase brand blue (#4391EA, sampled from icon.png) */
   --primary: oklch(0.65 0.154 254);
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.62 0.14 254);
-  --secondary-foreground: oklch(0.05 0.02 254);
-  --muted: oklch(0.15 0.03 254 / 0.08);
-  --muted-foreground: oklch(0.35 0.03 254);
-  --accent: oklch(0.96 0.005 254);
-  --accent-foreground: oklch(0.08 0.02 254);
+  --secondary-foreground: oklch(0.05 0 0);
+  --muted: oklch(0.15 0 0 / 0.08);
+  --muted-foreground: oklch(0.35 0 0);
+  --accent: oklch(0.96 0 0);
+  --accent-foreground: oklch(0.08 0 0);
   --destructive: oklch(0.604 0.191 22.216);
-  --border: oklch(0.90 0.008 254);
-  --input: oklch(0.85 0.012 254);
+  --border: oklch(0.90 0 0);
+  --input: oklch(0.85 0 0);
   --ring: oklch(0.65 0.154 254 / 0.4);
 
-  /* Wordmark gradient stops — brand-blue ramp (light → mid → deep) */
-  --chart-1: oklch(0.72 0.13 254);
-  --chart-2: oklch(0.65 0.154 254);
-  --chart-3: oklch(0.50 0.18 256);
+  /* Tier 2 #2: light-mode wordmark gradient — punchier so it doesn't
+     wash out against the off-white background. Darker + more saturated. */
+  --chart-1: oklch(0.62 0.17 254);
+  --chart-2: oklch(0.55 0.18 256);
+  --chart-3: oklch(0.42 0.17 258);
   --chart-4: oklch(0.58 0.17 254);
   --chart-5: oklch(0.45 0.16 257);
 
-  --sidebar: oklch(0.97 0.005 254);
-  --sidebar-foreground: oklch(0.05 0.02 254);
+  --sidebar: oklch(0.97 0 0);
+  --sidebar-foreground: oklch(0.05 0 0);
   --sidebar-primary: oklch(0.65 0.154 254);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.92 0.012 254);
-  --sidebar-accent-foreground: oklch(0.05 0.02 254);
+  --sidebar-accent: oklch(0.92 0 0);
+  --sidebar-accent-foreground: oklch(0.05 0 0);
   --sidebar-border: oklch(0 0 0 / 8%);
   --sidebar-ring: oklch(0.65 0.154 254 / 0.4);
 
