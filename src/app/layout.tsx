@@ -120,12 +120,20 @@ export default function RootLayout({
  >
  {/* Background Blur */}
  <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
- {/* Noise Background — multiply on light surfaces (overlay produces no
-     visible effect on near-white), overlay on dark. The noise asset is
-     dark-weighted (mean lightness 5%), so light-mode opacity must stay
-     low (~10%) to keep the surface from collapsing into grey. */}
+ {/* Light-mode noise — SVG fractal-noise tinted brand-blue/steel.
+     The webp asset (used in dark mode) is heavily dark-weighted, which
+     unavoidably darkens light surfaces under any blend mode. This SVG
+     version emits brand-tinted RGB at noise-modulated alpha, so it adds
+     visible grain WITHOUT pulling the surface darker. */}
  <div
- className="absolute inset-0 z-[-1] size-full opacity-10 mix-blend-multiply dark:opacity-70 dark:mix-blend-overlay dark:md:opacity-100"
+ className="pointer-events-none absolute inset-0 z-[-1] size-full opacity-50 dark:hidden"
+ style={{
+ backgroundImage: `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.26 0 0 0 0 0.45 0 0 0 0 0.80 0.55 0 0 0 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")`,
+ }}
+ />
+ {/* Dark-mode noise — original dark-grain webp, unchanged behaviour */}
+ <div
+ className="pointer-events-none absolute inset-0 z-[-1] hidden size-full opacity-70 mix-blend-overlay dark:block dark:md:opacity-100"
  style={{
  background: `url(/images/noise.webp) lightgray 0% 0% / 83.69069695472717px 83.69069695472717px repeat`,
  }}
