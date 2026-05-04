@@ -3,6 +3,9 @@
 import { useEffect, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus, vs } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { Check, Copy } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 
 const DARK_BG = '#1e1e1e';
 const DARK_HEADER = '#252526';
@@ -16,10 +19,18 @@ interface CodeBlockProps {
   language?: string;
   label?: string;
   className?: string;
+  showLineNumbers?: boolean;
 }
 
-export function CodeBlock({ code, language = 'javascript', label, className }: CodeBlockProps) {
+export function CodeBlock({
+  code,
+  language = 'javascript',
+  label,
+  className,
+  showLineNumbers = true,
+}: CodeBlockProps) {
   const [isDark, setIsDark] = useState(true);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     const check = () => setIsDark(document.documentElement.classList.contains('dark'));
@@ -33,37 +44,58 @@ export function CodeBlock({ code, language = 'javascript', label, className }: C
   const headerBg = isDark ? DARK_HEADER : LIGHT_HEADER;
   const border = isDark ? DARK_BORDER : LIGHT_BORDER;
 
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(code);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
   return (
     <div
       className={`overflow-hidden rounded-xl border ${className ?? ''}`}
       style={{ backgroundColor: bg, borderColor: border }}
     >
-      {label && (
-        <div
-          className="flex items-center gap-2 border-b px-4 py-3"
-          style={{ backgroundColor: headerBg, borderColor: border }}
-        >
-          <div className="flex gap-1.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-red-400/60" />
-            <div className="h-2.5 w-2.5 rounded-full bg-yellow-400/60" />
-            <div className="h-2.5 w-2.5 rounded-full bg-green-400/60" />
-          </div>
-          <span className="ml-1 font-mono text-xs text-muted-foreground">{label}</span>
-        </div>
-      )}
-      <SyntaxHighlighter
-        language={language}
-        style={isDark ? vscDarkPlus : vs}
-        customStyle={{
-          margin: 0,
-          padding: '1.25rem 1rem',
-          background: 'transparent',
-          fontSize: '0.75rem',
-          lineHeight: '1.7',
-        }}
+      <div
+        className="flex shrink-0 items-center justify-between border-b px-4 py-3"
+        style={{ backgroundColor: headerBg, borderColor: border }}
       >
-        {code}
-      </SyntaxHighlighter>
+        <span className="font-mono text-sm text-muted-foreground">{label ?? language}</span>
+        <Button variant="ghost" size="sm" onClick={handleCopy} className="h-8 px-2">
+          {copied ? (
+            <>
+              <Check className="mr-1.5 h-3.5 w-3.5" />
+              <span className="text-xs">Copied!</span>
+            </>
+          ) : (
+            <>
+              <Copy className="mr-1.5 h-3.5 w-3.5" />
+              <span className="text-xs">Copy</span>
+            </>
+          )}
+        </Button>
+      </div>
+      <div className="overflow-auto">
+        <SyntaxHighlighter
+          language={language}
+          style={isDark ? vscDarkPlus : vs}
+          customStyle={{
+            margin: 0,
+            padding: '1.25rem 1rem',
+            background: 'transparent',
+            fontSize: '0.875rem',
+            lineHeight: '1.7',
+          }}
+          showLineNumbers={showLineNumbers}
+          lineNumberStyle={{
+            color: isDark ? '#4a4a4a' : '#bbb',
+            paddingRight: '1.5rem',
+            minWidth: '2.5rem',
+            userSelect: 'none',
+          }}
+        >
+          {code}
+        </SyntaxHighlighter>
+      </div>
     </div>
   );
 }
