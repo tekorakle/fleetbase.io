@@ -81,9 +81,9 @@ const featureTabs = [
       'Route optimization as a configurable phase',
       'Visual plan output: review before you commit',
     ],
-    image: '/images/console-screenshots/fleetops-orders-table-detail.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
     imageAlt:
-      'Fleet-Ops order dispatch queue showing orders with pickup, dropoff, driver assignment and live status columns',
+      'Fleet-Ops Orchestrator Workbench showing stacked optimization phases and a visual plan ready for dispatcher review',
   },
   {
     id: 'tracking',
@@ -99,9 +99,9 @@ const featureTabs = [
       'Geofence-triggered automatic status updates',
       'Driver location history and journey replay',
     ],
-    image: '/images/console-screenshots/fleetops-live-map.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-geofences.webp',
     imageAlt:
-      'Fleet-Ops live map showing real-time vehicle positions with active orders and route overlays',
+      'Fleet-Ops live map showing geofences drawn around pickup and dropoff zones for automatic status updates',
   },
   {
     id: 'order-config',
@@ -117,7 +117,7 @@ const featureTabs = [
       'Multi-waypoint and multi-leg order support',
       'Proof of delivery: signatures, photos, barcodes',
     ],
-    image: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
     imageAlt:
       'Fleet-Ops order configuration showing the visual activity flow designer with custom statuses and automation triggers',
   },
@@ -135,9 +135,9 @@ const featureTabs = [
       'Shift scheduling and availability windows',
       'Navigator mobile app for drivers (iOS & Android)',
     ],
-    image: '/images/console-screenshots/fleetops-drivers.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
     imageAlt:
-      'Fleet-Ops driver management panel showing driver list with vehicle assignments, contact info, and active status',
+      'Fleet-Ops driver position playback showing a driver journey replay with timeline scrubber and live status',
   },
   {
     id: 'telematics',
@@ -153,9 +153,9 @@ const featureTabs = [
       'Driver behavior and idle time monitoring',
       'Location history and journey replay',
     ],
-    image: '/images/console-screenshots/fleetops-telematics.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-flespi-telematics-integration.webp',
     imageAlt:
-      'Fleet-Ops telematics dashboard showing vehicle data, GPS tracking, and driver behavior analytics',
+      'Fleet-Ops Flespi telematics integration showing live vehicle data, GPS positions, and sensor streams from connected devices',
   },
 ];
 
@@ -510,7 +510,7 @@ export default function FleetOpsPageContent() {
           <BrowserFrame label="Fleet-Ops — Live Operations Dashboard" className="shadow-2xl">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-live-map-full.webp"
+                src="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
                 alt="Fleet-Ops live operations dashboard showing real-time fleet map with driver positions, active orders, and route overlays"
                 fill
                 className="object-cover object-top"
@@ -767,7 +767,7 @@ export default function FleetOpsPageContent() {
               <BrowserFrame label="Fleet-Ops — Order Management">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-orders-kanban.webp"
+                    src="/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp"
                     alt="Fleet-Ops order management kanban board showing orders organised by status with driver assignments"
                     fill
                     className="object-cover object-top"
@@ -778,7 +778,7 @@ export default function FleetOpsPageContent() {
               <BrowserFrame label="Fleet-Ops — Scheduler">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-scheduler.webp"
+                    src="/images/screenshots/fleet-ops/fleet-ops-scheduler.webp"
                     alt="Fleet-Ops scheduler showing calendar view with planned deliveries and unscheduled orders"
                     fill
                     className="object-cover object-top"
@@ -832,22 +832,22 @@ export default function FleetOpsPageContent() {
 
             {/* Right: screenshots */}
             <div className="flex flex-col gap-5 lg:col-span-3">
-              <BrowserFrame label="Fleet-Ops — Issues & Maintenance Queue">
+              <BrowserFrame label="Fleet-Ops — Maintenance Log">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-issues.webp"
-                    alt="Fleet-Ops issues and maintenance dashboard showing vehicle problems, work orders, and maintenance queue"
+                    src="/images/screenshots/fleet-ops/fleet-ops-maintenance-log.webp"
+                    alt="Fleet-Ops maintenance log showing work order history, parts consumption, and service records per vehicle"
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 60vw"
                   />
                 </div>
               </BrowserFrame>
-              <BrowserFrame label="Fleet-Ops — Vehicle Management">
+              <BrowserFrame label="Fleet-Ops — Preventive Maintenance Schedules">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-vehicles.webp"
-                    alt="Fleet-Ops vehicle management panel showing fleet list with vehicle status, plate numbers, and driver assignments"
+                    src="/images/screenshots/fleet-ops/fleet-ops-maintenance-schedules.webp"
+                    alt="Fleet-Ops preventive maintenance schedules showing service intervals by mileage, engine hours, and calendar date"
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -884,8 +884,8 @@ export default function FleetOpsPageContent() {
               <BrowserFrame label="Fleet-Ops — Telematics & Connectivity">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-telematics.webp"
-                    alt="Fleet-Ops telematics dashboard showing connected device data, live GPS positions, and sensor readings"
+                    src="/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp"
+                    alt="Fleet-Ops vehicle position playback showing connected device data, live GPS positions, and sensor readings streamed from telematics providers"
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -938,11 +938,11 @@ export default function FleetOpsPageContent() {
           <div className="grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Left: screenshot */}
             <div className="lg:col-span-3">
-              <BrowserFrame label="Fleet-Ops — Analytics & Reporting">
+              <BrowserFrame label="Fleet-Ops — Report Builder">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/fleetops-dashboard-metrics.webp"
-                    alt="Fleet-Ops analytics dashboard with charts showing delivery performance, costs, and fleet utilization metrics"
+                    src="/images/screenshots/fleet-ops/fleet-ops-report-builder.webp"
+                    alt="Fleet-Ops report builder showing custom report configuration with charts for delivery performance, costs, and fleet utilization"
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 60vw"

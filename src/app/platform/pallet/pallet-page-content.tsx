@@ -280,7 +280,7 @@ export default function PalletPageContent() {
           <BrowserFrame label="Fleetbase — Operations Dashboard" className="shadow-2xl">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-orders-table.webp"
+                src="/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp"
                 alt="Fleetbase platform showing order and inventory management across warehouse and delivery operations"
                 fill
                 className="object-cover object-top"
@@ -430,7 +430,7 @@ export default function PalletPageContent() {
           <BrowserFrame label="Fleet-Ops — Deliveries triggered from Pallet fulfilment">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-live-map-full.webp"
+                src="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
                 alt="Fleet-Ops live map showing deliveries automatically dispatched after Pallet warehouse fulfilment"
                 fill
                 className="object-cover object-top"

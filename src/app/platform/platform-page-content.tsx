@@ -276,7 +276,7 @@ export default function PlatformPageContent() {
             </div>
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-live-map-full.webp"
+                src="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
                 alt="Fleetbase platform showing the Fleet-Ops live operations dashboard with real-time fleet map, active orders, and driver positions"
                 fill
                 className="object-cover object-top"

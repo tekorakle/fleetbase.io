@@ -650,7 +650,7 @@ export default function StorefrontPageContent() {
           <BrowserFrame label="Fleet-Ops — Live Dispatch (auto-triggered by Storefront order)">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/fleetops-live-map-singapore.png"
+                src="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
                 alt="Fleet-Ops live map showing real-time driver dispatch triggered automatically by a Storefront order"
                 fill
                 className="object-cover object-top"

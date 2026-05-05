@@ -25,7 +25,7 @@ const tabs = [
       'Automation triggers on status changes',
       'Industry-specific order templates',
     ],
-    image: '/images/console-screenshots/fleetops-order-config-activity-flow.webp',
+    image: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
     imageAlt: 'Fleet-Ops dynamic order configuration showing activity flow designer with custom statuses and triggers',
   },
   {
@@ -42,8 +42,8 @@ const tabs = [
       'Service zone management',
       'Real-time manual override controls',
     ],
-    image: '/images/console-screenshots/fleetops-live-map.webp',
-    imageAlt: 'Fleet-Ops live dispatch map showing driver locations, active orders, and route assignments',
+    image: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
+    imageAlt: 'Fleet-Ops Orchestrator showing automated driver allocation, optimized routes, and a visual plan ready for dispatch',
   },
   {
     id: 'telematics',
@@ -59,8 +59,8 @@ const tabs = [
       'Driver behavior & idle time monitoring',
       'Location history & journey replay',
     ],
-    image: '/images/console-screenshots/fleetops-telematics.webp',
-    imageAlt: 'Fleet-Ops telematics dashboard showing vehicle data, GPS tracking, and driver behavior analytics',
+    image: '/images/screenshots/fleet-ops/fleet-ops-flespi-telematics-integration.webp',
+    imageAlt: 'Fleet-Ops Flespi telematics integration showing live vehicle data, GPS positions, and sensor streams from connected devices',
   },
   {
     id: 'maintenance',
@@ -76,8 +76,8 @@ const tabs = [
       'Complete vehicle service history',
       'Photo & document attachments',
     ],
-    image: '/images/console-screenshots/fleetops-issues.webp',
-    imageAlt: 'Fleet-Ops maintenance and issues dashboard showing vehicle problems, service schedules, and reports',
+    image: '/images/screenshots/fleet-ops/fleet-ops-maintenance-schedules.webp',
+    imageAlt: 'Fleet-Ops preventive maintenance schedules showing service intervals by mileage, engine hours, and calendar date',
   },
   {
     id: 'analytics',
@@ -93,8 +93,8 @@ const tabs = [
       'Driver performance & scoring',
       'Exportable reports & data access',
     ],
-    image: '/images/console-screenshots/fleetops-dashboard-metrics.webp',
-    imageAlt: 'Fleet-Ops analytics dashboard with charts showing delivery performance, costs, and fleet utilization',
+    image: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
+    imageAlt: 'Fleet-Ops report builder showing custom report configuration with charts for delivery performance, costs, and fleet utilization',
   },
 ];
 

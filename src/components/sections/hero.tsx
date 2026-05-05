@@ -72,14 +72,14 @@ export default async function Hero() {
 
         {/* Hero screenshot */}
         <div className="relative mt-4 w-full max-w-6xl">
-          <div className="relative aspect-video overflow-hidden rounded-xl border shadow-2xl ring-1 ring-foreground/5">
+          <div className="relative aspect-[8/5] overflow-hidden rounded-xl border shadow-2xl ring-1 ring-foreground/5">
             <Image
-              src="/images/console-screenshots/fleetops-live-map-full.webp"
-              alt="Fleetbase console showing live fleet tracking, order dispatch, and operations dashboard"
+              src="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
+              alt="Fleetbase console showing a multi-waypoint Fleet-Ops order with optimized route, driver assignment, and live status timeline"
               fill
-              className="object-cover object-top"
+              className="object-contain object-top"
               priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1400px) 90vw, 1400px"
+              unoptimized
             />
           </div>
           {/* Bottom fade */}
