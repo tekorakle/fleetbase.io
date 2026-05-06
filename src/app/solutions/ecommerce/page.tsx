@@ -24,7 +24,7 @@ export default function EcommercePage() {
         { value: '3.2×', label: 'Higher repeat purchase rate with live tracking' },
         { value: '98%', label: 'API uptime SLA' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/storefront/storefront-dashboard.webp"
       heroScreenshotAlt="Fleetbase e-commerce delivery operations dashboard"
       painPoints={{
         heading: 'The delivery gap that\'s costing you customers',
@@ -49,7 +49,7 @@ export default function EcommercePage() {
             'Webhooks for every delivery event to update your OMS in real-time',
           ],
           icon: Code,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Branded Customer Tracking',
@@ -60,7 +60,7 @@ export default function EcommercePage() {
             'Delivery confirmation with photo proof of delivery',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Same-Day Dispatch Engine',
@@ -71,7 +71,7 @@ export default function EcommercePage() {
             'Real-time capacity management to avoid over-promising',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Delivery Notifications That Convert',
@@ -82,7 +82,7 @@ export default function EcommercePage() {
             'NPS and review request triggers post-delivery',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-push-notifications.webp',
         },
         {
           title: 'Returns & Reverse Logistics',
@@ -93,7 +93,7 @@ export default function EcommercePage() {
             'Real-time inbound tracking updated to your WMS via webhook',
           ],
           icon: RefreshCw,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-orders-overview.webp',
         },
         {
           title: 'Fulfilment & Inventory Sync',
@@ -104,7 +104,7 @@ export default function EcommercePage() {
             'Fulfilment SLA tracking and breach alerting',
           ],
           icon: Package,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-products-overview.webp',
         },
       ]}
       capabilities={[

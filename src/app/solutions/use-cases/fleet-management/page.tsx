@@ -24,7 +24,7 @@ export default function FleetManagementPage() {
         { value: '45%', label: 'Less time spent on compliance documentation' },
         { value: '8,000+', label: 'Active fleet instances running on Fleetbase' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp"
       heroScreenshotAlt="Fleetbase fleet management dashboard — real-time vehicle tracking, driver status, and maintenance alerts"
       painPoints={{
         heading: 'The hidden costs of poor fleet visibility',
@@ -49,7 +49,7 @@ export default function FleetManagementPage() {
             'Trip history and replay for any vehicle and time period',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Preventive Maintenance Scheduling',
@@ -60,7 +60,7 @@ export default function FleetManagementPage() {
             'Maintenance history log with cost tracking per vehicle',
           ],
           icon: Wrench,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-schedules.webp',
         },
         {
           title: 'Driver Management & Performance',
@@ -71,7 +71,7 @@ export default function FleetManagementPage() {
             'Shift scheduling and availability management',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
         {
           title: 'Compliance & Documentation Management',
@@ -82,7 +82,7 @@ export default function FleetManagementPage() {
             'Scheduled renewal reminders for licences, MOTs, and insurance',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-log.webp',
         },
         {
           title: 'Fleet Utilization Analytics',
@@ -93,7 +93,7 @@ export default function FleetManagementPage() {
             'Fleet capacity vs. demand modelling for planning decisions',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Driver Mobile App — Navigator',
@@ -104,7 +104,7 @@ export default function FleetManagementPage() {
             'Defect and incident reporting with photo evidence from the cab',
           ],
           icon: Smartphone,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
       ]}
       capabilities={[

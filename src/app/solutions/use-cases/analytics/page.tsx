@@ -24,7 +24,7 @@ export default function AnalyticsPage() {
         { value: '18%', label: 'Improvement in on-time delivery after KPI visibility' },
         { value: '10M+', label: 'Orders tracked and analysed on Fleetbase' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-report-builder.webp"
       heroScreenshotAlt="Fleetbase logistics analytics dashboard — fleet KPIs, delivery performance, and cost breakdown"
       painPoints={{
         heading: 'Managing logistics without data costs you in every direction',
@@ -49,7 +49,7 @@ export default function AnalyticsPage() {
             'Configurable dashboard widgets for the KPIs your role cares about',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Delivery Performance KPIs',
@@ -60,7 +60,7 @@ export default function AnalyticsPage() {
             'Average delivery duration trending and period-over-period comparison',
           ],
           icon: TrendingUp,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Fleet & Driver Performance Analytics',
@@ -71,7 +71,7 @@ export default function AnalyticsPage() {
             'Speeding, harsh braking, and behaviour incident trending per driver',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
         {
           title: 'Cost Analysis & Profitability Reporting',
@@ -82,7 +82,7 @@ export default function AnalyticsPage() {
             'Customer account profitability reporting for commercial reviews',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/ledger/ledger-balance-sheet.webp',
         },
         {
           title: 'SLA & Compliance Reporting',
@@ -93,7 +93,7 @@ export default function AnalyticsPage() {
             'Exportable delivery records in CSV, PDF, and API formats',
           ],
           icon: FileText,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Custom Dashboards & Report Builder',
@@ -104,7 +104,7 @@ export default function AnalyticsPage() {
             'Scheduled report delivery via email to stakeholders',
           ],
           icon: Settings,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

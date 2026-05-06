@@ -24,7 +24,7 @@ export default function OperationsManagersPage() {
         { value: '40%', label: 'Less time on status update requests from stakeholders' },
         { value: '98%', label: 'On-time SLA rate for operations running Fleetbase' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
       heroScreenshotAlt="Fleetbase operations management dashboard — live dispatch, SLA tracking, and driver overview"
       painPoints={{
         heading: 'The operational fire-fighting that fills your day',
@@ -49,7 +49,7 @@ export default function OperationsManagersPage() {
             'Driver availability and capacity view for same-day demand management',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp',
         },
         {
           title: 'Automated SLA Monitoring & Alerting',
@@ -60,7 +60,7 @@ export default function OperationsManagersPage() {
             'SLA breach log for post-incident review and client reporting',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Smart Dispatch Automation',
@@ -71,7 +71,7 @@ export default function OperationsManagersPage() {
             'Dispatch queue prioritization by SLA risk and order urgency',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Exception Management & Resolution',
@@ -82,7 +82,7 @@ export default function OperationsManagersPage() {
             'Exception history and root cause tracking for operational improvement',
           ],
           icon: Settings,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-import.webp',
         },
         {
           title: 'Team & Depot Management',
@@ -93,7 +93,7 @@ export default function OperationsManagersPage() {
             'Shift scheduling and driver availability management',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-routing-settings.webp',
         },
         {
           title: 'Operational Performance Reporting',
@@ -104,7 +104,7 @@ export default function OperationsManagersPage() {
             'Driver and depot performance benchmarking for team reviews',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

@@ -24,7 +24,7 @@ export default function TruckingPage() {
         { value: '40%', label: 'Fewer customer status calls' },
         { value: '10M+', label: 'Orders processed on platform' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
       heroScreenshotAlt="Fleetbase FleetOps live map — trucking fleet overview"
       painPoints={{
         heading: 'Sound familiar? You\'re not alone.',
@@ -49,7 +49,7 @@ export default function TruckingPage() {
             'Full trip history and dwell-time reporting per vehicle',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Intelligent Route Optimization',
@@ -60,7 +60,7 @@ export default function TruckingPage() {
             'Cost-per-mile modelling per vehicle type',
           ],
           icon: Truck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp',
         },
         {
           title: 'Digital Proof of Delivery',
@@ -71,7 +71,7 @@ export default function TruckingPage() {
             'Customer portal access to view their own delivery records',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Vehicle Maintenance & Fleet Health',
@@ -82,7 +82,7 @@ export default function TruckingPage() {
             'Export-ready maintenance logs for compliance audits',
           ],
           icon: Wrench,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-schedules.webp',
         },
         {
           title: 'Fleet Analytics & Cost Reporting',
@@ -93,7 +93,7 @@ export default function TruckingPage() {
             'Fuel consumption vs. route efficiency correlation reports',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Driver App — Navigator',
@@ -104,7 +104,7 @@ export default function TruckingPage() {
             'Multi-language support for diverse driver workforces',
           ],
           icon: Smartphone,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
       ]}
       capabilities={[

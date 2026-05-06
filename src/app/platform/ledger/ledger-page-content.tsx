@@ -81,8 +81,8 @@ const featureTabs = [
       'Full General Ledger with drill-down to operational context',
       'Trial Balance generation for accuracy verification',
     ],
-    image: '/images/console-screenshots/ledger-chart-of-accounts.webp',
-    imageAlt: 'Ledger chart of accounts showing account hierarchy, types, and balances',
+    image: '/images/screenshots/ledger/ledger-balance-sheet.webp',
+    imageAlt: 'Ledger balance sheet showing assets, liabilities, and equity totals generated from the double-entry accounting engine',
   },
   {
     id: 'invoicing',
@@ -98,8 +98,8 @@ const featureTabs = [
       'Full line-item control: quantity, unit price, tax, discounts',
       'Payment status tracking from draft to settled',
     ],
-    image: '/images/console-screenshots/ledger-invoices-create.webp',
-    imageAlt: 'Ledger invoice builder showing line items, tax configuration, and invoice preview',
+    image: '/images/screenshots/ledger/ledger-invoice-details.webp',
+    imageAlt: 'Ledger invoice detail view showing line items, tax configuration, customer details, and payment status',
   },
   {
     id: 'wallets',
@@ -115,8 +115,8 @@ const featureTabs = [
       'Company operating wallets for internal funds management',
       'All balances stored in smallest currency unit for precision',
     ],
-    image: '/images/console-screenshots/ledger-transactions.webp',
-    imageAlt: 'Ledger wallet dashboard showing driver balances, transaction history, and transfer controls',
+    image: '/images/screenshots/ledger/ledger-wallet-add-funds.webp',
+    imageAlt: 'Ledger wallet top-up flow showing add-funds form with currency selection and source account',
   },
   {
     id: 'reporting',
@@ -132,8 +132,8 @@ const featureTabs = [
       'A/R Aging Report: identify overdue invoices proactively',
       'Wallet Summary: consolidated balance and movement view',
     ],
-    image: '/images/console-screenshots/ledger-dashboard-detail.webp',
-    imageAlt: 'Ledger financial dashboard showing income statement, revenue breakdown, and report export',
+    image: '/images/screenshots/ledger/ledger-ar-aging.webp',
+    imageAlt: 'Ledger A/R aging report showing overdue invoices grouped by age bucket and customer',
   },
   {
     id: 'gateways',
@@ -149,8 +149,8 @@ const featureTabs = [
       'Real-time webhook event log for payments, failures, disputes',
       'Extensible gateway driver interface for custom providers',
     ],
-    image: '/images/console-screenshots/ledger-gateways.webp',
-    imageAlt: 'Ledger payment gateway configuration showing Stripe setup and sandbox toggle',
+    image: '/images/screenshots/ledger/ledger-payment-gateway-details.webp',
+    imageAlt: 'Ledger payment gateway details showing Stripe configuration, sandbox toggle, and webhook events',
   },
 ];
 
@@ -464,12 +464,12 @@ export default function LedgerPageContent() {
           <BrowserFrame label="Ledger — Financial Dashboard" className="shadow-2xl">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/ledger-dashboard.webp"
+                src="/images/screenshots/ledger/ledger-dashboard.webp"
                 alt="Ledger financial dashboard showing accounting overview, transaction ledger, and financial reporting for logistics operations"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
           </BrowserFrame>
@@ -602,7 +602,7 @@ export default function LedgerPageContent() {
                         alt={active.imageAlt}
                         fill
                         className="object-cover object-top"
-                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        unoptimized
                       />
                     </div>
                   </Card>
@@ -719,25 +719,25 @@ export default function LedgerPageContent() {
 
             {/* Right: screenshots */}
             <div className="flex flex-col gap-5 lg:col-span-3">
-              <BrowserFrame label="Ledger — Chart of Accounts">
+              <BrowserFrame label="Ledger — Balance Sheet">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-chart-of-accounts.webp"
-                    alt="Ledger chart of accounts management showing account hierarchy, types, and balances for a logistics business"
+                    src="/images/screenshots/ledger/ledger-balance-sheet.webp"
+                    alt="Ledger balance sheet generated from the double-entry engine showing assets, liabilities, and equity totals for a logistics business"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
-              <BrowserFrame label="Ledger — Transaction Ledger">
+              <BrowserFrame label="Ledger — Wallet Transfer">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-transactions.webp"
-                    alt="Ledger transaction log showing journal entries with operational context, account codes, and debit/credit balances"
+                    src="/images/screenshots/ledger/ledger-wallet-transfer-funds.webp"
+                    alt="Ledger wallet transfer flow showing funds being moved between accounts with the resulting journal entry"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -767,25 +767,25 @@ export default function LedgerPageContent() {
           <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Left: screenshots */}
             <div className="flex flex-col gap-5 lg:col-span-3">
-              <BrowserFrame label="Ledger — Invoice Builder">
+              <BrowserFrame label="Ledger — Customer Invoice Page">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-invoices-create.webp"
-                    alt="Ledger invoice builder showing line items, tax configuration, and client details"
+                    src="/images/screenshots/ledger/ledger-invoice-payment-page.webp"
+                    alt="Ledger customer-facing invoice page showing line items, totals, and one-click pay action"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
-              <BrowserFrame label="Ledger — Invoice Templates">
+              <BrowserFrame label="Ledger — Invoice Template Editor">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-invoice-templates.webp"
+                    src="/images/screenshots/ledger/ledger-invoice-template-editor.webp"
                     alt="Ledger invoice template editor with branded design options and custom field configuration"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -835,14 +835,14 @@ export default function LedgerPageContent() {
           <div className="grid items-center gap-12 lg:grid-cols-5 lg:gap-16">
             {/* Left: screenshot */}
             <div className="lg:col-span-3">
-              <BrowserFrame label="Ledger — Wallets & Transactions">
+              <BrowserFrame label="Ledger — Wallet Transfer">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-transactions.webp"
-                    alt="Ledger wallet management showing driver wallet balances, transaction history, and transfer controls"
+                    src="/images/screenshots/ledger/ledger-wallet-transfer-funds.webp"
+                    alt="Ledger wallet transfer flow showing funds movement between driver, customer, and company wallets"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -923,22 +923,22 @@ export default function LedgerPageContent() {
               <BrowserFrame label="Ledger — Financial Dashboard">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-dashboard-detail.webp"
+                    src="/images/screenshots/ledger/ledger-dashboard.webp"
                     alt="Ledger financial dashboard showing income statement, revenue breakdown by period, and report navigation"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
               <BrowserFrame label="Ledger — A/R Aging Report">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/ledger-ar-aging.webp"
+                    src="/images/screenshots/ledger/ledger-ar-aging.webp"
                     alt="Ledger accounts receivable aging report showing overdue invoices by age bucket and client"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>

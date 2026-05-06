@@ -401,12 +401,12 @@ export default function StorefrontPageContent() {
           <BrowserFrame label="Storefront — Commerce Dashboard" className="shadow-2xl">
             <div className="relative aspect-[16/7] w-full">
               <Image
-                src="/images/console-screenshots/storefront-dashboard.webp"
+                src="/images/screenshots/storefront/storefront-dashboard.webp"
                 alt="Fleetbase Storefront console dashboard showing live orders, store activity, product catalog, and delivery metrics"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
           </BrowserFrame>
@@ -478,22 +478,22 @@ export default function StorefrontPageContent() {
               <BrowserFrame label="Storefront — Product Grid">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/storefront-products-grid.webp"
-                    alt="Storefront product grid showing catalog items with images, pricing, variants, and availability settings"
+                    src="/images/screenshots/storefront/storefront-products-overview.webp"
+                    alt="Storefront product overview showing catalog items with images, pricing, variants, and availability settings"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
-              <BrowserFrame label="Storefront — Products">
+              <BrowserFrame label="Storefront — Product Editor">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/storefront-products.webp"
-                    alt="Storefront products list view showing product management with categories, stock status, and pricing"
+                    src="/images/screenshots/storefront/storefront-products-new.webp"
+                    alt="Storefront product editor showing fields for product details, pricing, categories, variants, and addons"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -574,22 +574,22 @@ export default function StorefrontPageContent() {
               <BrowserFrame label="Storefront — Catalogs & Networks">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/storefront-catalogs.webp"
+                    src="/images/screenshots/storefront/storefront-catalogs-overview.webp"
                     alt="Storefront catalog and network management showing multi-vendor store configuration and network settings"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
               <BrowserFrame label="Storefront — Food Trucks & Stores">
                 <div className="relative aspect-[16/7] w-full">
                   <Image
-                    src="/images/console-screenshots/storefront-food-trucks.webp"
+                    src="/images/screenshots/storefront/storefront-food-trucks-overview.webp"
                     alt="Storefront store directory showing food trucks and vendors with location, hours, and catalog management"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -654,7 +654,7 @@ export default function StorefrontPageContent() {
                 alt="Fleet-Ops live map showing real-time driver dispatch triggered automatically by a Storefront order"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
+                unoptimized
               />
             </div>
           </BrowserFrame>

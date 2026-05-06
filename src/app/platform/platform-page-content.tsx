@@ -280,8 +280,8 @@ export default function PlatformPageContent() {
                 alt="Fleetbase platform showing the Fleet-Ops live operations dashboard with real-time fleet map, active orders, and driver positions"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
           </div>

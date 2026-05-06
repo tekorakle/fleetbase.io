@@ -24,7 +24,7 @@ export default function CourierServicesPage() {
         { value: '60%', label: 'Fewer WISMO support tickets' },
         { value: '3×', label: 'More parcels per driver per day' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
       heroScreenshotAlt="Fleetbase courier operations — parcel tracking and route management"
       painPoints={{
         heading: 'Every courier operator knows these problems',
@@ -49,7 +49,7 @@ export default function CourierServicesPage() {
             'Dynamic re-sequencing when new parcels are added mid-route',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp',
         },
         {
           title: 'Proactive Delivery Notifications',
@@ -60,7 +60,7 @@ export default function CourierServicesPage() {
             'Delivery confirmation with photo proof sent to recipient',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-push-notifications.webp',
         },
         {
           title: 'Digital Proof of Delivery',
@@ -71,7 +71,7 @@ export default function CourierServicesPage() {
             'Automated PDF generation emailed to sender and recipient',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Sender & Recipient Tracking Portal',
@@ -82,7 +82,7 @@ export default function CourierServicesPage() {
             'Recipient-managed delivery notification preferences',
           ],
           icon: Package,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Driver Productivity Analytics',
@@ -93,7 +93,7 @@ export default function CourierServicesPage() {
             'Planned vs. actual route efficiency comparison',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Returns & Failed Delivery Workflows',
@@ -104,7 +104,7 @@ export default function CourierServicesPage() {
             'Reverse dispatch for returns logistics',
           ],
           icon: RefreshCw,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-import.webp',
         },
       ]}
       capabilities={[

@@ -162,6 +162,7 @@ export default function SolutionPageLayout({
               height={700}
               className="w-full rounded-2xl border shadow-2xl"
               priority
+              unoptimized
             />
           </div>
         </div>
@@ -237,6 +238,7 @@ export default function SolutionPageLayout({
                     width={700}
                     height={440}
                     className="w-full rounded-2xl border shadow-lg"
+                    unoptimized
                   />
                 </div>
               </div>

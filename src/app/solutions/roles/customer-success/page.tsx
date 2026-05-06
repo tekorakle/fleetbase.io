@@ -24,7 +24,7 @@ export default function CustomerSuccessPage() {
         { value: '40%', label: 'Fewer escalations when customers have live tracking access' },
         { value: '4.8/5', label: 'Average customer satisfaction score with live tracking' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
       heroScreenshotAlt="Fleetbase customer success view — order detail, live tracking, and POD retrieval"
       painPoints={{
         heading: 'Why customer success teams struggle with delivery queries',
@@ -49,7 +49,7 @@ export default function CustomerSuccessPage() {
             'Role-based access — support sees order data without touching dispatch tools',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp',
         },
         {
           title: 'Live Tracking Links',
@@ -60,7 +60,7 @@ export default function CustomerSuccessPage() {
             'Works on any device without app download',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Instant Proof of Delivery Retrieval',
@@ -71,7 +71,7 @@ export default function CustomerSuccessPage() {
             'One-click POD export as PDF for dispute resolution and billing',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Proactive Customer Notifications',
@@ -82,7 +82,7 @@ export default function CustomerSuccessPage() {
             'Notification templates fully editable per brand and communication channel',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-push-notifications.webp',
         },
         {
           title: 'Customer Self-Service Portal',
@@ -93,7 +93,7 @@ export default function CustomerSuccessPage() {
             'Return initiation workflow — direct from the portal without a support call',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-dashboard.webp',
         },
         {
           title: 'Delivery Performance & CSAT Reporting',
@@ -104,7 +104,7 @@ export default function CustomerSuccessPage() {
             'On-time delivery rate trending by zone and customer account',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

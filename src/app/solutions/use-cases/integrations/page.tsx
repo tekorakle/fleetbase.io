@@ -24,7 +24,7 @@ export default function IntegrationsPage() {
         { value: 'Real-time', label: 'Webhook delivery for every platform event' },
         { value: '98%', label: 'API uptime SLA on cloud plans' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp"
       heroScreenshotAlt="Fleetbase developer console — API keys, webhooks, and real-time event logs"
       painPoints={{
         heading: 'Integration problems that slow every logistics team down',
@@ -49,7 +49,7 @@ export default function IntegrationsPage() {
             'Tracking events, ETAs, and POD retrieval programmable endpoints',
           ],
           icon: Code2,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Real-Time Webhooks',
@@ -60,7 +60,7 @@ export default function IntegrationsPage() {
             'Automatic retry with exponential back-off on delivery failure',
           ],
           icon: Webhook,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/ledger/ledger-payment-gateway-details.webp',
         },
         {
           title: 'Storefront & E-commerce Connectors',
@@ -71,7 +71,7 @@ export default function IntegrationsPage() {
             'Customer notification triggers from storefront order timeline',
           ],
           icon: Puzzle,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-dashboard.webp',
         },
         {
           title: 'JavaScript & Mobile SDKs',
@@ -82,7 +82,7 @@ export default function IntegrationsPage() {
             'Detailed API reference with code examples in multiple languages',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Extension & Plugin System',
@@ -93,7 +93,7 @@ export default function IntegrationsPage() {
             'Ember.js frontend engine for building custom console UI panels',
           ],
           icon: Settings,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Developer Console & API Monitoring',
@@ -104,7 +104,7 @@ export default function IntegrationsPage() {
             'System event stream for real-time integration debugging',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

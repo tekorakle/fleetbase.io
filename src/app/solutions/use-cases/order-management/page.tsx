@@ -24,7 +24,7 @@ export default function OrderManagementPage() {
         { value: '40%', label: 'Faster order-to-dispatch time with automation' },
         { value: '100%', label: 'Configurable to your exact order workflow' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp"
       heroScreenshotAlt="Fleetbase order management — order pipeline view with custom statuses and bulk assignment"
       painPoints={{
         heading: 'The order management problems slowing your operation down',
@@ -49,7 +49,7 @@ export default function OrderManagementPage() {
             'Multiple order types with separate configurations, SLAs, and dispatch rules',
           ],
           icon: Settings,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Automated Order Intake & Routing',
@@ -60,7 +60,7 @@ export default function OrderManagementPage() {
             'Webhook events on every status change to keep upstream systems in sync',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-import.webp',
         },
         {
           title: 'Real-Time Order Tracking & Visibility',
@@ -71,7 +71,7 @@ export default function OrderManagementPage() {
             'SLA breach alerting to operations team before the window closes',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Proof of Delivery & Completion',
@@ -82,7 +82,7 @@ export default function OrderManagementPage() {
             'Bulk POD export for invoicing and compliance reporting',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp',
         },
         {
           title: 'SLA Management & Breach Prevention',
@@ -93,7 +93,7 @@ export default function OrderManagementPage() {
             'SLA performance reporting per customer, period, and order type',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Order Analytics & Performance Reporting',
@@ -104,7 +104,7 @@ export default function OrderManagementPage() {
             'Cost-per-order analysis broken down by route and vehicle type',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

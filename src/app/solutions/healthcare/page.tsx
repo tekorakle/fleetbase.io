@@ -24,7 +24,7 @@ export default function HealthcarePage() {
         { value: '0', label: 'Patient data stored on third-party servers (self-hosted)' },
         { value: '4 hr', label: 'Average urgent delivery dispatch time' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
       heroScreenshotAlt="Fleetbase healthcare logistics — chain-of-custody and delivery management"
       painPoints={{
         heading: 'The compliance and operational gaps keeping you up at night',
@@ -49,7 +49,7 @@ export default function HealthcarePage() {
             'One-click compliance export for regulatory audits',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Priority Dispatch for Urgent Items',
@@ -60,7 +60,7 @@ export default function HealthcarePage() {
             'SLA breach alerting before the window closes, not after',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Self-Hosted & Data-Sovereign Deployment',
@@ -71,7 +71,7 @@ export default function HealthcarePage() {
             'RBAC controls limit data access to authorised personnel only',
           ],
           icon: Lock,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Role-Based Access & Compliance Controls',
@@ -82,7 +82,7 @@ export default function HealthcarePage() {
             'Two-factor authentication enforceable system-wide',
           ],
           icon: Shield,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp',
         },
         {
           title: 'Temperature & Condition Monitoring',
@@ -93,7 +93,7 @@ export default function HealthcarePage() {
             'Full temperature log appended to each delivery\'s chain-of-custody record',
           ],
           icon: Heart,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-flespi-telematics-integration.webp',
         },
         {
           title: 'Compliance Reporting & Audit Exports',
@@ -104,7 +104,7 @@ export default function HealthcarePage() {
             'Data retention policies configurable per jurisdiction',
           ],
           icon: ClipboardList,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

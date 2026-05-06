@@ -24,7 +24,7 @@ export default function GovernmentPage() {
         { value: 'RBAC', label: 'Granular role-based access control' },
         { value: 'Full', label: 'Audit trail on every action and access event' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp"
       heroScreenshotAlt="Fleetbase government and military logistics operations dashboard"
       painPoints={{
         heading: 'Why commercial SaaS logistics software fails government requirements',
@@ -49,7 +49,7 @@ export default function GovernmentPage() {
             'Operates on classified networks with no external connectivity required',
           ],
           icon: Server,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Air-Gap & Offline Operation',
@@ -60,7 +60,7 @@ export default function GovernmentPage() {
             'Full platform operation on isolated networks with no internet dependency',
           ],
           icon: Globe,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-routing-settings.webp',
         },
         {
           title: 'Role-Based Access Control & Clearance Management',
@@ -71,7 +71,7 @@ export default function GovernmentPage() {
             'System-wide two-factor authentication enforcement',
           ],
           icon: Shield,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp',
         },
         {
           title: 'Comprehensive Audit Trails',
@@ -82,7 +82,7 @@ export default function GovernmentPage() {
             'Tamper-evident logging with configurable retention periods',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Open Source — Inspectable & Modifiable',
@@ -93,7 +93,7 @@ export default function GovernmentPage() {
             'No vendor dependency — your team owns the deployment',
           ],
           icon: Lock,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Fleet & Asset Logistics Management',
@@ -104,7 +104,7 @@ export default function GovernmentPage() {
             'Operational reporting and mission logistics documentation',
           ],
           icon: ClipboardList,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
       ]}
       capabilities={[

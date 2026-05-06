@@ -24,7 +24,7 @@ export default function WasteManagementPage() {
         { value: '15%', label: 'More collections per vehicle per day' },
         { value: '99.9%', label: 'Platform uptime' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp"
       heroScreenshotAlt="Fleetbase waste management fleet operations — route optimization and compliance tracking"
       painPoints={{
         heading: 'The operational pressures waste operators face every day',
@@ -49,7 +49,7 @@ export default function WasteManagementPage() {
             'Multi-vehicle coordination to prevent route overlap and missed zones',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp',
         },
         {
           title: 'Container & Asset Tracking',
@@ -60,7 +60,7 @@ export default function WasteManagementPage() {
             'Customer-facing container status portal for business clients',
           ],
           icon: Recycle,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-geofences.webp',
         },
         {
           title: 'Compliance & Environmental Reporting',
@@ -71,7 +71,7 @@ export default function WasteManagementPage() {
             'Digital waste transfer notes and disposal manifests',
           ],
           icon: ClipboardList,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Fleet Maintenance & Vehicle Health',
@@ -82,7 +82,7 @@ export default function WasteManagementPage() {
             'Vehicle inspection checklists with photo evidence',
           ],
           icon: Truck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-log.webp',
         },
         {
           title: 'Customer Notification & Collection Alerts',
@@ -93,7 +93,7 @@ export default function WasteManagementPage() {
             'Collection completion confirmation with timestamp and GPS data',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-push-notifications.webp',
         },
         {
           title: 'Operations Analytics & KPI Dashboards',
@@ -104,7 +104,7 @@ export default function WasteManagementPage() {
             'Route efficiency trending to catch degradation early',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
       ]}
       capabilities={[

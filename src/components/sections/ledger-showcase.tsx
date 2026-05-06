@@ -79,11 +79,11 @@ export default function LedgerShowcase() {
  >
  <div className="relative rounded-xl border overflow-hidden shadow-2xl aspect-[4/3]">
  <Image
- src="/images/console-screenshots/ledger-dashboard-detail.webp"
- alt="Fleetbase Ledger finance dashboard showing invoice management, wallet balances, and financial reporting for logistics operations"
+ src="/images/screenshots/ledger/ledger-balance-sheet.webp"
+ alt="Fleetbase Ledger balance sheet showing assets, liabilities, and equity totals generated automatically from logistics operations"
  fill
  className="object-cover object-top"
- sizes="(max-width: 1024px) 100vw, 50vw"
+ unoptimized
  />
  {/* Overlay badge */}
  <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur-sm border rounded-lg px-3 py-2 flex items-center gap-2">

@@ -39,7 +39,7 @@ const modules = [
       'White-label customer mobile app',
       'Auto-dispatch on checkout',
     ],
-    image: '/images/console-screenshots/storefront-products-grid.webp',
+    image: '/images/screenshots/storefront/storefront-products-overview.webp',
     imageAlt: 'Storefront product catalog and order management interface',
     href: '/platform/storefront',
     colSpan: 'lg:col-span-1',
@@ -77,7 +77,7 @@ const modules = [
       'Cash flow & P&L dashboards',
       'Full double-entry accounting',
     ],
-    image: '/images/console-screenshots/ledger-dashboard.webp',
+    image: '/images/screenshots/ledger/ledger-dashboard.webp',
     imageAlt: 'Ledger finance dashboard showing revenue, invoices and wallet management',
     href: '/platform/ledger',
     colSpan: 'lg:col-span-1',
@@ -130,7 +130,7 @@ export default function PlatformModules() {
             <Card
               key={mod.id}
               className={cn(
-                'dark:to-muted/30 dark:via-muted/10 to-background via-card from-card group overflow-hidden bg-gradient-to-br dark:from-transparent',
+                'dark:to-muted/30 dark:via-muted/10 to-background via-card from-card group gap-0 overflow-hidden bg-gradient-to-br py-0 dark:from-transparent',
                 mod.colSpan,
               )}
             >
@@ -142,7 +142,7 @@ export default function PlatformModules() {
                     alt={mod.imageAlt}
                     fill
                     className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized
                   />
                 </div>
 

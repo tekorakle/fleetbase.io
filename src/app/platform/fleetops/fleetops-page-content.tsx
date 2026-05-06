@@ -514,8 +514,8 @@ export default function FleetOpsPageContent() {
                 alt="Fleet-Ops live operations dashboard showing real-time fleet map with driver positions, active orders, and route overlays"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
           </BrowserFrame>
@@ -648,7 +648,7 @@ export default function FleetOpsPageContent() {
                         alt={active.imageAlt}
                         fill
                         className="object-cover object-top"
-                        sizes="(max-width: 1024px) 100vw, 60vw"
+                        unoptimized
                       />
                     </div>
                   </Card>
@@ -771,7 +771,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops order management kanban board showing orders organised by status with driver assignments"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -782,7 +782,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops scheduler showing calendar view with planned deliveries and unscheduled orders"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -839,7 +839,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops maintenance log showing work order history, parts consumption, and service records per vehicle"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -850,7 +850,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops preventive maintenance schedules showing service intervals by mileage, engine hours, and calendar date"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -888,7 +888,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops vehicle position playback showing connected device data, live GPS positions, and sensor readings streamed from telematics providers"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>
@@ -945,7 +945,7 @@ export default function FleetOpsPageContent() {
                     alt="Fleet-Ops report builder showing custom report configuration with charts for delivery performance, costs, and fleet utilization"
                     fill
                     className="object-cover object-top"
-                    sizes="(max-width: 1024px) 100vw, 60vw"
+                    unoptimized
                   />
                 </div>
               </BrowserFrame>

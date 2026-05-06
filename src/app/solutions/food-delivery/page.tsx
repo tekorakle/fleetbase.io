@@ -24,7 +24,7 @@ export default function FoodDeliveryPage() {
         { value: '4.8★', label: 'Avg. customer satisfaction uplift' },
         { value: '40%', label: 'Drop in inbound support calls' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp"
       heroScreenshotAlt="Fleetbase live dispatch board for food delivery operations"
       painPoints={{
         heading: 'The problems quietly killing your margins',
@@ -49,7 +49,7 @@ export default function FoodDeliveryPage() {
             'Colour-coded order status for instant dispatcher awareness',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Automated Smart Dispatch',
@@ -60,7 +60,7 @@ export default function FoodDeliveryPage() {
             'Surge mode — dynamic re-assignment when demand spikes',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Customer Notification Engine',
@@ -71,7 +71,7 @@ export default function FoodDeliveryPage() {
             'Configurable messaging templates in any language',
           ],
           icon: Bell,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-push-notifications.webp',
         },
         {
           title: 'Driver Performance & Ratings',
@@ -82,7 +82,7 @@ export default function FoodDeliveryPage() {
             'Leaderboards to motivate top performers',
           ],
           icon: Star,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
         {
           title: 'Zone & Profitability Analytics',
@@ -93,7 +93,7 @@ export default function FoodDeliveryPage() {
             'SLA breach heatmaps to identify operational weak spots',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Storefront — Native Order Management',
@@ -104,7 +104,7 @@ export default function FoodDeliveryPage() {
             'Customer accounts, order history, and reorder functionality',
           ],
           icon: ShoppingCart,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-dashboard.webp',
         },
       ]}
       capabilities={[

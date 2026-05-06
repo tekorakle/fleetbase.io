@@ -24,7 +24,7 @@ export default function LastMileDeliveryPage() {
         { value: '3.2×', label: 'Higher repeat purchase rate with live tracking' },
         { value: '25%', label: 'More deliveries per driver per day' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
       heroScreenshotAlt="Fleetbase FleetOps live map showing last-mile delivery drivers on optimized routes"
       painPoints={{
         heading: 'Last-mile problems that cost you money and customers',
@@ -49,7 +49,7 @@ export default function LastMileDeliveryPage() {
             'Manual override available for dispatchers at any time',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Optimized Multi-Stop Routes',
@@ -60,7 +60,7 @@ export default function LastMileDeliveryPage() {
             'Dynamic re-routing when stops are added or cancelled mid-run',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp',
         },
         {
           title: 'Live Customer Tracking',
@@ -71,7 +71,7 @@ export default function LastMileDeliveryPage() {
             'Automated SMS and email updates at every delivery milestone',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Driver Mobile App — Navigator',
@@ -82,7 +82,7 @@ export default function LastMileDeliveryPage() {
             'Offline mode — syncs automatically when connectivity restores',
           ],
           icon: Smartphone,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
         {
           title: 'Digital Proof of Delivery',
@@ -93,7 +93,7 @@ export default function LastMileDeliveryPage() {
             'Instant POD visibility in console and exportable for audits',
           ],
           icon: FileCheck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Last-Mile Performance Analytics',
@@ -104,7 +104,7 @@ export default function LastMileDeliveryPage() {
             'Cost-per-delivery and route efficiency trending',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

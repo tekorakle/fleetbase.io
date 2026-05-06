@@ -24,7 +24,7 @@ export default function WarehouseManagersPage() {
         { value: '50%', label: 'Fewer fulfillment errors vs. disconnected systems' },
         { value: '2×', label: 'Faster order dispatch after Pallet WMS integration' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/storefront/storefront-dashboard.webp"
       heroScreenshotAlt="Fleetbase Pallet warehouse management — inventory overview, pick list, and outbound dispatch queue"
       painPoints={{
         heading: 'The fulfilment gaps that cause delays and errors',
@@ -49,7 +49,7 @@ export default function WarehouseManagersPage() {
             'Low-stock alerts and reorder point automation',
           ],
           icon: Package,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-products-overview.webp',
         },
         {
           title: 'Pick-and-Pack Workflow Management',
@@ -60,7 +60,7 @@ export default function WarehouseManagersPage() {
             'Pack station workflow with label generation at point of packing',
           ],
           icon: ClipboardList,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-orders-overview.webp',
         },
         {
           title: 'Seamless Dispatch Integration with FleetOps',
@@ -71,7 +71,7 @@ export default function WarehouseManagersPage() {
             'Real-time dispatch status visible to warehouse team',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Outbound Staging & Manifest Management',
@@ -82,7 +82,7 @@ export default function WarehouseManagersPage() {
             'Driver sign-off on collection with order count confirmation',
           ],
           icon: Truck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-import.webp',
         },
         {
           title: 'Returns & Reverse Logistics',
@@ -93,7 +93,7 @@ export default function WarehouseManagersPage() {
             'Inventory update on return receipt with restock or quarantine routing',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/storefront/storefront-orders-overview.webp',
         },
         {
           title: 'Warehouse Performance Analytics',
@@ -104,7 +104,7 @@ export default function WarehouseManagersPage() {
             'Staging dwell time and dispatch delay analysis',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

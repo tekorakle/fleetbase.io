@@ -24,7 +24,7 @@ export default function RouteOptimizationPage() {
         { value: '15%', label: 'More stops completed per vehicle per day' },
         { value: '2 min', label: 'Average time to optimize a 50-stop route' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp"
       heroScreenshotAlt="Fleetbase route optimization — multi-stop route sequencing on live map with efficiency metrics"
       painPoints={{
         heading: 'What inefficient routing is actually costing you',
@@ -49,7 +49,7 @@ export default function RouteOptimizationPage() {
             'Driver shift-length and break-time compliance built in',
           ],
           icon: Navigation,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp',
         },
         {
           title: 'Real-Time Dynamic Re-Routing',
@@ -60,7 +60,7 @@ export default function RouteOptimizationPage() {
             'Driver app receives updated routes without interrupting navigation',
           ],
           icon: RefreshCw,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-route-editor.webp',
         },
         {
           title: 'Multi-Vehicle Fleet Coordination',
@@ -71,7 +71,7 @@ export default function RouteOptimizationPage() {
             'Overtime risk flagging before routes are dispatched',
           ],
           icon: Truck,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Delivery Time Window Management',
@@ -82,7 +82,7 @@ export default function RouteOptimizationPage() {
             'Customer notification triggers when route plans confirm delivery ETAs',
           ],
           icon: Clock,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-scheduler.webp',
         },
         {
           title: 'Route Performance Analytics',
@@ -93,7 +93,7 @@ export default function RouteOptimizationPage() {
             'Stop sequence adherence rate and deviation flagging',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Bulk Import & Planning Tools',
@@ -104,7 +104,7 @@ export default function RouteOptimizationPage() {
             'What-if scenario modelling for fleet sizing and zone planning',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orders-import.webp',
         },
       ]}
       capabilities={[

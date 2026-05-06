@@ -24,7 +24,7 @@ export default function ExecutivesPage() {
         { value: '8,000+', label: 'Active logistics operations worldwide' },
         { value: '10M+', label: 'Orders processed on Fleetbase globally' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-report-builder.webp"
       heroScreenshotAlt="Fleetbase executive dashboard — operational performance, cost analytics, and growth metrics"
       painPoints={{
         heading: 'What your current logistics platform is costing you beyond the subscription',
@@ -49,7 +49,7 @@ export default function ExecutivesPage() {
             'Open-source licence means your development investment stays with you',
           ],
           icon: DollarSign,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/ledger/ledger-balance-sheet.webp',
         },
         {
           title: 'Executive Performance Dashboard',
@@ -60,7 +60,7 @@ export default function ExecutivesPage() {
             'Period-over-period performance comparison for growth tracking',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
         {
           title: 'Data Sovereignty & Compliance Readiness',
@@ -71,7 +71,7 @@ export default function ExecutivesPage() {
             'Audit-ready data export for compliance, legal holds, and regulatory review',
           ],
           icon: Shield,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp',
         },
         {
           title: 'Operational Scalability Without Re-Platforming',
@@ -82,7 +82,7 @@ export default function ExecutivesPage() {
             'Extension system allows operational capability to grow without core platform changes',
           ],
           icon: Globe,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Vendor Independence & Strategic Control',
@@ -93,7 +93,7 @@ export default function ExecutivesPage() {
             'Commercial licence available for proprietary modifications to the codebase',
           ],
           icon: Settings,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'ROI Reporting & Business Intelligence',
@@ -104,7 +104,7 @@ export default function ExecutivesPage() {
             'Exportable financial and operational reports for board presentations',
           ],
           icon: TrendingUp,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/ledger/ledger-dashboard.webp',
         },
       ]}
       capabilities={[

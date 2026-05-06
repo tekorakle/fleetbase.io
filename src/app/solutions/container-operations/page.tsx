@@ -24,7 +24,7 @@ export default function ContainerOperationsPage() {
         { value: '2×', label: 'Faster gate-out processing with digital workflows' },
         { value: '40%', label: 'Fewer stakeholder status enquiries' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
       heroScreenshotAlt="Fleetbase container operations — port logistics and container tracking dashboard"
       painPoints={{
         heading: 'The visibility gaps costing you time and money',
@@ -49,7 +49,7 @@ export default function ContainerOperationsPage() {
             'Stakeholder-specific visibility portals — shippers, consignees, customs',
           ],
           icon: Ship,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Yard & Terminal Management',
@@ -60,7 +60,7 @@ export default function ContainerOperationsPage() {
             'Dwell time tracking and demurrage risk alerting',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-geofences.webp',
         },
         {
           title: 'Documentation & Customs Management',
@@ -71,7 +71,7 @@ export default function ContainerOperationsPage() {
             'Automated document completion alerts to prevent holds',
           ],
           icon: ClipboardList,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Multi-Party Stakeholder Portal',
@@ -82,7 +82,7 @@ export default function ContainerOperationsPage() {
             'Self-service document download for shippers and consignees',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp',
         },
         {
           title: 'Last-Mile Delivery Dispatch',
@@ -93,7 +93,7 @@ export default function ContainerOperationsPage() {
             'Proof of delivery capture for every final-mile drop',
           ],
           icon: Zap,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-1.webp',
         },
         {
           title: 'Operations Analytics & Demurrage Control',
@@ -104,7 +104,7 @@ export default function ContainerOperationsPage() {
             'Carrier performance benchmarking and SLA tracking',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

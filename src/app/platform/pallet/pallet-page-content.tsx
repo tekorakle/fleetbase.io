@@ -284,8 +284,8 @@ export default function PalletPageContent() {
                 alt="Fleetbase platform showing order and inventory management across warehouse and delivery operations"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
                 priority
+                unoptimized
               />
             </div>
           </BrowserFrame>
@@ -434,7 +434,7 @@ export default function PalletPageContent() {
                 alt="Fleet-Ops live map showing deliveries automatically dispatched after Pallet warehouse fulfilment"
                 fill
                 className="object-cover object-top"
-                sizes="100vw"
+                unoptimized
               />
             </div>
           </BrowserFrame>

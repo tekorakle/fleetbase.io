@@ -24,7 +24,7 @@ export default function DevelopersPage() {
         { value: '1,800+', label: 'GitHub stars and growing' },
         { value: '100%', label: 'API coverage — every feature accessible programmatically' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp"
       heroScreenshotAlt="Fleetbase developer console — API keys, webhook configuration, and request logs"
       painPoints={{
         heading: 'Why developers hate working with most logistics platforms',
@@ -49,7 +49,7 @@ export default function DevelopersPage() {
             'API key scoping — restrict keys to specific resources and operations',
           ],
           icon: Code2,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Real-Time Webhooks',
@@ -60,7 +60,7 @@ export default function DevelopersPage() {
             'Delivery log with retry history, response codes, and failure reasons',
           ],
           icon: Webhook,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/ledger/ledger-payment-gateway-details.webp',
         },
         {
           title: 'Extensions SDK — Build Custom Modules',
@@ -71,7 +71,7 @@ export default function DevelopersPage() {
             'Extension scaffold generator for rapid new module bootstrapping',
           ],
           icon: Puzzle,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp',
         },
         {
           title: 'Open Source — Full Code Access',
@@ -82,7 +82,7 @@ export default function DevelopersPage() {
             'Commercial licence available for proprietary modifications',
           ],
           icon: GitBranch,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-extensions-menu.webp',
         },
         {
           title: 'Self-Hosted Deployment',
@@ -93,7 +93,7 @@ export default function DevelopersPage() {
             'Environment variable configuration — no hard-coded credentials',
           ],
           icon: Globe,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp',
         },
         {
           title: 'Developer Console & Observability',
@@ -104,7 +104,7 @@ export default function DevelopersPage() {
             'System event stream for real-time integration debugging',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[

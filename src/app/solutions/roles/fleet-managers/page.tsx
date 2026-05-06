@@ -24,7 +24,7 @@ export default function FleetManagersPage() {
         { value: '45%', label: 'Less admin time on maintenance coordination' },
         { value: '20%', label: 'Improvement in overall fleet availability' },
       ]}
-      heroScreenshot="/images/placeholder.png"
+      heroScreenshot="/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp"
       heroScreenshotAlt="Fleetbase fleet manager dashboard — vehicle tracking, maintenance schedule, and compliance overview"
       painPoints={{
         heading: 'The fleet management problems that wake you up at night',
@@ -49,7 +49,7 @@ export default function FleetManagersPage() {
             'Trip history replay for any vehicle and date range',
           ],
           icon: MapPin,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp',
         },
         {
           title: 'Preventive Maintenance Scheduling',
@@ -60,7 +60,7 @@ export default function FleetManagersPage() {
             'Service history log with cost tracking and next-due calculations',
           ],
           icon: Wrench,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-schedules.webp',
         },
         {
           title: 'Compliance Documentation Management',
@@ -71,7 +71,7 @@ export default function FleetManagersPage() {
             'Audit-ready document export for regulatory inspections',
           ],
           icon: Shield,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-maintenance-log.webp',
         },
         {
           title: 'Driver Performance & Safety Monitoring',
@@ -82,7 +82,7 @@ export default function FleetManagersPage() {
             'Performance trend reports for driver review meetings',
           ],
           icon: Users,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp',
         },
         {
           title: 'Driver Vehicle Inspection Checklists',
@@ -93,7 +93,7 @@ export default function FleetManagersPage() {
             'Defect status tracking from report to resolution',
           ],
           icon: Smartphone,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-order-config-activity-flow.webp',
         },
         {
           title: 'Fleet Utilization & Cost Analytics',
@@ -104,7 +104,7 @@ export default function FleetManagersPage() {
             'Total cost of ownership modelling for fleet renewal planning',
           ],
           icon: BarChart3,
-          screenshot: '/images/placeholder.png',
+          screenshot: '/images/screenshots/fleet-ops/fleet-ops-report-builder.webp',
         },
       ]}
       capabilities={[
