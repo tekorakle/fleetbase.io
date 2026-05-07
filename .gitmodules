@@ -1,0 +1,3 @@
+[submodule "vendor/postman"]
+	path = vendor/postman
+	url = https://github.com/fleetbase/postman.git

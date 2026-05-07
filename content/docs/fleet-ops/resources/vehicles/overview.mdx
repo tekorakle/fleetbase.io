@@ -13,20 +13,33 @@ description: Register and manage your vehicle fleet — details, assignments, ca
 
 | Field | Description |
 | :--- | :--- |
-| **Name** | Display name for the vehicle (e.g., "Van 01") |
-| **Make / Model / Year** | Manufacturer and model information |
-| **Trim / Body Type / Body Sub-type** | Vehicle class and body style |
+| **Name** | Display name for the vehicle (e.g. *Van 01*) |
+| **Internal ID** | Your external reference ID for the vehicle |
+| **Description** | Free-text description |
+| **Make / Model / Model Type / Year** | Manufacturer information |
 | **Color** | Vehicle color |
+| **Trim / Transmission** | Trim level and transmission type |
+| **Body Type / Body Sub-type / Class / Type** | Vehicle classification (e.g. *Sedan / 4-Door / Passenger / car*) |
 | **Plate Number** | License plate |
 | **VIN** | Vehicle Identification Number |
+| **VIN Data** | Decoded VIN information (from the VIN lookup service) |
 | **Call Sign** | Radio or dispatch call sign |
-| **Capacity Weight** | Maximum payload weight (kg) |
-| **Capacity Volume** | Maximum payload volume (m³) |
+| **Serial Number** | Manufacturer serial number, when applicable |
+| **Usage Type** | Commercial, personal, etc. |
+| **Ownership Type** | Owned, leased, financed |
+| **Fuel Type** | Petrol, diesel, electric, hybrid, etc. |
+| **Fuel Volume Unit** | Unit used in fuel reports (litres, gallons) |
+| **Odometer / Odometer Unit / Odometer at Purchase** | Current and starting mileage with unit |
+| **Measurement System** | Metric or imperial — drives unit interpretation across the record |
+| **Payload Capacity** | Maximum payload weight (`payload_capacity`). Unit follows the entity weight units you populate. |
+| **Payload Capacity Volume** | Maximum payload volume (`payload_capacity_volume`). Unit follows the entity dimensions you set. |
+| **Financing Status / Loan Number of Payments / Loan First Payment** | Financing details for leased or financed vehicles |
 | **Status** | active, inactive, maintenance, offline |
 | **Online** | Whether the vehicle is currently reporting location |
-| **Location** | Real-time GPS position (latitude, longitude, heading, speed) |
-| **Avatar** | Vehicle photo or icon |
-| **Vendor** | Carrier/vendor this vehicle belongs to (optional) |
+| **Location / Speed / Heading / Altitude** | Real-time GPS position and motion data |
+| **Avatar URL / Photo** | Vehicle photo or icon |
+| **Vendor** | Carrier or vendor this vehicle belongs to (optional) |
+| **Category / Warranty** | Linked category and warranty records |
 
 ## Vehicle Statuses
 
@@ -50,7 +63,7 @@ description: Register and manage your vehicle fleet — details, assignments, ca
     Enter the vehicle details: name, make, model, year, plate number, and VIN.
   </Step>
   <Step>
-    Set **Capacity Weight** (kg) and **Capacity Volume** (m³) if you want the Orchestrator to enforce load limits.
+    Set **`payload_capacity`** (weight) and **`payload_capacity_volume`** if you want the Orchestrator to enforce load limits. Use units consistent with how you populate entity weights and dimensions.
   </Step>
   <Step>
     Assign the vehicle to a **Driver** if there is a default driver for this vehicle.

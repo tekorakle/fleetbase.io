@@ -1,74 +1,68 @@
 ---
 title: Scheduling Settings
-description: Configure shift defaults, HOS compliance rules, and scheduling horizon — controls the Scheduler and Orchestrator time window behavior.
+sidebarTitle: Scheduling
+description: Set the materialisation horizon, default shift duration, HOS limits, scheduling behaviours, and reusable schedule templates that drive the Scheduler and Orchestrator.
 ---
 
 # Scheduling Settings
 
-**Scheduling Settings** control the rules the Scheduler and Orchestrator use for driver shift management and Hours of Service (HOS) compliance.
+**Scheduling Settings** controls global defaults for the [Scheduler](/docs/fleet-ops/operations/scheduler/overview) — how far ahead shifts are materialised, default shift duration, Hours-of-Service (HOS) limits, behaviour toggles, and a library of reusable schedule templates.
 
 Navigate to **Fleet-Ops → Settings → Scheduling**.
 
-![Scheduling settings panel — HOS limits, break requirements, default shift hours](/images/placeholder.png)
+![Scheduling settings panel — materialisation, HOS limits, behaviour, and schedule templates](/images/screenshots/fleet-ops/fleet-ops-scheduling-settings.webp)
 
-## Available Settings
+The page is organised into four panels.
 
-### Default Shift Hours
+## Materialisation
 
-Set the default start and end times used when creating new shift entries for drivers. These defaults apply when adding a shift in the Scheduler without specifying custom times.
+How far ahead Fleet-Ops generates concrete shift instances from each driver's recurring schedule rules.
 
-| Setting | Description |
-| :--- | :--- |
-| **Default Shift Start** | Default shift start time (e.g., 08:00) |
-| **Default Shift End** | Default shift end time (e.g., 17:00) |
-| **Default Timezone** | Timezone used for shift times when none is set on the driver |
+| Setting | Default | Range | Description |
+| :--- | :--- | :--- | :--- |
+| **Horizon (days)** | 60 | 7–365 | How many days into the future shifts are materialised. The Scheduler calendar can only show and the Orchestrator can only plan against shifts that have been materialised. |
+| **Default shift duration (hours)** | 8 | 1–24 | The default length used when a shift is created without an explicit end time. |
 
-### HOS (Hours of Service) Limits
+Stored on the backend as `horizon_days` and `default_shift_duration`.
 
-HOS rules enforce regulatory driving time limits for commercial vehicle operators.
+## Hours of Service (HOS) Limits
 
-| Setting | Description |
-| :--- | :--- |
-| **Daily Driving Limit** | Maximum driving hours per day (e.g., 11 hours) |
-| **Daily On-Duty Limit** | Maximum on-duty hours per day (e.g., 14 hours) |
-| **Weekly Hours Limit** | Maximum hours in a rolling 7-day period |
-| **Required Rest Period** | Minimum consecutive rest hours between shifts |
-| **Mandatory Break** | Break required after continuous driving (e.g., 30 min after 8 hours) |
+Caps that the Orchestrator and Scheduler honour when assigning orders. Drivers approaching their HOS cap are excluded from new allocations.
 
-When a driver approaches their HOS limit, Fleet-Ops flags them in the Scheduler and excludes them from Orchestrator assignment for that period.
+| Setting | Default | Range | Description |
+| :--- | :--- | :--- | :--- |
+| **HOS daily limit (hours)** | 11 | 1–24 | Maximum driving hours per day |
+| **HOS weekly limit (hours)** | 70 | 1–168 | Maximum driving hours per rolling 7-day window |
 
-### Scheduling Horizon
+Stored as `hos_daily_limit` and `hos_weekly_limit`. These are the only HOS settings exposed by the page — there are no separate on-duty / mandatory-break / required-rest fields.
 
-| Setting | Description |
-| :--- | :--- |
-| **Planning Horizon (days)** | How many days forward the Scheduler displays and plans |
-| **Auto-Schedule Advance** | How far in advance orders are eligible for automatic scheduling |
+## Behaviour
 
-### Break and Overtime Rules
+Two toggles that change how the Scheduler and Navigator behave when shifts change.
 
-| Setting | Description |
-| :--- | :--- |
-| **Enable Break Scheduling** | Include break periods in shift calculations |
-| **Overtime Threshold** | Hours after which overtime tracking begins |
-| **Alert Threshold (%)** | Percentage of HOS limit at which warnings appear |
+| Setting | Default | Description |
+| :--- | :--- | :--- |
+| **Auto-activate schedule** | On | When a driver's first shift is added, automatically activate the schedule (rather than leaving it in draft). |
+| **Notify drivers on shift change** | Off | When on, drivers receive a notification in Navigator any time their shift is created, modified, or deleted. |
 
-## How These Settings Affect the Orchestrator
+Stored as `auto_activate_schedule` and `notify_drivers_on_shift_change`.
 
-When the Orchestrator assigns orders to drivers:
+## Schedule Templates
 
-1. It reads each driver's shift schedule to determine their time window
-2. It checks HOS status to exclude drivers at or near their limit
-3. It enforces the daily driving limit to prevent over-assignment
-4. Orders that cannot fit within available hours are returned to the unassigned pool
+A library of reusable shift patterns. Templates define a recurrence rule (RRULE) and a colour, and can be applied to drivers from the Scheduler to seed their schedule with a known pattern (e.g. *Weekday mornings*, *Three-on three-off*).
 
-Stricter HOS settings result in fewer orders per driver per run — adjust based on your regulatory requirements and operational context.
+The panel lists every template with its name, RRULE summary, and colour marker, plus per-row **Edit** and **Delete** actions. Click **+ New Template** in the panel header to create a new one.
 
-## HOS Compliance Monitoring
+Templates are stored as standalone records, so creating one doesn't immediately apply it to anyone — you apply them per-driver from the Scheduler.
 
-The Scheduler calendar shows HOS status indicators for each driver:
+## Saving
 
-- **Green** — well within limits
-- **Yellow** — approaching limit (within alert threshold)
-- **Red** — at or exceeding limit — no new assignments
+Click **Save Changes** in the page header to persist Materialisation, HOS, and Behaviour values. Schedule template changes save inline as you create / edit / delete them.
 
-HOS status is also visible in the driver detail panel under the **Schedule** tab.
+## How These Settings Affect Other Surfaces
+
+- The **Scheduler** ([calendar view](/docs/fleet-ops/operations/scheduler/overview)) reads the materialisation horizon to decide how many days of shifts to render and the default shift duration when creating new shifts inline.
+- The **Orchestrator** reads the HOS daily and weekly limits to cap allocation per driver, and excludes drivers at or above their cap from the resource pool.
+- **Navigator** receives the shift-change notification when *Notify drivers on shift change* is on.
+
+The HOS and shift settings only filter Orchestrator allocation — they don't enforce anything in Navigator itself; drivers still drive what they're physically able to. The settings shape how Fleet-Ops *plans*, not how the road behaves.

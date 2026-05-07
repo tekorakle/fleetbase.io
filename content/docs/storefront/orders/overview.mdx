@@ -1,6 +1,6 @@
 ---
 title: Orders & Checkout
-description: Manage the full order lifecycle from cart through checkout, payment, and Fleet-Ops fulfillment.
+description: Manage the full Storefront order lifecycle — cart, two-step checkout, payment, Fleet-Ops fulfillment, and the transactional notifications that fire along the way.
 ---
 
 # Orders & Checkout
@@ -9,25 +9,25 @@ The **Orders & Checkout** system handles the complete purchase lifecycle — fro
 
 Navigate to **Storefront → Orders** to view and manage orders.
 
-![Storefront orders list — order ID, customer, items, total, status, created time](/images/placeholder.png)
+![Storefront orders list — order ID, customer, items, total, status, created time](/images/screenshots/storefront/storefront-orders-list.webp)
 
 ## The Transaction Lifecycle
 
 ```
-Cart → Checkout → Payment → Fleet-Ops Order → Fulfillment
+Cart → /checkouts/before → /checkouts/capture → Fleet-Ops Order → Fulfillment
 ```
 
 ### 1. Cart
 
 The customer browses the catalog and adds products to a persistent **Cart**. The cart stores product selections, variants, addons, and quantities. See [Cart](/docs/storefront/orders/cart).
 
-### 2. Checkout
+### 2. Service Quote
 
-When ready to buy, the customer enters a delivery address. Storefront requests a **Service Quote** from Fleet-Ops to calculate the delivery fee based on distance. Any promo codes are applied here. See [Checkout](/docs/storefront/orders/checkout).
+When the customer adds a delivery address, your frontend asks Fleet-Ops for a **Service Quote** that calculates the delivery fee. See [Service Quotes](/docs/storefront/orders/service-quotes).
 
-### 3. Payment
+### 3. Checkout (two-step)
 
-The customer pays via a configured **Payment Gateway** (Stripe, QPay, or Cash on Delivery). On payment success, Storefront creates a Fleet-Ops Order. See [Payment Gateways](/docs/storefront/orders/payment-gateways).
+When ready to buy, the customer hits `POST /storefront/v1/checkouts/before` with the cart, service quote, payment gateway, tip, and pickup/delivery flag. Storefront returns a **token** (and a Stripe `clientSecret` when applicable). The frontend confirms payment via the gateway SDK, then calls `POST /storefront/v1/checkouts/capture` with the same token to finalize. See [Checkout](/docs/storefront/orders/checkout).
 
 ### 4. Fleet-Ops Fulfillment
 
@@ -35,16 +35,34 @@ The order appears instantly in **Fleet-Ops → Operations → Orders**. A dispat
 
 ## Order Statuses
 
-Storefront orders share their status with the underlying Fleet-Ops order:
+Storefront orders share their activity flow with the underlying Fleet-Ops `OrderConfig`. Storefront emits these activity codes as the order progresses:
 
-| Status | Meaning |
+| Activity | Triggered when |
 | :--- | :--- |
-| **created** | Payment received; order created, awaiting merchant preparation |
-| **preparing** | Merchant accepted and is preparing items |
-| **dispatched** | Driver assigned and heading to pickup |
-| **started** / **in transit** | Driver collected items, en route to customer |
-| **completed** | Delivery confirmed, proof of delivery captured |
-| **cancelled** | Cancelled by merchant, customer, or dispatcher |
+| **created** | Order created from a successful checkout |
+| **accepted** | Merchant accepts the order |
+| **preparing** | Merchant marks the order as being prepared |
+| **ready** / **pickup_ready** | Order is ready for the driver to collect (`pickup_ready` is used for customer self-pickup) |
+| **dispatched** | A driver has been assigned and is heading to pickup |
+| **started** / **in transit** | Driver collected the items and is en route to the customer |
+| **completed** | Delivery confirmed; proof of delivery captured |
+| **canceled** | Cancelled by merchant, customer, or dispatcher |
+
+## Transactional Notifications
+
+Storefront fires customer push notifications automatically as the Fleet-Ops order progresses. No manual configuration is required beyond setting up an APNs/FCM channel.
+
+| Notification | Fires when |
+| :--- | :--- |
+| `StorefrontOrderCreated` | A new order is placed |
+| `StorefrontOrderAccepted` | The merchant accepts the order |
+| `StorefrontOrderPreparing` | The merchant marks the order as being prepared |
+| `StorefrontOrderReadyForPickup` | The order is ready (used for pickup orders) |
+| `StorefrontOrderDriverAssigned` | A driver is assigned to the order |
+| `StorefrontOrderEnroute` | The driver has picked up and is en route |
+| `StorefrontOrderNearby` | The driver is approaching the dropoff |
+| `StorefrontOrderCompleted` | Delivery is complete |
+| `StorefrontOrderCanceled` | The order is cancelled |
 
 ## Managing Orders in the Console
 
@@ -54,12 +72,25 @@ From **Storefront → Orders**:
 - Track the driver's progress on the live map via the Fleet-Ops integration
 - View proof of delivery when the order is complete
 
+## Internal Merchant Endpoints
+
+If you are building a custom merchant terminal (rather than using the Fleetbase Console), Storefront exposes internal endpoints for advancing an order through its lifecycle:
+
+| Endpoint | Effect |
+| :--- | :--- |
+| `POST /storefront/int/v1/orders/{id}/accept` | Accept a pending order |
+| `POST /storefront/int/v1/orders/{id}/preparing` | Mark as preparing |
+| `POST /storefront/int/v1/orders/{id}/ready` | Mark as ready for pickup |
+| `POST /storefront/int/v1/orders/{id}/completed` | Mark as completed (used by the merchant for pickup orders) |
+
+These are authenticated as a Fleetbase user, not via a storefront key.
+
 ## Integration with Fleet-Ops
 
 When a Storefront checkout completes:
-- The **store location** becomes the Fleet-Ops order pickup address
+- The **store location** (or the **food truck** GPS position, for mobile stores) becomes the Fleet-Ops order pickup address
 - The **customer's delivery address** becomes the dropoff address
 - Each cart item is converted to a Fleet-Ops **Entity** in the order payload
-- Status changes in Fleet-Ops automatically propagate back to the Storefront order
+- Status changes in Fleet-Ops automatically propagate back to the Storefront order via internal listeners
 
 No custom webhooks or sync logic are required — the integration is native.

@@ -20,7 +20,7 @@ This page covers the day-to-day operations for managing orders in the Fleet-Ops 
 
     Click **+ New Order**. The new order form opens.
 
-    ![New order form — order config selector, customer, pickup, dropoff fields](/images/placeholder.png)
+    ![New order form — order config selector, customer, pickup, dropoff, scheduling, and entity fields](/images/screenshots/fleet-ops/fleet-ops-create-order.webp)
   </Step>
   <Step>
     ### Select an Order Configuration
@@ -67,7 +67,7 @@ This page covers the day-to-day operations for managing orders in the Fleet-Ops 
   <Step>
     ### Save
 
-    Click **Save**. The order is created in **pending** (or **scheduled**) status.
+    Click **Save**. The order is created with status **`created`**. If a scheduled date and time were set, the order remains in `created` until you choose to dispatch it.
   </Step>
 </Steps>
 
@@ -86,7 +86,7 @@ To assign a driver manually:
     Select a driver from the available drivers list. Optionally select a vehicle.
   </Step>
   <Step>
-    Click **Assign**. The order status moves to **assigned**.
+    Click **Assign**. The driver and vehicle are now linked to the order. The order's system status remains **`created`** until it is dispatched — assignment alone does not change the system status.
   </Step>
 </Steps>
 
@@ -104,25 +104,45 @@ Once a driver is assigned, dispatch the order to the driver's Navigator app:
     Click **Dispatch**. A confirmation dialog shows the driver name and vehicle.
   </Step>
   <Step>
-    Confirm the dispatch. The order status moves to **dispatched** and the driver receives a push notification.
+    Confirm the dispatch. The order status moves from **`created`** to **`dispatched`** and the driver receives a push notification.
   </Step>
 </Steps>
 
 <Callout type="info">
-You can dispatch immediately after assignment, or hold the order in assigned status until you're ready to send it to the driver.
+You can dispatch immediately after assigning a driver, or hold the order in `created` status until you're ready to send it to the driver.
 </Callout>
 
 ## Editing an Order
 
-Click any order to open its detail panel, then click **Edit**. You can update:
-- Pickup and dropoff locations
-- Waypoints and entities
-- Assigned driver and vehicle
-- Scheduled date/time
+Order editing is split between two distinct buttons in the detail panel — **Edit** and **Edit Route**. They open different surfaces because they affect different parts of the order.
+
+### Edit Details
+
+Click **Edit** in the order detail panel to open the **Edit Order** form. This surface covers everything that isn't the geometry of the route:
+
+- Customer and facilitator
+- Driver and vehicle assignment
+- Scheduled date/time and time window
+- Order Configuration custom fields and entity fields
 - Notes and internal ID
+- Service rate / payment overrides
+
+### Edit Route
+
+Click **Edit Route** to open the **Order Route Editor**. This is a map-driven surface for changing the order's pickup, dropoff, and waypoints — including reordering stops and re-running optimization.
+
+![Order Route Editor — pickup, dropoff, and waypoint list with map for reordering and editing stops](/images/screenshots/fleet-ops/fleet-ops-order-route-editor.webp)
+
+From the route editor you can:
+
+- Add, remove, or reorder waypoints
+- Replace pickup or dropoff with a different address or saved Place
+- Re-run **Route Optimization** to compute the optimal stop sequence
+
+![Order route optimization — re-sequenced waypoints with optimized polyline on the map](/images/screenshots/fleet-ops/fleet-ops-order-route-optimization.webp)
 
 <Callout type="warn">
-Editing pickup or dropoff on a dispatched or started order will recalculate the route and may require re-dispatching. The driver is notified of route changes.
+Editing the route on a dispatched or started order recalculates the route and may require re-dispatching. The driver is notified of route changes.
 </Callout>
 
 ## Bulk Actions
@@ -136,24 +156,37 @@ From the orders list, select multiple orders using the checkboxes, then use the 
 
 ## Cancelling an Order
 
-Open the order detail and click **Cancel Order**. Enter an optional cancellation reason. The status moves to **cancelled** and:
+Open the order detail and click **Cancel Order**. Enter an optional cancellation reason. The status moves to **`canceled`** and:
 - The driver is notified (if already dispatched)
-- A cancellation webhook event fires
+- A cancellation webhook event fires (`order.canceled`)
 - The order remains in the list for audit purposes
 
 ## Order Filters and Search
 
-The orders list supports:
+Click the **Filters** icon in the orders list toolbar to open the full filter panel. Apply any combination, then click **Apply** to narrow the list (or **Clear** to reset).
 
-| Filter | Options |
+![Orders filter panel — ID, Internal ID, Payload ID, driver, pickup/dropoff, customer, vehicle, facilitator, scheduling, status, and date filters](/images/screenshots/fleet-ops/fleet-ops-order-filters.webp)
+
+| Filter | What it matches |
 | :--- | :--- |
-| **Status** | All, Pending, Scheduled, Assigned, Dispatched, Started, Completed, Cancelled |
-| **Driver** | Filter by specific driver |
-| **Fleet** | Filter by fleet grouping |
-| **Date** | Filter by creation date or scheduled date |
-| **Type** | Filter by Order Config type |
+| **ID** | Match on the order's public ID (e.g. `order_qT4zTdE…`) |
+| **Internal ID** | Match on your external `internal_id` reference |
+| **Payload ID** | Match on a specific payload UUID |
+| **Driver Assigned** | Orders assigned to a specific driver |
+| **Pickup** | Orders whose pickup is a specific saved Place |
+| **Dropoff** | Orders whose dropoff is a specific saved Place |
+| **Customer** | Orders for a specific customer contact |
+| **Vehicle Assigned** | Orders assigned to a specific vehicle |
+| **Facilitator** | Orders associated with a specific facilitator |
+| **Scheduled At** | Filter by `scheduled_at` date |
+| **Tracking** | Match on tracking number |
+| **Type** | Filter by Order Configuration |
+| **Status** | Filter by system status — Created, Dispatched, Started, Completed, Canceled |
+| **Created** / **Updated** | Filter by `created_at` / `updated_at` date |
+| **Created By** / **Updated By** | Filter by the user who created or last updated the order |
+| **Without Driver Assigned** | Toggle to show only orders that have no driver linked |
 
-Use the search bar to find orders by order ID (public ID), customer name, driver name, or address.
+Use the search bar above the filter panel to do a free-text search across order ID, customer name, driver name, and address.
 
 ## Exporting Orders
 

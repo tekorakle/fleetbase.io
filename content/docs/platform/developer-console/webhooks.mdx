@@ -7,13 +7,13 @@ description: Configure webhook endpoints to receive real-time HTTP callbacks whe
 
 Webhooks push event notifications to your own servers the moment something happens in Fleetbase — an order is dispatched, a driver location changes, a contact is created. Navigate to **Developers → Webhooks** to manage your endpoints.
 
-![Webhooks list — URL, Status badge, Mode badge, Version, Created columns](/images/placeholder.png)
+![Webhooks list — URL, Status badge, Mode badge, Version, Created columns](/images/screenshots/developers/developers-webhooks-management.webp)
 
 ## Creating a Webhook
 
 Click **New** to configure a new endpoint.
 
-![Webhook form — URL, Description, API Credential, Version, and Events picker](/images/placeholder.png)
+![Webhook form — URL, Description, API Credential, Version, and Events picker](/images/screenshots/developers/developers-create-webhook.webp)
 
 | Field | Description |
 | :--- | :--- |
@@ -43,7 +43,7 @@ Events available depend on which extensions are installed on your instance.
 
 Click any webhook URL to open its detail page.
 
-![Webhook detail view — Metrics panel, Details panel, and Attempts log](/images/placeholder.png)
+![Webhook detail view — Metrics panel, Details panel, and Attempts log](/images/screenshots/developers/developers-webhook-details.webp)
 
 The detail view has three panels:
 
@@ -59,7 +59,7 @@ The full configuration of the webhook — URL, description, API credential, API 
 
 A delivery log showing every time Fleetbase sent a request to this endpoint. Each entry shows the event that fired, the response status code, and a timestamp.
 
-![Webhook Attempts log — event name, HTTP status code, and timestamp for each delivery](/images/placeholder.png)
+![Webhook Attempts log — event name, HTTP status code, and timestamp for each delivery](/images/screenshots/developers/developers-webhook-details-attempts.webp)
 
 Use the attempts log to debug failed deliveries — a `5xx` response or no response means your endpoint is down or misconfigured.
 

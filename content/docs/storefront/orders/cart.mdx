@@ -1,77 +1,126 @@
 ---
 title: Cart
-description: Understand how the Storefront cart works — persistent cart sessions, item management, multi-store behavior, and calculations.
+description: Persistent cart sessions, item structure, multi-store cart behavior, and the Cart API endpoints.
 ---
 
 # Cart
 
-The **Cart** is a persistent shopping session. Cart state is stored in the database, so customers can abandon and return without losing their selections. Carts expire after **7 days** of inactivity.
+The **Cart** is a persistent shopping session. Cart state is stored in the database, so customers can abandon and return without losing their selections. A cart's `expires_at` is set 7 days after creation and is not extended on subsequent updates.
 
 ## Cart Sessions
 
 Carts are tied to one of:
-- An **authenticated customer** — retrieved automatically when the customer logs in
-- A **guest session** — a unique identifier your app generates and stores locally (e.g., in `AsyncStorage`). Pass this as `unique_identifier` when making cart API requests.
+- An **authenticated customer** — retrieved automatically when the customer logs in (the `Customer-Token` is read by the middleware to find the customer's cart)
+- A **guest session** — a unique identifier your app generates and stores locally (e.g., in `AsyncStorage`). Pass it as the URL path parameter when retrieving the cart
+
+```http
+GET /storefront/v1/carts/{uniqueIdentifier}
+Authorization: Bearer store_your_store_key
+```
 
 ## Cart Item Structure
 
 Each item in the cart records:
-- `product_id` — the product
-- `store_id` and `store_location_id` — which store and location this item is from
-- `quantity` — how many units
-- `price` — unit price at time of adding
-- `subtotal` — unit price × quantity + addon costs
-- `variants` — array of selected variant option names
-- `addons` — array of selected addon names and prices
-- `scheduled_at` — optional future scheduling timestamp
+
+| Field | Description |
+| :--- | :--- |
+| `id` | Cart item ID (used for update/delete) |
+| `product_id` | Product `public_id` |
+| `name` | Product name at time of add |
+| `description` | Product description at time of add |
+| `product_image_url` | Image URL |
+| `store_id` | Store `public_id` |
+| `store_location_id` | Pickup location |
+| `food_truck_id` | Optional — when the item was added in the context of a food truck |
+| `quantity` | How many units |
+| `price` | Unit price at time of add |
+| `subtotal` | Computed line total |
+| `variants` | Array of selected variant options (with `additional_cost`) |
+| `addons` | Array of selected addons (with `price` and `is_on_sale` / `sale_price`) |
+| `scheduled_at` | Optional future scheduling timestamp |
+| `meta` | Mirrors the product's metadata at time of add |
+| `created_at`, `updated_at` | Unix timestamps |
+
+The cart object itself exposes accessors for `total_items`, `total_unique_items`, `subtotal`, and `is_multi_cart` (true when items span more than one store).
 
 ## Adding Items
 
 ```http
-POST /storefront/v1/carts/{cart_id}/{product_id}
-Storefront-Key: store_your_key
+POST /storefront/v1/carts/{cartId}/{productId}
+Authorization: Bearer store_your_store_key
 
 {
   "quantity": 2,
-  "variants": [{ "id": "variant_option_id" }],
-  "addons": [{ "id": "addon_id" }, { "id": "addon_id_2" }]
+  "variants": [{ "id": "variant_option_id", "additional_cost": 200 }],
+  "addons": [{ "id": "addon_id", "price": 100 }],
+  "store_location": "store_location_public_id"
 }
 ```
 
-Storefront validates that:
-- The product is active (`status = available`)
-- The store is currently open (within operating hours)
-- The product is within its own availability hours (if set)
+`store_location` is optional — if omitted, the cart picks the store's first location. Variants and addons are stored as full objects (their `additional_cost` and `price` are read by the cart subtotal calculator).
 
-## Updating & Removing Items
+## Updating Items
 
 ```http
-PUT /storefront/v1/carts/{cart_id}
+PUT /storefront/v1/carts/{cartId}/{lineItemId}
+Authorization: Bearer store_your_store_key
 ```
 
-Pass updated `quantity`, `variants`, or `addons` for an existing cart item. To remove an item, set `quantity` to `0` or call DELETE on the specific cart item.
+Pass updated `quantity`, `variants`, or `addons`.
+
+## Removing Items
+
+```http
+DELETE /storefront/v1/carts/{cartId}/{lineItemId}
+Authorization: Bearer store_your_store_key
+```
 
 ## Cart Calculations
 
 Cart totals are recalculated after every modification:
 
 ```
-Item Subtotal = (Base Price + Variant Additional Costs + Addon Prices) × Quantity
+Item Subtotal = (Base Price
+                 + Sum of selected variant additional costs
+                 + Sum of addon prices (sale_price when is_on_sale, otherwise price))
+                × Quantity
+
 Cart Subtotal = Sum of all item subtotals
 ```
 
 <Callout type="info">
-The delivery fee is **not** included in the cart. It is calculated during [Checkout](/docs/storefront/orders/checkout) once the customer provides a delivery address and Storefront requests a Fleet-Ops Service Quote.
+The delivery fee is **not** included in the cart subtotal. It is calculated separately via a [Service Quote](/docs/storefront/orders/service-quotes) once the customer provides a delivery address, and applied during [Checkout](/docs/storefront/orders/checkout).
 </Callout>
+
+## Cart Events
+
+Cart mutations are logged on the cart's `events` array — `cart.item_added`, `cart.item_updated`, `cart.item_removed`, `cart.emptied`. This is useful for audit trails and for analyzing cart abandonment patterns.
 
 ## Multi-Store Cart Behavior
 
-By default, a cart holds items from **one store only**. If a customer has items from Store A and tries to add an item from Store B, the API returns an error. Your frontend should handle this by prompting:
+A cart can hold items from a single store or from multiple stores within a Network — the behavior is controlled by the network's **Enable multi-cart checkout** setting (`options.multi_cart_enabled`).
 
-> "Your cart has items from another store. Clear your cart to start a new order?"
+### Single-store carts (default)
 
-This restriction exists because each store has its own location, operating hours, and dispatch requirements.
+When multi-cart is **disabled** (or the customer is shopping a standalone store), the cart's items are tied to a single store at a time. Your frontend should prompt the customer to clear the cart if they try to add an item from a different store.
 
-## Applying Discount Codes
+### Multi-store carts (network-level)
 
-Pass a `discount_code` on the cart to apply a promotion. If valid, the discount amount is reflected in the cart's total. See [Promotions](/docs/storefront/promotions/overview).
+When **Enable multi-cart checkout** is toggled on for a Network:
+
+- Customers can add items from any store in the network to a single cart
+- The cart's `is_multi_cart` accessor returns `true` when items span more than one store
+- Storefront groups cart items by store internally
+- One checkout session is created for the combined total
+- On successful capture, Storefront produces **one Fleet-Ops order per store**, each with its own pickup location, store-specific dispatch, and proof-of-delivery
+- The customer pays once but receives multiple deliveries
+
+Toggle this from **Storefront → Networks → [Network] → General Settings → Enable multi-cart checkout**.
+
+<Callout type="info">
+Multi-cart only applies inside a network. Standalone stores accessed by their own `store_*` API key are always single-store.
+</Callout>
+
+## Discount Codes
+
+The cart has a `discount_code` field that can be set via the API. There is no built-in promotion engine yet — applying real discount logic is the responsibility of the implementer (custom code or a future Storefront promotions feature).

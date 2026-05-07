@@ -1,8 +1,92 @@
 ---
-title: Services Overview
-description: "Overview of all UI services provided by @fleetbase/ember-ui: sidebar, resource-context-panel, dashboard, modals-manager, and more."
+title: Overview
+description: The six injectable services exported by @fleetbase/ember-ui — Modals Manager, Sidebar, Dashboard, Template Builder, Resource Context Panel, Leaflet.
 ---
 
-# Services Overview
+# Services
 
-This page is coming soon.
+`@fleetbase/ember-ui` exports six injectable Ember services. Inject them like any other Ember service:
+
+```js
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+
+export default class MyComponent extends Component {
+  @service modalsManager;
+  @service sidebar;
+  @service resourceContextPanel;
+  @service dashboard;
+  @service templateBuilder;
+  @service leaflet;
+}
+```
+
+## Available Services
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Modals Manager</CardTitle>
+      <CardDescription className="text-xs">Open, stack, and dismiss modals. Built-in confirm/alert/prompt/bulk/progress/process/loader layouts.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/modals/modals-manager" className="text-sm text-primary hover:underline">Modals Manager →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Sidebar</CardTitle>
+      <CardDescription className="text-xs">Show, hide, minimize, enable, disable the console sidebar.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/services/sidebar" className="text-sm text-primary hover:underline">Sidebar →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Resource Context Panel</CardTitle>
+      <CardDescription className="text-xs">Open contextual detail overlays for any resource — single-content or tabbed, with route-sync.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/services/resource-context-panel" className="text-sm text-primary hover:underline">Resource Context Panel →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Dashboard</CardTitle>
+      <CardDescription className="text-xs">Manage dashboards and widgets — load, switch, create, delete, edit.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/dashboard/service" className="text-sm text-primary hover:underline">Dashboard →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Template Builder</CardTitle>
+      <CardDescription className="text-xs">Register Fleetbase model classes as queryable resource types in the template builder's query form.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/services/template-builder" className="text-sm text-primary hover:underline">Template Builder Service →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Leaflet</CardTitle>
+      <CardDescription className="text-xs">Shared Leaflet map state for any component using the Leaflet integration.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <span className="text-sm text-gray-500">Leaflet (no dedicated page yet)</span>
+    </CardContent>
+  </Card>
+</div>
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/services/modals-manager.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/modals-manager.js) | Modals Manager service |
+| [`addon/services/sidebar.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/sidebar.js) | Sidebar service |
+| [`addon/services/resource-context-panel.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/resource-context-panel.js) | Resource Context Panel service |
+| [`addon/services/dashboard.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/dashboard.js) | Dashboard service |
+| [`addon/services/template-builder.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/template-builder.js) | Template Builder service |
+| [`addon/services/leaflet.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/leaflet.js) | Leaflet map state service |

@@ -1,8 +1,72 @@
 ---
-title: Verify Account
-description: "Verify your Fleetbase registry account using `flb verify`."
+title: Verify
+description: "Verify your registry account email using `flb verify` and receive your registry auth token."
 ---
 
-# Verify Account
+# `flb verify`
 
-This page is coming soon.
+Verify the email on a registry account you just registered. On success, the registry returns your **registry auth token** — save it; you'll use it to publish extensions.
+
+```bash
+flb verify
+```
+
+You'll be prompted for the email address and the verification code that was emailed to you when you registered.
+
+## Options
+
+| Option | Description |
+| :--- | :--- |
+| `-e, --email <email>` | Email address |
+| `-c, --code <code>` | Verification code from the email |
+| `-h, --host <host>` | API host (default: `https://api.fleetbase.io`) |
+
+Anything you don't pass is asked for interactively.
+
+## Examples
+
+### Interactive
+
+```bash
+flb verify
+```
+
+### One-liner
+
+```bash
+flb verify -e jane@example.com -c 482931
+```
+
+### Against a self-hosted registry
+
+```bash
+flb verify -e jane@example.com -c 482931 --host registry.mycompany.com
+```
+
+## What Happens on Success
+
+The CLI prints your **Registry Token** and the exact `flb set-auth` command to save it:
+
+```
+✓ Email verified successfully!
+
+🔑 Your Registry Token:
+   <token-value>
+
+💡 Save this token securely! You'll need it to authenticate with the registry.
+   Use: flb set-auth <token-value>
+
+✓ You can now login with: flb login -u <username>
+```
+
+Run the printed `flb set-auth` to write the token into your `~/.npmrc` so subsequent `flb` commands can authenticate. See [Set Auth](/docs/cli/account/set-auth).
+
+## If the Email Never Arrives
+
+Use [`flb resend-verification`](/docs/cli/account/resend-verification) to request a fresh code.
+
+## Troubleshooting
+
+**`Verification failed: Invalid code`** — codes are single-use and time-limited. Request a fresh one with `flb resend-verification`.
+
+**`Verification failed: No response from server`** — the API host isn't reachable. Check your `--host` value.

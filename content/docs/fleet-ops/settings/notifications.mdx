@@ -1,93 +1,71 @@
 ---
 title: Notification Settings
-description: Configure notification rules — which order and fleet events trigger alerts, the delivery channels (SMS, email, push), and the recipients.
+sidebarTitle: Notifications
+description: Pick who receives each Fleet-Ops notification — drivers, customers, operators, vendors, or any registered notifiable.
 ---
 
 # Notification Settings
 
-**Notification Settings** control which events in Fleet-Ops trigger alerts, how they are delivered (SMS, email, push notification, or webhook), and who receives them.
+**Notification Settings** answer one question per registered notification: *who should receive it?* For each notification that Fleet-Ops (or an installed extension) has registered with the platform, this page renders a single multi-select where you pick the **notifiables** — the parties who get the alert when that notification fires.
+
+Channels (SMS / email / push), message templates, and trigger conditions live elsewhere:
+
+- The **channel** each recipient gets the notification on is decided by their notifiable type (drivers get push to Navigator, customers get SMS, operators get email, etc.) and the platform-level mailer / SMS / push configuration.
+- The **trigger** (when a notification fires) is wired into the corresponding domain event in code — you can't reconfigure it from this page.
 
 Navigate to **Fleet-Ops → Settings → Notifications**.
 
-![Notification settings panel — event list with channel toggles per recipient type](/images/placeholder.png)
+![Fleet-Ops notification settings — list of registered notifications, each with a Notifiables multi-select](/images/screenshots/fleet-ops/fleet-ops-notification-settings.webp)
 
-## Notification Events
+## How the Page Works
 
-Fleet-Ops can send notifications for the following events:
+The page reads from a notifications registry — every notification that's been registered (by Fleet-Ops core or by an extension) shows up here automatically as one row:
 
-| Event | Description |
+| UI element | What it does |
 | :--- | :--- |
-| **Order Dispatched** | Order sent to driver's Navigator app |
-| **Order Started** | Driver accepted and began the order |
-| **Order In Transit** | Driver is on the way to delivery location |
-| **Order Arrived** | Driver has arrived at the delivery location |
-| **Order Completed** | Delivery completed with POD captured |
-| **Order Cancelled** | Order was cancelled |
-| **Driver Online** | A driver has come online in Navigator |
-| **Driver Offline** | A driver has gone offline |
-| **Issue Reported** | A driver or operator reported an issue |
-| **Issue Assigned** | An issue was assigned to a resolver |
-| **Geofence Entry** | A driver entered a service area or zone |
-| **Geofence Exit** | A driver exited a service area or zone |
+| **Notification name** | The titleized identifier of the notification (e.g. *Order Dispatched*, *Order Completed*). |
+| **Description** | Short help text describing when the notification fires. |
+| **Notifiables (multi-select)** | The parties that should receive this notification. Options are drawn from the registered notifiables in your instance. |
 
-## Notification Channels
+You don't add or remove notifications from this page — they're defined in code. You only choose **who gets each one**.
 
-Each event can be configured to send notifications through multiple channels:
-
-| Channel | Description |
-| :--- | :--- |
-| **SMS** | Text message to the recipient's phone number |
-| **Email** | Email to the recipient's email address |
-| **Push** | Push notification to the Navigator app (drivers) or customer app |
-| **Webhook** | HTTP POST to a registered webhook endpoint |
-
-## Recipients
-
-For each notification event, configure who receives it:
-
-| Recipient Type | Who gets notified |
-| :--- | :--- |
-| **Customer** | The contact assigned as customer on the order |
-| **Driver** | The driver assigned to the order |
-| **Operator** | Internal operators/dispatch team (via email) |
-| **Vendor** | The vendor/facilitator if one is assigned |
-
-## Configuring Notifications
+## Configuring Recipients
 
 <Steps>
   <Step>
     Navigate to **Fleet-Ops → Settings → Notifications**.
   </Step>
   <Step>
-    Find the event you want to configure (e.g., "Order Dispatched").
+    For the notification you want to configure, open the **Notifiables** multi-select.
   </Step>
   <Step>
-    For each recipient type (Customer, Driver, Operator), toggle on the channels you want to use.
+    Pick one or more notifiables — examples typically include:
+    - **Driver** — the driver assigned to the order
+    - **Customer** — the order's customer contact
+    - **Operator** — internal dispatch team
+    - **Vendor / facilitator** — the assigned vendor
+    - any custom notifiable registered by an extension
   </Step>
   <Step>
-    Optionally customize the message template for SMS and email notifications. Use placeholders like `{{driver_name}}`, `{{order_id}}`, `{{tracking_number}}` to insert dynamic values.
-  </Step>
-  <Step>
-    Click **Save**. Notifications apply to all future events matching the configured triggers.
+    Click **Save Changes**. New notification events will respect the updated recipient list.
   </Step>
 </Steps>
 
-## Notification Registry
+## Where Channels Are Decided
 
-The **Notification Registry** tab shows all registered notification types available in your Fleet-Ops instance, including any added by extensions. This is a read-only reference showing what notification events the system supports.
+When a notification fires, Fleet-Ops dispatches it via the channels that make sense for each notifiable:
 
-## Rate Limiting
+- A **driver** notifiable receives a push notification in the Navigator app
+- A **customer** contact receives an SMS or email depending on what's on file
+- An **operator** receives an email and / or in-console notification
 
-To prevent notification flooding (e.g., many rapid status updates), notification rate limiting can be configured:
+For these channels to actually deliver, the **platform-level** services have to be configured:
 
-- **Cooldown period** — minimum time between notifications of the same type for the same order
-- **Max per day** — cap on total notifications per recipient per day
+- **Mail** — [Platform → System Setup → Mail](/docs/platform/system-setup/mail)
+- **SMS** — Twilio (or compatible) configured at the platform level
+- **Push notifications** — [Platform → System Setup → Push Notifications](/docs/platform/system-setup/push-notifications)
+- **Webhooks** — registered in the [Developer Console → Webhooks](/docs/platform/developer-console/webhooks)
 
-## Notification Prerequisites
+## Adding Custom Notifications
 
-For notifications to work, the following platform settings must be configured:
-
-- **SMS** — mail/SMS provider configured in **Platform → Settings → Mail** and Twilio or similar SMS gateway
-- **Email** — mail provider configured in **Platform → Settings → Mail**
-- **Push** — push notification provider configured in **Platform → Settings → Push Notifications**
-- **Webhook** — webhook endpoint registered in **Platform → Developers → Webhooks**
+If you need a notification Fleet-Ops doesn't ship, build it in an [extension](/docs/platform/extensions/managing-extensions) and register it with the notifications registry. Once registered it appears on this page like any other notification, ready for recipients to be configured.

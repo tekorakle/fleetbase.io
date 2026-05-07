@@ -22,7 +22,7 @@ Click a driver marker to see:
 - Active order assignment
 - ETA to next stop
 
-![Live map — driver markers, active route polylines, pickup and dropoff pins](/images/placeholder.png)
+![Live map — driver markers, active route polylines, pickup and dropoff pins](/images/screenshots/fleet-ops/fleet-ops-vehicle-position-playback.webp)
 
 ## Order Detail Tracking
 
@@ -36,15 +36,15 @@ From the order detail panel, the tracking section shows:
 | **Status** | Current order status |
 | **Activity Timeline** | All status transitions with timestamps and locations |
 
-The activity timeline records every action with:
-- The event (dispatched, picked-up, in-transit, arrived, completed)
+The activity timeline records every event with:
+- The event — both system-status transitions (`dispatched`, `started`, `completed`, `canceled`) and any activities defined in the order's [activity flow](/docs/fleet-ops/operations/order-configurations/activity-flows) (e.g. *picked up*, *in transit*, *arrived at dropoff*)
 - The timestamp
 - The driver's GPS coordinates at the time of the event
 - Any attached proof (photo, signature)
 
 ## Tracking Number & Customer Tracking
 
-Every order has a **Tracking Number** (e.g., `FO-XXXXXXXX`) that customers can use on a public tracking page to view the order's current status without logging in.
+Every order has a **Tracking Number** (e.g. `FO-XXXXXXXX`) that customers can use on a public tracking page to view the order's current status without logging in.
 
 The tracking page shows:
 - Current status and recent activity
@@ -52,8 +52,14 @@ The tracking page shows:
 - Map with current driver position (when active)
 - Proof of delivery once completed
 
+The public tracking URL is `/~/track-order?order={tracking_number}`. Customers can also visit `/~/track-order` with no query parameter and enter a tracking number into the form.
+
 <Callout type="info">
-The public tracking page URL is: `https://yourdomain.com/tracking/{tracking_number}`. For Fleetbase Cloud: `https://console.fleetbase.io/tracking/{tracking_number}`.
+On Fleetbase Cloud the full URLs are:
+- Direct deep link: `https://console.fleetbase.io/~/track-order?order={tracking_number}`
+- Manual entry: `https://console.fleetbase.io/~/track-order`
+
+For self-hosted instances, replace `console.fleetbase.io` with your console hostname.
 </Callout>
 
 ## Entity-Level Tracking
@@ -73,8 +79,9 @@ Subscribe to `company.{company_id}` to receive:
 | `driver.location_changed` | Current driver coordinates, speed, heading |
 | `order.dispatched` | Order dispatched to driver |
 | `order.started` | Driver began the order |
-| `order.completed` | Order delivered |
-| `order.cancelled` | Order cancelled |
+| `order.completed` | Order's completion activity fired |
+| `order.canceled` | Order canceled |
+| `order.activity_changed` | Any custom activity from the order's activity flow fired |
 
 See [Socket Events](/docs/platform/developer-console/socket-events) for subscription details and payload schemas.
 

@@ -1,0 +1,156 @@
+---
+title: Integrations
+description: Wire up payments, social login, push notifications, and real-time order updates in the Storefront App.
+---
+
+# Integrations
+
+The Storefront App ships with several integrations pre-wired. Most are gated behind environment flags and require credentials from the corresponding provider.
+
+## Payments
+
+Set the active gateway in `.env`:
+
+```
+PAYMENT_GATEWAY=stripe   # stripe | qpay | paypal
+```
+
+The corresponding payment screen is rendered at checkout. You also need to configure the matching gateway in your Storefront extension — see [Payment Gateways](/docs/storefront/orders/payment-gateways).
+
+### Stripe
+
+The default gateway. Two UI styles are supported:
+
+```bash
+STRIPE_KEY=pk_live_...
+STRIPE_PAYMENT_UI=sheet         # sheet (PaymentSheet) | field (CardField)
+STRIPE_ENABLE_APPLE_PAY=true    # adds Apple Pay to PaymentSheet on iOS
+STRIPE_ENABLE_GOOGLE_PAY=true   # adds Google Pay to PaymentSheet on Android
+```
+
+| UI mode | Behavior |
+| :--- | :--- |
+| `sheet` | Opens Stripe's native PaymentSheet — supports cards, Apple Pay, Google Pay, and saved methods |
+| `field` | Inline `CardField` for cards only |
+
+Apple Pay also requires a Merchant Identifier in your Apple Developer account, and a corresponding entitlement enabled in `ios/StorefrontApp/StorefrontApp.entitlements`. Google Pay requires no client-side configuration beyond the env flag.
+
+### QPay
+
+The Mongolian payment gateway. The app deep-links into the customer's bank app:
+
+```
+PAYMENT_GATEWAY=qpay
+```
+
+`Info.plist` already declares `LSApplicationQueriesSchemes` for the supported Mongolian banking apps. Configure QPay credentials on the backend in [Payment Gateways](/docs/storefront/orders/payment-gateways).
+
+### PayPal
+
+Scaffolding exists for PayPal — the `PaypalCheckoutScreen` is implemented but the integration is not feature-complete. Treat it as a starting point if you intend to ship PayPal.
+
+### Cash on Delivery
+
+If your store has `options.cod_enabled = true`, Cash on Delivery appears as a payment method at checkout regardless of `PAYMENT_GATEWAY`.
+
+## Social Login
+
+Toggle each provider:
+
+```
+APPLE_LOGIN_ENABLED=true
+GOOGLE_LOGIN_ENABLED=true
+FACEBOOK_LOGIN_ENABLED=true
+FACEBOOK_APP_ID=000000000000000
+FACEBOOK_CLIENT_TOKEN=00000000000000000000000000000000
+```
+
+Underlying packages:
+
+| Provider | Package |
+| :--- | :--- |
+| Apple | `@invertase/react-native-apple-authentication` |
+| Google | `@react-native-google-signin/google-signin` |
+| Facebook | `react-native-fbsdk-next` |
+
+Each provider needs the matching native setup:
+
+- **Apple**: enable "Sign in with Apple" capability in Xcode → Signing & Capabilities. iOS 13+ devices only.
+- **Google**: drop your `GoogleService-Info.plist` into `ios/StorefrontApp/` and `google-services.json` into `android/app/`. The `URLSchemes` array in `Info.plist` already includes the Google client ID slot.
+- **Facebook**: `FACEBOOK_APP_ID` and `FACEBOOK_CLIENT_TOKEN` are injected into `Info.plist` and `AndroidManifest.xml` at build time. You also need to register your bundle ID and key hashes in the Facebook Developer console.
+
+Phone + SMS 2FA and email/password are always available — they require no flags.
+
+## Push Notifications
+
+Push notifications are powered by `react-native-notifications` against the channels you provision in **Storefront → Settings → Notification Channels** (see [Notifications](/docs/storefront/settings/notifications)).
+
+### iOS — APNs
+
+1. In your Apple Developer account, create an APNs Auth Key (`.p8`).
+2. In the Storefront Console, create a notification channel of type **APN** and upload the `.p8` plus the Key ID and Team ID.
+3. Enable Push Notifications and Background Modes → Remote Notifications in Xcode.
+4. Build and install on a physical device — the simulator cannot receive push.
+
+### Android — FCM
+
+1. Create a Firebase project and add an Android app with your package name (`APP_IDENTIFIER`).
+2. Download `google-services.json` and place it at `android/app/google-services.json`.
+3. In the Storefront Console, create a notification channel of type **FCM** and upload the FCM service account JSON.
+4. Build and install — the emulator can receive FCM push when signed into a Google account.
+
+The app registers for push tokens on first launch and submits them to Storefront so the backend can target the right device per customer.
+
+## Real-Time Order Updates
+
+The app uses [SocketCluster](https://socketcluster.io) to receive live order status, driver location, and dispatch updates.
+
+```
+SOCKETCLUSTER_HOST=socket.your-fleetbase.example.com
+SOCKETCLUSTER_PORT=8000
+SOCKETCLUSTER_SECURE=true
+```
+
+These map to the SocketCluster service deployed alongside Fleetbase. With these set, an order's status card updates without polling, and (if `MAP_DISPLAY_DRIVERS=true`) drivers are visible on the map.
+
+## Maps
+
+```
+GOOGLE_MAPS_API_KEY=AIza...
+DEFAULT_MAP_TYPE=standard      # standard | satellite | hybrid
+DEFAULT_COORDINATES=21.027,105.804
+DEFAULT_SERVICE_AREA=sa_xDPX9Dy
+MAP_DISPLAY_DRIVERS=false
+DISABLE_GEOCODING_SCREEN=false
+```
+
+Required Google Cloud APIs:
+- **Maps SDK for iOS**
+- **Maps SDK for Android**
+- **Maps JavaScript API** (only if you also run the web build)
+- **Geocoding API** (used by the address picker)
+- **Places API** (used by the address autocomplete)
+
+## Deep Links
+
+Set a URL scheme:
+
+```
+APP_LINK_PREFIX=storefront://
+```
+
+The navigator's linking config picks this up automatically. Use it for SMS receipts, push notification deep links, and "open in app" flows.
+
+## Localization
+
+```
+DEFAULT_LOCALE=en
+AVAILABLE_LOCALES=en,mn
+```
+
+Translations live in `/translations/<locale>.json`. To add a locale:
+
+1. Copy `/translations/en.json` to `/translations/<locale>.json`.
+2. Translate values.
+3. Add the locale to `AVAILABLE_LOCALES`.
+4. (Optional) Provide per-locale tab labels — e.g. `STORE_HOME_TAB_LABEL_FR=Accueil`.

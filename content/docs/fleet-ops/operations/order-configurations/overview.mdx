@@ -9,19 +9,23 @@ An **Order Configuration** (Order Config) is a template that defines how a parti
 
 This lets you run different service types from the same Fleet-Ops instance. A courier might have one config for same-day parcels (signature required), another for document delivery (photo required), and a third for returns (no POD needed). Each config has its own workflow and fields.
 
-![Order Configuration manager — list of configs with status, namespace, and action buttons](/images/placeholder.png)
+![Order Configuration manager — list of configs with status, namespace, and action buttons](/images/screenshots/fleet-ops/fleet-ops-order-config-details.webp)
 
 ## What an Order Config Contains
 
 | Component | Purpose |
 | :--- | :--- |
-| **Name & Namespace** | Display name and unique identifier for the config |
-| **Activity Flow** | The sequence of status steps drivers execute for this order type |
-| **Entity Definitions** | Fields and constraints required on each item (entity) in the payload |
-| **POD Method** | The proof of delivery method: signature, photo, QR code, or custom data |
-| **POD Required** | Whether proof is mandatory to complete the order |
-| **Custom Fields** | Order-level fields specific to this order type |
-| **Tags** | For organization and filtering |
+| **Name** | Display name shown in the console |
+| **Namespace & Key** | Unique identifiers used by the API and the system (e.g. `system:order-config:transport`) |
+| **Description** | Free-text description for operators |
+| **Status** | `private` or `public` — controls visibility of the config |
+| **Version** | Version string for the config (e.g. `0.0.1`) |
+| **Activity Flow** | The graph of activities drivers move through; each activity has its own POD settings, transitions, logic, and events. See [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows). |
+| **Entity Definitions** | Field templates for each item (entity) created on orders of this type. See [Order Types](/docs/fleet-ops/operations/order-configurations/order-types). |
+| **Tags** | Free-form tags for organisation and filtering |
+| **Custom Fields** | Order-level custom fields, attached separately and rendered alongside built-in fields |
+
+POD method and POD-required settings live on individual activities inside the activity flow, not on the config itself.
 
 ## Managing Order Configurations
 
@@ -48,10 +52,7 @@ The list shows all existing configs with their name, namespace key, version, and
     The **Namespace** key is auto-generated from the name (e.g., `same-day-delivery`) — this is the API identifier for the config.
   </Step>
   <Step>
-    Set **POD Required** and select the **POD Method** (Signature, Photo, QR Code, or Custom Data).
-  </Step>
-  <Step>
-    Configure the **Activity Flow** — the step-by-step workflow drivers follow. See [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows).
+    Configure the **Activity Flow** — the graph of activities drivers move through, including per-activity POD settings (`scan`, `signature`, or `photo`). See [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows).
   </Step>
   <Step>
     Add **Entity Definitions** — fields required on each item in this order type. See [Order Types](/docs/fleet-ops/operations/order-configurations/order-types).
@@ -61,32 +62,37 @@ The list shows all existing configs with their name, namespace key, version, and
   </Step>
 </Steps>
 
-## Core Service Configurations
+## The Core Service Configuration
 
-Fleet-Ops ships with several built-in core service configurations:
+Fleet-Ops ships with **one built-in core service configuration**: **Transport**. Every new company gets a Transport config created automatically with `core_service: 1` set, so an out-of-the-box instance always has a usable order config available immediately.
 
-| Config | Description |
+| Field | Value |
 | :--- | :--- |
-| **Delivery** | Standard pickup-to-dropoff delivery with signature POD |
-| **Pickup & Delivery (P&D)** | Driver collects item, then delivers it |
-| **Return to Sender (RTS)** | Failed delivery item returned to origin |
-| **Multi-Drop** | Single pickup, multiple delivery destinations |
+| **Name** | Transport |
+| **Key** | `transport` |
+| **Namespace** | `system:order-config:transport` |
+| **Default flow** | `created → dispatched → started → enroute → completed` |
+| **Default entities** | None — entities are added per order |
 
-You can customize these built-in configs or create your own from scratch.
+Core-service configs are protected: they cannot be deleted (the API rejects deletion when `core_service === 1`). You can duplicate them, edit your own copies, or build new configurations from scratch — for example *Pickup & Delivery*, *Returns*, or *Multi-Drop Courier* are common patterns customers create on top of the platform.
 
 ## Order Configs and the API
 
-When creating orders via the API, specify the `order_config_uuid` or `type` field matching the config's namespace. The config determines which activity steps, entity fields, and POD requirements apply to the order.
+When creating orders via the consumable API, reference the order configuration by its **`public_id`** (e.g. `config_dnid32`) using the `order_config` field. You can also pass `type` matching the config's `key` or `namespace` to fall back to a config when no `order_config` is supplied.
 
 ```json
 {
-  "order_config_uuid": "config_01H...",
+  "order_config": "config_dnid32",
   "payload": {
-    "pickup": { ... },
+    "pickup":  { ... },
     "dropoff": { ... }
   }
 }
 ```
+
+<Callout type="info">
+**The consumable API never accepts or returns `uuid` values** — every record is referenced by its `public_id` (e.g. `order_5sk3lf`, `driver_tt2x9q`, `vehicle_3hk912`). The internal `uuid` columns are private to the database. Throughout the docs, when an API example shows a field like `order_config`, `driver`, or `vehicle`, supply the matching `public_id`.
+</Callout>
 
 ## Related Pages
 

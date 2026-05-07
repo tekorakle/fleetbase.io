@@ -1,11 +1,7 @@
-import {
-  DocsBody,
-  DocsDescription,
-  DocsPage,
-  DocsTitle,
-} from 'fumadocs-ui/page';
+import { DocsBody, DocsPage } from 'fumadocs-ui/page';
 import { notFound } from 'next/navigation';
 
+import { LanguageTabsProvider } from '@/components/api-reference';
 import { getMDXComponents } from '@/components/mdx-components';
 import { apiSource } from '@/lib/source';
 
@@ -18,25 +14,20 @@ export default async function Page(props: {
 
   const MDX = page.data.body;
 
-  const isOverviewPage = !params.slug || params.slug.length === 0;
-
+  // API pages own their headers — the index uses h2 sections for Introduction,
+  // Authentication, etc., and resource pages use <ResourceHeader>. Don't
+  // render DocsTitle/DocsDescription so we don't get duplicates.
   return (
     <DocsPage
       toc={page.data.toc}
       full={page.data.full}
-      tableOfContent={{
-        style: 'clerk',
-      }}
+      tableOfContent={{ enabled: false }}
       article={{ className: 'pt-4 md:pt-6' }}
     >
-      {!isOverviewPage && (
-        <>
-          <DocsTitle>{page.data.title}</DocsTitle>
-          <DocsDescription>{page.data.description}</DocsDescription>
-        </>
-      )}
       <DocsBody>
-        <MDX components={getMDXComponents()} />
+        <LanguageTabsProvider>
+          <MDX components={getMDXComponents()} />
+        </LanguageTabsProvider>
       </DocsBody>
     </DocsPage>
   );

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
-import { blogRevalidateSeconds, getAllBlogSlugs, getBlogPostBySlug } from '@/lib/ghost';
+import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/ghost';
 
 const BASE_URL = 'https://fleetbase.io';
 
@@ -17,7 +17,7 @@ function formatPublishedDate(value: string) {
   }).format(new Date(value));
 }
 
-export const revalidate = blogRevalidateSeconds;
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getAllBlogSlugs();

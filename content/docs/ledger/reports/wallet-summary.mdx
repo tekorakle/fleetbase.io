@@ -1,59 +1,64 @@
 ---
 title: Wallet Summary
-description: Get an overview of all wallet balances — total balances by type, top wallets, and status breakdown.
+description: Get an overview of all wallet balances — counts by type and currency, period credits and debits, and the top 10 wallets by balance.
 ---
 
 # Wallet Summary
 
-The **Wallet Summary** report provides an analytical overview of all digital wallets in your Fleetbase ecosystem — total balances by wallet type, status breakdown, and top wallets by balance.
+The **Wallet Summary** report provides an analytical overview of all digital wallets in your Fleetbase ecosystem — wallet counts by subject type and currency, credit and debit totals for the selected period, and the top wallets by current balance.
 
 Navigate to **Ledger → Reports → Wallet Summary**.
 
-![Wallet summary — balance by type pie chart, status breakdown, and top wallets by balance table](/images/placeholder.png)
+## What the Report Shows
 
-## Report Sections
+### Wallet Counts
 
-### Total Balances by Type
+Counts of wallets grouped by subject type and currency:
 
-A breakdown of total wallet balances grouped by wallet type:
-
-| Type | What it represents |
+| Subject Type | What it represents |
 | :--- | :--- |
-| **Driver wallets** | Total earnings held across all driver wallets |
-| **Customer wallets** | Total prepaid credit across all customer wallets |
-| **Company wallets** | Total balance in company/operating accounts |
-| **User wallets** | Total balance in individual user accounts |
+| **driver** | Drivers' earnings wallets |
+| **customer** | Customers' prepaid credit / loyalty wallets |
+| **company** | Your organization's operating, revenue, and reserve wallets |
+| **user** | Individual users' personal wallets |
 
-This tells you how much total cash your organization has committed to each stakeholder group — e.g., how much you owe your drivers in pending payouts.
+Wallet counts are **all-time** — they are not affected by the selected date range.
 
-### Status Breakdown
+### Period Stats
 
-Wallet counts by status:
-- **Active** — operational wallets
-- **Frozen** — wallets currently blocked from debits
-- **Closed** — inactive wallets
+Per-currency credits and debits posted during the selected period — useful for understanding how much money flowed into or out of wallets over a window.
 
-### Top Wallets by Balance
+### Top 10 Wallets
 
-A ranked list of the wallets with the highest balances. Useful for identifying:
+A ranked list of the wallets with the highest current balances. Useful for identifying:
+
 - Drivers with large pending earnings that need payout
 - Customers with high prepaid credit
 - Any anomalous balances that warrant review
 
-### Summary Metrics
-
-- **Total wallets** — count of all wallets
-- **Total balance** — aggregate across all currencies and types
-- **Active wallet count** — operational wallets
-- **Average balance** — per-wallet average
-
 ## Currency
 
-If you operate in multiple currencies, the wallet summary shows balances grouped by currency. There is no automatic conversion — each currency is reported separately.
+If you operate in multiple currencies, wallet counts and period stats are grouped by currency. There is no automatic conversion — each currency is reported separately.
+
+## Setting the Report Period
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Reports → Wallet Summary**.
+  </Step>
+  <Step>
+    Set the **Date From** and **Date To** for the period.
+  </Step>
+  <Step>
+    Click **Generate**.
+  </Step>
+</Steps>
+
+The default period is the current month (start of month → today). Wallet counts and top wallets ignore the date range; only the period stats are bounded by it.
 
 ## Using the Wallet Summary
 
-- **Payroll/payout runs**: check driver wallet totals before initiating batch payouts
-- **Float management**: monitor company wallet balances to ensure sufficient float for operations
-- **Fraud detection**: large unusual balances in individual wallets may warrant investigation
-- **Customer lifetime value**: customer wallet balances indicate customers who are heavily invested in your platform
+- **Payout runs** — check period stats and top wallets before initiating batch payouts
+- **Float management** — monitor company wallet balances to ensure sufficient float
+- **Fraud detection** — anomalous spikes in period stats or unusual top-wallet entries may warrant investigation
+- **Customer lifetime value** — customers with high wallet balances indicate platform engagement

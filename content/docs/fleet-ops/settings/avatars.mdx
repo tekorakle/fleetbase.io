@@ -1,81 +1,74 @@
 ---
-title: Avatars
-description: Manage the avatar image library used for drivers, vehicles, contacts, and other Fleet-Ops resources across the console and Navigator app.
+title: Avatar Settings
+sidebarTitle: Avatars
+description: Manage the avatar image library used for vehicles, places, and drivers across the Fleet-Ops console and live map.
 ---
 
-# Avatars
+# Avatar Settings
 
-**Avatars** are the profile images and icons used to visually identify drivers, vehicles, contacts, and other resources in the Fleet-Ops console and in the Navigator app. The Avatar Manager provides a centralized library of images you can assign across resources.
+**Avatars** are the icons and images Fleet-Ops uses to identify vehicles, places, and drivers in the console and on the live map. The Avatar Manager is a centralised library of those images organised by **category** — so when you assign an avatar on a driver, vehicle, or place record, you pick from the correct category's library rather than re-uploading per resource.
 
 Navigate to **Fleet-Ops → Settings → Avatars**.
 
-![Avatar Manager — grid of avatar images with categories for drivers, vehicles, and contacts](/images/placeholder.png)
+![Avatar Manager — category sidebar with Vehicles / Places / Drivers, and a grid of uploaded avatars on the right](/images/screenshots/fleet-ops/fleet-ops-avatar-settings.webp)
 
-## Avatar Categories
+## Categories
 
-The avatar library is organized into categories:
+The Avatar Manager organises uploads into three categories. Pick the category in the left-hand sidebar; the right-hand panel shows the upload dropzone and the existing avatars for that category.
 
 | Category | Used for |
 | :--- | :--- |
-| **Driver** | Driver profile photos and default icons |
-| **Vehicle** | Vehicle photos and type icons (car, van, truck, motorcycle) |
-| **Contact** | Customer and supplier profile images |
-| **Fleet** | Fleet group icons |
-| **Place** | Location type icons (warehouse, hub, store) |
+| **Vehicles** | Vehicle photos and type icons (cars, vans, trucks, motorcycles) — appear as map markers and in vehicle list views |
+| **Places** | Location-type icons (warehouse, hub, store) — appear next to Place records and on the live map |
+| **Drivers** | Driver profile photos and identifying icons — appear next to driver records and on the live map |
+
+Other resources (contacts, fleets, vendors, etc.) use their own avatar fields stored on the resource itself, not pulled from this library.
+
+## Accepted File Types
+
+The Avatar Manager accepts only two image formats:
+
+- **PNG** (`image/png`)
+- **SVG** (`image/svg+xml`)
+
+Other formats are rejected at upload time. SVGs are recommended where possible — they scale cleanly to map marker sizes and dark/light themes.
 
 ## Uploading Avatars
 
 <Steps>
   <Step>
-    Navigate to **Fleet-Ops → Settings → Avatars**.
+    Open **Fleet-Ops → Settings → Avatars**.
   </Step>
   <Step>
-    Select the **category** tab for the resource type you want to add avatars for.
+    Click the category in the left sidebar (Vehicles, Places, or Drivers).
   </Step>
   <Step>
-    Click **Upload** and select image files (PNG, JPG, SVG recommended).
+    Drag PNG or SVG files into the dropzone in the right panel, or click **Select** to pick files. Multiple files at once is supported.
   </Step>
   <Step>
-    The uploaded images appear in the category gallery and are immediately available for selection on resource records.
+    Files upload sequentially with a per-file progress indicator. When complete, they appear in the category grid and are immediately selectable on resource records.
   </Step>
 </Steps>
 
+## Removing Avatars
+
+Hover over any avatar in the category grid and click the delete control to remove it from the library. Resources that already had the deleted avatar assigned fall back to whatever default avatar that category uses.
+
+## Recommended Image Specs
+
+For the best result on the live map and in console list views:
+
+- Square aspect (e.g. 64×64 px or 128×128 px for PNG)
+- Transparent background — PNG with alpha channel, or SVG
+- High-contrast strokes / fills so the icon reads on both light and dark map themes
+- For vehicle markers: keep the icon centred with a small visual padding so it doesn't clip when rendered at marker scale
+
 ## Assigning Avatars to Resources
 
-Avatars are assigned on individual resource records:
+Avatars from the library are picked on the resource itself, not on this page:
 
-- **Driver** — open the driver record → click the avatar area → select from the gallery
-- **Vehicle** — open the vehicle record → click the avatar area → select or upload
-- **Contact** — open the contact record → upload a profile photo or logo
+- **Driver** — open a driver record → photo / avatar field → pick from the Drivers library
+- **Vehicle** — open a vehicle record → photo / avatar field → pick from the Vehicles library
+- **Place** — open a place record → icon / avatar field → pick from the Places library
 
-Selected avatars appear:
-- In the drivers and vehicles list view
-- On the live map as marker icons (vehicle and driver icons)
-- In the Navigator app's driver profile
-- In order detail panels next to the assigned driver
-
-## Default Avatars
-
-Fleet-Ops ships with a set of default avatar icons for common vehicle types:
-- Sedan / Car
-- Van / Minivan
-- Truck
-- Motorcycle / Scooter
-- Bicycle
-- Drone
-
-And for drivers:
-- Generic person silhouettes (male/female/neutral)
-- Numbered icons for quick identification
-
-## Map Marker Icons
-
-Vehicle avatar icons displayed on the live map are the same images from the avatar library, resized for use as map markers. For best results on the map, upload icons with:
-
-- Square dimensions (e.g., 64×64 px)
-- Transparent background (PNG or SVG)
-- High contrast colors visible on both light and dark map themes
-
-## Deleting Avatars
-
-To remove an avatar from the library, click the image in the gallery and select **Delete**. Deleting an avatar that is currently assigned to a resource will revert that resource to the default icon.
+Any resource that doesn't have an avatar assigned displays the system default for its type.

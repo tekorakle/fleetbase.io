@@ -1,71 +1,55 @@
 ---
 title: Navigator App Settings
-description: Configure Navigator app behavior — driver login, order acceptance, GPS broadcast frequency, onboarding, and app-level preferences.
+sidebarTitle: Navigator App
+description: Configure Navigator app behaviour — entity-field editing per Order Configuration and driver self-onboarding from the app.
 ---
 
 # Navigator App Settings
 
-**Navigator App Settings** control how the Navigator driver mobile app behaves for your operation — login method, order acceptance mode, GPS tracking frequency, and driver onboarding configuration.
+**Navigator App Settings** control two operation-specific behaviours of the Navigator driver mobile app: which entity fields drivers are allowed to edit per Order Configuration, and whether drivers can onboard themselves from the app.
 
 Navigate to **Fleet-Ops → Settings → Navigator App**.
 
-![Navigator app settings panel — login method, acceptance mode, broadcast frequency, onboarding fields](/images/placeholder.png)
+![Navigator app settings panel — entity field editing settings and driver onboard settings](/images/screenshots/fleet-ops/fleet-ops-navigator-app-settings.webp)
 
-## Login Settings
+## Entity Field Editing
 
-| Setting | Options | Description |
-| :--- | :--- | :--- |
-| **SMS Verification** | On / Off | Require drivers to verify their phone number with an SMS code on each login |
-| **Allow Driver Registration** | On / Off | Allow new drivers to self-register via the app without being pre-created in the console |
-| **Registration Requires Approval** | On / Off | Hold self-registered drivers in pending status until an operator approves them |
+The **Entity Field Editing Settings** panel controls which fields on a payload's entities the driver can edit from inside the Navigator app, scoped per [Order Configuration](/docs/fleet-ops/operations/order-configurations/overview).
+
+<Steps>
+  <Step>
+    Pick the Order Configuration you want to configure from the **Select order config** dropdown.
+  </Step>
+  <Step>
+    Toggle **Enable driver to edit entity fields**. When off, all entity fields are read-only in Navigator for orders of this config.
+  </Step>
+  <Step>
+    When the toggle is on, check the individual fields drivers should be able to edit (description, weight, dimensions, custom fields, etc.).
+  </Step>
+  <Step>
+    Click **Save changes**. The new setting applies the next time a driver opens an order of this config in Navigator.
+  </Step>
+</Steps>
+
+The setting is stored per Order Configuration so different order types can grant different levels of driver autonomy — for example a courier flow might lock everything, while a maintenance flow lets drivers update notes and weights inline.
+
+## Driver Onboarding from the App
+
+The **Driver Onboard Settings** panel controls whether new drivers can register themselves from inside the Navigator app, without being pre-created by an operator in the console.
+
+| Setting | Description |
+| :--- | :--- |
+| **Enable driver onboard from app** | Master toggle — when on, the Navigator login screen exposes a *Sign up* flow |
+| **Select onboard method** | The verification path used during sign-up |
+| **Require driver to upload onboard documents** | When on, the sign-up flow blocks completion until the driver uploads the documents you require |
+| **Required onboard documents** | Free-text list of document names the driver must upload (e.g. *Driver's License*, *Insurance Certificate*) |
+
+When self-registration is off, drivers must exist in **Fleet-Ops → Resources → Drivers** before they can log in.
 
 <Callout type="info">
-If **Allow Driver Registration** is off, drivers must be created manually in **Fleet-Ops → Resources → Drivers** before they can log in.
+Other Navigator app behaviours — GPS broadcast frequency, push notifications, locale, and order acceptance mode — are managed by the platform's general system-setup pages or by the driver's device permissions, not by these Fleet-Ops Navigator app settings.
 </Callout>
-
-## Order Acceptance
-
-| Setting | Options | Description |
-| :--- | :--- | :--- |
-| **Order Acceptance Mode** | Auto / Manual | **Auto** — orders are accepted automatically when dispatched. **Manual** — drivers must tap Accept in Navigator before the order starts. |
-| **Accept Timeout** | Seconds | How long a manual-accept order waits before being automatically reassigned (0 = no timeout) |
-
-## GPS Tracking
-
-| Setting | Description |
-| :--- | :--- |
-| **Broadcast Frequency** | How often the driver's GPS position is sent to Fleet-Ops (seconds). Lower values = more real-time tracking but higher battery and data usage. Default: 5 seconds. |
-| **Accuracy Mode** | **High Accuracy** (GPS + network) or **Battery Saver** (network only). High accuracy is recommended for urban operations. |
-| **Background Tracking** | Must be enabled for continuous tracking when Navigator is in the background. Drivers must grant "Always Allow" location permission. |
-
-## Driver Onboarding
-
-Configure the onboarding flow shown to new drivers on first login:
-
-| Setting | Description |
-| :--- | :--- |
-| **Welcome Message** | Custom message shown on the first screen after login |
-| **Required Fields** | Fields the driver must complete during onboarding (e.g., license number, vehicle confirmation) |
-| **Terms Acceptance** | Require driver to accept terms and conditions before proceeding |
-| **Profile Photo** | Require driver to upload a profile photo during onboarding |
-
-## Language and Locale
-
-| Setting | Description |
-| :--- | :--- |
-| **Default Language** | The language shown in Navigator for all drivers in your organization |
-| **Date Format** | Date display format (e.g., DD/MM/YYYY or MM/DD/YYYY) |
-
-Drivers can override the language in their individual app settings if the app supports multiple languages.
-
-## Notification Preferences
-
-| Setting | Description |
-| :--- | :--- |
-| **Push Notifications** | Enable/disable push notifications to the Navigator app for dispatches and updates |
-| **Sound Alerts** | Play a sound when a new order arrives |
-| **Vibration** | Vibrate on incoming order notification |
 
 ## Saving Settings
 
-Click **Save** to apply changes. Navigator app settings take effect for all drivers immediately — the next time Navigator connects to the server, it picks up the updated configuration.
+Each panel has its own **Save changes** button. Updates apply the next time Navigator connects to the server.

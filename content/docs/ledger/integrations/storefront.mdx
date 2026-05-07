@@ -1,0 +1,49 @@
+---
+title: Storefront Integration
+description: Storefront orders record the sale directly in your books — no invoice needed, because the customer has already paid at checkout.
+---
+
+# Storefront Integration
+
+Storefront and Ledger work together a little differently than Fleet-Ops and Ledger.
+
+A Storefront order is a **point-of-sale** transaction — the customer pays at checkout, before the order is even created. There's nothing to bill them for after the fact. So instead of generating an invoice, Ledger records the sale **directly in your books** the moment the order completes.
+
+## What Happens
+
+When a Storefront order is placed, Ledger automatically posts a single journal entry recognizing the sale:
+
+- **Cash** goes up — you've received the money
+- **Revenue** goes up — the income is recognized
+
+That's it. The Storefront order itself acts as the customer's receipt. There's no separate invoice document to send, manage, or chase up.
+
+## Why No Invoice?
+
+An invoice represents money owed to you. Storefront orders are paid up front, so there's nothing owed — creating a "paid" invoice for every checkout would clutter your billing list and your AR reports for no benefit. Recording the journal entry directly keeps your books accurate without the extra paperwork.
+
+## Where Storefront Sales Show Up
+
+Although they don't appear in your invoice list, Storefront sales are fully reflected throughout Ledger:
+
+- **General Ledger** — every sale shows as a journal entry with the order's reference
+- **Income Statement** — Storefront revenue counts toward the period's total revenue
+- **Balance Sheet** — Cash and Revenue movements roll up into the snapshot
+- **Cash Flow Statement** — the cash inflow appears in operating activities
+
+To see only Storefront sales, filter the [General Ledger](/docs/ledger/accounting/general-ledger) by date range — each entry's reference field points back to the originating Storefront order.
+
+## Choosing Which Revenue Account to Use
+
+By default, Storefront sales credit your standard **Revenue** account. If you'd like Storefront income to land in a separate revenue account (e.g. to track e-commerce revenue distinctly from Fleet-Ops delivery revenue), set the **Default Revenue Account** under [Accounting Settings](/docs/ledger/settings/overview#accounting-settings) — or create a dedicated revenue account first and select it.
+
+## Comparison with Fleet-Ops
+
+| | Fleet-Ops orders | Storefront orders |
+| :--- | :--- | :--- |
+| Invoice generated? | Yes — a draft invoice you review and send | No |
+| When does Ledger react? | When the order is priced | When the customer checks out |
+| Revenue recognized as | An invoice that becomes paid | A direct sale |
+| Use case | B2B / contract delivery | E-commerce / point-of-sale |
+
+See [Fleet-Ops Integration](/docs/ledger/integrations/fleet-ops) for the contrasting flow.

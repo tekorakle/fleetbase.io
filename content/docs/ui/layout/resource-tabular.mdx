@@ -1,8 +1,81 @@
 ---
-title: Resource Tabular
-description: "Layout resource components for rendering resource lists: tabular, card, cards-grid, and panel views."
+title: Resource Layouts
+description: "<Layout::Resource::Tabular>, <Layout::Resource::Card>, <Layout::Resource::CardsGrid>, and <Layout::Resource::Panel> — pre-built page layouts for resource list views."
 ---
 
-# Resource Tabular
+# Resource Layouts
 
-This page is coming soon.
+`@fleetbase/ember-ui` ships four pre-built page layouts for rendering a resource list. They are higher-level wrappers around `<Table>`, search, filters, bulk actions, and pagination — drop one in and you get a complete resource page.
+
+| Layout | Component | When to use |
+| :--- | :--- | :--- |
+| Tabular | `<Layout::Resource::Tabular>` | Standard list/detail page (the default for most resources) |
+| Card | `<Layout::Resource::Card>` | Single-card detail view |
+| CardsGrid | `<Layout::Resource::CardsGrid>` | Grid of cards (e.g. media gallery, store grid) |
+| Panel | `<Layout::Resource::Panel>` | Sectioned panel layout |
+
+## Tabular Example
+
+```handlebars
+<Layout::Resource::Tabular
+  @title="Drivers"
+  @searchQuery={{this.q}}
+  @onSearch={{this.onSearch}}
+  @onReload={{this.onReload}}
+  @columns={{this.columns}}
+  @rows={{this.rows}}
+  @table={{this.table}}
+  @onRowClick={{this.openDriver}}
+/>
+```
+
+`<Layout::Resource::Tabular>` renders:
+
+- Section header with `@title`, search input, refresh button
+- Filters picker (driven by columns marked `filterable`)
+- Visible-column picker (let the user hide/show columns)
+- Bulk-action dropdown (when rows are selected)
+- The actual `<Table>` with sortable columns and pagination
+- Optional bulk-search dropdown for advanced multi-field search
+
+## Common Arguments
+
+| Argument | Description |
+| :--- | :--- |
+| `@title` | Header title |
+| `@columns` | Column descriptors (passed to `<Table>`) |
+| `@rows` | Row data |
+| `@table` | The ember-light-table model object |
+| `@searchQuery` | Bound to the search input |
+| `@onSearch` | Search callback |
+| `@onReload` | Refresh button callback |
+| `@onRowClick` | Click callback for each row |
+| `@onSubmitBulkSearch` | Optional advanced search |
+| `@bulkSearchValue` | Bound to advanced search |
+| `@withoutHeader` | Skip the entire header row |
+| `@hideColumnsPicker` | Skip the visible-column picker |
+
+Plus a long tail of `*Class` and `*Width` overrides for each subsection.
+
+## Real-World Usage
+
+Look at any of the resource list controllers in fleet-ops or storefront — they all use `<Layout::Resource::Tabular>` as their root template:
+
+- `fleet-ops/addon/templates/management/drivers/index.hbs`
+- `fleet-ops/addon/templates/management/vehicles/index.hbs`
+- `storefront/addon/templates/networks/index.hbs`
+
+Studying any of these is the fastest way to see the full set of arguments in action.
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/components/layout/resource/tabular.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/tabular.hbs) | Template |
+| [`addon/components/layout/resource/tabular.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/tabular.js) | Class |
+| [`addon/components/layout/resource/card.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/card.hbs) | Sibling — single-card detail view (template) |
+| [`addon/components/layout/resource/card.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/card.js) | |
+| [`addon/components/layout/resource/cards-grid.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/cards-grid.hbs) | Sibling — grid of cards (template) |
+| [`addon/components/layout/resource/cards-grid.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/cards-grid.js) | |
+| [`addon/components/layout/resource/panel.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/panel.hbs) | Sibling — sectioned panel layout (template) |
+| [`addon/components/layout/resource/panel.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/layout/resource/panel.js) | |

@@ -10,6 +10,29 @@ import { TypeTable } from 'fumadocs-ui/components/type-table';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 
+import {
+ Endpoint,
+ HttpExample,
+ HttpRequest,
+ HttpResponse,
+ MethodBadge,
+ Param,
+ ParamTable,
+ ResourceHeader,
+ ResourceObject,
+ Workflow,
+ WorkflowStep,
+} from './api-reference';
+import {
+ EmberApi,
+ EmberCan,
+ EmberDataApi,
+ EmberGuides,
+ LaravelApi,
+ LaravelDocs,
+ PhpDocs,
+ SocketClusterDocs,
+} from './external-docs';
 import { Badge } from './ui/badge';
 import {
  Card,
@@ -43,6 +66,27 @@ export function getMDXComponents(components?: MDXComponents): MDXComponents {
  CardDescription,
  CardHeader,
  CardTitle,
+ // External documentation links — single source of URL prefixes in src/lib/external-docs.ts
+ EmberApi,
+ EmberCan,
+ EmberDataApi,
+ EmberGuides,
+ LaravelApi,
+ LaravelDocs,
+ PhpDocs,
+ SocketClusterDocs,
+ // API-reference components — Stripe-style endpoint layout
+ Endpoint,
+ HttpExample,
+ HttpRequest,
+ HttpResponse,
+ MethodBadge,
+ Param,
+ ParamTable,
+ ResourceHeader,
+ ResourceObject,
+ Workflow,
+ WorkflowStep,
  // Enhanced code blocks with proper responsive behavior and background
  // eslint-disable-next-line @typescript-eslint/no-unused-vars
  pre: ({ ref: _ref, ...props }) => (

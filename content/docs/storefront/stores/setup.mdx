@@ -1,0 +1,78 @@
+---
+title: Creating a Store
+description: Create and configure an individual Storefront store — basic details, branding, contact info, and store-level settings.
+---
+
+# Creating a Store
+
+This guide covers creating and configuring a single store. For multi-vendor marketplaces, see [Networks](/docs/storefront/networks/overview).
+
+## Creating a Store
+
+<Steps>
+  <Step>
+    Navigate to **Storefront** in the Fleetbase Console sidebar.
+  </Step>
+  <Step>
+    Click **New Store**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Description**, and select the **Currency** used for all product pricing.
+  </Step>
+  <Step>
+    Click **Save**. The store is created and assigned a unique `store_*` API key automatically.
+  </Step>
+</Steps>
+
+![New store form — name, description, and currency fields](/images/screenshots/storefront/storefront-create-store.webp)
+
+After creating the store, open it to fill in additional details:
+
+- **Timezone** — operating hours are evaluated in this timezone
+- **Logo** and **Backdrop** images for branding
+- **Contact** — website, email, phone
+- **Social** — Facebook, Instagram, Twitter handles
+- **Tags** — freeform tags for filtering
+
+Then add [locations](/docs/storefront/stores/store-locations), set [operating hours](/docs/storefront/stores/operating-hours), and configure [payment gateways](/docs/storefront/settings/gateways).
+
+## Selecting the Active Store
+
+If you manage multiple stores, switch between them using the **store selector** at the top of the Storefront console — every per-store action (creating products, viewing orders, editing settings) operates on the currently active store.
+
+## Store Settings
+
+Open a store and scroll to **General Settings**. All toggles below (except `online`, `order_config_uuid`, and `pod_method`) are stored on the store's `options` JSON column.
+
+| Setting | Key | What it does |
+| :--- | :--- | :--- |
+| **Online** | `online` | Master switch — when off, the store is hidden from listings and cannot accept orders |
+| **Default Order Config** | `order_config_uuid` | Fleet-Ops order configuration applied to orders created from this store |
+| **Enable tax** | `options.tax_enabled` | Apply a tax line item to checkouts. When on, set **Tax percentage** in `options.tax_percentage` |
+| **Enable minimum order amount** | `options.required_checkout_min` | Block checkout below a threshold. When on, set the value in `options.required_checkout_min_amount` |
+| **Auto-accept incoming orders** | `options.auto_accept_orders` | Skip the manual accept step — incoming orders move straight to the next status |
+| **Auto-dispatch orders** | `options.auto_dispatch` | Automatically dispatch accepted orders to Fleet-Ops without manual intervention |
+| **Require proof of delivery** | `options.require_pod` | Drivers must capture POD on completion. Method is set in `pod_method` (`scan`, `signature`, `photo`, or `sms`) |
+| **Enable cash on delivery** | `options.cod_enabled` | Show Cash on Delivery as a payment option at checkout |
+| **Enable order pickup** | `options.pickup_enabled` | Allow customers to choose pickup instead of delivery |
+| **Enable tips** | `options.tips_enabled` | Show a tip field at checkout |
+| **Enable delivery tips** | `options.delivery_tips_enabled` | Allow customers to add a separate tip for the driver after delivery |
+
+Stores also have:
+- **Alert recipients** — under the **Alerts** panel, select users notified for new orders (`alertable.for_new_order`)
+- **Translations** — store name and description per locale
+
+To enable **multi-store cart** or **user reviews**, the store must belong to a network — those toggles are network-level only. See [Networks](/docs/storefront/networks/overview).
+
+## Managing Store Status
+
+To temporarily disable a store without deleting it:
+
+1. Open the store
+2. Toggle **Online** to off
+
+When offline, the store does not appear in network searches and customers cannot place new orders. Existing orders are unaffected.
+
+## Deleting a Store
+
+Open the store in the console and click **Delete**. Deleting a store removes its catalog — products, categories, variants, and locations. Historical orders are retained for record-keeping. This action cannot be undone.

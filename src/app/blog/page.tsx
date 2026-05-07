@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import { blogRevalidateSeconds, getBlogPosts } from '@/lib/ghost';
+import { getBlogPosts } from '@/lib/ghost';
 
 export const metadata: Metadata = {
   title: 'Blog | Fleetbase',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const revalidate = blogRevalidateSeconds;
+export const revalidate = 300;
 
 function formatPublishedDate(value: string) {
   return new Intl.DateTimeFormat('en-US', {

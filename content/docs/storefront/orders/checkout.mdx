@@ -1,84 +1,114 @@
 ---
 title: Checkout
-description: How the Storefront checkout flow works — delivery address, service quotes, payment, and order creation.
+description: The Storefront checkout is a two-step API flow — `/checkouts/before` to initialize and produce a token, then `/checkouts/capture` to finalize the order after payment is confirmed.
 ---
 
 # Checkout
 
-**Checkout** is the process of converting a cart into a paid order. It captures the customer's delivery address, calculates the delivery fee, processes payment, and creates a Fleet-Ops order — all in one atomic flow.
+**Checkout** converts a cart into a paid order. Storefront uses a **two-step** flow:
 
-## Checkout Flow
+1. **`/checkouts/before`** — submit the cart, service quote, gateway, tip, and pickup/delivery flag. Storefront returns a **token** (and a Stripe `clientSecret` if the gateway is Stripe).
+2. **`/checkouts/capture`** — once payment is confirmed by the customer's frontend, finalize by sending back the same token. Storefront creates one or more Fleet-Ops orders.
 
-### Step 1 — Delivery Address
+This split exists so the frontend can confirm payment with the gateway SDK (which keeps card data out of Fleetbase) and Storefront only needs to verify the gateway-confirmed token at capture time.
 
-The customer provides their delivery address (or selects a saved address). This is required before the delivery fee can be calculated.
-
-### Step 2 — Service Quote
-
-Storefront calls Fleet-Ops to request a **Service Quote** — the calculated delivery fee based on:
-- Distance between the store location and the customer's delivery address
-- The applicable Service Rate configured in Fleet-Ops
-
-The quote is returned to the frontend and displayed to the customer as the `delivery_fee`.
-
-### Step 3 — Apply Promotions
-
-If the customer has a discount code, it is validated now:
-- Is the promotion currently active?
-- Has the usage limit been reached?
-- Does the cart meet the minimum spend requirement?
-
-If valid, the discount is applied to the subtotal.
-
-### Step 4 — Payment
-
-The customer selects a payment method. Depending on the configured gateways:
-- **Stripe** — frontend collects card details via Stripe SDK, sends directly to Stripe
-- **QPay** — customer is redirected to QPay payment page
-- **Cash on Delivery** — no payment now; driver collects cash on delivery
-
-### Step 5 — Order Creation
-
-On payment success, your frontend calls the checkout capture endpoint. Storefront performs final validation:
-- Is the store still online?
-- Are all cart products still active?
-- Was payment confirmed?
-
-If everything is valid:
-1. The cart is finalized
-2. A **Checkout** record is created (snapshot of cart state + payment)
-3. A **Fleet-Ops Order** is created with pickup = store location, dropoff = customer address, payload = cart items
-4. The order ID is returned to the frontend for the confirmation screen
-
-## Pickup Orders
-
-If the customer selects **in-store pickup** (supported stores only):
-- No delivery fee is calculated
-- No Fleet-Ops driver dispatch occurs
-- The order status transitions based on store preparation and customer pickup confirmation
-
-## Checkout API
+## Step 1 — `/checkouts/before`
 
 ```http
-POST /storefront/v1/checkouts/capture
-Storefront-Key: store_your_key
-Authorization: Bearer customer_token
+POST /storefront/v1/checkouts/before
+Authorization: Bearer store_your_store_key
+Customer-Token: 1|VlKK7lZ...
 
 {
-  "cart_id": "cart_abc123",
-  "delivery_address": {
-    "street": "123 Main St",
-    "city": "San Francisco",
-    "country": "US",
-    "coordinates": [-122.4194, 37.7749]
-  },
-  "gateway_id": "gateway_stripe_id",
-  "is_pickup": false
+  "cart": "cart_abc123",
+  "gateway": "gateway_stripe_id",
+  "serviceQuote": "service_quote_id",
+  "customer": "customer_abc123",
+  "pickup": false,
+  "tip": 200,
+  "deliveryTip": 100
 }
 ```
 
-On success, returns the created Fleet-Ops order object with tracking information.
+Required:
+- **`cart`** — the cart's public id
+- **`gateway`** — the gateway public id selected by the customer
+- **`serviceQuote`** — the [Service Quote](/docs/storefront/orders/service-quotes) id (omit for pickup orders)
+- **`customer`** — the customer's public id
+
+Optional:
+- **`pickup`** — `true` for in-store pickup, defaults to delivery
+- **`tip`** — driver tip in minor currency units (e.g. `100` = $1.00 USD)
+- **`deliveryTip`** — separate delivery tip when `delivery_tips_enabled`
+- **`is_cod`** — `true` if the customer is paying cash on delivery
+
+Returns:
+
+```json
+{
+  "token": "checkout_token_abc",
+  "clientSecret": "pi_xxx_secret_yyy"
+}
+```
+
+For Stripe, the frontend uses `clientSecret` with the Stripe SDK to confirm the PaymentIntent (cards, Apple Pay, Google Pay). For QPay, the response includes the QPay invoice payload. For Cash on Delivery, no client-side payment is required.
+
+## Step 2 — `/checkouts/capture`
+
+```http
+POST /storefront/v1/checkouts/capture
+Authorization: Bearer store_your_store_key
+Customer-Token: 1|VlKK7lZ...
+
+{
+  "token": "checkout_token_abc",
+  "transactionDetails": { ... },
+  "notes": "Leave at the front gate."
+}
+```
+
+Required:
+- **`token`** — the token returned by `before`
+
+Optional:
+- **`transactionDetails`** — gateway-specific confirmation payload
+- **`notes`** — order notes for the merchant
+
+On success, Storefront finalizes the cart and creates a Fleet-Ops order (or one order per store, for multi-cart checkouts in a network). The response contains the created order(s).
+
+## QPay Callback
+
+QPay payments are completed by redirecting the customer to the bank app. After the bank confirms payment, QPay calls a public callback that Storefront uses to capture:
+
+```
+POST /storefront/v1/checkouts/capture-qpay
+```
+
+You don't call this directly — QPay does — but it must be reachable from QPay's network.
+
+## Pickup Orders
+
+If the customer selects in-store pickup:
+- No service quote is required (the `serviceQuote` field can be omitted)
+- The order's activity flow uses the **`pickup_ready`** status instead of dispatching a driver
+- The customer-facing app polls or subscribes to receive the ready notification, then collects in-store
+
+Pickup is available when the store/network has `options.pickup_enabled` toggled on.
 
 ## Required Minimum Amount
 
-Stores can optionally configure a **Minimum Checkout Amount** in **Storefront → [Store] → Details → Options**. If the cart subtotal is below this threshold, checkout is blocked.
+A store or network can require a minimum cart subtotal. Toggle `options.required_checkout_min` and set `options.required_checkout_min_amount`. If the cart subtotal is below the threshold, `before` returns a validation error.
+
+## Error Cases
+
+The `/before` step validates that:
+- The cart exists and is not expired
+- The selected gateway is configured for the store/network
+- The customer is authenticated (when authentication is required by your flow)
+- The cart subtotal meets the minimum order amount (if configured)
+
+The `/capture` step validates that:
+- The token is valid and not yet used
+- The gateway has confirmed the payment (for Stripe, that the PaymentIntent succeeded)
+
+Handle errors by surfacing the API message to the customer and letting them retry without losing cart state.

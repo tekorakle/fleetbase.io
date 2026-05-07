@@ -1,37 +1,35 @@
 ---
 title: Operating Hours
-description: Set store and location availability windows — customers cannot place orders outside operating hours.
+description: Set per-location availability windows — customers cannot place orders outside operating hours.
 ---
 
 # Operating Hours
 
-**Operating Hours** define when a store location accepts orders. If a customer tries to check out outside of a location's operating hours, the API rejects the request and the store shows as closed in your app.
+**Operating Hours** define when a store location accepts orders. Hours are set **per location** (not per store) using the schedule manager on the location's edit panel.
 
-Operating hours are set per **store location**, not per store. This allows a franchise with multiple branches to have different hours per location.
-
-Navigate to **Storefront → [Store] → Locations → [Location] → Hours**.
-
-![Operating hours schedule — day-by-day time blocks with add/remove controls](/images/placeholder.png)
+Each store has a `timezone` field — operating hours are evaluated against this timezone, not the customer's local time or the server's UTC clock. Set the store's timezone correctly before configuring hours.
 
 ## Setting Hours
 
 <Steps>
   <Step>
-    Open your store, click the **Locations** tab, and open a location.
+    Make sure the correct store is selected via the store switcher.
   </Step>
   <Step>
-    Click the **Hours** tab within the location detail.
+    Navigate to **Storefront → Settings → Locations** and open a location.
   </Step>
   <Step>
-    For each day of the week, click **Add Hours** and set the **Start** and **End** times.
+    In the schedule manager, add per-day **Start** and **End** time blocks.
   </Step>
   <Step>
     Leave a day empty (no time blocks) to mark it as closed.
   </Step>
   <Step>
-    Click **Save**.
+    Save.
   </Step>
 </Steps>
+
+Hours are stored in the `store_hours` table linked to the location via `store_location_uuid`.
 
 ## Multiple Time Blocks Per Day
 
@@ -43,17 +41,13 @@ Block 1: 11:00 AM → 02:00 PM  (Lunch)
 Block 2: 05:00 PM → 10:00 PM  (Dinner)
 ```
 
-During the gap (2pm–5pm), the store shows as closed and checkout is blocked.
-
-## Timezone
-
-Operating hours are evaluated in the **store's configured timezone**, not the customer's timezone or the server's UTC time. Always ensure the store timezone is set correctly in **Storefront → [Store] → Details**.
+During the gap (2pm–5pm), the store shows as closed.
 
 ## Overriding for Emergencies
 
-If you need to close the store immediately (e.g., due to a kitchen emergency):
+If you need to close the store immediately (e.g., a kitchen emergency):
 
-1. Open the store → **Details** tab
+1. Open the store
 2. Toggle **Online** to off
 
 This overrides the operating schedule and immediately stops new orders regardless of hours. Re-enable **Online** when ready to resume.
@@ -62,4 +56,8 @@ For planned closures like holidays, update the hours for the affected week manua
 
 ## Product-Level Hours
 
-Individual products can also have their own availability hours (e.g., a breakfast item only available 7am–11am). If a customer tries to add a product outside its hours, it is blocked even if the store is open. Configure product hours in **Storefront → Products → [Product] → Hours**.
+Individual products can also have per-product availability hours (e.g. a breakfast item available 7am–11am only). Configure them via the **Availability** panel inside the product editor. See [Products](/docs/storefront/catalog/products).
+
+## Catalog-Level Hours
+
+Catalogs assigned to food trucks have their own hours via the `CatalogHour` model. Use these to gate which catalog is active at a given time without editing each location or product. See [Catalogs](/docs/storefront/catalog/overview).

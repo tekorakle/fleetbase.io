@@ -5,7 +5,6 @@ import {
   BookOpen,
   Truck,
   ShoppingBag,
-  Package,
   BookMarked,
   Terminal,
   Layout,
@@ -32,12 +31,9 @@ const sections = [
     url: '/docs/storefront',
     icon: <ShoppingBag className="size-4" />,
   },
-  {
-    title: 'Pallet',
-    description: 'Warehouse & inventory',
-    url: '/docs/pallet',
-    icon: <Package className="size-4" />,
-  },
+  // Pallet docs are hidden from the dropdown until the extension is released.
+  // The /docs/pallet routes still resolve so direct links work, but the entry
+  // is omitted from the section picker so users don't browse to unfinished docs.
   {
     title: 'Ledger',
     description: 'Finance & billing',
@@ -52,14 +48,14 @@ const sections = [
   },
   {
     title: 'Fleetbase UI',
-    description: 'UI components & mobile apps',
+    description: 'UI components for the console',
     url: '/docs/ui',
     icon: <Layout className="size-4" />,
   },
   {
-    title: 'Extension SDK',
+    title: 'Extension Development',
     description: 'Build & extend Fleetbase',
-    url: '/docs/sdk',
+    url: '/docs/extension-development',
     icon: <Puzzle className="size-4" />,
   },
   {

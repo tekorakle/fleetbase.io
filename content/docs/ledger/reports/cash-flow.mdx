@@ -1,15 +1,13 @@
 ---
 title: Cash Flow Statement
-description: Track cash inflows and outflows — operating, financing, and investing activities — to understand your organization's liquidity.
+description: Track cash inflows and outflows — operating, financing, and investing activities — derived from movement on the Cash account.
 ---
 
 # Cash Flow Statement
 
-The **Cash Flow Statement** tracks the actual movement of cash into and out of your organization over a period. Unlike the income statement (which uses accrual accounting), the cash flow statement shows real cash received and paid.
+The **Cash Flow Statement** tracks the actual movement of cash into and out of your organization over a period. Unlike the income statement (which uses accrual accounting), the cash flow statement shows real cash movements — it is computed from journal entries that touch the Cash account (`CASH-DEFAULT`).
 
 Navigate to **Ledger → Reports → Cash Flow**.
-
-![Cash flow statement — operating, financing, and investing sections with net change in cash](/images/placeholder.png)
 
 ## Why Cash Flow Matters
 
@@ -17,46 +15,44 @@ A profitable business on paper can still run out of cash. The cash flow statemen
 
 ## Report Structure
 
+The report groups journal entries against the Cash account into three classifications, each shown as a list of items plus a net flow:
+
 ### Operating Activities
 
-Cash flows from your core business operations:
-- Cash received from customers (invoice payments)
-- Cash paid to vendors and suppliers
-- Driver earning payouts
-- Operating expenses paid
-
-**Net Cash from Operating Activities**
+Cash flows from core business operations — for example, customer payments on invoices and operating-expense payments.
 
 ### Financing Activities
 
-Cash flows from financing:
-- Wallet top-ups by customers (inflow)
-- Driver payouts to bank accounts (outflow)
-- Loan repayments (outflow)
-- Capital contributions (inflow)
-
-**Net Cash from Financing Activities**
+Cash flows from raising or returning capital and from wallet top-ups / payouts that move cash in or out of the system.
 
 ### Investing Activities
 
-Cash flows from investments:
-- Purchase of equipment or assets (outflow)
-- Proceeds from asset sales (inflow)
-
-**Net Cash from Investing Activities**
+Cash flows from longer-term asset acquisitions or disposals (typically zero for a logistics platform unless you record asset purchases through Ledger).
 
 ### Net Change in Cash
 
 ```
-Net Change = Operating + Financing + Investing
+Net Change = Net Operating + Net Financing + Net Investing
 ```
 
-This shows whether cash increased or decreased during the period. Add this to the opening cash balance to get the closing cash balance.
+Add this to the **opening cash balance** to get the **closing cash balance** — both are shown alongside the period's net change at the top of the report.
 
 ## Setting the Report Period
 
-1. Navigate to **Ledger → Reports → Cash Flow**
-2. Set the **Start Date** and **End Date**
-3. Click **Generate**
+<Steps>
+  <Step>
+    Navigate to **Ledger → Reports → Cash Flow**.
+  </Step>
+  <Step>
+    Set the **Start Date** and **End Date**.
+  </Step>
+  <Step>
+    Click **Generate**.
+  </Step>
+</Steps>
 
-The report draws from wallet transactions and journal entries classified by activity type.
+The default period is the current month (start of month → today).
+
+## How Classification Works
+
+Journal entries are classified into operating / financing / investing based on the contra account on the entry. The exact rules are implemented in `LedgerService` — if you configure custom accounts, ensure their `type` is set correctly so they classify as expected (e.g., expense accounts → operating, equity accounts → financing).

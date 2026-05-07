@@ -9,10 +9,10 @@ Vehicle **capacity** settings define the maximum load a vehicle can carry. These
 
 ## Capacity Fields
 
-| Field | Unit | Description |
-| :--- | :--- | :--- |
-| **Capacity Weight** | kg | Maximum weight the vehicle can carry |
-| **Capacity Volume** | m³ | Maximum cargo volume the vehicle can carry |
+| Field | Backing column | Type | Description |
+| :--- | :--- | :--- | :--- |
+| **Payload Capacity** | `payload_capacity` | decimal(2) | Maximum weight the vehicle can carry. Unit interpretation is up to your operation — populate it consistently with the entity weight units you use. |
+| **Payload Capacity Volume** | `payload_capacity_volume` | decimal(3) | Maximum cargo volume the vehicle can carry. Same convention — set entity dimensions in matching units. |
 
 Both fields are optional. If left blank, the Orchestrator treats the vehicle as having unlimited capacity.
 
@@ -22,7 +22,7 @@ Capacity is set on the vehicle record:
 
 1. Navigate to **Fleet-Ops → Resources → Vehicles**
 2. Open a vehicle record and click **Edit**
-3. Enter the **Capacity Weight** and/or **Capacity Volume**
+3. Enter the **Payload Capacity** (weight) and/or **Payload Capacity Volume**
 4. Click **Save**
 
 ## How Capacity Affects the Orchestrator

@@ -11,7 +11,7 @@ Fleet-Ops is built around a set of entities that represent the real-world object
 
 An **Order** is the central entity — it represents a delivery task or service job. Every order has:
 
-- A **status** that progresses through a lifecycle (pending → assigned → dispatched → started → completed)
+- A **status** that progresses through a lifecycle (created → dispatched → started → completed)
 - A **payload** containing the pickup location, dropoff location, and items being delivered
 - A **driver** and **vehicle** assigned to execute it
 - An **Order Configuration** that defines the workflow, fields, and proof of delivery method
@@ -20,16 +20,21 @@ Orders are created in the console, dispatched to drivers via the Navigator app, 
 
 ### Order Statuses
 
-| Status | Meaning |
-| :--- | :--- |
-| `draft` | Being composed, not yet submitted |
-| `pending` | Submitted, awaiting assignment |
-| `scheduled` | Assigned a future date/time |
-| `assigned` | Driver and vehicle assigned |
-| `dispatched` | Sent to the driver's Navigator app |
-| `started` | Driver has accepted and begun the route |
-| `completed` | Delivered with proof of delivery captured |
-| `cancelled` | Cancelled before completion |
+Fleet-Ops has five **system order statuses**. They drive the high-level lifecycle Fleet-Ops uses for dispatch, billing, and reporting.
+
+| Status | Always present? | Meaning |
+| :--- | :--- | :--- |
+| `created` | Yes | The order has been created and is awaiting dispatch |
+| `dispatched` | Yes | The order has been sent to a driver |
+| `started` | Yes | The driver has accepted and is working the order |
+| `canceled` | Yes | The order was cancelled before completion |
+| `completed` | Configurable | The order has been delivered |
+
+The first four — `created`, `dispatched`, `started`, `canceled` — are **static**. They exist on every order and cannot be removed. The `completed` status, however, can be replaced or supplemented by **any custom activity that has its `complete` flag set to `true`** in the order's activity flow. When that activity fires (for example, *Items Handed Over* or *Signature Captured*), Fleet-Ops marks the order as completed. This means an Order Configuration can define its own terminating step under whatever name fits the operation, while still ending the order's lifecycle.
+
+What happens **between `started` and the order's completion activity** is fully configurable. The intermediate steps a driver moves through — *arrived at pickup*, *items loaded*, *en route to dropoff*, and so on — are defined by the **activity flow** on the Order Configuration. Different order types can have completely different activity flows while still sharing the same system-status backbone.
+
+See [Order Configurations](/docs/fleet-ops/operations/order-configurations/overview) and [Activity Flows](/docs/fleet-ops/operations/order-configurations/activity-flows) for how to design custom workflows.
 
 ## Payload
 
@@ -125,7 +130,7 @@ Rates support surcharges for COD (cash on delivery), peak hours, and parcel size
 
 ## Orchestrator
 
-The **Orchestrator** is the automated assignment and route optimization engine. It takes a pool of unassigned orders and a set of available drivers and vehicles, then proposes an optimized assignment plan. You preview the plan before committing it.
+The **Orchestrator** is a multi-phase planner that turns a pool of unassigned orders into a committable plan. Rather than running a single fixed pipeline, you compose **phases** in the Orchestrator Workbench and stack them in sequence — for example *Assign Vehicles → Optimize Routes → Assign Drivers*. Each phase runs one mode (vehicle allocation, driver allocation, route optimization, or full allocation) using a configurable engine. You preview the proposed plan and commit it when you're satisfied — or run a single phase on its own when that's all you need.
 
 See [Orchestrator Overview](/docs/fleet-ops/operations/orchestrator/overview) for details.
 

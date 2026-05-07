@@ -1,8 +1,101 @@
 ---
-title: Layout Overview
-description: "Top-level layout components: app-container, header, sidebar, main, and section."
+title: Overview
+description: Top-level layout primitives in @fleetbase/ember-ui — Layout::Container, Layout::Header, Layout::Sidebar, Layout::Section, plus the standalone <Overlay>, <Drawer>, <ContentPanel>, and <Spacer>.
 ---
 
 # Layout Overview
 
-This page is coming soon.
+`@fleetbase/ember-ui` ships two complementary sets of layout primitives:
+
+1. **Top-level scaffolding** — `<Layout::Container>`, `<Layout::Header>`, `<Layout::Sidebar>`, `<Layout::Section>`, `<Layout::Main>`. These compose the overall page chrome.
+2. **Inline layout helpers** — `<ContentPanel>`, `<Overlay>`, `<Drawer>`, `<Spacer>`, `<Floating>`. These structure regions inside a page.
+
+Most extension authors don't compose `<Layout::*>` directly — the host console already provides the chrome. But you'll use the inline helpers extensively.
+
+## Top-Level Scaffolding
+
+| Component | Purpose |
+| :--- | :--- |
+| `<Layout::Container>` | The outermost shell |
+| `<Layout::Header>` | Top app bar with logo, search, notifications |
+| `<Layout::Sidebar>` | Left navigation rail |
+| `<Layout::Main>` | The primary content area |
+| `<Layout::Section>` | A bordered scrollable panel inside Main |
+| `<Layout::MobileNavbar>` | Mobile-tablet bottom nav |
+
+These are typically composed once at the application level.
+
+## Inline Layout Helpers
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">ContentPanel</CardTitle>
+      <CardDescription className="text-xs">Collapsible section with title, status, and action buttons. The most-used layout component.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/content-panel" className="text-sm text-primary hover:underline">ContentPanel →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Overlay</CardTitle>
+      <CardDescription className="text-xs">Edge-docked sliding panel — left, right, top, or bottom. Resizable, minimizable.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/overlay" className="text-sm text-primary hover:underline">Overlay →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Drawer</CardTitle>
+      <CardDescription className="text-xs">Bottom-anchored, vertically resizable panel for inline detail views.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/drawer" className="text-sm text-primary hover:underline">Drawer →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Floating</CardTitle>
+      <CardDescription className="text-xs">Floating element positioned relative to a trigger — popovers, tooltips, dropdown panels.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/floating" className="text-sm text-primary hover:underline">Floating →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">ResourceTabular</CardTitle>
+      <CardDescription className="text-xs">Standard list/detail page layout for resource pages.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/resource-tabular" className="text-sm text-primary hover:underline">ResourceTabular →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Spacer</CardTitle>
+      <CardDescription className="text-xs">Empty box for adding fixed-size space between elements.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/spacer" className="text-sm text-primary hover:underline">Spacer →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## Choosing Between Overlay, Drawer, and Modal
+
+| Use case | Component |
+| :--- | :--- |
+| Centered, blocking dialog | [Modals](/docs/ui/modals/overview) |
+| Slide-out side panel (e.g. detail view) | [`<Overlay>`](/docs/ui/layout/overlay) |
+| Bottom-anchored tray (e.g. inline editor) | [`<Drawer>`](/docs/ui/layout/drawer) |
+| Inline collapsible section in the page | [`<ContentPanel>`](/docs/ui/layout/content-panel) |
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/components/layout/`](https://github.com/fleetbase/ember-ui/tree/main/addon/components/layout) | Top-level layout components |
+| [`addon/components/`](https://github.com/fleetbase/ember-ui/tree/main/addon/components) | Inline layout helpers (`<name>.hbs`/`.js`) |

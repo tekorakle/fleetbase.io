@@ -7,7 +7,7 @@ description: An overview of Fleet-Ops operational capabilities — orders, dispa
 
 The Operations section of Fleet-Ops is the day-to-day control center for your logistics operation. It covers everything from creating and dispatching individual orders to running automated batch assignment across your entire fleet.
 
-![Fleet-Ops operations panel — orders list with filter bar and live map](/images/placeholder.png)
+![Fleet-Ops operations panel — orders list with filter bar and live map](/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp)
 
 ## What's in Operations
 
@@ -15,25 +15,27 @@ The Operations section of Fleet-Ops is the day-to-day control center for your lo
 | :--- | :--- |
 | **Orders** | Create, manage, assign, dispatch, and track all deliveries |
 | **Order Configurations** | Define custom order types with configurable workflows and entity fields |
-| **Orchestrator** | Batch order assignment and route optimization engine |
+| **Orchestrator** | Multi-phase planner for batch vehicle allocation, driver allocation, and route optimization |
 | **Scheduler** | Driver shift scheduling and order timeline management |
 | **Service Rates** | Pricing rules for calculating order costs |
 | **Service Quotes** | On-demand price quotation for orders |
 
 ## The Order Workflow
 
-Orders are the core unit of work in Fleet-Ops. A typical order lifecycle looks like this:
+Orders are the core unit of work in Fleet-Ops. A typical order moves through these stages:
 
-1. **Create** — An operator (or external system via API) creates an order with a pickup and dropoff address, items, and an order config
-2. **Schedule** (optional) — Set a specific date and time window for the order
-3. **Assign** — Manually assign a driver and vehicle, or use the Orchestrator to auto-assign in bulk
-4. **Dispatch** — Send the order to the driver's Navigator app
-5. **Execute** — The driver navigates to pickup, updates status at each stop, and captures proof of delivery
-6. **Complete** — Order is marked delivered with POD captured
+1. **Create** — An operator (or external system via API) creates an order with a pickup and dropoff address, items, and an Order Configuration. The order's system status is `created`.
+2. **Schedule** (optional) — Set a specific date and time window. The order remains `created` until dispatched.
+3. **Assign** — Link a driver and vehicle to the order, manually or via an Orchestrator phase. Assignment alone does not change the system status.
+4. **Dispatch** — Send the order to the driver's Navigator app. Status moves to `dispatched`.
+5. **Start** — When the driver accepts and begins the order, status moves to `started`. The activity flow defined by the Order Configuration runs through pickup, transit, and dropoff steps.
+6. **Complete** — When the activity with the `complete` flag fires (e.g. *Items Delivered*, *Signature Captured*), status moves to `completed`.
+
+See [Order Lifecycle](/docs/fleet-ops/operations/orders/order-lifecycle) for the full state model.
 
 ## Automation with the Orchestrator
 
-For high-volume operations, manually assigning each order is not practical. The **Orchestrator** takes a pool of unassigned orders and available drivers/vehicles, runs a route optimization algorithm, and proposes an assignment plan. You preview the plan before committing — once committed, Manifests are created for each driver and orders are dispatched automatically.
+For high-volume operations, manually assigning each order is not practical. The **Orchestrator** is a multi-phase planner: you compose phases that run in sequence — for example *Assign Vehicles* → *Optimize Routes* → *Assign Drivers* — and the Orchestrator builds a complete plan you preview and commit. You can run a single phase on its own (e.g. just route optimization) or stack many. Each phase uses a configurable engine (the built-in greedy algorithm, VROOM, or any engine registered by an extension).
 
 See [Orchestrator Overview](/docs/fleet-ops/operations/orchestrator/overview) for details.
 

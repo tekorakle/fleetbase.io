@@ -1,11 +1,11 @@
 ---
 title: Quickstart
-description: Get your Storefront up and running — create a store, add products, configure a payment gateway, and process your first order.
+description: Get your Storefront up and running — create a store, add a location, set up products, configure a payment gateway, and grab your API key.
 ---
 
 # Quickstart
 
-This guide walks you through setting up a Storefront store, adding products, configuring a payment gateway, and receiving your first order — all from the Fleetbase Console.
+This guide walks you through setting up a Storefront store, adding a location and products, configuring a payment gateway, and grabbing your API key — all from the Fleetbase Console.
 
 ## Step 1 — Create a Store
 
@@ -17,17 +17,18 @@ This guide walks you through setting up a Storefront store, adding products, con
     Click **New Store**.
   </Step>
   <Step>
-    Enter a **Name**, **Description**, and select your **Currency** and **Timezone**.
+    Enter a **Name**, **Description**, and select your **Currency**.
   </Step>
   <Step>
-    Upload a **Logo** and **Backdrop** image for branding.
-  </Step>
-  <Step>
-    Click **Save**. Your store is created and assigned a unique API key automatically.
+    Click **Save**. Your store is created and assigned a unique `store_*` API key automatically.
   </Step>
 </Steps>
 
-![New store form — name, currency, timezone, and branding upload fields](/images/placeholder.png)
+![New store form — name, description, and currency fields](/images/screenshots/storefront/storefront-create-store.webp)
+
+After creation, open the store to fill in its **timezone**, **logo/backdrop**, and contact info — see [Creating a Store](/docs/storefront/stores/setup).
+
+If you manage multiple stores, switch between them via the **store selector** at the top of the Storefront console before each per-store action.
 
 ## Step 2 — Add a Store Location
 
@@ -35,19 +36,19 @@ A store location provides the pickup address when Fleet-Ops creates delivery ord
 
 <Steps>
   <Step>
-    Open your store and click the **Locations** tab.
+    Navigate to **Storefront → Settings → Locations**.
   </Step>
   <Step>
-    Click **Add Location**.
+    Click **New Location**.
   </Step>
   <Step>
     Enter a **Name** (e.g., "Main Branch") and a **Street Address**. Fleetbase geocodes the address and pins it on the map.
   </Step>
   <Step>
-    Set **Operating Hours** for the location — the days and time windows when orders can be placed.
+    Click **Save**.
   </Step>
   <Step>
-    Click **Save**.
+    Use the **Schedule Manager** on the location to set operating hours — the days and time windows when orders can be placed.
   </Step>
 </Steps>
 
@@ -58,19 +59,19 @@ A store location provides the pickup address when Fleet-Ops creates delivery ord
     Navigate to **Storefront → Products**.
   </Step>
   <Step>
-    Click **New Category**, enter a name (e.g., "Burgers"), and save.
+    In the category sidebar, click **New Category**, enter a name (e.g., "Burgers"), and save.
   </Step>
   <Step>
-    Click **New Product**.
+    Open the category and click **New Product**.
   </Step>
   <Step>
-    Enter the **Name**, **Description**, **Price**, and assign it to your category.
+    Enter the **Name**, **Description**, and **Price**.
   </Step>
   <Step>
-    Upload a **Product Image**.
+    Upload a **Primary Image**.
   </Step>
   <Step>
-    Set **Status** to **Active** so the product is visible to customers.
+    Set **Status** to **Published** so the product is visible to customers (the alternative is **Draft**, which hides it).
   </Step>
   <Step>
     Click **Save**.
@@ -84,18 +85,20 @@ A store location provides the pickup address when Fleet-Ops creates delivery ord
     Navigate to **Storefront → Settings → Gateways**.
   </Step>
   <Step>
-    Click **Add Gateway** and select **Stripe** (or **Cash** for testing without a real gateway).
+    Click **New Gateway** and select **Stripe**.
   </Step>
   <Step>
     Enter your Stripe **Publishable Key** and **Secret Key**. Use test keys while building.
   </Step>
   <Step>
-    Enable **Sandbox Mode** for testing.
+    Enable **Sandbox** for testing.
   </Step>
   <Step>
     Click **Save**.
   </Step>
 </Steps>
+
+For testing without a real gateway, you can enable **Cash on Delivery** instead — toggle `Enable cash on delivery` in your store's general settings (it isn't a gateway picker option).
 
 ## Step 5 — Get Your API Key
 
@@ -106,13 +109,13 @@ Your custom frontend app (mobile or web) authenticates to the Storefront API usi
     Navigate to **Storefront → Settings → API**.
   </Step>
   <Step>
-    Copy the **Public Key** (prefixed with `store_`). This is passed in the `Storefront-Key` header of all API requests.
+    Copy the key (prefixed with `store_`). Pass it as a bearer token: `Authorization: Bearer store_...` on every API request.
   </Step>
 </Steps>
 
 ## Next Steps
 
-- [Core Concepts](/docs/storefront/getting-started/core-concepts) — understand how stores, networks, catalogs, and orders work together
+- [Core Concepts](/docs/storefront/getting-started/core-concepts) — understand how stores, networks, products, cart, and orders fit together
 - [Variants & Addons](/docs/storefront/catalog/variants-and-addons) — add customization options to your products
-- [Stores & Networks](/docs/storefront/stores/stores-and-networks) — build a multi-vendor marketplace
+- [Networks](/docs/storefront/networks/overview) — build a multi-vendor marketplace
 - [Customer Authentication](/docs/storefront/customers/authentication) — implement login for your customer app

@@ -157,7 +157,21 @@ To develop a frontend addon locally, open `console/package.json` and add a `link
 }
 ```
 
-Then install dependencies to resolve the links. Inside the console container (Path A):
+<Callout type="warn">
+**Each linked package needs its own `pnpm install` first.** Before the console can resolve a `link:` dependency, the linked package must have its own `node_modules` populated. If you skip this, `pnpm install` and `pnpm build` in the console will fail with missing-module errors.
+
+```bash
+cd packages/fleetops
+pnpm install
+
+cd ../pallet
+pnpm install
+```
+
+Repeat for every package you've linked.
+</Callout>
+
+Then install dependencies in the console to resolve the links. Inside the console container (Path A):
 
 ```bash
 docker compose exec console pnpm install
@@ -209,7 +223,7 @@ You can also pass options directly to skip the prompts:
 flb scaffold --name my-extension --namespace "MyCompany\\MyExtension"
 ```
 
-See the [flb scaffold command reference](/docs/cli/extension-development/scaffold) for all available flags, and the [Extension SDK Quickstart](/docs/sdk/getting-started/quickstart) for a full walkthrough of building and registering a new extension.
+See the [flb scaffold command reference](/docs/cli/extension-development/scaffold) for all available flags, and the [Extension Development Quickstart](/docs/extension-development/getting-started/quickstart) for a full walkthrough of building and registering a new extension.
 
 ## Licensing
 

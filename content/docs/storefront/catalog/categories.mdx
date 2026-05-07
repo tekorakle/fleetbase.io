@@ -9,8 +9,6 @@ description: Organize your products into categories for navigation and discovera
 
 Navigate to **Storefront → Products** and use the category sidebar to manage categories.
 
-![Categories panel — category list with product counts and edit controls](/images/placeholder.png)
-
 ## Creating a Category
 
 <Steps>
@@ -33,9 +31,11 @@ Navigate to **Storefront → Products** and use the category sidebar to manage c
 
 ## Assigning Products to Categories
 
-A single product can belong to multiple categories. Assign a category when creating or editing a product by selecting it in the **Category** dropdown.
+Each product has a primary **`category_uuid`** — its main category — selected from the **Category** dropdown when creating or editing the product.
 
-Example: "Cheeseburger" → both "Burgers" and "Lunch Specials" categories.
+In addition to the primary category, products can also belong to many **Catalog Categories** through the `catalog_category_product` pivot. This is what powers the per-catalog navigation: a single product (e.g. *Cheeseburger*) can appear in *Lunch Specials* in your weekday catalog and *Family Favourites* in your weekend catalog without duplication.
+
+Example: *Cheeseburger* → primary category *Burgers*, also assigned to catalog categories *Lunch Specials* (weekday catalog) and *Family Favourites* (weekend catalog).
 
 ## Nested Categories (Subcategories)
 
@@ -60,12 +60,11 @@ Categories also play a role in **Catalogs** — named collections of categories 
 
 ## Category API
 
-Fetch all categories for a store using the public API:
+Fetch all categories for a store using the public API. Pass your store key as a bearer token:
 
-```
+```http
 GET /storefront/v1/categories
-Headers:
-  Storefront-Key: store_your_public_key
+Authorization: Bearer store_your_store_key
 ```
 
-The response includes each category's `id`, `name`, `description`, `image_url`, `parent_id`, and `products_count`.
+Each category's response includes its `id`, `name`, `description`, `image_url`, and any nested children. Categories created via a `Store` are scoped `for: storefront_product`; networks have a separate set of categories scoped `for: storefront_network` used to tag stores within the network.

@@ -7,29 +7,27 @@ description: Add physical locations to your store — used as pickup addresses f
 
 A **Store Location** is the physical address of a store. When a customer places an order, the location address becomes the **pickup address** in the Fleet-Ops order — the point where the driver collects the items for delivery.
 
-A single store can have multiple locations (e.g., a franchise with five branches). Storefront automatically routes incoming orders to the nearest open location.
+A single store can have multiple locations (e.g., a franchise with five branches). Locations are managed centrally for the active store under **Storefront → Settings → Locations**.
 
-Navigate to **Storefront → [Store] → Locations** to manage locations.
-
-![Store locations tab — list of locations with addresses, hours, and status](/images/placeholder.png)
+![Store locations — list of locations with addresses, hours, and status](/images/screenshots/storefront/storefront-store-locations.webp)
 
 ## Adding a Location
 
 <Steps>
   <Step>
-    Open your store and click the **Locations** tab.
+    Make sure the correct store is selected via the store switcher.
   </Step>
   <Step>
-    Click **Add Location**.
+    Navigate to **Storefront → Settings → Locations**.
+  </Step>
+  <Step>
+    Click **New Location**.
   </Step>
   <Step>
     Enter a **Name** (e.g., "Downtown Branch", "Warehouse A").
   </Step>
   <Step>
-    Enter the **Address**. As you type, Fleetbase geocodes the address and drops a pin on the map.
-  </Step>
-  <Step>
-    If geocoding fails, drag the map pin to the correct position or enter **Latitude/Longitude** manually.
+    Enter the **Address**. As you type, Fleetbase geocodes the address. If geocoding fails or you need to adjust the pin, edit the **Latitude/Longitude** fields directly.
   </Step>
   <Step>
     Click **Save**.
@@ -38,27 +36,10 @@ Navigate to **Storefront → [Store] → Locations** to manage locations.
 
 After adding a location, set its **Operating Hours** — the days and times when this location accepts orders. See [Operating Hours](/docs/storefront/stores/operating-hours).
 
-## Multiple Locations and Order Routing
+## Multiple Locations
 
-When a store has multiple locations, Storefront determines which location fulfills an order using a nearest-neighbor algorithm:
-
-1. Customer enters their delivery address at checkout
-2. Storefront calculates distance from the delivery address to every active location
-3. The order is assigned to the nearest open location (based on operating hours)
-4. If the nearest location is closed, the next nearest is checked
-
-If all locations are closed or outside range, checkout is blocked and the customer is informed.
-
-## Delivery Zones
-
-By default, a store location can deliver to any address within the radius configured in Fleet-Ops routing settings.
-
-To restrict deliveries to a specific geographic area, link the location to a Fleet-Ops **Service Area** or **Zone**:
-- Open the location → **Zone** field → select a zone
-- Orders outside that zone will be rejected at checkout
-
-Zones are created in **Fleet-Ops → Resources → Service Areas**. See the [Fleet-Ops Service Areas](/docs/fleet-ops/resources/places/overview) documentation.
+When a store has multiple locations, each cart item is tagged with a `store_location_id` so the merchant knows which branch is fulfilling each order. By default the cart picks the store's first location for items it adds — your customer-facing app should let the customer pick a location explicitly (or scope their session to one) when more than one exists.
 
 ## Food Trucks
 
-For mobile stores, the location coordinates can be updated dynamically — the store's position shifts as the food truck moves. See [Food Trucks](/docs/storefront/stores/food-trucks) for the full mobile store setup guide.
+For mobile stores whose position changes — food trucks, pop-ups — use a [Food Truck](/docs/storefront/stores/food-trucks) record instead of (or in addition to) a fixed store location. Food trucks are linked to a Fleet-Ops vehicle for live GPS positioning, and they support optional Service Area / Zone restrictions that fixed store locations do not.

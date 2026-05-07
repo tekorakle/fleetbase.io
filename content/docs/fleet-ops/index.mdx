@@ -7,7 +7,7 @@ description: Fleet-Ops is the flagship fleet and transport management extension 
 
 Fleet-Ops is the core logistics and fleet management extension for the Fleetbase platform. It gives operations teams a full dispatch console for managing orders, drivers, vehicles, and routes — plus a mobile driver app (Navigator) that handles real-time GPS tracking, turn-by-turn navigation, and proof of delivery capture.
 
-![Fleet-Ops dashboard — live map with active driver positions and order status panel](/images/placeholder.png)
+![Fleet-Ops multi-waypoint order showing optimized route across multiple stops with driver assignment and live status timeline](/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp)
 
 ## What Fleet-Ops Does
 
@@ -19,7 +19,7 @@ Fleet-Ops covers the full delivery and fleet operations lifecycle in one place:
 | **Live Map** | Real-time driver and vehicle positions with route overlays |
 | **Driver App (Navigator)** | Mobile app for drivers — navigation, status updates, POD capture |
 | **Fleet & Driver Management** | Organize drivers and vehicles into fleets, track availability and status |
-| **Orchestrator** | Automated batch order assignment with route optimization |
+| **Orchestrator** | Multi-phase planner — stack vehicle allocation, driver allocation, and route optimization phases in sequence |
 | **Scheduler** | Driver shift scheduling and order timeline management |
 | **Order Configurations** | Custom order types with configurable workflows and entity fields |
 | **Service Rates & Quotes** | Pricing rules and on-demand quotation for orders |
@@ -41,17 +41,35 @@ See [Core Concepts](/docs/fleet-ops/getting-started/core-concepts) for a full in
 
 ## Getting Started
 
-<Cards>
-  <Card title="Quickstart" href="/docs/fleet-ops/getting-started/quickstart">
-    Create your first order, assign a driver, and dispatch in under 10 minutes.
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Get up and running</CardTitle>
+      <CardDescription className="text-xs">Create your first order, assign a driver, and dispatch in under 10 minutes.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/fleet-ops/getting-started/quickstart" className="text-sm text-primary hover:underline">Quickstart →</a>
+    </CardContent>
   </Card>
-  <Card title="Core Concepts" href="/docs/fleet-ops/getting-started/core-concepts">
-    Understand the key entities — orders, drivers, vehicles, fleets, and order configs.
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Understand the basics</CardTitle>
+      <CardDescription className="text-xs">Learn the key entities — orders, drivers, vehicles, fleets, and order configurations.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/fleet-ops/getting-started/core-concepts" className="text-sm text-primary hover:underline">Core Concepts →</a>
+    </CardContent>
   </Card>
-  <Card title="Navigator App Setup" href="/docs/fleet-ops/getting-started/navigator-app-setup">
-    Install and connect the driver mobile app before your first dispatch.
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Set up the driver app</CardTitle>
+      <CardDescription className="text-xs">Install Navigator and connect drivers before your first dispatch.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/fleet-ops/getting-started/navigator-app-setup" className="text-sm text-primary hover:underline">Navigator Setup →</a>
+    </CardContent>
   </Card>
-</Cards>
+</div>
 
 <Callout type="info">
 Fleet-Ops comes pre-installed with every Fleetbase instance — both Cloud and self-hosted. No separate installation is required. If you need to set up the Fleetbase platform itself, see [Running Locally](/docs/platform/quickstart/running-locally) or [Deploy in Cloud](/docs/platform/quickstart/deploy-in-cloud).

@@ -1,82 +1,97 @@
 ---
 title: Payment Settings
-description: Configure payment gateway integration — connect Stripe to collect payments for service quotes and set up the customer payment portal.
+sidebarTitle: Payments
+description: Connect a Stripe Connect account so Fleet-Ops can charge customers for service quotes and surface settled transactions in the console.
 ---
 
 # Payment Settings
 
-**Payment Settings** connect Fleet-Ops to a payment gateway so customers can pay for orders online. When configured, accepted service quotes generate checkout sessions that customers can use to pay before dispatch.
+**Payment Settings** in Fleet-Ops manages a single thing: connecting your organisation to Stripe via **Stripe Connect**. Once connected, Fleet-Ops can charge customers for service quotes, surface every settled transaction in the payments table, and aggregate totals by currency. There are no separate Stripe API key fields, currency selectors, or capture-mode toggles — the Stripe account itself owns those settings.
 
 Navigate to **Fleet-Ops → Settings → Payments**.
 
-![Payment settings panel — Stripe account connection, payment method selection, currency settings](/images/placeholder.png)
+![Payments settings panel — Stripe Connect onboarding info block when no account is connected, transactions table when connected](/images/screenshots/fleet-ops/fleet-ops-payment-settings.webp)
 
-## Payment Gateway
+## Two States
 
-Fleet-Ops uses **Stripe** as the payment gateway. Stripe handles payment processing, customer management, and checkout session creation.
+The page renders one of two views depending on whether your organisation has connected to Stripe yet.
 
-### Connecting Stripe
+### Not Connected — Stripe Connect Onboarding
+
+If no Stripe account is linked, you'll see an info block prompting you to start onboarding. This is shown only when the platform has Stripe enabled (a publishable key is configured at the platform level). Click **Start payments onboard** to launch the embedded Stripe Connect flow.
 
 <Steps>
   <Step>
-    In **Settings → Payments**, click **Connect with Stripe**.
+    Click **Start payments onboard** — Fleet-Ops navigates to the embedded onboarding screen.
   </Step>
   <Step>
-    You are redirected to Stripe's OAuth flow. Log in to your Stripe account (or create one).
+    Click **Start** to begin. Stripe's hosted onboarding component is mounted directly into the page.
   </Step>
   <Step>
-    Authorize Fleet-Ops to connect to your Stripe account.
+    Complete the onboarding inside the embedded form — business details, banking, identity verification. Stripe handles all of it.
   </Step>
   <Step>
-    You are returned to Fleet-Ops with the connection confirmed. Your Stripe account ID is shown.
+    When Stripe reports the onboarding as complete, the success state appears with a **Continue** button. Clicking it returns you to the Payments settings page, now showing the transactions view.
   </Step>
 </Steps>
 
-### Using Stripe Keys Directly
+If the platform doesn't have Stripe enabled (no publishable key in the platform config), a warning info block tells you the system Stripe credentials aren't set up. In that case the platform admin has to configure Stripe at the platform level before payments onboarding becomes available.
 
-Alternatively, enter your Stripe API keys manually:
+### Connected — Transactions View
 
-1. Enter your **Stripe Publishable Key** (`pk_live_...`)
-2. Enter your **Stripe Secret Key** (`sk_live_...`)
-3. Click **Save**
+Once a Stripe Connect account is linked, the page becomes a transactions table. Each row is a `PurchaseRate` — Fleet-Ops's record of a paid service quote.
 
-<Callout type="warn">
-Use live keys (`pk_live_...`, `sk_live_...`) for production. Use test keys (`pk_test_...`, `sk_test_...`) during development. Test keys process test payments only.
-</Callout>
+The header shows **per-currency totals** for the visible result set, e.g. *Total USD: $4,532.10 · Total SGD: $1,205.00*.
 
-## Payment Configuration
+The table has these columns:
 
-| Setting | Description |
+| Column | Source |
 | :--- | :--- |
-| **Default Currency** | The currency for all payment transactions (e.g., USD, SGD, AUD) |
-| **Payment Methods** | Which payment methods to accept: card, bank transfer, SEPA, etc. |
-| **Capture Mode** | **Automatic** (charge immediately) or **Manual** (authorize now, capture later) |
+| **Purchase Rate ID** | The transaction's `public_id` (click to copy) |
+| **Service Quote** | The linked service quote's `public_id` (click to copy) |
+| **Order** | The linked order's `public_id` (click to copy) |
+| **Customer** | The customer contact name |
+| **Amount** | Charged amount with currency |
+| **Date** | Created timestamp |
 
-## Customer Portal Payment Setup
+Pagination, sorting, and filters work the same way they do across other Fleet-Ops list views.
 
-The **Customer Portal** (Onboard) tab configures how customers pay when using the Storefront or a custom customer-facing interface:
+## Where Live vs Test Is Decided
 
-- **Require Payment Before Dispatch** — toggle to require payment confirmation before the order is dispatched to a driver
-- **Quote Acceptance** — require the customer to accept a service quote before payment proceeds
-- **Checkout URL** — the URL of the checkout page in your customer application
+There is no live/test toggle on this settings page. Whether transactions go through live Stripe or Stripe's test mode is determined entirely by **which Stripe credentials the platform is configured with**:
+
+- Live publishable + secret keys → live charges
+- Test keys → test charges
+
+If you want to develop against test Stripe, configure the platform with test keys and run onboarding against Stripe's test environment.
 
 ## Payment Flow
 
-1. Order is created and a Service Quote is generated
-2. Customer is sent a checkout link (via notification or API response)
-3. Customer completes payment on the Stripe checkout page
-4. Fleet-Ops receives the payment confirmation webhook from Stripe
-5. A Transaction record is created linked to the order
-6. Order is eligible for dispatch
+Once connected, an order's [Service Quote](/docs/fleet-ops/operations/service-quotes/overview) is delivered to the customer through one of three paths — your operation picks whichever fits its model:
 
-## Test Mode
+### Path A — Ledger Invoice (email)
 
-Toggle between **Live** and **Test** mode in the payments panel to use test Stripe credentials. In test mode:
+The Ledger extension turns the service quote into an invoice and emails it to the customer with a hosted **invoice payment link**. The customer clicks the link, lands on the invoice payment page, and pays through Stripe checkout.
 
-- Use Stripe test card numbers (e.g., `4242 4242 4242 4242`) to simulate payments
-- Payments are not real and no money changes hands
-- Transaction records are created with a test flag
+1. Order is created → a Service Quote is generated.
+2. Ledger creates an invoice from the quote and sends it to the customer's email.
+3. Customer follows the link, opens the invoice payment page, and pays.
+4. Stripe notifies Fleet-Ops via webhook; the payment is recorded as a `PurchaseRate` linked to the order.
+5. The order becomes eligible for dispatch.
 
-## Viewing Transactions
+### Path B — Customer Portal extension
 
-Payment transactions are visible in the order detail panel under the **Transaction** section. Each transaction shows the amount, currency, payment method, status, and Stripe transaction ID.
+The Customer Portal extension lets customers create orders **and** pay for them directly inside a self-service portal you host for your customers.
+
+1. Customer opens the portal, fills out the order form, and submits.
+2. Fleet-Ops creates the order and generates a Service Quote inline.
+3. Customer pays for the quote in the portal — Stripe checkout is rendered inside the portal flow.
+4. The webhook records the `PurchaseRate` and the order is dispatched.
+
+### Path C — Storefront (or any customer-facing app)
+
+If you're running [Storefront](/docs/storefront), or a custom customer-facing app integrated against the Fleet-Ops API, the order and payment flow are handled inside that app's own checkout. Fleet-Ops still receives the Stripe webhook and records the `PurchaseRate` against the order in the same way.
+
+## Permissions
+
+The Payments page requires the `fleet-ops onboard payments` permission on the user's role for the onboarding action to be available. Without it the onboarding button is disabled.

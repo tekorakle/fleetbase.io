@@ -1,0 +1,82 @@
+---
+title: Service Quotes
+description: Storefront calls Fleet-Ops to compute the delivery fee for a cart — the result is a Service Quote that's passed into checkout.
+---
+
+# Service Quotes
+
+A **Service Quote** is the calculated delivery fee for a cart. Before a customer can check out, your frontend asks Storefront to produce a quote based on the cart contents, the customer's delivery address, and the applicable Fleet-Ops Service Rate.
+
+The quote is then passed into [`/checkouts/before`](/docs/storefront/orders/checkout) so the order is created with the correct delivery fee.
+
+## When to Request a Quote
+
+Request a quote whenever the customer:
+- Adds or removes a cart item that affects pickup location
+- Enters or changes a delivery address
+- Switches between delivery and pickup (pickup orders skip the quote)
+
+## Endpoint
+
+```http
+POST /storefront/v1/service-quotes/from-cart
+Authorization: Bearer store_your_store_key
+
+{
+  "cart": "cart_abc123",
+  "delivery_address": {
+    "street": "123 Main St",
+    "city": "San Francisco",
+    "country": "US",
+    "coordinates": [-122.4194, 37.7749]
+  }
+}
+```
+
+The endpoint accepts a `cart` reference plus a delivery address. Storefront looks up the cart's pickup location(s), asks Fleet-Ops for the matching Service Rate, and returns a quote.
+
+## Response
+
+```json
+{
+  "service_quote": {
+    "id": "service_quote_xxx",
+    "amount": 599,
+    "currency": "USD",
+    "distance": 4200,
+    "time": 720,
+    "meta": {
+      "origin": { /* ... */ },
+      "destination": { /* ... */ }
+    }
+  }
+}
+```
+
+| Field | Description |
+| :--- | :--- |
+| `id` | Service quote public id — pass to `/checkouts/before` as `serviceQuote` |
+| `amount` | Delivery fee in minor currency units |
+| `currency` | Currency code |
+| `distance` | Distance in meters |
+| `time` | Estimated time in seconds |
+| `meta.origin` / `meta.destination` | The pickup and dropoff details that the resulting Fleet-Ops order will use |
+
+Display `amount` to the customer as the delivery fee. When they confirm and proceed, send `service_quote.id` to the checkout endpoint.
+
+## Multi-Store Carts
+
+For a multi-cart in a network, the cart spans multiple pickup locations. Storefront produces a service quote that aggregates the delivery legs — at capture time, this becomes one Fleet-Ops order per store, each with its own dispatch.
+
+## Pickup Orders
+
+If the customer chooses in-store pickup, **skip the service quote step entirely** and pass `pickup: true` to `/checkouts/before` without a `serviceQuote` field. Pickup orders use the `pickup_ready` activity flow on the Fleet-Ops order.
+
+## Failures
+
+The endpoint returns an error when:
+- The cart's pickup location cannot deliver to the given address (out of range)
+- No Service Rate is configured in Fleet-Ops for the route
+- Required address fields are missing
+
+Surface the error message to the customer so they can adjust their address or switch to pickup.

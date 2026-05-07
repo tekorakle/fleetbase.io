@@ -9,28 +9,28 @@ The **Income Statement** (also called a Profit & Loss or P&L statement) summariz
 
 Navigate to **Ledger → Reports → Income Statement**.
 
-![Income statement — revenue section, expense section, net income row with period label](/images/placeholder.png)
-
 ## Report Structure
 
 ### Revenue
 
-All **revenue** accounts from your chart of accounts:
-- Sales Revenue
-- Service Revenue
-- Interest Income
-- Other revenue
+All **revenue** accounts from your chart of accounts. Default seeded revenue accounts:
+
+- Delivery Revenue (`REVENUE-DELIVERY`)
+- Service Fee Revenue (`REVENUE-SERVICE-FEE`)
+- Subscription Revenue (`REVENUE-SUBSCRIPTION`)
+- Other Revenue (`REVENUE-OTHER`)
 
 **Total Revenue**
 
 ### Expenses
 
-All **expense** accounts:
-- Cost of Goods Sold
-- Operating Expenses
-- Wages and Salaries
-- Bank Fees
-- Other expenses
+All **expense** accounts. Default seeded expenses:
+
+- Driver Payout Expense (`EXPENSE-DRIVER-PAYOUT`)
+- Payment Gateway Fees (`EXPENSE-GATEWAY-FEES`)
+- Refunds & Chargebacks (`EXPENSE-REFUNDS`)
+- Wallet Expenses (`EXPENSE-WALLET`)
+- Other Operating Expenses (`EXPENSE-OTHER`)
 
 **Total Expenses**
 
@@ -44,21 +44,26 @@ A positive net income indicates profit; negative indicates a loss for the period
 
 ## Setting the Report Period
 
-1. Navigate to **Ledger → Reports → Income Statement**
-2. Set the **Start Date** and **End Date** for the period
-3. Click **Generate**
+<Steps>
+  <Step>
+    Navigate to **Ledger → Reports → Income Statement**.
+  </Step>
+  <Step>
+    Set the **Start Date** and **End Date** for the period.
+  </Step>
+  <Step>
+    Click **Generate**.
+  </Step>
+</Steps>
 
-Common periods: current month, current quarter, year-to-date (YTD), last fiscal year.
+The default period is the current month (start of month → today).
 
 ## Revenue Recognition
 
-Ledger uses **accrual accounting** — revenue is recognized when an invoice is created, not when cash is received. This means:
+Ledger uses **accrual accounting** — revenue is recognized at the time a `revenue_recognition` journal entry is posted (typically when a draft invoice is created from a Fleet-Ops `PurchaseRate`, or when a Storefront sale records a `storefront_sale` entry), not when cash is received.
 
-- An invoice created in March is counted as March revenue, even if payment arrives in April
-- When a Fleet-Ops order generates an invoice, revenue appears in the period the order was completed
-
-This is the standard accounting treatment. If you need cash-basis reporting (revenue only when cash is received), filter transactions by the `payment` type instead of using the income statement.
+For cash-basis reporting, filter the general ledger to journal entries of type `invoice_payment` and `gateway_payment` and aggregate those instead.
 
 ## Comparing Periods
 
-The Ledger dashboard shows year-over-year comparison for total revenue, total expenses, and net income. For detailed period-over-period comparison, generate two income statements for the respective periods and compare them side by side.
+The Ledger dashboard shows **previous-period comparison** for total revenue, total expenses, and net income — i.e. the prior period of equal length, not year-over-year. For arbitrary period-over-period comparison, generate two income statements for the respective ranges and compare them side by side.

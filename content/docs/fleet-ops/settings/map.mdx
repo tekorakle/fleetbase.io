@@ -1,72 +1,32 @@
 ---
 title: Map Settings
-description: Configure the Fleet-Ops live map — default viewport, tile provider, marker clustering, and display options.
+sidebarTitle: Map
+description: Choose the map tile provider Fleet-Ops uses for the live map and route overlays.
 ---
 
 # Map Settings
 
-**Map Settings** control how the Fleet-Ops live map is rendered — which map tiles are used, where the map initially centers, and how markers are displayed.
+**Map Settings** are intentionally minimal in Fleet-Ops — the only thing you configure here is which **map provider** renders the tiles for the live map. Everything else (default viewport, marker behaviour, clustering, theme) is driven by the active provider's defaults and the page-level Leaflet options used by Fleet-Ops components.
 
 Navigate to **Fleet-Ops → Settings → Map**.
 
-![Map settings panel — provider selector, coordinates fields, clustering toggle, zoom level](/images/placeholder.png)
+![Map settings panel — Map Provider dropdown with Leaflet / Google Maps](/images/screenshots/fleet-ops/fleet-ops-map-settings.webp)
 
 ## Map Provider
 
-Select the map tile source:
+The single setting on this page. The `mapProvider` value selects which tile source Fleet-Ops uses across the console — the live map, route overlays, position replays, and order detail maps all read from the active provider.
 
-| Provider | Notes |
-| :--- | :--- |
-| **OpenStreetMap** | Free, open-source tiles. Default for self-hosted instances. |
-| **Google Maps** | Requires a Google Maps API key with Maps JavaScript API enabled. |
-| **Mapbox** | Requires a Mapbox access token. Supports custom map styles. |
-| **Custom Tiles** | Enter a custom tile URL template (e.g., `https://{s}.tile.custom.com/{z}/{x}/{y}.png`) |
+| Provider | Value | Notes |
+| :--- | :--- | :--- |
+| **Leaflet** | `leaflet` | Default. Uses the configured Leaflet tile source (typically OpenStreetMap or a Leaflet-compatible tile server). No API key required for OSM tiles. |
+| **Google Maps** | `google` | Switches to Google's tile server. Requires a Google Maps API key configured at the platform level. |
 
-## Default Viewport
+Click **Save Changes** to persist the selection. The change applies on the next time a map view is rendered — no page refresh required for new dispatches.
 
-Set where the map centers when Fleet-Ops is first opened:
+<Callout type="info">
+Extensions can register additional map providers at runtime via the `fleet-ops:template:settings:map` registry. If your instance has extra options in the dropdown, they were added by an installed extension.
+</Callout>
 
-| Setting | Description |
-| :--- | :--- |
-| **Default Latitude** | Center latitude of the initial map view |
-| **Default Longitude** | Center longitude of the initial map view |
-| **Default Zoom** | Initial zoom level (1–20; higher = more zoomed in) |
+## Extending Map Settings
 
-Set these to the center of your primary operating region so dispatchers see the relevant area immediately.
-
-## Marker Clustering
-
-| Setting | Description |
-| :--- | :--- |
-| **Enable Clustering** | Group nearby driver/vehicle markers into clusters at low zoom levels |
-| **Cluster Radius** | Distance (pixels) within which markers are clustered |
-| **Max Cluster Zoom** | Zoom level at which clustering stops and individual markers are shown |
-
-Clustering is recommended for operations with many active drivers — it prevents marker overlap and improves map readability.
-
-## Display Options
-
-| Setting | Description |
-| :--- | :--- |
-| **Show Driver Labels** | Display driver name below their map marker |
-| **Show Vehicle Labels** | Display vehicle name/call sign below their marker |
-| **Show Routes** | Overlay active order routes as polylines |
-| **Show Service Areas** | Show service area and zone boundaries |
-| **Show Places** | Show saved Places as location pins |
-| **Map Theme** | Light or dark map theme |
-
-## Live Update Frequency
-
-| Setting | Description |
-| :--- | :--- |
-| **Position Update Interval** | How frequently the map refreshes driver/vehicle positions (seconds) |
-
-Lower values give more real-time updates but increase browser load. 5–10 seconds is typical for most operations.
-
-## Admin Map vs. Customer Map
-
-Fleet-Ops has two map configurations:
-- **Admin Map** — the map in the Fleet-Ops console (configured here)
-- **Customer Tracking Map** — the public tracking page map (configured separately in the same settings panel under the Customer Map tab)
-
-The customer tracking map can use a different provider and viewport than the admin map, which is useful for public-facing deployments.
+The Map settings page exposes an extension point at the registry key `fleet-ops:template:settings:map`. Extensions that need to expose their own map-related settings (heat-map overlays, custom layers, alternate tile providers) register a panel against that key and it renders below the provider selector. See [Extensions](/docs/platform/extensions/managing-extensions) for the registry pattern.

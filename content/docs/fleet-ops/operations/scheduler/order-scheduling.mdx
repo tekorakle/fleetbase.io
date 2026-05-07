@@ -17,11 +17,11 @@ Orders can be scheduled at creation or updated to a scheduled date afterward.
 2. Toggle **Schedule Order** on
 3. Set the **Scheduled At** date and time
 4. Optionally set a **Time Window Start** and **Time Window End** for the acceptable pickup range
-5. Save — the order status becomes **scheduled**
+5. Save — the order is created with system status **`created`** and the `scheduled_at` field set; it is not dispatched until you choose to
 
 ### After Creation
 
-1. Open an existing pending order
+1. Open an existing `created` order (one that hasn't been dispatched yet)
 2. Click **Edit**
 3. Enable the schedule toggle and set the date/time
 4. Save

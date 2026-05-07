@@ -12,8 +12,8 @@ The Orchestrator uses **payload capacity** constraints to ensure that orders are
 When an order has entities with weight or volume values, the Orchestrator sums the total payload weight and volume across all entities in the order. It then matches the order to vehicles where:
 
 ```
-sum(entity weights) ≤ vehicle.capacity_weight
-sum(entity volumes) ≤ vehicle.capacity_volume
+sum(entity weights) ≤ vehicle.payload_capacity
+sum(entity volumes) ≤ vehicle.payload_capacity_volume
 ```
 
 For a route with multiple orders assigned to the same vehicle, the cumulative load across all orders must remain within capacity.
@@ -32,8 +32,8 @@ Set a vehicle's capacity in **Fleet-Ops → Resources → Vehicles → [Vehicle]
 
 | Field | Unit | Description |
 | :--- | :--- | :--- |
-| **Capacity Weight** | kg | Maximum weight the vehicle can carry |
-| **Capacity Volume** | m³ | Maximum volume the vehicle can carry |
+| `payload_capacity` | decimal(2) | Maximum weight the vehicle can carry — unit is whatever you populate consistently with entity weight units |
+| `payload_capacity_volume` | decimal(3) | Maximum cargo volume the vehicle can carry — unit follows the entity dimensions you set |
 
 If these fields are blank, the Orchestrator treats the vehicle as having unlimited capacity.
 
@@ -75,10 +75,6 @@ This helps identify over- or under-utilized vehicles and adjust fleet allocation
 
 ## Configuration
 
-Default capacity enforcement behavior is set in **Fleet-Ops → Settings → Orchestrator**:
+Capacity enforcement is set **per phase** in the Orchestrator Workbench's [Phase Builder](/docs/fleet-ops/operations/orchestrator/workbench): toggle **Respect Capacity** on the phase to enable weight and volume checks for that phase.
 
-- **Enforce weight capacity** — toggle on/off
-- **Enforce volume capacity** — toggle on/off
-- **Max orders per vehicle** — hard cap regardless of capacity
-
-See [Settings → Orchestrator](/docs/fleet-ops/settings/orchestrator) for all available parameters.
+Global Orchestrator defaults (active engine, auto-allocate flags, max travel time, balance workload) live in [Orchestrator Settings](/docs/fleet-ops/settings/orchestrator).

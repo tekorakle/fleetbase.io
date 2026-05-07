@@ -20,6 +20,18 @@
 # fumadocs generated files
 /.source/
 
+# Auto-generated API reference pages — produced by scripts/generate-api-docs.mjs
+# from the postman collection submodule (vendor/postman). Run `pnpm prebuild` or
+# `node scripts/generate-api-docs.mjs` to regenerate. The index.mdx (intro/auth/
+# errors copy) is hand-authored and IS committed.
+/content/docs/api/fleetbase/
+/content/docs/api/core/
+/content/docs/api/storefront/
+/content/docs/api/ledger/
+/content/docs/api/workflows/
+# Auto-generated nav config alongside MDX
+/src/lib/api-nav.generated.ts
+
 # production
 /build
 

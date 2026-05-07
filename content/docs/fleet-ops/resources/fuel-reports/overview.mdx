@@ -7,7 +7,7 @@ description: Record and monitor fleet fuel consumption — track volume, cost, o
 
 **Fuel Reports** are records of fleet fuel consumption. Drivers submit reports when they fill up, and operators can log reports from the console. Each report captures the volume, cost, odometer reading, and location of the fuel transaction. Fuel reports are used for cost tracking, consumption analysis, and detecting anomalies.
 
-![Fuel reports list — driver, vehicle, date, volume, amount, and status badge](/images/placeholder.png)
+![Fuel reports list — driver, vehicle, date, volume, amount, and status badge](/images/screenshots/fleet-ops/fleet-ops-fuel-reports-list.webp)
 
 ## Fuel Report Fields
 
@@ -64,14 +64,23 @@ description: Record and monitor fleet fuel consumption — track volume, cost, o
   </Step>
 </Steps>
 
-### From Navigator App
+### From the Navigator App
 
-Drivers can submit fuel reports directly from the Navigator app:
+Drivers can submit and edit fuel reports directly from the Navigator app — no console access needed:
 
-1. Driver taps **Report** → **Fuel Report** in Navigator
-2. Enters volume, cost, and odometer reading
-3. The current GPS location is captured automatically
-4. Submits the report — it appears in the console for approval
+<Steps>
+  <Step>
+    The driver opens **Fuel Reports** in Navigator and taps **+ New Fuel Report**.
+  </Step>
+  <Step>
+    Navigator pre-fills the driver and the driver's current GPS location. The driver enters the **Volume**, **Metric Unit**, **Amount**, **Currency**, and **Odometer** reading; selects the **Vehicle**; and adds optional notes.
+  </Step>
+  <Step>
+    On submit, Fleet-Ops creates the fuel report with status `pending`. It appears in the console for operator approval.
+  </Step>
+</Steps>
+
+Drivers can also **edit existing fuel reports** they previously submitted from the same screen — for example to correct an odometer reading after taking a clearer photo. The same record is visible to operators in the console.
 
 ## Reviewing and Approving Reports
 

@@ -7,7 +7,7 @@ description: Manage third-party carriers and service providers — assign driver
 
 **Vendors** are third-party carriers or service providers in your logistics network. Unlike internal drivers and vehicles, a vendor represents an external company that provides their own drivers and fleet. Orders can be assigned to a vendor, who then dispatches using their own resources.
 
-![Vendors list — vendor name, type, driver count, status badge, and integration indicator](/images/placeholder.png)
+![Vendors list — vendor name, type, driver count, status badge, and integration indicator](/images/screenshots/fleet-ops/fleet-ops-vendors-list.webp)
 
 ## Vendor Attributes
 
@@ -16,7 +16,7 @@ description: Manage third-party carriers and service providers — assign driver
 | **Name** | Vendor company name |
 | **Email** | Contact email |
 | **Phone** | Contact phone |
-| **Website** | Vendor's website URL |
+| `website_url` | Vendor's website URL |
 | **Country** | Primary operating country |
 | **Business ID** | Business registration number |
 | **Type** | Carrier, courier, partner, etc. |
@@ -60,22 +60,7 @@ Vendor-assigned drivers and vehicles are included in Orchestrator runs when the 
 
 ## Integrated Vendors
 
-**Integrated Vendors** are external logistics platforms (like Lalamove) connected via their API. When an order is assigned to an integrated vendor:
-
-1. Fleet-Ops sends the order details to the partner's API
-2. The partner platform assigns their own driver
-3. Fleet-Ops receives status updates and driver location back via webhooks
-4. The order lifecycle and tracking continue within Fleet-Ops as normal
-
-### Setting Up an Integration
-
-1. Open the vendor record
-2. Click **Set Up Integration** (or navigate to the integration tab)
-3. Enter the partner API credentials (API key, secret, region)
-4. Configure the webhook callback URL for status updates
-5. Test the connection
-
-Supported integrations include Lalamove and other logistics API partners. Custom integrations can be built using the Fleet-Ops extension system.
+For external logistics platforms (like Lalamove) connected via their API, Fleet-Ops uses a separate model called **`IntegratedVendor`** with its own framework for adding new providers. See [Integrated Vendors](/docs/fleet-ops/resources/vendors/integrated-vendors) for the dedicated guide.
 
 ## Using Vendors as Order Facilitators
 
@@ -89,3 +74,7 @@ This is useful for:
 ## Sub-Organizations
 
 If your Fleetbase instance is part of a multi-tenant setup, a vendor can be linked to another Fleetbase organization via the `connect_company_uuid` field. This enables cross-organization order relay and tracking.
+
+## Related Pages
+
+- [Integrated Vendors](/docs/fleet-ops/resources/vendors/integrated-vendors) — connect external logistics platforms (Lalamove, etc.) and add your own provider via the framework

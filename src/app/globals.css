@@ -487,3 +487,48 @@ body {
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+
+/* ---------------------------------------------------------------------------
+ * Shiki dual-theme switching for the API reference.
+ *
+ * The generator pre-highlights code samples with Shiki using both `github-light`
+ * and `github-dark` themes. Shiki emits inline `color` for light mode and a
+ * `--shiki-dark` CSS variable for dark — these rules switch them based on the
+ * active theme.
+ * --------------------------------------------------------------------------- */
+.api-shiki .shiki,
+.api-shiki .shiki span {
+  background-color: transparent !important;
+}
+.dark .api-shiki .shiki,
+.dark .api-shiki .shiki span {
+  color: var(--shiki-dark) !important;
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Inline <code> styling for the API reference content area.
+ *
+ * Tints inline code with a primary-colored chip — distinctive without the
+ * loud border/bg pattern of a full panel. Excludes the Shiki-rendered code
+ * blocks (which are inside <pre> not <p>) and excludes anything that's
+ * already a header bar in our custom panels.
+ *
+ * Targets API content prose (paragraphs, list items, headings, table cells
+ * inside the API article only).
+ * --------------------------------------------------------------------------- */
+#nd-page article :where(p, li, td, h1, h2, h3, h4, h5, h6) > code,
+.api-endpoint-content :where(p, li) > code {
+  display: inline-block;
+  padding: 0 6px;
+  font-size: 0.85em;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-weight: 500;
+  color: var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 8%, transparent);
+  border: 1px solid color-mix(in oklch, var(--primary) 20%, transparent);
+  border-radius: 4px;
+  line-height: 1.6;
+  vertical-align: baseline;
+}

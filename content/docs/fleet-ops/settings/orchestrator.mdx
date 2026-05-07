@@ -1,72 +1,48 @@
 ---
 title: Orchestrator Settings
-description: Configure the default optimization engine, capacity enforcement, workload balancing, and route geometry for the Orchestrator.
+sidebarTitle: Orchestrator
+description: Configure the default Orchestrator engine, automatic allocation triggers, global allocation constraints, and order card field display.
 ---
 
 # Orchestrator Settings
 
-**Orchestrator Settings** control the default behavior of the automated assignment and route optimization engine — which algorithm runs, how capacity is enforced, and how routes are calculated.
+**Orchestrator Settings** control the defaults for the [Orchestrator](/docs/fleet-ops/operations/orchestrator/overview) — which engine new phases use by default, whether new orders are allocated automatically, and the global constraints that apply across every Orchestrator run.
 
 Navigate to **Fleet-Ops → Settings → Orchestrator**.
 
-![Orchestrator settings panel — engine selector, capacity toggles, geometry type, max distance fields](/images/placeholder.png)
+![Orchestrator settings panel — active engine, auto-allocate toggles, allocation constraints, and card fields](/images/screenshots/fleet-ops/fleet-ops-orchestrator-settings.webp)
 
-## Optimization Engine
-
-Select the default optimization engine used when running the Orchestrator:
-
-| Engine | Description |
-| :--- | :--- |
-| **VROOM** | Advanced vehicle routing optimization. Handles time windows, capacities, skills, and multiple depots. Recommended for most operations. |
-| **Greedy** | Simple nearest-fit allocation. Fast for small fleets but not globally optimal. |
-| **Driver Assignment** | Manual-guided — select specific drivers for specific orders in the Workbench. |
-| **Route Sequencing** | Given an existing driver-order assignment, find the optimal stop order. |
-
-The engine selected here is the default for new Workbench sessions. You can override it per run in the Workbench toolbar.
-
-## Capacity Enforcement
+## Engine Settings
 
 | Setting | Description |
 | :--- | :--- |
-| **Enforce Weight Capacity** | Prevent assigning orders that would exceed a vehicle's `capacity_weight` |
-| **Enforce Volume Capacity** | Prevent assigning orders that would exceed a vehicle's `capacity_volume` |
-| **Max Orders Per Driver** | Hard cap on number of orders per driver per run |
+| **Active Engine** | The default engine used when adding a new phase in the Workbench. Engines registered with the `OrchestrationEngineRegistry` appear in this dropdown — at minimum `Greedy (built-in)` and `VROOM` ship out of the box; extensions can register more. |
+| **Auto Allocate on Create** | When enabled, every newly created order is run through an automatic Orchestrator pass for allocation. Useful for high-volume operations that want zero-touch dispatch. |
+| **Auto Reallocate on Complete** | When enabled, completing an order triggers an Orchestrator pass for the affected driver to re-balance their remaining work. Useful for operations where the plan needs to adapt as orders are completed. |
 
-When capacity enforcement is enabled, orders that cannot fit any available vehicle are returned to the unassigned pool with a `capacity_exceeded` reason.
+Both auto-allocate flags fire the active engine using a default phase configuration. For more control over what runs automatically, leave these off and run the Orchestrator manually from the Workbench (or trigger it via API on a schedule).
 
-## Workload Balancing
+## Allocation Constraints
 
-| Setting | Description |
-| :--- | :--- |
-| **Balance Workload** | Attempt to distribute orders evenly across drivers rather than front-loading |
-| **Max Distance Per Driver** | Cap the total route distance per driver during a run |
-| **Max Travel Time Per Driver** | Cap the total driving time per driver during a run |
-
-## Route Geometry
+These constraints apply globally to every Orchestrator run and are honored by every engine.
 
 | Setting | Description |
 | :--- | :--- |
-| **Geometry Type** | **Simple** (straight-line distances) or **Full Routes** (actual road routes from routing engine) |
+| **Max Travel Time** | Maximum driving time (in seconds) the Orchestrator will plan into a single driver's route. Orders that would push the route past this limit are returned to the unassigned pool. |
+| **Balance Workload** | Attempt to distribute orders evenly across the available drivers/vehicles rather than front-loading the most efficient ones. Equivalent to enabling the per-phase *Balance Workload* setting by default. |
 
-**Simple** is faster and suitable for planning previews or large-batch runs where approximate distances are acceptable. **Full Routes** uses the configured routing engine for accurate ETAs and turn-by-turn routes — recommended for production operations.
+Engine-specific constraints — *respect skills*, *respect capacity*, *return to depot* — are configured per phase in the Workbench's [Phase Builder](/docs/fleet-ops/operations/orchestrator/workbench), not globally here.
 
-<Callout type="info">
-Full Routes requires the routing engine (OSRM, Google Maps, or Mapbox) to be configured in **Settings → Routing**. Simple mode works without a routing engine.
-</Callout>
+## Order Card Fields
 
-## Orchestrator Card Fields
+The Orchestrator Workbench renders each order as a card in the order pool and the Plan Viewer. The **Card Fields** panel lets you choose which fields appear on those cards. You can configure:
 
-The Orchestrator Workbench shows order cards in the order pool and assignment results. You can customize which fields appear on these cards in **Settings → Orchestrator → Card Fields**:
+- A **standard** field set used by default
+- A **per Order Configuration** override — different fields per order type
+- A **metadata fields** set for custom-field display
 
-- Order ID
-- Customer name
-- Distance estimate
-- Priority
-- Time window
-- Required skills
-
-Deselect fields that aren't relevant to your operation to reduce visual noise in the Workbench.
+Trim down the visible fields to what your dispatchers actually need on screen — fewer fields per card means more orders fit on the Workbench at once.
 
 ## Applying Settings
 
-Click **Save** after making changes. Updated settings apply to the next Orchestrator run. In-progress runs are not affected.
+Click **Save Changes** after editing. Updated settings apply to the next Orchestrator run; in-progress runs are unaffected.

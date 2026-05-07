@@ -1,96 +1,87 @@
 ---
-title: Custom Fields
-description: Define additional structured fields for drivers, vehicles, contacts, places, and other resources — and control which roles can edit entity fields on orders.
+title: Custom Field Settings
+sidebarTitle: Custom Fields
+description: Define additional structured fields for any Fleet-Ops resource — drivers, vehicles, contacts, vendors, places, entities, fleets, issues, and fuel reports.
 ---
 
-# Custom Fields
+# Custom Field Settings
 
-**Custom Fields** let you attach additional structured data to Fleet-Ops resources — drivers, vehicles, contacts, places, vendors — without building an extension. Fields are defined in the Custom Fields Manager and rendered inline on resource detail views.
-
-<Callout type="info">
-Custom fields for **orders** are configured through **Order Configurations** (the activity flow and entity definitions), not through this Custom Fields Manager. This page covers resource-level custom fields only.
-</Callout>
+**Custom Fields** let you attach additional structured data to Fleet-Ops resources without building an extension. Fields are defined in the Custom Fields Manager and rendered inline on the corresponding resource detail view.
 
 Navigate to **Fleet-Ops → Settings → Custom Fields**.
 
-![Custom Fields Manager — resource tabs across the top, field groups and fields below](/images/placeholder.png)
+![Custom Fields Manager — resource subject tabs across the top, field groups and fields below](/images/screenshots/fleet-ops/fleet-ops-custom-fields.webp)
 
-## Supported Resources
+## Supported Resources (Subjects)
 
-Custom fields can be added to:
+Custom fields are organised by **subject** — the resource type the fields attach to. The Custom Fields Manager surfaces the following subjects out of the box:
 
-- **Drivers**
-- **Vehicles**
-- **Contacts**
-- **Vendors**
-- **Places**
-- **Fleets**
+| Subject | Resource type | Where the fields appear |
+| :--- | :--- | :--- |
+| **Driver** | `fleet-ops:driver` | Driver detail panel |
+| **Vehicle** | `fleet-ops:vehicle` | Vehicle detail panel |
+| **Contact** | `fleet-ops:contact` | Contact detail panel |
+| **Vendor** | `fleet-ops:vendor` | Vendor detail panel |
+| **Place** | `fleet-ops:place` | Place detail panel |
+| **Entity** | `fleet-ops:entity` | Inline on each entity in an order's payload |
+| **Fleet** | `fleet-ops:fleet` | Fleet detail panel |
+| **Issue** | `fleet-ops:issue` | Issue detail panel and the Navigator issue form |
+| **Fuel Report** | `fleet-ops:fuel-report` | Fuel report detail panel and the Navigator fuel report form |
+
+<Callout type="info">
+Order-level custom fields (fields specific to an Order Configuration's order type) live in the [Order Configuration](/docs/fleet-ops/operations/order-configurations/overview) editor, not here. The **Entity** subject above is for fields on the items *inside* a payload, which apply across all order types.
+</Callout>
+
+## Creating Custom Fields
+
+<Steps>
+  <Step>
+    In the Custom Fields Manager, pick the **subject tab** (e.g. Driver) for the resource you're extending.
+  </Step>
+  <Step>
+    Click **+ New Group**. Field groups are named sections that render on the resource detail view (e.g. *Emergency Contact*, *Compliance*).
+  </Step>
+  <Step>
+    Set the group's **Grid Size** — `1`, `2`, or `3` columns — controls how many fields can appear side-by-side inside the group.
+  </Step>
+  <Step>
+    Inside the group, click **+ New Field** to add a custom field.
+  </Step>
+  <Step>
+    Configure the field properties:
+    - **Field Label** — display name shown in the UI
+    - **Field Type** — see the table below
+    - **Options** — for `Select` and `Radio Button` types, the list of choices
+    - **Required** — whether the field must have a value
+    - **Editable** — whether the field can be modified after the record is created
+    - **Column Span** — how many of the group's grid columns this field takes (1 / 2 / 3)
+  </Step>
+  <Step>
+    Save. The field is immediately available on every record of that subject.
+  </Step>
+</Steps>
 
 ## Field Types
 
 | Type | Best for |
 | :--- | :--- |
 | **Input** | Short single-line text — names, codes, identifiers |
-| **Phone Input** | Phone numbers with international dial code selector |
+| **Phone Input** | Phone numbers with international dial-code selector |
 | **Money Input** | Currency amounts |
-| **Date Time Input** | Combined date and time picker |
+| **Date Time Input** | Combined date + time picker |
 | **Date Picker** | Date only (no time) |
-| **Radio Button** | Single selection shown as inline radio buttons |
-| **Select** | Single selection shown as a dropdown |
-| **File Upload** | Document or image attachment |
-
-## Creating Custom Fields
-
-<Steps>
-  <Step>
-    In the Custom Fields Manager, click the **resource tab** for the resource you want to extend (e.g., Driver).
-  </Step>
-  <Step>
-    Click **New field group**. Field groups are named sections that appear on the resource detail view. Name it descriptively (e.g., "Emergency Contact", "Compliance").
-  </Step>
-  <Step>
-    Set the **Grid Size** for the group:
-    - `1` — single column, full width
-    - `2` — two equal columns
-    - `3` — three equal columns
-  </Step>
-  <Step>
-    Click **Create new custom field** inside the group.
-  </Step>
-  <Step>
-    Set the field properties:
-    - **Field Label** — display name
-    - **Field Type** — input, select, date picker, etc.
-    - **Options** — for Select and Radio types, add the dropdown options
-    - **Field is Required** — whether the field must be filled
-    - **Field is Editable** — whether the field can be changed after creation
-    - **Column Span** — how many columns this field occupies in the group grid
-  </Step>
-  <Step>
-    Click **Save**. The field is immediately available on all records of that resource type.
-  </Step>
-</Steps>
-
-## Entity Field Editing Settings
-
-This setting controls which user roles can edit custom entity fields (item-level custom data) on orders in progress.
-
-Navigate to the **Entity Field Editing** tab in Custom Fields settings:
-
-- **Restrict editing to** — select the roles that can modify entity fields on dispatched orders
-- Use this to prevent drivers from changing item data after dispatch, or to allow supervisors to correct field values
+| **Radio Button** | Single selection rendered as inline radios |
+| **Select** | Single selection rendered as a dropdown |
+| **File Upload** | Attach a document or image |
 
 ## API Access
 
-Custom field values are returned in API responses flattened onto the root resource object:
+Custom field values are returned in API responses alongside the resource's own fields. Each response includes a `custom_field_values` array carrying the structured `key` / `value` pairs:
 
 ```json
 {
-  "id": "driver_01H...",
+  "id": "driver_dnid32",
   "name": "Alex Tan",
-  "emergency_contact_name": "Sarah Tan",
-  "emergency_contact_phone": "+6598765432",
-  "custom_fields": ["emergency_contact_name", "emergency_contact_phone"],
   "custom_field_values": [
     { "key": "emergency_contact_name", "value": "Sarah Tan" },
     { "key": "emergency_contact_phone", "value": "+6598765432" }
@@ -98,6 +89,6 @@ Custom field values are returned in API responses flattened onto the root resour
 }
 ```
 
-The `custom_fields` array lists the keys of all custom fields defined on this resource. The `custom_field_values` array provides the structured key-value pairs for iteration.
+When creating or updating a record, send the same `custom_field_values` array; Fleet-Ops persists each entry against the appropriate field definition.
 
-For more detail on the API format, see the [Configure Custom Fields](/docs/platform/recipes/configure-custom-fields) recipe.
+For more detail and a worked recipe, see [Configure Custom Fields](/docs/platform/recipes/configure-custom-fields).

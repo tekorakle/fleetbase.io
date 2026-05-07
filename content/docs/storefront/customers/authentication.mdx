@@ -1,73 +1,111 @@
 ---
 title: Customer Authentication
-description: Configure customer authentication — SMS OTP, email/password, Apple Sign-In, Google, and Facebook login.
+description: Configure customer authentication — SMS code, email/password, Apple, Google, and Facebook sign-in. The full registration, verification, and login flow with API examples.
 ---
 
 # Customer Authentication
 
-Storefront provides a complete authentication system for your customers. When a customer successfully authenticates, the API returns a **JSON Web Token (JWT)**. Your frontend app stores this token and sends it in the `Authorization` header for all authenticated API requests.
+Storefront provides a complete authentication system for your customers. On successful authentication, the API returns a **Sanctum personal access token**. Your customer-facing app stores this token and includes it on every authenticated request via the **`Customer-Token`** header (the storefront key still goes in `Authorization: Bearer`).
+
+```http
+GET /storefront/v1/customers/me
+Authorization: Bearer store_your_store_key
+Customer-Token: 1|VlKK7lZ...
+```
 
 ## Authentication Methods
 
-### SMS Verification (OTP)
+### SMS Code (default)
 
-The most common method for on-demand delivery apps. No password required — a one-time passcode is sent to the customer's phone.
+The most common method for on-demand delivery apps. No password required — a one-time code is sent to the customer's phone.
 
-Flow:
-1. Customer enters their phone number
-2. Storefront sends an SMS OTP
-3. Customer enters the OTP in the app
-4. If valid, the customer is authenticated (account created automatically if new)
+### Email / Phone + Password
 
-### Email & Password
+Traditional credentials login. The login endpoint accepts an `identity` field that can be either an email or a phone number, plus a `password`.
 
-Traditional registration with email address and password.
+### Social Sign-In
 
-### Social Login (OAuth)
-
-Storefront supports sign-in via:
+Storefront supports:
 - **Apple Sign-In** — required by Apple for iOS apps that offer other social logins
-- **Google**
-- **Facebook**
+- **Google Sign-In**
+- **Facebook Sign-In**
 
-To enable social login, configure the OAuth credentials in **Storefront → Settings → Authentication** with the respective client IDs and secrets.
+Each social provider has its own login endpoint and required parameters — see [Social Login](#social-login) below.
 
-## Login API
+## Registration Flow
 
-### SMS OTP Login
+Registration is a two-step flow. The customer first requests a verification code, then submits their details along with the code.
+
+### 1. Request a verification code
 
 ```http
-POST /storefront/v1/customers/login-with-sms
-Storefront-Key: store_your_key
+POST /storefront/v1/customers/request-creation-code
+Authorization: Bearer store_your_store_key
 
 {
   "phone": "+15551234567"
 }
 ```
 
-After the OTP is sent, verify it:
+The customer receives a code via SMS (or email if you pass `email` instead of `phone`).
+
+### 2. Create the customer
 
 ```http
-POST /storefront/v1/customers/verify-sms
-Storefront-Key: store_your_key
+POST /storefront/v1/customers
+Authorization: Bearer store_your_store_key
 
 {
+  "name": "Jane Doe",
+  "email": "customer@example.com",
   "phone": "+15551234567",
+  "password": "securepassword",
   "code": "123456"
 }
 ```
 
-### Email Login
+<Callout type="info">
+Phone numbers must include the international prefix (e.g. `+1`, `+44`). The API normalizes the value and prepends `+` automatically if missing.
+</Callout>
+
+## Login
+
+### SMS Code Login
+
+```http
+POST /storefront/v1/customers/login-with-sms
+Authorization: Bearer store_your_store_key
+
+{
+  "phone": "+15551234567"
+}
+```
+
+Verify the code that was sent:
+
+```http
+POST /storefront/v1/customers/verify-code
+Authorization: Bearer store_your_store_key
+
+{
+  "identity": "+15551234567",
+  "code": "123456"
+}
+```
+
+### Email / Phone + Password Login
 
 ```http
 POST /storefront/v1/customers/login
-Storefront-Key: store_your_key
+Authorization: Bearer store_your_store_key
 
 {
-  "email": "customer@example.com",
+  "identity": "customer@example.com",
   "password": "securepassword"
 }
 ```
+
+The `identity` field can be either an email address or a phone number.
 
 ### Response
 
@@ -75,7 +113,7 @@ All login endpoints return the same structure on success:
 
 ```json
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5...",
+  "token": "1|VlKK7lZ...",
   "customer": {
     "id": "customer_abc123",
     "name": "Jane Doe",
@@ -85,30 +123,105 @@ All login endpoints return the same structure on success:
 }
 ```
 
-Store the token securely (e.g., in device keychain or `AsyncStorage`). Include it in subsequent requests:
+Store the token securely (e.g. iOS Keychain, Android Keystore, or `expo-secure-store`). Pass it on every authenticated request:
 
 ```http
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5...
+Customer-Token: 1|VlKK7lZ...
 ```
 
-## Registration
+## Social Login
+
+### Apple
 
 ```http
-POST /storefront/v1/customers
-Storefront-Key: store_your_key
+POST /storefront/v1/customers/login-with-apple
+Authorization: Bearer store_your_store_key
 
 {
-  "name": "Jane Doe",
-  "email": "customer@example.com",
-  "phone": "+15551234567",
-  "password": "securepassword"
+  "identityToken": "...",
+  "authorizationCode": "...",
+  "appleUserId": "...",
+  "name": "Jane Doe"
 }
 ```
 
-## Token Expiry & Sessions
+Apple does not always return name/email — pass them along the first time, since they're omitted on subsequent sign-ins.
 
-JWTs have an expiration time. Handle `401 Unauthorized` responses by prompting re-authentication. Customers can also explicitly log out, which invalidates the token server-side.
+### Google
+
+```http
+POST /storefront/v1/customers/login-with-google
+Authorization: Bearer store_your_store_key
+
+{
+  "idToken": "...",
+  "clientId": "..."
+}
+```
+
+### Facebook
+
+```http
+POST /storefront/v1/customers/login-with-facebook
+Authorization: Bearer store_your_store_key
+
+{
+  "facebookUserId": "...",
+  "email": "customer@example.com",
+  "name": "Jane Doe"
+}
+```
+
+## Phone Verification (post-registration)
+
+To verify a customer's phone after they've signed up (e.g. when they update it):
+
+```http
+POST /storefront/v1/customers/request-phone-verification
+POST /storefront/v1/customers/verify-phone-number
+```
+
+## Account Closure
+
+For App Store and Play Store compliance, expose an in-app account closure flow:
+
+```http
+POST /storefront/v1/customers/account-closure
+POST /storefront/v1/customers/confirm-account-closure
+```
+
+The first endpoint sends a confirmation code; the second confirms and closes the account.
+
+## Device Registration (push)
+
+For push notifications to reach the customer, register their device token after authentication:
+
+```http
+POST /storefront/v1/customers/register-device
+Authorization: Bearer store_your_store_key
+Customer-Token: 1|VlKK7lZ...
+
+{
+  "platform": "ios",
+  "token": "<APNs or FCM device token>"
+}
+```
+
+See [Notifications](/docs/storefront/settings/notifications) for setting up the underlying APNs / FCM channels.
+
+## Stripe Helpers
+
+If you use Stripe, two endpoints support saved-card / PaymentSheet flows:
+
+```http
+POST /storefront/v1/customers/stripe-ephemeral-key
+POST /storefront/v1/customers/stripe-setup-intent
+```
+
+## Token Sessions
+
+Tokens issued via these endpoints are Laravel Sanctum personal access tokens. Handle `401 Unauthorized` by re-authenticating. Tokens can be revoked server-side by an admin.
 
 <Callout type="info">
-If you are using the open-source Storefront App, authentication is already fully implemented with SMS OTP, Apple Sign-In, and Google — no additional setup needed beyond configuring the OAuth credentials in the console.
+If you are using the open-source [Storefront App](/docs/storefront/app/overview), authentication is already fully implemented with SMS code, email/password, Apple, Google, and Facebook — no additional setup needed beyond enabling the social providers via env vars.
 </Callout>

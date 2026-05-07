@@ -16,7 +16,7 @@ This guide walks you through creating your first order in Fleet-Ops, assigning i
 
 Click **Fleet-Ops** in the top navigation bar of the Fleetbase Console. The Fleet-Ops dashboard opens showing the live map and the operations sidebar.
 
-![Fleet-Ops main dashboard with live map and sidebar navigation](/images/placeholder.png)
+![Fleet-Ops main dashboard with live map and sidebar navigation](/images/screenshots/fleet-ops/fleet-ops-live-orders-panel.webp)
 
 ## Step 2 — Create a New Order
 
@@ -31,7 +31,7 @@ Click **Fleet-Ops** in the top navigation bar of the Fleetbase Console. The Flee
 
     Click the **+ New Order** button in the top right. The new order form opens.
 
-    ![New order form — order config selector, pickup and dropoff fields](/images/placeholder.png)
+    ![New order form — order config selector, customer, pickup, dropoff, scheduling, and entity fields](/images/screenshots/fleet-ops/fleet-ops-create-order.webp)
   </Step>
   <Step>
     ### Select an Order Configuration
@@ -51,7 +51,7 @@ Click **Fleet-Ops** in the top navigation bar of the Fleetbase Console. The Flee
   <Step>
     ### Save the Order
 
-    Click **Save**. The order is created in **pending** status and appears in the orders list.
+    Click **Save**. The order is created with system status **`created`** and appears in the orders list.
   </Step>
 </Steps>
 
@@ -68,7 +68,7 @@ Click **Fleet-Ops** in the top navigation bar of the Fleetbase Console. The Flee
 
     In the detail panel, click **Assign Driver**. Select a driver from the list of available drivers. Optionally assign a vehicle.
 
-    The order status moves to **assigned**.
+    The driver and vehicle are now linked to the order. The order's system status remains **`created`** until you dispatch it — assignment alone does not change the system status.
   </Step>
 </Steps>
 
@@ -97,9 +97,9 @@ Open **Operations → Orders** and click the order, or click the driver's marker
 - Activity history (each status transition with timestamp)
 - Proof of delivery when captured
 
-![Order detail panel — driver location, ETA, activity timeline](/images/placeholder.png)
+![Order detail panel — activity timeline showing each lifecycle event with timestamps and the driver's live position](/images/screenshots/fleet-ops/fleet-ops-track-order.webp)
 
-The order completes automatically when the driver captures proof of delivery (signature, photo, or QR scan) and marks the order as delivered in the Navigator app.
+The order moves to **`completed`** when the driver triggers the activity that has the `complete` flag set in the Order Configuration's [activity flow](/docs/fleet-ops/operations/order-configurations/activity-flows) — typically the activity that captures proof of delivery (signature, photo, or QR scan) and marks the order as delivered in the Navigator app.
 
 ## Next Steps
 

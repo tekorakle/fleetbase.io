@@ -1,40 +1,51 @@
 ---
 title: Wallets
-description: Manage digital wallets for drivers, customers, vendors, and your organization — deposit, withdraw, transfer, top-up, and freeze.
+description: Manage digital wallets for drivers, customers, your company, and individual users — credit, top-up, transfer, payout, freeze, and recalculate.
 ---
 
 # Wallets
 
-A **Wallet** is a digital balance account within Ledger. Wallets track money owed to or held for a specific entity — a driver's earnings, a customer's prepaid credit, a vendor's payout balance, or your organization's operating account.
+A **Wallet** is a digital balance account within Ledger. Wallets track money owed to or held for a specific entity — a driver's earnings, a customer's prepaid credit, your organization's operating account, or an individual user's personal balance.
 
 Navigate to **Ledger → Payments → Wallets**.
 
-![Wallet list — owner name, type, currency, balance, status badge](/images/placeholder.png)
-
 ## Wallet Types
 
-Wallets are polymorphic — they belong to any Fleetbase entity:
+Wallets are polymorphic — `subject_uuid` + `subject_type` point at the entity that owns the balance:
 
-| Type | Owner | Common Use |
+| Type | Subject | Common Use |
 | :--- | :--- | :--- |
 | **Driver** | Fleet-Ops driver | Track earnings from completed deliveries |
-| **Customer** | Storefront customer | Prepaid credit, loyalty balance, refunds |
-| **Company** | Your organization | Platform revenue, operating account |
+| **Customer** | Storefront / Fleet-Ops customer | Prepaid credit, loyalty balance, refunds |
+| **Company** | Your organization | Platform revenue, operating, payout / refund reserves |
 | **User** | Individual Fleetbase user | Personal account |
 
-A single entity can have multiple wallets in different currencies.
+A single subject can have multiple wallets in different currencies.
+
+## Auto-Provisioned Wallets
+
+Ledger creates wallets automatically in two cases:
+
+- **New companies** receive four system wallets on creation: **Operating Wallet**, **Revenue Wallet**, **Payout Reserve**, and **Refund Reserve**
+- **New users** (and users joining a company) receive a **personal wallet**
+
+Each wallet additionally has an internal ledger account auto-created with code `WALLET-{wallet_uuid}` so journal entries can post against it.
 
 ## Wallet Status
+
+The `status` field is the single source of truth for whether a wallet can transact. It accepts one of three values:
 
 | Status | Behavior |
 | :--- | :--- |
 | **active** | Normal — credits and debits allowed |
-| **frozen** | Debits blocked; credits still allowed (e.g., during dispute review) |
-| **closed** | No operations allowed |
+| **frozen** | Operations blocked while under review |
+| **closed** | Permanently disabled |
+
+API responses also expose a derived **`is_frozen`** attribute — it's a computed accessor that returns `true` when `status === 'frozen'`. Don't write to `is_frozen`; set the wallet's `status` instead. The legacy `is_frozen` toggle in the wallet form is a frontend remnant and does not drive backend behaviour.
 
 ## Creating a Wallet
 
-Wallets are often provisioned automatically — when a new driver is created in Fleet-Ops, or when a customer registers in Storefront. To create one manually:
+Wallets are usually provisioned automatically. To create one manually:
 
 <Steps>
   <Step>
@@ -44,7 +55,7 @@ Wallets are often provisioned automatically — when a new driver is created in 
     Click **New Wallet**.
   </Step>
   <Step>
-    Select the **Owner** (driver, customer, company, or user).
+    Select the **Subject** — the driver, customer, company, or user the wallet belongs to.
   </Step>
   <Step>
     Select the **Currency**.
@@ -59,66 +70,56 @@ Wallets are often provisioned automatically — when a new driver is created in 
 
 ## Wallet Operations
 
-### Deposit (Credit)
+Each operation below is a button on the wallet detail panel.
 
-Add funds to a wallet without a gateway (e.g., manual credit, earning allocation):
+| Action | Effect |
+| :--- | :--- |
+| **Credit** | Manual credit (no gateway) |
+| **Top-Up** | Gateway-charged top-up via Stripe or QPay |
+| **Transfer** | Move funds to another wallet |
+| **Payout** (sometimes labelled "Withdraw") | Debit the wallet (e.g., driver payout) |
+| **Freeze** | Set the wallet status to `frozen` |
+| **Unfreeze** | Set the wallet status to `active` |
+| **Recalculate Balance** | Recompute the balance from completed transactions |
+| **Transactions** tab | Filtered transaction list for this wallet |
 
-1. Open the wallet
-2. Click **Credit**
-3. Enter the amount and description
-4. Click **Save**
+### Credit (manual deposit, no gateway)
 
-Journal entry created: `DEBIT Cash → CREDIT Wallet Liability`
+![Add funds to wallet — credit form](/images/screenshots/ledger/ledger-wallet-add-funds.webp)
 
-### Top-Up (Credit via Gateway)
+Adds funds to a wallet without charging a gateway. Used for manual adjustments or earning allocations.
 
-Add funds to a wallet using a payment gateway (e.g., customer tops up with a credit card):
+Journal entry: `DEBIT Cash → CREDIT Wallet Liability`. Transaction type: `deposit`.
 
-1. Open the wallet
-2. Click **Top Up**
-3. Select the gateway and enter the amount
-4. Click **Charge**
+### Top-Up (deposit via gateway)
 
-The gateway processes the payment, then credits the wallet.
+Charges a payment method via the chosen gateway (Stripe or QPay) and credits the wallet on success.
 
-### Withdrawal (Debit)
-
-Remove funds from a wallet (e.g., driver payout, refund):
-
-1. Open the wallet
-2. Click **Withdraw**
-3. Enter the amount and description
-4. Click **Save**
-
-Journal entry created: `DEBIT Wallet Liability → CREDIT Cash`
-
-<Callout type="warn">
-Withdrawals are blocked on frozen wallets. Unfreeze the wallet first if a debit is legitimately needed.
-</Callout>
+Journal entry: `DEBIT Cash → CREDIT Wallet Liability`. Transaction type: `deposit`.
 
 ### Transfer
 
-Move funds between two wallets:
+![Transfer funds between wallets — source, destination, amount](/images/screenshots/ledger/ledger-wallet-transfer-funds.webp)
 
-1. Open the source wallet
-2. Click **Transfer**
-3. Select the destination wallet and enter the amount
-4. Click **Transfer**
+Moves funds between two wallets. Pick a destination wallet and an amount — Storefront produces:
 
-Two transactions are created — a debit from the source and a credit to the destination — with corresponding journal entries.
+- Two transactions on the source wallet (`transfer_out`, debit) and the destination (`transfer_in`, credit)
+- One journal entry directly between the two wallet liability accounts (no intermediate account)
 
-### Freeze & Unfreeze
+### Payout
 
-To freeze a wallet:
-1. Open the wallet
-2. Click **Freeze**
+Debits the wallet (e.g., driver earnings sent to a bank). The UI sometimes labels this **Withdraw**.
 
-To unfreeze: click **Unfreeze**. Only administrators can freeze/unfreeze wallets.
+Journal entry: `DEBIT Wallet Liability → CREDIT Cash`. Transaction type: `payout`.
+
+### Freeze / Unfreeze
+
+Toggles the wallet's `status`. While frozen, all operations are blocked.
+
+### Recalculate Balance
+
+If a wallet balance appears incorrect, click **Recalculate Balance** to recompute from all completed transactions.
 
 ## Viewing Wallet Transactions
 
-Open any wallet and click the **Transactions** tab to see a chronological list of all transactions with amounts, directions, and running balance.
-
-## Balance Reconciliation
-
-If a wallet balance appears incorrect, click **Recalculate Balance** from the wallet detail. This recomputes the balance from scratch based on all completed transactions.
+Open any wallet and click the **Transactions** tab to see a chronological list. Filter by type, direction, status, and date range.

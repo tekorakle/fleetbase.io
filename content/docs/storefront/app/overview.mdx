@@ -1,0 +1,84 @@
+---
+title: Storefront App
+description: The Storefront App is the open-source React Native client your customers use to browse stores and place orders against your Fleetbase Storefront backend.
+---
+
+# Storefront App
+
+The **Storefront App** is the open-source customer-facing client for the Storefront extension. It is a single React Native codebase that targets **iOS, Android, and the web**, paired with the Storefront backend running on your Fleetbase instance.
+
+[github.com/fleetbase/storefront-app](https://github.com/fleetbase/storefront-app)
+
+## What It Includes
+
+| Capability | Notes |
+| :--- | :--- |
+| **iOS, Android & web** | Single codebase. Native via React Native + Hermes (New Architecture); web via `react-native-web` + Webpack |
+| **Storefront browsing** | Home, search, map view, product detail, cart, checkout, receipt — wired to the [Storefront API](/docs/storefront/settings/api) |
+| **Cart & checkout** | Multi-product cart with options/variants/addons, address book, location picker, real-time service quote |
+| **Payments** | Stripe (PaymentSheet or CardField, with Apple Pay & Google Pay), QPay, PayPal scaffolding |
+| **Customer auth** | Phone + 2FA SMS, email/password, plus optional Apple, Google, and Facebook social sign-in |
+| **Real-time order tracking** | SocketCluster client for live order and driver updates |
+| **Push notifications** | APNs (iOS) and FCM (Android) via [Storefront notification channels](/docs/storefront/settings/notifications) |
+| **Theming** | Tamagui-based; 5 hue choices × light/dark, plus custom brand themes |
+| **Localization** | English and Mongolian bundled; per-locale tab labels; runtime locale switch |
+| **Food-truck mode** | Alternate single-vendor navigator for mobile stores |
+
+<Callout type="info">
+The Storefront App is the customer-facing companion to the Storefront extension. The backend is configured in the [Storefront Console](/docs/storefront) — the app is the storefront your customers download.
+</Callout>
+
+## How It Connects to Your Fleetbase Instance
+
+The app is a thin React Native client. All catalog, cart, checkout, customer, and order traffic is made against your Fleetbase API host using a public **Storefront key** (`store_*` for a single store or `network_*` for a marketplace) plus your Fleetbase API secret key.
+
+```
+Storefront App  ──HTTPS──▶  Fleetbase API  ──▶  Storefront extension  ──▶  Fleet-Ops
+                ──WSS───▶  SocketCluster  ──▶  Real-time order updates
+```
+
+You point the app at a backend by setting three environment variables in `.env`:
+
+```
+FLEETBASE_HOST=https://your-fleetbase.example.com
+FLEETBASE_KEY=flb_live_...
+STOREFRONT_KEY=$store.your_store_key
+```
+
+See [Quickstart](/docs/storefront/app/quickstart) for the full setup.
+
+## Project Status
+
+Single-store mode is production-ready and runs in real deployments today. The multi-vendor / network navigator is scaffolded in the codebase but not feature-complete — most teams currently use the app in single-store mode.
+
+## Next Steps
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Get the app running</CardTitle>
+      <CardDescription className="text-xs">Clone, install, configure `.env`, and launch in iOS, Android, or web.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/app/quickstart" className="text-sm text-primary hover:underline">Quickstart →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Customize behavior</CardTitle>
+      <CardDescription className="text-xs">Every config field, env var, and runtime option the app exposes.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/app/configuration" className="text-sm text-primary hover:underline">Configuration →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Apply your brand</CardTitle>
+      <CardDescription className="text-xs">Themes, colors, logo, app icon, splash, and display names.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/app/theming" className="text-sm text-primary hover:underline">Theming →</a>
+    </CardContent>
+  </Card>
+</div>

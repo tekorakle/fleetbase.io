@@ -8,8 +8,8 @@
     "---Accounting---",
     "accounting/overview",
     "accounting/chart-of-accounts",
-    "accounting/general-ledger",
     "accounting/journal-entries",
+    "accounting/general-ledger",
     "---Billing & Invoicing---",
     "billing/overview",
     "billing/invoices",
@@ -26,6 +26,13 @@
     "reports/cash-flow",
     "reports/trial-balance",
     "reports/ar-aging",
-    "reports/wallet-summary"
+    "reports/wallet-summary",
+    "---Integrations---",
+    "integrations/fleet-ops",
+    "integrations/storefront",
+    "---Settings---",
+    "settings/overview",
+    "---Recipes---",
+    "recipes/payment-gateway-driver"
   ]
 }

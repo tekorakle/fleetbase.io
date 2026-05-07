@@ -26,9 +26,9 @@ Product "T-Shirt"
 | Field | Description |
 | :--- | :--- |
 | **Name** | The variant label (e.g., "Size", "Color") |
-| **Is Required** | If true, customer must select before adding to cart |
-| **Is Multiselect** | If true, customer can choose multiple options |
-| **Min / Max** | Selection count limits |
+| `is_required` | If true, the customer must select an option from this variant before adding the product to cart. |
+| `is_multiselect` | Controls how many options a customer may pick. **Off (default):** the customer chooses exactly one option (single-select, e.g. Size). **On:** the customer can tick multiple options (multi-select, e.g. *Toppings to skip* or *Allergen flags*). When multiselect is on, every selected option's additional cost is added to the product price. |
+| **Min / Max** | Selection-count bounds — used together with `is_multiselect` to express *"pick at least 2 / at most 4"*. With `is_multiselect` off these are typically left at 1/1. |
 
 ### Adding variants to a product
 
@@ -43,7 +43,7 @@ Product "T-Shirt"
     Click **Add Variant** and enter the variant name (e.g., "Size").
   </Step>
   <Step>
-    Add options under the variant — each option has a **Name** and an optional **Additional Cost**.
+    Add options under the variant — each option has a **Name**, an optional **Description**, and an optional **Additional Cost**.
   </Step>
   <Step>
     Toggle **Is Required** if the customer must select this before ordering.
@@ -53,7 +53,7 @@ Product "T-Shirt"
   </Step>
 </Steps>
 
-When a customer selects a variant option, its additional cost is added to the product's base price.
+When a customer selects a variant option, its additional cost is added to the product's base price. With `is_multiselect` enabled, **every** selected option contributes its additional cost — a *Coffee* product with a multiselect *Add-ins* variant where the customer ticks *Vanilla syrup (+$0.50)* and *Oat milk (+$0.75)* gets both added to the line price.
 
 ---
 
@@ -103,12 +103,21 @@ If an addon category has addons that should not apply to a specific product (e.g
 
 ---
 
+### Sale-Priced Addons
+
+An addon can itself be on sale. Each addon has `is_on_sale` and `sale_price` fields — when `is_on_sale` is true, the cart applies the addon's `sale_price` instead of its `price` for the duration of the sale.
+
+---
+
 ## Cart Calculations
 
 When a customer adds a product to the cart, the API calculates the line item total:
 
 ```
-Line Item Total = (Base Price + Variant Additional Cost + Sum of Addon Prices) × Quantity
+Line Item Total = (Base Price
+                   + Sum of selected variant additional costs
+                   + Sum of addon prices (sale_price if is_on_sale, otherwise price))
+                  × Quantity
 ```
 
 Example:

@@ -7,7 +7,7 @@ description: Create, assign, and track maintenance work orders — from initial 
 
 A **Work Order** is an assigned maintenance or repair task. Work orders can be generated automatically from maintenance schedules when service thresholds are reached, or created manually for ad-hoc repairs and inspections. Each work order is tracked from open to completion with a full cost record.
 
-![Work orders list — code, subject, target, assignee, priority, status, and due date](/images/placeholder.png)
+![Work orders list — code, subject, target, assignee, priority, status, and due date](/images/screenshots/fleet-ops/fleet-ops-maintenance-log.webp)
 
 ## Work Order Attributes
 
@@ -33,19 +33,19 @@ A **Work Order** is an assigned maintenance or repair task. Work orders can be g
 ## Work Order Status Flow
 
 ```
-open → assigned → in_progress → pending_review → completed
-                                       │
-                                   cancelled
+open ──► in_progress ──► closed
+            │
+        canceled (terminal at any point)
 ```
 
 | Status | Meaning |
 | :--- | :--- |
-| `open` | Created, not yet assigned |
-| `assigned` | Assigned to a mechanic or team |
+| `open` | Created, not yet started — the default for new work orders |
 | `in_progress` | Work has begun |
-| `pending_review` | Work complete, awaiting supervisor sign-off |
-| `completed` | Closed with all checklist items done |
-| `cancelled` | Cancelled before completion |
+| `closed` | Work complete, all checklist items done, `closed_at` set |
+| `canceled` | Canceled before completion |
+
+Assignment is captured by the polymorphic `assignee_uuid` / `assignee_type` fields, not by status — a work order in `open` can already have an assignee.
 
 ## Creating a Work Order
 

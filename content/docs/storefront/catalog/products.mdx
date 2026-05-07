@@ -1,6 +1,6 @@
 ---
 title: Products
-description: Create and manage products in your Storefront catalog — images, variants, addons, availability, and status.
+description: Create and manage products in your Storefront catalog — images, videos, variants, addons, availability, translations, and metadata.
 ---
 
 # Products
@@ -9,7 +9,7 @@ A **Product** is the core unit of your catalog — any item or service a custome
 
 Navigate to **Storefront → Products** to manage your product list.
 
-![Product list — name, price, category, status, and primary image](/images/placeholder.png)
+![Product list — name, price, category, status, and primary image](/images/screenshots/storefront/storefront-products-list.webp)
 
 ## Product Attributes
 
@@ -20,13 +20,20 @@ Navigate to **Storefront → Products** to manage your product list.
 | **Price** | Base price in the store's currency |
 | **Sale Price** | Reduced price; applied when `is_on_sale` is enabled |
 | **SKU** | Optional internal stock keeping unit |
-| **Category** | The category this product belongs to |
-| **Status** | `available` (visible) or `draft` (hidden) |
+| **Category** | The primary category this product belongs to |
+| **Status** | `published` (visible to customers) or `draft` (hidden — used while editing) |
+| **Is Available** | Boolean toggle (`is_available`) layered on top of `status`. When off, the product is hidden from customers even if `status = published`. The customer-facing API filters on **both** flags being set, so use this to take a published product temporarily out of stock without losing its catalog placement |
 | **Is Recommended** | Flag to surface this product as a recommendation in your app |
 | **Is Service** | Mark as a service product (non-physical) |
-| **Is Bookable** | Enable appointment/booking-style ordering |
-| **Can Pickup** | Allow customers to select in-store pickup for this product |
+| **Is Bookable** | Enable appointment/booking-style ordering — only shown when **Is Service** is on |
 | **Tags** | Freeform tags for filtering and search |
+| **YouTube URLs** | Add embedded videos for the product detail screen |
+| **Translations** | Per-locale name and description |
+| **Metadata** | Arbitrary key/value `meta` data |
+
+A few additional fields are stored on the model but not exposed in the edit form — `can_pickup` (allow product-level pickup) is settable via the API only.
+
+Each product also auto-generates a **slug**, a **QR code**, and a **barcode** on creation.
 
 ## Creating a Product
 
@@ -35,19 +42,16 @@ Navigate to **Storefront → Products** to manage your product list.
     Navigate to **Storefront → Products**.
   </Step>
   <Step>
-    Click **New Product**.
+    Open a category and click **New Product**.
   </Step>
   <Step>
     Enter the **Name**, **Description**, and **Price**.
   </Step>
   <Step>
-    Select a **Category** from the dropdown (create one first if needed).
+    Upload images and (optionally) videos in the media dropzone — pick one as the primary image.
   </Step>
   <Step>
-    Upload a **Primary Image** and any additional photos.
-  </Step>
-  <Step>
-    Set **Status** to `available` when the product is ready for customers to see.
+    Set **Status** to **Published** when the product is ready for customers.
   </Step>
   <Step>
     Click **Save**.
@@ -64,27 +68,24 @@ Variants define required selections the customer must make before adding a produ
 
 Addons are optional extras grouped into addon categories. See [Variants & Addons](/docs/storefront/catalog/variants-and-addons).
 
-### Product Hours
+### Availability Hours
 
-If a product is only available at certain times (e.g., a breakfast item available 7am–11am only):
+If a product is only available at certain times (e.g., a breakfast item available 7am–11am only), use the **Availability** panel inside the product editor:
 
-1. Open the product and click the **Hours** tab
-2. Click **Add Hours**
-3. Select the day and set the start/end time
+1. Open the product
+2. Open the **Availability** panel (uses the schedule manager)
+3. Add per-day time blocks
 4. Save
-
-When a customer tries to add an unavailable product to the cart outside its hours, the API will reject the request.
 
 ## How Products Flow to Fleet-Ops
 
 When a customer completes checkout, each cart item is converted into a Fleet-Ops **Entity** in the order payload:
 
-- The entity carries the product name, SKU, quantity, price, and selected variants/addons
-- Dispatchers and drivers see exactly what needs to be picked up
-- Entities can have their own tracking numbers and QR codes
+- The entity carries the product **name**, **description**, **SKU**, **currency**, **price**, **sale_price**, **internal_id** (the product's `public_id`), and **image_url**
+- The cart item retains quantity and variant/addon selections so dispatchers and drivers see exactly what needs to be picked up
 
 This conversion happens automatically — no configuration required.
 
 ## Importing Products
 
-To bulk-upload a product catalog from a spreadsheet, click **Import** in the products list. The CSV format requires at minimum: `name`, `price`, `currency`, and `category`.
+To bulk-upload a product catalog from a spreadsheet, click **Import** in the products list. The CSV columns expected by the import flow include `name`, `price`, `currency`, and `category`; consult the import modal for the full schema applied by your installation.

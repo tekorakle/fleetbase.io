@@ -1,11 +1,11 @@
 ---
 title: API Settings
-description: Manage your Storefront API key — used to authenticate public requests from your customer-facing app.
+description: Your Storefront key authenticates public requests from your customer-facing app — pass it as a bearer token on every API call.
 ---
 
 # API Settings
 
-Every store and network in Storefront is assigned a unique **API key** that authenticates public requests from your customer-facing app (mobile or web). This key is passed in the `Storefront-Key` header of all API calls.
+Every store and network in Storefront has a unique **public key** that authenticates requests from your customer-facing app (mobile or web). The key is passed as a bearer token in the standard HTTP `Authorization` header.
 
 Navigate to **Storefront → Settings → API** to view your store's key.
 
@@ -17,44 +17,41 @@ This key is **public** — it is safe to include in your mobile app or web front
 
 ```http
 GET /storefront/v1/products
-Storefront-Key: store_a1b2c3d4e5f6
+Authorization: Bearer store_a1b2c3d4e5f6
 ```
 
 ## Network Key
 
 If you operate a network, the network key follows the same pattern: `network_<hash>`. Use the network key to fetch stores, categories, and other network-level resources.
 
-## Regenerating Your Key
+```http
+GET /storefront/v1/stores
+Authorization: Bearer network_a1b2c3d4e5f6
+```
 
-If you suspect the key has been leaked or misused:
+## Authenticated Customer Requests
 
-1. Navigate to **Storefront → Settings → API**
-2. Click **Regenerate Key**
-3. Update the key in your frontend app
-
-<Callout type="warn">
-Regenerating the key immediately invalidates the old key. Any currently deployed app versions using the old key will stop working until they receive the updated key.
-</Callout>
-
-## Using the Key in Your App
-
-Include the key in every API request header:
+For requests that require an authenticated customer (cart, checkout, profile, addresses, orders), include the customer's session token in the **`Customer-Token`** header **in addition to** the storefront bearer token:
 
 ```javascript
-const response = await fetch('https://your-fleetbase-instance.com/storefront/v1/products', {
+const response = await fetch('https://your-fleetbase-instance.com/storefront/v1/checkouts/before', {
+  method: 'POST',
   headers: {
-    'Storefront-Key': 'store_a1b2c3d4e5f6',
+    'Authorization': 'Bearer store_a1b2c3d4e5f6',
+    'Customer-Token': '1|VlKK7lZ...',
     'Content-Type': 'application/json'
-  }
+  },
+  body: JSON.stringify({ /* ... */ })
 });
 ```
 
-For authenticated customer requests (cart, checkout, profile), also include the customer JWT:
+The `Customer-Token` is the Sanctum personal access token returned by the customer login endpoints — see [Customer Authentication](/docs/storefront/customers/authentication).
 
-```javascript
-headers: {
-  'Storefront-Key': 'store_a1b2c3d4e5f6',
-  'Authorization': 'Bearer customer_jwt_token',
-  'Content-Type': 'application/json'
-}
-```
+## Key Rotation
+
+The API settings page displays the key as read-only — there is no in-console regenerate button. If a key is compromised:
+
+1. Open the database (or use the Fleetbase admin console) to update the `key` column on the affected `Store` or `Network` record
+2. Redeploy your customer-facing app with the new key
+
+For self-hosted instances, plan for this at deploy time — clients with a stale key will fail authentication immediately after rotation.

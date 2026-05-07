@@ -1,23 +1,38 @@
 ---
 title: Payment Gateways
-description: Configure Stripe, QPay, and Cash payment gateways for processing charges, refunds, and wallet top-ups.
+description: Configure Stripe, QPay, and Cash payment gateways — credentials, capabilities, sandbox mode, webhooks, and the gateway transaction audit log.
 ---
 
 # Payment Gateways
 
-**Payment Gateways** are the external services that process real money. Ledger integrates with Stripe, QPay, and Cash — each gateway stores encrypted credentials and supports sandbox mode for testing.
+**Payment Gateways** are the external services that process real money. Ledger ships with three drivers — Stripe, QPay, and Cash — and exposes a `PaymentGatewayManager::extend()` API for registering custom drivers from a service provider.
 
 Navigate to **Ledger → Payments → Gateways**.
 
-![Gateway list — gateway name, driver, environment badge, status, and configuration button](/images/placeholder.png)
+![Payment gateway details — driver, environment, credentials, and webhook URL](/images/screenshots/ledger/ledger-payment-gateway-details.webp)
 
 ## Supported Gateways
 
 | Gateway | Driver | Use Case |
 | :--- | :--- | :--- |
-| **Stripe** | `stripe` | Card payments, refunds, setup intents globally |
-| **QPay** | `qpay` | Invoice-based payments for Mongolia and regional markets |
-| **Cash** | `cash` | Manual/offline payments; no real processing |
+| **Stripe** | `stripe` | Card payments and digital wallets globally |
+| **QPay** | `qpay` | Invoice-based payments for Mongolian banks |
+| **Cash** | `cash` | Manual/offline payments and refunds |
+
+## Gateway Capabilities
+
+Each driver advertises the operations it supports. Check capabilities before invoking an operation.
+
+| Capability | Stripe | QPay | Cash |
+| :--- | :---: | :---: | :---: |
+| `purchase` | ✓ | ✓ | ✓ |
+| `refund` | ✓ | ✓ | ✓ |
+| `tokenization` | ✓ | — | — |
+| `setup_intent` | ✓ | — | — |
+| `checkout_session` | ✓ | — | — |
+| `webhooks` | ✓ | ✓ | — |
+| `sandbox` | ✓ | ✓ | — |
+| `recurring` | ✓ | — | — |
 
 ## Adding a Gateway
 
@@ -26,21 +41,23 @@ Navigate to **Ledger → Payments → Gateways**.
     Navigate to **Ledger → Payments → Gateways**.
   </Step>
   <Step>
-    Click **Add Gateway**.
+    Click **New Gateway**.
   </Step>
   <Step>
     Enter a **Name** and select the **Driver** (stripe, qpay, or cash).
   </Step>
   <Step>
-    Enter the gateway credentials (see per-driver configuration below).
+    Fill in the fields shown by the driver's config schema (see below).
   </Step>
   <Step>
-    Set **Environment** to `sandbox` while testing, `live` for production.
+    Set **Environment** to `sandbox` while testing, `live` for production. The boolean `is_sandbox` is kept in sync automatically.
   </Step>
   <Step>
     Click **Save**.
   </Step>
 </Steps>
+
+The form also exposes optional **Return URL** and **Webhook URL** fields. The system-generated webhook URL is displayed beneath the user-entered field for reference.
 
 ## Stripe Configuration
 
@@ -48,12 +65,12 @@ Navigate to **Ledger → Payments → Gateways**.
 | :--- | :--- |
 | **Publishable Key** | `pk_test_...` or `pk_live_...` |
 | **Secret Key** | `sk_test_...` or `sk_live_...` |
-| **Webhook Secret** | `whsec_...` — from Stripe Dashboard → Webhooks |
-| **Environment** | sandbox or live |
+| **Webhook Signing Secret** | `whsec_...` — from Stripe Dashboard → Webhooks |
+| **Show Postal Code** | Whether the card field requires a postal code |
+| **iDEAL Payment** | Enable iDEAL (Netherlands) |
+| **FPX Payment** | Enable FPX (Malaysia) |
 
-Register Ledger's webhook URL in the Stripe Dashboard so Stripe can notify Fleetbase of `charge.succeeded`, `charge.failed`, and `charge.refunded` events.
-
-The webhook URL is shown in the gateway detail: `POST /ledger/webhooks/stripe`
+Register the Ledger webhook URL (shown beneath the user-entered field on the gateway form) in the Stripe Dashboard so Stripe can notify Fleetbase of `charge.succeeded`, `charge.failed`, and `charge.refunded` events.
 
 ## QPay Configuration
 
@@ -61,37 +78,46 @@ The webhook URL is shown in the gateway detail: `POST /ledger/webhooks/stripe`
 | :--- | :--- |
 | **Username** | QPay merchant username |
 | **Password** | QPay merchant password |
-| **Invoice Code** | QPay invoice type code |
-| **Environment** | sandbox or live |
+| **Invoice Code** (`invoice_code`) | QPay invoice type code |
 
 ## Cash Configuration
 
-No credentials required. Name the gateway (e.g., "Cash Payment") and save. Cash gateway processes are immediate and always succeed — use for manual payment recording or testing.
+The Cash driver supports `purchase` and `refund` and is useful for recording manual / offline payments and refunds without an external processor.
 
-## Gateway Capabilities
-
-Each gateway exposes the operations it supports:
-
-| Capability | Description |
+| Field | Description |
 | :--- | :--- |
-| `purchase` | Process a charge |
-| `refund` | Issue a refund |
-| `setup_intent` | Tokenize a payment method without charging |
-
-Check capabilities before calling an operation. The Cash driver supports `purchase` only.
+| **Label** | Optional label shown to operators |
+| **Instructions** | Optional payment instructions surfaced to customers |
 
 ## Security
 
 Gateway credentials are:
-- Stored **encrypted at rest** (AES-256)
-- **Never exposed** in API responses
+
+- Stored encrypted at rest using Laravel's `encrypted:array` cast against your `APP_KEY`
+- Never exposed in API responses
 - Decrypted only in memory when a payment operation is executed
 
 ## Gateway Transaction Audit Log
 
-Every interaction with a gateway (charge, refund, webhook) is logged as a `GatewayTransaction`. View the log for any gateway:
+Every interaction with a gateway (charge, refund, webhook) is logged as a `GatewayTransaction`. The log is the **idempotency key store** — duplicate webhooks are deduplicated using `GatewayTransaction::isProcessed()`, a check on `(gateway_reference_id, event_type)`.
+
+View the log for any gateway:
 
 1. Open the gateway in Ledger
 2. Click the **Transactions** tab
 
 The log includes status, amount, gateway reference ID, raw response, and processing timestamp — useful for debugging payment issues.
+
+## Extending with Custom Drivers
+
+Register a custom driver from a service provider:
+
+```php
+use Fleetbase\Ledger\PaymentGatewayManager;
+
+PaymentGatewayManager::extend('mygateway', function () {
+    return new MyCustomDriver();
+});
+```
+
+Your driver class implements the standard payment gateway contract (`charge`, `refund`, `getCapabilities`, `getConfigSchema`, etc.) and will appear in the gateway picker once registered.

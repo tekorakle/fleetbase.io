@@ -1,8 +1,115 @@
 ---
-title: Dashboard Component
-description: The dashboard component for building configurable widget-based dashboards within an extension.
+title: Overview
+description: How dashboards work in @fleetbase/ember-ui — the dashboard service, widgets, and widget registries.
 ---
 
-# Dashboard Component
+# Dashboards
 
-This page is coming soon.
+`@fleetbase/ember-ui` ships a complete dashboard subsystem — a [`dashboard` service](/docs/ui/dashboard/service) for managing dashboards, a `<Dashboard>` component for rendering them, plus stat widgets and a Universe-backed widget registry that lets extensions contribute widgets to each other.
+
+Most extension authors don't render `<Dashboard>` directly — the console hosts a dashboard page for each extension that supports them, driven by the service.
+
+## How It Fits Together
+
+```
+┌──────────────────────────────────────────────────────┐
+│  universe/widget-service                              │
+│  ├── registerWidget('chart', { component, defaults })│
+│  └── available widget types for the picker            │
+└──────────────────────────────────────────────────────┘
+              │
+              ▼
+┌──────────────────────────────────────────────────────┐
+│  dashboard service                                    │
+│  ├── loadDashboards()                                 │
+│  ├── currentDashboard                                 │
+│  ├── isEditingDashboard / isAddingWidget               │
+│  └── selectDashboard / createDashboard / deleteDashboard │
+└──────────────────────────────────────────────────────┘
+              │
+              ▼
+┌──────────────────────────────────────────────────────┐
+│  <Dashboard> component                                │
+│  └── Renders currentDashboard's widgets in a grid     │
+└──────────────────────────────────────────────────────┘
+```
+
+## Pages
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Dashboard Service</CardTitle>
+      <CardDescription className="text-xs">Full API for loading, switching, creating, and editing dashboards.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/dashboard/service" className="text-sm text-primary hover:underline">Dashboard Service →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## Contributing a Widget
+
+Extensions register widgets to a dashboard from their `addon/extension.js` using the `Widget` contract from `@fleetbase/ember-core/contracts` and the Universe `widget` service:
+
+```js
+// addon/extension.js
+import { Widget, ExtensionComponent } from '@fleetbase/ember-core/contracts';
+
+export default {
+    setupExtension(app, universe) {
+        const widgetService = universe.getService('widget');
+
+        const widgets = [
+            new Widget({
+                id: 'storefront-key-metrics-widget',
+                name: 'Storefront Metrics',
+                description: 'Key metrics from Storefront.',
+                icon: 'store',
+                component: new ExtensionComponent('@fleetbase/storefront-engine', 'widget/storefront-key-metrics'),
+                grid_options: { w: 12, h: 7, minW: 8, minH: 7 },
+                options: { title: 'Storefront Metrics' },
+                default: true,
+            }),
+        ];
+
+        widgetService.registerWidgets('dashboard', widgets);
+    },
+};
+```
+
+| `Widget` field | Description |
+| :--- | :--- |
+| `id` | Unique widget identifier |
+| `name` | Display name in the picker |
+| `description` | Short description shown in the picker |
+| `icon` | FontAwesome icon name |
+| `component` | An `ExtensionComponent` pointing at the widget renderer in your engine |
+| `grid_options` | Grid layout — `{ w, h, minW, minH }` columns/rows for `grid-stack` |
+| `options` | Default options passed to the widget component |
+| `default` | If `true`, the widget is added to the default dashboard automatically |
+
+The first argument to `registerWidgets()` is the dashboard ID — `'dashboard'` for the default dashboard. Extensions that ship their own dashboards register their widgets against that dashboard's ID.
+
+See real examples:
+
+| Extension | Reference |
+| :--- | :--- |
+| Storefront — registers a Storefront Metrics widget | [storefront/addon/extension.js](https://github.com/fleetbase/storefront/blob/main/addon/extension.js) |
+| IAM Engine — registers an IAM Metrics widget | [iam-engine/addon/extension.js](https://github.com/fleetbase/iam-engine/blob/main/addon/extension.js) |
+| Customer Portal — registers a dedicated dashboard | [customer-portal/addon/extension.js](https://github.com/fleetbase/customer-portal/blob/main/addon/extension.js) |
+
+## See Also
+
+- [Dashboard Service](/docs/ui/dashboard/service) — full API
+- [Registry & Slots](/docs/ui/registry/overview) — the broader registration model
+- [Universe](/docs/extension-development/universe) — the underlying registry system
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/services/dashboard.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/services/dashboard.js) | Service class |
+| [`addon/components/dashboard.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/dashboard.hbs) | Template |
+| [`addon/components/dashboard.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/dashboard.js) | Class |
+| [`addon/components/widget/`](https://github.com/fleetbase/ember-ui/tree/main/addon/components/widget) | Widget subcomponents |

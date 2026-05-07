@@ -7,7 +7,7 @@ description: Manage the people and businesses your operation works with — cust
 
 **Contacts** are the people and businesses your logistics operation interacts with. They serve as customers who receive deliveries, suppliers who provide pickups, and facilitators who coordinate operations. Contacts are linked to Places (their physical location) and can be assigned to orders in the customer or facilitator role.
 
-![Contacts list — name, type badge, email, phone, and linked location](/images/placeholder.png)
+![Contacts list — name, type badge, email, phone, and linked location](/images/screenshots/fleet-ops/fleet-ops-contacts-list.webp)
 
 ## Contact Types
 
@@ -22,14 +22,16 @@ description: Manage the people and businesses your operation works with — cust
 
 | Field | Description |
 | :--- | :--- |
-| **Name** | Full name or business name |
-| **Email** | Email address — used for order notifications |
-| **Phone** | Phone number — used for SMS notifications |
-| **Type** | customer, supplier, facilitator, contact |
-| **Description** | Notes about the contact |
-| **Place** | Linked physical address |
-| **Logo** | Company logo or profile photo |
-| **Status** | active or inactive |
+| `name` | Full name or business name |
+| `title` | Job title or role label |
+| `email` | Email address — used for order notifications |
+| `phone` | Phone number — used for SMS notifications |
+| `type` | customer, supplier, facilitator, contact |
+| `notes` | Free-text notes about the contact |
+| `place_uuid` | Linked Place record (physical address) |
+| `photo_uuid` | Profile photo or logo |
+| `internal_id` | Your external reference ID for the contact |
+| `meta` | Custom fields specific to your operation |
 
 ## Creating a Contact
 

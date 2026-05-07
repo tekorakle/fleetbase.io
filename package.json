@@ -4,10 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "predev": "node scripts/generate-api-docs.mjs",
     "build": "next build",
+    "prebuild": "node scripts/generate-api-docs.mjs",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx && node scripts/generate-api-docs.mjs",
+    "generate:api-docs": "node scripts/generate-api-docs.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.0",
@@ -64,8 +67,10 @@
     "eslint-config-next": "15.4.2",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "prettier-plugin-tailwindcss": "^0.6.14",
+    "shiki": "^4.0.2",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "yaml": "^2.8.4"
   }
 }

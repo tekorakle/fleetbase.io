@@ -1,35 +1,33 @@
 ---
 title: Location Settings
-description: Manage store location settings — default delivery zones and location-level configuration.
+description: Manage your active store's pickup locations and per-location operating hours.
 ---
 
 # Location Settings
 
-**Location Settings** covers the global delivery and location configuration for your store. Individual store locations (addresses, hours) are managed per-store under **Storefront → [Store] → Locations**.
+The **Locations** settings page is where you add, edit, and remove the **pickup addresses** for the currently active store. It is also where you set per-location **operating hours**.
 
-Navigate to **Storefront → Settings → Locations** for store-wide location defaults.
+Navigate to **Storefront → Settings → Locations**. Make sure the correct store is selected via the store switcher first — every location you create here belongs to the active store.
 
-## Default Service Area
+## What This Page Manages
 
-You can link your store to a Fleet-Ops **Service Area** to define the geographic region where you accept orders. Customers outside this area will be unable to complete checkout.
+| Item | Notes |
+| :--- | :--- |
+| **Store Locations** | One row per pickup address. Each location has a name, address, latitude/longitude, and a polymorphic place reference |
+| **Operating Hours** | Per-location time blocks via the schedule manager (one row per day per block in `store_hours`) |
 
-To set the default service area:
+This is the only place store locations are managed. There is no per-store "Locations" tab inside the store detail view.
 
-1. Navigate to **Storefront → Settings → Locations**
-2. Select a **Service Area** from the dropdown (service areas are created in **Fleet-Ops → Resources → Service Areas**)
-3. Click **Save**
+## Adding a Location
 
-Individual store locations can override this default by assigning their own zone.
+See [Store Locations](/docs/storefront/stores/store-locations) for the full step-by-step.
 
-## Multiple Store Locations
+## Setting Operating Hours
 
-If your store has multiple physical locations, Storefront automatically routes each order to the nearest open location based on the customer's delivery address. See [Store Locations](/docs/storefront/stores/store-locations) for adding and managing individual locations.
+See [Operating Hours](/docs/storefront/stores/operating-hours).
 
-## Delivery Radius
+## Service Areas and Zones
 
-The default delivery radius is inherited from Fleet-Ops routing settings. To set a custom radius for your store:
+Storefront does **not** expose a service area or zone selector at the **store** or **store location** level. Service area / zone restrictions are configured per **food truck** instead — see [Food Trucks](/docs/storefront/stores/food-trucks).
 
-1. Configure the service area boundary in **Fleet-Ops → Resources → Service Areas**
-2. Assign the service area to your store location
-
-Orders from outside the configured boundary will be declined at checkout with a delivery-unavailable message.
+If you need delivery boundary enforcement for a fixed (non-mobile) store, use Fleet-Ops itself: configure your Service Rates and Service Areas in Fleet-Ops so that out-of-range customers receive an unavailable response when requesting a [Service Quote](/docs/storefront/orders/service-quotes).

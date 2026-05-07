@@ -7,19 +7,22 @@ description: Define pricing rules and rate structures used to calculate order co
 
 **Service Rates** define the pricing rules Fleet-Ops uses to calculate the cost of an order. Rates can be flat fees, distance-based, weight-based, or zone-based. They support surcharges for COD (cash on delivery), peak hours, and parcel size. When an order matches a service rate, Fleet-Ops generates a **Service Quote** with the calculated amount.
 
-![Service rates list — rate name, service type, base fee, and scope columns](/images/placeholder.png)
+![Service rates list — rate name, service type, base fee, and scope columns](/images/screenshots/fleet-ops/fleet-ops-service-rate-list.webp)
 
 ## Rate Calculation Methods
 
-| Method | How it works |
+The `rate_calculation_method` field on a service rate accepts one of six values:
+
+| Value | How it works |
 | :--- | :--- |
-| **Flat Rate** | Fixed fee regardless of distance or weight |
-| **Per Distance** | Base fee + (distance × per-unit rate) |
-| **Per Weight** | Base fee + (total weight × per-kg rate) |
-| **Per Volume** | Base fee + (total volume × per-m³ rate) |
-| **Zone-Based** | Fixed price based on origin and destination zones |
-| **Tiered Distance** | Different rates per distance bracket (0–5 km, 5–20 km, etc.) |
-| **Custom Algorithm** | Formula combining multiple factors |
+| `fixed_rate` | A single flat fee charged regardless of distance |
+| `fixed_meter` | A flat per-meter rate — `per_meter_flat_rate_fee` × normalized distance |
+| `per_meter` | Per-distance rate using a tiered fee table — fees are looked up against `ServiceRateFee` brackets keyed by distance |
+| `per_drop` | Charged per delivery stop in the order |
+| `parcel` | Parcel-based pricing — fees are looked up against `ServiceRateParcelFee` brackets keyed by parcel size or weight |
+| `algo` (or `algorithm`) | Algorithmic pricing — formula resolved at quote time, typically combining distance, time, weight, and surcharges. See [Algorithm-Based Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates). |
+
+Zone-based and order-config-based pricing are **scopes**, not calculation methods — see [Rate Scoping](#rate-scoping) below.
 
 ## Rate Components
 
@@ -43,8 +46,11 @@ Additional charge during high-demand periods:
 - **Start/end time** — when peak hours apply
 - **Flat peak fee** or **peak percentage** — the surcharge amount
 
-### Parcel Fees
-Size-based incremental fees for oversized or heavy items. Multiple parcel fee tiers can be configured based on weight or dimensional brackets.
+### Tiered Distance Fees (`per_meter`)
+For `per_meter` rates, **`ServiceRateFee`** entries define the fee table. Each entry has a `min`/`max` distance band, a `unit`, a `fee` amount, and a `currency`. The lookup picks the entry whose band the order's distance falls into.
+
+### Parcel Fees (`parcel`)
+For `parcel` rates, **`ServiceRateParcelFee`** entries define a fee table keyed by parcel attributes — `size`, `length`/`width`/`height`/`dimensions_unit`, and `weight`/`weight_unit`. Each entry has a `fee` and `currency`. The lookup picks the entry that matches the parcel's measurements.
 
 ## Creating a Service Rate
 
@@ -56,7 +62,7 @@ Size-based incremental fees for oversized or heavy items. Multiple parcel fee ti
     Click **+ New Rate**.
   </Step>
   <Step>
-    Set the **Service Name** and **Service Type** (Delivery, Pickup & Delivery, etc.).
+    Set the **Service Name** (free-text label, e.g. *Same-Day Express*) and **Service Type** (free-text grouping, e.g. *delivery*, *transport*, *parcel*). Service type is not an enum — use whatever taxonomy fits your operation.
   </Step>
   <Step>
     Select the **Rate Calculation Method** from the options above.

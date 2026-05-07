@@ -5,9 +5,9 @@ description: Manage orders visually by status column — see all active orders a
 
 # Kanban Board
 
-The Kanban Board provides a visual, column-based view of all orders organized by status. Each column represents a status stage — pending, assigned, dispatched, started, completed — and each card represents an order. It gives dispatchers a real-time snapshot of the operation's current state without navigating individual order records.
+The Kanban Board provides a visual, column-based view of all orders organized by **system status**. Each column represents one of the five system statuses — *created*, *dispatched*, *started*, *completed*, *canceled* — and each card represents an order. It gives dispatchers a real-time snapshot of the operation's current state without navigating individual order records.
 
-![Fleet-Ops Kanban board — columns for each order status, order cards with driver and address info](/images/placeholder.png)
+![Fleet-Ops Kanban board — columns for each order status, order cards with driver and address info](/images/screenshots/fleet-ops/fleet-ops-orders-kanban.webp)
 
 ## Accessing the Kanban Board
 
@@ -15,19 +15,17 @@ In Fleet-Ops, navigate to **Operations → Orders** and switch the view toggle f
 
 ## Board Columns
 
-The board has one column per order status:
+The board has one column per system status:
 
 | Column | Orders shown |
 | :--- | :--- |
-| **Pending** | Awaiting driver assignment |
-| **Scheduled** | Assigned a future pickup date |
-| **Assigned** | Driver assigned, not yet dispatched |
-| **Dispatched** | Sent to Navigator app, awaiting driver start |
+| **Created** | Awaiting dispatch |
+| **Dispatched** | Sent to the Navigator app, awaiting driver start |
 | **Started** | Driver actively executing the order |
-| **Completed** | Delivered and closed |
-| **Cancelled** | Cancelled orders |
+| **Completed** | Order completion activity has fired |
+| **Canceled** | Canceled orders |
 
-By default, completed and cancelled orders are hidden to keep the board focused on active work. Toggle their visibility using the column filter.
+By default, completed and canceled orders are hidden to keep the board focused on active work. Toggle their visibility using the column filter.
 
 ## Order Cards
 
@@ -57,8 +55,8 @@ Filters stack — combine driver and date to see a specific driver's schedule fo
 
 Hover over an order card to reveal quick action buttons:
 
-- **Dispatch** — dispatch an assigned order directly from the card without opening the detail
-- **Assign** — open the assignment dialog for a pending order
+- **Dispatch** — dispatch a created order directly from the card without opening the detail
+- **Assign** — open the driver/vehicle assignment dialog for a created order
 - **Cancel** — cancel the order
 
 ## Using the Board with the Orchestrator

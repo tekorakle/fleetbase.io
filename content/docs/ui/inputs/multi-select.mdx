@@ -1,8 +1,56 @@
 ---
-title: Multi Select
-description: Multi-value select input for choosing multiple options from a list.
+title: MultiSelect
+description: "<MultiSelect> is a multi-value typeahead select. Thin wrapper around ember-power-select's PowerSelectMultiple."
 ---
 
-# Multi Select
+# `<MultiSelect>`
 
-This page is coming soon.
+A multi-value typeahead select. Thin wrapper around `ember-power-select`'s `<PowerSelectMultiple>` with Fleetbase's form styling.
+
+For Ember Data records, prefer [`<ModelSelectMultiple>`](/docs/ui/inputs/model-select).
+
+## Basic Usage
+
+```handlebars
+<MultiSelect
+  @options={{this.tagOptions}}
+  @selected={{this.selectedTags}}
+  @placeholder="Add tags…"
+  @onChange={{fn (mut this.selectedTags)}}
+  as |tag|
+>
+  {{tag}}
+</MultiSelect>
+```
+
+## Arguments
+
+| Argument | Type | Description |
+| :--- | :--- | :--- |
+| `@options` | array | The options to choose from |
+| `@selected` | array | The currently-selected options |
+| `@onChange` | `(selected)` | Called with the new array on every change |
+| `@placeholder` | string | Placeholder for the empty state |
+| `@allowClear` | boolean | Show a clear-all button |
+| `@searchEnabled` | boolean | Enable typeahead search |
+| `@search` | function | Custom async search function |
+| `@selectClass` | string | Extra classes on the trigger |
+| `@registerAPI` | function | Capture the power-select API |
+| `@placeholderComponent` | string | Custom placeholder component |
+| `@preventScroll` | boolean | Disable body scroll when open |
+| `@renderInPlace` | boolean | Render in DOM order vs. portal |
+| `@scrollTo` | function | Custom scroll-to-option behavior |
+
+The yielded value is the option being rendered.
+
+## See Also
+
+- [`<Select>`](/docs/ui/inputs/select) — single-value
+- [`<ComboBox>`](/docs/ui/inputs/combo-box) — single-value with typeahead
+- [`<ModelSelect>`](/docs/ui/inputs/model-select) — for Ember Data records
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/components/multi-select.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/multi-select.hbs) | Template (template-only) |

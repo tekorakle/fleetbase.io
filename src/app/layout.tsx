@@ -23,6 +23,7 @@ const azeretMono = Azeret_Mono({
 });
 
 export const metadata: Metadata = {
+ metadataBase: new URL('https://fleetbase.io'),
  title: {
  default: 'Fleetbase | Open-Source Fleet Management & TMS Software',
  template: '%s | Fleetbase',

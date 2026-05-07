@@ -1,6 +1,6 @@
 ---
 title: Gateway Settings
-description: Configure payment gateways for your store or network — Stripe, QPay, and Cash on Delivery.
+description: Configure payment gateways for your store or network — Stripe, Braintree, QPay, Manual, and Cash on Delivery.
 ---
 
 # Gateway Settings
@@ -9,6 +9,14 @@ description: Configure payment gateways for your store or network — Stripe, QP
 
 Gateways can be configured at the **store level** (applies to one store) or the **network level** (applies to all stores in the network).
 
+## Supported Gateway Schemas
+
+The gateway picker offers four types: **Stripe**, **Braintree**, **QPay**, and **Manual**.
+
+**Cash on Delivery** is not in the picker — enable it via the `Enable cash on delivery` toggle in the store/network's general settings (`options.cod_enabled`).
+
+For full per-gateway configuration tables and the payment flow, see [Payment Gateways](/docs/storefront/orders/payment-gateways).
+
 ## Adding a Gateway
 
 <Steps>
@@ -16,46 +24,36 @@ Gateways can be configured at the **store level** (applies to one store) or the 
     Navigate to **Storefront → Settings → Gateways**.
   </Step>
   <Step>
-    Click **Add Gateway**.
+    Click **New Gateway**.
   </Step>
   <Step>
-    Select the gateway type: **Stripe**, **QPay**, or **Cash**.
+    Select the gateway type: **Stripe**, **Braintree**, **QPay**, or **Manual**.
   </Step>
   <Step>
-    Enter the required credentials (see per-gateway config below).
+    Enter the credentials (the form auto-renders the right fields per schema).
   </Step>
   <Step>
-    Toggle **Sandbox Mode** on while testing.
+    Optionally fill in **Callback URL** and **Return URL** as required by the gateway.
+  </Step>
+  <Step>
+    Toggle **Sandbox** on while testing.
   </Step>
   <Step>
     Click **Save**.
   </Step>
 </Steps>
 
-## Stripe Configuration
+## Common Fields
+
+Every gateway has these shared fields:
 
 | Field | Description |
 | :--- | :--- |
-| **Publishable Key** | Stripe public key (starts with `pk_test_` or `pk_live_`) |
-| **Secret Key** | Stripe secret key (starts with `sk_test_` or `sk_live_`) |
-| **Sandbox Mode** | On = test mode; Off = live mode |
-| **Return URL** | URL Stripe redirects to after off-session payments |
-| **Webhook URL** | Auto-generated — paste this into Stripe Dashboard → Webhooks |
-
-Register the webhook URL in your Stripe Dashboard so Stripe can notify Fleetbase of payment success/failure.
-
-## QPay Configuration
-
-| Field | Description |
-| :--- | :--- |
-| **Username** | QPay merchant username |
-| **Password** | QPay merchant password |
-| **Invoice Code** | QPay invoice type code from your merchant agreement |
-| **Sandbox Mode** | On = test environment |
-
-## Cash on Delivery
-
-No credentials required. Configure a display name (e.g., "Pay on Delivery") and save. COD orders are created without payment capture — the driver collects cash and confirms receipt in the Navigator app.
+| **Name** | Display label shown to customers |
+| **Code** | Immutable identifier set from the schema |
+| **Callback URL** | URL the gateway calls after payment (you fill this in based on the provider's docs) |
+| **Return URL** | URL the customer is redirected to after payment |
+| **Sandbox** | Toggle test mode |
 
 ## Removing a Gateway
 

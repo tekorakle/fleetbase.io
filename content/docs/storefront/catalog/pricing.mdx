@@ -9,7 +9,7 @@ Storefront's pricing model is built around base prices with optional modifiers f
 
 ## Base Price
 
-Every product has a **Base Price** — the default price when no variants or addons are selected. Prices are stored in the smallest currency unit (cents) internally but displayed in the store's configured currency.
+Every product has a **Base Price** — the default price when no variants or addons are selected. Money inputs in the console accept the human-readable amount; gateway-side conversion (e.g. cents for Stripe) is handled at checkout time.
 
 Set the base price when creating or editing a product in **Storefront → Products**.
 
@@ -38,7 +38,7 @@ Customer selects "Large" → Cart price: $12.00
 
 ## Addon Pricing
 
-Each [Addon](/docs/storefront/catalog/variants-and-addons) has its own price. All selected addon prices are summed and added to the product price.
+Each [Addon](/docs/storefront/catalog/variants-and-addons) has its own price, and can independently be on sale (`is_on_sale` + `sale_price`). The cart sums each selected addon's effective price (sale price when on sale, otherwise the regular price) and adds it to the product price.
 
 Example:
 ```

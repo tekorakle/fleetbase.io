@@ -11,10 +11,9 @@ description: Create and manage custom order types — define entity fields, cons
 
 Each Order Configuration defines an order type through:
 
-1. **Entity definitions** — what fields are required on each item in the payload
+1. **Entity definitions** — field templates that pre-populate when items are added to orders of this type
 2. **Tags** — for categorizing and filtering
-3. **Activity flow** — the sequence of steps drivers execute
-4. **POD requirements** — what proof is needed to complete the order
+3. **Activity flow** — the activities the driver moves through, including per-activity POD settings (defined on each activity, not on the config itself)
 
 ## Entity Definitions
 
@@ -22,18 +21,24 @@ Entity definitions specify what data must be filled in for each item (entity) ad
 
 ### Available Entity Fields
 
+These fields exist on the Entity model and can be templated in an Order Configuration's entity definitions:
+
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| **Description** | Text | Item description (e.g., "Laptop") |
-| **SKU** | Text | Stock Keeping Unit identifier |
-| **Barcode** | Text | Barcode for scanning |
-| **Quantity** | Number | Number of units |
-| **Weight** | Number + Unit | Weight in kg or lb |
-| **Length / Width / Height** | Number + Unit | Physical dimensions in cm, m, or inches |
-| **Photo** | File | Item photo |
-| **Customer** | Contact | Recipient for this specific item |
-| **Destination** | Place | Delivery location (for multi-drop) |
-| **Custom Fields** | Various | Additional fields specific to your operation |
+| `name` | Text | Item name |
+| `description` | Text | Item description (e.g. "Laptop") |
+| `internal_id` | Text | Your external reference ID for the item |
+| `sku` | Text | Stock Keeping Unit identifier |
+| `barcode` | Text | Barcode value (used by `scan` POD) |
+| `qr_code` | Text | QR code value (used by `scan` POD) |
+| `weight` / `weight_unit` | Number + Unit | Weight in kg, lb, etc. |
+| `length` / `width` / `height` / `dimensions_unit` | Number + Unit | Physical dimensions |
+| `declared_value` / `currency` | Number + Code | Declared value for the item |
+| `price` / `sale_price` | Number | Per-item pricing |
+| `photo_uuid` | File | Reference to an uploaded photo of the item |
+| `customer_uuid` | Contact | Recipient for this specific item (multi-drop) |
+| `destination_uuid` | Waypoint | Specific waypoint this item is destined for (multi-drop) |
+| `meta` | JSON | Custom fields specific to your operation |
 
 You can mark fields as **required** or **optional** per order type. Required fields must be completed before an order can be saved.
 
@@ -45,31 +50,35 @@ Beyond the standard fields, each entity definition can include custom fields cre
 - Fragile flag (toggle)
 - Handling instructions (text)
 
-## Built-In Order Type Examples
+## What Ships Out of the Box
+
+Fleet-Ops ships with **one built-in order type — Transport**, created automatically as a `core_service` config on every new company. It has no entity templates by default; you add the fields your operation needs.
+
+Common patterns customers build on top of Transport (or as separate configs):
 
 ### Standard Delivery
 
 - **Pickup → Dropoff** route
-- Entities: description, weight, dimensions optional
-- POD: signature required at dropoff
+- Entity template: `description`, `weight`, dimensions optional
+- POD: `signature` set on the delivery activity, `require_pod: true`
 
 ### Pickup & Delivery (P&D)
 
 - Driver collects from a supplier then delivers to a customer
-- Entities: description, barcode
-- POD: signature at dropoff
+- Entity template: `description`, `barcode`
+- POD: `signature` on the dropoff activity
 
 ### Return to Sender (RTS)
 
 - Driver collects an undeliverable item from a customer and returns it to origin
-- Entities: original order reference, reason for return
-- POD: photo at collection point
+- Entity template: `internal_id` (original order reference), reason in `meta`
+- POD: `photo` on the collection activity
 
 ### Multi-Drop Courier
 
 - Single pickup, multiple dropoffs
-- Entities: destination override per item (each entity routes to a different waypoint)
-- POD: signature at each dropoff waypoint
+- Entity template: each entity sets `destination_uuid` to a specific waypoint
+- POD: `signature` on each waypoint's delivery activity
 
 ## Creating a Custom Order Type
 

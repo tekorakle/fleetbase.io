@@ -1,8 +1,128 @@
 ---
 title: Type Checking Helpers
-description: "Helpers for inspecting values: is-array, is-model, is-url, is-uuid, in-array, is-object-empty, is-dark-mode, and more."
+description: Helpers for inspecting and asserting on values — is-array, is-model, is-url, is-uuid, in-array, is-object-empty, is-dark-mode, and more.
 ---
 
 # Type Checking Helpers
 
-This page is coming soon.
+These helpers return booleans describing a value's shape or contents. Useful for `{{#if}}` branches in templates.
+
+## `{{is-array value}}`
+
+True if the value is an array (Ember array or native array):
+
+```handlebars
+{{#if (is-array @items)}}
+  {{!-- safe to iterate --}}
+{{/if}}
+```
+
+## `{{is-bool-value value}}`
+
+True if the value is a boolean:
+
+```handlebars
+{{#if (is-bool-value @config.enabled)}}
+  <Toggle @isToggled={{@config.enabled}} />
+{{/if}}
+```
+
+## `{{is-model value}}`
+
+True if the value is an Ember Data model instance:
+
+```handlebars
+{{#if (is-model @row)}}
+  <Pill @resource={{@row}} />
+{{/if}}
+```
+
+## `{{is-url value}}`
+
+True if the value parses as a valid URL:
+
+```handlebars
+{{#if (is-url @link)}}
+  <a href={{@link}}>{{@link}}</a>
+{{else}}
+  <span>{{@link}}</span>
+{{/if}}
+```
+
+## `{{is-uuid value}}`
+
+True if the value matches the UUID v1–v5 format:
+
+```handlebars
+{{#if (is-uuid @id)}}
+  <ClickToCopy @value={{@id}} />
+{{/if}}
+```
+
+## `{{in-array value array}}`
+
+True if the value is in the array:
+
+```handlebars
+{{#if (in-array "admin" @user.roles)}}
+  <AdminPanel />
+{{/if}}
+```
+
+## `{{is-object value}}`
+
+True if the value is a plain object:
+
+```handlebars
+{{#if (is-object @data)}}
+  {{!-- iterate keys with each-in --}}
+{{/if}}
+```
+
+## `{{is-object-empty value}}`
+
+True if a plain object has no keys:
+
+```handlebars
+{{#if (is-object-empty @options)}}
+  <span class="text-gray-400">No options set</span>
+{{/if}}
+```
+
+## `{{is-not-empty value}}`
+
+True if the value is not null/undefined and (for strings/arrays) has length:
+
+```handlebars
+{{#if (is-not-empty @results)}}
+  <ResultsList @results={{@results}} />
+{{/if}}
+```
+
+## `{{is-dark-mode}}`
+
+True when the host application is in dark mode — useful for branching styles:
+
+```handlebars
+<img src={{if (is-dark-mode) "/logo-dark.svg" "/logo-light.svg"}} />
+```
+
+## `{{is-dd-item-visible}}`
+
+Internal helper used by dropdown menus to decide visibility — typically not needed in extension code.
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/helpers/is-array.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-array.js) | Helper |
+| [`addon/helpers/is-bool-value.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-bool-value.js) | Helper |
+| [`addon/helpers/is-dark-mode.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-dark-mode.js) | Helper |
+| [`addon/helpers/is-dd-item-visible.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-dd-item-visible.js) | Helper |
+| [`addon/helpers/is-model.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-model.js) | Helper |
+| [`addon/helpers/is-not-empty.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-not-empty.js) | Helper |
+| [`addon/helpers/is-object-empty.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-object-empty.js) | Helper |
+| [`addon/helpers/is-object.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-object.js) | Helper |
+| [`addon/helpers/is-url.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-url.js) | Helper |
+| [`addon/helpers/is-uuid.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/is-uuid.js) | Helper |
+| [`addon/helpers/in-array.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/helpers/in-array.js) | Helper |

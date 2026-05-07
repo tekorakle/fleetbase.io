@@ -7,7 +7,7 @@ description: Create and manage a library of saved locations — pickup points, w
 
 **Places** are saved locations in Fleet-Ops — reusable addresses for pickup points, warehouses, distribution hubs, customer addresses, and any other location your operation regularly uses. When creating orders, you can select from your Places library instead of entering addresses each time.
 
-![Places list — place name, type badge, address, and linked contact](/images/placeholder.png)
+![Places list — place name, type badge, address, and linked contact](/images/screenshots/fleet-ops/fleet-ops-places-list.webp)
 
 ## Place Attributes
 
@@ -84,9 +84,9 @@ Places appear as markers on the live map when their map display is enabled. This
 
 ## Service Areas & Zones
 
-Places are geographically contained within **Service Areas** and **Zones** (defined polygon boundaries). When a place falls within a service area, it becomes eligible for the service rates and orchestrator rules scoped to that area.
+Places are not contained by Service Areas or Zones — there is no foreign key from a Place to a Service Area, and a Place's geographic location does not automatically associate it with the polygon-bounded areas defined elsewhere in Fleet-Ops. Service Areas and Zones operate as a separate scoping concept used by Service Rates and the Orchestrator to filter routes and pricing; they don't index Places.
 
-See [Service Rates](/docs/fleet-ops/operations/service-rates/overview) for zone-based pricing.
+See [Service Rates](/docs/fleet-ops/operations/service-rates/overview) for how Service Areas and Zones scope pricing.
 
 ## Importing Places
 

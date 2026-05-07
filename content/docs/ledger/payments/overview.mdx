@@ -5,43 +5,40 @@ description: Process digital payments, manage digital wallets, and track every f
 
 # Payments & Transactions
 
-The **Payments** module covers three interconnected areas: payment gateways for processing real money, wallets for tracking internal balances, and transactions as the immutable audit trail of every financial event.
+The **Payments** module covers three interconnected areas: payment gateways for processing real money, wallets for tracking internal balances, and transactions as the immutable audit trail of every wallet movement.
 
 Navigate to **Ledger → Payments** to access gateways, wallets, and transactions.
 
-![Payments overview — wallet balance summary cards, recent transaction feed](/images/placeholder.png)
-
 ## Core Components
 
-### [Payment Gateways](/docs/ledger/payments/gateways)
+### Payment Gateways
 
-External payment processors — Stripe, QPay, and Cash — integrated with encrypted credentials and sandbox support. Gateways process charges, refunds, and top-ups. Each gateway interaction is logged as a `GatewayTransaction` for idempotency and audit.
+External payment processors — **Stripe**, **QPay**, and **Cash** — integrated with encrypted credentials and `sandbox`/`live` environments. All three drivers support both `purchase` and `refund` capabilities. Stripe additionally supports tokenization, setup intents, checkout sessions, webhooks, and recurring payments. Each gateway interaction is logged as a `GatewayTransaction` for idempotency and audit. See [Payment Gateways](/docs/ledger/payments/gateways).
 
-### [Wallets](/docs/ledger/payments/wallets)
+### Wallets
 
-Digital balance accounts tied to drivers, customers, vendors, or your company. Every wallet operation (deposit, withdrawal, transfer) creates a journal entry maintaining double-entry integrity. Wallets can be frozen to block debits.
+Digital balance accounts tied to drivers, customers, your company, or individual users. Every wallet operation (`credit`, `topup`, `transfer`, `payout`) creates one or more journal entries maintaining double-entry integrity. Wallets can be frozen to block all operations. See [Wallets](/docs/ledger/payments/wallets).
 
-### [Transactions](/docs/ledger/payments/transactions)
+### Transactions
 
-The complete, immutable ledger of every financial event. Transactions are never edited or deleted — they are the full audit trail for compliance and reconciliation.
+The complete, immutable ledger of every wallet movement. Transactions are never edited or deleted — they are the full audit trail for compliance and reconciliation. See [Transactions](/docs/ledger/payments/transactions).
 
-## The Payment Lifecycle in a Marketplace
+## A Typical Payment Lifecycle
 
 ```
-Customer pays via Stripe
+Customer pays via Stripe (e.g. invoice payment or wallet top-up)
   → GatewayTransaction logged (idempotency check)
     → PaymentSucceeded event fires
       → Ledger Transaction created (credit direction)
-        → Journal Entry: DEBIT Cash, CREDIT Wallet Liability
-          → Organization Wallet credited
-            → Commission Transfer: DEBIT Org Wallet, CREDIT Merchant Wallet
-              → Driver Earning: DEBIT Expense, CREDIT Driver Wallet
-                → Payout: DEBIT Driver Wallet, CREDIT Cash (bank transfer)
+        → Journal Entry posted by the relevant service
+          (invoice → invoice_payment / wallet → general / storefront → storefront_sale)
 ```
+
+The exact journal entries differ per source — see the per-flow examples on [Wallets](/docs/ledger/payments/wallets) and [Invoices](/docs/ledger/billing/invoices).
 
 ## Webhook Security
 
-All payment gateways send webhooks to confirm transactions. Ledger verifies webhook signatures before processing. Duplicate webhooks are deduplicated using `GatewayTransaction.alreadyProcessed()` — a check on `(gateway_reference_id, event_type)` — so each event is processed exactly once.
+All payment gateways send webhooks to confirm transactions. Each driver verifies its webhook signature before processing (Stripe via `Webhook::constructEvent`, QPay via its own driver). Duplicate webhooks are deduplicated using `GatewayTransaction::isProcessed()` — a check on `(gateway_reference_id, event_type)` — so each event is processed exactly once.
 
 ## Multi-Currency
 

@@ -1,15 +1,11 @@
 ---
-title: Stores & Networks
-description: Understand the Store and Network architecture — single-brand stores vs. multi-vendor marketplace networks.
+title: Stores
+description: A Store is a single brand or merchant in Storefront — its own catalog, locations, hours, payment gateways, and API key.
 ---
 
-# Stores & Networks
+# Stores
 
-The two foundational entities in Storefront are **Stores** and **Networks**. Understanding them is the first step to setting up your commerce platform correctly.
-
-## What is a Store?
-
-A **Store** represents a single brand or merchant. Every store has:
+A **Store** represents a single brand or merchant in Storefront. Every store has:
 
 - Its own **product catalog** (products and categories)
 - One or more **physical locations** used as pickup addresses for Fleet-Ops delivery orders
@@ -20,25 +16,7 @@ A **Store** represents a single brand or merchant. Every store has:
 
 If you are building a D2C app for a single restaurant, shop, or service provider — one store is everything you need.
 
-## What is a Network?
-
-A **Network** is a collection of stores grouped into a marketplace. Networks are the right choice when you are building a platform that hosts multiple independent merchants — think food delivery apps or local marketplace aggregators.
-
-- Customers browse the network to discover available stores
-- Each store manages its own catalog and locations
-- The network can share payment gateways and push notification channels across all member stores
-- Networks have their own API key (`network_*`) for public access
-- Stores can be categorized within a network (e.g., "Italian", "Fast Food")
-
-## Key Differences
-
-| Feature | Store | Network |
-| :--- | :--- | :--- |
-| **Use case** | Single brand or merchant | Multi-vendor marketplace |
-| **Catalog** | Owns products and categories | Aggregates stores; no direct catalog |
-| **Locations** | Has physical pickup addresses | No physical locations |
-| **API key** | `store_*` | `network_*` |
-| **Checkout** | Customer checks out from this store | Customer checks out from an individual store within the network |
+For multi-vendor marketplaces (e.g., a food delivery platform with many independent merchants), you'll group stores into a [Network](/docs/storefront/networks/overview).
 
 ## Architecture Examples
 
@@ -50,18 +28,34 @@ A **Network** is a collection of stores grouped into a marketplace. Networks are
 ### Single-brand, multiple locations (franchise)
 *Example: a coffee chain with 5 city locations.*
 - Create **1 Store** with **5 Locations**
-- Orders route to the nearest open location automatically
-- No network needed
+- Each location has its own address and operating hours
+- The cart records which location an item came from
+
+### Mobile or pop-up brand
+*Example: a single food truck operator.*
+- Create **1 Store** linked to a **Food Truck** record
+- The food truck is tied to a Fleet-Ops vehicle for live GPS positioning
+- See [Food Trucks](/docs/storefront/stores/food-trucks)
 
 ### Multi-vendor marketplace
 *Example: a food delivery app with 50 restaurants.*
-- Create **1 Network**
-- Create **50 Stores** (one per restaurant)
-- Add each store to the network with a category assignment
+- See [Networks](/docs/storefront/networks/overview) — group multiple stores together
+
+## Key Properties
+
+| Property | Notes |
+| :--- | :--- |
+| **API key** | `store_*` — used as a bearer token from the customer-facing app |
+| **Currency** | All product pricing is stored in the store's currency |
+| **Timezone** | Operating hours are evaluated against this timezone |
+| **Default Order Config** | Fleet-Ops `OrderConfig` applied to orders created from this store |
+| **Online toggle** | Master on/off switch — overrides operating hours |
+| **`options` JSON** | Stores feature toggles (tax, COD, tips, POD, pickup, etc.) — see [Setup](/docs/storefront/stores/setup#store-settings) |
 
 ## Next Steps
 
-- [Stores & Networks setup](/docs/storefront/stores/stores-and-networks) — create and configure stores and networks in the console
+- [Creating a Store](/docs/storefront/stores/setup) — create and configure a store, with the full settings reference
 - [Store Locations](/docs/storefront/stores/store-locations) — add physical addresses for pickup
-- [Operating Hours](/docs/storefront/stores/operating-hours) — set when your store accepts orders
-- [Food Trucks](/docs/storefront/stores/food-trucks) — configure mobile stores with GPS-linked locations
+- [Operating Hours](/docs/storefront/stores/operating-hours) — set when each location accepts orders
+- [Food Trucks](/docs/storefront/stores/food-trucks) — configure mobile stores with GPS-linked positioning
+- [Networks](/docs/storefront/networks/overview) — when to graduate to a multi-vendor marketplace

@@ -1,8 +1,115 @@
 ---
-title: Modal Overview
-description: "The modal component anatomy: body, header, footer, and title slots."
+title: Overview
+description: How modals work in @fleetbase/ember-ui — the modals-manager service, the built-in layouts, and how to build custom modal components.
 ---
 
-# Modal Overview
+# Modals
 
-This page is coming soon.
+Modals in `@fleetbase/ember-ui` are driven by a single service — `modals-manager` — that mounts a component into a portal, manages a stack of nested modals, and exposes a Promise-based API.
+
+## How They Work
+
+```
+modals-manager.show('modals/edit-driver', { title, driver, confirm })
+       ↓
+The component at addon/components/modals/edit-driver renders
+       ↓
+The user clicks Confirm or Decline
+       ↓
+The Promise returned by show() resolves (confirm) or rejects (decline)
+```
+
+You can also use one of the **built-in layouts** (`confirm`, `alert`, `prompt`, `bulk`, `progress`, `process`, `loader`, `userSelectOption`) which render their own component and only need options.
+
+## Three Ways to Open a Modal
+
+### 1. Built-in confirmation
+
+```js
+this.modalsManager.confirm({
+  title: 'Delete driver?',
+  body: 'This cannot be undone.',
+  acceptButtonScheme: 'danger',
+  confirm: async () => await driver.destroyRecord(),
+});
+```
+
+### 2. Built-in alert / prompt / bulk / progress / process / loader
+
+```js
+this.modalsManager.alert({ title: 'Saved', body: 'Your changes are saved.' });
+this.modalsManager.prompt({ title: 'Rename', confirm: async (m) => { /* … */ } });
+this.modalsManager.loader({ title: 'Loading…' });
+```
+
+### 3. Custom modal component
+
+```js
+this.modalsManager.show('modals/edit-driver', {
+  title: 'Edit driver',
+  driver,
+  confirm: async (modal) => await modal.options.driver.save(),
+});
+```
+
+The component at `addon/components/modals/edit-driver` renders inside the modal frame.
+
+## Pages in This Section
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">modals-manager Service</CardTitle>
+      <CardDescription className="text-xs">The full service API — show, confirm, alert, prompt, bulk, progress, process, loader, and stack control.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/modals/modals-manager" className="text-sm text-primary hover:underline">modals-manager →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Modal Layouts</CardTitle>
+      <CardDescription className="text-xs">The built-in layouts — what each looks like and which option fields they consume.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/modals/modal-layouts" className="text-sm text-primary hover:underline">Layouts →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## Building a Custom Modal Component
+
+Place your component under `addon/components/modals/<name>.{hbs,js}`. The component receives:
+
+| Argument | Provided by | Purpose |
+| :--- | :--- | :--- |
+| `@modalIsOpened` | manager | Boolean visibility flag |
+| `@options` | `show()` caller | Everything you passed in `options` |
+| `@onConfirm` | manager | Click handler for the confirm button |
+| `@onDecline` | manager | Click handler for the decline button |
+
+Use `<Modal::Default>` (or `<Modal::Wide>`, `<Modal::Sidebar>`, etc.) as the root template:
+
+```handlebars
+{{!-- addon/components/modals/edit-driver.hbs --}}
+<Modal::Default
+  @modalIsOpened={{@modalIsOpened}}
+  @options={{@options}}
+  @confirm={{@onConfirm}}
+  @decline={{@onDecline}}
+>
+  <div class="modal-body-container">
+    <InputGroup @name="Name" @value={{@options.driver.name}} />
+    <InputGroup @name="Phone">
+      <PhoneInput @value={{@options.driver.phone}} />
+    </InputGroup>
+  </div>
+</Modal::Default>
+```
+
+The `<Modal::Default>` wrapper handles the backdrop, close button, header, footer, accept/decline buttons, and the Promise plumbing — your component just provides the body.
+
+## See Also
+
+- [`modals-manager` service](/docs/ui/modals/modals-manager) — full API
+- [Modal Layouts](/docs/ui/modals/modal-layouts) — pre-built layouts

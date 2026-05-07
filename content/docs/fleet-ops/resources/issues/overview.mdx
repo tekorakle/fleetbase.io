@@ -7,7 +7,7 @@ description: Log, track, and resolve operational issues — vehicle faults, driv
 
 **Issues** are operational incidents, faults, and exceptions that need to be tracked and resolved. Drivers can report issues from the Navigator app, and operators can log them from the console. Issues are linked to the driver, vehicle, or location involved and tracked through a resolution workflow.
 
-![Issues list — issue title, category, priority badge, status, assigned to, and reported date](/images/placeholder.png)
+![Issues list — issue title, category, priority badge, status, assigned to, and reported date](/images/screenshots/fleet-ops/fleet-ops-issues-list.webp)
 
 ## Issue Categories
 
@@ -50,13 +50,17 @@ description: Log, track, and resolve operational issues — vehicle faults, driv
 
 ## Issue Statuses
 
+`status` is a free-form string — operators can use any value. Newly created issues default to **`pending`** if no status is supplied. Common values used in practice:
+
 | Status | Meaning |
 | :--- | :--- |
-| `open` | Logged, not yet assigned |
+| `pending` | Default status when an issue is logged but not yet triaged |
 | `assigned` | Assigned to a resolver |
 | `in_progress` | Being actively worked on |
 | `resolved` | Resolution applied, pending confirmation |
 | `closed` | Fully resolved and closed |
+
+The status setter dasherizes the input, so `In Progress` and `in_progress` are stored consistently.
 
 ## Creating an Issue
 
@@ -87,13 +91,26 @@ description: Log, track, and resolve operational issues — vehicle faults, driv
   </Step>
 </Steps>
 
-## Driver-Reported Issues
+## Reporting Issues from the Navigator App
 
-Drivers can report issues directly from the Navigator app. When a driver submits a report:
+Drivers can report issues directly from the Navigator app — they don't need console access. The flow lives on the **Issues** screen and reaches it from the main Navigator menu:
 
-- The issue is created in Fleet-Ops with the driver and their current location automatically set
-- Photo evidence can be attached from the app
-- Operators receive a notification based on priority
+<Steps>
+  <Step>
+    The driver opens **Issues** in Navigator and taps **+ New Issue**.
+  </Step>
+  <Step>
+    Navigator pre-fills the driver and the driver's current location (read live from the device's GPS). The driver picks the **Category** and **Priority** and writes the **Report**.
+  </Step>
+  <Step>
+    The driver can attach photo evidence captured directly from the camera, link the issue to the **Vehicle** they're driving, and tag it.
+  </Step>
+  <Step>
+    On submit, Fleet-Ops creates the issue with status `pending`. Operators receive a notification based on the issue's priority.
+  </Step>
+</Steps>
+
+Drivers can also edit issues they've previously submitted (e.g. add follow-up photos or update the description) from the **Issues** screen. The same record is visible to operators in the console.
 
 ## Resolving Issues
 

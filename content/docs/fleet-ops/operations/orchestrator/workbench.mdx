@@ -1,120 +1,127 @@
 ---
 title: Workbench
-description: Use the Orchestrator Workbench to run optimization, review proposed assignments, and commit delivery plans.
+description: Compose phases, run the Orchestrator, review the proposed plan, and commit assignments — all from the Orchestrator Workbench.
 ---
 
 # Orchestrator Workbench
 
-The **Workbench** is the main UI for running the Orchestrator. It provides a side-by-side view of the unassigned order pool and the available driver/vehicle resources, with controls to run optimization, review the proposed plan, and commit the final assignments.
+The **Workbench** is the main UI for running the Orchestrator. It lays out the unassigned order pool, the available drivers and vehicles, and a phase builder where you compose and run optimization phases. The Workbench is a planning surface — nothing changes in production until you click **Commit**.
 
-![Orchestrator Workbench — order pool panel, resource panel, and proposed assignment results](/images/placeholder.png)
+![Orchestrator Workbench — phase builder with order pool, map, and resource panel](/images/screenshots/fleet-ops/fleet-ops-orchestrator-2.webp)
 
-## Opening the Workbench
+## Layout
 
-Navigate to **Fleet-Ops → Operations → Orchestrator**. The Workbench opens showing:
+Open the Workbench from **Fleet-Ops → Operations → Orchestrator**. The screen is divided into three regions:
 
-- **Order Pool** (left panel) — all unassigned pending orders
-- **Resource Panel** (right panel) — available drivers and vehicles
-- **Results Panel** (bottom) — proposed assignments after running optimization
+| Region | Purpose |
+| :--- | :--- |
+| **Order Pool** (left) | Filterable list of orders eligible for allocation |
+| **Map + Phase Builder** (center) | Interactive map; phase builder panel slides down when toggled |
+| **Resource Panel** (right) | Available vehicles and drivers, filterable by status |
 
-## Order Pool
+After you run phases, the right panel switches to the **Plan Viewer** showing proposed assignments per driver/vehicle.
 
-The order pool lists all orders eligible for assignment. Each order card shows:
+## The Order Pool
 
-- Order ID and customer
-- Pickup and dropoff addresses
-- Priority level (if set)
-- Required skills (if set)
-- Time window (if set)
-- Estimated distance
+The order pool lists every order currently eligible for allocation. Each card shows the order ID, customer, pickup and dropoff, scheduled time (if any), and the order's system status. Use the quick filters above the list — *All*, *Scheduled*, *Today*, *Urgent*, *Unassigned*, *Imported* — and the **Advanced Filters** button for date, fleet, order config, and status filters.
 
-### Filtering the Pool
+Click an order to highlight its pickup and dropoff on the map. The pool count updates as you filter.
 
-Use the filters above the pool to narrow which orders are included in the optimization run:
+## The Resource Panel
 
-- Filter by **Fleet** to run the Orchestrator for a specific fleet's orders only
-- Filter by **Date** to include only today's or tomorrow's orders
-- Filter by **Order Config** to optimize one service type at a time
+The resource panel lists available vehicles and drivers. Each vehicle card shows the make/model, plate, a status badge (*Active*, *Maintenance*, *In Transit*, *No Driver*, *Available*), and the assigned driver if one is linked. The drivers tab shows online drivers, their skills, and their shift window.
 
-### Excluding Orders
+Toggle a vehicle or driver off to exclude them from the run.
 
-Click the **X** on any order card to temporarily exclude it from the current run. Excluded orders remain pending and appear in the next run.
+## Phase Builder
 
-## Resource Panel
+The phase builder is where you compose the orchestration. Click the **Phases** button in the toolbar to open it. By default the panel is empty — click **+ Add Phase** to add the first phase.
 
-The resource panel shows available drivers and vehicles. Each driver card shows:
+### Adding a Phase
 
-- Driver name, photo, and online status
-- Current location on mini-map
-- Skills (certifications)
-- Shift window (time window start/end)
-- Current number of assigned orders
-- Vehicle assigned
+Each phase has these fields:
 
-Toggle drivers on/off to include or exclude them from the optimization run.
+| Field | Meaning |
+| :--- | :--- |
+| **Phase Label** | Free-text name shown on the phase tab (e.g. *Allocate Orders*, *Re-sequence Routes*) |
+| **Mode** | What the phase optimizes for: *Assign Vehicles*, *Assign Drivers*, *Optimize Routes*, or *Allocate Orders* |
+| **Engine** | The strategy used to compute the phase — `greedy` or `vroom` (or any engine registered by an extension) |
+| **Include Order Statuses** | Which order statuses the phase pulls from — typically `created`, but `dispatched` or `started` can be included for re-planning |
+| **Balance Workload** | Try to equalize stops/orders across drivers |
+| **Respect Skills** | Honor skill requirements on orders and skills on drivers |
+| **Respect Capacity** | Honor vehicle capacity (weight, volume) when allocating |
+| **Return to Depot** | Add a final leg back to each driver's depot |
+| **Auto-commit** | Commit this phase's result before the next phase runs (rather than reviewing the entire plan at the end) |
 
-## Running Optimization
+Phases run in the order shown in the panel. Use the up/down arrows on a phase to reorder. Use the trash icon to delete a phase.
+
+### Running One Phase or Many
+
+You can run a single phase on its own — for example, just **Optimize Routes** to re-sequence an existing manifest without changing assignments — or chain several phases together.
+
+![Workbench with three phases stacked — Phase 1: Assign Vehicles, Phase 2: Optimize Routes, Phase 3: Assign Vehicles, with the Allocate Orders mode selected](/images/screenshots/fleet-ops/orchestrator-multiple-phases.webp)
+
+Common multi-phase patterns:
+
+- *Assign Vehicles → Optimize Routes* — allocate by capacity, then plan the route
+- *Assign Vehicles → Assign Drivers → Optimize Routes* — full three-step build
+- *Assign Drivers → Optimize Routes* — when vehicles are pre-paired with drivers
+
+Each phase reads the current state and writes the updated plan, so the next phase sees the previous phase's output as its input.
+
+## Running the Orchestrator
 
 <Steps>
   <Step>
-    ### Select the optimization engine
+    ### Filter the order pool
 
-    Use the engine selector to choose: **VROOM** (default, recommended for most cases), **Greedy**, **Driver Assignment**, or **Route Sequencing**.
+    Use the quick filters or **Advanced Filters** to narrow the pool to the orders you want to plan against. Excluded orders stay in the pool for the next run.
   </Step>
   <Step>
-    ### Set parameters (optional)
+    ### Open the Phase Builder
 
-    Adjust optimization parameters:
-    - **Max orders per driver** — cap the workload per driver
-    - **Balance workload** — try to equalize orders across drivers
-    - **Geometry type** — Simple (straight lines) or Full Routes (uses routing engine for accurate ETAs)
+    Click **Phases** in the toolbar. Add and configure phases — at minimum one phase, or as many as the workflow needs.
   </Step>
   <Step>
-    ### Click Run Optimization
+    ### Click Run Phase(s)
 
-    The engine processes the order pool against available resources. For large batches this may take a few seconds.
+    The button label reflects the count (*Run 1 Phase(s)*, *Run 3 Phase(s)*). Phases execute in sequence; each result feeds the next.
   </Step>
   <Step>
     ### Review the proposed plan
 
-    The results panel shows proposed assignments:
-    - Each driver row shows which orders they've been assigned
-    - Total distance and estimated time per driver
-    - Orders flagged as unassigned (with reasons)
-    
-    Click any assignment to see the proposed route on the map.
+    The right panel switches to the Plan Viewer. Each driver/vehicle row shows their assigned orders, total distance, and estimated duration. The map draws the proposed routes. Click any assignment to inspect it.
+
+    Orders that could not be allocated appear in an **Unassigned** section with the reason (capacity exceeded, no matching skill, time window impossible, no available driver).
   </Step>
   <Step>
-    ### Adjust the plan
+    ### Adjust the plan (optional)
 
-    Before committing, you can:
-    - **Drag orders** between driver rows to manually reassign
-    - **Exclude orders** from the plan to leave them pending
-    - **Re-run** with different parameters
+    Drag orders between drivers, exclude orders, or re-run with different phase settings until the plan looks right.
   </Step>
   <Step>
     ### Commit
 
-    Click **Commit Plan**. The Orchestrator:
-    - Creates a **Manifest** for each driver with their ordered stop list
-    - Assigns the driver and vehicle to each order
-    - Dispatches orders to the Navigator app
-    
-    A confirmation shows the number of orders assigned and any that could not be allocated.
+    Click **Commit Plan**. The Orchestrator creates a **Manifest** per assigned driver, links the driver and vehicle to each order, and dispatches the orders to the Navigator app. A confirmation summarizes the result.
   </Step>
 </Steps>
 
+## Card Fields
+
+The **Card Fields** button in the toolbar opens a panel for choosing which fields appear on each order card in the pool and plan viewer (e.g. tracking number, scheduled time, customer, dropoff). You can configure separate field sets for the standard view, per Order Configuration, and metadata fields.
+
 ## Reviewing Results After Commit
 
-After committing, each driver's manifest appears in:
+Once committed, each driver's manifest appears in:
 
 - **Fleet-Ops → Resources → Drivers → [Driver] → Schedule** — the driver's order list for the day
 - **Navigator app** — drivers see their manifest as their active job queue
 
-Unassigned orders return to the pending pool and are available for the next Orchestrator run or manual assignment.
+Unassigned orders return to the pool and remain available for the next Orchestrator run or manual assignment.
 
-## Phase Builder
+## See Also
 
-For complex multi-phase operations (e.g., warehouse pickup first, then delivery routes), the Workbench includes a **Phase Builder** that lets you define optimization phases. Each phase runs a separate optimization pass — useful when you want to first consolidate pickups, then plan delivery routes.
-
-Access the Phase Builder using the **Phases** tab in the Workbench toolbar.
+- [Orchestrator Overview](/docs/fleet-ops/operations/orchestrator/overview) — modes, engines, and the planning model
+- [Vehicle Allocation](/docs/fleet-ops/operations/orchestrator/vehicle-allocation) — how vehicles are matched to orders
+- [Payload & Capacity Allocation](/docs/fleet-ops/operations/orchestrator/payload-capacity-allocation) — weight and volume constraints
+- [Orchestrator Settings](/docs/fleet-ops/settings/orchestrator) — defaults and global behavior

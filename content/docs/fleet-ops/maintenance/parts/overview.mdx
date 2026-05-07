@@ -7,21 +7,26 @@ description: Track parts inventory used in fleet maintenance — log parts used 
 
 **Parts** is the inventory management section for maintenance components. It tracks the parts available for vehicle and equipment maintenance — oil filters, brake pads, belts, fluids, and any other consumables used in work orders.
 
-![Parts inventory list — part name, SKU, supplier, cost per unit, quantity](/images/placeholder.png)
+![Parts inventory list — part name, SKU, supplier, cost per unit, quantity](/images/screenshots/fleet-ops/fleet-ops-parts-inventory.webp)
 
 ## Part Attributes
 
 | Field | Description |
 | :--- | :--- |
-| **Name** | Part name (e.g., "Oil Filter – Toyota Hiace") |
-| **Part Number** | Manufacturer part number or OEM code |
-| **SKU** | Internal stock keeping unit |
-| **Description** | Detailed description of the part |
-| **Supplier** | Vendor or supplier who provides this part |
-| **Unit Cost** | Cost per unit |
-| **Currency** | Currency of the unit cost |
-| **Quantity On Hand** | Current stock level (optional — for basic inventory tracking) |
-| **Minimum Stock Level** | Alert threshold — notify when stock drops below this |
+| `name` | Part name (e.g., *Oil Filter – Toyota Hiace*) |
+| `manufacturer` / `model` | Manufacturer name and OEM model |
+| `sku` | Internal stock keeping unit |
+| `serial_number` | Serial number, when applicable |
+| `barcode` | Barcode for scanning |
+| `description` | Detailed description of the part |
+| `vendor_uuid` | Vendor or supplier who provides this part |
+| `warranty_uuid` | Linked warranty record |
+| `unit_cost` / `msrp` / `currency` | Cost per unit, manufacturer's suggested retail price, and currency |
+| `quantity_on_hand` | Current stock level |
+| `reorder_point` | Alert threshold — when `quantity_on_hand` drops below this, the part is flagged `is_low_stock` and a low-stock alert can fire. Stored under the `specs` JSON; defaults to 5. |
+| `asset_type` / `asset_uuid` | Polymorphic link to the asset this part belongs to (e.g. a vehicle or piece of equipment) |
+| `photo_uuid` | Reference to an uploaded photo of the part |
+| `status` / `type` | Free-form classification fields |
 
 ## Creating a Part Record
 

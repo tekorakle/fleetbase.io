@@ -1,35 +1,97 @@
 ---
 title: Fleetbase UI
-description: The Fleetbase UI library — components, conventions, and patterns for building consistent interfaces in the Fleetbase Console.
+description: "@fleetbase/ember-ui is the Ember.js component library used to build Fleetbase Console extensions — components, helpers, modifiers, and services for consistent interfaces."
 ---
 
 # Fleetbase UI
 
-The **Fleetbase UI** library (`@fleetbase/ember-ui`) is the standard component library used across all Fleetbase extensions and the core console. It provides a set of pre-built, consistent UI components built on Ember.js that extension developers use to build interfaces that look and behave like native Fleetbase features.
+**`@fleetbase/ember-ui`** is the official component library for the Fleetbase Console. It is a core Ember.js addon that ships with every extension and provides the components, helpers, modifiers, and services you need to build a UI that looks and behaves like a native Fleetbase feature.
 
-## What's in this section
+When you scaffold a new extension with [`flb scaffold`](/docs/cli/extension-development/scaffold), `@fleetbase/ember-ui` is already declared as a dependency — you don't need to install it manually.
 
-This section covers:
+<Callout type="info">
+**Console-only.** This library is for building **interfaces inside the Fleetbase Console and extensions**.
+</Callout>
 
-- **Components** — Every component available in `@fleetbase/ember-ui`, with props, options, and usage examples
-- **Markup Conventions** — The standard patterns and conventions for structuring extension UI
-- **Mobile Apps** — The Navigator and Storefront mobile applications built on the Fleetbase platform
+## What's Included
 
-## Getting Started
+| Category | What it covers |
+| :--- | :--- |
+| **Components** | 200+ reusable UI components — buttons, inputs, modals, tables, layouts, calendars, builders |
+| **Helpers** | Template helpers — `format-currency`, `format-bytes`, `is-uuid`, permission checks, dot-prop access |
+| **Modifiers** | Element modifiers — `set-height`, `imask`, `background-url`, dimension constraints |
+| **Services** | Injectable services — `modals-manager`, `sidebar`, `dashboard`, `template-builder`, `resource-context-panel`, `leaflet` |
 
-To use the Fleetbase UI library in your extension, install it via npm:
+## What You Build With It
 
-```bash
-npm install @fleetbase/ember-ui
-```
+Extensions use ember-ui to render the entire surface area of a Fleetbase feature:
 
-Then import components as needed in your Ember.js templates:
+- **Console pages** — list views, detail views, settings panels
+- **Modals** — confirmation dialogs, edit forms, multi-step wizards
+- **Forms** — input groups, validation, model selects, file uploads
+- **Tables** — sortable, filterable, paginated resource grids
+- **Builders** — drag-and-drop report and template editors
+- **Dashboards** — KPI widgets, charts, activity feeds
+
+## Quick Example
+
+A typical Fleetbase form built with ember-ui components:
 
 ```handlebars
-{{!-- Example: using a Fleetbase UI button --}}
-<Button @type="primary" @onClick={{this.handleAction}}>
-  Save Changes
-</Button>
+<ContentPanel @title="Driver Details" @open={{true}}>
+  <InputGroup @name="Name" @value={{@driver.name}} @required={{true}} />
+
+  <InputGroup @name="Phone">
+    <PhoneInput @value={{@driver.phone}} />
+  </InputGroup>
+
+  <InputGroup @name="Vehicle">
+    <ModelSelect
+      @modelName="vehicle"
+      @selectedModel={{@driver.vehicle}}
+      @onChange={{fn (mut @driver.vehicle)}}
+    />
+  </InputGroup>
+
+  <div class="flex justify-end">
+    <Button
+      @type="primary"
+      @icon="save"
+      @text="Save"
+      @onClick={{this.saveDriver}}
+    />
+  </div>
+</ContentPanel>
 ```
 
-For a full walkthrough of building an extension UI, see the [Extension SDK](/docs/sdk) documentation.
+## Browse the Library
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Get Started</CardTitle>
+      <CardDescription className="text-xs">Install ember-ui in an extension and import your first component.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/getting-started/installation" className="text-sm text-primary hover:underline">Installation →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Forms & Inputs</CardTitle>
+      <CardDescription className="text-xs">Build forms with InputGroup, Select, ModelSelect, FileUpload, and more.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/inputs/input-group" className="text-sm text-primary hover:underline">Inputs →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Layout</CardTitle>
+      <CardDescription className="text-xs">Structure your pages with ContentPanel, Overlay, Drawer, and ResourceTabular.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/ui/layout/overview" className="text-sm text-primary hover:underline">Layout →</a>
+    </CardContent>
+  </Card>
+</div>
