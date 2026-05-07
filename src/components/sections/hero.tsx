@@ -33,6 +33,9 @@ export default async function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 px-3 transition-opacity hover:opacity-80"
+            data-cta-id="star_github"
+            data-cta-location="hero"
+            data-cta-variant="tertiary"
           >
             <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
             {stars} on GitHub
@@ -54,12 +57,24 @@ export default async function Hero() {
         {/* CTAs */}
         <div className="mt-2 flex flex-col gap-3 sm:flex-row">
           <Button size="lg" asChild>
-            <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+            <Link
+              href="https://console.fleetbase.io/onboard"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta-id="start_free_trial"
+              data-cta-location="hero"
+              data-cta-variant="primary"
+            >
               Start Free Trial
             </Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
-            <Link href="/pricing">
+            <Link
+              href="/pricing"
+              data-cta-id="view_pricing"
+              data-cta-location="hero"
+              data-cta-variant="secondary"
+            >
               View Pricing
             </Link>
           </Button>

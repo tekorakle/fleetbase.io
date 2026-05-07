@@ -1,41 +1,41 @@
 'use client';
 import { 
- Box, 
- Truck, 
- Navigation, 
- Store, 
- Package, 
- Shield, 
- Boxes, 
- Code, 
- Webhook, 
- BookOpen,
- Landmark,
- Users, 
- MessageSquare, 
- FileText, 
- Building2, 
- Handshake, 
- FileCheck, 
- Mail,
- Github,
- Utensils,
- ShoppingCart,
- Heart,
- Recycle,
- Ship,
- Smartphone,
- MapPin,
  BarChart3,
- Zap,
- UserCog,
- Briefcase,
- ClipboardList,
+ BookOpen,
+ Box, 
+ Boxes, 
  Brain,
+ Briefcase,
+ Building2, 
+ ClipboardList,
+ Code, 
+ FileCheck, 
  FileCode,
+ FileText, 
+ Github,
+ Handshake, 
+ Heart,
+ Landmark,
  Library,
- Terminal,
+ Mail,
+ MapPin,
+ MessageSquare, 
+ Navigation, 
+ Package, 
  Puzzle,
+ Recycle,
+ Shield, 
+ Ship,
+ ShoppingCart,
+ Smartphone,
+ Store, 
+ Terminal,
+ Truck, 
+ UserCog,
+ Users, 
+ Utensils,
+ Webhook, 
+ Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -433,8 +433,20 @@ export const NAV_LINKS: NavLink[] = [
  },
 ];
 
-const ACTION_BUTTONS = [
- { label: 'Start Free Trial', href: 'https://console.fleetbase.io/onboard', variant: 'default' as const },
+const ACTION_BUTTONS: Array<{
+ label: string;
+ href: string;
+ variant: 'default' | 'ghost' | 'outline';
+ ctaId: string;
+ external?: boolean;
+ icon?: React.ElementType;
+}> = [
+ {
+ label: 'Start Free Trial',
+ href: 'https://console.fleetbase.io/onboard',
+ variant: 'default',
+ ctaId: 'start_free_trial',
+ },
 ];
 
 const Navbar = () => {
@@ -615,7 +627,15 @@ const Navbar = () => {
  <div className="hidden flex-shrink-0 items-center justify-end gap-3 lg:flex">
  <ThemeToggle />
  <Button size="sm" variant="ghost" asChild>
- <Link href="https://github.com/fleetbase/fleetbase" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5">
+ <Link
+ href="https://github.com/fleetbase/fleetbase"
+ target="_blank"
+ rel="noopener noreferrer"
+ className="flex items-center gap-1.5"
+ data-cta-id="star_github"
+ data-cta-location="navbar"
+ data-cta-variant="tertiary"
+ >
  <Github className="size-4" />
  <span>Star us</span>
  <span className="inline-flex items-center rounded-full bg-muted px-2 py-0.5 text-xs font-medium tabular-nums">{ghStars}</span>
@@ -628,8 +648,11 @@ const Navbar = () => {
  variant={button.variant}
  asChild
  >
- <Link 
+ <Link
  href={button.href}
+ data-cta-id={button.ctaId}
+ data-cta-location="navbar"
+ data-cta-variant="primary"
  {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
  >
  {button.icon && <button.icon className="size-4 mr-2" />}
@@ -785,9 +808,12 @@ const Navbar = () => {
  asChild
  className="h-12 flex-1 rounded-sm transition-all hover:scale-105"
  >
- <Link 
- href={button.href} 
+ <Link
+ href={button.href}
  onClick={() => setIsMenuOpen(false)}
+ data-cta-id={button.ctaId}
+ data-cta-location="navbar_mobile"
+ data-cta-variant="primary"
  {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
  >
  {button.icon && <button.icon className="size-4 mr-2" />}

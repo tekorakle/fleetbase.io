@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -139,7 +140,14 @@ const Features = ({ className }: { className?: string }) => {
  className="bg-[#4A90E2] hover:bg-[#3D7DC2] text-white shadow-md px-8 py-6 text-lg" 
  asChild
  >
- <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+ <Link
+ href="https://console.fleetbase.io/onboard"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="start_free_trial"
+ data-cta-location="features"
+ data-cta-variant="primary"
+ >
  See It In Action
  </Link>
  </Button>

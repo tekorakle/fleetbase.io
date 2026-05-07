@@ -123,14 +123,28 @@ const Footer = () => {
 
  <div className="mx-auto flex max-w-sm justify-center gap-4.5">
  <Button className="flex-1" asChild>
- <Link href="https://console.fleetbase.io/onboard">Try Fleetbase Cloud</Link>
+ <Link
+ href="https://console.fleetbase.io/onboard"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="start_free_trial"
+ data-cta-location="footer"
+ data-cta-variant="primary"
+ >
+ Try Fleetbase Cloud
+ </Link>
  </Button>
  <Button
  variant="secondary"
  className="border-input bg-accent flex-1 border"
  asChild
  >
- <Link href="/pricing">
+ <Link
+ href="/pricing"
+ data-cta-id="view_pricing"
+ data-cta-location="footer"
+ data-cta-variant="secondary"
+ >
  View Pricing
  </Link>
  </Button>

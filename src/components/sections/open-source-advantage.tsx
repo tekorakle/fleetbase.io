@@ -142,6 +142,9 @@ const OpenSourceAdvantage = () => {
                   href="https://github.com/fleetbase/fleetbase"
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-cta-id="view_github"
+                  data-cta-location="open_source_advantage"
+                  data-cta-variant="primary"
                 >
                   <GitBranch className="mr-2 h-4 w-4" />
                   View on GitHub

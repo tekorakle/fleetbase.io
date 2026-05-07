@@ -2,7 +2,8 @@
 
 import { ChevronLeft, Copy } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { usePathname } from 'next/navigation';
+import { useRef, useState } from 'react';
 import { FaGoogle } from 'react-icons/fa6';
 import { toast } from 'sonner';
 
@@ -13,15 +14,31 @@ import {
  InputOTPSlot,
 } from '@/components/ui/input-otp';
 import { Separator } from '@/components/ui/separator';
+import { track } from '@/lib/analytics/posthog';
 
 export default function OTPPageContent() {
  const [value, setValue] = useState('');
+ const pathname = usePathname() ?? '/otp';
+ const startedRef = useRef(false);
+ const submittedRef = useRef(false);
+
+ const handleChange = (next: string) => {
+ setValue(next);
+ if (!startedRef.current && next.length > 0) {
+ startedRef.current = true;
+ track('form_started', { form_id: 'otp', pathname });
+ }
+ if (!submittedRef.current && next.length === 6) {
+ submittedRef.current = true;
+ track('form_submitted', { form_id: 'otp', pathname });
+ }
+ };
 
  const handlePasteCode = async () => {
  try {
  const text = await navigator.clipboard.readText();
  const digits = text.replace(/\D/g, '').slice(0, 6);
- setValue(digits);
+ handleChange(digits);
  } catch (err) {
  toast.error('Failed to read clipboard');
  console.error('Failed to read clipboard:', err);
@@ -62,7 +79,7 @@ export default function OTPPageContent() {
  <InputOTP
  maxLength={6}
  value={value}
- onChange={(value) => setValue(value)}
+ onChange={handleChange}
  containerClassName="w-full max-w-xs mb-4"
  >
  <InputOTPGroup className="w-full justify-between gap-2">

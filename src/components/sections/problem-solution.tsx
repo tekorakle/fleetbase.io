@@ -1,7 +1,8 @@
 'use client';
+import { CheckCircle2,XCircle } from 'lucide-react';
 import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
-import { XCircle, CheckCircle2 } from 'lucide-react';
 
 const problems = [
  'Manual dispatch and spreadsheet-based planning',
@@ -66,7 +67,16 @@ export default function ProblemSolution() {
  ))}
  </ul>
  <Button asChild>
- <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">Start Free Trial</Link>
+ <Link
+ href="https://console.fleetbase.io/onboard"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="start_free_trial"
+ data-cta-location="problem_solution"
+ data-cta-variant="primary"
+ >
+ Start Free Trial
+ </Link>
  </Button>
  </div>
  </div>
