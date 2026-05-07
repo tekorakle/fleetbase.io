@@ -68,6 +68,21 @@ If you skip step 2, the generator picks the collection up anyway with sluggified
 
 Alongside each `<Request>.request.yaml`, the generator looks for these optional companion files. All are picked up automatically — no config or registration needed.
 
+### `.resources/definition.yaml` (per resource folder)
+
+The resource-level intro that appears as the paragraph under the page title. Lives at `<ResourceFolder>/.resources/definition.yaml`. The generator reads its `description:` and surfaces it in `<ResourceHeader>` (left column, under the title).
+
+```yaml
+$kind: collection
+description: |-
+  Places represent geographic locations — addresses, coordinates, or named
+  landmarks. They serve as pickup/dropoff points on orders, the boundaries
+  of service areas, and saved locations on customer profiles.
+order: 1000
+```
+
+This is the right place for **resource-page** descriptions (the intro that frames the whole resource). The complementary `.resources/object.yaml` `description:` field is for the **model object** description (rendered inside the "The X object" section). They're often similar in spirit but live in different sections of the page — keep them distinct so each section reads naturally on its own.
+
 ### `<Request>.params.yaml`
 
 Body-parameter descriptions for the request. Renders as a `<ParamTable title="Body parameters">` above the code example.

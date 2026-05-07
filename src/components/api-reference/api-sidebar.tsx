@@ -66,7 +66,7 @@ export function ApiSidebar() {
     <nav
       ref={navRef}
       aria-label="API reference"
-      className="api-sidebar w-full text-xs"
+      className="api-sidebar w-full text-[13px]"
     >
       {/* Top — intro/conceptual sections */}
       <ul className="space-y-px">
@@ -91,7 +91,7 @@ export function ApiSidebar() {
       {/* Resource groups */}
       {apiNav.resourceGroups.map((group) => (
         <div key={group.title} className="mt-4">
-          <div className="mb-1 px-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/80">
+          <div className="mb-1 px-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/80">
             {group.title}
           </div>
           <ul className="space-y-px">
@@ -171,14 +171,14 @@ function EndpointSidebarItem({
       <a
         href={endpointHref(resource, endpoint)}
         className={cn(
-          'flex items-center gap-2 rounded-md px-2 py-0.5 text-[11px] text-foreground/65 transition-colors hover:bg-muted/60 hover:text-foreground',
+          'flex items-center gap-2 rounded-md px-2 py-1 text-[12px] text-foreground/65 transition-colors hover:bg-muted/60 hover:text-foreground',
           isActive && 'bg-primary/10 font-medium text-primary',
         )}
       >
         {endpoint.method && (
           <MethodBadge
             method={endpoint.method}
-            className="text-[9px]"
+            className="text-[10px]"
           />
         )}
         <span className="truncate">{endpoint.title}</span>

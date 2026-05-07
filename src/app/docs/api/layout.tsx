@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         tree={emptyTree}
         {...baseOptions}
         nav={{ enabled: false, title: undefined }}
-        containerProps={{ className: 'md:[&_#nd-page_article]:pt-6' }}
+        containerProps={{ className: 'md:[&_#nd-page_article]:pt-6 !pt-8' }}
         sidebar={{
           collapsible: false,
           banner: (

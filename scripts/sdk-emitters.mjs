@@ -95,6 +95,7 @@ export function emitJs({
   method,
   fullUrl,
   body,
+  queryParams,
   endpointKind,
   endpointAction,
   resourceFolder,
@@ -136,14 +137,18 @@ export function emitJs({
         ``,
         `const record = await ${js.client}.${store}.findRecord(id);`,
       ].join('\n');
-    case 'query':
+    case 'query': {
+      // Prefer the structured queryParams block (the documented inputs to a
+      // list/search call) over the request body, which is empty for GET.
+      const arg = formatJsObjectArg(queryParams ?? {});
       return [
         `import Fleetbase from '${js.pkg}';`,
         ``,
         `const ${js.client} = new Fleetbase('${KEY_PLACEHOLDER}');`,
         ``,
-        `const records = await ${js.client}.${store}.query(${body ? formatJsArg(body) : '{}'});`,
+        `const records = await ${js.client}.${store}.query(${arg});`,
       ].join('\n');
+    }
     case 'update':
       return [
         `import Fleetbase from '${js.pkg}';`,
@@ -163,6 +168,22 @@ export function emitJs({
     default:
       return emitJsRaw({ method, fullUrl, body });
   }
+}
+
+/** Format a key→value map as a JS object literal. Empty → `{}`. */
+function formatJsObjectArg(map) {
+  const keys = Object.keys(map ?? {});
+  if (keys.length === 0) return '{}';
+  const lines = keys.map((k) => {
+    const v = map[k];
+    return `  ${jsKeyEscape(k)}: ${JSON.stringify(v ?? '')}`;
+  });
+  return `{\n${lines.join(',\n')}\n}`;
+}
+
+function jsKeyEscape(k) {
+  // Plain identifiers can render unquoted; everything else needs quoting.
+  return /^[a-zA-Z_$][\w$]*$/.test(k) ? k : JSON.stringify(k);
 }
 
 function emitJsRaw({ method, fullUrl, body }) {
@@ -205,6 +226,7 @@ export function emitPhp({
   method,
   fullUrl,
   body,
+  queryParams,
   endpointKind,
   endpointAction,
   resourceFolder,
@@ -230,13 +252,17 @@ export function emitPhp({
         ``,
         `$record = $${php.client}->${store}->findRecord($id);`,
       ].join('\n');
-    case 'query':
+    case 'query': {
+      // Prefer the structured queryParams block (the documented inputs to a
+      // list/search call) over the request body, which is empty for GET.
+      const arg = formatPhpAssocArg(queryParams ?? {});
       return [
         `<?php`,
         `$${php.client} = new \\Fleetbase\\Sdk\\Fleetbase('${KEY_PLACEHOLDER}');`,
         ``,
-        `$records = $${php.client}->${store}->query(${body ? formatPhpArg(body) : '[]'});`,
+        `$records = $${php.client}->${store}->query(${arg});`,
       ].join('\n');
+    }
     case 'update':
       return [
         `<?php`,
@@ -292,6 +318,24 @@ function formatPhpArg(body) {
   } catch {
     return `'${body.replace(/'/g, "\\'")}'`;
   }
+}
+
+/** Format a key→value map as a PHP associative array literal. Empty → `[]`. */
+function formatPhpAssocArg(map) {
+  const keys = Object.keys(map ?? {});
+  if (keys.length === 0) return '[]';
+  const lines = keys.map((k) => {
+    const v = map[k];
+    return `    '${k}' => ${phpScalarLiteral(v)}`;
+  });
+  return `[\n${lines.join(',\n')}\n]`;
+}
+
+function phpScalarLiteral(value) {
+  if (value === null || value === undefined) return "''";
+  if (typeof value === 'string') return `'${value.replace(/'/g, "\\'")}'`;
+  if (typeof value === 'boolean') return value ? 'true' : 'false';
+  return String(value);
 }
 
 function phpArrayLiteral(value, indent) {

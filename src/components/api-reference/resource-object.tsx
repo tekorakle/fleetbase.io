@@ -68,7 +68,10 @@ export function ResourceObject({
       {children}
 
       <div data-api-aside className="not-prose my-4 lg:my-0 lg:flex lg:h-full lg:flex-col">
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm lg:flex-1">
+        <div
+          data-api-panel="object"
+          className="flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm lg:max-h-full"
+        >
           <div className="shrink-0 border-b border-border/40 bg-muted/30 px-2.5 py-1">
             <span className="font-mono text-[10px] uppercase tracking-wider text-muted-foreground">
               The {name} object
