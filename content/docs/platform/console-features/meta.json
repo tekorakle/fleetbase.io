@@ -1,0 +1,11 @@
+{
+  "title": "Console Features",
+  "pages": [
+    "navigation",
+    "internationalization",
+    "dashboards-and-widgets",
+    "custom-fields",
+    "chat",
+    "notifications"
+  ]
+}

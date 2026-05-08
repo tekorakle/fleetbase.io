@@ -1,0 +1,33 @@
+---
+title: Location Settings
+description: Manage your active store's pickup locations and per-location operating hours.
+---
+
+# Location Settings
+
+The **Locations** settings page is where you add, edit, and remove the **pickup addresses** for the currently active store. It is also where you set per-location **operating hours**.
+
+Navigate to **Storefront → Settings → Locations**. Make sure the correct store is selected via the store switcher first — every location you create here belongs to the active store.
+
+## What This Page Manages
+
+| Item | Notes |
+| :--- | :--- |
+| **Store Locations** | One row per pickup address. Each location has a name, address, latitude/longitude, and a polymorphic place reference |
+| **Operating Hours** | Per-location time blocks via the schedule manager (one row per day per block in `store_hours`) |
+
+This is the only place store locations are managed. There is no per-store "Locations" tab inside the store detail view.
+
+## Adding a Location
+
+See [Store Locations](/docs/storefront/stores/store-locations) for the full step-by-step.
+
+## Setting Operating Hours
+
+See [Operating Hours](/docs/storefront/stores/operating-hours).
+
+## Service Areas and Zones
+
+Storefront does **not** expose a service area or zone selector at the **store** or **store location** level. Service area / zone restrictions are configured per **food truck** instead — see [Food Trucks](/docs/storefront/stores/food-trucks).
+
+If you need delivery boundary enforcement for a fixed (non-mobile) store, use Fleet-Ops itself: configure your Service Rates and Service Areas in Fleet-Ops so that out-of-range customers receive an unavailable response when requesting a [Service Quote](/docs/storefront/orders/service-quotes).

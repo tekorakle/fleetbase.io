@@ -4,6 +4,6 @@ import Logo from '@/components/layout/logo';
 
 export const baseOptions: BaseLayoutProps = {
   nav: {
-    title: <Logo className="text-lg" iconClassName="w-6" noLink />,
+    title: <Logo className="text-lg" iconClassName="w-6" />,
   },
 };

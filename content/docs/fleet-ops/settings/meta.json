@@ -1,0 +1,14 @@
+{
+  "title": "Settings",
+  "pages": [
+    "navigator-app",
+    "payments",
+    "notifications",
+    "routing",
+    "map",
+    "orchestrator",
+    "scheduling",
+    "custom-fields",
+    "avatars"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "title": "Platform",
+  "pages": [
+    "index",
+    "...platform",
+    "---Community & Support---",
+    "...community",
+    "---Contributing---",
+    "[Contributing Guide](/docs/contributing)",
+    "[Translations](/docs/contributing/translations)",
+    "[Reporting Issues](/docs/contributing/reporting-issues)"
+  ]
+}
+

@@ -1,0 +1,48 @@
+---
+title: Order Fulfillment
+description: Manage the full inbound and outbound order fulfillment lifecycle within Pallet.
+---
+
+# Order Fulfillment
+
+The **Fulfillment** module in Pallet handles the movement of goods into and out of your [Warehouses](/docs/pallet/warehouses).
+
+It provides the tools necessary to manage both inbound stock (receiving goods from suppliers) and outbound stock (picking and packing orders for customers).
+
+## Inbound Fulfillment (Receiving)
+
+Inbound fulfillment is the process of receiving new inventory into a warehouse.
+
+This process is typically driven by a **[Purchase Order](/docs/pallet/fulfillment/purchase-orders)**.
+
+1. You create a Purchase Order to request goods from a [Supplier](/docs/pallet/suppliers).
+2. When the goods arrive at the warehouse, a worker uses Pallet to "Receive" the Purchase Order.
+3. The worker verifies the quantities received against the quantities ordered.
+4. Pallet automatically updates the [Inventory](/docs/pallet/inventory) levels, adding the new stock to the designated receiving [Bin](/docs/pallet/warehouses/zones-aisles-racks-bins).
+5. The stock can then be transferred from the receiving dock to its final storage location.
+
+## Outbound Fulfillment (Shipping)
+
+Outbound fulfillment is the process of picking, packing, and shipping goods to fulfill a customer's order.
+
+This process is driven by a **[Sales Order](/docs/pallet/fulfillment/sales-orders)**.
+
+If you are using [Storefront](/docs/storefront), a Sales Order is automatically generated in Pallet whenever a customer completes checkout.
+
+The outbound fulfillment process involves several steps:
+
+### 1. Order Allocation
+When a Sales Order is created, Pallet checks the current [Inventory](/docs/pallet/inventory) levels. If sufficient stock is available, Pallet "allocates" the stock to the order. This prevents the same item from being sold twice.
+
+### 2. [Pick Lists](/docs/pallet/fulfillment/pick-lists)
+Pallet generates a Pick List for the warehouse workers. The Pick List details exactly which items need to be picked, and crucially, *where* they are located (Zone, Aisle, Rack, Bin).
+
+Pallet optimizes the Pick List to minimize the distance the worker needs to travel through the warehouse.
+
+### 3. [Waves & Batches](/docs/pallet/fulfillment/waves-and-batches)
+For high-volume operations, Pallet supports Wave Picking and Batch Picking. Instead of picking one order at a time, a worker can pick items for multiple orders simultaneously, significantly increasing efficiency.
+
+### 4. Packing & Shipping
+Once the items are picked, they are brought to a packing station. The worker verifies the items, packs them into boxes, and marks the Sales Order as "Packed".
+
+At this point, the order is ready for dispatch. If you are using [FleetOps](/docs/fleetops), Pallet can automatically hand the order over to the dispatch engine to assign a driver for final-mile delivery.

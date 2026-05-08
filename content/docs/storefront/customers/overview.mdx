@@ -1,0 +1,84 @@
+---
+title: Customers
+description: Manage customer accounts in your store or network — order history, contact details, addresses, and the API surface for guest and registered customers.
+---
+
+# Customers
+
+A **Customer** is an end-user registered with your store or network. Customer records track contact information, saved delivery addresses, order history, and API authentication tokens.
+
+Navigate to **Storefront → Customers** to manage your customer base.
+
+## Customer Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Customer's full name |
+| **Email** | Contact email |
+| **Phone** | Mobile phone number (used for SMS code login) |
+| **Photo** | Profile photo |
+| **Addresses** | Saved delivery addresses (`places`) |
+| **Order History** | All Fleet-Ops orders placed through this store or network |
+| **Slug** | Auto-generated URL slug |
+| **Meta** | Arbitrary key/value metadata |
+
+The Customer API resource exposes `id`, `name`, `email`, `phone`, `address`, `addresses`, `photo_url`, `meta`, `slug`, `orders` (count), `created_at`, `updated_at`, and a `token` for authenticated sessions.
+
+## Managing Customers
+
+From **Storefront → Customers** you can:
+
+- **View** a customer's full profile including order history and saved addresses
+- **Edit** contact information (name, email, phone)
+- **Delete** a customer account — removes the account and saved data; historical orders are retained for record-keeping
+
+## Guest vs. Registered Customers
+
+### Guest Checkout
+
+If a customer completes an order without creating an account, Storefront still creates a customer record with the name, email, and phone provided at checkout. Guest customers:
+- Cannot save delivery addresses for future use
+- Cannot log in to view order history
+- Cannot submit reviews (only authenticated customers can review)
+
+### Registered Customers
+
+Registered customers authenticate via the API (see [Customer Authentication](/docs/storefront/customers/authentication)) and benefit from:
+- Faster checkout with saved delivery addresses
+- Access to order history and tracking
+- Ability to submit product and store reviews
+
+## Customer Reviews (API only)
+
+Customers can leave reviews on both products and stores via the API. Reviews include a 1–5 star **rating**, optional **text content**, and optional **media uploads** (photo or video). Other customers can **vote** on reviews.
+
+<Callout type="info">
+Reviews are currently exposed via the public API only. There is no console UI for browsing or moderating reviews — this is on the roadmap. To enable reviews on a network, toggle `options.reviews_enabled` in [Network Settings](/docs/storefront/networks/overview#network-settings).
+</Callout>
+
+| Endpoint | Purpose |
+| :--- | :--- |
+| `GET /storefront/v1/reviews` | List reviews for a subject (product or store) |
+| `POST /storefront/v1/reviews` | Submit a review (authenticated customer) |
+| `DELETE /storefront/v1/reviews/{id}` | Remove a review |
+
+## Customer API
+
+If you are building a custom frontend, use the Storefront API to manage customers. Authenticated customer requests pass the customer's session token in the `Customer-Token` header (the storefront key still goes in `Authorization: Bearer`).
+
+| Endpoint | Purpose |
+| :--- | :--- |
+| `POST /storefront/v1/customers` | Register a new customer (requires a verification code from `request-creation-code` first) |
+| `POST /storefront/v1/customers/login` | Email/phone + password login |
+| `POST /storefront/v1/customers/login-with-sms` | SMS code login |
+| `POST /storefront/v1/customers/verify-code` | Verify the SMS code |
+| `POST /storefront/v1/customers/login-with-apple` | Apple Sign-In |
+| `POST /storefront/v1/customers/login-with-google` | Google Sign-In |
+| `POST /storefront/v1/customers/login-with-facebook` | Facebook Sign-In |
+| `GET /storefront/v1/customers/{id}` | Get customer profile |
+| `PUT /storefront/v1/customers/{id}` | Update profile |
+| `POST /storefront/v1/customers/register-device` | Register a device token for push notifications |
+| `POST /storefront/v1/customers/account-closure` | Begin account closure flow (App Store compliance) |
+| `POST /storefront/v1/customers/confirm-account-closure` | Confirm and close the account |
+
+See [Customer Authentication](/docs/storefront/customers/authentication) for the full login flow including verification codes, social login, and device registration.

@@ -1,0 +1,119 @@
+---
+title: Extension Development
+description: Build custom extensions for Fleetbase. Add features, integrations, and entire modules using the Universe service architecture in @fleetbase/ember-core and the Laravel package layer in fleetbase/core-api.
+---
+
+# Extension Development
+
+Fleetbase is designed from the ground up to be modular. The core console and API ship a small surface; everything else — Fleet-Ops, Storefront, Pallet, Ledger — is an extension built against the same APIs you'll use to build your own.
+
+This section is your reference for building those extensions.
+
+<Callout type="info">
+**Two halves, one extension.** A Fleetbase extension is a single repository that ships **both** an Ember.js addon (the console UI) and a Laravel package (the API). The same `flb scaffold` command generates both halves wired together. See [Architecture](/docs/extension-development/architecture/overview).
+</Callout>
+
+## What Powers Your Extension
+
+Two foundational packages give your extension everything it needs — services, contracts, base classes, and helpers. You import from them; you don't modify them.
+
+| Package | What it provides |
+| :--- | :--- |
+| **`@fleetbase/ember-core`** | Ember.js addon — the `UniverseService` and its sub-services, contracts (`MenuItem`, `Widget`, `Hook`, `ExtensionComponent`), shared host services (`fetch`, `store`, `notifications`, `currentUser`, …), decorators, and a base adapter for talking to the API |
+| **`fleetbase/core-api`** | Composer package — the `CoreServiceProvider` your extension extends, route macros (`fleetbaseRoutes`, `fleetbaseRestRoutes`), expansions, observer auto-registration, traits (`HasUuid`, `HasPublicId`), the `NotificationRegistry`, `SmsService`, and the SocketCluster broadcaster |
+
+The console wires both halves together at boot — you write your extension against these packages, scaffold links it into a running Fleetbase instance, and your features show up.
+
+## What You'll Build
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Get Started</CardTitle>
+      <CardDescription className="text-xs">Scaffold a new extension, link it into your local Fleetbase, and run it for the first time.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/getting-started/quickstart" className="text-sm text-primary hover:underline">Quickstart →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Architecture</CardTitle>
+      <CardDescription className="text-xs">How an extension is structured — addon + server, manifest, and engine loading.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/architecture/overview" className="text-sm text-primary hover:underline">Architecture →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Universe Service</CardTitle>
+      <CardDescription className="text-xs">The frontend extensibility API — register menu items, components, widgets, and hooks via `addon/extension.js`.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/universe/overview" className="text-sm text-primary hover:underline">Universe Service →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Frontend Development</CardTitle>
+      <CardDescription className="text-xs">Routes, templates, and components inside your Ember engine.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/frontend/routing" className="text-sm text-primary hover:underline">Frontend →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Backend Development</CardTitle>
+      <CardDescription className="text-xs">Service providers, routes, controllers, models, migrations, expansions, and observers.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/backend/service-provider" className="text-sm text-primary hover:underline">Backend →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Publishing</CardTitle>
+      <CardDescription className="text-xs">Bundle, version, and publish your extension to the Fleetbase Extension Registry.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/extension-development/publishing/overview" className="text-sm text-primary hover:underline">Publishing →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## How Extensions Plug Into the Console
+
+Every modern extension declares a single **`addon/extension.js`** file at the root of its addon. The file exports a default object with a `setupExtension(app, universe)` hook — the console calls it once at boot.
+
+```js
+// addon/extension.js
+import { MenuItem, ExtensionComponent } from '@fleetbase/ember-core/contracts';
+
+export default {
+    setupExtension(app, universe) {
+        const menuService = universe.getService('menu');
+
+        menuService.registerHeaderMenuItem('My Extension', 'console.my-extension', {
+            icon: 'puzzle-piece',
+            description: 'My custom logistics feature.',
+        });
+    },
+};
+```
+
+The `universe` parameter is the [`UniverseService`](/docs/extension-development/universe/overview) — the central registry for the whole platform. Through it you reach the menu, registry, widget, and hook sub-services.
+
+See [Universe Service](/docs/extension-development/universe/overview) for the full API.
+
+## Where to Start
+
+If this is your first extension, follow the [Quickstart](/docs/extension-development/getting-started/quickstart) — it walks through scaffolding, linking to a running Fleetbase, and the first round-trip to the API.
+
+If you've scaffolded one already and want depth on a specific topic, jump to:
+
+- [Universe Service →](/docs/extension-development/universe/overview)
+- [Frontend Routing →](/docs/extension-development/frontend/routing)
+- [Backend Service Provider →](/docs/extension-development/backend/service-provider)
+- [Publishing →](/docs/extension-development/publishing/overview)

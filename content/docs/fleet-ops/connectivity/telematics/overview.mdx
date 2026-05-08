@@ -1,0 +1,101 @@
+---
+title: Telematics
+description: Connect telematics providers to Fleet-Ops — enter API credentials, discover devices, link them to vehicles, and start receiving live telemetry data.
+---
+
+# Telematics
+
+**Telematics** devices are modems installed in vehicles that continuously transmit GPS position, engine diagnostics, and sensor data to a telematics provider's cloud platform. Fleet-Ops connects to supported providers via API to ingest this data in real time.
+
+Navigate to **Fleet-Ops → Connectivity → Telematics**.
+
+![Telematics list — provider name, connection status, linked device count, last sync time](/images/screenshots/fleet-ops/fleet-ops-flespi-telematics-integration.webp)
+
+## Supported Providers
+
+| Provider | Data Available |
+| :--- | :--- |
+| **Flespi** | GPS position, speed, OBD-II (RPM, fuel, engine hours), sensor data, event streams |
+| **Geotab** | GPS position, engine diagnostics, fault codes, driver behavior scoring |
+| **Samsara** | GPS position, dashcam clips, HOS compliance, fuel efficiency |
+| **Generic Webhook** | Any provider that can POST telemetry data to a custom endpoint |
+
+## Setting Up a Telematics Integration
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Connectivity → Telematics**.
+  </Step>
+  <Step>
+    Click **+ New Telematics**.
+  </Step>
+  <Step>
+    Select the **Provider** from the list.
+  </Step>
+  <Step>
+    Enter the provider's **API credentials**:
+    - **Flespi** — Flespi token
+    - **Geotab** — database name, username, session ID
+    - **Samsara** — API access token
+  </Step>
+  <Step>
+    Click **Test Connection** to verify the credentials are valid and Fleet-Ops can reach the provider.
+  </Step>
+  <Step>
+    Click **Save**. Fleet-Ops begins syncing device data from the provider.
+  </Step>
+</Steps>
+
+## Discovering and Linking Devices
+
+Once the telematics integration is connected, Fleet-Ops can discover the devices registered in the provider's account:
+
+<Steps>
+  <Step>
+    Open the telematics record and click the **Devices** tab.
+  </Step>
+  <Step>
+    Click **Discover Devices** — Fleet-Ops fetches the list of registered devices from the provider.
+  </Step>
+  <Step>
+    For each discovered device, click **Link to Vehicle** and select the vehicle it is installed in.
+  </Step>
+  <Step>
+    Save. Fleet-Ops now associates telemetry data from this device with the selected vehicle.
+  </Step>
+</Steps>
+
+## Telematics Device Record
+
+Each telematics integration includes device records:
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Device name (from provider) |
+| **Provider** | Which telematics provider manages this device |
+| **Model** | Modem model (e.g., Teltonika FMB920) |
+| **Serial Number** | Manufacturer serial |
+| **IMEI** | International Mobile Equipment Identity number |
+| **SIM ICCID** | SIM card identifier |
+| **Firmware Version** | Current firmware |
+| **Status** | active, inactive, offline |
+
+## Live Data Flow
+
+Once a device is linked to a vehicle:
+
+1. The provider sends position updates to Fleet-Ops (via webhook or API polling)
+2. Fleet-Ops stores the position as a `Position` record for the vehicle
+3. The position is broadcast to the live map via SocketCluster
+4. OBD-II and sensor data is stored as `DeviceEvent` records
+5. Alerts (engine fault codes, geofence crossings) can trigger Issues or notifications
+
+## Data Sync Frequency
+
+Position data frequency depends on the telematics device configuration:
+
+- High-frequency: every 5–30 seconds (urban delivery)
+- Standard: every 60 seconds (highway transport)
+- Parked mode: every 5–10 minutes (when stationary)
+
+Configure this in your telematics provider's device settings, not in Fleet-Ops.

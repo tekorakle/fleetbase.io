@@ -1,0 +1,129 @@
+---
+title: Payment Gateways
+description: Configure payment gateways for Storefront — Stripe, Braintree, QPay, Manual, and Cash on Delivery.
+---
+
+# Payment Gateways
+
+To accept payments, configure one or more **Payment Gateways** in your store or network settings. Storefront supports four gateway schemas, plus a separate Cash on Delivery toggle.
+
+Navigate to **Storefront → Settings → Gateways** to configure gateways.
+
+## Supported Gateways
+
+| Gateway | Type | Notes |
+| :--- | :--- | :--- |
+| **Stripe** | Card / digital wallet | Global; supports test mode, Apple Pay, Google Pay |
+| **Braintree** | Card / PayPal | Global PayPal/Braintree |
+| **QPay** | Bank-app invoice | Mongolian banking ecosystem |
+| **Manual** | Offline / wire | For invoicing, bank transfer, or any custom payment instructions |
+
+**Cash on Delivery** is **not** in the gateway picker — it is enabled separately by toggling `options.cod_enabled` on the store or network.
+
+## Adding a Gateway
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Settings → Gateways**.
+  </Step>
+  <Step>
+    Click **New Gateway**.
+  </Step>
+  <Step>
+    Select the gateway type.
+  </Step>
+  <Step>
+    Enter the credentials and configuration (see per-gateway tables below).
+  </Step>
+  <Step>
+    Toggle **Sandbox** on while testing.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+Every gateway has these common fields:
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Display label shown to customers (e.g., "Card") |
+| **Code** | Immutable identifier (set once, derived from the schema) |
+| **Callback URL** | URL the gateway calls after payment (you fill this in based on the provider's docs) |
+| **Return URL** | URL the customer is redirected to after payment |
+| **Sandbox** | Toggle test mode |
+
+## Stripe
+
+| Field | Description |
+| :--- | :--- |
+| **Publishable Key** | Stripe public key (starts with `pk_test_` or `pk_live_`) |
+| **Secret Key** | Stripe secret key (starts with `sk_test_` or `sk_live_`) |
+| **Show Postal Code** | Whether the card field requires a postal code |
+| **iDEAL Payment** | Enable the iDEAL payment method (Netherlands) |
+| **FPX Payment** | Enable the FPX payment method (Malaysia) |
+
+### Stripe Payment Flow
+
+1. Frontend calls [`/checkouts/before`](/docs/storefront/orders/checkout) with the Stripe gateway selected
+2. Storefront creates a Stripe `PaymentIntent` and returns the `clientSecret`
+3. Frontend confirms the payment with the Stripe SDK (PaymentSheet or CardField)
+4. Frontend calls [`/checkouts/capture`](/docs/storefront/orders/checkout) with the same token
+5. Storefront verifies the PaymentIntent status with Stripe and finalizes the order
+
+Raw card numbers never touch the Fleetbase API — PCI compliance is maintained.
+
+## Braintree
+
+| Field | Description |
+| :--- | :--- |
+| **Merchant ID** | Braintree merchant ID |
+| **Public Key** | Braintree API public key |
+| **Private Key** | Braintree API private key |
+| **Tokenization Key** | Client-side tokenization key (optional) |
+
+## QPay
+
+| Field | Description |
+| :--- | :--- |
+| **Username** | QPay merchant username |
+| **Password** | QPay merchant password |
+| **Invoice ID** | QPay invoice type code |
+| **Ebarimt Invoice ID** | Ebarimt receipt ID for tax reporting |
+| **District Code** | Tax district code |
+
+QPay payments are completed via bank-app deep links. After the customer pays in their bank's app, QPay POSTs to the public callback `POST /storefront/v1/checkouts/capture-qpay`, which Storefront uses to capture the order.
+
+## Manual
+
+The Manual gateway is for offline payment methods (bank transfer, invoicing, in-person handoff). Configure it with whatever fields your workflow needs:
+
+| Field | Description |
+| :--- | :--- |
+| **Public Key**, **Private Key**, **Key ID**, **Key Secret** | Generic credential slots — use as needed |
+| **Email** | Contact email shown to customers |
+| **Name** | Receiver name |
+| **Details** | Free-form payment details |
+| **Payment Instructions** | Instructions surfaced to the customer at checkout |
+
+## Cash on Delivery
+
+To enable COD:
+
+1. Open the store or network's general settings
+2. Toggle **Enable cash on delivery** (`options.cod_enabled`) to on
+3. Save
+
+When enabled, "Cash" appears as a payment option at checkout alongside any configured gateways. COD orders are created without payment capture — the driver collects cash and confirms receipt in the Navigator app.
+
+## Sandbox Mode
+
+All gateways support a **Sandbox** toggle. Enable sandbox during development — no real charges are made. Switch to live credentials before going to production. Cash on Delivery has no sandbox concept — payment is collected in person.
+
+## Gateway per Store vs. per Network
+
+Gateways can be configured at the **store level** or the **network level**:
+- Store-level gateways are available only to that store's checkout
+- Network-level gateways are shared by every store in the network
+
+Customers browsing a network see the gateway options configured on the network. Gateways are not implicitly inherited from store to network or vice versa — configure them where they apply.

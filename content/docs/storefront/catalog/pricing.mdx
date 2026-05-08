@@ -1,0 +1,71 @@
+---
+title: Pricing
+description: Configure base pricing, variant pricing, addon pricing, and sale prices for your Storefront products.
+---
+
+# Pricing
+
+Storefront's pricing model is built around base prices with optional modifiers from variants and addons. There is also a sale price mechanism for time-limited discounts.
+
+## Base Price
+
+Every product has a **Base Price** — the default price when no variants or addons are selected. Money inputs in the console accept the human-readable amount; gateway-side conversion (e.g. cents for Stripe) is handled at checkout time.
+
+Set the base price when creating or editing a product in **Storefront → Products**.
+
+## Sale Price
+
+If a product is currently on sale, set the **Sale Price** and toggle **Is On Sale**.
+
+When `is_on_sale` is true:
+- The sale price is used instead of the base price for cart calculations
+- Your frontend app can show the original price struck through alongside the sale price
+
+To end the sale, toggle `is_on_sale` back off — the base price is restored automatically.
+
+## Variant Pricing
+
+[Variants](/docs/storefront/catalog/variants-and-addons) define required selections with optional additional costs per option. The cost of a selected variant option is **added** to the product's base price (or sale price).
+
+Example:
+```
+Base Price: $10.00
+Variant "Size"
+  └── Option "Large": additional_cost +$2.00
+
+Customer selects "Large" → Cart price: $12.00
+```
+
+## Addon Pricing
+
+Each [Addon](/docs/storefront/catalog/variants-and-addons) has its own price, and can independently be on sale (`is_on_sale` + `sale_price`). The cart sums each selected addon's effective price (sale price when on sale, otherwise the regular price) and adds it to the product price.
+
+Example:
+```
+Base Price: $10.00
+Addons selected:
+  Extra Cheese: +$1.00
+  Bacon: +$1.50
+
+Cart price: $12.50
+```
+
+If an addon is free (e.g., "No Onions"), set its price to `0`.
+
+## Cart Total Calculation
+
+The full line item total follows this formula:
+
+```
+Line Total = (Base/Sale Price + Variant Additional Costs + Addon Prices) × Quantity
+```
+
+The cart subtotal is the sum of all line item totals. The delivery fee (a Fleet-Ops service quote) is added separately during checkout, not during the cart phase.
+
+## Currency
+
+Each store has a single **Currency** setting. All product prices in that store are denominated in that currency. If you need to operate in multiple currencies, create separate stores per currency.
+
+<Callout type="info">
+Storefront does not currently support dynamic currency conversion. The currency set on the store applies to all products in that store.
+</Callout>

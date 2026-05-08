@@ -1,0 +1,51 @@
+---
+title: Filesystem
+description: Configure where Fleetbase stores file uploads — local disk, Amazon S3, Google Cloud Storage, or any S3-compatible provider.
+---
+
+# Filesystem
+
+The Filesystem settings control where Fleetbase stores uploaded files — driver documents, proof of delivery photos, import CSVs, and other user-uploaded content. Navigate to **Admin → System Settings → Filesystem** to access these settings.
+
+![Filesystem settings — Driver dropdown with S3 configuration fields visible](/images/screenshots/admin/admin-filesystem-s3.webp)
+
+## Driver
+
+Select the storage backend from the **Driver** dropdown. The form updates to show the fields required for the selected driver.
+
+<Tabs items={['Local', 'S3 / S3-Compatible', 'Google Cloud Storage']}>
+<Tab value="Local">
+Stores files on the server's local disk. No additional configuration required. Only suitable for single-server setups with persistent, non-ephemeral storage — not recommended for cloud deployments where containers may be restarted.
+</Tab>
+<Tab value="S3 / S3-Compatible">
+Amazon S3 or any S3-compatible provider (Cloudflare R2, MinIO, DigitalOcean Spaces, Backblaze B2).
+
+| Field | Description |
+| :--- | :--- |
+| **S3 Bucket** | The name of your S3 bucket |
+| **S3 URL** | Optional public CDN or custom domain URL for serving files (e.g. a CloudFront distribution URL) |
+| **S3 Endpoint** | Custom endpoint for S3-compatible providers — leave empty for AWS S3 (e.g. `https://nyc3.digitaloceanspaces.com` for DigitalOcean Spaces) |
+
+AWS credentials (Access Key ID, Secret Access Key, and region) for S3 are configured in [Services](/docs/platform/system-setup/services) or set via environment variables (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_DEFAULT_REGION`).
+</Tab>
+<Tab value="Google Cloud Storage">
+| Field | Description |
+| :--- | :--- |
+| **GCS Bucket** | The name of your GCS bucket |
+| **GCS Service Account Key File** | Upload your GCS service account credentials JSON file |
+
+<Callout type="warn">
+If GCS is already configured via environment variables (`GOOGLE_CLOUD_STORAGE_BUCKET`, `GOOGLE_CLOUD_PROJECT_ID`, or `GOOGLE_APPLICATION_CREDENTIALS`), the console will display a warning. Saving new values here will override the environment configuration.
+</Callout>
+
+To generate a service account key file: open the Google Cloud Console → IAM & Admin → Service Accounts → select your service account → Keys → Add Key → JSON. Grant the service account the **Storage Object Admin** role on your bucket.
+</Tab>
+</Tabs>
+
+## Testing
+
+Click **Test Config** to verify the configuration by uploading a small test file to the selected storage backend. A success or error message is shown inline. Test before saving to confirm credentials and bucket access are correct.
+
+## Saving
+
+Click **Save Changes** to apply the configuration. The config cache is refreshed automatically — no restart is required.

@@ -1,0 +1,45 @@
+---
+title: Store Locations
+description: Add physical locations to your store — used as pickup addresses for Fleet-Ops delivery orders.
+---
+
+# Store Locations
+
+A **Store Location** is the physical address of a store. When a customer places an order, the location address becomes the **pickup address** in the Fleet-Ops order — the point where the driver collects the items for delivery.
+
+A single store can have multiple locations (e.g., a franchise with five branches). Locations are managed centrally for the active store under **Storefront → Settings → Locations**.
+
+![Store locations — list of locations with addresses, hours, and status](/images/screenshots/storefront/storefront-store-locations.webp)
+
+## Adding a Location
+
+<Steps>
+  <Step>
+    Make sure the correct store is selected via the store switcher.
+  </Step>
+  <Step>
+    Navigate to **Storefront → Settings → Locations**.
+  </Step>
+  <Step>
+    Click **New Location**.
+  </Step>
+  <Step>
+    Enter a **Name** (e.g., "Downtown Branch", "Warehouse A").
+  </Step>
+  <Step>
+    Enter the **Address**. As you type, Fleetbase geocodes the address. If geocoding fails or you need to adjust the pin, edit the **Latitude/Longitude** fields directly.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+After adding a location, set its **Operating Hours** — the days and times when this location accepts orders. See [Operating Hours](/docs/storefront/stores/operating-hours).
+
+## Multiple Locations
+
+When a store has multiple locations, each cart item is tagged with a `store_location_id` so the merchant knows which branch is fulfilling each order. By default the cart picks the store's first location for items it adds — your customer-facing app should let the customer pick a location explicitly (or scope their session to one) when more than one exists.
+
+## Food Trucks
+
+For mobile stores whose position changes — food trucks, pop-ups — use a [Food Truck](/docs/storefront/stores/food-trucks) record instead of (or in addition to) a fixed store location. Food trucks are linked to a Fleet-Ops vehicle for live GPS positioning, and they support optional Service Area / Zone restrictions that fixed store locations do not.

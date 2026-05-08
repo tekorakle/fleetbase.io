@@ -1,0 +1,134 @@
+---
+title: Quickstart
+description: Get up and running with Ledger — review your default chart of accounts, set invoicing defaults, configure a payment gateway, and create your first invoice.
+---
+
+# Quickstart
+
+This guide walks you through reviewing your seeded chart of accounts, setting invoicing defaults, configuring a payment gateway, and creating and recording payment on your first invoice.
+
+## Step 1 — Review Your Chart of Accounts
+
+When your Fleetbase company is created, Ledger automatically provisions a default chart of accounts covering the standard asset, liability, equity, revenue, and expense accounts a logistics business needs.
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Accounting → Accounts**.
+  </Step>
+  <Step>
+    Review the default accounts grouped by type — Cash, Bank Account, Accounts Receivable, Stripe Clearing, Wallet Liability Pool, Driver Earnings Payable, Delivery Revenue, Driver Payout Expense, etc. See [Chart of Accounts](/docs/ledger/accounting/chart-of-accounts) for the full seeded list.
+  </Step>
+  <Step>
+    Optionally add custom accounts for your business (e.g. an extra revenue account per service line).
+  </Step>
+</Steps>
+
+## Step 2 — Configure Invoice & Payment Defaults
+
+Set your invoicing defaults before creating invoices — these power auto-numbering, due-date calculation, and PDF rendering.
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Settings → Invoice**.
+  </Step>
+  <Step>
+    Set the **Invoice Prefix** (default `INV-`), **Default Currency**, and **Payment Terms (days)**. Optionally set the **Default Template** so invoices can render to PDF without picking a template each time.
+  </Step>
+  <Step>
+    Save.
+  </Step>
+  <Step>
+    Open **Ledger → Settings → Payment** and (optionally) set a **Default Gateway** for invoice payments.
+  </Step>
+</Steps>
+
+See [Settings](/docs/ledger/settings/overview) for the full reference.
+
+## Step 3 — Configure a Payment Gateway
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Payments → Gateways**.
+  </Step>
+  <Step>
+    Click **New Gateway** and select **Stripe** (or **Cash** for offline / manual receipts).
+  </Step>
+  <Step>
+    Fill in the credentials shown by the form — for Stripe: **Publishable Key**, **Secret Key**, and **Webhook Signing Secret**.
+  </Step>
+  <Step>
+    Set **Environment** to `sandbox` while testing.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+![Payment gateway details — credentials, environment, and webhook URL](/images/screenshots/ledger/ledger-payment-gateway-details.webp)
+
+## Step 4 — Create an Invoice
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Billing → Invoices**.
+  </Step>
+  <Step>
+    Click **New Invoice**.
+  </Step>
+  <Step>
+    Select a **Customer**. The customer field is polymorphic — pick a Fleetbase contact, vendor, driver, or user.
+  </Step>
+  <Step>
+    Set the **Invoice Date**. The **Due Date** auto-fills from your invoice settings if a non-zero `due_date_offset_days` is set.
+  </Step>
+  <Step>
+    Add one or more **Line Items** — each with a description, quantity, unit price, and optional tax rate (decimal, 0–100).
+  </Step>
+  <Step>
+    Click **Save**. The invoice is created in `draft` status and assigned a number like `INV-004821` (6-digit random integer). Subtotal, tax, and total are calculated automatically.
+  </Step>
+</Steps>
+
+![Invoice detail — header with customer and dates, line items table, totals, and action buttons](/images/screenshots/ledger/ledger-invoice-details.webp)
+
+## Step 5 — Send the Invoice
+
+<Steps>
+  <Step>
+    Open the draft invoice.
+  </Step>
+  <Step>
+    Click **Send** — Ledger emails the invoice to the customer's email address and transitions the status to `sent`. The customer receives the public invoice URL in the email and can pay online without logging in.
+  </Step>
+  <Step>
+    Alternatively, click **Mark as Sent** to transition the status without sending an email — useful if you want to deliver the invoice through your own channel (SMS, your CRM, in person).
+  </Step>
+</Steps>
+
+The public invoice URL format is `/~/invoice?id={public_id}`. The first time the customer opens it, the invoice transitions to `viewed`.
+
+## Step 6 — Record Payment
+
+When the customer pays:
+
+<Steps>
+  <Step>
+    Open the invoice.
+  </Step>
+  <Step>
+    Click **Record Payment**.
+  </Step>
+  <Step>
+    Enter the **Amount** received, the **Payment Method** (defaults to `manual`), and an optional **Reference** (e.g., a bank statement line).
+  </Step>
+  <Step>
+    Click **Save**. The invoice's `amount_paid` increases, the `balance` is recalculated, and the status moves to `paid` (balance = 0) or `partial` (balance &gt; 0). A journal entry (DEBIT Cash → CREDIT Accounts Receivable) and a `Transaction` record are created automatically.
+  </Step>
+</Steps>
+
+## Next Steps
+
+- [Chart of Accounts](/docs/ledger/accounting/chart-of-accounts) — review the seeded accounts and add custom ones
+- [Wallets](/docs/ledger/payments/wallets) — manage driver, customer, company, and user wallets
+- [Reports](/docs/ledger/reports/overview) — generate balance sheets, income statements, AR aging, and the wallet summary
+- [Settings](/docs/ledger/settings/overview) — configure invoice prefixes, payment terms, default gateways, and fiscal year

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block auth and internal routes from indexing
+Disallow: /signin
+Disallow: /signup
+Disallow: /otp
+Disallow: /api/
+Disallow: /_next/
+
+# Sitemap
+Sitemap: https://fleetbase.io/sitemap.xml

@@ -1,0 +1,118 @@
+---
+title: Service Rates
+description: Define pricing rules and rate structures used to calculate order costs — flat fees, distance-based, weight-based, zone pricing, and surcharges.
+---
+
+# Service Rates
+
+**Service Rates** define the pricing rules Fleet-Ops uses to calculate the cost of an order. Rates can be flat fees, distance-based, weight-based, or zone-based. They support surcharges for COD (cash on delivery), peak hours, and parcel size. When an order matches a service rate, Fleet-Ops generates a **Service Quote** with the calculated amount.
+
+![Service rates list — rate name, service type, base fee, and scope columns](/images/screenshots/fleet-ops/fleet-ops-service-rate-list.webp)
+
+## Rate Calculation Methods
+
+The `rate_calculation_method` field on a service rate accepts one of six values:
+
+| Value | How it works |
+| :--- | :--- |
+| `fixed_rate` | A single flat fee charged regardless of distance |
+| `fixed_meter` | A flat per-meter rate — `per_meter_flat_rate_fee` × normalized distance |
+| `per_meter` | Per-distance rate using a tiered fee table — fees are looked up against `ServiceRateFee` brackets keyed by distance |
+| `per_drop` | Charged per delivery stop in the order |
+| `parcel` | Parcel-based pricing — fees are looked up against `ServiceRateParcelFee` brackets keyed by parcel size or weight |
+| `algo` (or `algorithm`) | Algorithmic pricing — formula resolved at quote time, typically combining distance, time, weight, and surcharges. See [Algorithm-Based Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates). |
+
+Zone-based and order-config-based pricing are **scopes**, not calculation methods — see [Rate Scoping](#rate-scoping) below.
+
+## Rate Components
+
+Each service rate has the following configurable fields:
+
+### Base Fee
+The starting charge applied before any distance or weight calculation.
+
+### Distance Component
+- **Per-meter rate** — charge per unit of distance
+- **Per-meter unit** — km, mile, meter, or feet
+- **Max distance** — cap beyond which no additional distance charge is added
+
+### Cash on Delivery (COD) Fee
+Applied when the order has a COD amount to collect from the recipient:
+- **Flat COD fee** — fixed fee per COD order
+- **COD percentage** — percentage of the COD amount
+
+### Peak Hours Surcharge
+Additional charge during high-demand periods:
+- **Start/end time** — when peak hours apply
+- **Flat peak fee** or **peak percentage** — the surcharge amount
+
+### Tiered Distance Fees (`per_meter`)
+For `per_meter` rates, **`ServiceRateFee`** entries define the fee table. Each entry has a `min`/`max` distance band, a `unit`, a `fee` amount, and a `currency`. The lookup picks the entry whose band the order's distance falls into.
+
+### Parcel Fees (`parcel`)
+For `parcel` rates, **`ServiceRateParcelFee`** entries define a fee table keyed by parcel attributes — `size`, `length`/`width`/`height`/`dimensions_unit`, and `weight`/`weight_unit`. Each entry has a `fee` and `currency`. The lookup picks the entry that matches the parcel's measurements.
+
+## Creating a Service Rate
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Operations → Service Rates**.
+  </Step>
+  <Step>
+    Click **+ New Rate**.
+  </Step>
+  <Step>
+    Set the **Service Name** (free-text label, e.g. *Same-Day Express*) and **Service Type** (free-text grouping, e.g. *delivery*, *transport*, *parcel*). Service type is not an enum — use whatever taxonomy fits your operation.
+  </Step>
+  <Step>
+    Select the **Rate Calculation Method** from the options above.
+  </Step>
+  <Step>
+    Set the **Base Fee** and configure the distance/weight/volume components as needed.
+  </Step>
+  <Step>
+    Set the **Currency** for this rate.
+  </Step>
+  <Step>
+    Configure optional surcharges: COD fee, peak hours, parcel fees.
+  </Step>
+  <Step>
+    Set the rate **Scope**:
+    - **Service Area** — applies only to orders within a specific service area
+    - **Zone** — applies only to orders within a specific zone
+    - **Order Config** — applies only to a specific order type
+  </Step>
+  <Step>
+    Click **Save**. The rate is now active and will be matched to new orders.
+  </Step>
+</Steps>
+
+## Rate Scoping
+
+Rates are matched to orders based on their scope. Multiple rates can exist for the same service type — the most specific match wins:
+
+1. Zone-scoped rate (most specific)
+2. Service area-scoped rate
+3. Order config-scoped rate
+4. Global rate (no scope)
+
+If multiple rates match, the customer can choose which to apply, or the first match is used automatically depending on your settings.
+
+## Duration Terms
+
+Rates can include **Duration Terms** — the expected delivery timeframe for this service type (e.g., "Same Day", "Next Business Day", "2–3 Days"). This is shown on service quotes as the estimated delivery window.
+
+## Via the API
+
+Service rates can be read via the public API:
+
+```bash
+GET /v1/service-rates
+```
+
+Filtered by service area, zone, or order config to retrieve applicable rates for a given origin/destination pair.
+
+## Related Pages
+
+- [Service Quotes](/docs/fleet-ops/operations/service-quotes/overview) — how quotes are generated from service rates
+- [Service Areas & Zones](/docs/fleet-ops/resources/places/overview) — scoping rates geographically

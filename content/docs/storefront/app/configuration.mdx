@@ -1,0 +1,184 @@
+---
+title: Configuration
+description: Complete reference for the Storefront App — every environment variable, every storefront.config.ts field, and what each one controls.
+---
+
+# Configuration
+
+The Storefront App is configured by a combination of:
+1. **Environment variables** in `.env`, read at build time via `react-native-config` (and inlined into the web build by Webpack).
+2. **`storefront.config.ts`** at the project root, which delegates to `config/default.js` — the customization surface for tabs, theming, layout, and feature flags.
+3. **`app.json`** — the React Native registry name (`appName`).
+4. **Native config** — `Info.plist` (iOS) and `AndroidManifest.xml` / `build.gradle` (Android), most of which read from your `.env`.
+
+## How `storefront.config.ts` Works
+
+`storefront.config.ts` is a one-line delegate:
+
+```ts
+import { createStorefrontConfig } from './config/default';
+export default createStorefrontConfig();
+```
+
+`createStorefrontConfig(overrides)` deep-merges your overrides on top of the env-driven defaults in `config/default.js`. Most teams **don't edit `storefront.config.ts` at all** and instead drive everything through `.env`. Edit it if you need to inject computed values or share config across builds.
+
+## Required Environment Variables
+
+Without these, the app cannot start:
+
+| Var | Purpose |
+| :--- | :--- |
+| `APP_NAME` | Display name shown in the JS layer (also used by iOS via xcconfig and Android via the manifest) |
+| `APP_IDENTIFIER` | iOS bundle ID / Android `applicationId` |
+| `FLEETBASE_HOST` | Your Fleetbase API base URL |
+| `FLEETBASE_KEY` | Fleetbase API secret key — Console → **Developers** |
+| `STOREFRONT_KEY` | `store_*` (single store) or `network_*` (network) — Console → **Storefront → Settings → API** |
+| `GOOGLE_MAPS_API_KEY` | Maps SDK for iOS, Android, and (for web) JavaScript API |
+
+## Backend & Real-Time
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `FLEETBASE_HOST` | — | Fleetbase API host |
+| `FLEETBASE_KEY` | — | Fleetbase API secret |
+| `STOREFRONT_KEY` | — | Storefront key (`store_*` or `network_*`) |
+| `SOCKETCLUSTER_HOST` | — | Real-time host for live order/driver updates |
+| `SOCKETCLUSTER_PORT` | — | Socket port (commonly `8000`) |
+| `SOCKETCLUSTER_SECURE` | — | `true` for `wss`, `false` for `ws` |
+
+## Payments
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `PAYMENT_GATEWAY` | `stripe` | One of `stripe`, `qpay`, `paypal` |
+| `STRIPE_KEY` | — | Stripe publishable key |
+| `STRIPE_PAYMENT_UI` | `sheet` | `sheet` (Stripe PaymentSheet) or `field` (CardField) |
+| `STRIPE_ENABLE_APPLE_PAY` | `false` | Show Apple Pay in PaymentSheet on iOS |
+| `STRIPE_ENABLE_GOOGLE_PAY` | `false` | Show Google Pay in PaymentSheet on Android |
+| `TIP_INCREMENT` | `50` | Tip stepper increment in minor currency units (50 = $0.50 in USD) |
+
+See [Integrations → Payments](/docs/storefront/app/integrations#payments) for QPay and PayPal specifics.
+
+## Authentication
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `APPLE_LOGIN_ENABLED` | `false` | Show "Sign in with Apple" button |
+| `GOOGLE_LOGIN_ENABLED` | `false` | Show "Sign in with Google" button |
+| `FACEBOOK_LOGIN_ENABLED` | `false` | Show "Continue with Facebook" button |
+| `FACEBOOK_APP_ID` | — | Facebook app ID (also injected into `Info.plist` and `AndroidManifest.xml` at build time) |
+| `FACEBOOK_CLIENT_TOKEN` | — | Facebook client token |
+
+Phone + SMS 2FA and email/password are always available — no flags needed.
+
+## Tabs & Navigation
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `STORE_NAVIGATOR_TABS` | `StoreHomeTab,StoreSearchTab,StoreMapTab,StoreCartTab,StoreProfileTab` | Comma-separated tab list. Add `StoreFoodTruckTab` for food-truck mode |
+| `STORE_NAVIGATOR_DEFAULT_TAB` | `StoreHomeTab` | Initial tab on launch |
+| `STORE_NAVIGATOR_TAB_BAR_BG` | `blur` | `blur` for iOS BlurView, or any theme key (e.g. `primary`, `custom`) for a solid color |
+| `CUSTOM_TAB_BAR_BG_COLOR` | — | Override tab bar background |
+| `CUSTOM_TAB_BAR_ACTIVE_COLOR` | — | Override active tab tint |
+| `CUSTOM_TAB_BAR_INACTIVE_COLOR` | — | Override inactive tab tint |
+| `STORE_FOOD_TRUCK_TAB_ICON` | — | Override icon for the food-truck tab |
+
+Per-locale tab labels follow the pattern `STORE_<TAB>_TAB_LABEL_<LOCALE>` — e.g. `STORE_HOME_TAB_LABEL_EN`, `STORE_HOME_TAB_LABEL_MN`, `STORE_SEARCH_TAB_LABEL_EN`, etc.
+
+## Map
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `DEFAULT_MAP_TYPE` | `standard` | `standard`, `satellite`, or `hybrid` |
+| `DEFAULT_COORDINATES` | — | Initial map center as `lat,lng` |
+| `DEFAULT_SERVICE_AREA` | — | Fleetbase Service Area `public_id` (e.g. `sa_xDPX9Dy`) — bounds the map |
+| `MAP_DISPLAY_DRIVERS` | `false` | Render drivers on the map view |
+| `DISABLE_GEOCODING_SCREEN` | `false` | Skip text-based geocoding and go straight to the map pin picker |
+
+## Localization
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `DEFAULT_LOCALE` | `en` | Initial locale |
+| `AVAILABLE_LOCALES` | `en,mn` | Comma-separated locales offered in the language picker. Each must have a JSON file in `/translations/` |
+
+## Storefront Layout
+
+These control the look of the home and product screens:
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `STORE_CATEGORIES_DISPLAY` | `grid` | `grid` or `pills` |
+| `PRODUCT_CARD_STYLE` | `bordered` | `bordered`, `outlined`, or `visio` |
+| `PRIORITIZE_PICKUP` | `false` | Default the order type to pickup over delivery |
+| `STORE_HEADER_SHOW_GRADIENT` | `1` | Show gradient overlay on the store header |
+| `STORE_HEADER_SHOW_LOCATION_PICKER` | `1` | Show location picker in the header |
+| `STORE_HEADER_SHOW_TITLE` | `1` | Show store title in the header |
+| `STORE_HEADER_SHOW_DESCRIPTION` | `1` | Show store description in the header |
+| `STORE_HEADER_SHOW_LOGO` | `1` | Show store logo in the header |
+| `STORE_HEADER_LOGO_HEIGHT` | `45` | Logo height in pixels |
+| `STORE_HEADER_LOGO_WIDTH` | `45` | Logo width in pixels |
+| `STORE_HEADER_FLEX_DIRECTION` | `column` | `row` or `column` |
+| `STORE_HEADER_ALIGN_ITEMS` | `center` | Flexbox alignment |
+| `STORE_HEADER_JUSTIFY_CONTENT` | `flex-end` | Flexbox justification |
+| `STORE_HEADER_SPACING` | `$1` | Space between header items (Tamagui token) |
+| `STORE_HEADER_PADDING_TOP` | `0` | Header padding |
+| `STORE_HEADER_PADDING_BOTTOM` | `0` | |
+| `STORE_HEADER_PADDING_LEFT` | `0` | |
+| `STORE_HEADER_PADDING_RIGHT` | `0` | |
+
+## Theming Inputs
+
+See [Theming](/docs/storefront/app/theming) for a deeper walkthrough.
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `APP_THEME` | `blue` | Base hue. Combined with system light/dark to form a Tamagui theme key (e.g. `lightBlue`, `darkTruevegan`) |
+| `CUSTOM_COLORS` | — | Inject custom theme tokens. Format: `key:#hex,key2:#hex` |
+| `CUSTOM_COLORS_LIGHT` | — | Light-mode-only token overrides |
+| `CUSTOM_COLORS_DARK` | — | Dark-mode-only token overrides |
+| `BOOTSCREEN_BACKGROUND_COLOR` | — | Single hex (`#FFFFFF`) or two-stop gradient (`#ff3a44,#f67d04`) |
+| `LOGIN_BG_IMAGE` | `storefront_photo_1` | One of `storefront_photo_1`, `storefront_photo_2` |
+| `BOOTSCREEN_BG_IMAGE` | — | Same set as above |
+
+## Legal
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `TOS_URL` | — | Terms of Service URL surfaced in the app |
+| `PRIVACY_URL` | — | Privacy Policy URL |
+
+## Deep Linking
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `APP_LINK_PREFIX` | — | Custom URL scheme used for deep links (e.g. `storefront://`). Navigation linking is enabled automatically when set |
+
+## Android Versioning
+
+| Var | Default | Purpose |
+| :--- | :--- | :--- |
+| `ANDROID_VERSION_CODE` | — | Android `versionCode` — must increment for every Play Store upload |
+| `ANDROID_VERSION_NAME` | — | Android `versionName` (e.g. `1.2.0`) |
+
+## `app.json`
+
+Trivial — sets only the React Native registry name:
+
+```json
+{
+  "name": "StorefrontApp",
+  "displayName": "StorefrontApp"
+}
+```
+
+If you rename your app's React Native registry entry, update both keys here.
+
+## Native Display Names
+
+The user-visible app name on the home screen is **not** controlled by `app.json`:
+
+- **iOS**: `ios/StorefrontApp/Info.plist` → `CFBundleDisplayName` (set to `$(APP_NAME)` from xcconfig)
+- **Android**: `android/app/src/main/res/values/strings.xml` → `<string name="app_name">`
+
+See [Build & Release](/docs/storefront/app/build-and-release#native-naming) for the full rename procedure.

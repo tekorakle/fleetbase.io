@@ -1,0 +1,84 @@
+---
+title: Notification Settings
+description: Configure APNs and FCM notification channels so Storefront can deliver push notifications to your customers.
+---
+
+# Notification Settings
+
+**Notification channels** connect Storefront to Apple Push Notification service (APNs) or Firebase Cloud Messaging (FCM) so you can deliver push notifications to your customers' devices.
+
+Navigate to **Storefront → Settings → Notifications** to manage channels.
+
+## Adding a Notification Channel
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Settings → Notifications**.
+  </Step>
+  <Step>
+    Click **New Channel**.
+  </Step>
+  <Step>
+    Enter a **Name** (e.g., "iOS APNs Production").
+  </Step>
+  <Step>
+    Select the **Scheme**: `apn` for iOS or `fcm` for Android.
+  </Step>
+  <Step>
+    Fill in the credentials for the selected scheme (see below).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## APNs (Apple Push Notification service)
+
+For iOS devices.
+
+| Field | Description |
+| :--- | :--- |
+| **Key ID** (`key_id`) | The 10-character key ID from your Apple Developer account |
+| **Team ID** (`team_id`) | Your Apple Developer Team ID |
+| **App Bundle ID** (`app_bundle_id`) | Your app's bundle identifier (e.g., `com.yourcompany.app`) |
+| **Private Key Content** (`private_key_content`) | Paste the **contents** of the `.p8` authentication key file (it's a textarea, not an upload) |
+| **Production** (`production`) | Toggle for production vs. sandbox APNs endpoint |
+
+Download the `.p8` key from **Apple Developer → Certificates, Identifiers & Profiles → Keys**. Open the file in a text editor and copy its contents into the **Private Key Content** field.
+
+## FCM (Firebase Cloud Messaging)
+
+For Android devices, using the FCM v1 API (service-account based).
+
+| Field | Description |
+| :--- | :--- |
+| **Firebase Credentials JSON** (`firebase_credentials_json`) | Paste the contents of your Firebase **service account** JSON file |
+| **Firebase Database URL** (`firebase_database_url`) | Your Firebase project's database URL |
+| **Firebase Project Name** (`firebase_project_name`) | Your Firebase project name (project ID) |
+
+To download the service-account JSON:
+1. Go to **Firebase Console → Project Settings → Service Accounts**
+2. Click **Generate new private key**
+3. Open the downloaded JSON in a text editor and paste its contents into the **Firebase Credentials JSON** field
+
+<Callout type="warn">
+The legacy "Server Key" / "Sender ID" fields are deprecated by Google and are not used by this notification channel. If you have older docs referencing those, ignore them — Storefront uses the modern FCM v1 service-account flow.
+</Callout>
+
+## App Key
+
+Each notification channel has an auto-generated **App Key** (`noty_channel_<hash>`) that your customer-facing app uses when registering device tokens. After the customer grants notification permission and you obtain their device token from APNs / FCM, send both to:
+
+```http
+POST /storefront/v1/customers/register-device
+```
+
+with the App Key included in the payload.
+
+## Testing Notifications
+
+After configuring a channel, send a test notification from **Storefront → Promotions → Push Notifications** to verify the setup before deploying to production.
+
+<Callout type="info">
+Notification channels can be configured at the store level or the network level. Network-level channels are shared across all member stores.
+</Callout>

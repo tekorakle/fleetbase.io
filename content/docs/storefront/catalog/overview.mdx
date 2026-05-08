@@ -1,0 +1,90 @@
+---
+title: Catalogs
+description: Catalogs are named bundles of categories and products that can be assigned to food trucks (and, soon, store locations) — distinct from the store's underlying product list.
+---
+
+# Catalogs
+
+A **Catalog** is a named bundle of **categories** and **products** that you can assign to one or more **food trucks**. Catalogs are useful when one store runs multiple mobile units that serve different menus — the BBQ truck and the taco truck share a parent store but each has its own catalog.
+
+Catalogs are **distinct** from the store's underlying product list (which is sometimes loosely called "the catalog"). A catalog references existing products through pivot tables — it doesn't duplicate them.
+
+Navigate to **Storefront → Catalogs** to manage them. Catalog assignment to a food truck happens from the food truck's detail page — see [Food Trucks](/docs/storefront/stores/food-trucks).
+
+![Storefront catalogs list — named catalogs with status indicators](/images/screenshots/storefront/storefront-catalogs-list.webp)
+
+## Catalog Properties
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Catalog label (e.g., "Weekend Brunch") |
+| **Description** | Short description |
+| **Status** | Whether the catalog is active |
+| **Catalog Categories** | Sections inside the catalog (each catalog has its own set of categories) |
+| **Catalog Products** | Products assigned to one or more catalog categories |
+| **Catalog Hours** | Per-day availability windows (using the same schedule manager pattern as store and product hours) |
+| **Subjects** | The food truck(s) the catalog is assigned to (polymorphic — currently only food trucks) |
+
+## Underlying Catalog (the store's product list)
+
+Each store has a top-level **product list** — every product, category, variant, addon, and per-product hour the store offers. This is what most people mean by "your catalog" colloquially. It is managed under **Storefront → Products**, not under **Storefront → Catalogs**.
+
+| Entity | Purpose |
+| :--- | :--- |
+| **Product** | An individual item for sale — with price, images, SKU, and availability |
+| **Category** | A grouping of products for navigation (e.g., "Burgers", "Drinks") |
+| **Variant** | A required product option (e.g., Size: S / M / L) — customer must choose |
+| **Addon** | An optional extra (e.g., Extra Cheese +$1) — customer may choose |
+| **Addon Category** | A group of addons assigned to a product (e.g., "Toppings") with selection limits |
+| **Product Hours** | Time windows when a product is available (e.g., breakfast items: 7am–11am) |
+
+See:
+- [Products](/docs/storefront/catalog/products)
+- [Categories](/docs/storefront/catalog/categories)
+- [Variants & Addons](/docs/storefront/catalog/variants-and-addons)
+- [Pricing](/docs/storefront/catalog/pricing)
+
+## Creating a Catalog
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Catalogs**.
+  </Step>
+  <Step>
+    Click **New Catalog** and enter a name.
+  </Step>
+  <Step>
+    Add catalog categories — these are sections inside this catalog (e.g., "Tacos", "Burritos") and live alongside the store's primary categories.
+  </Step>
+  <Step>
+    Within each catalog category, assign products from the store's product list.
+  </Step>
+  <Step>
+    Optionally set catalog hours via the schedule manager.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Assigning Catalogs to Food Trucks
+
+Catalog assignment is many-to-many — a food truck can serve multiple catalogs and a catalog can be assigned to multiple trucks. From the **Food Trucks** list, click the **Catalogs** button on a truck card to open the assignment modal. See [Food Trucks](/docs/storefront/stores/food-trucks).
+
+## Headless Catalog API
+
+For custom frontends, the Storefront API exposes the store's underlying product list. Pass your store key as a bearer token:
+
+```http
+GET /storefront/v1/products
+Authorization: Bearer store_your_store_key
+```
+
+| Endpoint | Purpose |
+| :--- | :--- |
+| `GET /storefront/v1/products` | List products with optional category filter |
+| `GET /storefront/v1/products/{id}` | Product detail with variants and addons |
+| `GET /storefront/v1/categories` | List all categories |
+| `GET /storefront/v1/catalogs` | List a store's catalogs |
+
+See [API Settings](/docs/storefront/settings/api) for your store's key.

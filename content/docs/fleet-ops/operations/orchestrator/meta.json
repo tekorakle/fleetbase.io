@@ -1,0 +1,9 @@
+{
+  "title": "Orchestrator",
+  "pages": [
+    "overview",
+    "workbench",
+    "vehicle-allocation",
+    "payload-capacity-allocation"
+  ]
+}

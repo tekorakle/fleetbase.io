@@ -1,0 +1,70 @@
+---
+title: Repositories
+description: Every Fleetbase repository that accepts translation contributions, with paths and what each one covers.
+sidebarTitle: Repositories
+---
+
+# Translation repositories
+
+Fleetbase is split across many repositories — each maintained independently, each with its own translation files. To deliver a complete experience in a language, you typically contribute to multiple repos. This page is the full map.
+
+## Console + extensions
+
+These are the user-facing applications operators interact with daily. The bulk of translation work happens here.
+
+| Repository | Translation path | Covers |
+| :--- | :--- | :--- |
+| [`fleetbase/fleetbase`](https://github.com/fleetbase/fleetbase) | `console/translations/` | Console shell — top nav, settings, account, auth, shared UI, navigation menus |
+| [`fleetbase/fleetops`](https://github.com/fleetbase/fleetops) | `translations/` | FleetOps — orders, drivers, vehicles, fleets, dispatching, live map, maintenance |
+| [`fleetbase/storefront`](https://github.com/fleetbase/storefront) | `translations/` | Storefront — products, catalogs, orders, customers, networks, food trucks |
+| [`fleetbase/pallet`](https://github.com/fleetbase/pallet) | `translations/` | Pallet — warehouse operations, inventory, pick/pack/fulfillment |
+| [`fleetbase/ledger`](https://github.com/fleetbase/ledger) | `translations/` | Ledger — invoices, payments, wallets, accounting, reports |
+| [`fleetbase/iam-engine`](https://github.com/fleetbase/iam-engine) | `translations/` | IAM — users, roles, groups, policies, permissions |
+| [`fleetbase/dev-engine`](https://github.com/fleetbase/dev-engine) | `translations/` | Developer Console — API keys, webhooks, logs, events, sandbox |
+| [`fleetbase/registry-bridge`](https://github.com/fleetbase/registry-bridge) | `translations/` | Extensions Marketplace — install/purchase flow, listings, developer tools |
+
+## Mobile apps (React Native)
+
+Mobile app translations follow the same pattern — fork, edit, PR — but use a slightly different file format (JSON instead of YAML in some cases). Check the `translations/` or `i18n/` directory in each repo's README before starting.
+
+| Repository | Covers |
+| :--- | :--- |
+| [`fleetbase/navigator-app`](https://github.com/fleetbase/navigator-app) | Navigator — driver-facing app for completing deliveries |
+| [`fleetbase/storefront-app`](https://github.com/fleetbase/storefront-app) | Storefront — customer-facing app for browsing stores and tracking orders |
+
+## What if my repo isn't listed?
+
+If you maintain a third-party Fleetbase extension and want to follow the same translation conventions, you can add a `translations/en-us.yaml` to your repo and point contributors at this guide. The Fleetbase i18n loader automatically picks up `translations/<locale>.yaml` from any registered extension.
+
+## Where to start
+
+If you're translating from scratch, here's a sensible order — by impact:
+
+<Steps>
+  <Step>
+    ### `fleetbase/fleetbase` — Console shell
+    The most visible UI. Every user sees this regardless of which extensions they use.
+  </Step>
+  <Step>
+    ### `fleetbase/fleetops` — Fleet management
+    The largest single extension by string count. Used by every operator running deliveries or fleet ops.
+  </Step>
+  <Step>
+    ### `fleetbase/iam-engine` — Users & roles
+    Common across every deployment. Smaller string count than FleetOps but high visibility.
+  </Step>
+  <Step>
+    ### Whatever extension your team uses most
+    Storefront, Pallet, Ledger, Dev Console — pick what's relevant to your operation.
+  </Step>
+</Steps>
+
+## Coordinating with other translators
+
+If you're working on a language with active translators, coordinate in `#translations` on [Discord](/docs/community/discord) before starting a major PR — it avoids two people translating the same file in parallel.
+
+For a brand-new language, just open a PR with your work — the maintainers will tag any other contributors who've expressed interest.
+
+## Submitting
+
+Once your changes are ready, see [Submitting →](/docs/contributing/translations/submitting) for the PR conventions.

@@ -1,0 +1,122 @@
+---
+title: Setup
+description: Fork, clone, and prepare your environment to contribute Fleetbase translations.
+sidebarTitle: Setup
+---
+
+# Setup
+
+This page covers the practical setup before you translate anything. None of it is Fleetbase-specific — if you've contributed to any GitHub project before, skim and skip.
+
+## Prerequisites
+
+You need:
+
+- A **GitHub account**
+- **Git** installed locally
+- A **text editor** that handles YAML well (VS Code, Sublime, Vim, anything with syntax highlighting)
+- *(Optional)* A way to run Fleetbase locally to preview your translation in context — see [Self-hosting](/docs/platform/system-setup) if you want to go this route
+
+You don't need to run Fleetbase locally to contribute — you can translate the YAML files directly and rely on the maintainers to verify rendering during review. Running locally is faster feedback though, especially for languages that change UI sizing (long German words, RTL Arabic, dense CJK).
+
+## Step 1 — Identify the repository
+
+Decide what you want to translate:
+
+| If you want to translate... | Fork this repo |
+| :--- | :--- |
+| **The Console shell** (nav, settings, auth) | [`fleetbase/fleetbase`](https://github.com/fleetbase/fleetbase) |
+| **FleetOps** (fleet management UI) | [`fleetbase/fleetops`](https://github.com/fleetbase/fleetops) |
+| **Storefront** (e-commerce UI) | [`fleetbase/storefront`](https://github.com/fleetbase/storefront) |
+| **Pallet** (warehouse UI) | [`fleetbase/pallet`](https://github.com/fleetbase/pallet) |
+| **Ledger** (finance UI) | [`fleetbase/ledger`](https://github.com/fleetbase/ledger) |
+| **IAM** (users, roles, policies) | [`fleetbase/iam-engine`](https://github.com/fleetbase/iam-engine) |
+| **Developer Console** (API keys, webhooks) | [`fleetbase/dev-engine`](https://github.com/fleetbase/dev-engine) |
+| **Extensions Marketplace** | [`fleetbase/registry-bridge`](https://github.com/fleetbase/registry-bridge) |
+
+Full repo map with translation paths: [Repositories →](/docs/contributing/translations/repositories).
+
+You can contribute to one repo at a time. Many translators start with the Console (most user-facing) and expand from there.
+
+## Step 2 — Fork and clone
+
+On GitHub, click **Fork** on the repo you chose. Then clone your fork locally:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/<repo-name>.git
+cd <repo-name>
+```
+
+Add the upstream remote so you can pull latest changes:
+
+```bash
+git remote add upstream https://github.com/fleetbase/<repo-name>.git
+git fetch upstream
+```
+
+## Step 3 — Find the translation files
+
+Translation files live at one of two paths depending on the repo:
+
+- **Main `fleetbase/fleetbase` repository** → `console/translations/`
+- **Every other extension** → `translations/` (at repo root)
+
+Inside, you'll see one YAML file per locale:
+
+```
+translations/
+├── en-us.yaml      # base language — never translate this directly
+├── ar.yaml         # Arabic
+├── de-de.yaml      # German
+├── es-es.yaml      # Spanish (Spain)
+├── es-mx.yaml      # Spanish (Mexico)
+├── fr-fr.yaml      # French (France)
+├── hi.yaml         # Hindi
+├── ja-jp.yaml      # Japanese
+├── ko-kr.yaml      # Korean
+├── mn.yaml         # Mongolian
+├── pt-br.yaml      # Portuguese (Brazil)
+├── ru.yaml         # Russian
+├── th.yaml         # Thai
+├── vi.yaml         # Vietnamese
+├── zh-cn.yaml      # Chinese (Simplified)
+└── zh-hk.yaml      # Chinese (Traditional, Hong Kong)
+```
+
+The exact list varies by repo. Some extensions have fewer locales than the Console. That's normal — start filling them in.
+
+## Step 4 — Create your locale file
+
+### Adding a new language
+
+```bash
+# from the translations/ directory
+cp en-us.yaml es-mx.yaml      # example: Mexican Spanish
+```
+
+Use the standard [BCP-47 language tag](https://en.wikipedia.org/wiki/IETF_language_tag) format: `<language>-<region>` (e.g. `pt-br`, `es-mx`, `zh-cn`). Lowercase, dash-separated.
+
+For languages without strong regional variation, you can drop the region (e.g. `ar`, `hi`, `vi`, `mn`).
+
+### Updating an existing language
+
+Open the existing locale file and `en-us.yaml` side-by-side. Use a diff tool to find keys present in `en-us` that are missing or stale in your locale:
+
+```bash
+# rough comparison — list keys only
+yq 'paths | map(.) | join(".")' en-us.yaml > /tmp/en.keys
+yq 'paths | map(.) | join(".")' es-mx.yaml > /tmp/es.keys
+diff /tmp/en.keys /tmp/es.keys
+```
+
+(Requires `yq` — `brew install yq` or `apt install yq`. The exact command varies by `yq` version.)
+
+## Step 5 — Create a working branch
+
+```bash
+git checkout -b translations/es-mx-update
+# or
+git checkout -b translations/add-vietnamese
+```
+
+You're now ready to translate. Continue to [File format →](/docs/contributing/translations/file-format) to learn the YAML conventions, placeholders, and rules of the road.

@@ -1,0 +1,104 @@
+name: Bump Postman Submodule
+
+# Triggered by fleetbase/postman pushing to main (via repository_dispatch from
+# its notify-fleetbase-io.yml workflow), or manually from the Actions tab.
+#
+# Updates the vendor/postman submodule pointer to the latest commit on main,
+# regenerates the API docs to verify the build still works, and opens a PR.
+# Vercel will deploy a preview for the PR — review the rendered API docs
+# there, then merge to ship.
+
+on:
+  repository_dispatch:
+    types: [postman-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  bump:
+    name: Update submodule and open PR
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout fleetbase.io
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Update postman submodule to origin/main
+        id: bump
+        run: |
+          cd vendor/postman
+          old_sha=$(git rev-parse HEAD)
+          git fetch origin main
+          git checkout main
+          git pull --ff-only origin main
+          new_sha=$(git rev-parse HEAD)
+          cd "$GITHUB_WORKSPACE"
+
+          echo "old_sha=$old_sha" >> "$GITHUB_OUTPUT"
+          echo "new_sha=$new_sha" >> "$GITHUB_OUTPUT"
+          echo "old_short=${old_sha:0:7}" >> "$GITHUB_OUTPUT"
+          echo "new_short=${new_sha:0:7}" >> "$GITHUB_OUTPUT"
+
+          if [ "$old_sha" = "$new_sha" ]; then
+            echo "no_change=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Submodule is already at latest main ($old_sha) — nothing to do."
+          else
+            echo "no_change=false" >> "$GITHUB_OUTPUT"
+            echo "🆕 Bumping submodule: $old_sha → $new_sha"
+          fi
+
+      - name: Stop early if nothing changed
+        if: steps.bump.outputs.no_change == 'true'
+        run: exit 0
+
+      - name: Setup pnpm
+        if: steps.bump.outputs.no_change != 'true'
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        if: steps.bump.outputs.no_change != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        if: steps.bump.outputs.no_change != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: Regenerate API docs
+        if: steps.bump.outputs.no_change != 'true'
+        run: pnpm generate:api-docs
+
+      - name: Create Pull Request
+        if: steps.bump.outputs.no_change != 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: bump postman submodule (${{ steps.bump.outputs.old_short }} → ${{ steps.bump.outputs.new_short }})"
+          title: "chore: bump postman submodule"
+          body: |
+            Automated bump of the `vendor/postman` submodule.
+
+            **Diff:** [`${{ steps.bump.outputs.old_short }}...${{ steps.bump.outputs.new_short }}`](https://github.com/fleetbase/postman/compare/${{ steps.bump.outputs.old_sha }}...${{ steps.bump.outputs.new_sha }})
+
+            Triggered by:
+            - **SHA:** `${{ github.event.client_payload.sha }}`
+            - **Actor:** ${{ github.event.client_payload.actor }}
+            - **Compare:** ${{ github.event.client_payload.compare_url }}
+
+            The Vercel preview deploy below will render the regenerated API docs at `/docs/api/*`. Review, then merge.
+          branch: chore/bump-postman
+          delete-branch: true
+          base: main
+          labels: |
+            automated
+            api-docs

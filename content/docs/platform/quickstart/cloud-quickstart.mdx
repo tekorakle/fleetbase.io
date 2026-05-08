@@ -1,0 +1,181 @@
+---
+title: Cloud Quickstart
+description: Sign up for Fleetbase Cloud, complete onboarding, and get to your first driver, order, and API call.
+---
+
+# Cloud Quickstart
+
+Fleetbase Cloud is the fastest way to get started. Your environment is provisioned and pre-configured during signup — no infrastructure or setup required. This guide walks you through every step of the onboarding flow with screenshots, then covers what to do first once you're in.
+
+The cloud onboarding flow has five top-level steps: **Create Account → Verify Email → Choose Deployment → Configure Workspace → Start Your Trial**. The Configure Workspace step has seven internal substeps that personalise your console.
+
+<Steps>
+  <Step>
+    ### Create Account
+
+    Go to [console.fleetbase.io/onboard](https://console.fleetbase.io/onboard) and fill in your full name, email, password, organisation name, phone number, and country. Your organisation is created at this step — there's no separate setup afterwards.
+
+    ![Onboarding — Create Account form with name, email, password, organisation, phone, and country fields](/images/screenshots/general/console-onboard-create-account-step.webp)
+  </Step>
+
+  <Step>
+    ### Verify Email
+
+    A six-digit verification code is sent to the email address you signed up with. Enter the code on the verification screen. If you don't see the email within a minute, check spam, or use **Resend verification email** at the bottom of the form.
+
+    ![Onboarding — Verify Email step with six-digit code input and resend link](/images/screenshots/general/console-onboard-verify-email-step.webp)
+  </Step>
+
+  <Step>
+    ### Choose Deployment
+
+    Pick how you want to run Fleetbase. **Cloud (SaaS)** is fully managed and ready in minutes — that's the path this guide covers. **Self-Managed** deploys to your own cloud or on-premise infrastructure (see the [Self-Hosted Quickstart](/docs/platform/quickstart) for that flow).
+
+    ![Onboarding — Choose Deployment with Cloud (SaaS) and Self-Managed options](/images/screenshots/general/console-onboard-choose-deployment-step.webp)
+  </Step>
+
+  <Step>
+    ### Configure Workspace
+
+    A seven-substep wizard personalises your console — dashboard layout, recommended integrations, default presets — before you ever log in. Each substep takes a few seconds; you can change every answer later from settings.
+
+    <Steps>
+      <Step>
+        #### Company
+
+        Tell us about your organisation: company size and geographic focus. These shape default dashboard layouts and recommended integrations downstream.
+
+        ![Configure Workspace — Company size and geographic focus](/images/screenshots/general/console-onboard-configure-workspace-1-step.webp)
+      </Step>
+      <Step>
+        #### Industry
+
+        Select your primary business vertical — trucking, food & grocery delivery, courier, e-commerce, healthcare, waste management, container operations, government/military, or other. The industry choice unlocks vertical-specific goal options and integration recommendations on the next substeps.
+
+        ![Configure Workspace — Industry selection with logistics and supply chain verticals](/images/screenshots/general/console-onboard-configure-workspace-2-step.webp)
+      </Step>
+      <Step>
+        #### Goals
+
+        Choose the operational objectives that matter most for your business — route optimisation, real-time tracking, proof of delivery, dispatching, fleet management, and so on. Goals refine the integration list and dashboard preset shown on later substeps.
+
+        ![Configure Workspace — Goals selection with operational objective tiles](/images/screenshots/general/console-onboard-configure-workspace-3-step.webp)
+      </Step>
+      <Step>
+        #### Integrations
+
+        Connect the tools and services you already use. The list is filtered by your industry and goals, so you see relevant options first — telematics (Flespi, Samsara, Geotab), routing (OSRM, Valhalla, VROOM), maps, payments, comms, ERP, WMS, and more. You can search the full catalogue or come back to this anytime.
+
+        ![Configure Workspace — Integrations browse view with categorised tiles](/images/screenshots/general/console-onboard-configure-workspace-4-step.webp)
+
+        Selected integrations are highlighted as you tap them.
+
+        ![Configure Workspace — Integrations with several selected and highlighted](/images/screenshots/general/console-onboard-configure-workspace-4-selected-step.webp)
+      </Step>
+      <Step>
+        #### Dashboard
+
+        Pick a dashboard preset. Presets pre-load relevant widgets — KPI cards, the live map, recent orders, fleet status — based on your industry and goals. You can rebuild the dashboard from scratch or add widgets later from the dashboard editor.
+
+        ![Configure Workspace — Dashboard preset picker](/images/screenshots/general/console-onboard-configure-workspace-5-step.webp)
+      </Step>
+      <Step>
+        #### Setup
+
+        Add a first driver and a first vehicle if you have the details handy. This isn't required — you can come back to **Fleet-Ops → Drivers** and **Fleet-Ops → Vehicles** anytime — but seeding one of each makes the guided tour land more naturally on real data.
+
+        ![Configure Workspace — Setup with first driver and first vehicle forms](/images/screenshots/general/console-onboard-configure-workspace-6-step.webp)
+      </Step>
+      <Step>
+        #### Review
+
+        A final review screen summarises every choice you've made. Confirm to apply the configuration, or use **Back** to revise any answer.
+
+        ![Configure Workspace — Review summary of all selections](/images/screenshots/general/console-onboard-configure-workspace-review-step.webp)
+      </Step>
+    </Steps>
+  </Step>
+
+  <Step>
+    ### Start Your Trial
+
+    Pick a plan to activate your 7-day free trial. Annual is discounted by 20% compared to monthly. A payment method is required to start, but your card isn't charged until the trial ends — and you can cancel anytime from billing settings.
+
+    ![Onboarding — Start Trial with monthly and annual plan cards](/images/screenshots/general/console-onboard-start-trial-step.webp)
+
+    Once payment is confirmed, your workspace is provisioned and you're redirected to the console.
+  </Step>
+
+  <Step>
+    ### Take the guided tour
+
+    When you first land in the console, a guided tour starts automatically. It walks you through the interface and then through creating your first driver and dispatching your first order. Complete it to get real data into the system, or skip it — it's available anytime from **Help & Tours** in the console menu.
+  </Step>
+</Steps>
+
+## First things to do
+
+Once you're in the console, these are the three most useful things to get done:
+
+- **[Create an API Key](/docs/platform/developer-console/api-keys)** — Go to **Developer Console → API Keys** and generate your first key. You'll need this to connect any external system, app, or integration to your Fleetbase instance.
+
+- **[Add your first driver and get Navigator](/docs/fleet-ops/drivers)** — Go to **Fleet-Ops → Drivers** to add your driver roster. Each driver uses the **Fleetbase Navigator** mobile app to receive orders, update status, and submit proof of delivery — share the download link from the driver profile.
+
+- **[Create your first order](/docs/fleet-ops/orders)** — Go to **Fleet-Ops → Orders** and dispatch a delivery. Assign it to a driver and watch it move through the status lifecycle on the live map in real time.
+
+## Common resources
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-2 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Managing orders</CardTitle>
+      <CardDescription>Create, dispatch, and track orders through their full lifecycle.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/fleet-ops/orders" className="text-primary hover:underline">Orders overview →</a>
+        <a href="/docs/fleet-ops/orders/importing" className="text-primary hover:underline">How to import orders →</a>
+        <a href="/docs/fleet-ops/orders/order-config" className="text-primary hover:underline">How to configure order types →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Managing your fleet</CardTitle>
+      <CardDescription>Add drivers and vehicles, set up zones, and configure the Navigator app.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/fleet-ops/drivers" className="text-primary hover:underline">How to add drivers →</a>
+        <a href="/docs/fleet-ops/drivers/importing" className="text-primary hover:underline">How to import drivers →</a>
+        <a href="/docs/fleet-ops/service-areas" className="text-primary hover:underline">How to set up service areas →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Developer tools</CardTitle>
+      <CardDescription>Connect external systems, subscribe to events, and automate workflows.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/developer-console/api-keys" className="text-primary hover:underline">Making your first API call →</a>
+        <a href="/docs/platform/developer-console/webhooks" className="text-primary hover:underline">Setting up webhooks →</a>
+        <a href="/docs/platform/developer-console/socket-events" className="text-primary hover:underline">Real-time socket events →</a>
+      </div>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-base">Team & access</CardTitle>
+      <CardDescription>Invite your operations team and assign the right roles and permissions.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="flex flex-col gap-1.5 text-sm">
+        <a href="/docs/platform/identity-and-access/users" className="text-primary hover:underline">Inviting team members →</a>
+        <a href="/docs/platform/identity-and-access/roles" className="text-primary hover:underline">Managing roles →</a>
+        <a href="/docs/platform/identity-and-access/permissions" className="text-primary hover:underline">Configuring permissions →</a>
+      </div>
+    </CardContent>
+  </Card>
+</div>

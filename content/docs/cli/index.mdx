@@ -1,0 +1,85 @@
+---
+title: Fleetbase CLI
+description: The Fleetbase CLI (flb) — install Fleetbase, manage extensions on a running instance, and publish your own extensions to the registry.
+---
+
+# Fleetbase CLI
+
+The **Fleetbase CLI** (`flb`) is the official command-line tool for working with Fleetbase. It does three things:
+
+- **Installs Fleetbase** on your own infrastructure with an interactive Docker-based setup wizard
+- **Manages extensions** on a running Fleetbase instance — search, install, uninstall
+- **Publishes extensions** to the Fleetbase Extension Registry — scaffold, bundle, version-bump, publish
+
+```bash
+npm install -g @fleetbase/cli
+flb --version
+```
+
+## What You Can Do
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Install Fleetbase</CardTitle>
+      <CardDescription className="text-xs">Spin up a self-hosted Fleetbase instance with Docker via the interactive wizard.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/installation/overview" className="text-sm text-primary hover:underline">Install Fleetbase →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Manage Extensions</CardTitle>
+      <CardDescription className="text-xs">Search, install, and uninstall extensions on a running Fleetbase instance.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extensions/search" className="text-sm text-primary hover:underline">Manage Extensions →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Publish Extensions</CardTitle>
+      <CardDescription className="text-xs">Scaffold a new extension, bundle it, and publish it to the registry.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/overview" className="text-sm text-primary hover:underline">Publish Extensions →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## Global Options
+
+These options work with every command:
+
+| Option | Description |
+| :--- | :--- |
+| `-v, --version` | Output the CLI version |
+| `-r, --registry [url]` | Override the registry URL (default: `https://registry.fleetbase.io`) |
+| `--help` | Show help for the current command |
+
+## Quick Reference
+
+```bash
+# Install Fleetbase on your machine
+flb install-fleetbase
+
+# Find an extension on the registry
+flb search
+
+# Install an extension into your instance
+flb install fleetbase/storefront
+
+# Create a new extension
+flb scaffold
+
+# Publish your extension to the registry
+flb bundle --upload
+flb publish
+```
+
+## Next Steps
+
+- [Requirements](/docs/cli/getting-started/requirements) — what you need before installing the CLI
+- [Installation](/docs/cli/getting-started/installation) — install the CLI globally via npm
+- [Install Fleetbase](/docs/cli/installation/overview) — install a self-hosted Fleetbase instance

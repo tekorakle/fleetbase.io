@@ -1,0 +1,130 @@
+---
+title: Variants & Addons
+description: Configure product variants (required selections like size/color) and addons (optional extras like toppings) for flexible ordering.
+---
+
+# Variants & Addons
+
+Many products require customers to make choices before they can be added to the cart. Storefront handles this through two mechanisms: **Variants** (required selections) and **Addons** (optional extras).
+
+## Variants
+
+A **Variant** defines a dimension of required customization. The customer must choose from the variant's options before adding the product to the cart.
+
+### Variant structure
+
+```
+Product "T-Shirt"
+└── Variant "Size" (required, min: 1, max: 1)
+    ├── Option "Small"    — +$0
+    ├── Option "Medium"   — +$0
+    └── Option "Large"    — +$2.00
+```
+
+### Variant attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | The variant label (e.g., "Size", "Color") |
+| `is_required` | If true, the customer must select an option from this variant before adding the product to cart. |
+| `is_multiselect` | Controls how many options a customer may pick. **Off (default):** the customer chooses exactly one option (single-select, e.g. Size). **On:** the customer can tick multiple options (multi-select, e.g. *Toppings to skip* or *Allergen flags*). When multiselect is on, every selected option's additional cost is added to the product price. |
+| **Min / Max** | Selection-count bounds — used together with `is_multiselect` to express *"pick at least 2 / at most 4"*. With `is_multiselect` off these are typically left at 1/1. |
+
+### Adding variants to a product
+
+<Steps>
+  <Step>
+    Open the product in **Storefront → Products**.
+  </Step>
+  <Step>
+    Click the **Variants** tab.
+  </Step>
+  <Step>
+    Click **Add Variant** and enter the variant name (e.g., "Size").
+  </Step>
+  <Step>
+    Add options under the variant — each option has a **Name**, an optional **Description**, and an optional **Additional Cost**.
+  </Step>
+  <Step>
+    Toggle **Is Required** if the customer must select this before ordering.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+When a customer selects a variant option, its additional cost is added to the product's base price. With `is_multiselect` enabled, **every** selected option contributes its additional cost — a *Coffee* product with a multiselect *Add-ins* variant where the customer ticks *Vanilla syrup (+$0.50)* and *Oat milk (+$0.75)* gets both added to the line price.
+
+---
+
+## Addons
+
+**Addons** are optional extras grouped into **Addon Categories**. Unlike variants, customers choose zero or more addons — there is no hard requirement to select one (unless `is_required` is set on the category).
+
+### Addon structure
+
+```
+Product "Burger"
+└── Addon Category "Toppings" (max_selectable: 3, is_required: false)
+    ├── Addon "Extra Cheese" — +$1.00
+    ├── Addon "Bacon"        — +$1.50
+    ├── Addon "Avocado"      — +$2.00
+    └── Addon "Jalapeños"    — +$0.50
+```
+
+### Creating addon categories and addons
+
+Addon categories are shared across a store — create them once and reuse them on multiple products.
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Products** and open a product.
+  </Step>
+  <Step>
+    Click the **Addons** tab.
+  </Step>
+  <Step>
+    Click **Add Addon Category** — choose an existing category or create a new one.
+  </Step>
+  <Step>
+    Set **Max Selectable** (how many addons from this group the customer can pick) and toggle **Is Required** if needed.
+  </Step>
+  <Step>
+    Within the addon category, click **Add Addon** and set the **Name** and **Price**.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+### Excluding addons per product
+
+If an addon category has addons that should not apply to a specific product (e.g., a vegan burger should not offer "Bacon"), you can set **Excluded Addons** on the product-addon category link to hide specific addons for that product only.
+
+---
+
+### Sale-Priced Addons
+
+An addon can itself be on sale. Each addon has `is_on_sale` and `sale_price` fields — when `is_on_sale` is true, the cart applies the addon's `sale_price` instead of its `price` for the duration of the sale.
+
+---
+
+## Cart Calculations
+
+When a customer adds a product to the cart, the API calculates the line item total:
+
+```
+Line Item Total = (Base Price
+                   + Sum of selected variant additional costs
+                   + Sum of addon prices (sale_price if is_on_sale, otherwise price))
+                  × Quantity
+```
+
+Example:
+- Burger base price: $10.00
+- Selected variant "Large": +$0.00
+- Selected addons: Extra Cheese ($1.00) + Bacon ($1.50)
+- Quantity: 2
+- **Line item total: $25.00**
+
+The variant and addon selections are stored in the cart item and passed through to the Fleet-Ops order payload so the merchant knows exactly how to prepare each item.

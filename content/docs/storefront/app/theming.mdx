@@ -1,0 +1,146 @@
+---
+title: Theming & Branding
+description: Customize colors, themes, fonts, app icon, splash screen, and display names for the Storefront App.
+---
+
+# Theming & Branding
+
+The Storefront App uses [Tamagui](https://tamagui.dev) for theming. The setup combines a Tailwind-style color palette with named themes, plus runtime overrides via env vars for fast brand work without touching code.
+
+## How Themes Work
+
+Theming source: `tamagui.config.ts` at the project root.
+
+### Bases
+
+The app defines two semantic **bases** — `lightBase` and `darkBase` — and every screen consumes tokens from these. The token set includes:
+
+- `background`, `surface`, `color`
+- `textPrimary`, `textSecondary`, `textPlaceholder`
+- `primary`, `primaryBorder`, `primaryText`
+- `secondary`, `secondaryBorder`
+- `borderColor`, `borderColorWithShadow`, `shadowColor`, `borderActive`
+- `success`, `successBorder`, `successText`
+- `error`, `errorBorder`, `errorText`
+- `warning`, `warningBorder`, `warningText`
+- `info`, `infoBorder`, `infoText`
+
+### Override Layers
+
+The bases are extended in this order — later layers win:
+
+1. `globalColors` — built-in Tailwind palette tokens
+2. `CUSTOM_COLORS` env — universal token overrides
+3. `CUSTOM_COLORS_LIGHT` or `CUSTOM_COLORS_DARK` env — mode-specific overrides
+4. Flattened Tailwind palette (`gray`, `red`, `blue`, `green`, `yellow`, `orange`, `indigo`, `purple`, `pink`) — every shade 50–900
+
+### Named Themes
+
+`tamagui.config.ts` exports these themes via `createTheme()`:
+
+- **Light**: `lightBlue`, `lightRed`, `lightGreen`, `lightIndigo`, `lightOrange`
+- **Dark**: `darkBlue`, `darkRed`, `darkGreen`, `darkIndigo`, `darkOrange`
+
+The active theme is computed at runtime as `${userColorScheme}${capitalize(APP_THEME)}` — so `APP_THEME=indigo` plus dark mode resolves to `darkIndigo`.
+
+The repo also includes `themes/true-vegan.js` as a reference implementation of a fully custom brand theme — use it as a template if you want to build your own (see [Add a Brand Theme](#add-a-brand-theme) below).
+
+The user can flip light/dark from inside the app. The choice persists in MMKV under the key `app_theme`.
+
+## Quickly Recolor with `CUSTOM_COLORS`
+
+For most brand work you don't need to touch code — set environment variables:
+
+```bash
+APP_THEME=blue
+
+# Universal tokens
+CUSTOM_COLORS=primary:#FF3A44,primaryBorder:#FF3A44,primaryText:#FFFFFF
+
+# Different overrides per mode
+CUSTOM_COLORS_LIGHT=background:#FFFFFF,surface:#F7F7F7
+CUSTOM_COLORS_DARK=background:#0A0A0A,surface:#171717
+```
+
+Format: `tokenName:#hex` separated by commas.
+
+For example, defining a custom token and referencing it from a layout slot:
+
+```
+STORE_NAVIGATOR_TAB_BAR_BG=custom
+CUSTOM_COLORS=custom:#345A73,customBorder:#345A73,customText:#F0EEEC
+```
+
+The `custom` token here is referenced by `STORE_NAVIGATOR_TAB_BAR_BG=custom` — that's how a one-off color can be wired into a layout slot via env alone.
+
+## Add a Brand Theme
+
+If env overrides aren't enough — for example you want a fully custom hue on top of every Tailwind-style shade — add a brand theme file.
+
+<Steps>
+  <Step>
+    Create a new file in `themes/`, e.g. `themes/acme.js`. Use `themes/true-vegan.js` as a reference. Export a color palette plus `lightBase` and `darkBase` objects.
+  </Step>
+  <Step>
+    Open `tamagui.config.ts` and import your new file.
+  </Step>
+  <Step>
+    Merge your palette into the `colors` object, and add `lightAcme` / `darkAcme` entries to the `themes` map.
+  </Step>
+  <Step>
+    Set `APP_THEME=acme` in `.env`. Restart Metro / Webpack.
+  </Step>
+</Steps>
+
+## Branding Assets
+
+| Asset | Source file | How to apply |
+| :--- | :--- | :--- |
+| **App icon** | `assets/app-icon.png` (1024x1024 PNG) | Replace, then `yarn generate:app-icon` — fans out to `ios/.../Images.xcassets` and `android/.../mipmap-*` |
+| **Splash screen** | `assets/splash-screen.png` | Replace, then `yarn generate:launch-screen` — runs `react-native-bootsplash` |
+| **Web boot splash** | `index.html` (inline base64 SVG) | Replace the data URL inside `#bootsplash-logo` |
+| **Login background** | `assets/images/storefront-photo-1.jpg` and `storefront-photo-2.jpg` | Replace, or pick which one via `LOGIN_BG_IMAGE` and `BOOTSCREEN_BG_IMAGE` |
+| **Boot screen color** | — | Set `BOOTSCREEN_BACKGROUND_COLOR=#FFFFFF` (or two-stop gradient `#ff3a44,#f67d04`) |
+| **Web font** | `index.html` `<head>` | The default loads Inter from Google Fonts. Swap the `<link>` for your font |
+
+### Generating App Icon and Splash
+
+```bash
+# After replacing assets/app-icon.png:
+yarn generate:app-icon
+
+# After replacing assets/splash-screen.png:
+yarn generate:launch-screen
+```
+
+`yarn generate:launch-screen` defaults to `--background=#FFFFFF --logo-width=100`. Edit the script in `package.json` if you want a different background or logo size.
+
+## Native Display Names
+
+`app.json` only controls the React Native registry name. The user-visible app name is set natively:
+
+- **iOS**: `ios/StorefrontApp/Info.plist` → `CFBundleDisplayName` (currently `$(APP_NAME)` from xcconfig — i.e. driven by your `.env`)
+- **Android**: `android/app/src/main/res/values/strings.xml` → `<string name="app_name">StorefrontApp</string>`
+
+If you fully rebrand, also update:
+- `ios/StorefrontApp.xcodeproj` (Xcode project name)
+- `android/app/build.gradle` namespace and `applicationId`
+- `app.json` `name` and `displayName`
+
+See [Build & Release → Renaming the App](/docs/storefront/app/build-and-release#native-naming).
+
+## Layout Tweaks Without Code
+
+Many home/store visual choices are env-controlled — see [Configuration → Storefront Layout](/docs/storefront/app/configuration#storefront-layout). Examples:
+
+```bash
+STORE_CATEGORIES_DISPLAY=pills          # or grid (default)
+PRODUCT_CARD_STYLE=visio                # or bordered (default), outlined
+STORE_HEADER_SHOW_GRADIENT=1
+STORE_HEADER_LOGO_HEIGHT=64
+STORE_HEADER_LOGO_WIDTH=64
+```
+
+## Tamagui Static Extraction
+
+The build runs Tamagui's Babel plugin and (on web) `tamagui-loader` for static CSS extraction. Web emits `public/tamagui.css`, post-processed by `postcss-tamagui-fix.js`. You usually don't need to think about this — but if a Tamagui upgrade breaks the web build, the post-process script is the place to look.

@@ -1,0 +1,129 @@
+---
+title: Networks
+description: Build a multi-vendor marketplace by grouping multiple Storefront stores into a Network — shared payment gateways, notification channels, and a single customer-facing app.
+---
+
+# Networks
+
+A **Network** is a collection of Storefront stores grouped into a single marketplace. Networks are the right architecture when you are building a platform that hosts multiple independent merchants — food delivery apps, local marketplace aggregators, multi-brand parent companies.
+
+If you are running a single brand, you don't need a network — see [Stores](/docs/storefront/stores/overview).
+
+## What a Network Provides
+
+| Capability | Notes |
+| :--- | :--- |
+| **Aggregated catalog** | Customers browse member stores and check out from one of them |
+| **Shared payment gateways** | Configure Stripe, QPay, Braintree once at the network level instead of per-store |
+| **Shared notification channels** | One set of APNs/FCM channels services every store in the network |
+| **Network categories** | Tag member stores ("Pizza", "Sushi") for navigation in your customer app |
+| **Multi-cart checkout** | Optional — let one cart span multiple stores; produces one Fleet-Ops order per store |
+| **Network-wide reviews** | Optional — enable customer reviews on stores and products in the network |
+| **Network API key** | One `network_*` key fetches the entire marketplace |
+
+Stores belong to networks via a join with optional category assignment, and a single store can belong to multiple networks.
+
+## Creating a Network
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Networks** and click **New Network**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Description**, and **Currency**.
+  </Step>
+  <Step>
+    Click **Save**. The network is created and assigned a unique `network_*` API key.
+  </Step>
+</Steps>
+
+After creation, open the network's settings to fill in branding (logo, backdrop), contact info, social handles, and the toggles in [Network Settings](#network-settings).
+
+## Adding Stores to a Network
+
+<Steps>
+  <Step>
+    Open the network and click the **Stores** tab.
+  </Step>
+  <Step>
+    Click **Add Store**.
+  </Step>
+  <Step>
+    Search for and select the stores to add. Optionally assign each store a **Network Category** (e.g., "Pizza", "Sushi") to group them in your customer app.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+Stores can belong to multiple networks. When a customer browses a network, only stores that are currently online and within delivery range appear.
+
+## Inviting Stores to Join
+
+If you don't operate the stores directly, send a **shareable join link**:
+
+<Steps>
+  <Step>
+    Open the network → **Stores** tab and click **Share Network**.
+  </Step>
+  <Step>
+    Enter the recipient's email addresses.
+  </Step>
+  <Step>
+    Click **Send**. Each recipient receives a link to join the network with an existing store.
+  </Step>
+</Steps>
+
+A shareable join link is also available via the network's settings (`options.shareable_link_enabled`) — anyone with the link can join the network without an explicit invitation.
+
+## Network Settings
+
+Open the network and scroll to **General Network Settings**. All toggles below (except `online`, `order_config_uuid`, and `pod_method`) are stored on the network's `options` JSON column.
+
+| Setting | Key | What it does |
+| :--- | :--- | :--- |
+| **Online** | `online` | Master switch — when off, the network is hidden from public discovery |
+| **Default Order Config** | `order_config_uuid` | Fleet-Ops order configuration applied to orders created within this network |
+| **Enable tax** | `options.tax_enabled` | Apply a tax line item to checkouts. When on, set **Tax percentage** in `options.tax_percentage` |
+| **Enable minimum order amount** | `options.required_checkout_min` | Block checkout below a threshold. When on, set the value in `options.required_checkout_min_amount` |
+| **Auto-accept incoming orders** | `options.auto_accept_orders` | Skip the manual accept step — incoming orders move straight to the next status |
+| **Auto-dispatch orders** | `options.auto_dispatch` | Automatically dispatch accepted orders to Fleet-Ops without manual intervention |
+| **Require proof of delivery** | `options.require_pod` | Drivers must capture POD on completion. Method is set in `pod_method` (`scan`, `signature`, `photo`, or `sms`) |
+| **Enable cash on delivery** | `options.cod_enabled` | Show Cash on Delivery as a payment option at checkout |
+| **Enable order pickup** | `options.pickup_enabled` | Allow customers to choose pickup instead of delivery |
+| **Enable tips** | `options.tips_enabled` | Show a tip field at checkout |
+| **Enable delivery tips** | `options.delivery_tips_enabled` | Allow customers to add a separate tip for the driver after delivery |
+| **Enable multi-cart checkout** | `options.multi_cart_enabled` | Allow a single cart to contain items from multiple stores in the network — see [Multi-Store Cart Behavior](/docs/storefront/orders/cart#multi-store-cart-behavior) |
+| **Enable user reviews** | `options.reviews_enabled` | Allow customers to submit reviews on stores and products in the network |
+
+Networks also have:
+- **Alert recipients** — under the **Alerts** panel, select users notified for new orders (`alertable.for_new_order`)
+- **Contact & Social** — phone, email, website, Facebook, Instagram, Twitter
+- **Branding** — logo and backdrop images
+- **Tags** — freeform tags for filtering
+
+<Callout type="info">
+**Multi-cart checkout** and **user reviews** are network-only settings — they do not exist on standalone stores.
+</Callout>
+
+## Network API Key
+
+Each network is assigned a unique key prefixed with `network_` — find it in **Storefront → Settings → API**. Use it as the bearer token from your customer app to fetch the entire marketplace catalog.
+
+```http
+GET /storefront/v1/stores
+Authorization: Bearer network_a1b2c3d4...
+```
+
+See [API Settings](/docs/storefront/settings/api) for the full authentication model.
+
+## Deleting a Network
+
+Open the network in the console and click **Delete**. Member stores are not deleted — they remain available as standalone stores or can be re-attached to another network. Historical orders associated with the network are retained.
+
+## Next Steps
+
+- [Stores](/docs/storefront/stores/overview) — manage individual stores within your network
+- [Payment Gateways](/docs/storefront/orders/payment-gateways) — configure shared gateways at the network level
+- [Notifications](/docs/storefront/settings/notifications) — set up shared APNs and FCM channels
+- [Cart](/docs/storefront/orders/cart#multi-store-cart-behavior) — how multi-store carts and checkout work

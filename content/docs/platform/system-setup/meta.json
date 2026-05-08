@@ -1,0 +1,13 @@
+{
+  "title": "System Setup",
+  "pages": [
+    "branding",
+    "services",
+    "mail",
+    "filesystem",
+    "queue",
+    "socket",
+    "push-notifications",
+    "two-factor-authentication"
+  ]
+}

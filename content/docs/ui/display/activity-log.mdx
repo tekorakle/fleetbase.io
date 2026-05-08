@@ -1,0 +1,89 @@
+---
+title: ActivityLog
+description: "<ActivityLog> renders a feed of activity records — auto-fetches from the `activity` model, groups by day, supports date-range filtering."
+---
+
+# `<ActivityLog>`
+
+`<ActivityLog>` renders a feed of activity records (user and system actions). It auto-fetches activities from the `activity` Ember Data model, groups them by day, and includes a built-in date-range filter and refresh button.
+
+## Basic Usage
+
+```handlebars
+<ActivityLog @subjectId={{this.order.id}} />
+```
+
+This loads activities where `subject_id = order.id` and renders them grouped by day.
+
+## Filtering
+
+```handlebars
+<ActivityLog
+  @subjectId={{this.order.id}}
+  @causerId={{this.user.id}}
+/>
+```
+
+Activities are loaded from the API with `subject_id` and/or `causer_id` query params plus the date-range filter the user picks.
+
+## Arguments
+
+### Filtering
+
+| Argument | Type | Description |
+| :--- | :--- | :--- |
+| `@subjectId` | string | Filter to activities about a specific record |
+| `@causerId` | string | Filter to activities caused by a specific user |
+
+### Visual
+
+| Argument | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `@density` | string | `compact` | `compact` or `cozy` |
+| `@showAvatars` | boolean | `true` | Show user avatars |
+| `@showBadges` | boolean | `true` | Show activity-type badges |
+| `@dateFilterButtons` | array | — | Quick-pick buttons for the date filter (e.g. "Last 7 days") |
+| `@autoClose` | boolean | — | Close the date picker after selection |
+| `@toggleSelected` | boolean | — | Toggle behavior on the date picker |
+
+### Class Hooks
+
+| Argument | Description |
+| :--- | :--- |
+| `@headerWrapperClass` | Header row |
+| `@groupClass` | Each day group |
+| `@groupLabelClass` | Day label |
+| `@itemClass` | Each activity item |
+
+### Callbacks
+
+| Argument | Signature | Description |
+| :--- | :--- | :--- |
+| `@onCauserClick` | `(causer)` | Called when a user link in an activity is clicked |
+| `@onSubjectClick` | `(subject)` | Called when a subject link is clicked |
+
+### Yielded Block
+
+| Block | Purpose |
+| :--- | :--- |
+| `:filters` | Render extra filter controls in the header |
+
+## Real-World Example
+
+```handlebars
+{{!-- Inside an order detail overlay --}}
+<ContentPanel @title="Activity Log" @open={{true}}>
+  <ActivityLog
+    @subjectId={{this.order.id}}
+    @density="compact"
+    @onCauserClick={{this.openUser}}
+  />
+</ContentPanel>
+```
+
+## Source
+
+| File | Description |
+| :--- | :--- |
+| [`addon/components/activity-log.hbs`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/activity-log.hbs) | Template |
+| [`addon/components/activity-log.js`](https://github.com/fleetbase/ember-ui/blob/main/addon/components/activity-log.js) | Class — queries the `activity` Ember Data model |

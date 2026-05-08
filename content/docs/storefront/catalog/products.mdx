@@ -1,0 +1,91 @@
+---
+title: Products
+description: Create and manage products in your Storefront catalog — images, videos, variants, addons, availability, translations, and metadata.
+---
+
+# Products
+
+A **Product** is the core unit of your catalog — any item or service a customer can purchase. Products belong to a specific store and are organized into categories.
+
+Navigate to **Storefront → Products** to manage your product list.
+
+![Product list — name, price, category, status, and primary image](/images/screenshots/storefront/storefront-products-list.webp)
+
+## Product Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | The customer-facing product name |
+| **Description** | Detailed description of the item |
+| **Price** | Base price in the store's currency |
+| **Sale Price** | Reduced price; applied when `is_on_sale` is enabled |
+| **SKU** | Optional internal stock keeping unit |
+| **Category** | The primary category this product belongs to |
+| **Status** | `published` (visible to customers) or `draft` (hidden — used while editing) |
+| **Is Available** | Boolean toggle (`is_available`) layered on top of `status`. When off, the product is hidden from customers even if `status = published`. The customer-facing API filters on **both** flags being set, so use this to take a published product temporarily out of stock without losing its catalog placement |
+| **Is Recommended** | Flag to surface this product as a recommendation in your app |
+| **Is Service** | Mark as a service product (non-physical) |
+| **Is Bookable** | Enable appointment/booking-style ordering — only shown when **Is Service** is on |
+| **Tags** | Freeform tags for filtering and search |
+| **YouTube URLs** | Add embedded videos for the product detail screen |
+| **Translations** | Per-locale name and description |
+| **Metadata** | Arbitrary key/value `meta` data |
+
+A few additional fields are stored on the model but not exposed in the edit form — `can_pickup` (allow product-level pickup) is settable via the API only.
+
+Each product also auto-generates a **slug**, a **QR code**, and a **barcode** on creation.
+
+## Creating a Product
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Products**.
+  </Step>
+  <Step>
+    Open a category and click **New Product**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Description**, and **Price**.
+  </Step>
+  <Step>
+    Upload images and (optionally) videos in the media dropzone — pick one as the primary image.
+  </Step>
+  <Step>
+    Set **Status** to **Published** when the product is ready for customers.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Product Customization
+
+### Variants
+
+Variants define required selections the customer must make before adding a product to the cart (e.g., selecting a size). See [Variants & Addons](/docs/storefront/catalog/variants-and-addons).
+
+### Addons
+
+Addons are optional extras grouped into addon categories. See [Variants & Addons](/docs/storefront/catalog/variants-and-addons).
+
+### Availability Hours
+
+If a product is only available at certain times (e.g., a breakfast item available 7am–11am only), use the **Availability** panel inside the product editor:
+
+1. Open the product
+2. Open the **Availability** panel (uses the schedule manager)
+3. Add per-day time blocks
+4. Save
+
+## How Products Flow to Fleet-Ops
+
+When a customer completes checkout, each cart item is converted into a Fleet-Ops **Entity** in the order payload:
+
+- The entity carries the product **name**, **description**, **SKU**, **currency**, **price**, **sale_price**, **internal_id** (the product's `public_id`), and **image_url**
+- The cart item retains quantity and variant/addon selections so dispatchers and drivers see exactly what needs to be picked up
+
+This conversion happens automatically — no configuration required.
+
+## Importing Products
+
+To bulk-upload a product catalog from a spreadsheet, click **Import** in the products list. The CSV columns expected by the import flow include `name`, `price`, `currency`, and `category`; consult the import modal for the full schema applied by your installation.

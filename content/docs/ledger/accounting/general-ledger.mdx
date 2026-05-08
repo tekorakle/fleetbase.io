@@ -1,0 +1,55 @@
+---
+title: General Ledger
+description: View the master record of all journal entries — a complete chronological history of every financial transaction.
+---
+
+# General Ledger
+
+The **General Ledger** is the master record of all journal entries across your organization. It provides a complete, chronological view of every financial event — debits, credits, amounts, and running balances.
+
+Navigate to **Ledger → Accounting → General Ledger**.
+
+## Columns
+
+The general ledger view shows:
+
+| Column | Description |
+| :--- | :--- |
+| **Date** | Date of the journal entry |
+| **Ref #** | Human-readable reference (invoice number, order ID, etc.) |
+| **Description** | What the entry records |
+| **Debit** | Amount on the debit side |
+| **Credit** | Amount on the credit side |
+| **Balance** | Running balance |
+
+## Filters
+
+Use the filters at the top of the page to narrow the view:
+
+- **Date range** — start and end date
+- **Type** — filter by **account type** (asset, liability, equity, revenue, expense)
+
+## Account-Level Ledger
+
+To view the ledger for a single account with a running balance:
+
+<Steps>
+  <Step>
+    Navigate to **Ledger → Accounting → Accounts**.
+  </Step>
+  <Step>
+    Click an account row.
+  </Step>
+  <Step>
+    The account detail panel shows the account's journal history with debit, credit, and running balance.
+  </Step>
+</Steps>
+
+This view is useful for reconciling specific accounts (e.g., Accounts Receivable) or producing account statements for audits.
+
+## System vs. Manual Entries
+
+- **System entries** (`is_system_entry: true`) are written automatically by Ledger in response to invoice payments, gateway transactions, wallet operations, and Storefront sales.
+- **Manual entries** are created by operators via **Ledger → Accounting → Journal → New Manual Entry**.
+
+Both appear in the general ledger. There is no built-in reversal/voiding workflow — to undo a system entry, post a manual reversing entry against the same accounts.

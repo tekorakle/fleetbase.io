@@ -1,0 +1,111 @@
+---
+title: Frontend Development
+description: Build the frontend of your extension as an Ember.js engine — routes, components, and services.
+---
+
+# Frontend Development
+
+The frontend of a Fleetbase extension is built as an **Ember.js Engine**.
+
+An Ember Engine is a self-contained Ember application that can be mounted inside a larger host application (in this case, the Fleetbase Console). This architecture allows you to build complex, multi-route UIs that feel like native parts of the platform.
+
+## The Addon Directory
+
+When you [scaffold an extension](/docs/extending-fleetbase/scaffolding-your-extension), the CLI generates an `addon/` directory containing the frontend engine.
+
+```text
+addon/
+├── components/
+├── controllers/
+├── routes/
+├── templates/
+├── engine.js
+└── routes.js
+```
+
+## The Engine Entry Point
+
+The entry point for your frontend engine is `addon/engine.js`.
+
+This file defines the engine and specifies its dependencies. Crucially, this is where you declare which services from the host application (Fleetbase) your extension needs access to.
+
+```javascript
+import Engine from '@ember/engine';
+import loadInitializers from 'ember-load-initializers';
+import Resolver from 'ember-resolver';
+import config from './config/environment';
+
+const { modulePrefix } = config;
+
+const Eng = Engine.extend({
+    modulePrefix,
+    Resolver,
+    dependencies: {
+        services: [
+            'store',
+            'fetch',
+            'universe',
+            'router',
+            'session',
+            'notifications',
+        ],
+    },
+});
+
+loadInitializers(Eng, modulePrefix);
+
+export default Eng;
+```
+
+By declaring these dependencies, your extension can use Fleetbase's core services. For example, you can use the `store` service to interact with Ember Data models, the `fetch` service to make authenticated API requests to your [Backend](/docs/extending-fleetbase/backend-development), and the `universe` service to register UI elements.
+
+## Defining Routes
+
+Your frontend routes are defined in `addon/routes.js`.
+
+```javascript
+import buildRoutes from 'ember-engines/routes';
+
+export default buildRoutes(function () {
+    this.route('index', { path: '/' });
+    this.route('settings');
+    this.route('details', { path: '/:id' });
+});
+```
+
+When your extension is mounted in the Fleetbase Console, these routes will be accessible under your extension's namespace (e.g., `/console/my-extension/settings`).
+
+## Interacting with the Universe Service
+
+The most important service for extension development is the **Universe Service**.
+
+You use the Universe Service to inject your extension into the Fleetbase UI. This is typically done in an initializer or within the `init` method of your engine's application route.
+
+For example, to add a link to your extension in the main sidebar navigation:
+
+```javascript
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
+
+export default class ApplicationRoute extends Route {
+    @service universe;
+
+    init() {
+        super.init(...arguments);
+
+        this.universe.registerMenuItem('console.sidebar', {
+            title: 'My Extension',
+            icon: 'box',
+            route: 'console.my-extension',
+        });
+    }
+}
+```
+
+*See [Menus & Navigation](/docs/extending-fleetbase/menus-and-navigation) for more details on registering UI elements.*
+
+## Building Components
+
+You can build standard Ember components in the `addon/components/` directory and use them in your templates.
+
+Because your extension runs within the Fleetbase environment, you also have access to the **Fleetbase UI Library** (`@fleetbase/ember-ui`). This library provides a comprehensive set of pre-built, styled components (buttons, tables, modals, form inputs) that you can use to ensure your extension matches the look and feel of the core platform.

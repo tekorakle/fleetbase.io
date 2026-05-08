@@ -1,0 +1,80 @@
+---
+title: Equipment
+description: Track fleet equipment assets — tools, trailers, containers — with maintenance schedules, work orders, and warranty coverage.
+---
+
+# Equipment
+
+**Equipment** tracks fleet assets beyond vehicles — tools, trailers, containers, attachments, and other hardware that require their own maintenance schedules and work orders. Equipment records are linked to vehicles or drivers and participate in the same maintenance workflow as vehicles.
+
+![Equipment list — name, category, assigned vehicle, status, next maintenance date](/images/screenshots/fleet-ops/fleet-ops-equipment-list.webp)
+
+## What Equipment Covers
+
+Equipment in Fleet-Ops includes:
+
+- **Trailers** — flatbed, refrigerated, curtainsider, tanker
+- **Containers** — shipping containers, ISO containers
+- **Attachments** — forklifts, tail lifts, cranes
+- **Tools** — delivery trolleys, pallet jacks, scanners
+- **Powered equipment** — generators, refrigeration units
+
+Anything that:
+1. Has its own service intervals (independent of the vehicle)
+2. Needs work orders for repairs and inspections
+3. Has a warranty that should be tracked
+
+## Equipment Attributes
+
+| Field | Description |
+| :--- | :--- |
+| **Name** | Equipment identifier (e.g., "Trailer 003", "Pallet Jack 12") |
+| **Category** | Type of equipment |
+| **Description** | Detailed description |
+| **Serial Number** | Manufacturer serial number |
+| **Status** | active, inactive, maintenance, retired |
+| **Assigned Vehicle** | Vehicle this equipment is currently assigned to |
+
+## Creating Equipment
+
+<Steps>
+  <Step>
+    Navigate to **Fleet-Ops → Maintenance → Equipment**.
+  </Step>
+  <Step>
+    Click **+ New Equipment**.
+  </Step>
+  <Step>
+    Enter the **Name**, **Category**, and **Description**.
+  </Step>
+  <Step>
+    Set the **Serial Number** for identification.
+  </Step>
+  <Step>
+    Assign to a **Vehicle** if this equipment is currently attached.
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Maintenance for Equipment
+
+Equipment participates in the same maintenance workflow as vehicles:
+
+- Create **Maintenance Schedules** for equipment (e.g., refrigeration unit service every 500 hours)
+- **Work Orders** are generated when thresholds are reached
+- **Maintenance History** records all services performed
+
+Access these from the Equipment detail panel tabs: **Schedules**, **Work Orders**, **Maintenance**.
+
+## Warranty Tracking
+
+Equipment can have a **Warranty** record that tracks:
+
+- Warranty provider and policy number
+- Coverage start and end dates
+- Covered components
+- Warranty claim history
+
+When a warranty is expiring, Fleet-Ops can be configured to send a reminder notification.

@@ -1,0 +1,42 @@
+---
+title: Extensions
+description: Extend Fleetbase with modular extensions — install from the registry, manage installed extensions, or publish your own.
+---
+
+# Extensions
+
+Fleetbase is built on a modular architecture. The core platform provides identity management, API routing, and real-time events — the actual logistics capabilities are delivered by **Extensions**.
+
+Extensions are installable packages that add specific features, workflows, or integrations to your instance. You can install official extensions, purchase community extensions, or build and publish your own.
+
+**Extensions** is accessible from the **top navigation bar** of the Fleetbase Console — not the sidebar. Clicking it opens the Extensions section with its own sidebar containing:
+
+| Section | Description |
+| :--- | :--- |
+| **Installed** | Extensions currently active on your instance |
+| **Purchased** | Extensions you have purchased — install or reinstall from here |
+| **Explore** | Browse the registry by category or search |
+| **Developers** | Publish and manage your own extensions *(self-hosted registry only)* |
+
+## Official Extensions
+
+| Extension | Description |
+| :--- | :--- |
+| **FleetOps** | Fleet management and dispatch — drivers, vehicles, orders, and real-time tracking |
+| **Storefront** | Headless e-commerce engine — products, categories, customers, and checkout |
+| **Ledger** | Accounting and billing — wallets, transactions, and invoicing |
+| **Pallet** | Warehouse and inventory management |
+
+## Installing Extensions
+
+Extensions can be installed directly from the console (Explore → Install) or from the command line using the Fleetbase CLI:
+
+```bash
+flb install fleetbase/fleetops
+```
+
+See [Browsing & Installing](/docs/platform/extensions/browsing-and-installing) for full details.
+
+## Building Your Own
+
+You can build a custom extension and keep it private or publish it to the registry. See the [Extending Fleetbase](/docs/extending-fleetbase) section to get started.

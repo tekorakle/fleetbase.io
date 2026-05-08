@@ -1,0 +1,78 @@
+'use client';
+
+import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
+import {
+  BookOpen,
+  Truck,
+  ShoppingBag,
+  BookMarked,
+  Terminal,
+  Layout,
+  Puzzle,
+  FileCode,
+  HeartHandshake,
+} from 'lucide-react';
+
+const sections = [
+  {
+    title: 'Platform',
+    description: 'Getting started & core platform',
+    url: '/docs',
+    icon: <BookOpen className="size-4" />,
+  },
+  {
+    title: 'Fleet-Ops',
+    description: 'Fleet & transport management',
+    url: '/docs/fleet-ops',
+    icon: <Truck className="size-4" />,
+  },
+  {
+    title: 'Storefront',
+    description: 'E-commerce & marketplace',
+    url: '/docs/storefront',
+    icon: <ShoppingBag className="size-4" />,
+  },
+  // Pallet docs are hidden from the dropdown until the extension is released.
+  // The /docs/pallet routes still resolve so direct links work, but the entry
+  // is omitted from the section picker so users don't browse to unfinished docs.
+  {
+    title: 'Ledger',
+    description: 'Finance & billing',
+    url: '/docs/ledger',
+    icon: <BookMarked className="size-4" />,
+  },
+  {
+    title: 'Fleetbase CLI',
+    description: 'Command-line tools',
+    url: '/docs/cli',
+    icon: <Terminal className="size-4" />,
+  },
+  {
+    title: 'Fleetbase UI',
+    description: 'UI components for the console',
+    url: '/docs/ui',
+    icon: <Layout className="size-4" />,
+  },
+  {
+    title: 'Extension Development',
+    description: 'Build & extend Fleetbase',
+    url: '/docs/extension-development',
+    icon: <Puzzle className="size-4" />,
+  },
+  {
+    title: 'API Reference',
+    description: 'REST API documentation',
+    url: '/docs/api',
+    icon: <FileCode className="size-4" />,
+  },
+  {
+    title: 'Contributing',
+    description: 'Translations, code, docs & extensions',
+    url: '/docs/contributing',
+    icon: <HeartHandshake className="size-4" />,
+  },
+];
+
+export function DocsToggle() {
+  return <RootToggle options={sections} />;
+}

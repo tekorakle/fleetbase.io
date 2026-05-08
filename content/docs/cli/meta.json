@@ -1,0 +1,31 @@
+{
+  "title": "CLI",
+  "pages": [
+    "index",
+    "---Getting Started---",
+    "getting-started/requirements",
+    "getting-started/installation",
+    "getting-started/commands",
+    "---Install Fleetbase---",
+    "installation/overview",
+    "---Account---",
+    "account/register",
+    "account/verify",
+    "account/resend-verification",
+    "account/login",
+    "account/set-auth",
+    "account/generate-token",
+    "---Manage Extensions---",
+    "extensions/search",
+    "extensions/install",
+    "extensions/uninstall",
+    "---Publish Extensions---",
+    "extension-development/overview",
+    "extension-development/scaffold",
+    "extension-development/version-bump",
+    "extension-development/bundle",
+    "extension-development/bundle-upload",
+    "extension-development/publish",
+    "extension-development/unpublish"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Developer Console",
+  "pages": [
+    "api-keys",
+    "webhooks",
+    "request-logs",
+    "system-events",
+    "socket-events"
+  ]
+}

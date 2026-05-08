@@ -1,0 +1,120 @@
+---
+title: Browsing & Installing
+description: Browse the Fleetbase extension registry and install extensions via the console or the CLI.
+---
+
+# Browsing & Installing Extensions
+
+Extensions are discovered and installed from the **Extensions** section in the top navigation bar of the Fleetbase Console, or using the `flb` CLI on a self-hosted instance.
+
+## Browsing the Registry
+
+### Via the Console
+
+Click **Extensions** in the top navbar to open the Extensions section. The default view is **Explore**, which shows extension cards in a grid.
+
+![Extensions Explore view — extension card grid with search bar and category sidebar](/images/screenshots/extensions/extensions-browse.webp)
+
+The sidebar shows:
+- **Explore All** — the full registry catalogue
+- **Categories** — browse by type (e.g. Fleet Management, Commerce, Finance)
+
+Use the **search bar** in the section header to filter by keyword. Click a category in the sidebar to narrow results to that type.
+
+Each extension card shows the extension name, icon, and description. Click a card to view full details before installing.
+
+### Via the CLI
+
+```bash
+# Browse all available extensions
+flb search
+
+# Search by keyword
+flb search routing
+
+# Filter by category
+flb search --category logistics
+
+# Show only free extensions
+flb search --free
+
+# Output as JSON (for scripting)
+flb search --json
+
+# Output one extension per line (slug, name, version, price)
+flb search --simple
+```
+
+## Installing Extensions
+
+### Via the Console
+
+From the **Explore** view, find the extension you want and click **Install**. The console handles the rest — downloading the backend package, running database migrations, and rebuilding the frontend to include the new UI.
+
+Once installation completes the extension's features and navigation appear immediately. You may need to refresh the page.
+
+![Extension card with Install button and installation progress indicator](/images/screenshots/extensions/extensions-console-install.webp)
+
+### Via the CLI (Self-Hosted)
+
+On a self-hosted instance, use the Fleetbase CLI to install extensions. The extension identifier uses the format `publisher/extension-name` — no `@` prefix.
+
+```bash
+# Install an extension by name
+flb install fleetbase/fleetops
+
+# Install to a specific Fleetbase instance directory
+flb install fleetbase/fleetops --path /opt/fleetbase
+```
+
+The CLI downloads the extension, runs any required database migrations, and rebuilds the frontend console to wire in the new UI components.
+
+## Authenticating the CLI
+
+Before you can install extensions from the CLI you must authenticate with the Fleetbase Registry.
+
+<Steps>
+  <Step>
+    ### Register an account
+
+    ```bash
+    flb register
+    ```
+  </Step>
+  <Step>
+    ### Verify your email
+
+    ```bash
+    flb verify -e your@email.com -c verification-code
+    ```
+  </Step>
+  <Step>
+    ### Generate a registry token
+
+    ```bash
+    flb generate-token -e your@email.com
+    ```
+  </Step>
+  <Step>
+    ### Set your auth token
+
+    ```bash
+    flb set-auth your-registry-token-here
+    ```
+  </Step>
+</Steps>
+
+You only need to do this once per machine. After authenticating, `flb install` and all other registry commands work without further prompts.
+
+## Purchased Extensions
+
+Extensions you have purchased but not yet installed appear under **Purchased** in the Extensions sidebar. Each card shows an **Installed** badge if the extension is already active, or allows you to install it if not.
+
+![Purchased tab — extension cards with Installed badges for active extensions](/images/screenshots/extensions/extensions-purchased.webp)
+
+## Post-Installation
+
+After installing an extension:
+
+- **Permissions** — the extension registers new permission strings in IAM. Update your [Roles & Permissions](/docs/platform/identity-and-access/roles-and-permissions) to grant users access to the new features.
+- **Settings** — many extensions add configuration panels under their own settings section. Review these after installation.

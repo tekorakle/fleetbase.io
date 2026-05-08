@@ -1,0 +1,104 @@
+---
+title: Overview
+description: Build, test, version, bundle, and publish custom Fleetbase extensions using the CLI.
+---
+
+# Publishing Extensions
+
+The CLI gives you the full lifecycle for authoring and shipping a Fleetbase extension — from scaffolding a new project to publishing it on the Extension Registry.
+
+## The Lifecycle
+
+```
+flb scaffold        →  Generate a new extension from the starter template
+                          ↓
+        develop locally — write your addon and server code
+                          ↓
+flb version-bump    →  Bump version in extension.json / package.json / composer.json
+                          ↓
+flb bundle          →  Pack the extension into a distributable .tar.gz
+                          ↓
+flb bundle-upload   →  Upload the bundle to the registry's storage
+   — or —
+flb publish         →  Run npm publish against the registry
+                          ↓
+                    Extension is now installable via flb install
+```
+
+## Pages
+
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Scaffold</CardTitle>
+      <CardDescription className="text-xs">Generate a new extension from the starter template.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/scaffold" className="text-sm text-primary hover:underline">flb scaffold →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Version Bump</CardTitle>
+      <CardDescription className="text-xs">Increment major / minor / patch / prerelease across all manifest files.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/version-bump" className="text-sm text-primary hover:underline">flb version-bump →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Bundle</CardTitle>
+      <CardDescription className="text-xs">Pack the extension into a versioned .tar.gz, optionally uploading.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/bundle" className="text-sm text-primary hover:underline">flb bundle →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Bundle Upload</CardTitle>
+      <CardDescription className="text-xs">Upload an existing bundle to the registry.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/bundle-upload" className="text-sm text-primary hover:underline">flb bundle-upload →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Publish</CardTitle>
+      <CardDescription className="text-xs">Run `npm publish` against the registry.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/publish" className="text-sm text-primary hover:underline">flb publish →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Unpublish</CardTitle>
+      <CardDescription className="text-xs">Remove a published extension from the registry.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/cli/extension-development/unpublish" className="text-sm text-primary hover:underline">flb unpublish →</a>
+    </CardContent>
+  </Card>
+</div>
+
+## Prerequisites
+
+Before you can publish, you need:
+
+1. A registry developer account — see [Register](/docs/cli/account/register)
+2. A verified email — see [Verify](/docs/cli/account/verify)
+3. A registry auth token — saved via [`flb set-auth`](/docs/cli/account/set-auth) or environment variable for CI
+
+## Extension Anatomy
+
+A Fleetbase extension is a single repository that contains both:
+
+- **An Ember addon** — the console UI (npm package, e.g. `@yourcompany/yourext-engine`)
+- **A Laravel package** — the API server code (composer package, e.g. `yourcompany/yourext-api`)
+
+Both packages are published from the same source tree. The starter template the scaffolder clones gives you both halves wired up.
+
+For deeper development docs (architecture, services, registries, IAM), see the [Extension Development](/docs/extension-development/getting-started/quickstart).

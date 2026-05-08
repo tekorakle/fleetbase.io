@@ -1,0 +1,180 @@
+---
+title: Build & Release
+description: Production builds for iOS, Android, and the web target — signing, versioning, and renaming for your brand.
+---
+
+# Build & Release
+
+The Storefront App is a standard React Native project plus a Webpack-based web target. Production releases follow normal RN release procedures with a few project-specific notes.
+
+## iOS Release Build
+
+### Prerequisites
+
+- An Apple Developer account
+- A Distribution certificate and provisioning profile for your bundle ID
+- App Store Connect entry for your app
+
+### Configure Signing
+
+1. Open `ios/StorefrontApp.xcworkspace` in Xcode.
+2. In the project navigator, select the `StorefrontApp` target.
+3. Under **Signing & Capabilities**, select your team and provisioning profile.
+
+### Build
+
+```bash
+cd ios
+bundle exec pod install
+
+# Archive
+xcodebuild -workspace StorefrontApp.xcworkspace \
+  -scheme StorefrontApp \
+  -configuration Release \
+  -archivePath build/StorefrontApp.xcarchive \
+  archive
+
+# Export IPA
+xcodebuild -exportArchive \
+  -archivePath build/StorefrontApp.xcarchive \
+  -exportPath build/ \
+  -exportOptionsPlist ExportOptions.plist
+```
+
+Or just hit **Product → Archive** in Xcode and use Organizer to upload.
+
+### Versioning
+
+iOS version and build number are set in Xcode (or via `agvtool`). Bump the build number for every TestFlight / App Store upload.
+
+## Android Release Build
+
+### Configure the Signing Keystore
+
+The repo expects a keystore alias defined via env vars:
+
+```
+ANDROID_STOREFRONT_APP_UPLOAD_STORE_FILE=storefront-app.keystore
+ANDROID_STOREFRONT_APP_UPLOAD_KEY_ALIAS=storefrontapp
+ANDROID_STOREFRONT_APP_UPLOAD_STORE_PASSWORD=...
+ANDROID_STOREFRONT_APP_UPLOAD_KEY_PASSWORD=...
+```
+
+Place your keystore file at `android/app/<keystore name>` and check `android/app/build.gradle` to confirm how it's referenced.
+
+### Versioning
+
+Set in `.env`:
+
+```
+ANDROID_VERSION_CODE=10
+ANDROID_VERSION_NAME=1.2.0
+```
+
+`build.gradle` reads these at build time. `versionCode` **must** increment for every Play Store upload.
+
+### Build
+
+```bash
+cd android
+./gradlew assembleRelease       # APK
+./gradlew bundleRelease          # AAB (recommended for Play Store)
+```
+
+Output:
+- APK: `android/app/build/outputs/apk/release/app-release.apk`
+- AAB: `android/app/build/outputs/bundle/release/app-release.aab`
+
+## Web Build
+
+The repo's web tooling is dev-server oriented:
+
+```bash
+yarn web
+```
+
+This boots `webpack-dev-server` and serves the app at the URL it logs. There is **no production-optimized webpack config** in the repo. If you intend to ship the web target to customers:
+
+- Add a production webpack config (split chunks, tree-shake, minify, hash assets).
+- Add a PWA manifest if you want install-to-home-screen.
+- Set up a static host (S3/CloudFront, Vercel, Netlify) and a deploy pipeline.
+
+The build outputs a `bundle.web.js` and the Tamagui-extracted `tamagui.css` (post-processed by `postcss-tamagui-fix.js`).
+
+## Native Naming
+
+`app.json` only controls the React Native registry name. To fully rename the app:
+
+### iOS
+
+| File | Change |
+| :--- | :--- |
+| `ios/StorefrontApp/Info.plist` | `CFBundleDisplayName` (already wired to `$(APP_NAME)` via xcconfig — set `APP_NAME` in `.env`) |
+| `ios/StorefrontApp/Info.plist` | `CFBundleIdentifier` (already wired to `$(PRODUCT_BUNDLE_IDENTIFIER)` — set `APP_IDENTIFIER` in `.env`) |
+| `ios/StorefrontApp.xcodeproj` | Rename the Xcode project (use Xcode's rename refactor) |
+
+### Android
+
+| File | Change |
+| :--- | :--- |
+| `.env` | `APP_IDENTIFIER` — read by `build.gradle` for `applicationId` |
+| `android/app/build.gradle` | `namespace` is hardcoded to `com.storefront.app` — change to your package |
+| `android/app/src/main/res/values/strings.xml` | `<string name="app_name">` |
+| `android/app/src/main/AndroidManifest.xml` | If using the legacy `package=` attribute, update it |
+
+### React Native registry
+
+| File | Change |
+| :--- | :--- |
+| `app.json` | Both `name` and `displayName` |
+| `index.native.tsx`, `index.web.tsx` | Both import `appName` from `app.json` — no edit needed if you change `app.json` |
+
+After renaming, run a clean rebuild:
+
+```bash
+yarn reset
+yarn pod:install
+```
+
+## Patches
+
+`patches/` contains `patch-package` patches applied automatically on `yarn install`:
+
+| Patch | Purpose |
+| :--- | :--- |
+| `@backpackapp-io+react-native-toast` | Drops a missing re-export that breaks the build |
+| `react-native-gesture-handler` | Adds the modern `compileSdk` line |
+| `react-native-i18n` | Replaces deprecated `compile` Gradle directive with `implementation` |
+| `react-native-notifications` | Removes deprecated `dexOptions` block (fails on AGP 8) |
+
+If you bump versions of any of these packages, regenerate or remove the corresponding patch.
+
+## New Architecture
+
+The project ships with React Native's New Architecture enabled:
+
+- iOS: `RCTNewArchEnabled=true` in `Info.plist`, `RCT_NEW_ARCH_ENABLED=1` in pod scripts
+- Android: `newArchEnabled=true` in `gradle.properties`
+
+Hermes is on for both platforms. Any native modules you add must be Fabric/TurboModule compatible.
+
+## Web Shims
+
+When the web target imports a native-only module, an alias in `webpack.config.js` redirects it to a shim under `/web/`. Modules currently shimmed:
+
+- `@gorhom/bottom-sheet`
+- `react-native-maps`
+- `react-native-linear-gradient`
+- `@react-native-community/blur`
+- `react-native-config`
+- `react-native-device-info`
+- `react-native-fast-image`
+- `react-native-svg/css`
+- `@fleetbase/storefront`
+- `@fleetbase/sdk`
+
+If you add a new native dependency, add a corresponding `<package-name>.web.js` shim and an alias entry to `webpack.config.js`, otherwise the web build will fail.
+
+## Legacy Code
+
+The `legacy/` directory contains the previous-generation app and is **not** imported by the current source. You can ignore it for development and remove it from your fork if you want a smaller checkout.

@@ -1,0 +1,72 @@
+---
+title: Push Notifications
+description: Send broadcast or targeted push notifications to your customers via APNs (iOS) and FCM (Android).
+---
+
+# Push Notifications
+
+Push notifications let you re-engage customers and announce new products. Storefront's push engine supports **Apple Push Notification service (APNs)** for iOS and **Firebase Cloud Messaging (FCM)** for Android.
+
+## Prerequisites
+
+Before sending any push notification:
+
+1. Configure a **notification channel** in **Storefront → Settings → Notifications**. See [Notification Settings](/docs/storefront/settings/notifications).
+2. Your customer-facing app must:
+   - Request notification permissions from the customer
+   - Obtain the device token from APNs / FCM
+   - Register the device token with Storefront via `POST /storefront/v1/customers/register-device`
+
+## Sending a Notification
+
+<Steps>
+  <Step>
+    Navigate to **Storefront → Promotions → Push Notifications**.
+  </Step>
+  <Step>
+    Click **New Notification**.
+  </Step>
+  <Step>
+    Enter the **Title** (bold headline) and **Body** (message text).
+  </Step>
+  <Step>
+    To broadcast, toggle **Send to all customers**. To send to specific customers, leave the toggle off and select recipients from the customer search.
+  </Step>
+  <Step>
+    Click **Send**. Storefront queues the notification and dispatches it to all registered devices.
+  </Step>
+</Steps>
+
+![Push notification form — title, body, and recipient selection](/images/screenshots/storefront/storefront-push-notifications.webp)
+
+The push form supports plain title + body messages. Rich media (images) and deep links are not currently exposed in the console form.
+
+## Targeted vs. Broadcast
+
+- **Broadcast** — toggle **Send to all customers** on. Every customer with a registered device token receives the notification.
+- **Targeted** — leave the toggle off and pick specific customers via the search. Only those customers' devices receive the notification.
+
+Targeted notifications are useful for:
+- Re-engaging customers who haven't ordered in 30+ days
+- Sending special offers to your top buyers
+- Notifying specific customers of a resolution to a service issue
+
+## Automated Transactional Notifications
+
+Storefront automatically sends order-status notifications as the Fleet-Ops order progresses — no manual action required. These cover the full lifecycle:
+
+- `StorefrontOrderCreated`
+- `StorefrontOrderAccepted`
+- `StorefrontOrderPreparing`
+- `StorefrontOrderReadyForPickup`
+- `StorefrontOrderDriverAssigned`
+- `StorefrontOrderEnroute`
+- `StorefrontOrderNearby`
+- `StorefrontOrderCompleted`
+- `StorefrontOrderCanceled`
+
+See [Orders & Checkout](/docs/storefront/orders/overview#transactional-notifications) for the trigger conditions.
+
+<Callout type="info">
+Transactional notifications fire automatically as long as a notification channel is configured and the customer's device token is registered. No additional setup is needed.
+</Callout>

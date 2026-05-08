@@ -1,0 +1,12 @@
+{
+  "title": "Contributing",
+  "pages": [
+    "index",
+    "---Contribution Areas---",
+    "translations",
+    "code",
+    "documentation",
+    "extensions",
+    "reporting-issues"
+  ]
+}

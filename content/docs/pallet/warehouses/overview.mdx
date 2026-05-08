@@ -1,0 +1,44 @@
+---
+title: Warehouse Management
+description: Define and manage your warehouse structure — from the building down to individual bin locations.
+---
+
+# Warehouse Management
+
+In Pallet, a **Warehouse** is the foundational entity for managing physical inventory.
+
+A Warehouse represents a physical building or facility where goods are stored, picked, packed, and shipped.
+
+## Warehouse Structure
+
+Pallet uses a hierarchical structure to define exactly where an item is located within a Warehouse. This structure is essential for efficient picking and inventory auditing.
+
+The hierarchy is as follows:
+
+1. **[Warehouse](/docs/pallet/warehouses/warehouses)**: The physical building (e.g., "Main Distribution Center").
+2. **[Zone](/docs/pallet/warehouses/zones-aisles-racks-bins)**: A specific area within the warehouse (e.g., "Cold Storage", "Receiving Dock").
+3. **[Aisle](/docs/pallet/warehouses/zones-aisles-racks-bins)**: A row of shelving within a Zone (e.g., "Aisle 4").
+4. **[Rack](/docs/pallet/warehouses/zones-aisles-racks-bins)**: A specific shelving unit within an Aisle (e.g., "Rack B").
+5. **[Bin](/docs/pallet/warehouses/zones-aisles-racks-bins)**: The smallest unit of storage, representing a specific shelf or container on a Rack (e.g., "Bin 12").
+
+When an item is received into inventory, it is assigned to a specific Bin. When a picker is fulfilling an order, Pallet directs them to the exact Zone, Aisle, Rack, and Bin to find the item.
+
+## Creating a Warehouse
+
+To create a new Warehouse:
+
+1. Navigate to **Pallet** > **Warehouses** in the Fleetbase Console.
+2. Click the **New Warehouse** button.
+3. Provide the basic details:
+   - **Name**: A descriptive name for the facility.
+   - **Address**: The physical location of the building.
+   - **Contact Info**: The phone number or email for the warehouse manager.
+4. Click **Save**.
+
+Once the Warehouse is created, you can begin defining its internal structure by adding Zones, Aisles, Racks, and Bins.
+
+## Multi-Warehouse Operations
+
+Pallet supports managing multiple Warehouses within a single Organization.
+
+This allows you to track inventory across a distributed network of facilities. When an order is placed, you can determine which Warehouse has the necessary stock and route the fulfillment request accordingly.

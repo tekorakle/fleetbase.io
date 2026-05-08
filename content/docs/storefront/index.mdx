@@ -1,0 +1,74 @@
+---
+title: Storefront
+description: Storefront is the headless e-commerce and marketplace extension for Fleetbase — power on-demand delivery apps, multi-vendor marketplaces, and D2C platforms.
+---
+
+# Storefront
+
+**Storefront** is the headless commerce and marketplace extension for Fleetbase. It provides the complete backend infrastructure to build on-demand delivery apps, multi-vendor marketplaces, or direct-to-consumer e-commerce platforms — all deeply integrated with Fleet-Ops so orders flow automatically into your dispatch system.
+
+![Storefront console — store overview with products, orders, and live customer activity](/images/screenshots/storefront/storefront-dashboard.webp)
+
+## What Storefront Does
+
+| Capability | What it covers |
+| :--- | :--- |
+| **Stores & Networks** | Single-store or multi-vendor marketplace architecture |
+| **Product Catalog** | Products, categories, variants, addons, availability hours |
+| **Orders & Cart** | Persistent cart, multi-store checkout, order lifecycle management |
+| **Payment Gateways** | Stripe, QPay, and Cash on Delivery |
+| **Customer Management** | Registration, authentication, order history, saved addresses |
+| **Push Notifications** | APNs and FCM notification channels for broadcast and transactional pushes |
+| **Customer Reviews** | API endpoints for product and store reviews (network-gated, API-only) |
+| **Food Trucks** | Mobile store locations linked to Fleet-Ops vehicles with live GPS |
+| **Catalogs** | Group products into named bundles, assign to food trucks |
+| **Headless API** | Full REST API for powering custom mobile or web frontends |
+| **Open-Source App** | A React Native + web client your customers download — see [Storefront App](/docs/storefront/app/overview) |
+| **Fleet-Ops Integration** | Checkouts create Fleet-Ops orders for fulfillment automatically |
+
+## Key Concepts
+
+Storefront is built around a few core entities:
+
+- **Store** — a single brand or merchant with its own catalog, locations, operating hours, and branding. Each store has an auto-generated API key for secure public access.
+- **Network** — a collection of stores forming a marketplace. Networks aggregate stores with shared payment gateways and notification channels.
+- **Product** — an item for sale with variants (required selections like size/color), addons (optional extras like toppings), and per-product availability hours.
+- **Cart** — a persistent shopping session. Carts expire 7 days after creation and are tied to the customer or guest `unique_identifier`.
+- **Checkout** — a finalized cart with payment, delivery address, and service quote. A successful checkout creates a Fleet-Ops order.
+- **Customer** — an end-user who can register, authenticate via phone/email/social login, and track their orders.
+
+## Getting Started
+
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6 not-prose">
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Get up and running</CardTitle>
+      <CardDescription className="text-xs">Create your store, add products, and process your first order.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/getting-started/quickstart" className="text-sm text-primary hover:underline">Quickstart →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Understand the basics</CardTitle>
+      <CardDescription className="text-xs">Learn how stores, networks, products, cart, and checkout fit together.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/getting-started/core-concepts" className="text-sm text-primary hover:underline">Core Concepts →</a>
+    </CardContent>
+  </Card>
+  <Card>
+    <CardHeader>
+      <CardTitle className="text-sm font-semibold">Build your catalog</CardTitle>
+      <CardDescription className="text-xs">Add products with variants, addons, and categories — the core of every store.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <a href="/docs/storefront/catalog/products" className="text-sm text-primary hover:underline">Products →</a>
+    </CardContent>
+  </Card>
+</div>
+
+<Callout type="info">
+Storefront comes pre-installed with every Fleetbase instance — no separate installation is required. Navigate to **Storefront** in the console sidebar to begin.
+</Callout>

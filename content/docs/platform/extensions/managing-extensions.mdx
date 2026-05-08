@@ -1,0 +1,91 @@
+---
+title: Managing Extensions
+description: View installed extensions, uninstall them, and manage developer credentials for publishing to the registry.
+---
+
+# Managing Extensions
+
+Once extensions are installed you can view, remove, and manage them from the **Extensions** section in the top navigation bar.
+
+## Installed Extensions
+
+Click **Installed** in the Extensions sidebar to see every extension currently active on your instance.
+
+![Installed extensions — card grid with extension icon, name, description, About and Uninstall buttons](/images/screenshots/extensions/extensions-installed.webp)
+
+Each card has two actions:
+
+| Action | Description |
+| :--- | :--- |
+| **About extension** | Opens a detail modal showing the extension's description, version, and publisher |
+| **Uninstall** | Begins the uninstall process for this extension |
+
+## Uninstalling an Extension
+
+Click **Uninstall** on any installed extension card. A confirmation dialog appears before anything is removed.
+
+![Uninstall confirmation modal — extension name, warning text, and 3-step progress bar](/images/screenshots/extensions/extensions-uninstall.webp)
+
+Uninstalling runs three steps tracked via a real-time progress bar:
+
+1. **(1/3) Uninstalling server package** — removes the Laravel backend package
+2. **(2/3) Uninstalling engine** — removes the Ember.js frontend engine
+3. **(3/3) Rebuilding console** — rebuilds the frontend to remove the extension's UI
+
+The console reloads automatically when the process completes.
+
+<Callout type="warn">Uninstalling an extension may permanently delete the data it managed — for example, uninstalling FleetOps removes driver and vehicle records. Back up any data you need before proceeding.</Callout>
+
+### Uninstalling via the CLI
+
+On a self-hosted instance you can also uninstall from the command line:
+
+```bash
+flb uninstall fleetbase/fleetops
+
+# Target a specific instance directory
+flb uninstall fleetbase/fleetops --path /opt/fleetbase
+```
+
+## Developers Section
+
+The **Developers** section in the Extensions sidebar is available on instances running a self-hosted registry. It provides tools for publishing and managing your own extensions.
+
+### Extensions
+
+Lists the extensions you have published to the registry. Click **Create new extension** to register a new one — provide a name and description to get started, then manage distribution from the extension's edit page.
+
+Each extension's edit page has tabs for:
+
+| Tab | Description |
+| :--- | :--- |
+| **Details** | Name, description, icon, category, and visibility settings |
+| **Bundles** | Upload and manage release bundles for the extension |
+| **Monetize** | Pricing configuration — free, one-time purchase, or subscription |
+
+### Analytics
+
+Usage metrics for your published extensions — installs, active instances, and engagement over time.
+
+### Payments
+
+Stripe-powered payment onboarding and settings for extensions you sell through the registry. Set up your payout account here before enabling paid pricing on an extension.
+
+### Credentials
+
+Registry tokens used to authenticate CLI operations (`flb publish`, `flb bundle-upload`, etc.).
+
+| Column | Description |
+| :--- | :--- |
+| **Owner** | The user who created the credentials |
+| **Fleetbase Token** | Your Fleetbase account token (click to copy) |
+| **Registry Token** | The registry-specific token used for CLI auth (click to reveal and copy) |
+| **Expiry** | When the credentials expire |
+
+Click **Create new credentials** to generate a new token pair. Use the **⋯ → Delete** action to revoke credentials — any CLI session using them will lose registry access immediately.
+
+To authenticate the CLI with your registry token:
+
+```bash
+flb set-auth your-registry-token-here
+```

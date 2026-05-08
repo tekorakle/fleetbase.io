@@ -1,0 +1,96 @@
+---
+title: Orders & Checkout
+description: Manage the full Storefront order lifecycle — cart, two-step checkout, payment, Fleet-Ops fulfillment, and the transactional notifications that fire along the way.
+---
+
+# Orders & Checkout
+
+The **Orders & Checkout** system handles the complete purchase lifecycle — from a customer adding items to their cart through to a dispatched Fleet-Ops delivery.
+
+Navigate to **Storefront → Orders** to view and manage orders.
+
+![Storefront orders list — order ID, customer, items, total, status, created time](/images/screenshots/storefront/storefront-orders-list.webp)
+
+## The Transaction Lifecycle
+
+```
+Cart → /checkouts/before → /checkouts/capture → Fleet-Ops Order → Fulfillment
+```
+
+### 1. Cart
+
+The customer browses the catalog and adds products to a persistent **Cart**. The cart stores product selections, variants, addons, and quantities. See [Cart](/docs/storefront/orders/cart).
+
+### 2. Service Quote
+
+When the customer adds a delivery address, your frontend asks Fleet-Ops for a **Service Quote** that calculates the delivery fee. See [Service Quotes](/docs/storefront/orders/service-quotes).
+
+### 3. Checkout (two-step)
+
+When ready to buy, the customer hits `POST /storefront/v1/checkouts/before` with the cart, service quote, payment gateway, tip, and pickup/delivery flag. Storefront returns a **token** (and a Stripe `clientSecret` when applicable). The frontend confirms payment via the gateway SDK, then calls `POST /storefront/v1/checkouts/capture` with the same token to finalize. See [Checkout](/docs/storefront/orders/checkout).
+
+### 4. Fleet-Ops Fulfillment
+
+The order appears instantly in **Fleet-Ops → Operations → Orders**. A dispatcher (or the Orchestrator) assigns a driver. The driver picks up from the store location and delivers to the customer's address.
+
+## Order Statuses
+
+Storefront orders share their activity flow with the underlying Fleet-Ops `OrderConfig`. Storefront emits these activity codes as the order progresses:
+
+| Activity | Triggered when |
+| :--- | :--- |
+| **created** | Order created from a successful checkout |
+| **accepted** | Merchant accepts the order |
+| **preparing** | Merchant marks the order as being prepared |
+| **ready** / **pickup_ready** | Order is ready for the driver to collect (`pickup_ready` is used for customer self-pickup) |
+| **dispatched** | A driver has been assigned and is heading to pickup |
+| **started** / **in transit** | Driver collected the items and is en route to the customer |
+| **completed** | Delivery confirmed; proof of delivery captured |
+| **canceled** | Cancelled by merchant, customer, or dispatcher |
+
+## Transactional Notifications
+
+Storefront fires customer push notifications automatically as the Fleet-Ops order progresses. No manual configuration is required beyond setting up an APNs/FCM channel.
+
+| Notification | Fires when |
+| :--- | :--- |
+| `StorefrontOrderCreated` | A new order is placed |
+| `StorefrontOrderAccepted` | The merchant accepts the order |
+| `StorefrontOrderPreparing` | The merchant marks the order as being prepared |
+| `StorefrontOrderReadyForPickup` | The order is ready (used for pickup orders) |
+| `StorefrontOrderDriverAssigned` | A driver is assigned to the order |
+| `StorefrontOrderEnroute` | The driver has picked up and is en route |
+| `StorefrontOrderNearby` | The driver is approaching the dropoff |
+| `StorefrontOrderCompleted` | Delivery is complete |
+| `StorefrontOrderCanceled` | The order is cancelled |
+
+## Managing Orders in the Console
+
+From **Storefront → Orders**:
+- View all incoming orders in real-time with current status
+- Click an order to see full detail: customer info, line items, payment breakdown, delivery status
+- Track the driver's progress on the live map via the Fleet-Ops integration
+- View proof of delivery when the order is complete
+
+## Internal Merchant Endpoints
+
+If you are building a custom merchant terminal (rather than using the Fleetbase Console), Storefront exposes internal endpoints for advancing an order through its lifecycle:
+
+| Endpoint | Effect |
+| :--- | :--- |
+| `POST /storefront/int/v1/orders/{id}/accept` | Accept a pending order |
+| `POST /storefront/int/v1/orders/{id}/preparing` | Mark as preparing |
+| `POST /storefront/int/v1/orders/{id}/ready` | Mark as ready for pickup |
+| `POST /storefront/int/v1/orders/{id}/completed` | Mark as completed (used by the merchant for pickup orders) |
+
+These are authenticated as a Fleetbase user, not via a storefront key.
+
+## Integration with Fleet-Ops
+
+When a Storefront checkout completes:
+- The **store location** (or the **food truck** GPS position, for mobile stores) becomes the Fleet-Ops order pickup address
+- The **customer's delivery address** becomes the dropoff address
+- Each cart item is converted to a Fleet-Ops **Entity** in the order payload
+- Status changes in Fleet-Ops automatically propagate back to the Storefront order via internal listeners
+
+No custom webhooks or sync logic are required — the integration is native.

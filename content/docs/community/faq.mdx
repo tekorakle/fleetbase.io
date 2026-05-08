@@ -1,0 +1,136 @@
+---
+title: FAQ
+description: Answers to frequently asked questions about Fleetbase — what it is, how it's licensed, how to deploy it, and how it works.
+---
+
+# Frequently Asked Questions
+
+<Accordions>
+  <Accordion title="What is Fleetbase?">
+    Fleetbase is an open-source, modular logistics and supply chain operating system. It provides a platform for managing fleets, orders, drivers, warehouses, and supply chain operations — either self-hosted on your own infrastructure or via Fleetbase Cloud.
+
+    The core platform handles identity management, real-time events, API routing, and the developer console. Logistics capabilities are delivered by **extensions** — installable packages that add specific workflows to your instance. Official extensions include **FleetOps** (fleet management and dispatch), **Storefront** (headless e-commerce), **Pallet** (warehouse and inventory), and **Ledger** (accounting and invoicing).
+
+    See the [Platform overview](/docs/platform) for a full introduction.
+  </Accordion>
+
+  <Accordion title="Is Fleetbase free to use?">
+    Yes. The core Fleetbase platform and all official extensions are open-source under the **AGPL-3.0** license — free to download, deploy, and use commercially, including for revenue-generating operations.
+
+    Self-hosted deployments are entirely free. [Fleetbase Cloud](https://console.fleetbase.io/onboard) is a managed, hosted version with usage-based pricing and a 7-day free trial — no credit card required.
+
+    If you need to embed Fleetbase into a proprietary closed-source product, a commercial license is available. See [Licensing](/docs/community/licensing) for details.
+  </Accordion>
+
+  <Accordion title="What is the tech stack?">
+    | Layer | Technology |
+    | :--- | :--- |
+    | **Backend API** | PHP 8.x, Laravel |
+    | **Console (web UI)** | Ember.js |
+    | **Database** | MySQL |
+    | **Cache & Queue** | Redis |
+    | **Real-time events** | SocketCluster (Node.js) |
+    | **Mobile apps** | React Native (Expo) |
+    | **Deployment** | Docker Compose |
+  </Accordion>
+
+  <Accordion title="What is Fleetbase Cloud?">
+    Fleetbase Cloud is the fully managed, hosted version of the platform at [console.fleetbase.io/onboard](https://console.fleetbase.io/onboard). You get all the same features as a self-hosted instance without managing servers, backups, or upgrades. Cloud accounts include email support.
+
+    Cloud pricing is usage-based on resource units (orders, drivers, vehicles) rather than per-seat fees. A 7-day free trial is available.
+  </Accordion>
+
+  <Accordion title="What is the difference between self-hosted and Fleetbase Cloud?">
+    | | Self-Hosted | Fleetbase Cloud |
+    | :--- | :--- | :--- |
+    | **Cost** | Free (AGPL-3.0) | Usage-based, 7-day trial |
+    | **Infrastructure** | Your own servers | Managed by Fleetbase |
+    | **Upgrades** | Manual (`./deploy.sh`) | Automatic |
+    | **Support** | Community (Discord, GitHub) | Email support included |
+    | **Data residency** | Your control | Fleetbase-managed (regions available) |
+    | **Custom extensions** | Full control | Full control |
+
+    See [Deploy in Cloud](/docs/platform/quickstart/deploy-in-cloud) if you want to self-host on your own cloud provider.
+  </Accordion>
+
+  <Accordion title="How do I install Fleetbase?">
+    The quickest way to get running locally is with Docker Compose:
+
+    ```bash
+    git clone https://github.com/fleetbase/fleetbase.git
+    cd fleetbase
+    cp .env.example .env
+    docker compose up -d
+    ```
+
+    Then open [http://localhost:4200](http://localhost:4200) and create your first admin account.
+
+    For a full walkthrough, see [Running Locally](/docs/platform/quickstart/running-locally) or [Deploy in Cloud](/docs/platform/quickstart/deploy-in-cloud). For Fleetbase Cloud, see [Cloud Quickstart](/docs/platform/quickstart/cloud-quickstart).
+  </Accordion>
+
+  <Accordion title="Does Fleetbase support Docker?">
+    Yes. Fleetbase ships with a `docker-compose.yml` that orchestrates all required services — the Laravel API, Ember console, MySQL, Redis, and SocketCluster. Docker Compose is the recommended deployment method for both development and production self-hosted instances.
+
+    See [Running Locally](/docs/platform/quickstart/running-locally) for the development setup and [Deploy in Cloud](/docs/platform/quickstart/deploy-in-cloud) for production.
+  </Accordion>
+
+  <Accordion title="Can I build my own extensions?">
+    Yes. Fleetbase is designed to be extensible at every layer. An extension is a full-stack package — a **Laravel backend package** and an **Ember.js frontend engine** — that registers into the Fleetbase platform at runtime.
+
+    Extensions can add new pages, sidebar navigation, API endpoints, permissions, webhooks, and widgets without modifying core platform code.
+
+    See [Building Extensions](/docs/extending-fleetbase) for a complete developer guide. You can also install the [Fleetbase CLI](/docs/cli) to scaffold, bundle, and publish extensions to the registry.
+  </Accordion>
+
+  <Accordion title="Does Fleetbase have a REST API?">
+    Yes. Fleetbase exposes a REST API for all platform resources. Every extension also registers its own API endpoints under the same base URL.
+
+    Authentication uses API key Bearer tokens generated in the [Developer Console](/docs/platform/developer-console/api-keys). The API supports test and live environments — test mode uses isolated data and test keys.
+
+    See [API Reference](/docs/api) for endpoint documentation.
+  </Accordion>
+
+  <Accordion title="What real-time features does Fleetbase support?">
+    Fleetbase uses **SocketCluster** for real-time WebSocket events. Live features include:
+
+    - Driver location updates on the live map
+    - Order status changes pushed to the console without page refresh
+    - In-console chat and notifications
+    - Real-time event streaming in the Developer Console
+
+    Developers can subscribe to socket channels (`company.{id}`, `api.{key_id}`) from their own applications. See [Socket Events](/docs/platform/developer-console/socket-events) for details.
+  </Accordion>
+
+  <Accordion title="What mobile apps does Fleetbase include?">
+    Two open-source mobile apps ship with the platform:
+
+    - **Navigator App** — the driver app. Used by drivers for turn-by-turn navigation, proof of delivery (photo/signature), order status updates, fault reporting, and real-time location broadcast. Built with React Native / Expo.
+    - **Storefront App** — the customer-facing shopping app. Supports product browsing, cart, checkout, and live order tracking. Also built with React Native / Expo.
+
+    Both apps are open-source and can be white-labeled. See [Apps](/docs/apps) for setup and configuration guides.
+  </Accordion>
+
+  <Accordion title="How does the AGPL-3.0 license affect me?">
+    **Running Fleetbase for your own operations** (self-hosted or on a cloud provider, for internal use or as a service to your customers) is allowed under AGPL-3.0 without any additional requirements.
+
+    **Modifying Fleetbase and deploying it as a network service** (e.g. building a SaaS product on top of Fleetbase) requires you to make your modified source code available to the users of that service under the same AGPL-3.0 license.
+
+    **Embedding Fleetbase into a proprietary closed-source product** requires a commercial license.
+
+    See [Licensing](/docs/community/licensing) for a plain-language breakdown, or contact [hello@fleetbase.io](mailto:hello@fleetbase.io) if you're unsure how the license applies to your use case.
+  </Accordion>
+
+  <Accordion title="Do you offer commercial licenses?">
+    Yes. A commercial license lets you integrate Fleetbase into proprietary or closed-source products, white-label the console and mobile apps without releasing your modifications, and use Fleetbase without the AGPL-3.0 copyleft requirements.
+
+    Contact [hello@fleetbase.io](mailto:hello@fleetbase.io) to discuss licensing terms.
+  </Accordion>
+
+  <Accordion title="How do I get support?">
+    - **Community support** — [Discord](/docs/community/discord) and [GitHub Discussions](/docs/community/github-discussions) are free and monitored by the core team
+    - **Cloud support** — email support is included with all Fleetbase Cloud accounts
+    - **Paid plans** — dedicated engineers, SLA guarantees, and architecture reviews are available for self-hosted and cloud deployments
+
+    See [Support Plans](/docs/community/support-plans) for details.
+  </Accordion>
+</Accordions>

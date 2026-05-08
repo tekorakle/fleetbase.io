@@ -1,0 +1,61 @@
+---
+title: Stores
+description: A Store is a single brand or merchant in Storefront — its own catalog, locations, hours, payment gateways, and API key.
+---
+
+# Stores
+
+A **Store** represents a single brand or merchant in Storefront. Every store has:
+
+- Its own **product catalog** (products and categories)
+- One or more **physical locations** used as pickup addresses for Fleet-Ops delivery orders
+- **Operating hours** per location
+- **Currency** and **timezone** settings
+- An auto-generated **API key** (`store_*`) for public access
+- Its own **payment gateways** and **notification channels**
+
+If you are building a D2C app for a single restaurant, shop, or service provider — one store is everything you need.
+
+For multi-vendor marketplaces (e.g., a food delivery platform with many independent merchants), you'll group stores into a [Network](/docs/storefront/networks/overview).
+
+## Architecture Examples
+
+### Single-brand, single location
+*Example: a neighborhood café.*
+- Create **1 Store** with **1 Location**
+- No network needed
+
+### Single-brand, multiple locations (franchise)
+*Example: a coffee chain with 5 city locations.*
+- Create **1 Store** with **5 Locations**
+- Each location has its own address and operating hours
+- The cart records which location an item came from
+
+### Mobile or pop-up brand
+*Example: a single food truck operator.*
+- Create **1 Store** linked to a **Food Truck** record
+- The food truck is tied to a Fleet-Ops vehicle for live GPS positioning
+- See [Food Trucks](/docs/storefront/stores/food-trucks)
+
+### Multi-vendor marketplace
+*Example: a food delivery app with 50 restaurants.*
+- See [Networks](/docs/storefront/networks/overview) — group multiple stores together
+
+## Key Properties
+
+| Property | Notes |
+| :--- | :--- |
+| **API key** | `store_*` — used as a bearer token from the customer-facing app |
+| **Currency** | All product pricing is stored in the store's currency |
+| **Timezone** | Operating hours are evaluated against this timezone |
+| **Default Order Config** | Fleet-Ops `OrderConfig` applied to orders created from this store |
+| **Online toggle** | Master on/off switch — overrides operating hours |
+| **`options` JSON** | Stores feature toggles (tax, COD, tips, POD, pickup, etc.) — see [Setup](/docs/storefront/stores/setup#store-settings) |
+
+## Next Steps
+
+- [Creating a Store](/docs/storefront/stores/setup) — create and configure a store, with the full settings reference
+- [Store Locations](/docs/storefront/stores/store-locations) — add physical addresses for pickup
+- [Operating Hours](/docs/storefront/stores/operating-hours) — set when each location accepts orders
+- [Food Trucks](/docs/storefront/stores/food-trucks) — configure mobile stores with GPS-linked positioning
+- [Networks](/docs/storefront/networks/overview) — when to graduate to a multi-vendor marketplace

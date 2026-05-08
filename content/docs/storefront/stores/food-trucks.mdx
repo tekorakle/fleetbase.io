@@ -1,0 +1,78 @@
+---
+title: Food Trucks
+description: Configure mobile store locations — food trucks and pop-up shops linked to Fleet-Ops vehicles for live GPS positioning, with multi-catalog assignment.
+---
+
+# Food Trucks
+
+Storefront supports **mobile stores** — food trucks, pop-up shops, and any merchant whose location changes day to day. A **FoodTruck** is its own entity that links a store to a Fleet-Ops **Vehicle** for live GPS positioning, and to one or more **Catalogs** for menu management.
+
+Navigate to **Storefront → Food Trucks** to manage mobile stores.
+
+![Food trucks list — store name, vehicle, current location, and status](/images/screenshots/storefront/storefront-food-trucks-list.webp)
+
+## How Food Trucks Work
+
+A FoodTruck record links:
+- A **Store** — set automatically from the active store
+- A **Vehicle** — from Fleet-Ops Resources, providing the live GPS position
+- One or more **Catalogs** — assigned via a separate workflow on the food truck card
+- An optional **Service Area** or **Zone** — restricts where the truck accepts orders
+- A **Status** — `active` or `inactive`
+
+When a customer places an order, the truck's position from the Fleet-Ops vehicle telemetry is used as the pickup point.
+
+## Creating a Food Truck
+
+<Steps>
+  <Step>
+    Make sure the correct store is selected via the store switcher — the food truck will be created against the active store.
+  </Step>
+  <Step>
+    Ensure the vehicle that represents the food truck exists in **Fleet-Ops → Resources → Vehicles**.
+  </Step>
+  <Step>
+    Navigate to **Storefront → Food Trucks**.
+  </Step>
+  <Step>
+    Click **New Food Truck**.
+  </Step>
+  <Step>
+    Select the **Vehicle** from Fleet-Ops that represents the physical truck.
+  </Step>
+  <Step>
+    Optionally assign a **Service Area** or **Zone** to restrict where the truck accepts orders.
+  </Step>
+  <Step>
+    Set **Status** (`active` or `inactive`).
+  </Step>
+  <Step>
+    Click **Save**.
+  </Step>
+</Steps>
+
+## Assigning Catalogs to a Food Truck
+
+Catalog assignment is a **separate** step from creation — a single truck can serve **multiple** catalogs and a single catalog can be assigned to **multiple** trucks (the relationship is many-to-many polymorphic via the `catalog_subjects` pivot).
+
+<Steps>
+  <Step>
+    On the food trucks list, find the truck card and click the **Catalogs** button.
+  </Step>
+  <Step>
+    Pick one or more existing catalogs to assign.
+  </Step>
+  <Step>
+    Save.
+  </Step>
+</Steps>
+
+To create a catalog first, see [Catalogs](/docs/storefront/catalog/overview).
+
+## Real-Time Location Updates
+
+The food truck's position in the customer-facing app comes directly from the Fleet-Ops vehicle's GPS telemetry. As the vehicle moves, the truck's position updates automatically — no manual location entry required.
+
+## Operating Hours for Food Trucks
+
+Set hours on the **catalog** (`CatalogHour` per day-of-week) to define when each menu is active. If the truck moves to a new neighborhood, update its zone assignment if you use zone-based delivery restrictions.

@@ -1,0 +1,133 @@
+---
+title: Code contributions
+description: How to submit bug fixes, features, and refactors to Fleetbase — branching, testing, and PR conventions.
+sidebarTitle: Code
+---
+
+# Code contributions
+
+This page covers contributing **code** to Fleetbase — bug fixes, features, refactors, and improvements across the core platform and its extensions.
+
+For other contribution types see [Translations](/docs/contributing/translations), [Documentation](/docs/contributing/documentation), [Extensions](/docs/contributing/extensions), or [Reporting issues](/docs/contributing/reporting-issues).
+
+## Before you start
+
+- **Open a discussion first** for non-trivial changes. A small fix doesn't need one — but anything that adds APIs, changes behaviour, or restructures code should be agreed in [GitHub Discussions](https://github.com/fleetbase/fleetbase/discussions) before you build it.
+- **Find a good first issue**: issues labelled [`good first issue`](https://github.com/fleetbase/fleetbase/labels/good%20first%20issue) are scoped for newcomers.
+- **Read the relevant repo's README** — coding conventions and dev setup vary by component.
+
+## Submitting a pull request
+
+<Steps>
+  <Step>
+    ### Fork and clone
+
+    Fork the repository on GitHub, then clone your fork:
+
+    ```bash
+    git clone https://github.com/YOUR_USERNAME/fleetbase.git
+    cd fleetbase
+    ```
+  </Step>
+  <Step>
+    ### Create a branch
+
+    Branch from `main` with a descriptive name:
+
+    ```bash
+    git checkout -b fix/order-status-not-updating
+    # or
+    git checkout -b feat/add-bulk-driver-import
+    ```
+
+    Use `fix/`, `feat/`, `refactor/`, `docs/`, or `chore/` prefixes to match commit conventions.
+  </Step>
+  <Step>
+    ### Make your changes
+
+    Match the coding conventions for the component you're touching:
+
+    - **PHP / Laravel (core API)** — PSR-12 coding standard, type hints, docblocks on public methods
+    - **Ember.js (Console, extensions)** — native classes, no jQuery, follow existing component and service patterns
+    - **React Native (mobile apps)** — functional components, hooks, no class components
+    - **TypeScript (developer tools, this site)** — strict mode, prefer composition over inheritance
+  </Step>
+  <Step>
+    ### Run tests
+
+    ```bash
+    # PHP tests (from the api container)
+    docker compose exec application php artisan test
+
+    # Ember tests (from the console directory)
+    cd console && pnpm test
+
+    # JavaScript / TypeScript tests
+    pnpm test
+    ```
+
+    All existing tests must pass. If you're adding a feature, add a test that covers it.
+  </Step>
+  <Step>
+    ### Open the pull request
+
+    Push your branch and open a PR against `main` of the upstream repository. In the PR description:
+
+    - Reference the issue it closes (e.g. `Closes #1234`)
+    - Describe what changed and why
+    - Note any breaking changes
+    - Include screenshots for UI changes
+    - Include a test plan section listing what you've verified
+  </Step>
+</Steps>
+
+## Coding conventions
+
+### Commit messages
+
+Follow [Conventional Commits](https://www.conventionalcommits.org):
+
+```
+feat(orders): add bulk dispatch action
+fix(map): correct vehicle marker rotation
+refactor(iam): simplify policy evaluation
+docs(api): document the webhook signature scheme
+chore(deps): bump @fleetbase/sdk to 1.4.0
+```
+
+### One thing per PR
+
+A PR that fixes a bug AND refactors three other files AND adds a feature is impossible to review. Split it.
+
+### Tests
+
+- New code → new tests
+- Bug fix → regression test that fails before the fix and passes after
+- Refactor → existing tests must still pass; add new ones if behaviour changed
+
+### Performance
+
+If your change touches a hot path (rendering the live map, list-view queries, the order timeline), include before/after numbers in the PR description.
+
+## Where contributions live
+
+Different changes go to different repos. The full repo map:
+
+| Repository | What it covers |
+| :--- | :--- |
+| [`fleetbase/fleetbase`](https://github.com/fleetbase/fleetbase) | Core platform — API, Console shell, IAM, Developer Console |
+| [`fleetbase/fleetops`](https://github.com/fleetbase/fleetops) | FleetOps extension |
+| [`fleetbase/storefront`](https://github.com/fleetbase/storefront) | Storefront extension |
+| [`fleetbase/pallet`](https://github.com/fleetbase/pallet) | Pallet (warehouse) extension |
+| [`fleetbase/ledger`](https://github.com/fleetbase/ledger) | Ledger (finance) extension |
+| [`fleetbase/iam-engine`](https://github.com/fleetbase/iam-engine) | IAM engine |
+| [`fleetbase/dev-engine`](https://github.com/fleetbase/dev-engine) | Developer console engine |
+| [`fleetbase/registry-bridge`](https://github.com/fleetbase/registry-bridge) | Extensions marketplace |
+| [`fleetbase/navigator-app`](https://github.com/fleetbase/navigator-app) | Navigator driver mobile app |
+| [`fleetbase/storefront-app`](https://github.com/fleetbase/storefront-app) | Storefront customer mobile app |
+| [`fleetbase/fleetbase-cli`](https://github.com/fleetbase/fleetbase-cli) | Fleetbase CLI |
+| [`fleetbase/ember-ui`](https://github.com/fleetbase/ember-ui) | Console UI component library |
+
+## License
+
+By submitting a contribution, you agree your code is licensed under [AGPL-3.0](https://github.com/fleetbase/fleetbase/blob/main/LICENSE.md). For licensing questions, see [Licensing](/docs/community/licensing).
