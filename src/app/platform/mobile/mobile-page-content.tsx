@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import {
+  ArrowRight,
   Navigation,
   Package,
   Camera,
@@ -159,6 +160,13 @@ export default function MobileAppsPageContent() {
                 </div>
                 <p className="text-muted-foreground font-medium mb-3">The driver app. Built for the field.</p>
                 <p className="text-sm text-muted-foreground mb-6">Navigator gives drivers everything they need to complete deliveries efficiently — assigned orders, optimised routing, proof of delivery capture, real-time dispatch communication, and offline support for areas with poor connectivity.</p>
+                <div className="flex gap-3 flex-wrap mb-4">
+                  <Link href="/services/navigator-publishing">
+                    <Button size="sm">
+                      Publish Branded Navigator <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    </Button>
+                  </Link>
+                </div>
                 <div className="flex gap-3 flex-wrap">
                   <Link href="https://github.com/fleetbase/navigator-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
@@ -182,6 +190,13 @@ export default function MobileAppsPageContent() {
                 </div>
                 <p className="text-muted-foreground font-medium mb-3">The customer app. Built for conversion.</p>
                 <p className="text-sm text-muted-foreground mb-6">The Storefront customer app lets shoppers browse stores, place orders, track deliveries in real time, and manage their account — all under your brand. It connects directly to your Fleetbase Storefront instance with zero additional backend work.</p>
+                <div className="flex gap-3 flex-wrap mb-4">
+                  <Link href="/services/storefront-publishing">
+                    <Button size="sm">
+                      Publish Branded Storefront <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                    </Button>
+                  </Link>
+                </div>
                 <div className="flex gap-3 flex-wrap">
                   <Link href="https://github.com/fleetbase/storefront-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
@@ -266,8 +281,106 @@ export default function MobileAppsPageContent() {
         </div>
       </section>
 
-      {/* Build Your Own */}
+      {/* Real Customers */}
       <section className="section-padding">
+        <div className="container">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
+              <span className="text-primary">●</span>
+              <span className="ml-2">Real Customers</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-3">
+              Branded apps live in the App Store today
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Two production deployments of the open-source Storefront app — one a Mongolian
+              bulk-supply marketplace, the other a vegan restaurant in Florida. Same codebase,
+              different brands, different markets.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Oli Max */}
+            <Link
+              href="/oli-max"
+              className="group relative overflow-hidden rounded-2xl border bg-card hover:shadow-lg transition-all"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-orange-500 to-red-700">
+                <Image
+                  src="/images/screenshots/storefront-app/oli-max/oli-max-home-screen.webp"
+                  alt="Oli Max — branded Storefront app for Mongolian bulk supply"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain object-top p-8 transition-transform group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground mb-2">
+                  <MapPin className="size-3.5" />
+                  <span>Ulaanbaatar, Mongolia</span>
+                  <span className="text-border">·</span>
+                  <span>Bulk Supply Marketplace</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2">Oli Max</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Restaurants, vendors, and households across Ulaanbaatar order rice, flour,
+                  oil, and bulk meat directly from distributors — through a branded Storefront
+                  app with food-truck mode and QPay checkout.
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:underline">
+                  Read the case study <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </Link>
+
+            {/* True Vegan */}
+            <Link
+              href="/true-vegan"
+              className="group relative overflow-hidden rounded-2xl border bg-card hover:shadow-lg transition-all"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-slate-700 to-slate-900">
+                <Image
+                  src="/images/screenshots/storefront-app/true-vegan/true-vegan-home-screen.webp"
+                  alt="True Vegan — branded Storefront app for plant-based restaurant"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain object-top p-8 transition-transform group-hover:scale-105"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground mb-2">
+                  <MapPin className="size-3.5" />
+                  <span>Delray Beach, FL</span>
+                  <span className="text-border">·</span>
+                  <span>Restaurant</span>
+                </div>
+                <h3 className="text-xl font-bold mb-2">True Vegan</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Chef Rahein&apos;s plant-based restaurant runs pickup, delivery, and in-store
+                  ordering through a branded Storefront app with Stripe checkout and FleetOps
+                  delivery dispatch.
+                </p>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary group-hover:underline">
+                  Read the case study <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
+                </span>
+              </div>
+            </Link>
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/services/storefront-publishing"
+              className="text-sm text-muted-foreground hover:text-primary"
+            >
+              Want a branded Storefront app like these?{' '}
+              <span className="text-primary underline underline-offset-4">
+                Storefront Publishing Service →
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Build Your Own */}
+      <section className="section-padding bg-muted/20">
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>

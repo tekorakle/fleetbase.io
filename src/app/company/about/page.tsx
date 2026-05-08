@@ -122,11 +122,11 @@ export default function AboutPage() {
  </section>
 
  {/* Mission */}
- <section className="border-y bg-muted/20 py-16 md:py-20">
+ <section className="bg-brand-blue-600 py-16 md:py-20">
  <div className="container">
  <div className="mx-auto max-w-3xl text-center">
- <h2 className="mb-6 text-2xl font-bold tracking-tight md:text-3xl">Our mission</h2>
- <blockquote className="text-xl leading-relaxed text-foreground md:text-2xl">
+ <h2 className="mb-6 text-2xl font-bold tracking-tight text-white md:text-3xl">Our mission</h2>
+ <blockquote className="text-xl leading-relaxed text-white md:text-2xl">
  &ldquo;To democratize logistics technology by building open-source infrastructure that
  gives every business the tools to operate with the efficiency and intelligence of the
  world&apos;s best logistics companies — without vendor lock-in, without prohibitive
@@ -142,9 +142,17 @@ export default function AboutPage() {
  <div className="mx-auto max-w-3xl">
  <h2 className="mb-4 text-2xl font-bold tracking-tight md:text-3xl">How we operate</h2>
  <p className="text-lg leading-relaxed text-muted-foreground">
- Fleetbase is built and run by a two-person team. We&apos;ve kept it that way deliberately —
- no venture capital, no growth team, no investor clock. That gives us the freedom to build
- what operators actually need rather than what looks good on a board slide.
+ Fleetbase is led by two founders who built the platform from the ground up and stay
+ hands-on with every part of the business — engineering, product, customer relationships,
+ and partnerships. We&apos;ve grown a powerful company largely on our own, and we&apos;re
+ intimately involved in the operators and businesses running on Fleetbase day to day.
+ </p>
+ <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+ We&apos;ve taken a bootstrapped path — that means we move on our own conviction and
+ timeline — but it doesn&apos;t mean we work alone. We have full-time engineering, customer
+ support, and DevOps teams behind us, delivering the SLAs, custom development, and
+ operational depth our enterprise customers rely on. The founders set the direction and
+ stay close to every decision; the team makes it happen at scale.
  </p>
  <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
  What this means in practice:
@@ -153,16 +161,25 @@ export default function AboutPage() {
  <li className="flex gap-3">
  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
  <span>
- <strong className="font-semibold text-foreground">The founders read every issue.</strong>{' '}
- We have support tiers like any platform — but the founders are directly reachable above
- them. Bug reports, feature requests, and community questions reach the people writing
- the code, not a triage queue.
+ <strong className="font-semibold text-foreground">Direct access to the founders.</strong>{' '}
+ Above the standard support tiers, the founders are personally reachable. Bug reports,
+ feature requests, and partnership conversations land with the people who actually
+ built the platform.
  </span>
  </li>
  <li className="flex gap-3">
  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
  <span>
- <strong className="font-semibold text-foreground">The roadmap reflects real operator needs.</strong>{' '}
+ <strong className="font-semibold text-foreground">A real team behind every release.</strong>{' '}
+ Engineering, customer support, and DevOps work full-time on Fleetbase. Enterprise
+ customers get dedicated support, custom development, and the same operational depth
+ they&apos;d expect from any commercial platform.
+ </span>
+ </li>
+ <li className="flex gap-3">
+ <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
+ <span>
+ <strong className="font-semibold text-foreground">A roadmap that reflects what operators need.</strong>{' '}
  We say &ldquo;no&rdquo; to features that don&apos;t fit, and &ldquo;yes&rdquo; to small,
  unglamorous fixes that make a real difference for the businesses already on the platform.
  </span>
@@ -170,16 +187,25 @@ export default function AboutPage() {
  <li className="flex gap-3">
  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
  <span>
- <strong className="font-semibold text-foreground">The platform stays open and self-hostable.</strong>{' '}
- Closing the core or moving to per-seat pricing isn&apos;t a lever we&apos;ll pull —
- it&apos;s the foundation operators trust us on.
+ <strong className="font-semibold text-foreground">A platform that stays open and self-hostable.</strong>{' '}
+ The core remains AGPL-3.0 — the foundation operators trust us on.
  </span>
  </li>
  </ul>
- <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
- Being small is a constraint, not a marketing pitch. We choose it because it&apos;s the
- way we can keep Fleetbase honest.
+ <div className="mt-8 rounded-xl border bg-muted/20 p-6">
+ <p className="text-base leading-relaxed text-muted-foreground">
+ If you&apos;re interested in investing in our team, our mission, or Fleetbase as a
+ platform, we&apos;re open to investment opportunities and strategic partnerships.{' '}
+ <Link href="/company/investors" className="text-primary underline underline-offset-4">
+ Read our investor page
+ </Link>{' '}
+ or{' '}
+ <Link href="/partners" className="text-primary underline underline-offset-4">
+ explore the partner program
+ </Link>{' '}
+ to start the conversation.
  </p>
+ </div>
  </div>
  </div>
  </section>

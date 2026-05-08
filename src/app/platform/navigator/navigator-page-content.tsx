@@ -45,13 +45,13 @@ function PhoneFrame({
 }) {
   return (
     <div
-      className={`relative mx-auto flex flex-col overflow-hidden rounded-[1.75rem] border-2 border-border bg-background shadow-2xl ${className}`}
-      style={{ width: 220, height: 440 }}
+      className={`relative mx-auto flex flex-col overflow-hidden rounded-[1.75rem] border-2 border-border bg-background shadow-2xl shrink-0 ${className}`}
+      style={{ width: 260, height: 520 }}
     >
       {/* notch */}
       <div className="absolute left-1/2 top-3 h-5 w-20 -translate-x-1/2 rounded-full bg-border/60 z-10" />
       <div className="relative flex-1 overflow-hidden">
-        <Image src={src} alt={alt} fill className="object-cover object-top" sizes="220px" />
+        <Image src={src} alt={alt} fill className="object-cover object-top" sizes="260px" />
       </div>
     </div>
   );
@@ -133,19 +133,19 @@ export default function NavigatorPageContent() {
             </div>
 
             {/* Right — phone gallery */}
-            <div className="flex items-end justify-center gap-4">
+            <div className="flex items-end justify-center gap-2">
               <PhoneFrame
-                src="/images/screenshots/navigator-app/navigator-app-orders-screen.webp"
-                alt="Navigator app — orders list"
+                src="/images/screenshots/navigator-app/navigator-app-order-activity-update.webp"
+                alt="Navigator app — order activity update"
                 className="mb-8 opacity-70 scale-90"
               />
               <PhoneFrame
-                src="/images/screenshots/navigator-app/navigator-app-start-route-navigation.webp"
-                alt="Navigator app — active route navigation"
+                src="/images/screenshots/navigator-app/navigator-app-order-screen.webp"
+                alt="Navigator app — order detail"
               />
               <PhoneFrame
-                src="/images/screenshots/navigator-app/navigator-app-order-screen-docs-and-comments-screen.webp"
-                alt="Navigator app — proof of delivery, docs & comments"
+                src="/images/screenshots/navigator-app/navigator-app-order-change-destination.webp"
+                alt="Navigator app — change destination"
                 className="mb-8 opacity-70 scale-90"
               />
             </div>
@@ -454,6 +454,11 @@ export default function NavigatorPageContent() {
                 ))}
               </ul>
               <div className="flex gap-3 flex-wrap">
+                <Link href="/services/navigator-publishing">
+                  <Button>
+                    Publishing Service <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
                 <Link href="https://github.com/fleetbase/navigator-app" target="_blank" rel="noopener noreferrer">
                   <Button variant="outline">
                     <FaGithub className="mr-2 h-4 w-4" />
@@ -465,12 +470,18 @@ export default function NavigatorPageContent() {
                     Customization guide
                   </Button>
                 </Link>
-                <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">
+                <Link href="/licensing/commercial">
                   <Button variant="ghost">
                     Commercial licence <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
               </div>
+              <p className="text-sm text-muted-foreground mt-1">
+                Don&apos;t want to manage the publishing process?{' '}
+                <Link href="/services/navigator-publishing" className="text-primary underline underline-offset-4">
+                  Our team can publish a fully branded Navigator app to the App Store and Google Play in ~2 weeks →
+                </Link>
+              </p>
             </div>
             <div className="relative flex items-center justify-center">
               <div className="relative w-full max-w-sm aspect-[4/3] rounded-xl overflow-hidden border">

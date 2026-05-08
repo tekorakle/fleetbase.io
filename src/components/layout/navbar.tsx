@@ -17,7 +17,6 @@ import {
  Heart,
  Landmark,
  Library,
- LineChart,
  Mail,
  MapPin,
  MessageSquare, 
@@ -371,6 +370,12 @@ export const NAV_LINKS: NavLink[] = [
  icon: Handshake,
  },
  {
+ label: 'Commercial License',
+ href: '/licensing/commercial',
+ description: 'Build proprietary on Fleetbase — pricing, terms, and FAQ.',
+ icon: Shield,
+ },
+ {
  label: 'Changelog',
  href: '/changelog',
  description: 'Stay updated with the latest features, fixes, and improvements.',
@@ -405,12 +410,6 @@ export const NAV_LINKS: NavLink[] = [
  href: '/licensing',
  description: 'Understand AGPL open source and commercial licensing for your needs.',
  icon: FileCheck,
- },
- {
- label: 'Investors',
- href: '/company/investors',
- description: 'Bootstrapped, profitable, and built for the long term.',
- icon: LineChart,
  },
  {
  label: 'Contact Sales',
@@ -472,12 +471,24 @@ const Navbar = () => {
  })
  .catch(() => {});
  }, []);
+ // Brand-story pages with full-bleed coloured heroes (oli-max, true-vegan)
+ // pair this scroll threshold with a CSS pseudo-element strip on the page
+ // wrapper that sits above the layered theme overlays in the navbar zone.
+ //
+ // Below the threshold: navbar is transparent and the strip shows clean brand
+ // colour through it. Slightly above: the strip has scrolled out of viewport
+ // and the navbar's standard opaque-glass blur kicks in.
+ //
+ // The threshold is set to one navbar height (~80px) so the glass appears
+ // right as the user scrolls past the strip — no gap of unstyled navbar.
+ const isBrandStoryPage = pathname === '/true-vegan' || pathname === '/oli-max';
+ const scrollThreshold = isBrandStoryPage ? 80 : 16;
  useEffect(() => {
- const onScroll = () => setIsScrolled(window.scrollY > 16);
+ const onScroll = () => setIsScrolled(window.scrollY > scrollThreshold);
  onScroll();
  window.addEventListener('scroll', onScroll, { passive: true });
  return () => window.removeEventListener('scroll', onScroll);
- }, []);
+ }, [scrollThreshold]);
 
  const hideNavbar = ['/signin', '/signup', '/otp'].some((route) =>
  pathname.includes(route),

@@ -4,6 +4,11 @@
     "index",
     "...platform",
     "---Community & Support---",
-    "...community"
+    "...community",
+    "---Contributing---",
+    "[Contributing Guide](/docs/contributing)",
+    "[Translations](/docs/contributing/translations)",
+    "[Reporting Issues](/docs/contributing/reporting-issues)"
   ]
 }
+

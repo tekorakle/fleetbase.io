@@ -362,7 +362,7 @@ const FAQS = [
   },
   {
     q: 'Do I need a Commercial License?',
-    a: 'Only if you plan to build proprietary (closed-source) extensions or integrations on top of Fleetbase. The core platform is AGPL-licensed, which requires open-sourcing modifications. A Commercial License waives this obligation and keeps your custom code private.',
+    a: 'Only if you plan to build proprietary (closed-source) extensions or integrations on top of Fleetbase. The core platform is AGPL-licensed, which requires open-sourcing modifications. A Commercial License waives this obligation and keeps your custom code private. See /licensing/commercial for full details, pricing tiers, and the FAQ.',
   },
   {
     q: 'Is there a free trial?',
@@ -889,6 +889,11 @@ export default function PricingClient() {
             ))}
           </div>
           <p className="text-center text-sm text-muted-foreground mt-6">
+            <Link href="/licensing/commercial" className="text-primary underline underline-offset-4">
+              See full commercial licensing details &amp; FAQ →
+            </Link>
+          </p>
+          <p className="text-center text-sm text-muted-foreground mt-2">
             Not sure which license you need?{' '}
             <Link href="/licensing" className="text-primary underline underline-offset-4">
               Read our licensing guide

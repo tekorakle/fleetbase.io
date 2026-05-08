@@ -159,7 +159,7 @@ export default function TermsOfServicePage() {
  The Fleetbase Core platform is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). Your use of the Service via Fleetbase Cloud does not require you to open-source your own applications or data. However, if you self-host Fleetbase and modify the Core, AGPL obligations may apply.
  </p>
  <p className="text-muted-foreground leading-relaxed mt-3">
- If you require a Commercial License to build proprietary Extensions or integrations without AGPL obligations, separate commercial licensing terms apply. Please contact <a href="mailto:hello@fleetbase.io" className="text-primary underline underline-offset-4">hello@fleetbase.io</a> for details. See our <Link href="/licensing" className="text-primary underline underline-offset-4">Licensing page</Link> for full information.
+ If you require a Commercial License to build proprietary Extensions or integrations without AGPL obligations, separate commercial licensing terms apply. See our <Link href="/licensing/commercial" className="text-primary underline underline-offset-4">Commercial Licensing page</Link> for full details, pricing, and FAQ, or contact <a href="mailto:hello@fleetbase.io" className="text-primary underline underline-offset-4">hello@fleetbase.io</a>.
  </p>
  </section>
 

@@ -112,11 +112,13 @@ export default function OliMaxPage() {
  return (
  <div className="oli-max-page flex flex-col text-[var(--oli-fg)]">
  {/* ── Hero ────────────────────────────────────────────────────── */}
- <section className="oli-hero relative overflow-hidden">
- <div className="absolute inset-0 -z-10">
- <div className="absolute inset-0 bg-gradient-to-b from-[var(--oli-orange)] via-[var(--oli-red)] to-[var(--oli-deep)]" />
- <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_30%_20%,rgba(242,196,48,0.4),transparent_55%),radial-gradient(circle_at_75%_75%,rgba(255,255,255,0.15),transparent_50%)]" />
- </div>
+ <section className="oli-hero relative overflow-hidden bg-[var(--oli-orange)]">
+ {/* Subtle dark fade only at the bottom 25% to anchor the hero — top stays
+     full solid brand orange. */}
+ <div
+ className="pointer-events-none absolute inset-x-0 bottom-0 h-1/4 -z-10 bg-gradient-to-t from-black/35 to-transparent"
+ aria-hidden
+ />
 
  <div className="container relative pt-24 md:pt-28 pb-20 md:pb-28">
  <div className="grid lg:grid-cols-[1.2fr_1fr] gap-16 items-center">
@@ -294,10 +296,7 @@ export default function OliMaxPage() {
  </section>
 
  {/* ── Food Truck Mode (highlight feature) ────────────────────── */}
- <section className="relative overflow-hidden py-20 md:py-28">
- <div className="absolute inset-0 -z-10">
- <div className="absolute inset-0 bg-gradient-to-br from-[var(--oli-deep)] via-[var(--oli-red)]/40 to-[var(--oli-bg)]" />
- </div>
+ <section className="relative overflow-hidden bg-[var(--oli-orange)] py-20 md:py-28">
  <div className="container">
  <div className="grid lg:grid-cols-[1fr_1.1fr] gap-16 items-center">
  <div className="grid grid-cols-2 gap-6 justify-items-center order-2 lg:order-1">
@@ -313,7 +312,7 @@ export default function OliMaxPage() {
  </div>
 
  <div className="flex flex-col gap-6 order-1 lg:order-2">
- <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[var(--oli-orange)]/40 bg-[var(--oli-orange)]/10 px-3 py-1 text-xs font-medium text-[var(--oli-orange)]">
+ <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
  <Truck className="size-3.5" />
  Food-Truck Mode · Moving Shops
  </div>
@@ -472,10 +471,7 @@ export default function OliMaxPage() {
  </section>
 
  {/* ── CTA ────────────────────────────────────────────────────── */}
- <section className="relative overflow-hidden py-20 md:py-28">
- <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--oli-orange)] via-[var(--oli-red)] to-[var(--oli-deep)]" />
- <div className="absolute inset-0 -z-10 opacity-30 [background-image:radial-gradient(circle_at_70%_30%,rgba(242,196,48,0.5),transparent_55%),radial-gradient(circle_at_30%_70%,rgba(255,255,255,0.15),transparent_50%)]" />
-
+ <section className="relative overflow-hidden bg-[var(--oli-orange)] py-20 md:py-28">
  <div className="container">
  <div className="max-w-3xl mx-auto text-center">
  <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white text-balance leading-[1.05]">
@@ -483,7 +479,8 @@ export default function OliMaxPage() {
  </h2>
  <p className="mt-5 text-lg md:text-xl text-white/85 leading-relaxed max-w-2xl mx-auto">
  Storefront is open-source under AGPL-3.0. Fork it, brand it, ship it — or
- work with our team to deploy a customised version for your operation.
+ work with our team to set up, configure, and publish a fully branded
+ customer app for your operation.
  </p>
  <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
  <Button
@@ -491,8 +488,8 @@ export default function OliMaxPage() {
  asChild
  className="bg-[var(--oli-gold)] text-[var(--oli-deep)] hover:bg-[var(--oli-gold)]/90 font-semibold shadow-lg"
  >
- <Link href="/platform/storefront">
- Explore Storefront <ArrowRight className="ml-2 size-4" />
+ <Link href="/services/storefront-publishing">
+ Storefront Publishing Service <ArrowRight className="ml-2 size-4" />
  </Link>
  </Button>
  <Button

@@ -6,6 +6,7 @@
  * with gold accent and dark navy surface tones.
  */
 .oli-max-page {
+  position: relative;
   --oli-orange: #e5471f;       /* primary brand orange (logo-mark warm tone) */
   --oli-red: #b62a14;          /* deeper red on the gradient bottom */
   --oli-gold: #f2c430;         /* accent yellow — warhorse logomark */
@@ -20,4 +21,36 @@
 /* Mid-band darker section (between full-bleed gradient and bg-card sections) */
 .oli-max-page .oli-band-dark {
   background: linear-gradient(180deg, #0a0e18 0%, #11161f 100%);
+}
+
+/*
+ * Cover the navbar zone with the brand colour at the top of the page.
+ *
+ * The root layout stacks several full-bleed overlays (bg-background/10
+ * backdrop-blur + noise) at z=-1/-2 — they tint the body wherever no page
+ * content covers them. The navbar zone (page y=0 to header-height) sits ABOVE
+ * the page wrapper's first section, which means without intervention the
+ * overlays read through the transparent navbar at scrollY=0.
+ *
+ * This pseudo-element renders at z=0 (above the overlays, below the navbar
+ * which is z=50) and is positioned above the page wrapper to cover the navbar
+ * zone with clean brand orange. It scrolls with the page, so once the user
+ * scrolls past navbar height the strip exits the viewport and the navbar's
+ * opaque-glass blur (triggered by the scroll threshold in navbar.tsx) takes
+ * over for the rest of the page.
+ */
+.oli-max-page::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* The 8px buffer absorbs the navbar's 1px border-b plus any subpixel
+     rounding so there's no thin sliver of body overlay leaking through at
+     viewport y=0. The extra height extends offscreen above viewport top
+     (harmless) but guarantees the strip fully covers the navbar zone. */
+  top: calc(-1 * var(--header-height) - 8px);
+  height: calc(var(--header-height) + 8px);
+  background-color: var(--oli-orange);
+  z-index: 0;
+  pointer-events: none;
 }

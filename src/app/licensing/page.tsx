@@ -53,8 +53,8 @@ const licences = [
  'Enterprises that require confidential customisations or specific licence terms',
  ],
  notSuitable: [],
- cta: 'Contact sales',
- ctaHref: '/contact/sales',
+ cta: 'Learn more',
+ ctaHref: '/licensing/commercial',
  },
 ];
 
@@ -199,13 +199,19 @@ export default function LicensingPage() {
  <h3 className="mb-2 font-semibold">Network deployment with changes</h3>
  <p className="text-sm text-muted-foreground">Deploying a modified Fleetbase as a service to external users. AGPL requires you to publish your modifications under AGPL-3.0.</p>
  </div>
- <div className="rounded-xl border border-primary bg-primary/5 p-6">
+ <Link
+ href="/licensing/commercial"
+ className="group rounded-xl border border-primary bg-primary/5 p-6 transition-colors hover:bg-primary/10"
+ >
  <div className="mb-4 flex size-10 items-center justify-center rounded-lg border bg-background">
  <Lock className="size-5 text-primary" />
  </div>
  <h3 className="mb-2 font-semibold">Proprietary modifications</h3>
  <p className="text-sm text-muted-foreground">Want to keep your changes private? A commercial licence removes all AGPL obligations and lets you build proprietary products.</p>
- </div>
+ <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary">
+ Commercial licence details <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+ </span>
+ </Link>
  </div>
  </div>
  </div>
@@ -231,6 +237,12 @@ export default function LicensingPage() {
  ))}
  </Accordion>
  <p className="mt-8 text-sm text-muted-foreground">
+ Need a commercial licence?{' '}
+ <Link href="/licensing/commercial" className="text-primary hover:underline">
+ See full details, pricing, and FAQ →
+ </Link>
+ </p>
+ <p className="mt-2 text-sm text-muted-foreground">
  Still unsure which licence applies to your use case?{' '}
  <Link href="https://cal.com/shivthakker/enquiry" className="text-primary hover:underline">
  Contact our team

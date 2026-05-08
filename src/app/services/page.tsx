@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {
  ArrowRight, Check, Calendar,
  Wrench, Code2, GraduationCap, Shield, Zap, Server,
+ Navigation, ShoppingBag,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -134,7 +135,9 @@ const SUPPORT_TIERS = [
 ];
 
 // ─── Professional Services ────────────────────────────────────────────────────
-const PROFESSIONAL_SERVICES = [
+// Primary services — lead with our core offerings: deploy, publish driver app,
+// publish customer app, build custom code.
+const PRIMARY_SERVICES = [
  {
  icon: Server,
  title: 'Self-Hosted Implementation',
@@ -150,6 +153,34 @@ const PROFESSIONAL_SERVICES = [
  ],
  },
  {
+ icon: ShoppingBag,
+ title: 'Storefront App Publishing',
+ price: '$2,500 one-time',
+ href: '/services/storefront-publishing',
+ description: 'White-label, build, configure, and submit a fully branded Storefront customer app on the App Store and Google Play — including payment gateway integration.',
+ deliverables: [
+ 'Branded iOS + Android builds',
+ 'Custom logo, splash, icons & theme',
+ 'Payment gateway integration (Stripe, QPay, etc.)',
+ 'Push notification setup (APNs + FCM)',
+ 'App Store & Play Console submission',
+ ],
+ },
+ {
+ icon: Navigation,
+ title: 'Navigator App Publishing',
+ price: '$2,500 one-time',
+ href: '/services/navigator-publishing',
+ description: 'White-label, build, configure, and submit a fully branded Navigator driver app on the App Store and Google Play. iOS and Android in one engagement.',
+ deliverables: [
+ 'Branded iOS + Android builds',
+ 'Custom logo, splash, icons & theme',
+ 'Push notification setup (APNs + FCM)',
+ 'App Store & Play Console submission',
+ 'Build pipeline + handover',
+ ],
+ },
+ {
  icon: Code2,
  title: 'Custom Extension Development',
  price: 'Custom pricing',
@@ -162,6 +193,10 @@ const PROFESSIONAL_SERVICES = [
  'Code review & documentation',
  ],
  },
+];
+
+// Additional services — specialised engagements scoped per project.
+const ADDITIONAL_SERVICES = [
  {
  icon: Wrench,
  title: 'Data Migration',
@@ -216,6 +251,55 @@ const PROFESSIONAL_SERVICES = [
  },
 ];
 
+type Service = {
+ icon: React.ElementType;
+ title: string;
+ price: string;
+ href?: string;
+ description: string;
+ deliverables: string[];
+};
+
+function ServiceCard({ service, highlight = false }: { service: Service; highlight?: boolean }) {
+ return (
+ <Card className={cn('flex flex-col', highlight && 'border-primary/30 shadow-sm')}>
+ <CardHeader className="pb-3">
+ <div className="flex items-center gap-3 mb-2">
+ <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+ <service.icon className="w-5 h-5 text-primary" />
+ </div>
+ <div className="min-w-0">
+ <CardTitle className="text-sm leading-tight">{service.title}</CardTitle>
+ <div className="text-xs font-semibold text-primary mt-0.5">{service.price}</div>
+ </div>
+ </div>
+ <CardDescription className="text-xs leading-relaxed">{service.description}</CardDescription>
+ </CardHeader>
+ <CardContent className="flex-1">
+ <div className="text-[10px] font-semibold uppercase tracking-wide text-muted-foreground mb-2">Deliverables</div>
+ <ul className="space-y-1.5">
+ {service.deliverables.map((d) => (
+ <li key={d} className="flex items-start gap-2 text-xs">
+ <Check className="w-3 h-3 text-primary flex-shrink-0 mt-0.5" />
+ <span>{d}</span>
+ </li>
+ ))}
+ </ul>
+ </CardContent>
+ <CardFooter>
+ {service.href ? (
+ <Button className="w-full" size="sm" asChild>
+ <Link href={service.href}>Learn More <ArrowRight className="ml-2 w-3.5 h-3.5" /></Link>
+ </Button>
+ ) : (
+ <Button className="w-full" size="sm" variant="outline" asChild>
+ <Link href="https://cal.com/shivthakker/enquiry">Request a Quote</Link>
+ </Button>
+ )}
+ </CardFooter>
+ </Card>
+ );
+}
 
 export default function ServicesPage() {
  return (
@@ -272,53 +356,35 @@ export default function ServicesPage() {
  </div>
  </section>
 
- {/* Professional Services */}
+ {/* Primary Services */}
  <section className="py-16 bg-muted/20">
  <div className="container mx-auto px-4">
  <div className="text-center mb-10">
  <h2 className="text-3xl font-bold mb-2">Professional Services</h2>
  <p className="text-muted-foreground max-w-2xl mx-auto">
- Hands-on expert services to deploy, customise, and optimise your Fleetbase implementation. All engagements are scoped to your specific requirements.
+ Our four core engagements — deploy Fleetbase, publish your customer app, publish your driver app, and build custom extensions tailored to your operation.
  </p>
  </div>
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
- {PROFESSIONAL_SERVICES.map((service) => (
- <Card key={service.title} className="flex flex-col">
- <CardHeader className="pb-3">
- <div className="flex items-center gap-3 mb-2">
- <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
- <service.icon className="w-5 h-5 text-primary" />
- </div>
- <div>
- <CardTitle className="text-base leading-tight">{service.title}</CardTitle>
- <div className="text-xs font-semibold text-primary mt-0.5">{service.price}</div>
- </div>
- </div>
- <CardDescription className="text-sm leading-relaxed">{service.description}</CardDescription>
- </CardHeader>
- <CardContent className="flex-1">
- <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Deliverables</div>
- <ul className="space-y-1.5">
- {service.deliverables.map((d) => (
- <li key={d} className="flex items-start gap-2 text-sm">
- <Check className="w-3.5 h-3.5 text-primary flex-shrink-0 mt-0.5" />
- <span>{d}</span>
- </li>
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+ {PRIMARY_SERVICES.map((service) => (
+ <ServiceCard key={service.title} service={service} highlight />
  ))}
- </ul>
- </CardContent>
- <CardFooter className="flex flex-col gap-2">
- {service.href ? (
- <Button className="w-full" asChild>
- <Link href={service.href}>Learn More <ArrowRight className="ml-2 w-4 h-4" /></Link>
- </Button>
- ) : (
- <Button className="w-full" variant="outline" asChild>
- <Link href="https://cal.com/shivthakker/enquiry">Request a Quote</Link>
- </Button>
- )}
- </CardFooter>
- </Card>
+ </div>
+ </div>
+ </section>
+
+ {/* Additional Services */}
+ <section className="py-16">
+ <div className="container mx-auto px-4">
+ <div className="text-center mb-10">
+ <h2 className="text-2xl font-bold mb-2">Additional Services</h2>
+ <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
+ Specialised engagements scoped per project — for teams that need help with specific operations beyond the core offerings above.
+ </p>
+ </div>
+ <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+ {ADDITIONAL_SERVICES.map((service) => (
+ <ServiceCard key={service.title} service={service} />
  ))}
  </div>
  </div>

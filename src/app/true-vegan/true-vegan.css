@@ -1,0 +1,70 @@
+/*
+ * True Vegan — scoped page styles.
+ *
+ * Variables here ONLY apply inside `.true-vegan-page` so the rest of the site
+ * keeps its branding. Sourced from the True Vegan customer app: deep navy
+ * header, cream surface, cobalt CTA accent.
+ */
+
+/*
+ * Extend the hero up behind the navbar.
+ *
+ * The hero has a gradient bg (radial highlight + linear navy→navy-deep), not
+ * a solid colour, so a separate solid strip in the navbar zone would create a
+ * visible seam where the strip's flat colour meets the hero's gradient. We
+ * pull the hero section itself up by one navbar-height via negative margin
+ * and add matching internal padding-top so its inner content stays in the
+ * same visible position. The hero's gradient now continues seamlessly behind
+ * the transparent navbar.
+ *
+ * Once the user scrolls past navbar-height (the threshold defined in
+ * navbar.tsx), the navbar gets its standard opaque-glass blur and reads the
+ * hero/section content behind it — same behaviour as every other page.
+ */
+.true-vegan-page .tv-hero-bg {
+  /* The 8px buffer absorbs the navbar's 1px border-b plus subpixel rounding so
+     there's no thin sliver of body overlay leaking through at viewport y=0. */
+  margin-top: calc(-1 * var(--header-height) - 8px);
+  padding-top: calc(var(--header-height) + 8px);
+}
+.true-vegan-page {
+  position: relative;
+  --tv-navy: #243747;          /* deep navy — primary header & footer surface */
+  --tv-navy-deep: #1a2832;     /* gradient depth */
+  --tv-navy-soft: #344c5e;     /* lighter navy variant for cards on dark band */
+  --tv-blue: #3a7aa6;          /* cobalt CTA / interactive */
+  --tv-blue-soft: #5e9bc6;     /* lighter blue for hover/lift */
+  --tv-rust: #a44e36;          /* warm secondary accent (sparingly used) */
+  --tv-cream: #ebeef0;         /* light surface tint */
+  --tv-card: #ffffff;          /* card surface on light band */
+  --tv-fg: #1a2832;            /* text on light surfaces */
+  --tv-fg-muted: rgba(26, 40, 50, 0.7);
+  --tv-fg-light: #f5f7f8;      /* text on navy surfaces */
+  --tv-fg-light-muted: rgba(245, 247, 248, 0.75);
+  --tv-border-light: rgba(26, 40, 50, 0.08);
+}
+
+/* Hero gradient — deep navy with subtle warmth from cream-bottom */
+.true-vegan-page .tv-hero-bg {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(58, 122, 166, 0.25), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.04), transparent 50%),
+    linear-gradient(180deg, var(--tv-navy) 0%, var(--tv-navy-deep) 100%);
+}
+
+/* Light-band surface */
+.true-vegan-page .tv-light-bg {
+  background: var(--tv-cream);
+}
+
+/* Mid-section cream-to-navy transition */
+.true-vegan-page .tv-mid-bg {
+  background: linear-gradient(180deg, var(--tv-cream) 0%, var(--tv-navy) 100%);
+}
+
+/* Final CTA gradient */
+.true-vegan-page .tv-cta-bg {
+  background:
+    radial-gradient(circle at 70% 30%, rgba(58, 122, 166, 0.30), transparent 55%),
+    linear-gradient(135deg, var(--tv-navy) 0%, var(--tv-navy-deep) 100%);
+}
