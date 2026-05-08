@@ -2,7 +2,7 @@
 
 The marketing site, documentation, and developer portal for [Fleetbase](https://fleetbase.io) — the open-source logistics and supply-chain platform.
 
-![Fleetbase — Your Fleet. Your Data. Your Platform.](./public/images/og-image.jpeg)
+![Fleetbase — Your Fleet. Your Data. Your Platform.](./public/images/og-image.webp)
 
 ## What's in this repo
 
@@ -42,13 +42,13 @@ The site runs at <http://localhost:3000>.
 
 Copy `.env.local.example` to `.env.local` and fill in the required values:
 
-| Variable | Purpose |
-| :--- | :--- |
-| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog project key (frontend) |
+| Variable                   | Purpose                                               |
+| :------------------------- | :---------------------------------------------------- |
+| `NEXT_PUBLIC_POSTHOG_KEY`  | PostHog project key (frontend)                        |
 | `NEXT_PUBLIC_POSTHOG_HOST` | PostHog ingest host (e.g. `https://us.i.posthog.com`) |
-| `GHOST_API_URL` | Ghost CMS base URL for the blog |
-| `GHOST_CONTENT_API_KEY` | Ghost Content API key |
-| `GHOST_API_VERSION` | Ghost API version (e.g. `v5.0`) |
+| `GHOST_API_URL`            | Ghost CMS base URL for the blog                       |
+| `GHOST_CONTENT_API_KEY`    | Ghost Content API key                                 |
+| `GHOST_API_VERSION`        | Ghost API version (e.g. `v5.0`)                       |
 
 Without the Ghost variables, blog routes fall back to an empty state. Without the PostHog variables, analytics calls no-op locally.
 
