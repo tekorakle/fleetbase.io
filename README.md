@@ -1,118 +1,102 @@
-# Plasma NextJS Template
+# fleetbase.io
 
-Plasma NextJS Template is a premium template built by https://www.shadcnblocks.com
+The marketing site, documentation, and developer portal for [Fleetbase](https://fleetbase.io) — the open-source logistics and supply-chain platform.
 
-- [Demo](https://plasma-nextjs-template.vercel.app/)
-- [Documentation](https://docs.shadcnblocks.com/templates/getting-started)
+![Fleetbase — Your Fleet. Your Data. Your Platform.](./public/images/og-image.jpeg)
 
-## Screenshot
+## What's in this repo
 
-![Plasma NextJS Template screenshot](./public/images/og-image.jpeg)
+- **Marketing site** — home, platform pages, solutions, pricing, partners, customer stories (`/oli-max`, `/true-vegan`)
+- **Documentation** — Platform, FleetOps, Storefront, Pallet, Ledger, CLI, Fleetbase UI, Extension Development, API Reference, Contributing — all rendered with [Fumadocs](https://fumadocs.dev)
+- **API reference generator** — auto-generates `/docs/api/*` MDX from the [`fleetbase/postman`](https://github.com/fleetbase/postman) collection at build time (see `scripts/generate-api-docs.mjs`)
+- **Blog** — pulled from a Ghost CMS via the Content API
+- **Customer stories** — branded landing pages for production deployments of the Fleetbase Storefront app
 
-## Getting Started
+## Tech stack
 
-```bash
-npm install
-```
+- **Next.js 15** with the App Router
+- **TypeScript**, **React 19**
+- **Tailwind CSS 4** + **shadcn/ui** components
+- **Fumadocs** for the documentation system (MDX + search)
+- **Ghost** for blog content
+- **PostHog** for product analytics
+- **pnpm** for package management
+- **Vercel** for hosting
 
-```bash
-npm run dev
-```
+## Local development
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Tech Stack
-
-- Nextjs 15 / App Router
-- Tailwind 4
-- shadcn/ui
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com)
-
-## Static Export Support
-
-This template is configured to support static export by default, making it easy to deploy on various platforms including Cloudflare Pages, GitHub Pages, and other static hosting providers.
-
-To build for static export:
+Requirements: Node.js 20+, pnpm 10+.
 
 ```bash
-npm run build
-# The output will be in the 'out' directory
+git clone --recurse-submodules git@github.com:fleetbase/fleetbase.io.git
+cd fleetbase.io
+pnpm install
+pnpm dev
 ```
 
-## Search Configuration Fumadocs
+The site runs at <http://localhost:3000>.
 
-### Default (Static Export Compatible)
+> The `vendor/postman` git submodule supplies the API documentation source. If you cloned without `--recurse-submodules`, run `git submodule update --init --recursive` before `pnpm install`.
 
-By default, this template uses **static search** which is compatible with static export. The search uses `staticGET` to generate search indexes at build time that are downloaded by the client when needed.
+### Environment variables
 
-**How it works:**
+Copy `.env.local.example` to `.env.local` and fill in the required values:
 
-- Build time: Search indexes are generated using `staticGET`
-- Runtime: Client downloads indexes and uses Orama for client-side search
-- Both custom search and native Fumadocs search work with static data
-- Compatible with static export (`output: 'export'`)
+| Variable | Purpose |
+| :--- | :--- |
+| `NEXT_PUBLIC_POSTHOG_KEY` | PostHog project key (frontend) |
+| `NEXT_PUBLIC_POSTHOG_HOST` | PostHog ingest host (e.g. `https://us.i.posthog.com`) |
+| `GHOST_API_URL` | Ghost CMS base URL for the blog |
+| `GHOST_CONTENT_API_KEY` | Ghost Content API key |
+| `GHOST_API_VERSION` | Ghost API version (e.g. `v5.0`) |
 
-**Configuration:**
+Without the Ghost variables, blog routes fall back to an empty state. Without the PostHog variables, analytics calls no-op locally.
 
-The `RootProvider` in `src/app/layout.tsx` is configured to use static search by default:
+## Scripts
 
-```typescript
-<RootProvider
-  search={{
-    options: {
-      type: 'static',
-    },
-  }}
->
+```bash
+pnpm dev               # start the dev server (regenerates API docs first)
+pnpm build             # production build (regenerates API docs first)
+pnpm start             # serve the production build
+pnpm generate:api-docs # regenerate /docs/api/* from the postman submodule
+pnpm lint              # next lint
 ```
 
-This ensures both the custom docs overview search and the native Fumadocs search dialog (Cmd+K) use static mode.
+## Project layout
 
-### Optional: Server-Side Search (SSR)
+```
+fleetbase.io/
+├── content/            # MDX content for docs, blog, changelog
+│   ├── docs/           # docs sections — platform, fleet-ops, storefront, etc.
+│   ├── blog/           # blog post sources
+│   └── changelog/
+├── public/             # static assets
+│   └── images/
+│       └── screenshots/  # console + mobile app screenshots used across the site
+├── scripts/            # build-time helpers
+│   ├── generate-api-docs.mjs   # walks vendor/postman and emits /docs/api/* MDX
+│   ├── sdk-emitters.mjs        # JS / PHP / Python SDK code samples
+│   └── api-docs.config.mjs     # per-collection mapping & SDK store names
+├── src/
+│   ├── app/            # Next.js App Router routes
+│   ├── components/     # UI components, layout, MDX components
+│   └── lib/            # utilities, source loaders, GitHub stars helper
+├── vendor/
+│   └── postman/        # submodule — fleetbase/postman collection
+├── source.config.ts    # Fumadocs MDX source registration
+└── next.config.ts
+```
 
-You can optionally enable server-side search. **Note: This will prevent static export.**
+## Documentation
 
-To enable server-side search:
+Docs live in `content/docs/` as `.mdx` files. Each top-level folder (`platform/`, `fleet-ops/`, `storefront/`, etc.) is registered as its own Fumadocs source in [`src/lib/source.ts`](./src/lib/source.ts) and gets its own sidebar.
 
-1. **Update the API route**: Replace the contents of `src/app/api/search/route.ts` with the server-side version from `route.example.ts`:
+The API reference under `/docs/api/*` is **auto-generated** from the [postman submodule](./vendor/postman) — don't edit those MDX files directly. To improve the API reference, edit the YAML side-files in `vendor/postman` and submit a PR there. See [`scripts/README.md`](./scripts/README.md) for the full generator architecture.
 
-   ```typescript
-   import { createFromSource } from 'fumadocs-core/search/server';
-   import { source } from '@/lib/source';
+## Contributing
 
-   export const { GET } = createFromSource(source, {
-     language: 'english',
-   });
-   ```
+The [Contributing Guide](https://fleetbase.io/docs/contributing) covers code, documentation, translations, extensions, and reporting issues. PRs welcome.
 
-2. **Update the search client**: In `src/components/docs/overview.tsx`, change the search configuration:
+## License
 
-   ```typescript
-   // Remove the initOrama import and function, then update:
-   const { search, setSearch, query } = useDocsSearch({
-     type: 'fetch', // Changed from 'static'
-     // Remove initOrama parameter
-   });
-   ```
-
-3. **Update RootProvider**: In `src/app/layout.tsx`, remove the search options:
-
-   ```typescript
-   <RootProvider>{
-     /* Remove search configuration for server-side search */
-   };
-   ```
-
-4. **Remove static export**: If you want to use server-side search, you cannot use static export. Remove any `output: 'export'` setting from `next.config.js`.
-
-### Trade-offs
-
-| Feature               | Static Search (Default)    | Server-Side Search      |
-| --------------------- | -------------------------- | ----------------------- |
-| Static Export         | ✅ Supported               | ❌ Not supported        |
-| Initial Load          | Slower (downloads indexes) | Faster                  |
-| Search Performance    | Good                       | Excellent               |
-| Hosting Compatibility | Any static host            | Requires Node.js server |
+[AGPL-3.0](./LICENSE.md). Commercial licensing is available — see [/licensing/commercial](https://fleetbase.io/licensing/commercial) for full details, pricing tiers, and terms.
