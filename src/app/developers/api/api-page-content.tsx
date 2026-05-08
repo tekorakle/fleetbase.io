@@ -112,7 +112,7 @@ export default function ApiIntegrationsPageContent() {
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link href="https://docs.fleetbase.io/developers/api" target="_blank" rel="noopener noreferrer">
+              <Link href="/docs/api">
                 <Button size="lg">View API Reference</Button>
               </Link>
               <Link href="https://documenter.getpostman.com/view/6866273/2s9YyvAfZh" target="_blank" rel="noopener noreferrer">
@@ -127,8 +127,8 @@ export default function ApiIntegrationsPageContent() {
 
             <div className="relative w-full mt-4 aspect-video overflow-hidden rounded-xl border shadow-2xl">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase developer console — API keys, endpoint documentation, and integration tools"
+                src="/images/screenshots/developers/developers-api-keys-management.webp"
+                alt="Fleetbase Developer Console — API key management and integration tools"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 80vw"
@@ -192,10 +192,10 @@ export default function ApiIntegrationsPageContent() {
                 ))}
               </ul>
               <div className="flex gap-3 flex-wrap">
-                <Link href="https://docs.fleetbase.io/developers/api" target="_blank" rel="noopener noreferrer">
+                <Link href="/docs/api">
                   <Button variant="outline" size="sm">Core API Docs</Button>
                 </Link>
-                <Link href="https://docs.fleetbase.io/storefront-api" target="_blank" rel="noopener noreferrer">
+                <Link href="/docs/api/storefront">
                   <Button variant="outline" size="sm">Storefront API Docs</Button>
                 </Link>
               </div>
@@ -244,8 +244,8 @@ export default function ApiIntegrationsPageContent() {
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg order-2 lg:order-1">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase live map showing real-time SocketCluster-powered driver location updates"
+                src="/images/screenshots/developers/developers-websockets-listen-custom-channel.webp"
+                alt="Fleetbase Developer Console — listening on a custom SocketCluster channel"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -342,8 +342,8 @@ export default function ApiIntegrationsPageContent() {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase developer console — webhook delivery log and payload inspector"
+                src="/images/screenshots/developers/developers-webhook-details-attempts.webp"
+                alt="Fleetbase Developer Console — webhook delivery attempts with payload and response inspector"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -382,7 +382,7 @@ export default function ApiIntegrationsPageContent() {
 
           <p className="mt-8 text-center text-sm text-muted-foreground">
             Plus hundreds more available through the{' '}
-            <Link href="/extensions" className="text-primary underline underline-offset-4">
+            <Link href="/platform/extensions" className="text-primary underline underline-offset-4">
               Extensions Marketplace
             </Link>
           </p>
@@ -395,8 +395,8 @@ export default function ApiIntegrationsPageContent() {
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg order-2 lg:order-1">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase Storefront API — product catalogue, store management, and order endpoints"
+                src="/images/screenshots/storefront/storefront-products-overview.webp"
+                alt="Fleetbase Storefront — product catalogue and store management surface for the Storefront API"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -423,7 +423,7 @@ export default function ApiIntegrationsPageContent() {
                   'Cart, checkout, and order management',
                   'Customer accounts and address book',
                   'Real-time order tracking for customers',
-                  'Fully documented at docs.fleetbase.io/storefront-api',
+                  'Fully documented in the Storefront API reference',
                 ].map((f) => (
                   <li key={f} className="flex items-start gap-3 text-sm">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
@@ -432,7 +432,7 @@ export default function ApiIntegrationsPageContent() {
                 ))}
               </ul>
               <div>
-                <Link href="https://docs.fleetbase.io/storefront-api" target="_blank" rel="noopener noreferrer">
+                <Link href="/docs/api/storefront">
                   <Button variant="outline">
                     View Storefront API Docs <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -455,6 +455,7 @@ export default function ApiIntegrationsPageContent() {
                 {
                   q: 'What authentication method does the Fleetbase API use?',
                   a: 'The Fleetbase API uses Bearer token authentication. Generate an API key from the Developer Console and include it in the Authorization header of every request: Authorization: Bearer YOUR_API_KEY. Keys are scoped to your organisation and can be rotated or revoked at any time.',
+                  learnMore: { href: '/docs/platform/developer-console/api-keys', label: 'API key management →' },
                 },
                 {
                   q: 'Is there a rate limit on API requests?',
@@ -463,24 +464,29 @@ export default function ApiIntegrationsPageContent() {
                 {
                   q: 'Does Fleetbase support real-time data via WebSockets?',
                   a: 'Yes. Fleetbase provides real-time WebSocket channels powered by SocketCluster. Subscribe to channels for live order updates, driver location tracking, fleet status changes, and any other platform event. Use the official socketcluster-client npm package to connect.',
+                  learnMore: { href: '/docs/platform/developer-console/socket-events', label: 'Socket events docs →' },
                 },
                 {
                   q: 'How do webhooks work in Fleetbase?',
                   a: 'Webhooks allow Fleetbase to push event notifications to your server in real time. Configure a webhook endpoint URL in the Developer Console, select which events to subscribe to, and Fleetbase will POST a JSON payload to your endpoint whenever those events occur. Failed deliveries are automatically retried with exponential backoff.',
+                  learnMore: { href: '/docs/platform/developer-console/webhooks', label: 'Webhooks docs →' },
                 },
                 {
                   q: 'Is there a Storefront-specific API?',
                   a: 'Yes. The Storefront extension exposes its own dedicated API for managing stores, products, categories, orders, and customers. The Storefront API is documented separately and uses the same authentication mechanism as the core Fleetbase API.',
+                  learnMore: { href: '/docs/api/storefront', label: 'Storefront API reference →' },
                 },
                 {
                   q: 'Can I use the API to build a custom mobile app?',
                   a: 'Absolutely. The Fleetbase API is the foundation for our own open-source Navigator and Storefront mobile apps. You can use the same API to build custom driver apps, customer-facing apps, or any other mobile experience on top of Fleetbase.',
+                  learnMore: { href: '/docs/apps', label: 'Navigator & Storefront app docs →' },
                 },
                 {
                   q: 'Where can I find the full API reference?',
-                  a: 'The full API reference is available at docs.fleetbase.io/developers/api and as a Postman collection linked in the documentation. The reference covers all endpoints, request/response schemas, authentication, and example payloads.',
+                  a: 'The full API reference lives at /docs/api and is also available as a Postman collection linked in the documentation. The reference covers all endpoints, request/response schemas, authentication, and example payloads.',
+                  learnMore: { href: '/docs/api', label: 'API reference →' },
                 },
-              ].map(({ q, a }, i) => (
+              ].map(({ q, a, learnMore }, i) => (
                 <AccordionItem
                   key={i}
                   value={`faq-${i}`}
@@ -489,6 +495,16 @@ export default function ApiIntegrationsPageContent() {
                   <AccordionTrigger className="text-left font-medium">{q}</AccordionTrigger>
                   <AccordionContent className="text-sm text-muted-foreground leading-relaxed">
                     {a}
+                    {learnMore && (
+                      <div className="mt-3">
+                        <Link
+                          href={learnMore.href}
+                          className="inline-flex items-center text-xs font-medium text-primary hover:underline"
+                        >
+                          {learnMore.label}
+                        </Link>
+                      </div>
+                    )}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -514,7 +530,7 @@ export default function ApiIntegrationsPageContent() {
                 <Link href="https://console.fleetbase.io" target="_blank" rel="noopener noreferrer">
                   <Button size="lg">Get Your API Key</Button>
                 </Link>
-                <Link href="https://docs.fleetbase.io/developers/api" target="_blank" rel="noopener noreferrer">
+                <Link href="/docs/api">
                   <Button size="lg" variant="outline">View API Reference</Button>
                 </Link>
                 <Link href="https://documenter.getpostman.com/view/6866273/2s9YyvAfZh" target="_blank" rel="noopener noreferrer">

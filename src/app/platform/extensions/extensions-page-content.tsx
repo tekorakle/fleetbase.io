@@ -48,6 +48,57 @@ const categories = [
   { icon: Shield,         name: 'Security & Auth',       count: 4 },
 ];
 
+// First-party + community-built integrations available natively or through
+// extensions. Logos: simpleicons CDN where available, otherwise self-hosted
+// under /public/images/integrations/.
+const INTEGRATIONS: { name: string; category: string; logo: string }[] = [
+  // Maps & Location
+  { name: 'Google Maps',     category: 'Maps & Location',          logo: 'https://cdn.simpleicons.org/googlemaps/4285F4' },
+  { name: 'OpenStreetMap',   category: 'Maps & Location',          logo: 'https://cdn.simpleicons.org/openstreetmap/7EBC6F' },
+  // Routing & Optimization
+  { name: 'OSRM',            category: 'Routing & Optimization',   logo: '/images/integrations/osrm.svg' },
+  { name: 'Valhalla',        category: 'Routing & Optimization',   logo: '/images/integrations/valhalla.svg' },
+  { name: 'VROOM',           category: 'Routing & Optimization',   logo: '/images/integrations/vroom.png' },
+  // Telematics & Fleet Hardware
+  { name: 'Flespi',          category: 'Telematics & Fleet Hardware', logo: '/images/integrations/flespi.svg' },
+  { name: 'Samsara',         category: 'Telematics & Fleet Hardware', logo: '/images/integrations/samsara.svg' },
+  { name: 'Geotab',          category: 'Telematics & Fleet Hardware', logo: '/images/integrations/geotab.svg' },
+  // Payments
+  { name: 'Stripe',          category: 'Payments',                 logo: 'https://cdn.simpleicons.org/stripe/635BFF' },
+  // Communication
+  { name: 'Twilio',          category: 'Communication',            logo: 'https://cdn.simpleicons.org/twilio/F22F46' },
+  { name: 'SendGrid',        category: 'Communication',            logo: 'https://cdn.simpleicons.org/sendgrid/51A9E3' },
+  { name: 'Mailgun',         category: 'Communication',            logo: 'https://cdn.simpleicons.org/mailgun/F06B66' },
+  // Cloud & Infrastructure
+  { name: 'AWS',             category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/amazonaws/FF9900' },
+  { name: 'Google Cloud',    category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/googlecloud/4285F4' },
+  { name: 'Microsoft Azure', category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/microsoftazure/0078D4' },
+  { name: 'DigitalOcean',    category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/digitalocean/0080FF' },
+  { name: 'Docker',          category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/docker/2496ED' },
+  { name: 'Kubernetes',      category: 'Cloud & Infrastructure',   logo: 'https://cdn.simpleicons.org/kubernetes/326CE5' },
+  // Databases
+  { name: 'MySQL',           category: 'Databases',                logo: 'https://cdn.simpleicons.org/mysql/4479A1' },
+  { name: 'Redis',           category: 'Databases',                logo: 'https://cdn.simpleicons.org/redis/DC382D' },
+  // Developer Tools
+  { name: 'GitHub',          category: 'Developer Tools',          logo: 'https://cdn.simpleicons.org/github/181717' },
+  { name: 'Postman',         category: 'Developer Tools',          logo: 'https://cdn.simpleicons.org/postman/FF6C37' },
+  // Monitoring
+  { name: 'Sentry',          category: 'Monitoring',               logo: 'https://cdn.simpleicons.org/sentry/362D59' },
+  // E-commerce
+  { name: 'Shopify',         category: 'E-commerce',               logo: 'https://cdn.simpleicons.org/shopify/96BF48' },
+  { name: 'WooCommerce',     category: 'E-commerce',               logo: 'https://cdn.simpleicons.org/woocommerce/96588A' },
+  // Mobile
+  { name: 'Android',         category: 'Mobile',                   logo: 'https://cdn.simpleicons.org/android/3DDC84' },
+  { name: 'React Native',    category: 'Mobile',                   logo: 'https://cdn.simpleicons.org/react/61DAFB' },
+  { name: 'Expo',            category: 'Mobile',                   logo: 'https://cdn.simpleicons.org/expo/000020' },
+  // Backend & Framework
+  { name: 'Laravel',         category: 'Backend & Framework',      logo: 'https://cdn.simpleicons.org/laravel/FF2D20' },
+  { name: 'Node.js',         category: 'Backend & Framework',      logo: 'https://cdn.simpleicons.org/nodedotjs/339933' },
+  { name: 'Next.js',         category: 'Backend & Framework',      logo: 'https://cdn.simpleicons.org/nextdotjs/000000' },
+  { name: 'PHP',             category: 'Backend & Framework',      logo: 'https://cdn.simpleicons.org/php/777BB4' },
+];
+const INTEGRATION_CATEGORIES = [...new Set(INTEGRATIONS.map((i) => i.category))];
+
 const featuredExtensions = [
   { icon: Truck,         name: 'FleetOps',                 tag: 'Free',  desc: 'Core TMS and fleet management — orders, drivers, routes, and real-time tracking.', publisher: 'Fleetbase' },
   { icon: ShoppingBag,   name: 'Storefront',               tag: 'Free',  desc: 'Headless e-commerce and on-demand ordering with native delivery integration.', publisher: 'Fleetbase' },
@@ -122,7 +173,7 @@ export default function ExtensionsMarketplacePageContent() {
 
             <div className="relative w-full mt-4 aspect-video overflow-hidden rounded-xl border shadow-2xl">
               <Image
-                src="/images/placeholder.png"
+                src="/images/screenshots/extensions/extensions-browse.webp"
                 alt="Fleetbase Extensions Marketplace console view"
                 fill
                 className="object-cover object-top"
@@ -192,7 +243,7 @@ export default function ExtensionsMarketplacePageContent() {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg">
               <Image
-                src="/images/placeholder.png"
+                src="/images/screenshots/extensions/extensions-console-install.webp"
                 alt="Fleetbase extensions marketplace install flow"
                 fill
                 className="object-cover object-top"
@@ -282,14 +333,70 @@ export default function ExtensionsMarketplacePageContent() {
         </div>
       </section>
 
+      {/* ── Integrations ────────────────────────────────────────────── */}
+      <section id="integrations" className="section-padding scroll-mt-20">
+        <div className="container">
+          <div className="mb-12 text-center">
+            <div className="mb-3 inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
+              Integrations
+            </div>
+            <h2 className="mb-4 text-4xl font-bold tracking-tight">
+              Plug into the tools you already use
+            </h2>
+            <p className="mx-auto max-w-2xl text-muted-foreground">
+              Fleetbase connects natively to {INTEGRATIONS.length}+ services across maps, payments,
+              communication, cloud, and developer tooling — through first-party extensions, the
+              REST API, and webhooks.
+            </p>
+          </div>
+          {INTEGRATION_CATEGORIES.map((category) => (
+            <div key={category} className="mb-10">
+              <h3 className="mb-4 border-b pb-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+                {category}
+              </h3>
+              <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
+                {INTEGRATIONS.filter((i) => i.category === category).map((integration) => (
+                  <div
+                    key={integration.name}
+                    className="flex flex-col items-center gap-2 rounded-lg border bg-card p-3 transition-all hover:border-primary/40 hover:shadow-sm"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={integration.logo}
+                      alt={`${integration.name} logo`}
+                      className="h-8 w-8 object-contain"
+                      loading="lazy"
+                    />
+                    <span className="text-center text-xs leading-tight text-muted-foreground">
+                      {integration.name}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <p className="mt-8 text-center text-sm text-muted-foreground">
+            Don&apos;t see what you need?{' '}
+            <Link href="/developers/extensions" className="text-primary underline underline-offset-4">
+              Build your own integration
+            </Link>{' '}
+            or{' '}
+            <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">
+              talk to us
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
+
       {/* ── For Developers / Publishers ──────────────────────────────── */}
       <section className="section-padding bg-muted/20">
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg order-2 lg:order-1">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase developer dashboard — extension analytics and revenue"
+                src="/images/screenshots/extensions/extensions-installed.webp"
+                alt="Fleetbase developer dashboard — installed and purchased extensions"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -329,6 +436,12 @@ export default function ExtensionsMarketplacePageContent() {
               <div className="flex gap-3 flex-wrap">
                 <Link href="/developers/extensions">
                   <Button>Start building</Button>
+                </Link>
+                <Link href="/docs/extension-development">
+                  <Button variant="outline">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Read the docs
+                  </Button>
                 </Link>
                 <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">
                   <Button variant="ghost">

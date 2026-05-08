@@ -10,6 +10,7 @@ import {
   uiDocs,
   extensionDevelopmentDocs,
   apiDocs,
+  contributingDocs,
 } from '@/.source';
 
 // Plugin: when a page declares `sidebarTitle` in frontmatter, use it as the
@@ -92,6 +93,13 @@ export const extensionDevelopmentSource = loader({
 export const apiSource = loader({
   baseUrl: '/docs/api',
   source: { files: apiDocs.toFumadocsSource().files() },
+});
+
+// Contributing — translations, code, docs, extensions, reporting issues
+export const contributingSource = loader({
+  baseUrl: '/docs/contributing',
+  source: { files: contributingDocs.toFumadocsSource().files() },
+  plugins: [sidebarTitlePlugin],
 });
 
 export type Page = InferPageType<typeof source>;

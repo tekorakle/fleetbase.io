@@ -95,10 +95,11 @@ const useCases = [
   },
 ];
 
-const faqs = [
+const faqs: { q: string; a: string; learnMore?: { href: string; label: string } }[] = [
   {
     q: 'How do I set up a webhook endpoint?',
     a: 'Navigate to Developers → Webhooks in the Fleetbase console. Click "Add Webhook", enter your HTTPS endpoint URL, select the events you want to subscribe to, and save. Fleetbase will immediately begin delivering events to your endpoint.',
+    learnMore: { href: '/docs/platform/recipes/connect-your-first-webhook', label: 'Recipe: Connect your first webhook →' },
   },
   {
     q: 'Does Fleetbase retry failed webhook deliveries?',
@@ -107,6 +108,7 @@ const faqs = [
   {
     q: 'How do I verify that a webhook came from Fleetbase?',
     a: 'Every webhook request includes an X-Fleetbase-Signature header containing an HMAC-SHA256 signature of the raw request body, signed with your webhook secret. Verify this signature on your server before processing the payload to prevent spoofed requests.',
+    learnMore: { href: '/docs/platform/developer-console/webhooks', label: 'Webhook signing details →' },
   },
   {
     q: 'What format does the webhook payload use?',
@@ -115,6 +117,7 @@ const faqs = [
   {
     q: 'Can I subscribe to all events at once?',
     a: 'Yes. When creating a webhook you can select "All events" to receive every event type, or you can cherry-pick specific events. You can also create multiple webhooks pointing to different endpoints with different event subscriptions.',
+    learnMore: { href: '/docs/platform/developer-console/system-events', label: 'Available event types →' },
   },
   {
     q: 'How do I test my webhook endpoint locally?',
@@ -123,6 +126,7 @@ const faqs = [
   {
     q: 'Is there a log of all webhook deliveries?',
     a: 'Yes. The Developers → Webhooks panel in the console shows a full delivery log for every webhook, including the event type, timestamp, HTTP status returned by your endpoint, full request/response bodies, and retry history.',
+    learnMore: { href: '/docs/platform/developer-console/request-logs', label: 'Request & delivery logs →' },
   },
 ];
 
@@ -147,7 +151,7 @@ export default function WebhooksPageContent() {
               Webhooks let Fleetbase push event data directly to your server the moment something happens — an order is dispatched, a driver updates their location, or a delivery is completed. No polling, no delays, no missed updates.
             </p>
             <div className="flex flex-wrap gap-4 justify-center mt-4">
-              <Link href="https://docs.fleetbase.io/developers/webhooks/" target="_blank" rel="noopener noreferrer">
+              <Link href="/docs/platform/developer-console/webhooks">
                 <Button size="lg">Read the Docs</Button>
               </Link>
               <Link href="https://console.fleetbase.io/onboard">
@@ -413,6 +417,16 @@ export default function WebhooksPageContent() {
                 {openFaq === i && (
                   <div className="px-6 pb-5 text-sm text-muted-foreground leading-relaxed border-t bg-muted/10 pt-4">
                     {faq.a}
+                    {faq.learnMore && (
+                      <div className="mt-3">
+                        <Link
+                          href={faq.learnMore.href}
+                          className="inline-flex items-center text-xs font-medium text-primary hover:underline"
+                        >
+                          {faq.learnMore.label}
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -432,7 +446,7 @@ export default function WebhooksPageContent() {
             <Link href="https://console.fleetbase.io/onboard">
               <Button size="lg">Get Started Free</Button>
             </Link>
-            <Link href="https://docs.fleetbase.io/developers/webhooks/" target="_blank" rel="noopener noreferrer">
+            <Link href="/docs/platform/developer-console/webhooks">
               <Button size="lg" variant="outline">Read the Docs</Button>
             </Link>
           </div>

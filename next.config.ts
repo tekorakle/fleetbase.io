@@ -45,6 +45,11 @@ const nextConfig: NextConfig = {
         destination: '/developers/webhooks',
         permanent: true,
       },
+      {
+        source: '/docs/community/contributing',
+        destination: '/docs/contributing',
+        permanent: true,
+      },
     ];
   },
   allowedDevOrigins: [

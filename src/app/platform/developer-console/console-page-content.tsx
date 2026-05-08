@@ -104,8 +104,8 @@ export default function DeveloperConsolePageContent() {
 
             <div className="relative w-full mt-4 aspect-video overflow-hidden rounded-xl border shadow-2xl">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase Developer Console — API monitoring, request logs, and webhook activity"
+                src="/images/screenshots/developers/developers-request-logs.webp"
+                alt="Fleetbase Developer Console — API request log with method, status, and latency"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 80vw"
@@ -132,20 +132,27 @@ export default function DeveloperConsolePageContent() {
             style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1 }}
           >
             {[
-              { icon: Key,      title: 'API Key Management',   desc: 'Generate, name, and manage multiple API keys per organisation. Set expiry dates, rotate keys, and revoke access instantly.' },
-              { icon: Webhook,  title: 'Webhook Configuration', desc: 'Subscribe to platform events and deliver real-time HTTP notifications to any endpoint. Configure retries and view delivery history.' },
-              { icon: Activity, title: 'Request Logs',          desc: 'Full audit trail of every API request — method, endpoint, payload, response, latency, status code, and authenticating key.' },
-              { icon: Wifi,     title: 'Socket Channels',       desc: 'Monitor active SocketCluster channels, connected clients, and real-time message streams for live data integrations.' },
-              { icon: Radio,    title: 'Event Stream',          desc: 'Browse all platform events in chronological order. Filter by type, entity, or time range to debug integration issues.' },
-              { icon: Shield,   title: 'Sandbox Mode',          desc: 'Test your integration against a fully isolated sandbox without affecting production data or triggering live webhooks.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex flex-col gap-3 bg-background p-6">
+              { icon: Key,      title: 'API Key Management',   desc: 'Generate, name, and manage multiple API keys per organisation. Set expiry dates, rotate keys, and revoke access instantly.', href: '/docs/platform/developer-console/api-keys' },
+              { icon: Webhook,  title: 'Webhook Configuration', desc: 'Subscribe to platform events and deliver real-time HTTP notifications to any endpoint. Configure retries and view delivery history.', href: '/docs/platform/developer-console/webhooks' },
+              { icon: Activity, title: 'Request Logs',          desc: 'Full audit trail of every API request — method, endpoint, payload, response, latency, status code, and authenticating key.', href: '/docs/platform/developer-console/request-logs' },
+              { icon: Wifi,     title: 'Socket Channels',       desc: 'Monitor active SocketCluster channels, connected clients, and real-time message streams for live data integrations.', href: '/docs/platform/developer-console/socket-events' },
+              { icon: Radio,    title: 'Event Stream',          desc: 'Browse all platform events in chronological order. Filter by type, entity, or time range to debug integration issues.', href: '/docs/platform/developer-console/system-events' },
+              { icon: Shield,   title: 'Sandbox Mode',          desc: 'Test your integration against a fully isolated sandbox without affecting production data or triggering live webhooks.', href: '/docs/platform/developer-console' },
+            ].map(({ icon: Icon, title, desc, href }) => (
+              <Link
+                key={title}
+                href={href}
+                className="group flex flex-col gap-3 bg-background p-6 transition-colors hover:bg-muted/30"
+              >
                 <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
                   <Icon className="h-4 w-4 text-primary" />
                 </div>
                 <p className="font-semibold text-sm">{title}</p>
                 <p className="text-xs text-muted-foreground leading-relaxed">{desc}</p>
-              </div>
+                <span className="mt-auto inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+                  Read the docs <ArrowRight className="size-3" />
+                </span>
+              </Link>
             ))}
           </div>
         </div>
@@ -184,10 +191,18 @@ export default function DeveloperConsolePageContent() {
                   </li>
                 ))}
               </ul>
+              <div>
+                <Link
+                  href="/docs/platform/developer-console/api-keys"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                >
+                  API key documentation <ArrowRight className="size-3.5" />
+                </Link>
+              </div>
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg">
               <Image
-                src="/images/placeholder.png"
+                src="/images/screenshots/developers/developers-api-keys-management.webp"
                 alt="Fleetbase Developer Console — API key management"
                 fill
                 className="object-cover object-top"
@@ -204,8 +219,8 @@ export default function DeveloperConsolePageContent() {
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg order-2 lg:order-1">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase Developer Console — webhook configuration and delivery history"
+                src="/images/screenshots/developers/developers-webhooks-management.webp"
+                alt="Fleetbase Developer Console — webhook subscriptions and target URLs"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -237,6 +252,14 @@ export default function DeveloperConsolePageContent() {
                     <p className="mt-1 text-xs text-muted-foreground">{examples}</p>
                   </div>
                 ))}
+              </div>
+              <div>
+                <Link
+                  href="/docs/platform/developer-console/webhooks"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline"
+                >
+                  Webhook setup &amp; signing →
+                </Link>
               </div>
             </div>
           </div>
@@ -281,8 +304,8 @@ export default function DeveloperConsolePageContent() {
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase Developer Console — request logs and monitoring"
+                src="/images/screenshots/developers/developers-request-log-details.webp"
+                alt="Fleetbase Developer Console — request log entry details with payload and response"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -298,8 +321,8 @@ export default function DeveloperConsolePageContent() {
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border shadow-lg order-2 lg:order-1">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase Developer Console — socket channel monitor"
+                src="/images/screenshots/developers/developers-websockets.webp"
+                alt="Fleetbase Developer Console — active WebSocket channels and connected clients"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"

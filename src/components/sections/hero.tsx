@@ -3,21 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-
-async function getGitHubStars(): Promise<string> {
-  try {
-    const res = await fetch('https://api.github.com/repos/fleetbase/fleetbase', {
-      next: { revalidate: 3600 },
-    });
-    if (!res.ok) return '1.8k+';
-    const data = await res.json();
-    const count: number = data.stargazers_count;
-    if (count >= 1000) return `${(count / 1000).toFixed(1).replace(/\.0$/, '')}k+`;
-    return `${count}+`;
-  } catch {
-    return '1.8k+';
-  }
-}
+import { getGitHubStars } from '@/lib/github-stars';
 
 export default async function Hero() {
   const stars = await getGitHubStars();

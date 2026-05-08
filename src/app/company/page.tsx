@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Globe, Heart, Code2, Users, BookOpen, Handshake } from 'lucide-react';
+import { ArrowRight, Globe, Heart, Code2, Users, BookOpen, Handshake, LineChart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -61,6 +61,14 @@ const companyLinks = [
  description:
  'Understand the difference between AGPL open-source and commercial licensing, and choose the right option for your deployment and business model.',
  cta: 'Understand licensing',
+ },
+ {
+ href: '/company/investors',
+ icon: LineChart,
+ title: 'Investors',
+ description:
+ 'Bootstrapped, profitable, and built for the long term. For investors and strategic partners who want to understand the opportunity, our model, and what we look for in long-term partners.',
+ cta: 'Open a conversation',
  },
 ];
 

@@ -57,7 +57,7 @@ const QUICK_START_SECTIONS = [
  description:
  'Full REST API documentation for all Fleetbase resources — orders, drivers, places, vehicles, and more.',
  icon: Zap,
- href: 'https://docs.fleetbase.io/api-reference',
+ href: '/docs/api',
  },
  {
  title: 'File Systems',

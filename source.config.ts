@@ -70,4 +70,11 @@ export const apiDocs = defineDocs({
   meta: { files: ['meta.json', '**/meta.json'] },
 });
 
+// Contributing — translations, code, docs, extensions, reporting issues
+export const contributingDocs = defineDocs({
+  dir: 'content/docs/contributing',
+  docs: { files: ['**/*.mdx'], schema: docFrontmatter },
+  meta: { files: ['meta.json', '**/meta.json'] },
+});
+
 export default defineConfig();

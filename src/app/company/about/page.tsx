@@ -136,6 +136,54 @@ export default function AboutPage() {
  </div>
  </section>
 
+ {/* How we operate */}
+ <section className="py-16 md:py-20">
+ <div className="container">
+ <div className="mx-auto max-w-3xl">
+ <h2 className="mb-4 text-2xl font-bold tracking-tight md:text-3xl">How we operate</h2>
+ <p className="text-lg leading-relaxed text-muted-foreground">
+ Fleetbase is built and run by a two-person team. We&apos;ve kept it that way deliberately —
+ no venture capital, no growth team, no investor clock. That gives us the freedom to build
+ what operators actually need rather than what looks good on a board slide.
+ </p>
+ <p className="mt-4 text-lg leading-relaxed text-muted-foreground">
+ What this means in practice:
+ </p>
+ <ul className="mt-4 space-y-3 text-lg leading-relaxed text-muted-foreground">
+ <li className="flex gap-3">
+ <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
+ <span>
+ <strong className="font-semibold text-foreground">The founders read every issue.</strong>{' '}
+ We have support tiers like any platform — but the founders are directly reachable above
+ them. Bug reports, feature requests, and community questions reach the people writing
+ the code, not a triage queue.
+ </span>
+ </li>
+ <li className="flex gap-3">
+ <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
+ <span>
+ <strong className="font-semibold text-foreground">The roadmap reflects real operator needs.</strong>{' '}
+ We say &ldquo;no&rdquo; to features that don&apos;t fit, and &ldquo;yes&rdquo; to small,
+ unglamorous fixes that make a real difference for the businesses already on the platform.
+ </span>
+ </li>
+ <li className="flex gap-3">
+ <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" />
+ <span>
+ <strong className="font-semibold text-foreground">The platform stays open and self-hostable.</strong>{' '}
+ Closing the core or moving to per-seat pricing isn&apos;t a lever we&apos;ll pull —
+ it&apos;s the foundation operators trust us on.
+ </span>
+ </li>
+ </ul>
+ <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
+ Being small is a constraint, not a marketing pitch. We choose it because it&apos;s the
+ way we can keep Fleetbase honest.
+ </p>
+ </div>
+ </div>
+ </section>
+
  {/* Values */}
  <section className="py-16 md:py-24">
  <div className="container">

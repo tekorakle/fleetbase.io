@@ -31,12 +31,14 @@ import { cn } from '@/lib/utils';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 
-const stats = [
-  { value: '8,000+', label: 'Active instances' },
-  { value: '10M+', label: 'Orders processed' },
-  { value: '50K+', label: 'Fleet vehicles tracked' },
-  { value: '1.8k+', label: 'GitHub stars' },
-];
+function buildStats(stars: string) {
+  return [
+    { value: '8,000+', label: 'Active instances' },
+    { value: '10M+', label: 'Orders processed' },
+    { value: '50K+', label: 'Fleet vehicles tracked' },
+    { value: stars, label: 'GitHub stars' },
+  ];
+}
 
 const modules = [
   {
@@ -201,7 +203,8 @@ const platformPrinciples = [
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
-export default function PlatformPageContent() {
+export default function PlatformPageContent({ stars }: { stars: string }) {
+  const stats = buildStats(stars);
   return (
     <div className="flex flex-col">
 

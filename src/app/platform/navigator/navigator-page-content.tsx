@@ -34,22 +34,24 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 
-function PhoneFrame({ alt, className = '' }: { alt: string; className?: string }) {
+function PhoneFrame({
+  src,
+  alt,
+  className = '',
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <div
-      className={`relative mx-auto flex flex-col overflow-hidden rounded-[2.5rem] border-2 border-border bg-background shadow-2xl ${className}`}
+      className={`relative mx-auto flex flex-col overflow-hidden rounded-[1.75rem] border-2 border-border bg-background shadow-2xl ${className}`}
       style={{ width: 220, height: 440 }}
     >
       {/* notch */}
-      <div className="absolute left-1/2 top-3 h-5 w-20 -translate-x-1/2 rounded-full bg-border/60" />
+      <div className="absolute left-1/2 top-3 h-5 w-20 -translate-x-1/2 rounded-full bg-border/60 z-10" />
       <div className="relative flex-1 overflow-hidden">
-        <Image
-          src="/images/placeholder.png"
-          alt={alt}
-          fill
-          className="object-cover"
-          sizes="220px"
-        />
+        <Image src={src} alt={alt} fill className="object-cover object-top" sizes="220px" />
       </div>
     </div>
   );
@@ -132,9 +134,20 @@ export default function NavigatorPageContent() {
 
             {/* Right — phone gallery */}
             <div className="flex items-end justify-center gap-4">
-              <PhoneFrame alt="Navigator app — job list" className="mb-8 opacity-70 scale-90" />
-              <PhoneFrame alt="Navigator app — active route" />
-              <PhoneFrame alt="Navigator app — proof of delivery" className="mb-8 opacity-70 scale-90" />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-orders-screen.webp"
+                alt="Navigator app — orders list"
+                className="mb-8 opacity-70 scale-90"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-start-route-navigation.webp"
+                alt="Navigator app — active route navigation"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-order-screen-docs-and-comments-screen.webp"
+                alt="Navigator app — proof of delivery, docs & comments"
+                className="mb-8 opacity-70 scale-90"
+              />
             </div>
           </div>
         </div>
@@ -205,8 +218,15 @@ export default function NavigatorPageContent() {
               </ul>
             </div>
             <div className="flex justify-center gap-6">
-              <PhoneFrame alt="Navigator — incoming job notification" className="mb-6 opacity-80 scale-95" />
-              <PhoneFrame alt="Navigator — job detail view" />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-order-activity-update.webp"
+                alt="Navigator — incoming job activity update"
+                className="mb-6 opacity-80 scale-95"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-order-screen.webp"
+                alt="Navigator — job detail view"
+              />
             </div>
           </div>
         </div>
@@ -217,8 +237,15 @@ export default function NavigatorPageContent() {
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="flex justify-center gap-6 order-2 lg:order-1">
-              <PhoneFrame alt="Navigator — map view with route" />
-              <PhoneFrame alt="Navigator — offline map indicator" className="mt-6 opacity-80 scale-95" />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-start-route-navigation.webp"
+                alt="Navigator — turn-by-turn route navigation"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-order-screen-route-details.webp"
+                alt="Navigator — route waypoint details"
+                className="mt-6 opacity-80 scale-95"
+              />
             </div>
             <div className="flex flex-col gap-6 order-1 lg:order-2">
               <div className="inline-flex w-fit items-center rounded-full border px-3 py-1 text-xs">
@@ -297,8 +324,15 @@ export default function NavigatorPageContent() {
               </ul>
             </div>
             <div className="flex justify-center gap-6">
-              <PhoneFrame alt="Navigator — proof of delivery capture" />
-              <PhoneFrame alt="Navigator — signature screen" className="mt-6 opacity-80 scale-95" />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-waypoint-activity-updated.webp"
+                alt="Navigator — waypoint completion with activity update"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-order-screen-customer-items-details.webp"
+                alt="Navigator — customer & items details for verification"
+                className="mt-6 opacity-80 scale-95"
+              />
             </div>
           </div>
         </div>
@@ -309,8 +343,15 @@ export default function NavigatorPageContent() {
         <div className="container">
           <div className="grid items-center gap-16 lg:grid-cols-2">
             <div className="flex justify-center gap-6 order-2 lg:order-1">
-              <PhoneFrame alt="Navigator — channel list" className="mb-6 opacity-80 scale-95" />
-              <PhoneFrame alt="Navigator — chat thread" />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-chats-screen.webp"
+                alt="Navigator — chat channels list"
+                className="mb-6 opacity-80 scale-95"
+              />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-chat-conversation-screen.webp"
+                alt="Navigator — chat conversation"
+              />
             </div>
             <div className="flex flex-col gap-6 order-1 lg:order-2">
               <div className="inline-flex w-fit items-center rounded-full border px-3 py-1 text-xs">
@@ -419,6 +460,11 @@ export default function NavigatorPageContent() {
                     Fork on GitHub
                   </Button>
                 </Link>
+                <Link href="/docs/apps/navigator-app/customization">
+                  <Button variant="outline">
+                    Customization guide
+                  </Button>
+                </Link>
                 <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">
                   <Button variant="ghost">
                     Commercial licence <ArrowRight className="ml-2 h-4 w-4" />
@@ -429,8 +475,8 @@ export default function NavigatorPageContent() {
             <div className="relative flex items-center justify-center">
               <div className="relative w-full max-w-sm aspect-[4/3] rounded-xl overflow-hidden border">
                 <Image
-                  src="/images/placeholder.png"
-                  alt="White-label Navigator configuration — custom branding"
+                  src="/images/screenshots/admin/admin-branding.webp"
+                  alt="White-label Navigator configuration — custom branding controls in the admin console"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
@@ -480,10 +526,10 @@ export default function NavigatorPageContent() {
 
           <div className="relative w-full max-w-4xl mx-auto aspect-video overflow-hidden rounded-xl border">
             <Image
-              src="/images/placeholder.png"
-              alt="Fleet-Ops console showing live driver location from Navigator"
+              src="/images/screenshots/fleet-ops/fleet-ops-driver-position-playback.webp"
+              alt="Fleet-Ops console showing live driver position playback from Navigator"
               fill
-              className="object-cover"
+              className="object-cover object-top"
               sizes="(max-width: 768px) 100vw, 80vw"
             />
           </div>

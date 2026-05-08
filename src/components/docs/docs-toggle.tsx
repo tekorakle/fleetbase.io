@@ -10,6 +10,7 @@ import {
   Layout,
   Puzzle,
   FileCode,
+  HeartHandshake,
 } from 'lucide-react';
 
 const sections = [
@@ -63,6 +64,12 @@ const sections = [
     description: 'REST API documentation',
     url: '/docs/api',
     icon: <FileCode className="size-4" />,
+  },
+  {
+    title: 'Contributing',
+    description: 'Translations, code, docs & extensions',
+    url: '/docs/contributing',
+    icon: <HeartHandshake className="size-4" />,
   },
 ];
 

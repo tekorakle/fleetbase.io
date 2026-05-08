@@ -28,12 +28,14 @@ const FEATURES = [
   },
 ];
 
-const GITHUB_STATS = [
-  { label: 'GitHub Stars', value: '1.8k+' },
-  { label: 'Contributors', value: '50+' },
-  { label: 'Forks', value: '200+' },
-  { label: 'Active Instances', value: '8,000+' },
-];
+function buildGithubStats(stars: string) {
+  return [
+    { label: 'GitHub Stars', value: stars },
+    { label: 'Contributors', value: '50+' },
+    { label: 'Forks', value: '200+' },
+    { label: 'Active Instances', value: '8,000+' },
+  ];
+}
 
 const WHY_POINTS = [
   {
@@ -50,7 +52,8 @@ const WHY_POINTS = [
   },
 ];
 
-const OpenSourceAdvantage = () => {
+const OpenSourceAdvantage = ({ stars = '1.9k+' }: { stars?: string }) => {
+  const githubStats = buildGithubStats(stars);
   return (
     <section className="section-padding">
       <div className="container space-y-14">
@@ -68,7 +71,7 @@ const OpenSourceAdvantage = () => {
 
         {/* GitHub proof strip */}
         <div className="grid grid-cols-2 overflow-hidden rounded-xl border bg-border md:grid-cols-4" style={{ gap: '1px' }}>
-          {GITHUB_STATS.map((stat, i) => (
+          {githubStats.map((stat, i) => (
             <div
               key={i}
               className="flex flex-col items-center justify-center gap-1 bg-card px-6 py-8 text-center"

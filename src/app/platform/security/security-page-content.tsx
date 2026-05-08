@@ -148,8 +148,8 @@ export default function SecurityCompliancePageContent() {
             </div>
             <div className="w-full h-[460px] rounded-xl border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase IAM user management"
+                src="/images/screenshots/iam/iam-users-management.webp"
+                alt="Fleetbase IAM — users management screen"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -165,8 +165,8 @@ export default function SecurityCompliancePageContent() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="w-full h-[460px] rounded-xl border overflow-hidden shadow-lg relative order-last md:order-first">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase IAM access control"
+                src="/images/screenshots/iam/iam-policy-management.webp"
+                alt="Fleetbase IAM — policy management with granular permissions"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -229,8 +229,8 @@ export default function SecurityCompliancePageContent() {
             </div>
             <div className="w-full h-[460px] rounded-xl border overflow-hidden shadow-lg relative">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase audit log dashboard"
+                src="/images/screenshots/developers/developers-request-logs.webp"
+                alt="Fleetbase audit log dashboard — request log entries with timestamps and IP addresses"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -274,8 +274,8 @@ export default function SecurityCompliancePageContent() {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="w-full h-[400px] rounded-xl border overflow-hidden shadow-lg relative order-last md:order-first">
               <Image
-                src="/images/placeholder.png"
-                alt="Fleetbase self-hosted deployment"
+                src="/images/screenshots/admin/admin-services.webp"
+                alt="Fleetbase admin — self-hosted services configuration"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -303,7 +303,7 @@ export default function SecurityCompliancePageContent() {
                   </div>
                 ))}
               </div>
-              <Link href="https://docs.fleetbase.io" target="_blank" rel="noopener noreferrer">
+              <Link href="/docs/platform/system-setup">
                 <Button variant="outline">Self-Hosting Guide</Button>
               </Link>
             </div>

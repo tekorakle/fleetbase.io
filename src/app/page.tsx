@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 
+import { getGitHubStars } from '@/lib/github-stars';
 import { OrganizationSchema, SoftwareApplicationSchema } from '@/components/seo/json-ld';
 import DeploymentOptions from '@/components/sections/deployment-options';
 import FeaturesTabsSection from '@/components/sections/features-tabs';
@@ -11,7 +12,6 @@ import IntegrationsEcosystem from '@/components/sections/integrations-ecosystem'
 import OpenSourceAdvantage from '@/components/sections/open-source-advantage';
 import PlatformModules from '@/components/sections/platform-modules';
 import StatsBar from '@/components/sections/stats-bar';
-import Testimonials from '@/components/sections/testimonials';
 
 export const metadata: Metadata = {
   title: 'Fleetbase | Open-Source Logistics & Supply Chain Platform',
@@ -31,7 +31,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const stars = await getGitHubStars();
   return (
     <>
       <OrganizationSchema />
@@ -40,12 +41,11 @@ export default function Home() {
       <StatsBar />
       <PlatformModules />
       <FleetOpsShowcase />
-      <OpenSourceAdvantage />
+      <OpenSourceAdvantage stars={stars} />
       <FeaturesTabsSection />
       <IndustryUseCases />
       <IntegrationsEcosystem />
       <DeploymentOptions />
-      <Testimonials />
       <FinalCTA />
     </>
   );

@@ -85,14 +85,14 @@ const faqs = [
   },
 ];
 
-function PhoneFrame() {
+function PhoneFrame({ src, alt }: { src: string; alt: string }) {
   return (
     <div
-      className="relative mx-auto rounded-[2.5rem] border-4 border-foreground/20 bg-background shadow-2xl overflow-hidden"
+      className="relative mx-auto rounded-[1.75rem] border-4 border-foreground/20 bg-background shadow-2xl overflow-hidden"
       style={{ width: 220, height: 440 }}
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-6 bg-foreground/20 rounded-b-2xl z-10" />
-      <Image src="/images/placeholder.png" alt="Mobile app screenshot" fill className="object-cover" sizes="220px" />
+      <Image src={src} alt={alt} fill className="object-cover object-top" sizes="220px" />
     </div>
   );
 }
@@ -127,8 +127,14 @@ export default function MobileAppsPageContent() {
               </Link>
             </div>
             <div className="flex gap-12 justify-center mt-12">
-              <PhoneFrame />
-              <PhoneFrame />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-home-screen.webp"
+                alt="Navigator app — driver dashboard home"
+              />
+              <PhoneFrame
+                src="/images/screenshots/storefront-app/true-vegan/true-vegan-home-screen.webp"
+                alt="Storefront app — customer home (True Vegan deployment)"
+              />
             </div>
           </div>
         </div>
@@ -157,6 +163,9 @@ export default function MobileAppsPageContent() {
                   <Link href="https://github.com/fleetbase/navigator-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
                   </Link>
+                  <Link href="/docs/apps/navigator-app">
+                    <Button size="sm" variant="outline">Docs</Button>
+                  </Link>
                   <Button size="sm" variant="outline"><FaApple className="mr-1.5 h-3.5 w-3.5" />App Store</Button>
                   <Button size="sm" variant="outline"><FaGooglePlay className="mr-1.5 h-3.5 w-3.5" />Google Play</Button>
                 </div>
@@ -176,6 +185,9 @@ export default function MobileAppsPageContent() {
                 <div className="flex gap-3 flex-wrap">
                   <Link href="https://github.com/fleetbase/storefront-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
+                  </Link>
+                  <Link href="/docs/apps/storefront-app">
+                    <Button size="sm" variant="outline">Docs</Button>
                   </Link>
                   <Button size="sm" variant="outline"><FaApple className="mr-1.5 h-3.5 w-3.5" />App Store</Button>
                   <Button size="sm" variant="outline"><FaGooglePlay className="mr-1.5 h-3.5 w-3.5" />Google Play</Button>
@@ -199,7 +211,10 @@ export default function MobileAppsPageContent() {
               <p className="text-lg text-muted-foreground">Navigator is a purpose-built driver app that integrates directly with FleetOps. From the moment a driver is dispatched to the moment a delivery is confirmed, Navigator handles the entire workflow — on iOS, Android, and even in areas with no signal.</p>
             </div>
             <div className="flex justify-center">
-              <PhoneFrame />
+              <PhoneFrame
+                src="/images/screenshots/navigator-app/navigator-app-orders-screen.webp"
+                alt="Navigator app — driver orders queue"
+              />
             </div>
           </div>
           <div className="bg-border rounded-xl overflow-hidden" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1 }}>
@@ -222,7 +237,10 @@ export default function MobileAppsPageContent() {
         <div className="container">
           <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
             <div className="flex justify-center order-last md:order-first">
-              <PhoneFrame />
+              <PhoneFrame
+                src="/images/screenshots/storefront-app/true-vegan/true-vegan-products-screen.webp"
+                alt="Storefront app — product catalog (True Vegan deployment)"
+              />
             </div>
             <div>
               <div className="inline-flex items-center rounded-full border px-3 py-1 text-xs mb-4">
@@ -280,7 +298,10 @@ export default function MobileAppsPageContent() {
               </div>
             </div>
             <div className="flex justify-center">
-              <PhoneFrame />
+              <PhoneFrame
+                src="/images/screenshots/storefront-app/oli-max/oli-max-food-truck-screen.webp"
+                alt="Storefront app — custom food-truck mode (Oli Max deployment in Mongolia)"
+              />
             </div>
           </div>
         </div>

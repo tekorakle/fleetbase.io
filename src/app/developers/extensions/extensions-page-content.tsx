@@ -217,11 +217,7 @@ export default function DeveloperExtensionsPageContent() {
           </p>
           <div className="flex flex-wrap gap-4 justify-center mb-12">
             <Button size="lg" asChild>
-              <Link
-                href="https://docs.fleetbase.io/developers/building-an-extension"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="/docs/extension-development">
                 Read the Extension Guide <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -241,7 +237,7 @@ export default function DeveloperExtensionsPageContent() {
           </div>
           <div className="rounded-xl border overflow-hidden shadow-2xl relative aspect-video">
             <Image
-              src="/images/placeholder.png"
+              src="/images/screenshots/extensions/extensions-browse.webp"
               alt="Fleetbase Extensions Marketplace in the console"
               fill
               className="object-cover object-top"
@@ -376,11 +372,7 @@ export default function DeveloperExtensionsPageContent() {
           </div>
           <div className="text-center">
             <Button size="lg" asChild>
-              <Link
-                href="https://docs.fleetbase.io/developers/building-an-extension/getting-started"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Link href="/docs/extension-development/getting-started">
                 <BookOpen className="mr-2 w-4 h-4" />
                 Full Getting Started Guide
               </Link>
@@ -523,11 +515,7 @@ export default function DeveloperExtensionsPageContent() {
               </p>
               <div className="flex flex-wrap gap-4 justify-center">
                 <Button size="lg" asChild>
-                  <Link
-                    href="https://docs.fleetbase.io/developers/building-an-extension"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <Link href="/docs/extension-development">
                     Start Building <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>

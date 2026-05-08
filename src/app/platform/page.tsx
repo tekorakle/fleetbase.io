@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+import { getGitHubStars } from '@/lib/github-stars';
+
 import PlatformPageContent from './platform-page-content';
 
 export const metadata: Metadata = {
@@ -30,6 +32,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function PlatformOverviewPage() {
-  return <PlatformPageContent />;
+export default async function PlatformOverviewPage() {
+  const stars = await getGitHubStars();
+  return <PlatformPageContent stars={stars} />;
 }

@@ -17,6 +17,7 @@ import {
  Heart,
  Landmark,
  Library,
+ LineChart,
  Mail,
  MapPin,
  MessageSquare, 
@@ -404,6 +405,12 @@ export const NAV_LINKS: NavLink[] = [
  href: '/licensing',
  description: 'Understand AGPL open source and commercial licensing for your needs.',
  icon: FileCheck,
+ },
+ {
+ label: 'Investors',
+ href: '/company/investors',
+ description: 'Bootstrapped, profitable, and built for the long term.',
+ icon: LineChart,
  },
  {
  label: 'Contact Sales',
