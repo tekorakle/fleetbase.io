@@ -28,17 +28,36 @@ export default function FinalCTA() {
 
             <div className="flex flex-col justify-center gap-4 sm:flex-row sm:flex-wrap">
               <Button size="lg" className="gap-2" asChild>
-                <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://console.fleetbase.io/onboard"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cta-id="start_free_trial"
+                  data-cta-location="final_cta"
+                  data-cta-variant="primary"
+                >
                   Start Free Trial <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="gap-2" asChild>
-                <Link href="/pricing">
+                <Link
+                  href="/pricing"
+                  data-cta-id="view_pricing"
+                  data-cta-location="final_cta"
+                  data-cta-variant="secondary"
+                >
                   View Pricing
                 </Link>
               </Button>
               <Button size="lg" variant="outline" className="gap-2" asChild>
-                <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://cal.com/shivthakker/enquiry"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cta-id="book_demo"
+                  data-cta-location="final_cta"
+                  data-cta-variant="secondary"
+                >
                   <Calendar className="h-4 w-4" /> Book a Demo
                 </Link>
               </Button>

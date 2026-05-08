@@ -1,12 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
+import { ArrowRight, BarChart3, CreditCard, FileText,Receipt, RefreshCw, Wallet } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useInView } from 'motion/react';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRef } from 'react';
+
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Receipt, Wallet, BarChart3, RefreshCw, CreditCard, FileText } from 'lucide-react';
 
 const features = [
  {
@@ -145,7 +146,16 @@ export default function LedgerShowcase() {
  </Link>
  </Button>
  <Button variant="outline" asChild>
- <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
+ <Link
+ href="https://cal.com/shivthakker/enquiry"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="contact_sales"
+ data-cta-location="ledger_showcase"
+ data-cta-variant="secondary"
+ >
+ Talk to Sales
+ </Link>
  </Button>
  </div>
  </motion.div>

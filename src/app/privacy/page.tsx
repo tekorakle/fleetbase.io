@@ -184,6 +184,9 @@ export default function PrivacyPolicyPage() {
  <p className="text-muted-foreground leading-relaxed">
  We use cookies and similar tracking technologies on our website to improve your experience, analyse traffic, and personalise content. You can control cookie preferences through your browser settings. Disabling certain cookies may affect the functionality of our website. We do not use cookies to track you across third-party websites for advertising purposes.
  </p>
+ <p className="text-muted-foreground leading-relaxed mt-4">
+ We use <strong>PostHog</strong> for first-party product analytics: pageviews, button clicks, and aggregate usage patterns help us understand which parts of the site are useful and which are not. PostHog cookies (prefixed <code className="px-1 py-0.5 bg-muted rounded">ph_</code>) are stored on the <code className="px-1 py-0.5 bg-muted rounded">.fleetbase.io</code> domain. We never capture form field values, and session replays mask all input fields by default. Visitors in the EU, EEA, UK, and Switzerland are asked to opt in before any data is captured. You can withdraw consent at any time by clearing the <code className="px-1 py-0.5 bg-muted rounded">fb_consent</code> cookie or contacting us at <a href="mailto:hello@fleetbase.io" className="text-primary underline underline-offset-4">hello@fleetbase.io</a>. We honor the <a href="https://globalprivacycontrol.org/" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-4">Global Privacy Control</a> (Sec-GPC) signal globally.
+ </p>
  </section>
 
  <section id="privacy-10">

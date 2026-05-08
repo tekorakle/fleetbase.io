@@ -1,6 +1,7 @@
+import { ArrowRight, Calendar, Globe, HeadphonesIcon,Mail, MessageSquare, Zap } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Mail, MessageSquare, Calendar, Globe, Zap, HeadphonesIcon } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
@@ -105,7 +106,13 @@ export default function ContactSalesPage() {
 
  <div className="space-y-4">
  {/* General enquiries */}
- <Link href="mailto:hello@fleetbase.io" className="block group">
+ <Link
+ href="mailto:hello@fleetbase.io"
+ className="block group"
+ data-cta-id="contact_sales"
+ data-cta-location="contact_sales_page"
+ data-cta-variant="primary"
+ >
  <div className="flex items-start gap-5 rounded-xl border bg-card p-6 hover:border-primary/50 transition-colors">
  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-background">
  <Mail className="size-5 text-primary" />
@@ -124,7 +131,13 @@ export default function ContactSalesPage() {
  </Link>
 
  {/* Support */}
- <Link href="mailto:support@fleetbase.io" className="block group">
+ <Link
+ href="mailto:support@fleetbase.io"
+ className="block group"
+ data-cta-id="contact_support"
+ data-cta-location="contact_sales_page"
+ data-cta-variant="secondary"
+ >
  <div className="flex items-start gap-5 rounded-xl border bg-card p-6 hover:border-primary/50 transition-colors">
  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-background">
  <HeadphonesIcon className="size-5 text-primary" />
@@ -143,7 +156,15 @@ export default function ContactSalesPage() {
  </Link>
 
  {/* Cal.com */}
- <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer" className="block group">
+ <Link
+ href="https://cal.com/shivthakker/enquiry"
+ target="_blank"
+ rel="noopener noreferrer"
+ className="block group"
+ data-cta-id="book_demo"
+ data-cta-location="contact_sales_page"
+ data-cta-variant="primary"
+ >
  <div className="flex items-start gap-5 rounded-xl border bg-card p-6 hover:border-primary/50 transition-colors">
  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-background">
  <Calendar className="size-5 text-primary" />
@@ -163,7 +184,15 @@ export default function ContactSalesPage() {
  </Link>
 
  {/* Discord */}
- <Link href="https://discord.com/invite/HnTqQ6zAVn" target="_blank" rel="noopener noreferrer" className="block group">
+ <Link
+ href="https://discord.com/invite/HnTqQ6zAVn"
+ target="_blank"
+ rel="noopener noreferrer"
+ className="block group"
+ data-cta-id="join_discord"
+ data-cta-location="contact_sales_page"
+ data-cta-variant="tertiary"
+ >
  <div className="flex items-start gap-5 rounded-xl border bg-card p-6 hover:border-primary/50 transition-colors">
  <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-background">
  {/* Discord icon */}
@@ -206,7 +235,14 @@ export default function ContactSalesPage() {
  Start a free 7-day trial capped at 50 resource units.
  </p>
  <Button variant="outline" asChild>
- <Link href="https://console.fleetbase.io" target="_blank" rel="noopener noreferrer">
+ <Link
+ href="https://console.fleetbase.io"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="start_free_trial"
+ data-cta-location="contact_sales_page"
+ data-cta-variant="secondary"
+ >
  Start free trial <ArrowRight className="ml-2 size-4" />
  </Link>
  </Button>

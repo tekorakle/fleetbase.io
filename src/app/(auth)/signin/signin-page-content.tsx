@@ -3,8 +3,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Eye, EyeClosed } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaGoogle } from 'react-icons/fa6';
 import * as z from 'zod';
@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
+import { setPersonProperties, track } from '@/lib/analytics/posthog';
 
 const formSchema = z.object({
  email: z.string().optional(),
@@ -30,6 +31,8 @@ type FormData = z.infer<typeof formSchema>;
 export default function SignInPageContent() {
  const [showPassword, setShowPassword] = useState(false);
  const router = useRouter();
+ const pathname = usePathname() ?? '/signin';
+ const startedRef = useRef(false);
  const form = useForm<FormData>({
  resolver: zodResolver(formSchema),
  defaultValues: {
@@ -38,9 +41,25 @@ export default function SignInPageContent() {
  },
  });
 
+ const handleFirstInteraction = () => {
+ if (startedRef.current) return;
+ startedRef.current = true;
+ track('form_started', { form_id: 'signin', pathname });
+ };
+
  const onSubmit = (values: FormData) => {
+ if (values.email) setPersonProperties({ email: values.email });
+ track('form_submitted', { form_id: 'signin', pathname });
  console.log(values);
  router.push('/otp');
+ };
+
+ const onInvalid = (errors: Record<string, { message?: string }>) => {
+ track('form_validation_failed', {
+ form_id: 'signin',
+ pathname,
+ field_errors: Object.keys(errors),
+ });
  };
 
  return (
@@ -64,7 +83,11 @@ export default function SignInPageContent() {
  <Separator className="bg-input" />
 
  <Form {...form}>
- <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+ <form
+ onSubmit={form.handleSubmit(onSubmit, onInvalid)}
+ onFocus={handleFirstInteraction}
+ className="space-y-3"
+ >
  <FormField
  control={form.control}
  name="email"

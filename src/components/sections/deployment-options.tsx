@@ -1,7 +1,8 @@
 'use client';
 
-import { Cloud, Server, Wrench, Check, X } from 'lucide-react';
+import { Check, Cloud, Server, Wrench, X } from 'lucide-react';
 import Link from 'next/link';
+
 import { Button } from '@/components/ui/button';
 import {
  Card,
@@ -157,7 +158,16 @@ export default function DeploymentOptions() {
  Need help choosing the right deployment option?
  </p>
  <Button variant="outline" asChild>
- <Link href="https://cal.com/shivthakker/enquiry" target="_blank" rel="noopener noreferrer">Schedule a Consultation</Link>
+ <Link
+ href="https://cal.com/shivthakker/enquiry"
+ target="_blank"
+ rel="noopener noreferrer"
+ data-cta-id="book_demo"
+ data-cta-location="deployment_options"
+ data-cta-variant="secondary"
+ >
+ Schedule a Consultation
+ </Link>
  </Button>
  </div>
  </section>

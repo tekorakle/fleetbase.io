@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import SignUpPageContent from './signup-page-content';
 
 export const metadata: Metadata = {

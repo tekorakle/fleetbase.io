@@ -73,7 +73,14 @@ const Testimonials = () => {
               asChild
               className="text-accent-foreground group gap-3 !px-0 hover:!bg-transparent hover:opacity-90"
             >
-              <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://console.fleetbase.io/onboard"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta-id="start_free_trial"
+                data-cta-location="testimonials"
+                data-cta-variant="primary"
+              >
                 Start your free trial
                 <ArrowRight className="size-5 transition-transform group-hover:translate-x-1" />
               </Link>

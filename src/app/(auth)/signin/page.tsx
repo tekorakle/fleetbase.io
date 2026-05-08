@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+
 import SignInPageContent from './signin-page-content';
 
 export const metadata: Metadata = {

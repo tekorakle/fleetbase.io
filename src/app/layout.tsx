@@ -3,13 +3,19 @@ import './globals.css';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
 import { Azeret_Mono, Inter } from 'next/font/google';
+import { headers } from 'next/headers';
 
-
+import { ConsentBanner } from '@/components/analytics/ConsentBanner';
+import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import Footer from '@/components/layout/footer';
 import Navbar from '@/components/layout/navbar';
 import WhatsAppFloat from '@/components/layout/whatsapp-float';
 import { StyleGlideProvider } from '@/components/styleglide-provider';
 import { ThemeProvider } from '@/components/theme-provider';
+import {
+  isOptInRequired,
+  readConsentContextFromHeaders,
+} from '@/lib/analytics/consent';
 import { cn } from '@/lib/utils';
 
 const inter = Inter({
@@ -93,11 +99,14 @@ export const metadata: Metadata = {
  },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
  children,
 }: Readonly<{
  children: React.ReactNode;
 }>) {
+ const consentCtx = readConsentContextFromHeaders(await headers());
+ const optInRequired = isOptInRequired(consentCtx);
+
  return (
  <html lang="en" suppressHydrationWarning>
  <body
@@ -119,6 +128,7 @@ export default function RootLayout({
  },
  }}
  >
+ <PostHogProvider optInRequired={optInRequired}>
  {/* Background Blur */}
  <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
  {/* Light-mode noise — SVG fractal-noise tinted brand-blue/steel.
@@ -145,6 +155,8 @@ export default function RootLayout({
  <main className="flex-1">{children}</main>
  <Footer />
  <WhatsAppFloat />
+ <ConsentBanner optInRequired={optInRequired} />
+ </PostHogProvider>
  </RootProvider>
  </ThemeProvider>
  </body>

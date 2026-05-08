@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
-import Link from 'next/link';
 import {
-  Check, X, ArrowRight, Zap, Server, Users, User, Truck, Package,
-  Webhook, Key, ChevronDown, ChevronUp, MapPin, Building2,
-  Receipt, Globe, Layers, UserRound,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
+ArrowRight, Building2,
+  Check, ChevronDown, ChevronUp, Globe, Key, Layers, MapPin, Package,
+  Receipt, Server, Truck, User, UserRound,
+Users,   Webhook, X, Zap, } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardFooter,CardHeader, CardTitle } from '@/components/ui/card';
+import { track } from '@/lib/analytics/posthog';
 import { cn } from '@/lib/utils';
 
 // ─── Cloud Pricing Tiers ──────────────────────────────────────────────────────
@@ -387,6 +389,26 @@ export default function PricingClient() {
   const tierPrice = (tier: (typeof CLOUD_TIERS)[0]) =>
     billing === 'annual' ? tier.annualPrice : tier.monthlyPrice;
 
+  useEffect(() => {
+    track('pricing_viewed', { billing_cycle: billing });
+    // Initial pricing view only — toggle changes are tracked separately.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const setBillingCycle = (cycle: 'monthly' | 'annual') => {
+    if (cycle === billing) return;
+    setBilling(cycle);
+    track('pricing_billing_toggled', { to_cycle: cycle });
+  };
+
+  const onTierCtaClick = (tier: (typeof CLOUD_TIERS)[0]) => {
+    track('pricing_tier_cta_clicked', {
+      tier: tier.name,
+      billing_cycle: billing,
+      monthly_price: tierPrice(tier),
+    });
+  };
+
   return (
     <div className="flex flex-col">
       {/* Hero */}
@@ -408,7 +430,7 @@ export default function PricingClient() {
           <div className="flex justify-center mb-10">
             <div className="inline-flex items-center gap-1 rounded-full border p-1 bg-muted/30">
               <button
-                onClick={() => setBilling('monthly')}
+                onClick={() => setBillingCycle('monthly')}
                 className={cn(
                   'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
                   billing === 'monthly'
@@ -419,7 +441,7 @@ export default function PricingClient() {
                 Monthly
               </button>
               <button
-                onClick={() => setBilling('annual')}
+                onClick={() => setBillingCycle('annual')}
                 className={cn(
                   'px-4 py-1.5 rounded-full text-sm font-medium transition-all',
                   billing === 'annual'
@@ -437,12 +459,28 @@ export default function PricingClient() {
 
           <div className="flex gap-4 justify-center flex-wrap">
             <Button size="lg" asChild>
-              <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+              <Link
+                href="https://console.fleetbase.io/onboard"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta-id="start_free_trial"
+                data-cta-location="pricing_page"
+                data-cta-variant="primary"
+              >
                 Start 7-Day Free Trial <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
             <Button size="lg" variant="outline" asChild>
-              <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
+              <Link
+                href="https://cal.com/shivthakker/enquiry"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cta-id="contact_sales"
+                data-cta-location="pricing_page"
+                data-cta-variant="secondary"
+              >
+                Talk to Sales
+              </Link>
             </Button>
           </div>
           <p className="text-sm text-muted-foreground mt-4">
@@ -501,6 +539,10 @@ export default function PricingClient() {
                       href="https://console.fleetbase.io/onboard"
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => onTierCtaClick(tier)}
+                      data-cta-id="pricing_tier_select"
+                      data-cta-location="pricing_card"
+                      data-cta-variant="primary"
                     >
                       Start Free Trial
                     </Link>
@@ -581,6 +623,10 @@ export default function PricingClient() {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-xs text-primary hover:underline underline-offset-4 whitespace-nowrap"
+                          onClick={() => onTierCtaClick(tier)}
+                          data-cta-id="pricing_tier_select"
+                          data-cta-location="pricing_card"
+                          data-cta-variant="tertiary"
                         >
                           Get started
                         </Link>
@@ -891,12 +937,28 @@ export default function PricingClient() {
               </p>
               <div className="flex gap-4 justify-center flex-wrap">
                 <Button size="lg" asChild>
-                  <Link href="https://console.fleetbase.io/onboard" target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href="https://console.fleetbase.io/onboard"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cta-id="start_free_trial"
+                    data-cta-location="pricing_page"
+                    data-cta-variant="primary"
+                  >
                     Start Free Trial <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="https://cal.com/shivthakker/enquiry">Talk to Sales</Link>
+                  <Link
+                    href="https://cal.com/shivthakker/enquiry"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-cta-id="contact_sales"
+                    data-cta-location="pricing_page"
+                    data-cta-variant="secondary"
+                  >
+                    Talk to Sales
+                  </Link>
                 </Button>
               </div>
             </div>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { BlogPostTracker } from '@/components/analytics/BlogPostTracker';
 import { Button } from '@/components/ui/button';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/ghost';
 
@@ -84,6 +85,11 @@ export default async function BlogPostPage(props: {
 
   return (
     <div className="flex flex-col">
+      <BlogPostTracker
+        slug={post.slug}
+        tags={post.tags.map((t) => t.name)}
+        publishedAt={post.publishedAt}
+      />
       <section className="section-padding container">
         <div className="mx-auto max-w-4xl">
           <Button variant="ghost" asChild className="mb-8 px-0 hover:bg-transparent">
