@@ -159,8 +159,8 @@ export default function WebhooksPageContent() {
             </div>
             <div className="w-full mt-12 rounded-lg border overflow-hidden shadow-2xl relative aspect-video">
               <Image
-                src="/images/console-screenshots/developers-api-keys.webp"
-                alt="Fleetbase Developer Console showing webhook configuration and event delivery logs"
+                src="/images/screenshots/developers/developers-webhooks-management.webp"
+                alt="Fleetbase Developer Console — Webhooks management screen with subscriptions, target URLs, and event filters"
                 fill
                 className="object-cover object-top"
                 sizes="(max-width: 768px) 100vw, 80vw"

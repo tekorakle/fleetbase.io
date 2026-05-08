@@ -1,7 +1,15 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
-import { useState, type ReactNode } from 'react';
+import { ArrowLeft, ChevronRight, X } from 'lucide-react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
 import { CopyButton } from '@/components/ui/copy-button';
 import { cn } from '@/lib/utils';
@@ -12,6 +20,26 @@ import {
   type LanguageId,
 } from './language-tabs';
 import { MethodBadge, type HttpMethod } from './method-badge';
+
+// ---------------------------------------------------------------------------
+// Variant drawer context
+// ---------------------------------------------------------------------------
+
+interface VariantContext {
+  open: (variant: HttpRequestVariant) => void;
+}
+
+const VariantDrawerContext = createContext<VariantContext | null>(null);
+
+// HttpRequest publishes its method/path so the drawer can echo them in its
+// header — variants don't carry their own method/path, they share the parent's.
+const ParentMetaContext = createContext<
+  ((method: HttpMethod | string, path: string) => void) | null
+>(null);
+
+// ---------------------------------------------------------------------------
+// HttpExample — right-column container, owns the drawer
+// ---------------------------------------------------------------------------
 
 interface HttpExampleProps {
   children: ReactNode;
@@ -24,23 +52,82 @@ interface HttpExampleProps {
  * positions it as the sticky right pane.
  *
  * On `lg:` and above this becomes a flex column that splits its (bounded)
- * height 50/50 between the request and the response — each child uses
- * `flex-1 min-h-0` to claim half. When only the request is present, it
- * naturally fills the full column.
+ * height 50/50 between the request and the response. It also acts as the
+ * positioning root for the variant drawer, which slides in over the entire
+ * column when the user picks an alternative request shape.
  */
 export function HttpExample({ children, className }: HttpExampleProps) {
+  const [activeVariant, setActiveVariant] =
+    useState<HttpRequestVariant | null>(null);
+  const [parentMeta, setParentMeta] = useState<{
+    method: HttpMethod | string;
+    path: string;
+  }>({ method: 'GET', path: '' });
+
+  const captureParent = useCallback(
+    (method: HttpMethod | string, path: string) => {
+      setParentMeta((prev) =>
+        prev.method === method && prev.path === path ? prev : { method, path },
+      );
+    },
+    [],
+  );
+
+  const ctx = useMemo<VariantContext>(
+    () => ({ open: (v) => setActiveVariant(v) }),
+    [],
+  );
+
+  // Dismiss on ESC
+  useEffect(() => {
+    if (!activeVariant) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveVariant(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [activeVariant]);
+
   return (
-    <div
-      data-api-aside
-      className={cn(
-        'not-prose my-6 flex flex-col gap-3 lg:my-0 lg:h-full lg:gap-2',
-        className,
-      )}
-    >
-      {children}
-    </div>
+    <VariantDrawerContext.Provider value={ctx}>
+      <ParentMetaContext.Provider value={captureParent}>
+        <div
+          data-api-aside
+          className={cn(
+            'not-prose relative my-6 flex flex-col gap-3 lg:my-0 lg:h-full lg:gap-2',
+            // Force every panel to share the column equally. CSS targets the
+            // [data-api-panel] markers on HttpRequest and HttpResponse so the
+            // 50/50 (or 100% when alone) split is reliable across reconciler
+            // edge cases that React Children inspection couldn't catch.
+            'lg:[&>[data-api-panel]]:flex-1',
+            'lg:[&>[data-api-panel]]:min-h-0',
+            // When the request panel is alone (no response sibling matching
+            // [data-api-panel="response"]), let it size to content with a
+            // viewport cap so short request examples don't stretch awkwardly.
+            'lg:[&:not(:has([data-api-panel="response"]))>[data-api-panel="request"]]:!flex-none',
+            'lg:[&:not(:has([data-api-panel="response"]))>[data-api-panel="request"]]:!max-h-full',
+            className,
+          )}
+        >
+          {children}
+
+          {activeVariant && (
+            <VariantDrawer
+              variant={activeVariant}
+              parentMethod={parentMeta.method}
+              parentPath={parentMeta.path}
+              onClose={() => setActiveVariant(null)}
+            />
+          )}
+        </div>
+      </ParentMetaContext.Provider>
+    </VariantDrawerContext.Provider>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Sample types
+// ---------------------------------------------------------------------------
 
 /**
  * Per-language sample. The generator produces both:
@@ -59,14 +146,18 @@ export interface HttpRequestVariant {
   samples: SampleSet;
 }
 
+// ---------------------------------------------------------------------------
+// HttpRequest
+// ---------------------------------------------------------------------------
+
 interface HttpRequestProps {
   method: HttpMethod | string;
   path: string;
   samples: SampleSet;
   /**
-   * Optional alternative request shapes (e.g. "Create using Waypoints"). When
-   * present, they're rendered as a joined accordion section attached to the
-   * bottom of the main code panel — visually one unit, no gap.
+   * Optional alternative request shapes. Rendered as a compact pill rail at
+   * the bottom of the panel. Clicking a pill opens a full-column drawer
+   * showing that variant's code at full height.
    */
   variants?: HttpRequestVariant[];
   className?: string;
@@ -85,6 +176,7 @@ export function HttpRequest({
   className,
 }: HttpRequestProps) {
   const { language } = useApiLanguage();
+  const captureParent = useContext(ParentMetaContext);
   const available = Object.keys(samples) as LanguageId[];
   const active: LanguageId = available.includes(language)
     ? language
@@ -93,10 +185,16 @@ export function HttpRequest({
   const sample = normalizeSample(samples[active]);
   const hasVariants = !!variants && variants.length > 0;
 
+  // Publish method/path to the parent <HttpExample> so the drawer can echo them.
+  useEffect(() => {
+    captureParent?.(method, path);
+  }, [captureParent, method, path]);
+
   return (
     <div
+      data-api-panel="request"
       className={cn(
-        'not-prose flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm lg:flex-1',
+        'not-prose flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm',
         className,
       )}
     >
@@ -119,24 +217,19 @@ export function HttpRequest({
         <CodeBody html={sample.html} code={sample.code} lang={active} />
       </div>
 
-      {hasVariants && (
-        <HttpRequestVariants variants={variants!} active={active} />
-      )}
+      {hasVariants && <VariantPillRail variants={variants!} />}
     </div>
   );
 }
 
-/**
- * The "Other ways to call this" accordion that lives inside <HttpRequest>,
- * sharing its border so the two read as one unit.
- */
-function HttpRequestVariants({
-  variants,
-  active,
-}: {
-  variants: HttpRequestVariant[];
-  active: LanguageId;
-}) {
+// ---------------------------------------------------------------------------
+// Variant pill rail (the "at rest" view inside HttpRequest)
+// ---------------------------------------------------------------------------
+
+function VariantPillRail({ variants }: { variants: HttpRequestVariant[] }) {
+  const ctx = useContext(VariantDrawerContext);
+  if (!ctx) return null;
+
   return (
     <div className="shrink-0 border-t border-border/40 bg-muted/10">
       <div className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
@@ -144,47 +237,101 @@ function HttpRequestVariants({
       </div>
       <ul className="divide-y divide-border/40 border-t border-border/40">
         {variants.map((v) => (
-          <VariantItem key={v.title} variant={v} active={active} />
+          <li key={v.title}>
+            <button
+              type="button"
+              onClick={() => ctx.open(v)}
+              className="flex w-full items-center justify-between gap-2 px-2.5 py-1 text-left text-[11px] font-medium text-foreground/80 transition-colors hover:bg-muted/40 hover:text-foreground"
+            >
+              <span className="truncate">{v.title}</span>
+              <ChevronRight
+                className="h-3 w-3 shrink-0 text-muted-foreground"
+                aria-hidden="true"
+              />
+            </button>
+          </li>
         ))}
       </ul>
     </div>
   );
 }
 
-function VariantItem({
+// ---------------------------------------------------------------------------
+// Variant drawer — full-column overlay
+// ---------------------------------------------------------------------------
+
+function VariantDrawer({
   variant,
-  active,
+  parentMethod,
+  parentPath,
+  onClose,
 }: {
   variant: HttpRequestVariant;
-  active: LanguageId;
+  parentMethod: HttpMethod | string;
+  parentPath: string;
+  onClose: () => void;
 }) {
-  const [open, setOpen] = useState(false);
+  const { language } = useApiLanguage();
+  const available = Object.keys(variant.samples) as LanguageId[];
+  const active: LanguageId = available.includes(language)
+    ? language
+    : (available[0] ?? 'curl');
+
   const sample = normalizeSample(variant.samples[active]);
 
   return (
-    <li>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        className="flex w-full items-center justify-between gap-2 px-2.5 py-1 text-left text-[11px] font-medium text-foreground/80 transition-colors hover:bg-muted/30"
-      >
-        <span className="truncate">{variant.title}</span>
-        <ChevronDown
-          className={cn(
-            'h-3 w-3 shrink-0 text-muted-foreground transition-transform',
-            open && 'rotate-180',
-          )}
-        />
-      </button>
-      {open && (
-        <div className="max-h-80 overflow-y-auto border-t border-border/40">
-          <CodeBody html={sample.html} code={sample.code} lang={active} />
+    <div className="absolute inset-x-0 inset-y-2 z-20 flex flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-lg motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-150">
+      <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border/40 bg-muted/30 px-2.5 py-1">
+        <button
+          type="button"
+          onClick={onClose}
+          className="inline-flex shrink-0 items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+        >
+          <ArrowLeft className="h-3 w-3" aria-hidden="true" />
+          Back
+        </button>
+
+        <div className="flex min-w-0 flex-1 items-center justify-center gap-2">
+          <span className="truncate text-[11px] font-semibold text-foreground">
+            {variant.title}
+          </span>
+          <span aria-hidden="true" className="text-muted-foreground/40">
+            ·
+          </span>
+          <MethodBadge method={parentMethod} />
+          <code className="truncate font-mono text-[11px] text-muted-foreground">
+            {parentPath}
+          </code>
         </div>
-      )}
-    </li>
+
+        <div className="flex shrink-0 items-center gap-0.5">
+          <CopyButton text={sample.code} />
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close variant"
+            className="inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            <X className="h-3.5 w-3.5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <LanguageTabs
+        languages={available.length ? available : undefined}
+        className="shrink-0"
+      />
+
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <CodeBody html={sample.html} code={sample.code} lang={active} />
+      </div>
+    </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// HttpResponse
+// ---------------------------------------------------------------------------
 
 interface HttpResponseProps {
   status?: number;
@@ -216,8 +363,9 @@ export function HttpResponse({
 
   return (
     <div
+      data-api-panel="response"
       className={cn(
-        'not-prose flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm lg:flex-1',
+        'not-prose flex min-h-0 flex-col overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm',
         className,
       )}
     >
@@ -245,6 +393,10 @@ export function HttpResponse({
     </div>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Shared body / utilities
+// ---------------------------------------------------------------------------
 
 /**
  * Renders highlighted Shiki HTML when available, falling back to a plain

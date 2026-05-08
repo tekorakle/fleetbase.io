@@ -536,8 +536,8 @@ export default function StorefrontPageContent() {
               <BrowserFrame label="Storefront — Promotions">
                 <div className="relative aspect-video w-full">
                   <Image
-                    src="/images/console-screenshots/storefront-promotions.webp"
-                    alt="Storefront promotions dashboard showing active discount codes, bundle offers, and flash sale configuration"
+                    src="/images/screenshots/storefront/storefront-dashboard.webp"
+                    alt="Storefront dashboard with Promotions module — KPI cards, recent orders, and the Promotions navigation entry"
                     fill
                     className="object-cover object-top"
                     sizes="(max-width: 1024px) 100vw, 60vw"
@@ -711,17 +711,19 @@ export default function StorefrontPageContent() {
               </div>
             </div>
 
-            {/* Right: app screenshot */}
+            {/* Right: storefront product browsing screenshot */}
             <div className="flex items-center justify-center">
-              <div className="relative w-full max-w-sm overflow-hidden rounded-3xl border shadow-2xl">
-                <Image
-                  src="/images/console-screenshots/storefront-customer-app.png"
-                  alt="Storefront customer mobile app showing product browsing, cart, and live order tracking experience"
-                  width={400}
-                  height={800}
-                  className="w-full"
-                />
-              </div>
+              <BrowserFrame label="Storefront — Products">
+                <div className="relative aspect-video w-full">
+                  <Image
+                    src="/images/screenshots/storefront/storefront-products-overview.webp"
+                    alt="Storefront product catalog grid — categories, product cards, and inventory controls"
+                    fill
+                    className="object-cover object-top"
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                  />
+                </div>
+              </BrowserFrame>
             </div>
           </div>
         </div>

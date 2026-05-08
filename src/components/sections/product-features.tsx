@@ -53,28 +53,23 @@ const FEATURE_CARDS = [
  {
  title: 'Step-by-Step Debugging',
  description: 'Visualize how each node performs in real time',
- image: '/images/product/debugging.png',
  },
  {
  title: 'Export Data',
  description: 'Export node outputs or logs as CSV, JSON, or XLS',
- image: '/images/product/export.png',
  },
  {
  title: 'Performance tracking',
  description:
  'Track successful run counts and spot performance spikes or drops',
- image: '/images/product/performance.png',
  },
  {
  title: 'Integrate data and tracking with apps',
  description: 'Observe outputs from third-party apps',
- image: '/images/product/integrate.png',
  },
  {
  title: 'AI Usage tracking',
  description: 'Monitor token usage and AI-triggered actions',
- image: '/images/product/ai-usage.png',
  },
 ];
 

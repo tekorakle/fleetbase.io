@@ -96,7 +96,7 @@ const modules = [
       'Build and publish custom extensions',
       'CLI scaffolding tools',
     ],
-    image: '/images/console-screenshots/extensions-marketplace.webp',
+    image: '/images/screenshots/extensions/extensions-browse.webp',
     imageAlt: 'Fleetbase extensions marketplace showing available modules and integrations',
     href: '/extensions',
     colSpan: 'lg:col-span-1',

@@ -217,7 +217,7 @@ async function generateResourcePage({
 
   const mdx = renderResourcePage({
     title: resourceFolder,
-    description: descriptionForResource(resourceFolder),
+    description: await loadResourceDefinition(resourceDir),
     endpoints,
     objectMeta,
   });
@@ -284,6 +284,7 @@ async function buildEndpointSection(
       method: req.method,
       fullUrl,
       body: req.body,
+      queryParams: req.structuredQueryParams,
       endpointKind: kind,
       endpointAction: action,
       resourceFolder,
@@ -293,6 +294,7 @@ async function buildEndpointSection(
       method: req.method,
       fullUrl,
       body: req.body,
+      queryParams: req.structuredQueryParams,
       endpointKind: kind,
       endpointAction: action,
       resourceFolder,
@@ -322,6 +324,7 @@ async function buildEndpointSection(
             method: req.method,
             fullUrl,
             body: ex.requestBody,
+            queryParams: req.structuredQueryParams,
             endpointKind: kind,
             endpointAction: action,
             resourceFolder,
@@ -331,6 +334,7 @@ async function buildEndpointSection(
             method: req.method,
             fullUrl,
             body: ex.requestBody,
+            queryParams: req.structuredQueryParams,
             endpointKind: kind,
             endpointAction: action,
             resourceFolder,
@@ -450,8 +454,24 @@ function templatedPathToDisplay(rawUrl) {
   return s.startsWith('/') ? s : `/${s}`;
 }
 
-function descriptionForResource(name) {
-  return ''; // Postman doesn't carry per-resource descriptions in native-git.
+/**
+ * Read the resource description from `<ResourceFolder>/.resources/definition.yaml`.
+ *
+ * The definition.yaml is the Postman Native Git canonical home for
+ * folder-level metadata. We pluck its `description:` and surface it as the
+ * paragraph under the resource title in <ResourceHeader>. Returns an empty
+ * string when the file or field is absent — the renderer falls back to a
+ * generic placeholder in that case.
+ */
+async function loadResourceDefinition(resourceDir) {
+  const filePath = path.join(resourceDir, '.resources', 'definition.yaml');
+  try {
+    const yamlText = await fs.readFile(filePath, 'utf8');
+    const data = YAML.parse(yamlText);
+    return cleanText(data?.description ?? '');
+  } catch {
+    return '';
+  }
 }
 
 // ---------------------------------------------------------------------------
