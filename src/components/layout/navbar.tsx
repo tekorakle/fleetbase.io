@@ -41,6 +41,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
+import { DocsSidebarTrigger } from '@/components/docs/docs-sidebar-trigger';
 import Logo from '@/components/layout/logo';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
@@ -681,6 +682,7 @@ const Navbar = () => {
  </div>
 
  <div className="flex items-center gap-2 lg:hidden lg:gap-4">
+ <DocsSidebarTrigger />
  <ThemeToggle />
  <button
  className="text-muted-foreground relative flex size-8 rounded-sm border lg:hidden"
