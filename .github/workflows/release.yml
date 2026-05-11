@@ -56,35 +56,35 @@ jobs:
           fi
           echo "✓ package.json version matches tag: $pkg_version"
 
-      - name: Extract CHANGELOG section for this version
-        id: changelog
+      - name: Extract CHANGELOG section to release_notes.md
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
-          version="${{ steps.version.outputs.version }}"
-          # Pull lines between `## [VERSION]` and the next `## [` heading.
-          notes=$(awk -v ver="$version" '
+          # Write notes to a file (not a step output) — passing markdown
+          # through GitHub Actions string interpolation into a shell command
+          # is brittle: backticks, parens, hash-headings, and newlines in the
+          # CHANGELOG get re-parsed by bash and crash the step. Reading from
+          # a file via `--notes-file` sidesteps the whole problem.
+          awk -v ver="$VERSION" '
             $0 ~ "^## \\[" ver "\\]" { found=1; next }
             found && /^## \[/         { exit }
             found                     { print }
-          ' CHANGELOG.md)
+          ' CHANGELOG.md > release_notes.md
 
-          if [ -z "$notes" ]; then
-            echo "::error::No CHANGELOG.md section found for version $version. Add a '## [$version]' entry before tagging."
+          if [ ! -s release_notes.md ]; then
+            echo "::error::No CHANGELOG.md section found for version $VERSION. Add a '## [$VERSION]' entry before tagging."
             exit 1
           fi
-
-          # Multi-line outputs require a heredoc delimiter.
-          {
-            echo "notes<<CHANGELOG_EOF"
-            echo "$notes"
-            echo "CHANGELOG_EOF"
-          } >> "$GITHUB_OUTPUT"
-          echo "✓ Found CHANGELOG entry for $version ($(echo "$notes" | wc -l) lines)"
+          echo "✓ Extracted CHANGELOG entry for $VERSION ($(wc -l < release_notes.md) lines)"
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+          PRERELEASE_FLAG: ${{ steps.version.outputs.prerelease == 'true' && '--prerelease' || '' }}
         run: |
-          gh release create "${{ steps.version.outputs.tag }}" \
-            --title "${{ steps.version.outputs.tag }}" \
-            --notes "${{ steps.changelog.outputs.notes }}" \
-            ${{ steps.version.outputs.prerelease == 'true' && '--prerelease' || '' }}
+          # shellcheck disable=SC2086 # PRERELEASE_FLAG is intentionally unquoted: empty string must be a no-op, not an empty arg.
+          gh release create "$TAG" \
+            --title "$TAG" \
+            --notes-file release_notes.md \
+            $PRERELEASE_FLAG
