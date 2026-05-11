@@ -1,48 +1,50 @@
 'use client';
-import { 
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
+import {
  BarChart3,
  BookOpen,
- Box, 
- Boxes, 
+ Box,
+ Boxes,
  Brain,
  Briefcase,
- Building2, 
+ Building2,
  ClipboardList,
- Code, 
- FileCheck, 
+ Code,
+ FileCheck,
  FileCode,
- FileText, 
+ FileText,
  Github,
- Handshake, 
+ Handshake,
  Heart,
  Landmark,
  Library,
  Mail,
  MapPin,
- MessageSquare, 
- Navigation, 
- Package, 
+ MessageSquare,
+ Navigation,
+ Package,
  Puzzle,
  Recycle,
- Shield, 
+ Shield,
  Ship,
  ShoppingCart,
  Smartphone,
- Store, 
+ Store,
  Terminal,
- Truck, 
+ Truck,
  UserCog,
- Users, 
+ Users,
  Utensils,
- Webhook, 
+ Webhook,
  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 
-import { DocsSidebarTrigger } from '@/components/docs/docs-sidebar-trigger';
 import Logo from '@/components/layout/logo';
+import { useMobileNav } from '@/components/layout/mobile-nav-context';
 import { ThemeToggle } from '@/components/theme-toggle';
 import {
  Accordion,
@@ -457,9 +459,18 @@ const ACTION_BUTTONS: Array<{
 ];
 
 const Navbar = () => {
- const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const { isOpen: isMenuOpen, setOpen: setIsMenuOpen, toggle: toggleMenu } = useMobileNav();
+ const { open: isDocsSidebarOpen, setOpen: setDocsSidebarOpen } = useSidebar();
  const [isScrolled, setIsScrolled] = useState(false);
  const [ghStars, setGhStars] = useState<string>('Star');
+ // Portal target — only available after mount on the client. The drawer is
+ // rendered into document.body to escape any ancestor that creates a
+ // containing block for fixed-positioned descendants (e.g. the header's
+ // own backdrop-blur when scrolled), which otherwise traps the drawer
+ // inside the header's tiny vertical box and leaves the user with a
+ // locked, invisible menu.
+ const [mounted, setMounted] = useState(false);
+ useEffect(() => setMounted(true), []);
  const pathname = usePathname();
 
  useEffect(() => {
@@ -495,10 +506,19 @@ const Navbar = () => {
  pathname.includes(route),
  );
 
+ const isDocsPage = pathname.startsWith('/docs');
+ const anyDrawerOpen = isMenuOpen || (isDocsPage && isDocsSidebarOpen);
+
  useEffect(() => {
- if (isMenuOpen) {
- document.documentElement.style.overflow = 'hidden';
- document.body.style.overflow = 'hidden';
+ // `overflow: clip` (not `hidden`) so the sticky header keeps working.
+ // `hidden` on <html> establishes a new scroll container, which strips
+ // `position: sticky` of its scrolling ancestor — the header then falls
+ // back to its document position and ends up scrolled out of the viewport
+ // when a user opens the drawer after scrolling down. `clip` locks the
+ // axis without establishing a scroll container, so sticky is preserved.
+ if (anyDrawerOpen) {
+ document.documentElement.style.overflow = 'clip';
+ document.body.style.overflow = 'clip';
  } else {
  document.documentElement.style.overflow = '';
  document.body.style.overflow = '';
@@ -508,22 +528,176 @@ const Navbar = () => {
  document.documentElement.style.overflow = '';
  document.body.style.overflow = '';
  };
- }, [isMenuOpen]);
+ }, [anyDrawerOpen]);
 
- const isDocsPage = pathname.startsWith('/docs');
+ // ESC closes one layer at a time: site nav drawer first (it overlays the
+ // fumadocs sidebar on docs pages), then fumadocs handles its own ESC.
+ useEffect(() => {
+ if (!isMenuOpen) return;
+ const onKey = (e: KeyboardEvent) => {
+ if (e.key === 'Escape') {
+ e.stopPropagation();
+ setIsMenuOpen(false);
+ }
+ };
+ window.addEventListener('keydown', onKey, true);
+ return () => window.removeEventListener('keydown', onKey, true);
+ }, [isMenuOpen, setIsMenuOpen]);
+
+ // The hamburger icon reflects whichever layer is active.
+ // Click behaviour peels layers off in stacking order:
+ // (1) site drawer is the topmost — close it first (regardless of docs sidebar);
+ // (2) on /docs with no overlay, toggle the fumadocs sidebar;
+ // (3) on non-docs, toggle the site drawer.
+ const triggerOpen = anyDrawerOpen;
+ const onTriggerClick = () => {
+ if (isMenuOpen) setIsMenuOpen(false);
+ else if (isDocsPage) setDocsSidebarOpen(!isDocsSidebarOpen);
+ else toggleMenu();
+ };
 
  if (hideNavbar) return null;
 
+ // Built outside the JSX so we can render the same drawer through a portal
+ // — keeping it as a child of <header> would re-introduce the containing
+ // block bug (see `mounted` declaration above for context).
+ const mobileMenuDrawer = (
+ <div
+ className={cn(
+ 'bg-background/95 text-accent-foreground fixed inset-0 top-[var(--header-height)] z-[60] flex flex-col justify-between tracking-normal backdrop-blur-md transition-all duration-500 ease-out lg:hidden',
+ isMenuOpen
+ ? 'translate-x-0 opacity-100'
+ : 'pointer-events-none translate-x-full opacity-0',
+ )}
+ >
+ <div className="container overflow-y-auto">
+ <NavigationMenu
+ orientation="vertical"
+ className="inline-block w-full max-w-none py-10"
+ >
+ <NavigationMenuList className="w-full flex-col items-start gap-6">
+ {NAV_LINKS.map((item) => (
+ <NavigationMenuItem key={item.label} className="w-full">
+ {item.subgroups ? (
+ /* ── Mobile: grouped Solutions accordion ── */
+ <Accordion type="single" collapsible className="w-full">
+ <AccordionItem value={item.label}>
+ <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
+ {item.label}
+ </AccordionTrigger>
+ <AccordionContent className="pt-2 pb-0">
+ <div className="space-y-4">
+ {item.subgroups.map((group) => (
+ <div key={group.groupLabel}>
+ <div className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+ {group.groupLabel}
+ </div>
+ <div className="space-y-1">
+ {group.items.map((subitem) => (
+ <NavigationMenuLink
+ key={subitem.label}
+ href={subitem.href}
+ onClick={() => setIsMenuOpen(false)}
+ className={cn(
+ 'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
+ pathname === subitem.href && 'bg-accent font-semibold',
+ )}
+ {...(subitem.external && { target: '_blank', rel: 'noopener noreferrer' })}
+ >
+ <subitem.icon className="size-5" />
+ <span>{subitem.label}</span>
+ </NavigationMenuLink>
+ ))}
+ </div>
+ </div>
+ ))}
+ </div>
+ </AccordionContent>
+ </AccordionItem>
+ </Accordion>
+ ) : item.subitems ? (
+ /* ── Mobile: standard accordion ── */
+ <Accordion type="single" collapsible className="">
+ <AccordionItem value={item.label}>
+ <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
+ {item.label}
+ </AccordionTrigger>
+ <AccordionContent className="pt-2 pb-0">
+ <div className="space-y-2">
+ {item.subitems.map((subitem) => (
+ <NavigationMenuLink
+ key={subitem.label}
+ href={subitem.href}
+ onClick={() => setIsMenuOpen(false)}
+ className={cn(
+ 'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
+ pathname === subitem.href && 'bg-accent font-semibold',
+ )}
+ {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
+ >
+ <subitem.icon className="size-5.5" />
+ <span className="">{subitem.label}</span>
+ </NavigationMenuLink>
+ ))}
+ </div>
+ </AccordionContent>
+ </AccordionItem>
+ </Accordion>
+ ) : (
+ /* ── Mobile: plain link ── */
+ <NavigationMenuLink
+ href={item.href}
+ className={cn(
+ 'hover:text-foreground text-base transition-colors',
+ pathname === item.href && 'font-semibold',
+ )}
+ onClick={() => setIsMenuOpen(false)}
+ >
+ {item.label}
+ </NavigationMenuLink>
+ )}
+ </NavigationMenuItem>
+ ))}
+ </NavigationMenuList>
+ </NavigationMenu>
+ </div>
+
+ <div className="flex gap-4.5 border-t px-6 py-4">
+ {ACTION_BUTTONS.map((button) => (
+ <Button
+ key={button.label}
+ variant={button.variant === 'ghost' ? 'muted' : button.variant}
+ asChild
+ className="h-12 flex-1 rounded-sm transition-all hover:scale-105"
+ >
+ <Link
+ href={button.href}
+ onClick={() => setIsMenuOpen(false)}
+ data-cta-id={button.ctaId}
+ data-cta-location="navbar_mobile"
+ data-cta-variant="primary"
+ {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
+ >
+ {button.icon && <button.icon className="size-4 mr-2" />}
+ {button.label}
+ </Link>
+ </Button>
+ ))}
+ </div>
+ </div>
+ );
+
  return (
+ <>
  <header className={cn(
- 'sticky top-0 z-50 border-b transition-colors duration-300',
+ 'sticky top-0 z-[60] border-b transition-colors duration-300',
  isDocsPage
  ? 'border-border bg-fd-card'
  : isScrolled
  ? 'border-border/50 bg-background/60 backdrop-blur-xl'
  : 'border-transparent bg-transparent',
  )}>
- <div className="relative z-50 container flex h-[var(--header-height)] items-center justify-between gap-4">
+ <div className="relative z-[60] container flex h-[var(--header-height)] items-center justify-between gap-4">
  
  <Logo />
 
@@ -682,11 +856,13 @@ const Navbar = () => {
  </div>
 
  <div className="flex items-center gap-2 lg:hidden lg:gap-4">
- <DocsSidebarTrigger />
  <ThemeToggle />
  <button
+ type="button"
+ aria-label={triggerOpen ? 'Close menu' : 'Open main menu'}
+ aria-expanded={triggerOpen}
  className="text-muted-foreground relative flex size-8 rounded-sm border lg:hidden"
- onClick={() => setIsMenuOpen(!isMenuOpen)}
+ onClick={onTriggerClick}
  >
  <span className="sr-only">Open main menu</span>
  <div
@@ -698,153 +874,31 @@ const Navbar = () => {
  aria-hidden="true"
  className={cn(
  'absolute block h-0.25 w-full rounded-full bg-current transition duration-500 ease-in-out',
- isMenuOpen ? 'rotate-45' : '-translate-y-1.5',
+ triggerOpen ? 'rotate-45' : '-translate-y-1.5',
  )}
  ></span>
  <span
  aria-hidden="true"
  className={cn(
  'absolute block h-0.25 w-full rounded-full bg-current transition duration-500 ease-in-out',
- isMenuOpen ? 'opacity-0' : '',
+ triggerOpen ? 'opacity-0' : '',
  )}
  ></span>
  <span
  aria-hidden="true"
  className={cn(
  'absolute block h-0.25 w-full rounded-full bg-current transition duration-500 ease-in-out',
- isMenuOpen ? '-rotate-45' : 'translate-y-1.5',
+ triggerOpen ? '-rotate-45' : 'translate-y-1.5',
  )}
  ></span>
  </div>
  </button>
  </div>
 
- {/* Mobile Menu Navigation */}
- <div
- className={cn(
- 'bg-background/95 text-accent-foreground fixed inset-0 top-[var(--header-height)] z-50 flex flex-col justify-between tracking-normal backdrop-blur-md transition-all duration-500 ease-out lg:hidden',
- isMenuOpen
- ? 'translate-x-0 opacity-100'
- : 'pointer-events-none translate-x-full opacity-0',
- )}
- >
- <div className="container overflow-y-auto">
- <NavigationMenu
- orientation="vertical"
- className="inline-block w-full max-w-none py-10"
- >
- <NavigationMenuList className="w-full flex-col items-start gap-6">
- {NAV_LINKS.map((item) => (
- <NavigationMenuItem key={item.label} className="w-full">
- {item.subgroups ? (
- /* ── Mobile: grouped Solutions accordion ── */
- <Accordion type="single" collapsible className="w-full">
- <AccordionItem value={item.label}>
- <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
- {item.label}
- </AccordionTrigger>
- <AccordionContent className="pt-2 pb-0">
- <div className="space-y-4">
- {item.subgroups.map((group) => (
- <div key={group.groupLabel}>
- <div className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
- {group.groupLabel}
- </div>
- <div className="space-y-1">
- {group.items.map((subitem) => (
- <NavigationMenuLink
- key={subitem.label}
- href={subitem.href}
- onClick={() => setIsMenuOpen(false)}
- className={cn(
- 'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
- pathname === subitem.href && 'bg-accent font-semibold',
- )}
- {...(subitem.external && { target: '_blank', rel: 'noopener noreferrer' })}
- >
- <subitem.icon className="size-5" />
- <span>{subitem.label}</span>
- </NavigationMenuLink>
- ))}
- </div>
- </div>
- ))}
- </div>
- </AccordionContent>
- </AccordionItem>
- </Accordion>
- ) : item.subitems ? (
- /* ── Mobile: standard accordion ── */
- <Accordion type="single" collapsible className="">
- <AccordionItem value={item.label}>
- <AccordionTrigger className="flex w-full items-center justify-between p-2 text-base font-normal">
- {item.label}
- </AccordionTrigger>
- <AccordionContent className="pt-2 pb-0">
- <div className="space-y-2">
- {item.subitems.map((subitem) => (
- <NavigationMenuLink
- key={subitem.label}
- href={subitem.href}
- onClick={() => setIsMenuOpen(false)}
- className={cn(
- 'text-muted-foreground hover:bg-accent/50 flex flex-row gap-2 p-3 font-medium transition-colors',
- pathname === subitem.href && 'bg-accent font-semibold',
- )}
- {...(subitem.external && { target: "_blank", rel: "noopener noreferrer" })}
- >
- <subitem.icon className="size-5.5" />
- <span className="">{subitem.label}</span>
- </NavigationMenuLink>
- ))}
- </div>
- </AccordionContent>
- </AccordionItem>
- </Accordion>
- ) : (
- /* ── Mobile: plain link ── */
- <NavigationMenuLink
- href={item.href}
- className={cn(
- 'hover:text-foreground text-base transition-colors',
- pathname === item.href && 'font-semibold',
- )}
- onClick={() => setIsMenuOpen(false)}
- >
- {item.label}
- </NavigationMenuLink>
- )}
- </NavigationMenuItem>
- ))}
- </NavigationMenuList>
- </NavigationMenu>
- </div>
-
- <div className="flex gap-4.5 border-t px-6 py-4">
- {ACTION_BUTTONS.map((button) => (
- <Button
- key={button.label}
- variant={button.variant === 'ghost' ? 'muted' : button.variant}
- asChild
- className="h-12 flex-1 rounded-sm transition-all hover:scale-105"
- >
- <Link
- href={button.href}
- onClick={() => setIsMenuOpen(false)}
- data-cta-id={button.ctaId}
- data-cta-location="navbar_mobile"
- data-cta-variant="primary"
- {...(button.external && { target: "_blank", rel: "noopener noreferrer" })}
- >
- {button.icon && <button.icon className="size-4 mr-2" />}
- {button.label}
- </Link>
- </Button>
- ))}
- </div>
- </div>
  </div>
  </header>
+ {mounted && createPortal(mobileMenuDrawer, document.body)}
+ </>
  );
 };
 

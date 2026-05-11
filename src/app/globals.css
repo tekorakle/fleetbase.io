@@ -437,6 +437,14 @@ html::before {
   text-overflow: ellipsis;
 }
 
+/* ── Docs mobile sidebar: breathing room above the section picker ──
+   Fumadocs's mobile drawer renders the banner (DocsToggle) flush with the
+   top edge, which looks cramped against the header. Add padding only on
+   the mobile sidebar; the desktop one already has its own spacing. */
+#nd-sidebar-mobile {
+  padding-top: 1rem;
+}
+
 /* ── Prevent overscroll bounce from pulling/pushing the sticky navbar ── */
 html,
 body {
