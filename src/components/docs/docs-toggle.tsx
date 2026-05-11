@@ -1,17 +1,22 @@
 'use client';
 
+import { useSidebar } from 'fumadocs-ui/contexts/sidebar';
 import { RootToggle } from 'fumadocs-ui/components/layout/root-toggle';
 import {
-  BookOpen,
-  Truck,
-  ShoppingBag,
+  ArrowRight,
   BookMarked,
-  Terminal,
-  Layout,
-  Puzzle,
+  BookOpen,
   FileCode,
   HeartHandshake,
+  Layout,
+  Menu,
+  Puzzle,
+  ShoppingBag,
+  Terminal,
+  Truck,
 } from 'lucide-react';
+
+import { useMobileNav } from '@/components/layout/mobile-nav-context';
 
 const sections = [
   {
@@ -73,6 +78,39 @@ const sections = [
   },
 ];
 
+// Stacked-trigger button that overlays the site nav drawer on top of an open
+// fumadocs sidebar. Mobile-only — desktop has the full site nav in the header.
+function MainMenuButton() {
+  const { setOpen: setNavOpen } = useMobileNav();
+  const { setOpen: setDocsSidebarOpen } = useSidebar();
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        // Open the site nav drawer on top; leave the docs sidebar mounted
+        // underneath so closing the site drawer returns the user to it.
+        setNavOpen(true);
+        // Belt-and-suspenders: ensure the docs sidebar stays in its open
+        // state if anything tries to close it on click.
+        setDocsSidebarOpen(true);
+      }}
+      className="flex w-full items-center justify-between gap-2 rounded-md border bg-fd-card px-3 py-2.5 text-sm font-medium text-fd-foreground transition-colors hover:bg-fd-accent hover:text-fd-accent-foreground md:hidden"
+    >
+      <span className="flex items-center gap-2">
+        <Menu className="size-4" />
+        Main menu
+      </span>
+      <ArrowRight className="size-4" />
+    </button>
+  );
+}
+
 export function DocsToggle() {
-  return <RootToggle options={sections} />;
+  return (
+    <div className="flex flex-col gap-2">
+      <MainMenuButton />
+      <RootToggle options={sections} />
+    </div>
+  );
 }

@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
 import { Azeret_Mono, Inter } from 'next/font/google';
@@ -8,6 +9,7 @@ import { headers } from 'next/headers';
 import { ConsentBanner } from '@/components/analytics/ConsentBanner';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import Footer from '@/components/layout/footer';
+import { MobileNavProvider } from '@/components/layout/mobile-nav-context';
 import Navbar from '@/components/layout/navbar';
 import WhatsAppFloat from '@/components/layout/whatsapp-float';
 import { StyleGlideProvider } from '@/components/styleglide-provider';
@@ -128,6 +130,7 @@ export default async function RootLayout({
  },
  }}
  >
+ <MobileNavProvider>
  <PostHogProvider optInRequired={optInRequired}>
  {/* Background Blur */}
  <div className="bg-background/10 absolute inset-0 z-[-2] backdrop-blur-[85px] will-change-transform md:backdrop-blur-[170px]" />
@@ -157,8 +160,10 @@ export default async function RootLayout({
  <WhatsAppFloat />
  <ConsentBanner optInRequired={optInRequired} />
  </PostHogProvider>
+ </MobileNavProvider>
  </RootProvider>
  </ThemeProvider>
+ <Analytics />
  </body>
  </html>
  );
