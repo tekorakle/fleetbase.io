@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { Analytics } from '@vercel/analytics/next';
 import { RootProvider } from 'fumadocs-ui/provider';
 import type { Metadata } from 'next';
 import { Azeret_Mono, Inter } from 'next/font/google';
@@ -162,6 +163,7 @@ export default async function RootLayout({
  </MobileNavProvider>
  </RootProvider>
  </ThemeProvider>
+ <Analytics />
  </body>
  </html>
  );
