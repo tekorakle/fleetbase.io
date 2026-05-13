@@ -314,7 +314,13 @@ function FeatureLabel({ feature, info }: { feature: string; info?: string }) {
             i
           </button>
         </TooltipTrigger>
-        <TooltipContent side="top" className="max-w-[240px] bg-[var(--fo-fg-strong)] text-white">
+        {/*
+         * Don't override bg/text here — TooltipContent renders inside a Radix
+         * Portal at document.body, where the .fleet-ops-page CSS variables
+         * aren't in scope. Use the component's default bg-primary, which is
+         * the global Fleetbase blue + white text.
+         */}
+        <TooltipContent side="top" className="max-w-[240px]">
           {info}
         </TooltipContent>
       </Tooltip>
