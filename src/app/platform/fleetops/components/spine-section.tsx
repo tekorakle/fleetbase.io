@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { cn } from '@/lib/utils';
@@ -22,12 +23,14 @@ export function Spine({ children, className }: { children: ReactNode; className?
 }
 
 export function SpineBeat({
+  id,
   label,
   title,
   description,
   cta,
   children,
 }: {
+  id?: string;
   label: string;
   title: string;
   description: string;
@@ -35,7 +38,7 @@ export function SpineBeat({
   children: ReactNode;
 }) {
   return (
-    <section className="relative">
+    <section id={id} className="relative scroll-mt-24">
       <span className="relative inline-block text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-blue)]">
         <span className="fo-spine-dot" />
         {label}
@@ -48,12 +51,12 @@ export function SpineBeat({
           {description}
         </p>
         {cta ? (
-          <a
+          <Link
             href={cta.href}
             className="inline-flex h-[38px] items-center gap-1.5 rounded-[10px] bg-[var(--fo-surface-2)] px-[14px] text-[16px] font-[550] leading-none tracking-[0.2px] text-[var(--fo-fg-strong)] transition-colors hover:bg-[var(--fo-border)]"
           >
             {cta.label}
-          </a>
+          </Link>
         ) : null}
       </div>
       <div className="mt-10 lg:mt-12">{children}</div>

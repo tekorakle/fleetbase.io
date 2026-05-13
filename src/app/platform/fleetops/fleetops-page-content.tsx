@@ -1,17 +1,18 @@
+import './fleet-ops.css';
+
 import {
   Activity,
   ArrowRight,
   BarChart3,
   Calendar,
-  CheckCircle2,
+  Check,
   ChevronRight,
   Clock,
   FileText,
-  Gauge,
   GitBranch,
   Github,
-  LayoutDashboard,
   MapPin,
+  Minus,
   Package,
   Radio,
   Route,
@@ -33,10 +34,11 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-import './fleet-ops.css';
 import { DarkCodePanel } from './components/dark-code-panel';
 import { LayerStack } from './components/layer-stack';
+import { SpineProgress } from './components/spine-progress';
 import { Spine, SpineBeat } from './components/spine-section';
 
 // ── Data ─────────────────────────────────────────────────────────────────────
@@ -82,7 +84,8 @@ const faqs = [
   },
   {
     q: 'How does Fleet-Ops pricing work?',
-    a: 'Resource-unit-based pricing — a flat monthly fee per plan tier with included resource units. No per-seat or per-driver fees. Scale your team without scaling your software bill.',
+    a: 'Resource-unit-based pricing — a flat monthly fee per plan tier with included resource units (orders, vehicles, drivers, and storage). No per-seat or per-driver fees.',
+    link: { label: 'See pricing tiers', href: '/pricing' },
   },
   {
     q: 'Is Fleet-Ops open source?',
@@ -198,7 +201,7 @@ export default function FleetOpsPageContent() {
               </span>
             </div>
             <h1 className="mt-6 text-center text-[40px] font-[680] leading-[44px] tracking-[-0.6px] text-balance text-white lg:text-left lg:text-[60px] lg:leading-[64px] lg:tracking-[-1px] xl:text-[68px] xl:leading-[70px] xl:tracking-[-1.2px]">
-              The complete fleet management system, open from the ground up.
+              Dynamic fleet and transport operations module.
             </h1>
             <p className="mt-5 text-center text-[18px] font-[460] leading-[26px] tracking-[0.15px] text-white/85 lg:mt-7 lg:text-left lg:text-[21px] lg:leading-[30px] lg:tracking-[0.12px]">
               Route planning. Live tracking. Vehicle allocation. Maintenance scheduling.
@@ -300,6 +303,15 @@ export default function FleetOpsPageContent() {
 
       {/* ── Spine: Configure → Plan & Dispatch → Track → Maintenance → Optimize ── */}
       <section className="relative bg-[var(--fo-bg-2)] py-24 lg:py-32">
+        <SpineProgress
+          beats={[
+            { id: 'beat-configure', label: 'Configure' },
+            { id: 'beat-plan-dispatch', label: 'Plan & Dispatch' },
+            { id: 'beat-track', label: 'Track' },
+            { id: 'beat-maintenance', label: 'Maintenance' },
+            { id: 'beat-optimize', label: 'Optimize & Allocate' },
+          ]}
+        />
         <div className="container">
           <div className="mb-16 max-w-3xl lg:mb-20">
             <span className="inline-block text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-blue)]">
@@ -313,6 +325,7 @@ export default function FleetOpsPageContent() {
           <Spine>
             {/* Configure — order config, activity flows, custom fields */}
             <SpineBeat
+              id="beat-configure"
               label="01 · Configure"
               title="Build any workflow — without writing code."
               description="Custom order types, drag-and-drop activity flows, business rules, and the exact data fields your operation needs. Adapt the software to your operation, not the other way around."
@@ -345,6 +358,7 @@ export default function FleetOpsPageContent() {
 
             {/* Plan & Dispatch — operations, scheduling */}
             <SpineBeat
+              id="beat-plan-dispatch"
               label="02 · Plan & Dispatch"
               title="A live operations queue every dispatcher can run from."
               description="Kanban, table, or live-map views of every active order. Schedule deliveries ahead of time, plan capacity by zone or driver, and send dispatches to the Navigator app in seconds."
@@ -377,6 +391,7 @@ export default function FleetOpsPageContent() {
 
             {/* Track — connectivity, live tracking, telematics */}
             <SpineBeat
+              id="beat-track"
               label="03 · Track"
               title="Every driver, vehicle, and order — on one live map."
               description="Sub-minute GPS via the Navigator app. Geofence-triggered automatic status updates. Branded customer tracking links with live ETA. Telematics providers connected out of the box."
@@ -409,6 +424,7 @@ export default function FleetOpsPageContent() {
 
             {/* Maintenance */}
             <SpineBeat
+              id="beat-maintenance"
               label="04 · Maintenance"
               title="Keep every vehicle roadworthy."
               description="Work orders from open to resolved, preventive schedules by mileage or engine hours, parts inventory linked to jobs, and driver fault reporting from the Navigator app — all on the same fleet data as dispatch."
@@ -441,6 +457,7 @@ export default function FleetOpsPageContent() {
 
             {/* Optimization & Allocation — Orchestrator Workbench (flagship at the end) */}
             <SpineBeat
+              id="beat-optimize"
               label="05 · Optimize & Allocate"
               title="The Orchestrator Workbench."
               description="Phase-based optimization. Stack driver allocation, vehicle matching, and route optimization into a reviewable pipeline — or run it hands-free on every incoming order. This is what makes Fleet-Ops different from every other TMS."
@@ -509,7 +526,7 @@ export default function FleetOpsPageContent() {
               <Zap className="size-4" /> Automate
             </span>
             <h2 className="mt-4 text-[32px] font-[680] leading-[36px] tracking-[-0.4px] text-balance text-[var(--fo-fg-strong)] lg:text-[50px] lg:leading-[54px] lg:tracking-[-0.6px]">
-              Programmable from the API down.
+              Build and automate with Fleet-Ops.
             </h2>
             <p className="mt-6 text-[18px] font-[460] leading-[25px] tracking-[0.15px] text-[var(--fo-fg-muted)] lg:max-w-2xl lg:text-[22px] lg:leading-[29px] lg:tracking-[0.12px]">
               Every order, driver, and event in Fleet-Ops is reachable via REST. Webhooks fire
@@ -564,10 +581,19 @@ console.log(\`ETA: \${order.eta}\`);`}
             </div>
           </div>
 
-          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row">
+          <div className="mt-10 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap">
             <Button
               asChild
               className="h-[48px] bg-[var(--fo-blue)] px-5 text-base font-[600] text-white hover:bg-[var(--fo-blue-bright)]"
+            >
+              <Link href="/docs/api">
+                API Reference <ArrowRight className="ml-2 size-4" />
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="outline"
+              className="h-[48px] border-[var(--fo-border)] bg-white px-5 text-base font-[600] text-[var(--fo-fg-strong)] hover:bg-[var(--fo-surface-2)]"
             >
               <Link href="/docs/fleet-ops">Read the docs</Link>
             </Button>
@@ -585,6 +611,132 @@ console.log(\`ETA: \${order.eta}\`);`}
               </a>
             </Button>
           </div>
+        </div>
+      </section>
+
+      {/* ── Compare ───────────────────────────────────────────────────────── */}
+      <section className="relative py-24 lg:py-32">
+        <div className="container">
+          <div className="mb-12 max-w-3xl">
+            <span className="text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-blue)]">
+              Compare
+            </span>
+            <h2 className="mt-4 text-[32px] font-[680] leading-[36px] tracking-[-0.4px] text-balance text-[var(--fo-fg-strong)] lg:text-[50px] lg:leading-[54px] lg:tracking-[-0.6px]">
+              The only TMS you can audit, fork, and self-host.
+            </h2>
+            <p className="mt-6 text-[18px] font-[460] leading-[25px] tracking-[0.15px] text-[var(--fo-fg-muted)] lg:max-w-2xl lg:text-[22px] lg:leading-[29px] lg:tracking-[0.12px]">
+              Most last-mile and dispatch platforms charge per driver or per vehicle, run as
+              closed SaaS, and lock you out of the source. Fleet-Ops doesn&apos;t.
+            </p>
+          </div>
+
+          {/* Comparison table */}
+          <div className="overflow-x-auto rounded-3xl border border-[var(--fo-border)] bg-white">
+            <table className="w-full min-w-[760px] text-left">
+              <thead>
+                <tr className="border-b border-[var(--fo-border)]">
+                  <th className="sticky left-0 z-10 bg-white px-5 py-5 text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-fg-soft)]">
+                    Capability
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-4 py-5 text-center text-[13px] font-[680] tracking-tight text-[var(--fo-blue)]"
+                  >
+                    Fleet-Ops
+                  </th>
+                  {(['Onfleet', 'Bringg', 'Spoke', 'Tookan', 'Detrack'] as const).map((name) => (
+                    <th
+                      key={name}
+                      scope="col"
+                      className="px-4 py-5 text-center text-[13px] font-[600] text-[var(--fo-fg-muted)]"
+                    >
+                      {name}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody className="text-sm">
+                {(
+                  [
+                    {
+                      feature: 'Open source (AGPL-3.0)',
+                      values: [true, false, false, false, false, false],
+                    },
+                    {
+                      feature: 'Self-hostable',
+                      values: [true, false, false, false, false, false],
+                    },
+                    {
+                      feature: 'No per-driver / per-vehicle fees',
+                      values: [true, false, false, false, false, false],
+                    },
+                    {
+                      feature: 'White-label option',
+                      values: [true, 'enterprise', 'enterprise', false, 'add-on', false],
+                    },
+                    {
+                      feature: 'Phase-based Orchestrator Workbench',
+                      values: [true, false, false, false, false, false],
+                    },
+                    {
+                      feature: 'Native telematics integrations (Samsara · Geotab · Flespi)',
+                      values: [true, false, 'partial', false, false, 'partial'],
+                    },
+                    {
+                      feature: 'Configurable order types & activity flows',
+                      values: [true, 'partial', true, 'partial', 'partial', false],
+                    },
+                    {
+                      feature: 'Extension marketplace',
+                      values: [true, false, 'limited', false, false, false],
+                    },
+                    {
+                      feature: 'REST API + Webhooks + WebSockets',
+                      values: [true, 'API + Webhooks', 'API + Webhooks', 'API + Webhooks', 'API + Webhooks', 'API + Webhooks'],
+                    },
+                  ] as const
+                ).map((row, idx) => (
+                  <tr
+                    key={row.feature}
+                    className={cn(
+                      'border-b border-[var(--fo-border)] last:border-b-0',
+                      idx % 2 === 1 ? 'bg-[var(--fo-bg-2)]/40' : '',
+                    )}
+                  >
+                    <th
+                      scope="row"
+                      className={cn(
+                        'sticky left-0 z-10 px-5 py-4 font-[550] text-[var(--fo-fg-strong)]',
+                        idx % 2 === 1 ? 'bg-[var(--fo-bg-2)]' : 'bg-white',
+                      )}
+                    >
+                      {row.feature}
+                    </th>
+                    {row.values.map((v, i) => (
+                      <td key={i} className="px-4 py-4 text-center">
+                        {v === true ? (
+                          <span className="inline-flex size-6 items-center justify-center rounded-full bg-[var(--fo-blue)] text-white">
+                            <Check className="size-3.5" strokeWidth={3} />
+                          </span>
+                        ) : v === false ? (
+                          <Minus className="mx-auto size-4 text-[var(--fo-fg-soft)]" />
+                        ) : (
+                          <span className="text-[12px] font-[500] text-[var(--fo-fg-muted)]">
+                            {v}
+                          </span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-[12px] text-[var(--fo-fg-soft)]">
+            Comparison reflects publicly documented features at time of writing. Competitor
+            information sourced from each vendor&apos;s public documentation and pricing pages.
+            Trademarks belong to their respective owners.
+          </p>
         </div>
       </section>
 
@@ -644,6 +796,18 @@ console.log(\`ETA: \${order.eta}\`);`}
                   </AccordionTrigger>
                   <AccordionContent className="pb-5 leading-relaxed text-[var(--fo-fg-muted)]">
                     {faq.a}
+                    {'link' in faq && faq.link ? (
+                      <>
+                        {' '}
+                        <Link
+                          href={faq.link.href}
+                          className="inline-flex items-center gap-1 font-medium text-[var(--fo-blue)] hover:underline"
+                        >
+                          {faq.link.label}
+                          <ArrowRight className="size-3.5" />
+                        </Link>
+                      </>
+                    ) : null}
                   </AccordionContent>
                 </AccordionItem>
               ))}
