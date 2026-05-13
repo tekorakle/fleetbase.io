@@ -493,7 +493,10 @@ const Navbar = () => {
  //
  // The threshold is set to one navbar height (~80px) so the glass appears
  // right as the user scrolls past the strip — no gap of unstyled navbar.
- const isBrandStoryPage = pathname === '/true-vegan' || pathname === '/oli-max';
+ const isBrandStoryPage =
+ pathname === '/true-vegan' ||
+ pathname === '/oli-max' ||
+ pathname === '/platform/fleetops';
  const scrollThreshold = isBrandStoryPage ? 80 : 16;
  useEffect(() => {
  const onScroll = () => setIsScrolled(window.scrollY > scrollThreshold);

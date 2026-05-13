@@ -1,0 +1,222 @@
+/*
+ * Fleet-Ops landing page — scoped page styles.
+ *
+ * Design language inspired by spoke.com/dispatch:
+ *   - Light theme with a near-white gray-50 page background
+ *   - Surgical brand-blue accent (Fleetbase #4391EA)
+ *   - Tight, heavy display typography
+ *   - One continuous canvas; section variation comes from cards and a
+ *     vertical "spine" rather than per-section background slabs
+ *   - A few sections invert to dark gray-900 for emphasis (API, CTA)
+ *
+ * Product screenshots stay in their native dark console look — they
+ * provide natural visual contrast against the light page bg without
+ * needing to be re-skinned.
+ */
+
+.fleet-ops-page {
+  position: relative;
+
+  /* Surfaces */
+  --fo-bg:          oklch(0.972 0.005744 264.533);  /* gray-50 — page bg */
+  --fo-bg-2:        oklch(0.967 0.003 264.542);     /* gray-100 — subtle band */
+  --fo-surface:     #ffffff;                         /* card */
+  --fo-surface-2:   oklch(0.967 0.003 264.542);     /* gray-100 — quiet card */
+
+  /* Dark inversion surfaces (for inverted sections — API, CTA, console) */
+  --fo-dark-950:    oklch(0.131 0.022 264.965);     /* gray-950 */
+  --fo-dark-900:    oklch(0.21 0.034 264.665);      /* gray-900 — console base */
+  --fo-dark-800:    oklch(0.278 0.033 256.848);     /* gray-800 — console card */
+  --fo-dark-700:    oklch(0.373 0.034 259.733);     /* gray-700 — border on dark */
+
+  /* Brand */
+  --fo-blue:        oklch(0.65 0.154 254);          /* #4391EA */
+  --fo-blue-bright: oklch(0.72 0.14 254);           /* hover */
+  --fo-blue-dark:   oklch(0.50 0.18 256);           /* deeper for gradients */
+  --fo-blue-soft:   oklch(0.93 0.030 254);          /* brand-blue-100 */
+  --fo-blue-tint:   oklch(0.97 0.012 254);          /* brand-blue-50 */
+
+  /* Live signal — used very sparingly */
+  --fo-pulse:       oklch(0.65 0.18 162);
+  --fo-cyan:        oklch(0.65 0.15 220);
+  --fo-route:       oklch(0.70 0.16 75);
+  --fo-danger:      oklch(0.60 0.20 25);
+
+  /* Text on light surfaces */
+  --fo-fg:          oklch(0.131 0.022 264.965);     /* gray-950 — heavy */
+  --fo-fg-strong:   oklch(0.21 0.034 264.665);      /* gray-900 — headlines */
+  --fo-fg-muted:    oklch(0.460 0.049 263.908);     /* gray-600 — body */
+  --fo-fg-soft:     oklch(0.551 0.027 264.364);     /* gray-500 — small text */
+
+  /* Text on inverted (dark) surfaces */
+  --fo-fg-inv:      oklch(0.967 0.003 264.542);     /* gray-100 */
+  --fo-fg-inv-muted: oklch(0.707 0.022 261.325);    /* gray-400 */
+
+  /* Lines */
+  --fo-border:      oklch(0.91 0.017 264.481);      /* gray-200 */
+  --fo-border-soft: oklch(0.94 0.012 259.823);      /* gray-100 */
+  --fo-border-inv:  oklch(0.30 0.033 260 / 0.4);
+
+  background-color: var(--fo-bg);
+  color: var(--fo-fg);
+}
+
+/*
+ * Hero extends seamlessly behind the navbar. The body overlay layer sits on
+ * top of the page wrapper at z<0 — the hero needs to cover the navbar zone
+ * with its own background so no overlay leaks through.
+ *
+ * The hero is the one bold brand moment at the top: Fleetbase brand blue
+ * gradient with a soft radial highlight. Text inside is white-on-blue.
+ */
+.fleet-ops-page .fo-hero {
+  margin-top: calc(-1 * var(--header-height) - 8px);
+  padding-top: calc(var(--header-height) + 8px);
+  background-color: var(--fo-blue);
+  background-image:
+    radial-gradient(80% 60% at 18% 10%, oklch(0.78 0.16 254 / 0.50), transparent 60%),
+    radial-gradient(55% 50% at 88% 30%, oklch(0.78 0.16 220 / 0.30), transparent 60%),
+    linear-gradient(180deg, var(--fo-blue-dark) 0%, var(--fo-blue) 50%, var(--fo-blue-dark) 100%);
+  color: var(--fo-fg-inv);
+}
+
+/* ── Dark inverted sections ───────────────────────────────────────── */
+
+.fleet-ops-page .fo-inverted {
+  background-color: var(--fo-dark-900);
+  color: var(--fo-fg-inv);
+}
+
+.fleet-ops-page .fo-cta {
+  background-color: var(--fo-dark-950);
+  background-image:
+    radial-gradient(60% 80% at 80% 0%, oklch(0.65 0.20 254 / 0.30), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, oklch(0.65 0.18 220 / 0.16), transparent 60%),
+    linear-gradient(135deg, var(--fo-blue) 0%, var(--fo-blue-dark) 50%, var(--fo-blue) 100%);
+  color: #ffffff;
+}
+
+/* ── Spine (vertical line + dots) ─────────────────────────────────── */
+
+/*
+ * The spine is a left border with a fading gradient image — gray line at
+ * the top, fading to transparent at the bottom. The dots are absolutely
+ * positioned circles with a thick page-bg outline so they appear "stamped"
+ * onto the line.
+ */
+.fleet-ops-page .fo-spine {
+  border-left: 1px solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(
+    to bottom,
+    var(--fo-border) 0%,
+    var(--fo-border) 70%,
+    transparent 100%
+  );
+}
+
+.fleet-ops-page .fo-spine-dot {
+  position: absolute;
+  left: -28px;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 9999px;
+  background-color: var(--fo-blue);
+  outline: 8px solid var(--fo-bg);
+}
+
+@media (min-width: 1024px) {
+  .fleet-ops-page .fo-spine-dot {
+    left: -44px;
+  }
+}
+
+/* ── Pulse indicator (live dot, used in "live" callouts) ──────────── */
+
+.fleet-ops-page .fo-pulse-dot {
+  position: relative;
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--fo-pulse);
+  border-radius: 9999px;
+}
+
+.fleet-ops-page .fo-pulse-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--fo-pulse);
+  border-radius: 9999px;
+  animation: fo-pulse 1.8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes fo-pulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  70%  { transform: scale(2.4); opacity: 0;   }
+  100% { transform: scale(2.4); opacity: 0;   }
+}
+
+/*
+ * "What is Fleet-Ops" — five module cards stacked evenly, no slant or
+ * marginal staggering. Active layer subtly lifts.
+ */
+.fleet-ops-page .fo-layer {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fleet-ops-page .fo-layer:hover {
+  transform: translateY(-2px);
+}
+
+.fleet-ops-page .fo-layer[data-active='true'] {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -20px oklch(0.65 0.154 254 / 0.30);
+}
+
+/* ── Misc ─────────────────────────────────────────────────────────── */
+
+/*
+ * Standardised card corner. Used on all feature cards across the spine and
+ * "What is Fleet-Ops" sections — uniform rounded-3xl so the page doesn't
+ * mix asymmetric and symmetric corners.
+ */
+.fleet-ops-page .fo-card {
+  border-radius: 1.5rem;
+}
+
+/*
+ * Container padding override — the global container utility caps at
+ * 1.5rem padding-inline. The Fleet-Ops landing page reads as cramped at
+ * that width on large screens, so we bump padding-inline progressively.
+ */
+.fleet-ops-page > section > .container,
+.fleet-ops-page > div > .container,
+.fleet-ops-page section .container {
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .fleet-ops-page > section > .container,
+  .fleet-ops-page > div > .container,
+  .fleet-ops-page section .container {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .fleet-ops-page > section > .container,
+  .fleet-ops-page > div > .container,
+  .fleet-ops-page section .container {
+    padding-inline: 3rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .fleet-ops-page > section > .container,
+  .fleet-ops-page > div > .container,
+  .fleet-ops-page section .container {
+    padding-inline: 4rem;
+  }
+}
