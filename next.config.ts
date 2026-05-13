@@ -100,6 +100,18 @@ const nextConfig: NextConfig = {
         source: '/ingest/decide',
         destination: 'https://us.i.posthog.com/decide',
       },
+      // Self-host Google Analytics — bypasses ad blockers that target
+      // googletagmanager.com / google-analytics.com. /g/collect is the path
+      // gtag.js hardcodes for data collection, so transport_url just needs to
+      // point at the current origin (set in GoogleAnalyticsProvider.tsx).
+      {
+        source: '/gtm/:path*',
+        destination: 'https://www.googletagmanager.com/:path*',
+      },
+      {
+        source: '/g/collect',
+        destination: 'https://www.google-analytics.com/g/collect',
+      },
     ];
   },
   skipTrailingSlashRedirect: true,
