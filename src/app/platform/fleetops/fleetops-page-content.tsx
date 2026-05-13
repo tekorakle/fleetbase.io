@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Fragment } from 'react';
 
 import {
   Accordion,
@@ -34,6 +35,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
 
 import { DarkCodePanel } from './components/dark-code-panel';
@@ -183,6 +185,239 @@ function FeatureCard({
   );
 }
 
+// ── Comparison section ──────────────────────────────────────────────────────
+
+/**
+ * Comparison cell value:
+ *   true   → brand-blue check
+ *   false  → muted minus
+ *   string → titleized qualifier text (e.g. "Partial", "Enterprise")
+ */
+type CmpVal = boolean | string;
+
+type CmpRow = {
+  feature: string;
+  /** Optional info shown on hover via tooltip (no parenthetical in the row). */
+  info?: string;
+  values: readonly [CmpVal, CmpVal, CmpVal, CmpVal, CmpVal, CmpVal];
+};
+
+type CmpSection = {
+  label: string;
+  rows: readonly CmpRow[];
+};
+
+const COMPETITOR_NAMES = ['Fleet-Ops', 'Onfleet', 'Bringg', 'Spoke', 'Tookan', 'Detrack'] as const;
+
+const comparisonSections: readonly CmpSection[] = [
+  {
+    label: 'Core dispatch & tracking',
+    rows: [
+      { feature: 'Live GPS tracking', values: [true, true, true, true, true, true] },
+      { feature: 'Customer tracking links', values: [true, true, true, true, true, true] },
+      { feature: 'Driver mobile app', values: [true, true, true, true, true, true] },
+      { feature: 'Multi-stop route optimization', values: [true, true, true, true, true, false] },
+      { feature: 'Proof of delivery', values: [true, true, true, true, true, true] },
+      { feature: 'REST API + Webhooks', values: [true, true, true, true, true, true] },
+    ],
+  },
+  {
+    label: 'Advanced operations',
+    rows: [
+      {
+        feature: 'Phase-based orchestration',
+        values: [true, false, 'Partial', false, false, false],
+      },
+      {
+        feature: 'WebSocket / live event streams',
+        values: [true, false, false, false, false, false],
+      },
+      {
+        feature: 'Native telematics integrations',
+        info: 'Samsara · Geotab · Flespi out of the box.',
+        values: [true, false, 'Partial', false, false, 'Partial'],
+      },
+      {
+        feature: 'Configurable order types & activity flows',
+        values: [true, 'Partial', true, 'Partial', 'Partial', false],
+      },
+      {
+        feature: 'Integrated maintenance module',
+        values: [true, false, false, false, false, false],
+      },
+    ],
+  },
+  {
+    label: 'Platform & ownership',
+    rows: [
+      {
+        feature: 'Open source',
+        info: 'Fleet-Ops is licensed under AGPL-3.0.',
+        values: [true, false, false, false, false, false],
+      },
+      {
+        feature: 'Self-host option',
+        values: [true, false, 'Enterprise on-prem', false, false, false],
+      },
+      {
+        feature: 'White-label option',
+        values: [true, 'Enterprise', 'Enterprise', false, 'Add-on', false],
+      },
+      {
+        feature: 'Extensible',
+        info: 'First-class extension SDK + marketplace, not just an API surface.',
+        values: [true, 'API only', 'Partial', 'API + integrations', 'API only', 'API only'],
+      },
+    ],
+  },
+  {
+    label: 'Pricing',
+    rows: [
+      {
+        feature: 'Pricing model',
+        values: ['Resource-unit', 'Per-driver', 'Per-driver', 'Per-driver', 'Per-driver', 'Per-vehicle'],
+      },
+    ],
+  },
+] as const;
+
+function CmpCell({ v }: { v: CmpVal }) {
+  if (v === true) {
+    return (
+      <span className="inline-flex size-6 items-center justify-center rounded-full bg-[var(--fo-blue)] text-white">
+        <Check className="size-3.5" strokeWidth={3} />
+      </span>
+    );
+  }
+  if (v === false) {
+    return <Minus className="mx-auto size-4 text-[var(--fo-fg-soft)]" />;
+  }
+  return (
+    <span className="text-[12px] font-[500] text-[var(--fo-fg-muted)]">{v}</span>
+  );
+}
+
+function FeatureLabel({ feature, info }: { feature: string; info?: string }) {
+  if (!info) {
+    return <span>{feature}</span>;
+  }
+  return (
+    <span className="inline-flex items-center gap-1.5">
+      {feature}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            aria-label={`More info about ${feature}`}
+            className="inline-flex size-4 items-center justify-center rounded-full border border-[var(--fo-border)] text-[10px] font-medium text-[var(--fo-fg-soft)] transition-colors hover:border-[var(--fo-blue)] hover:text-[var(--fo-blue)]"
+          >
+            i
+          </button>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="max-w-[240px] bg-[var(--fo-fg-strong)] text-white">
+          {info}
+        </TooltipContent>
+      </Tooltip>
+    </span>
+  );
+}
+
+function ComparisonSection() {
+  return (
+    <section className="relative py-24 lg:py-32">
+      <div className="container">
+        <div className="mb-12 max-w-3xl">
+          <span className="text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-blue)]">
+            Compare
+          </span>
+          <h2 className="mt-4 text-[32px] font-[680] leading-[36px] tracking-[-0.4px] text-balance text-[var(--fo-fg-strong)] lg:text-[50px] lg:leading-[54px] lg:tracking-[-0.6px]">
+            How Fleet-Ops compares.
+          </h2>
+          <p className="mt-6 text-[18px] font-[460] leading-[25px] tracking-[0.15px] text-[var(--fo-fg-muted)] lg:max-w-2xl lg:text-[22px] lg:leading-[29px] lg:tracking-[0.12px]">
+            Most last-mile and dispatch platforms run as proprietary SaaS with per-driver
+            pricing. Fleet-Ops takes a different approach — open-source, self-hostable, and
+            resource-unit priced. Here&apos;s how we line up on the features that actually
+            matter.
+          </p>
+        </div>
+
+        <div className="overflow-x-auto rounded-3xl border border-[var(--fo-border)] bg-white">
+          <table className="w-full min-w-[760px] text-left">
+            <thead>
+              <tr className="border-b border-[var(--fo-border)]">
+                <th
+                  scope="col"
+                  className="sticky left-0 z-10 bg-white px-5 py-5 text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-fg-soft)]"
+                >
+                  Capability
+                </th>
+                {COMPETITOR_NAMES.map((name, i) => (
+                  <th
+                    key={name}
+                    scope="col"
+                    className={cn(
+                      'px-4 py-5 text-center text-[13px] tracking-tight',
+                      i === 0
+                        ? 'font-[680] text-[var(--fo-blue)]'
+                        : 'font-[600] text-[var(--fo-fg-muted)]',
+                    )}
+                  >
+                    {name}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="text-sm">
+              {comparisonSections.map((section) => (
+                <Fragment key={section.label}>
+                  <tr className="bg-[var(--fo-bg-2)]">
+                    <th
+                      scope="colgroup"
+                      colSpan={1 + COMPETITOR_NAMES.length}
+                      className="sticky left-0 z-10 bg-[var(--fo-bg-2)] px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.8px] text-[var(--fo-fg-muted)]"
+                    >
+                      {section.label}
+                    </th>
+                  </tr>
+                  {section.rows.map((row, ri) => (
+                    <tr
+                      key={row.feature}
+                      className={cn(
+                        'border-t border-[var(--fo-border)]',
+                        ri % 2 === 1 ? 'bg-[var(--fo-bg-2)]/30' : '',
+                      )}
+                    >
+                      <th
+                        scope="row"
+                        className={cn(
+                          'sticky left-0 z-10 px-5 py-4 font-[550] text-[var(--fo-fg-strong)]',
+                          ri % 2 === 1 ? 'bg-[var(--fo-bg-2)]' : 'bg-white',
+                        )}
+                      >
+                        <FeatureLabel feature={row.feature} info={row.info} />
+                      </th>
+                      {row.values.map((v, i) => (
+                        <td key={i} className="px-4 py-4 text-center">
+                          <CmpCell v={v} />
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </Fragment>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-[12px] text-[var(--fo-fg-soft)]">
+          Comparison reflects publicly documented features at time of writing. Competitor
+          information sourced from each vendor&apos;s public documentation and pricing pages.
+          Trademarks belong to their respective owners.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function FleetOpsPageContent() {
@@ -201,7 +436,7 @@ export default function FleetOpsPageContent() {
               </span>
             </div>
             <h1 className="mt-6 text-center text-[40px] font-[680] leading-[44px] tracking-[-0.6px] text-balance text-white lg:text-left lg:text-[60px] lg:leading-[64px] lg:tracking-[-1px] xl:text-[68px] xl:leading-[70px] xl:tracking-[-1.2px]">
-              Dynamic fleet and transport operations module.
+              Fleet management, dispatch, and transport — one operations module.
             </h1>
             <p className="mt-5 text-center text-[18px] font-[460] leading-[26px] tracking-[0.15px] text-white/85 lg:mt-7 lg:text-left lg:text-[21px] lg:leading-[30px] lg:tracking-[0.12px]">
               Route planning. Live tracking. Vehicle allocation. Maintenance scheduling.
@@ -615,130 +850,8 @@ console.log(\`ETA: \${order.eta}\`);`}
       </section>
 
       {/* ── Compare ───────────────────────────────────────────────────────── */}
-      <section className="relative py-24 lg:py-32">
-        <div className="container">
-          <div className="mb-12 max-w-3xl">
-            <span className="text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-blue)]">
-              Compare
-            </span>
-            <h2 className="mt-4 text-[32px] font-[680] leading-[36px] tracking-[-0.4px] text-balance text-[var(--fo-fg-strong)] lg:text-[50px] lg:leading-[54px] lg:tracking-[-0.6px]">
-              The only TMS you can audit, fork, and self-host.
-            </h2>
-            <p className="mt-6 text-[18px] font-[460] leading-[25px] tracking-[0.15px] text-[var(--fo-fg-muted)] lg:max-w-2xl lg:text-[22px] lg:leading-[29px] lg:tracking-[0.12px]">
-              Most last-mile and dispatch platforms charge per driver or per vehicle, run as
-              closed SaaS, and lock you out of the source. Fleet-Ops doesn&apos;t.
-            </p>
-          </div>
+      <ComparisonSection />
 
-          {/* Comparison table */}
-          <div className="overflow-x-auto rounded-3xl border border-[var(--fo-border)] bg-white">
-            <table className="w-full min-w-[760px] text-left">
-              <thead>
-                <tr className="border-b border-[var(--fo-border)]">
-                  <th className="sticky left-0 z-10 bg-white px-5 py-5 text-[12px] font-semibold uppercase tracking-[0.7px] text-[var(--fo-fg-soft)]">
-                    Capability
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-4 py-5 text-center text-[13px] font-[680] tracking-tight text-[var(--fo-blue)]"
-                  >
-                    Fleet-Ops
-                  </th>
-                  {(['Onfleet', 'Bringg', 'Spoke', 'Tookan', 'Detrack'] as const).map((name) => (
-                    <th
-                      key={name}
-                      scope="col"
-                      className="px-4 py-5 text-center text-[13px] font-[600] text-[var(--fo-fg-muted)]"
-                    >
-                      {name}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="text-sm">
-                {(
-                  [
-                    {
-                      feature: 'Open source (AGPL-3.0)',
-                      values: [true, false, false, false, false, false],
-                    },
-                    {
-                      feature: 'Self-hostable',
-                      values: [true, false, false, false, false, false],
-                    },
-                    {
-                      feature: 'No per-driver / per-vehicle fees',
-                      values: [true, false, false, false, false, false],
-                    },
-                    {
-                      feature: 'White-label option',
-                      values: [true, 'enterprise', 'enterprise', false, 'add-on', false],
-                    },
-                    {
-                      feature: 'Phase-based Orchestrator Workbench',
-                      values: [true, false, false, false, false, false],
-                    },
-                    {
-                      feature: 'Native telematics integrations (Samsara · Geotab · Flespi)',
-                      values: [true, false, 'partial', false, false, 'partial'],
-                    },
-                    {
-                      feature: 'Configurable order types & activity flows',
-                      values: [true, 'partial', true, 'partial', 'partial', false],
-                    },
-                    {
-                      feature: 'Extension marketplace',
-                      values: [true, false, 'limited', false, false, false],
-                    },
-                    {
-                      feature: 'REST API + Webhooks + WebSockets',
-                      values: [true, 'API + Webhooks', 'API + Webhooks', 'API + Webhooks', 'API + Webhooks', 'API + Webhooks'],
-                    },
-                  ] as const
-                ).map((row, idx) => (
-                  <tr
-                    key={row.feature}
-                    className={cn(
-                      'border-b border-[var(--fo-border)] last:border-b-0',
-                      idx % 2 === 1 ? 'bg-[var(--fo-bg-2)]/40' : '',
-                    )}
-                  >
-                    <th
-                      scope="row"
-                      className={cn(
-                        'sticky left-0 z-10 px-5 py-4 font-[550] text-[var(--fo-fg-strong)]',
-                        idx % 2 === 1 ? 'bg-[var(--fo-bg-2)]' : 'bg-white',
-                      )}
-                    >
-                      {row.feature}
-                    </th>
-                    {row.values.map((v, i) => (
-                      <td key={i} className="px-4 py-4 text-center">
-                        {v === true ? (
-                          <span className="inline-flex size-6 items-center justify-center rounded-full bg-[var(--fo-blue)] text-white">
-                            <Check className="size-3.5" strokeWidth={3} />
-                          </span>
-                        ) : v === false ? (
-                          <Minus className="mx-auto size-4 text-[var(--fo-fg-soft)]" />
-                        ) : (
-                          <span className="text-[12px] font-[500] text-[var(--fo-fg-muted)]">
-                            {v}
-                          </span>
-                        )}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <p className="mt-4 text-[12px] text-[var(--fo-fg-soft)]">
-            Comparison reflects publicly documented features at time of writing. Competitor
-            information sourced from each vendor&apos;s public documentation and pricing pages.
-            Trademarks belong to their respective owners.
-          </p>
-        </div>
-      </section>
 
       {/* ── Industries ────────────────────────────────────────────────────── */}
       <section className="relative bg-[var(--fo-bg-2)] py-24 lg:py-32">
