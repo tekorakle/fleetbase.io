@@ -10,6 +10,7 @@ import {
   readConsentCookie,
   writeConsentCookie,
 } from '@/lib/analytics/consent';
+import { setConsent as setGAConsent } from '@/lib/analytics/google';
 import { optIn, optOut } from '@/lib/analytics/posthog';
 import { cn } from '@/lib/utils';
 
@@ -43,12 +44,14 @@ export function ConsentBanner({ optInRequired }: Props) {
   const accept = () => {
     writeConsentCookie('granted');
     optIn();
+    setGAConsent(true);
     setStatus('granted');
   };
 
   const decline = () => {
     writeConsentCookie('declined');
     optOut();
+    setGAConsent(false);
     setStatus('declined');
   };
 

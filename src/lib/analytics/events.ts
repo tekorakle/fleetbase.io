@@ -197,3 +197,86 @@ export type EventProperties<N extends EventName> = Extract<
   MarketingEvent,
   { name: N }
 >['properties'];
+
+// ─── GA4 conversion bridge ───────────────────────────────────────────────────
+//
+// PostHog is the firehose; GA4 receives only curated conversion events used
+// for Google Ads conversion tracking and GSC attribution. Adding a new
+// conversion requires editing this map alone — the bridge in posthog.ts
+// reads from it on every track() call.
+
+export interface GAConversion {
+  /** GA4 event name (snake_case). Use Google's recommended names where one
+   *  exists (sign_up, generate_lead, select_item) — Google Ads recognises
+   *  those out of the box. */
+  eventName: string;
+  /** Event params. GA4 caps at 25 params per event, 100 chars per value. */
+  params?: Record<string, unknown>;
+}
+
+/**
+ * Map a typed PostHog event to a GA4 conversion, or null to skip.
+ *
+ * Conversion choices:
+ *  - CTAs that send a visitor to console.fleetbase.io (start_free_trial,
+ *    signin, signup) → standalone events for Google Ads conversion config.
+ *  - book_demo / contact_sales / partner_inquiry → generate_lead (recommended
+ *    event Google Ads can target as a conversion).
+ *  - signup form_submitted → sign_up (recommended event).
+ *  - pricing_tier_cta_clicked → select_item with monetary value, so GA can
+ *    compute conversion value distribution by tier.
+ */
+export function mapToGAConversion<N extends EventName>(
+  name: N,
+  properties: EventProperties<N>,
+): GAConversion | null {
+  if (name === 'cta_clicked') {
+    const props = properties as EventProperties<'cta_clicked'>;
+    const ctaMap: Partial<Record<CtaId, string>> = {
+      start_free_trial: 'start_free_trial',
+      book_demo: 'generate_lead',
+      contact_sales: 'generate_lead',
+      request_quote: 'generate_lead',
+      signup: 'sign_up_intent',
+      signin: 'login_intent',
+    };
+    const eventName = ctaMap[props.cta_id];
+    if (!eventName) return null;
+    return {
+      eventName,
+      params: {
+        cta_id: props.cta_id,
+        cta_location: props.cta_location,
+        cta_variant: props.cta_variant,
+      },
+    };
+  }
+
+  if (name === 'form_submitted') {
+    const props = properties as EventProperties<'form_submitted'>;
+    const formMap: Partial<Record<FormId, string>> = {
+      signup: 'sign_up',
+      contact_sales: 'generate_lead',
+      partner_inquiry: 'generate_lead',
+      newsletter: 'newsletter_signup',
+    };
+    const eventName = formMap[props.form_id];
+    if (!eventName) return null;
+    return { eventName, params: { form_id: props.form_id } };
+  }
+
+  if (name === 'pricing_tier_cta_clicked') {
+    const props = properties as EventProperties<'pricing_tier_cta_clicked'>;
+    return {
+      eventName: 'select_item',
+      params: {
+        item_name: props.tier,
+        item_category: props.billing_cycle,
+        value: props.monthly_price,
+        currency: 'USD',
+      },
+    };
+  }
+
+  return null;
+}

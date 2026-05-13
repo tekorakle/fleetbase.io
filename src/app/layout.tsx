@@ -7,6 +7,7 @@ import { Azeret_Mono, Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 
 import { ConsentBanner } from '@/components/analytics/ConsentBanner';
+import { GoogleAnalyticsProvider } from '@/components/analytics/GoogleAnalyticsProvider';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
 import Footer from '@/components/layout/footer';
 import { MobileNavProvider } from '@/components/layout/mobile-nav-context';
@@ -164,6 +165,7 @@ export default async function RootLayout({
  </RootProvider>
  </ThemeProvider>
  <Analytics />
+ <GoogleAnalyticsProvider optInRequired={optInRequired} />
  </body>
  </html>
  );

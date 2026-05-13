@@ -12,7 +12,12 @@
 
 import posthog from 'posthog-js';
 
-import type { EventName, EventProperties } from './events';
+import { trackConversion as trackGAConversion } from './google';
+import {
+  type EventName,
+  type EventProperties,
+  mapToGAConversion,
+} from './events';
 
 let initialized = false;
 let initPromise: Promise<void> | null = null;
@@ -109,6 +114,14 @@ export function track<N extends EventName>(
   name: N,
   properties: EventProperties<N>,
 ): void {
+  // GA conversion bridge runs independently of PostHog readiness — GA has its
+  // own consent gating via Consent Mode v2, so it's safe to call even when
+  // PostHog is uninitialized or the visitor has opted out.
+  const gaConversion = mapToGAConversion(name, properties);
+  if (gaConversion) {
+    trackGAConversion(gaConversion.eventName, gaConversion.params);
+  }
+
   if (!isReady()) return;
   try {
     posthog.capture(name, {
@@ -116,7 +129,7 @@ export function track<N extends EventName>(
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-     
+
     console.error('[PostHog] capture failed', name, error);
   }
 }
