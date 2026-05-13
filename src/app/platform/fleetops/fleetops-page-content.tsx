@@ -316,7 +316,7 @@ export default function FleetOpsPageContent() {
               label="01 · Configure"
               title="Build any workflow — without writing code."
               description="Custom order types, drag-and-drop activity flows, business rules, and the exact data fields your operation needs. Adapt the software to your operation, not the other way around."
-              cta={{ label: 'More on configuration', href: '/docs/fleet-ops/operations/order-config' }}
+              cta={{ label: 'More on configuration', href: '/docs/fleet-ops/operations/order-configurations/overview' }}
             >
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-12 sm:gap-6">
                 <FeatureHeroCard
@@ -348,7 +348,7 @@ export default function FleetOpsPageContent() {
               label="02 · Plan & Dispatch"
               title="A live operations queue every dispatcher can run from."
               description="Kanban, table, or live-map views of every active order. Schedule deliveries ahead of time, plan capacity by zone or driver, and send dispatches to the Navigator app in seconds."
-              cta={{ label: 'More on operations', href: '/docs/fleet-ops/operations' }}
+              cta={{ label: 'More on operations', href: '/docs/fleet-ops/operations/overview' }}
             >
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-12 sm:gap-6">
                 <FeatureHeroCard
@@ -380,7 +380,7 @@ export default function FleetOpsPageContent() {
               label="03 · Track"
               title="Every driver, vehicle, and order — on one live map."
               description="Sub-minute GPS via the Navigator app. Geofence-triggered automatic status updates. Branded customer tracking links with live ETA. Telematics providers connected out of the box."
-              cta={{ label: 'More on tracking', href: '/docs/fleet-ops/connectivity' }}
+              cta={{ label: 'More on tracking', href: '/docs/fleet-ops/connectivity/overview' }}
             >
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-12 sm:gap-6">
                 <FeatureHeroCard
@@ -412,7 +412,7 @@ export default function FleetOpsPageContent() {
               label="04 · Maintenance"
               title="Keep every vehicle roadworthy."
               description="Work orders from open to resolved, preventive schedules by mileage or engine hours, parts inventory linked to jobs, and driver fault reporting from the Navigator app — all on the same fleet data as dispatch."
-              cta={{ label: 'More on maintenance', href: '/docs/fleet-ops/maintenance' }}
+              cta={{ label: 'More on maintenance', href: '/docs/fleet-ops/maintenance/overview' }}
             >
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-12 sm:gap-6">
                 <FeatureHeroCard
@@ -444,7 +444,7 @@ export default function FleetOpsPageContent() {
               label="05 · Optimize & Allocate"
               title="The Orchestrator Workbench."
               description="Phase-based optimization. Stack driver allocation, vehicle matching, and route optimization into a reviewable pipeline — or run it hands-free on every incoming order. This is what makes Fleet-Ops different from every other TMS."
-              cta={{ label: 'More on the orchestrator', href: '/docs/fleet-ops/operations/orchestrator' }}
+              cta={{ label: 'More on the orchestrator', href: '/docs/fleet-ops/operations/orchestrator/overview' }}
             >
               <div className="grid grid-cols-4 gap-4 sm:grid-cols-12 sm:gap-6">
                 <FeatureHeroCard
