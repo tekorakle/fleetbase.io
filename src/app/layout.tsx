@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { Azeret_Mono, Inter } from 'next/font/google';
 import { headers } from 'next/headers';
 
+import { AhrefsAnalytics } from '@/components/analytics/AhrefsAnalytics';
 import { ConsentBanner } from '@/components/analytics/ConsentBanner';
 import { GoogleAnalyticsProvider } from '@/components/analytics/GoogleAnalyticsProvider';
 import { PostHogProvider } from '@/components/analytics/PostHogProvider';
@@ -166,6 +167,7 @@ export default async function RootLayout({
  </ThemeProvider>
  <Analytics />
  <GoogleAnalyticsProvider optInRequired={optInRequired} />
+ <AhrefsAnalytics />
  </body>
  </html>
  );
