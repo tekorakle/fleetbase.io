@@ -9,6 +9,11 @@ export const metadata: Metadata = {
         title: 'Implementation Terms & Conditions | Fleetbase',
         description: 'Terms and Conditions governing the Fleetbase Console & Core Implementation service.',
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Implementation Terms & Conditions | Fleetbase`,
+      description: `Terms and Conditions governing the Fleetbase Console & Core Implementation service.`,
+    },
 };
 
 const LAST_UPDATED = 'April 2025';

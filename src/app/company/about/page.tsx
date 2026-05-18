@@ -14,6 +14,11 @@ export const metadata: Metadata = {
  title: 'About Us | Fleetbase',
  description: 'The open-source logistics platform on a mission to democratize logistics technology.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `About Us | Fleetbase`,
+   description: `The open-source logistics platform on a mission to democratize logistics technology.`,
+ },
 };
 
 const values = [

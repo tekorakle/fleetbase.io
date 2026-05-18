@@ -14,6 +14,11 @@ export const metadata: Metadata = {
  title: 'Licensing | Fleetbase',
  description: 'AGPL-3.0 open source and commercial licensing options for Fleetbase.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Licensing | Fleetbase`,
+   description: `AGPL-3.0 open source and commercial licensing options for Fleetbase.`,
+ },
 };
 
 const licences = [
@@ -54,7 +59,7 @@ const licences = [
  'Enterprises that require confidential customisations or specific licence terms',
  ],
  notSuitable: [],
- cta: 'Learn more',
+ cta: 'View Commercial License',
  ctaHref: '/licensing/commercial',
  },
 ];

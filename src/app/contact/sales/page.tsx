@@ -14,6 +14,11 @@ export const metadata: Metadata = {
  title: 'Contact | Fleetbase',
  description: 'Get in touch with the Fleetbase team. Email, Discord, or book a demo.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Contact | Fleetbase`,
+   description: `Get in touch with the Fleetbase team. Email, Discord, or book a demo.`,
+ },
 };
 
 const contactReasons = [

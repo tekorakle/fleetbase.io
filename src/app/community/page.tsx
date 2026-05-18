@@ -13,6 +13,11 @@ export const metadata: Metadata = {
  title: 'Community | Fleetbase',
  description: 'Join thousands of logistics operators and developers in the Fleetbase community.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Community | Fleetbase`,
+   description: `Join thousands of logistics operators and developers in the Fleetbase community.`,
+ },
 };
 
 const channels = [

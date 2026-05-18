@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Trucking & Haulage Fleet Management | Fleetbase',
     description: 'Modern open-source fleet management for trucking operators. Cut costs, eliminate paperwork, and deliver on time.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Trucking & Haulage Fleet Management | Fleetbase`,
+    description: `Modern open-source fleet management for trucking operators. Cut costs, eliminate paperwork, and deliver on time.`,
+  },
 };
 
 export default function TruckingPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Trucking & Haulage', href: '/solutions/trucking' },
+      ]}
       badge="Trucking & Haulage"
       title={<>Run a Tighter Fleet.<br /><span className="text-gradient">Cut Costs. Deliver On Time.</span></>}
       description="Fleetbase gives trucking and haulage operators a complete operations platform — real-time fleet visibility, intelligent route optimization, digital proof of delivery, and driver management — on open-source infrastructure you own and control. No per-seat fees. No vendor lock-in."

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
  title: 'Partner Program | Fleetbase',
  description: 'Join the partner program as an integration, implementation, technology, or reseller partner.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Partner Program | Fleetbase`,
+   description: `Join the partner program as an integration, implementation, technology, or reseller partner.`,
+ },
  alternates: { canonical: 'https://fleetbase.io/partners' },
 };
 

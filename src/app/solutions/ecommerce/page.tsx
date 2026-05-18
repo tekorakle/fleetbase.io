@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'E-commerce & Retail Delivery Software | Fleetbase',
     description: 'Give your customers the delivery experience they expect — and keep the margins that make it worth it.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `E-commerce & Retail Delivery Software | Fleetbase`,
+    description: `Give your customers the delivery experience they expect — and keep the margins that make it worth it.`,
+  },
 };
 
 export default function EcommercePage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'E-commerce & Retail', href: '/solutions/ecommerce' },
+      ]}
       badge="E-commerce & Retail"
       title={<>Own Your Last Mile.<br /><span className="text-gradient">Stop Paying Carrier Fees.</span></>}
       description="Carrier dependency is costing your e-commerce business more than you think — in fees, in brand experience, and in customer loyalty. Fleetbase gives you a complete owned-delivery platform: headless API, real-time customer tracking, same-day dispatch, and returns management — built to plug into your existing stack."

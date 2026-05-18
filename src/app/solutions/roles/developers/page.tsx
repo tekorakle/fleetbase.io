@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Logistics Platform for Developers | Fleetbase',
     description: 'Open source, API-first, and built to be extended. The logistics platform developers actually want to work with.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Platform for Developers | Fleetbase`,
+    description: `Open source, API-first, and built to be extended. The logistics platform developers actually want to work with.`,
+  },
 };
 
 export default function DevelopersPage() {

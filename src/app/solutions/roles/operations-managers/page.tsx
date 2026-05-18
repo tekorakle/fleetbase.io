@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Logistics Software for Operations Managers | Fleetbase',
     description: 'Everything you need to run your operation in one place — live, accurate, and actionable.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Software for Operations Managers | Fleetbase`,
+    description: `Everything you need to run your operation in one place — live, accurate, and actionable.`,
+  },
 };
 
 export default function OperationsManagersPage() {

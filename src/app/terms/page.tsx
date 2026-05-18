@@ -9,6 +9,11 @@ export const metadata: Metadata = {
  title: 'Terms of Service | Fleetbase',
  description: 'Fleetbase Terms of Service for SaaS and Cloud customers.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Terms of Service | Fleetbase`,
+   description: `Fleetbase Terms of Service for SaaS and Cloud customers.`,
+ },
 };
 
 const LAST_UPDATED = 'April 2025';

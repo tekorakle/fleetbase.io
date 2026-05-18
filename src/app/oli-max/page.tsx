@@ -40,6 +40,11 @@ export const metadata: Metadata = {
  description:
  'How Techbase LLC built one of Mongolia\'s leading bulk-supply marketplaces on the open-source Fleetbase Storefront app.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Oli Max × Fleetbase`,
+   description: `How Techbase LLC built one of Mongolia\'s leading bulk-supply marketplaces on the open-source Fleetbase Storefront app.`,
+ },
  alternates: { canonical: 'https://fleetbase.io/oli-max' },
 };
 

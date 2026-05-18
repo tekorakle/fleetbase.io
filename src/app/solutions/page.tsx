@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     title: 'Logistics Solutions by Industry, Use Case & Role | Fleetbase',
     description: 'The open-source logistics platform that adapts to your operation — not the other way around.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Solutions by Industry, Use Case & Role | Fleetbase`,
+    description: `The open-source logistics platform that adapts to your operation — not the other way around.`,
+  },
 };
 
 const BY_INDUSTRY = [
@@ -182,7 +187,7 @@ function SolutionCard({ label, href, description, icon: Icon }: SolutionCardProp
       </div>
       <p className="text-xs leading-relaxed text-muted-foreground flex-1">{description}</p>
       <div className="flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
-        Learn more <ArrowRight className="size-3" />
+        Explore {label} <ArrowRight className="size-3" />
       </div>
     </Link>
   );

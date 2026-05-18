@@ -63,6 +63,11 @@ export const metadata: Metadata = {
     description:
       'Your own branded Storefront customer app on the App Store and Google Play — built, configured, and submitted by our team.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Storefront App Publishing Service | Fleetbase`,
+    description: `Your own branded Storefront customer app on the App Store and Google Play — built, configured, and submitted by our team.`,
+  },
 };
 
 const DELIVERABLES = [

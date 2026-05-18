@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Check, ChevronDown, X } from 'lucide-react';
+import { Breadcrumbs, type BreadcrumbItem } from '@/components/ui/breadcrumbs';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -41,6 +42,12 @@ export interface SolutionPageProps {
   badge: string;
   title: React.ReactNode;
   description: string;
+  /**
+   * Optional breadcrumb trail rendered above the hero badge.
+   * The Home crumb is added automatically — pass only the descendant trail.
+   * Also emits `BreadcrumbList` JSON-LD for SERP-eligible rich snippets.
+   */
+  breadcrumbs?: BreadcrumbItem[];
   stats: Stat[];
   heroCta?: { primary: string; primaryHref: string; secondary?: string; secondaryHref?: string };
   heroScreenshot?: string;
@@ -80,6 +87,7 @@ export default function SolutionPageLayout({
   badge,
   title,
   description,
+  breadcrumbs,
   stats,
   heroCta,
   heroScreenshot,
@@ -112,6 +120,12 @@ export default function SolutionPageLayout({
       <section className="section-padding relative overflow-hidden">
         <div className="container">
           <div className="mx-auto max-w-4xl text-center">
+            {breadcrumbs && breadcrumbs.length > 0 && (
+              <Breadcrumbs
+                className="mb-6 justify-center [&_ol]:justify-center"
+                items={breadcrumbs}
+              />
+            )}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium">
               <span className="h-1.5 w-1.5 rounded-full bg-primary" />
               {badge}

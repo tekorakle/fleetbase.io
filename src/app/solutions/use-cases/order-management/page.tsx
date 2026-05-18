@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Order Management Software | Fleetbase',
     description: 'Every order type. Every workflow. One platform that bends to your operation.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Order Management Software | Fleetbase`,
+    description: `Every order type. Every workflow. One platform that bends to your operation.`,
+  },
 };
 
 export default function OrderManagementPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Order Management', href: '/solutions/use-cases/order-management' },
+      ]}
       badge="Use Case — Order Management"
       title={<>One Platform for<br /><span className="text-gradient">Every Order Type You Run.</span></>}
       description="Most order management software was built for one workflow and bolted onto everything else. Your operation is more complex than that — different order types, different SLAs, different proof requirements, different customer expectations. Fleetbase gives you a fully configurable order management platform that works the way you work, with custom fields, statuses, workflows, and automation built for real logistics operations."

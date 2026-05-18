@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Logistics Analytics & Reporting | Fleetbase',
     description: 'Stop managing your logistics operation by feel. Start managing it by data.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Analytics & Reporting | Fleetbase`,
+    description: `Stop managing your logistics operation by feel. Start managing it by data.`,
+  },
 };
 
 export default function AnalyticsPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Analytics & Reporting', href: '/solutions/use-cases/analytics' },
+      ]}
       badge="Use Case — Analytics & Reporting"
       title={<>Stop Managing Your Operation<br /><span className="text-gradient">by Feel. Manage it by Data.</span></>}
       description="Most logistics operations are flying blind. You know something is wrong when costs spike or customers complain — but by then, the damage is done. Fleetbase's analytics layer captures every operational data point — deliveries, routes, driver behaviour, fuel, costs, SLAs — and surfaces the insights that let you fix problems before they become expensive, and prove performance to your clients and leadership."

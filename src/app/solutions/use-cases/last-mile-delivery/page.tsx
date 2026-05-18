@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Last-Mile Delivery Software | Fleetbase',
     description: 'The last mile is where customers judge you. Make every delivery count.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Last-Mile Delivery Software | Fleetbase`,
+    description: `The last mile is where customers judge you. Make every delivery count.`,
+  },
 };
 
 export default function LastMileDeliveryPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Last-Mile Delivery', href: '/solutions/use-cases/last-mile-delivery' },
+      ]}
       badge="Use Case — Last-Mile Delivery"
       title={<>The Last Mile is<br /><span className="text-gradient">Where You Win or Lose.</span></>}
       description="Last-mile delivery is your most expensive, most visible, and most customer-defining operation. Every failed attempt costs you £8–15 in re-delivery. Every missing ETA costs you a repeat purchase. Fleetbase gives you the automation, visibility, and customer experience tools to turn your last mile from a cost centre into a competitive advantage."

@@ -22,6 +22,11 @@ export const metadata: Metadata = {
     description:
       'Product updates, engineering deep-dives, and logistics industry insights from Fleetbase.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Blog | Fleetbase`,
+    description: `Product updates, engineering deep-dives, and logistics industry insights from Fleetbase.`,
+  },
 };
 
 export const revalidate = 300;

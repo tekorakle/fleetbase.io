@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Healthcare & Pharmacy Logistics | Fleetbase',
     description: 'Chain-of-custody you can prove. Compliance you can afford. Patients you can trust.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Healthcare & Pharmacy Logistics | Fleetbase`,
+    description: `Chain-of-custody you can prove. Compliance you can afford. Patients you can trust.`,
+  },
 };
 
 export default function HealthcarePage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Healthcare & Pharmacy', href: '/solutions/healthcare' },
+      ]}
       badge="Healthcare & Pharmacy"
       title={<>Chain-of-Custody You Can Prove.<br /><span className="text-gradient">Compliance You Can Afford.</span></>}
       description="Healthcare and pharmacy logistics demand an audit trail for everything, zero tolerance for delivery failure, and data privacy you can defend in front of any regulator. Fleetbase delivers all three — with encrypted chain-of-custody records, priority dispatch for time-sensitive items, and self-hosted deployment that keeps patient data within your own infrastructure."

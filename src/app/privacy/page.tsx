@@ -9,6 +9,11 @@ export const metadata: Metadata = {
  title: 'Privacy Policy | Fleetbase',
  description: 'How Fleetbase collects, uses, and protects your data.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Privacy Policy | Fleetbase`,
+   description: `How Fleetbase collects, uses, and protects your data.`,
+ },
 };
 
 const LAST_UPDATED = 'April 2025';

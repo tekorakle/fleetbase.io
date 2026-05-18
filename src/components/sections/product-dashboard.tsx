@@ -19,7 +19,7 @@ const FEATURE_CARDS = [
  description:
  'Instantly view how long each node takes to execute, with timestamps and retry data.',
  icon: Clock,
- cta: 'Read more',
+ cta: 'See details',
  href: '#',
  },
  {
@@ -27,7 +27,7 @@ const FEATURE_CARDS = [
  description:
  'Watch your automation unfold in real time — success, fail, delay — no refresh needed.',
  icon: Activity,
- cta: 'Read more',
+ cta: 'See details',
  href: '#',
  },
  {
@@ -35,7 +35,7 @@ const FEATURE_CARDS = [
  description:
  'Click into any node to inspect its payloads, logs, and available data output at each step.',
  icon: Bug,
- cta: 'Read more',
+ cta: 'See details',
  href: '#',
  },
  {
@@ -43,7 +43,7 @@ const FEATURE_CARDS = [
  description:
  'Attach custom events to any trigger or node and track their journey through the flow.',
  icon: Settings,
- cta: 'Read more',
+ cta: 'See details',
  href: '#',
  },
 ];
@@ -98,7 +98,7 @@ export default function ProductDashboard() {
  className="group mt-6 h-12 gap-3 !px-0 font-normal transition-opacity hover:!bg-transparent hover:opacity-95"
  >
  <Link href={card.href}>
- Read more
+ {card.cta}
  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
  </Link>
  </Button>

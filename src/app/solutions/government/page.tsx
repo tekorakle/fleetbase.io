@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Military & Government Logistics | Fleetbase',
     description: 'Logistics software built to your security standards. Self-hosted, auditable, and data-sovereign by design.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Military & Government Logistics | Fleetbase`,
+    description: `Logistics software built to your security standards. Self-hosted, auditable, and data-sovereign by design.`,
+  },
 };
 
 export default function GovernmentPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Military & Government', href: '/solutions/government' },
+      ]}
       badge="Military & Government"
       title={<>Logistics Software Built to<br /><span className="text-gradient">Your Security Standards.</span></>}
       description="Government and military logistics operations demand data sovereignty, comprehensive audit trails, role-based access at every level, and the option to operate completely offline. Fleetbase is open-source, self-hosted, and designed from the ground up to meet the security and compliance requirements that commercial SaaS logistics software was never built to satisfy."

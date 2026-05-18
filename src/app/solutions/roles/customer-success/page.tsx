@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Customer Support Tools for Logistics | Fleetbase',
     description: 'Resolve customer delivery queries in seconds. Every answer is already in the platform.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Customer Support Tools for Logistics | Fleetbase`,
+    description: `Resolve customer delivery queries in seconds. Every answer is already in the platform.`,
+  },
 };
 
 export default function CustomerSuccessPage() {

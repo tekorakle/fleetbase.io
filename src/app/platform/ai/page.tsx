@@ -35,6 +35,11 @@ export const metadata: Metadata = {
  'The open-source AI layer for logistics operations. Route AI, dispatch AI, anomaly detection, and natural language control — on infrastructure you own.',
  images: [{ url: '/images/og-ai.png', width: 1200, height: 630 }],
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Open Source Logistics AI | Fleetbase`,
+   description: `The open-source AI layer for logistics operations. Route AI, dispatch AI, anomaly detection, and natural language control — on infrastructure you own.`,
+ },
 };
 
 // ─── AI Capabilities ──────────────────────────────────────────────────────────

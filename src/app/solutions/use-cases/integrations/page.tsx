@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Logistics API & Integrations | Fleetbase',
     description: 'A logistics platform that fits your stack — not one that replaces it.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics API & Integrations | Fleetbase`,
+    description: `A logistics platform that fits your stack — not one that replaces it.`,
+  },
 };
 
 export default function IntegrationsPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'API & Integrations', href: '/solutions/use-cases/integrations' },
+      ]}
       badge="Use Case — API & Integrations"
       title={<>A Logistics Platform That<br /><span className="text-gradient">Fits Your Stack.</span></>}
       description="The best logistics platform is one that works with what you've already built — not one that forces you to rip and replace your existing tools. Fleetbase is built API-first from the ground up. Every capability is accessible programmatically. Connect your OMS, WMS, ERP, storefront, or custom systems and build the exact logistics workflow your operation needs — without writing a logistics platform from scratch."

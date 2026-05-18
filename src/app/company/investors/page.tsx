@@ -35,6 +35,11 @@ export const metadata: Metadata = {
  description:
  'Bootstrapped open-source logistics platform with 8,000+ active instances. Learn about the opportunity and what we look for in long-term partners.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Investors | Fleetbase`,
+   description: `Bootstrapped open-source logistics platform with 8,000+ active instances. Learn about the opportunity and what we look for in long-term partners.`,
+ },
  alternates: { canonical: 'https://fleetbase.io/company/investors' },
 };
 

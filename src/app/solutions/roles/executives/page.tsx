@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Logistics Platform for Executives | Fleetbase',
     description: 'The logistics infrastructure that delivers ROI, not just functionality.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Platform for Executives | Fleetbase`,
+    description: `The logistics infrastructure that delivers ROI, not just functionality.`,
+  },
 };
 
 export default function ExecutivesPage() {

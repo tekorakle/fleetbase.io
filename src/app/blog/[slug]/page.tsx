@@ -40,14 +40,19 @@ export async function generateMetadata(props: {
   }
 
   const canonicalUrl = `${BASE_URL}/blog/${post.slug}`;
-  const image = post.featureImage
-    ? [
-        {
-          url: post.featureImage,
-          alt: post.featureImageAlt || post.title,
-        },
-      ]
-    : undefined;
+
+  // Prefer the post's feature image; otherwise fall back to a branded
+  // dynamic OG image built from the post title + excerpt so every post
+  // gets a unique social card instead of the site-wide default.
+  const fallbackOg = `${BASE_URL}/og?title=${encodeURIComponent(post.title)}&eyebrow=Blog${
+    post.excerpt ? `&subtitle=${encodeURIComponent(post.excerpt)}` : ''
+  }`;
+  const image = [
+    {
+      url: post.featureImage || fallbackOg,
+      alt: post.featureImageAlt || post.title,
+    },
+  ];
 
   return {
     title: post.title,
@@ -66,10 +71,10 @@ export async function generateMetadata(props: {
       tags: post.tags.map((tag) => tag.name),
     },
     twitter: {
-      card: image ? 'summary_large_image' : 'summary',
+      card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: image?.map((item) => item.url),
+      images: image.map((item) => item.url),
     },
   };
 }

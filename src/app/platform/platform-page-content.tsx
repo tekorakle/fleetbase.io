@@ -373,7 +373,7 @@ export default function PlatformPageContent({ stars }: { stars: string }) {
                     <p className="text-xs leading-snug text-muted-foreground">{mod.description}</p>
                   </div>
                   <div className="mt-auto flex items-center gap-1 text-xs font-medium text-muted-foreground transition-colors group-hover:text-accent-foreground">
-                    Learn more <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
+                    Explore {mod.name} <ArrowRight className="size-3 transition-transform group-hover:translate-x-0.5" />
                   </div>
                 </Link>
               );

@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CheckCircle2, XCircle, ArrowRight, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BreadcrumbSchema } from '@/components/seo/json-ld';
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export const metadata: Metadata = {
  title: 'Fleetbase vs Tookan | Open-Source Tookan Alternative',
@@ -21,6 +22,22 @@ export const metadata: Metadata = {
  title: 'Fleetbase vs Tookan | Open-Source Tookan Alternative',
  description:
  'Compare Fleetbase vs Tookan. No agent-based pricing, self-hosting, full API access. The open-source alternative to Tookan.',
+ images: [
+ {
+ url: '/og?title=Fleetbase%20vs%20Tookan&eyebrow=Compare&subtitle=The%20open-source%20alternative%20to%20Tookan%20%E2%80%94%20no%20agent-based%20pricing%2C%20self-hosted%20or%20cloud.',
+ width: 1200,
+ height: 630,
+ alt: 'Fleetbase vs Tookan — open-source Tookan alternative',
+ },
+ ],
+ },
+ twitter: {
+ card: 'summary_large_image',
+ title: 'Fleetbase vs Tookan',
+ description: 'The open-source Tookan alternative — no agent-based pricing, self-hosted or cloud.',
+ images: [
+ '/og?title=Fleetbase%20vs%20Tookan&eyebrow=Compare&subtitle=The%20open-source%20alternative%20to%20Tookan%20%E2%80%94%20no%20agent-based%20pricing%2C%20self-hosted%20or%20cloud.',
+ ],
  },
  alternates: { canonical: 'https://fleetbase.io/compare/vs-tookan' },
 };
@@ -68,17 +85,22 @@ function Cell({ value }: { value: string | boolean }) {
 export default function VsTookanPage() {
  return (
  <div className="min-h-screen">
- <BreadcrumbSchema
- items={[
- { name: 'Home', url: 'https://fleetbase.io' },
- { name: 'Compare', url: 'https://fleetbase.io/compare' },
- { name: 'Fleetbase vs Tookan', url: 'https://fleetbase.io/compare/vs-tookan' },
- ]}
+ <SoftwareApplicationSchema
+ name="Tookan"
+ url="https://tookanapp.com"
+ description="Delivery management and dispatch software with per-agent and per-task pricing — closed-source SaaS."
  />
 
  {/* Hero */}
  <section className="section-padding border-b bg-gradient-to-b from-muted/30 to-background">
  <div className="container max-w-5xl text-center space-y-6">
+ <Breadcrumbs
+ className="justify-center [&_ol]:justify-center"
+ items={[
+ { label: 'Compare', href: '/compare' },
+ { label: 'Fleetbase vs Tookan', href: '/compare/vs-tookan' },
+ ]}
+ />
  <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
  Comparison
  </div>

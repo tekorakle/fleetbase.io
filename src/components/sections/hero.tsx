@@ -9,7 +9,7 @@ export default async function Hero() {
   const stars = await getGitHubStars();
 
   return (
-    <section className="section-padding relative overflow-hidden">
+    <header className="section-padding relative overflow-hidden">
       <div className="container relative flex flex-col items-center gap-6 text-center">
         {/* Badge */}
         <div className="flex items-center rounded-full border p-1 text-xs">
@@ -94,6 +94,6 @@ export default async function Hero() {
         <div className="absolute top-1/4 -right-24 h-[550px] w-[550px] rounded-full bg-chart-3/[0.10] blur-3xl" />
         <div className="absolute top-1/2 -left-24 h-[450px] w-[450px] rounded-full bg-chart-2/[0.09] blur-3xl" />
       </div>
-    </section>
+    </header>
   );
 }

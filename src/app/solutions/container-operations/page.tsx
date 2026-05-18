@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Container Operations Logistics | Fleetbase',
     description: 'Full container visibility from port to door — tracking, documentation, and yard operations in one platform.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Container Operations Logistics | Fleetbase`,
+    description: `Full container visibility from port to door — tracking, documentation, and yard operations in one platform.`,
+  },
 };
 
 export default function ContainerOperationsPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Container Operations', href: '/solutions/container-operations' },
+      ]}
       badge="Container Operations"
       title={<>Full Visibility.<br /><span className="text-gradient">Port to Door. No Gaps.</span></>}
       description="Container logistics is too complex for a patchwork of spreadsheets and phone calls. Fleetbase gives container operators, freight forwarders, and terminal managers a unified platform for container tracking, documentation management, yard operations, and real-time stakeholder visibility — from the moment a container is loaded to final delivery."

@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Warehouse Management Software | Fleetbase',
     description: 'From pick to doorstep — warehouse and delivery, unified in one platform.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Warehouse Management Software | Fleetbase`,
+    description: `From pick to doorstep — warehouse and delivery, unified in one platform.`,
+  },
 };
 
 export default function WarehouseManagersPage() {

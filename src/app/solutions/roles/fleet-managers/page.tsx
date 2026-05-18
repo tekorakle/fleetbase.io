@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     title: 'Fleet Management Software for Fleet Managers | Fleetbase',
     description: 'Every vehicle. Every driver. Every compliance deadline. Visible and under control.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Fleet Management Software for Fleet Managers | Fleetbase`,
+    description: `Every vehicle. Every driver. Every compliance deadline. Visible and under control.`,
+  },
 };
 
 export default function FleetManagersPage() {

@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CheckCircle2, XCircle, ArrowRight, Minus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BreadcrumbSchema } from '@/components/seo/json-ld';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
 
 export const metadata: Metadata = {
  title: 'Fleetbase vs Onfleet | Open-Source Onfleet Alternative',
@@ -21,6 +22,22 @@ export const metadata: Metadata = {
  title: 'Fleetbase vs Onfleet | Open-Source Onfleet Alternative',
  description:
  'Compare Fleetbase vs Onfleet. No per-task pricing, self-hosting, full API access, and a free tier. The open-source alternative to Onfleet.',
+ images: [
+ {
+ url: '/og?title=Fleetbase%20vs%20Onfleet&eyebrow=Compare&subtitle=The%20open-source%20alternative%20to%20Onfleet%20%E2%80%94%20no%20per-task%20pricing%2C%20self-hosted%20or%20cloud.',
+ width: 1200,
+ height: 630,
+ alt: 'Fleetbase vs Onfleet — open-source Onfleet alternative',
+ },
+ ],
+ },
+ twitter: {
+ card: 'summary_large_image',
+ title: 'Fleetbase vs Onfleet',
+ description: 'The open-source Onfleet alternative — no per-task pricing, self-hosted or cloud.',
+ images: [
+ '/og?title=Fleetbase%20vs%20Onfleet&eyebrow=Compare&subtitle=The%20open-source%20alternative%20to%20Onfleet%20%E2%80%94%20no%20per-task%20pricing%2C%20self-hosted%20or%20cloud.',
+ ],
  },
  alternates: { canonical: 'https://fleetbase.io/compare/vs-onfleet' },
 };
@@ -68,17 +85,22 @@ function Cell({ value }: { value: string | boolean }) {
 export default function VsOnfleetPage() {
  return (
  <div className="min-h-screen">
- <BreadcrumbSchema
- items={[
- { name: 'Home', url: 'https://fleetbase.io' },
- { name: 'Compare', url: 'https://fleetbase.io/compare' },
- { name: 'Fleetbase vs Onfleet', url: 'https://fleetbase.io/compare/vs-onfleet' },
- ]}
+ <SoftwareApplicationSchema
+ name="Onfleet"
+ url="https://onfleet.com"
+ description="Last-mile delivery management software for dispatch, routing, and proof of delivery — closed-source, per-task pricing."
  />
 
  {/* Hero */}
  <section className="section-padding border-b bg-gradient-to-b from-muted/30 to-background">
  <div className="container max-w-5xl text-center space-y-6">
+ <Breadcrumbs
+ className="justify-center [&_ol]:justify-center"
+ items={[
+ { label: 'Compare', href: '/compare' },
+ { label: 'Fleetbase vs Onfleet', href: '/compare/vs-onfleet' },
+ ]}
+ />
  <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
  Comparison
  </div>

@@ -25,7 +25,7 @@ const OBSERVABILITY_DATA = [
 
 export default function ProductHero() {
  return (
- <section className="section-padding relative container overflow-hidden">
+ <header className="section-padding relative container overflow-hidden">
  <div className="mx-auto flex max-w-4xl flex-col items-center justify-center gap-5 text-center">
  <div className="flex items-center rounded-full border p-1 text-xs">
  <span className="bg-muted rounded-full px-3 py-1">
@@ -174,6 +174,6 @@ export default function ProductHero() {
  2.4k stars · 500+ active installs
  </div>
  </div>
- </section>
+ </header>
  );
 }

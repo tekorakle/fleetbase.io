@@ -705,7 +705,7 @@ export default function PricingClient() {
               <CardFooter>
                 <Button className="w-full" asChild>
                   <Link href="/services/installation">
-                    Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                    View Installation Service <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
               </CardFooter>

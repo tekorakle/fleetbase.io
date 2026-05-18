@@ -11,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Waste & Recycling Operations Software | Fleetbase',
     description: 'Collect more, drive less. Route optimization and compliance tools built for waste operators.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Waste & Recycling Operations Software | Fleetbase`,
+    description: `Collect more, drive less. Route optimization and compliance tools built for waste operators.`,
+  },
 };
 
 export default function WasteManagementPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Waste & Recycling', href: '/solutions/waste-management' },
+      ]}
       badge="Waste & Recycling"
       title={<>Collect More.<br /><span className="text-gradient">Drive Less. Comply Effortlessly.</span></>}
       description="Waste and recycling operations run on tight margins, strict compliance timelines, and the constant pressure to do more with the same number of vehicles. Fleetbase gives waste operators intelligent route optimization, container tracking, compliance reporting, and real-time fleet visibility — all on open-source infrastructure you own and control."

@@ -12,6 +12,11 @@ export const metadata: Metadata = {
  title: 'Company | Fleetbase',
  description: 'Open-source logistics infrastructure built to democratize logistics technology.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Company | Fleetbase`,
+   description: `Open-source logistics infrastructure built to democratize logistics technology.`,
+ },
 };
 
 const companyLinks = [

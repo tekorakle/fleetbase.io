@@ -13,6 +13,11 @@ export const metadata: Metadata = {
  title: 'Open Source Mission | Fleetbase',
  description: 'Fully open-source logistics infrastructure under AGPL-3.0. Deploy anywhere, own everything.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Open Source Mission | Fleetbase`,
+   description: `Fully open-source logistics infrastructure under AGPL-3.0. Deploy anywhere, own everything.`,
+ },
 };
 
 const reasons = [

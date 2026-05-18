@@ -56,12 +56,23 @@ export const metadata: Metadata = {
       'Build on the open-source logistics platform. REST API, real-time WebSockets, multi-language SDKs, webhooks, and a full extension framework.',
     type: 'website',
     url: CANONICAL,
+    images: [
+      {
+        url: '/og?title=The%20developer-first%20logistics%20platform&eyebrow=Developers&subtitle=REST%20API%2C%20WebSockets%2C%20SDKs%2C%20webhooks%2C%20and%20a%20full%20extension%20framework%20%E2%80%94%20open%20source.',
+        width: 1200,
+        height: 630,
+        alt: 'Fleetbase Developer Platform — API, SDKs, webhooks, and extensions',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Developer Platform | Fleetbase',
     description:
       'REST API, real-time WebSockets, multi-language SDKs, webhooks, and a full extension framework — all open source.',
+    images: [
+      '/og?title=The%20developer-first%20logistics%20platform&eyebrow=Developers&subtitle=REST%20API%2C%20WebSockets%2C%20SDKs%2C%20webhooks%2C%20and%20a%20full%20extension%20framework%20%E2%80%94%20open%20source.',
+    ],
   },
 };
 

@@ -63,6 +63,11 @@ export const metadata: Metadata = {
     description:
       'Your own branded Navigator driver app on the App Store and Google Play — built, configured, and submitted by our team.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Navigator App Publishing Service | Fleetbase`,
+    description: `Your own branded Navigator driver app on the App Store and Google Play — built, configured, and submitted by our team.`,
+  },
 };
 
 const DELIVERABLES = [

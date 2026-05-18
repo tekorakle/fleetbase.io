@@ -836,7 +836,7 @@ console.log(\`ETA: \${order.eta}\`);`}
               variant="outline"
               className="h-[48px] border-[var(--fo-border)] bg-white px-5 text-base font-[600] text-[var(--fo-fg-strong)] hover:bg-[var(--fo-surface-2)]"
             >
-              <Link href="/docs/fleet-ops">Read the docs</Link>
+              <Link href="/docs/fleet-ops">Read the Fleet-Ops docs</Link>
             </Button>
             <Button
               asChild
