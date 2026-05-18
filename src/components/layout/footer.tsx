@@ -115,8 +115,6 @@ const FOOTER_LINKS = [
  { label: 'Commercial License', href: '/licensing/commercial' },
  { label: 'Contact Sales', href: '/contact/sales' },
  { label: 'Pricing', href: '/pricing' },
- { label: 'Start Free Trial', href: '/trial' },
- { label: 'Download', href: '/download' },
  { label: 'Terms of Service', href: '/terms' },
  { label: 'Privacy Policy', href: '/privacy' },
  ],
