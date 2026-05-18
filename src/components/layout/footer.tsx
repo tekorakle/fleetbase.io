@@ -72,6 +72,9 @@ const FOOTER_LINKS = [
  { label: 'Fleetbase vs Onfleet', href: '/compare/vs-onfleet' },
  { label: 'Fleetbase vs Tookan', href: '/compare/vs-tookan' },
  { label: 'Fleetbase vs Route4Me', href: '/compare/vs-route4me' },
+ { subheading: 'Powered by Fleetbase' },
+ { label: 'OLI Max', href: '/oli-max' },
+ { label: 'True Vegan', href: '/true-vegan' },
  ],
  },
  {
@@ -94,12 +97,11 @@ const FOOTER_LINKS = [
       { label: 'Blog', href: '/blog' },
  { label: 'Changelog', href: '/changelog' },
  { label: 'Community (Discord)', href: '/community' },
- { label: 'Services', href: '/services' },
+ { subheading: 'Services' },
+ { label: 'All Services', href: '/services' },
  { label: 'Installation Service', href: '/services/installation' },
  { label: 'Navigator Publishing', href: '/services/navigator-publishing' },
  { label: 'Storefront Publishing', href: '/services/storefront-publishing' },
- { label: 'Customer Story: OLI Max', href: '/oli-max' },
- { label: 'Customer Story: True Vegan', href: '/true-vegan' },
  ],
  },
  {
@@ -184,6 +186,13 @@ const Footer = () => {
  </h3>
  <ul className="space-y-2">
  {section.links.map((link, linkIndex) => (
+ 'subheading' in link ? (
+ <li key={linkIndex} className="pt-4 first:pt-0">
+ <h4 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/70">
+ {link.subheading}
+ </h4>
+ </li>
+ ) : (
  <li key={linkIndex}>
  <Link
  href={link.href}
@@ -193,6 +202,7 @@ const Footer = () => {
  {link.label}
  </Link>
  </li>
+ )
  ))}
  </ul>
  </div>
