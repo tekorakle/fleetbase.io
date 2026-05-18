@@ -123,7 +123,7 @@ const FOOTER_LINKS = [
 
 const Footer = () => {
  const pathname = usePathname();
- const hideFooter = ['/signin', '/signup', '/otp', '/download', '/docs'].some(
+ const hideFooter = ['/signin', '/signup', '/otp', '/docs'].some(
  (route) => pathname.includes(route),
  );
 

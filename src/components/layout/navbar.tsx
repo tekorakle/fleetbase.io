@@ -359,12 +359,29 @@ export const NAV_LINKS: NavLink[] = [
  {
  label: 'Resources',
  href: '/resources',
- megaMenu: true,
  subitems: [
       {
         label: 'Blog',
  href: '/blog',
  description: 'Industry insights, best practices, and product updates from our team.',
+ icon: FileText,
+ },
+ {
+ label: 'Community (Discord)',
+ href: '/community',
+ description: 'Join our Discord server and connect with other Fleetbase users.',
+ icon: MessageSquare,
+ },
+ {
+ label: 'Services',
+ href: '/services',
+ description: 'Professional implementation, development, and enterprise support options.',
+ icon: Handshake,
+ },
+ {
+ label: 'Changelog',
+ href: '/changelog',
+ description: 'Stay updated with the latest features, fixes, and improvements.',
  icon: FileText,
  },
  {
@@ -374,34 +391,10 @@ export const NAV_LINKS: NavLink[] = [
  icon: BarChart3,
  },
  {
- label: 'Community (Discord)',
- href: '/community',
- description: 'Join our Discord server and connect with other Fleetbase users.',
- icon: MessageSquare,
- },
- {
- label: 'Customer Stories',
- href: '/oli-max',
- description: 'See how operators like OLI Max and True Vegan run on Fleetbase in production.',
- icon: Heart,
- },
- {
- label: 'Services',
- href: '/services',
- description: 'Professional implementation, development, and enterprise support options.',
- icon: Handshake,
- },
- {
  label: 'Commercial License',
  href: '/licensing/commercial',
  description: 'Build proprietary on Fleetbase — pricing, terms, and FAQ.',
  icon: Shield,
- },
- {
- label: 'Changelog',
- href: '/changelog',
- description: 'Stay updated with the latest features, fixes, and improvements.',
- icon: FileText,
  },
  ],
  },
