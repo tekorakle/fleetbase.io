@@ -3,6 +3,7 @@ import { Shield, Lock, MapPin, ClipboardList, Server, BarChart3, FileCheck, User
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/government' },
   title: 'Military & Government Logistics Software | Fleetbase',
   description: 'Open-source logistics platform for military and government operations. Self-hosted, air-gap capable, role-based access, full audit trails, and data sovereignty by design.',
   keywords: ['government logistics software', 'military fleet management', 'secure logistics platform', 'defense logistics software', 'air-gap logistics', 'government transport management'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Military & Government Logistics | Fleetbase',
     description: 'Logistics software built to your security standards. Self-hosted, auditable, and data-sovereign by design.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Military & Government Logistics | Fleetbase`,
+    description: `Logistics software built to your security standards. Self-hosted, auditable, and data-sovereign by design.`,
+  },
 };
 
 export default function GovernmentPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Military & Government', href: '/solutions/government' },
+      ]}
       badge="Military & Government"
       title={<>Logistics Software Built to<br /><span className="text-gradient">Your Security Standards.</span></>}
       description="Government and military logistics operations demand data sovereignty, comprehensive audit trails, role-based access at every level, and the option to operate completely offline. Fleetbase is open-source, self-hosted, and designed from the ground up to meet the security and compliance requirements that commercial SaaS logistics software was never built to satisfy."

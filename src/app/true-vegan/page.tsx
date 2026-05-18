@@ -38,6 +38,11 @@ export const metadata: Metadata = {
  description:
  'How a plant-based restaurant in Delray Beach runs its pickup and delivery operation on a branded Fleetbase Storefront app.',
  },
+ twitter: {
+   card: 'summary_large_image',
+   title: `True Vegan × Fleetbase`,
+   description: `How a plant-based restaurant in Delray Beach runs its pickup and delivery operation on a branded Fleetbase Storefront app.`,
+ },
  alternates: { canonical: 'https://fleetbase.io/true-vegan' },
 };
 

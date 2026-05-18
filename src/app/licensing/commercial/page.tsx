@@ -50,6 +50,11 @@ export const metadata: Metadata = {
     description:
       'Build proprietary modifications, ship SaaS, white-label Fleetbase. The Commercial License removes AGPL obligations entirely.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Commercial License | Fleetbase`,
+    description: `Build proprietary modifications, ship SaaS, white-label Fleetbase. The Commercial License removes AGPL obligations entirely.`,
+  },
 };
 
 const includes = [

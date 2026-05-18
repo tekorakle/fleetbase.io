@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import DeveloperExtensionsPageContent from './extensions-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/developers/extensions' },
   title: 'Build Extensions — Custom Modules for the Fleetbase Platform | Fleetbase',
   description:
     'Build, publish, and distribute Fleetbase extensions using Ember.js and Laravel. Scaffold full-stack modules, backend integrations, and UI components with the Fleetbase CLI.',

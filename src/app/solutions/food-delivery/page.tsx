@@ -3,6 +3,7 @@ import { Utensils, MapPin, Zap, Star, Smartphone, BarChart3, Clock, Bell, Users,
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/food-delivery' },
   title: 'Food & Grocery Delivery Management Software | Fleetbase',
   description: 'Power on-demand food and grocery delivery with real-time dispatch, live customer tracking, and automated notifications. Built for speed, scale, and customer satisfaction.',
   keywords: ['food delivery software', 'grocery delivery platform', 'on-demand delivery management', 'restaurant delivery dispatch', 'last mile food delivery'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Food & Grocery Delivery Software | Fleetbase',
     description: 'Deliver faster, reduce failed orders, and keep customers coming back with Fleetbase.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Food & Grocery Delivery Software | Fleetbase`,
+    description: `Deliver faster, reduce failed orders, and keep customers coming back with Fleetbase.`,
+  },
 };
 
 export default function FoodDeliveryPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Food & Grocery Delivery', href: '/solutions/food-delivery' },
+      ]}
       badge="Food & Grocery Delivery"
       title={<>Deliver Faster.<br /><span className="text-gradient">Keep Customers Coming Back.</span></>}
       description="Every minute a hot order sits unassigned kills your rating. Fleetbase powers on-demand food and grocery delivery with intelligent auto-dispatch, real-time driver tracking, live customer notifications, and the analytics to keep every order — and every margin — on track."

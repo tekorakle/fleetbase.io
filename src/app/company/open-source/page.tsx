@@ -4,6 +4,7 @@ import { ArrowRight, Github, Code2, Users, Shield, GitBranch, BookOpen, Database
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/company/open-source' },
  title: 'Open Source Mission | Fleetbase',
  description:
  'Fleetbase is fully open-source under AGPL-3.0. Learn why we chose open source, what it means for your deployment, how to self-host, and how to contribute to the project.',
@@ -11,6 +12,11 @@ export const metadata: Metadata = {
  openGraph: {
  title: 'Open Source Mission | Fleetbase',
  description: 'Fully open-source logistics infrastructure under AGPL-3.0. Deploy anywhere, own everything.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Open Source Mission | Fleetbase`,
+   description: `Fully open-source logistics infrastructure under AGPL-3.0. Deploy anywhere, own everything.`,
  },
 };
 

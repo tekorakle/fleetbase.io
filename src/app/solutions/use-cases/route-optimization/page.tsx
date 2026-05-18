@@ -3,6 +3,7 @@ import { Navigation, Truck, BarChart3, Zap, MapPin, Clock, RefreshCw, Bell, Shie
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/route-optimization' },
   title: 'Route Optimization Software | Fleetbase',
   description: 'Cut fuel costs by 28% and improve on-time rates with intelligent multi-stop route optimization. Real-time traffic, time windows, vehicle capacity — all factored in automatically.',
   keywords: ['route optimization software', 'delivery route planner', 'multi-stop route optimization', 'fleet route planning', 'dynamic route optimization', 'last mile routing'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Route Optimization Software | Fleetbase',
     description: 'Stop planning routes by hand. Let Fleetbase optimize every run for time, fuel, and capacity.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Route Optimization Software | Fleetbase`,
+    description: `Stop planning routes by hand. Let Fleetbase optimize every run for time, fuel, and capacity.`,
+  },
 };
 
 export default function RouteOptimizationPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Route Optimization', href: '/solutions/use-cases/route-optimization' },
+      ]}
       badge="Use Case — Route Optimization"
       title={<>Stop Planning Routes<br /><span className="text-gradient">by Hand. Start Winning.</span></>}
       description="Manual route planning is costing you more than you realize. Your drivers are taking inefficient paths, missing delivery windows, and burning fuel on routes that haven't been reviewed in months. Fleetbase's route optimization engine sequences every run for maximum efficiency — automatically, in seconds, factoring in real-time traffic, delivery windows, vehicle capacity, and driver availability."

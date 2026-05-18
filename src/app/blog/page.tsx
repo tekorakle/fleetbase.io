@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { getBlogPosts } from '@/lib/ghost';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/blog' },
   title: 'Blog | Fleetbase',
   description:
     'Product updates, engineering deep-dives, logistics industry insights, and open-source news from the Fleetbase team. Stay up to date with the latest from the platform.',
@@ -20,6 +21,11 @@ export const metadata: Metadata = {
     title: 'Blog | Fleetbase',
     description:
       'Product updates, engineering deep-dives, and logistics industry insights from Fleetbase.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Blog | Fleetbase`,
+    description: `Product updates, engineering deep-dives, and logistics industry insights from Fleetbase.`,
   },
 };
 

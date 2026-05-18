@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { CheckCircle2, XCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BreadcrumbSchema } from '@/components/seo/json-ld';
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
 
 export const metadata: Metadata = {
  title: 'Fleetbase vs Route4Me | Open-Source Route4Me Alternative',
@@ -21,6 +22,22 @@ export const metadata: Metadata = {
  title: 'Fleetbase vs Route4Me | Open-Source Route4Me Alternative',
  description:
  'Compare Fleetbase vs Route4Me. Full dispatch, fleet management, driver app, and route optimization — no per-route fees.',
+ images: [
+ {
+ url: '/og?title=Fleetbase%20vs%20Route4Me&eyebrow=Compare&subtitle=Open-source%20alternative%20with%20dispatch%2C%20fleet%20management%2C%20driver%20app%2C%20and%20route%20optimization%20built%20in.',
+ width: 1200,
+ height: 630,
+ alt: 'Fleetbase vs Route4Me — open-source Route4Me alternative',
+ },
+ ],
+ },
+ twitter: {
+ card: 'summary_large_image',
+ title: 'Fleetbase vs Route4Me',
+ description: 'Open-source alternative with dispatch, fleet management, driver app, and route optimization built in.',
+ images: [
+ '/og?title=Fleetbase%20vs%20Route4Me&eyebrow=Compare&subtitle=Open-source%20alternative%20with%20dispatch%2C%20fleet%20management%2C%20driver%20app%2C%20and%20route%20optimization%20built%20in.',
+ ],
  },
  alternates: { canonical: 'https://fleetbase.io/compare/vs-route4me' },
 };
@@ -68,17 +85,22 @@ function Cell({ value }: { value: string | boolean }) {
 export default function VsRoute4MePage() {
  return (
  <div className="min-h-screen">
- <BreadcrumbSchema
- items={[
- { name: 'Home', url: 'https://fleetbase.io' },
- { name: 'Compare', url: 'https://fleetbase.io/compare' },
- { name: 'Fleetbase vs Route4Me', url: 'https://fleetbase.io/compare/vs-route4me' },
- ]}
+ <SoftwareApplicationSchema
+ name="Route4Me"
+ url="https://route4me.com"
+ description="Route planning and optimization software focused on last-mile delivery routing — closed-source SaaS."
  />
 
  {/* Hero */}
  <section className="section-padding border-b bg-gradient-to-b from-muted/30 to-background">
  <div className="container max-w-5xl text-center space-y-6">
+ <Breadcrumbs
+ className="justify-center [&_ol]:justify-center"
+ items={[
+ { label: 'Compare', href: '/compare' },
+ { label: 'Fleetbase vs Route4Me', href: '/compare/vs-route4me' },
+ ]}
+ />
  <div className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium text-muted-foreground">
  Comparison
  </div>

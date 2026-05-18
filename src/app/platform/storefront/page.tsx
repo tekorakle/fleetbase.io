@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import StorefrontPageContent from './storefront-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/storefront' },
   title: 'Storefront — Headless Commerce & Marketplace Platform | Fleetbase',
   description:
     'Storefront by Fleetbase is open-source headless commerce built for on-demand businesses. Zero commission fees, white-label mobile apps, multi-vendor marketplace, and native Fleet-Ops delivery integration.',
@@ -32,5 +35,14 @@ export const metadata: Metadata = {
 };
 
 export default function StorefrontPage() {
-  return <StorefrontPageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Storefront"
+        url="https://fleetbase.io/platform/storefront"
+        description="Open-source headless commerce and multi-vendor marketplace platform with white-label mobile apps, zero commission fees, and native Fleet-Ops delivery integration."
+      />
+      <StorefrontPageContent />
+    </>
+  );
 }

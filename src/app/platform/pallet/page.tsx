@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import PalletPageContent from './pallet-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/pallet' },
   title: 'Pallet — Open-Source Warehouse Management System | Fleetbase',
   description:
     'Pallet by Fleetbase is an open-source WMS for inventory management, pick lists, cycle counts, and fulfilment — natively connected to Fleet-Ops dispatch and Storefront orders.',
@@ -30,5 +34,14 @@ export const metadata: Metadata = {
 };
 
 export default function PalletPage() {
-  return <PalletPageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Pallet"
+        url="https://fleetbase.io/platform/pallet"
+        description="Open-source warehouse management system for inventory tracking, pick lists, cycle counts, and fulfilment — natively connected to Fleet-Ops dispatch and Storefront orders."
+      />
+      <PalletPageContent />
+    </>
+  );
 }

@@ -10,12 +10,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/services' },
  title: 'Services | Fleetbase',
  description: 'Explore Fleetbase professional services — implementation, custom development, training, and support. Get expert help to deploy, scale, and customise your logistics platform.',
  keywords: ['Fleetbase services', 'logistics platform implementation', 'custom development', 'support plans', 'professional services'],
  openGraph: {
  title: 'Services | Fleetbase',
  description: 'Expert implementation, custom development, training, and support for your Fleetbase logistics platform.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Services | Fleetbase`,
+   description: `Expert implementation, custom development, training, and support for your Fleetbase logistics platform.`,
  },
 };
 
@@ -289,7 +295,7 @@ function ServiceCard({ service, highlight = false }: { service: Service; highlig
  <CardFooter>
  {service.href ? (
  <Button className="w-full" size="sm" asChild>
- <Link href={service.href}>Learn More <ArrowRight className="ml-2 w-3.5 h-3.5" /></Link>
+ <Link href={service.href}>Explore {service.name} <ArrowRight className="ml-2 w-3.5 h-3.5" /></Link>
  </Button>
  ) : (
  <Button className="w-full" size="sm" variant="outline" asChild>

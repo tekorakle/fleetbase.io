@@ -3,6 +3,7 @@ import { Package, MapPin, FileCheck, BarChart3, Smartphone, Zap, Bell, Clock, Us
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/courier-services' },
   title: 'Courier & Parcel Delivery Management Software | Fleetbase',
   description: 'Maximize first-attempt delivery rates, automate dispatch, and give customers real-time parcel tracking. Open-source courier management software built for scale.',
   keywords: ['courier management software', 'parcel delivery platform', 'last mile courier', 'proof of delivery software', 'delivery management system'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Courier & Parcel Services Software | Fleetbase',
     description: 'Maximize first-attempt delivery rates and scale your courier business with Fleetbase.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Courier & Parcel Services Software | Fleetbase`,
+    description: `Maximize first-attempt delivery rates and scale your courier business with Fleetbase.`,
+  },
 };
 
 export default function CourierServicesPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Courier & Parcel Services', href: '/solutions/courier-services' },
+      ]}
       badge="Courier & Parcel Services"
       title={<>More First-Attempt Deliveries.<br /><span className="text-gradient">Less Cost Per Parcel.</span></>}
       description="Every failed delivery attempt costs you $17 or more. Fleetbase helps courier and parcel operators maximize first-attempt success rates with intelligent route density optimization, proactive customer notifications, and real-time tracking — on open-source infrastructure that scales with your volume."

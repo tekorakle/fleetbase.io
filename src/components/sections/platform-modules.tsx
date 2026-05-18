@@ -178,7 +178,7 @@ export default function PlatformModules() {
                       href={mod.href}
                       className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-foreground transition-all hover:gap-2.5"
                     >
-                      Learn more <ArrowRight className="size-3.5" />
+                      Explore {mod.name} <ArrowRight className="size-3.5" />
                     </Link>
                   </div>
                 </div>

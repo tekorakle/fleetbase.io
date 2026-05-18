@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/licensing' },
  title: 'Licensing | Fleetbase',
  description:
  'Fleetbase is released under AGPL-3.0. If you deploy on a network and make changes, those changes must remain AGPL — or you need a commercial licence to keep them proprietary.',
@@ -12,6 +13,11 @@ export const metadata: Metadata = {
  openGraph: {
  title: 'Licensing | Fleetbase',
  description: 'AGPL-3.0 open source and commercial licensing options for Fleetbase.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Licensing | Fleetbase`,
+   description: `AGPL-3.0 open source and commercial licensing options for Fleetbase.`,
  },
 };
 
@@ -53,7 +59,7 @@ const licences = [
  'Enterprises that require confidential customisations or specific licence terms',
  ],
  notSuitable: [],
- cta: 'Learn more',
+ cta: 'View Commercial License',
  ctaHref: '/licensing/commercial',
  },
 ];

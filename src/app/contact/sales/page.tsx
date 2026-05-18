@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/contact/sales' },
  title: 'Contact | Fleetbase',
  description:
  'Get in touch with the Fleetbase team. Email us, book a demo on Cal.com, or join our Discord community. We respond within 1 business day.',
@@ -12,6 +13,11 @@ export const metadata: Metadata = {
  openGraph: {
  title: 'Contact | Fleetbase',
  description: 'Get in touch with the Fleetbase team. Email, Discord, or book a demo.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Contact | Fleetbase`,
+   description: `Get in touch with the Fleetbase team. Email, Discord, or book a demo.`,
  },
 };
 

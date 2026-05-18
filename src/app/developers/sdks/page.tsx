@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import SdksPageContent from './sdks-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/developers/sdks' },
   title: 'SDKs & Libraries — JavaScript, PHP & Storefront | Fleetbase',
   description:
     'Official Fleetbase client libraries for JavaScript and PHP, plus a dedicated Storefront SDK. Integrate fleet management and logistics into your application in minutes.',

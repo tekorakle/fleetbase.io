@@ -14,6 +14,8 @@ import { Card, CardContent, CardDescription, CardFooter,CardHeader, CardTitle } 
 import { track } from '@/lib/analytics/posthog';
 import { cn } from '@/lib/utils';
 
+import { PRICING_FAQS } from './faqs';
+
 // ─── Cloud Pricing Tiers ──────────────────────────────────────────────────────
 const CLOUD_TIERS = [
   {
@@ -343,42 +345,6 @@ const LICENSE_OPTIONS = [
     coverage: 'Single minor version (e.g. 1.1.x)',
     note: 'No ongoing support or updates.',
     highlight: false,
-  },
-];
-
-// ─── FAQs ─────────────────────────────────────────────────────────────────────
-const FAQS = [
-  {
-    q: 'What is a Resource Unit?',
-    a: 'Resource Units are the currency of your Fleetbase Cloud plan. Each resource type consumes a set number of units: Orders = 2 units; Users = 5 units; Webhooks = 5 units; Contacts, Places, Vendors, Vehicles, Drivers, Service Rates, Service Areas, Zones, and API Keys = 1 unit each. Most resources reset each billing cycle. Rolling resources — Users, Vehicles, Drivers, Webhooks, and API Keys — do not reset; their count persists into the next billing cycle. You only pay overage for usage beyond your monthly allocation.',
-  },
-  {
-    q: 'Can I switch plans at any time?',
-    a: 'Yes. You can upgrade or downgrade your Cloud plan at any time. Upgrades take effect immediately. Downgrades take effect at the start of your next billing cycle.',
-  },
-  {
-    q: 'What is the difference between Cloud and Self-Hosted?',
-    a: 'Fleetbase Cloud is fully managed by us — we handle infrastructure, security patches, and uptime. Self-Hosted means you deploy Fleetbase on your own servers or cloud account. The one-time $2,500 implementation fee covers deployment, CI/CD setup, configuration, and branding.',
-  },
-  {
-    q: 'Do I need a Commercial License?',
-    a: 'Only if you plan to build proprietary (closed-source) extensions or integrations on top of Fleetbase. The core platform is AGPL-licensed, which requires open-sourcing modifications. A Commercial License waives this obligation and keeps your custom code private. See /licensing/commercial for full details, pricing tiers, and the FAQ.',
-  },
-  {
-    q: 'Is there a free trial?',
-    a: 'Yes — every Cloud plan includes a 7-day free trial capped at 50 resource units. Billing begins when either limit is reached first, so you can evaluate the platform against real operational usage.',
-  },
-  {
-    q: 'What does the Self-Hosted implementation fee include?',
-    a: 'The $2,500 one-time fee covers: server deployment on your infrastructure, CI/CD pipeline setup, environment configuration, custom branding, and a go-live handover session. Ongoing support is available separately via our support tiers.',
-  },
-  {
-    q: 'Can I add more Resource Units mid-month?',
-    a: 'Yes. You can purchase Resource Unit Packs at any time: Small (100 units / $90), Medium (300 units / $240), Large (500 units / $375), or Jumbo (1,000 units / $700). These top up your allocation immediately.',
-  },
-  {
-    q: 'What is Professional Services?',
-    a: 'Professional Services covers custom development work — building bespoke extensions, integrating with your existing ERP/CRM, custom workflow automation, data migration, and training. Pricing is scoped per project. Contact our sales team for a quote.',
   },
 ];
 
@@ -739,7 +705,7 @@ export default function PricingClient() {
               <CardFooter>
                 <Button className="w-full" asChild>
                   <Link href="/services/installation">
-                    Learn More <ArrowRight className="ml-2 w-4 h-4" />
+                    View Installation Service <ArrowRight className="ml-2 w-4 h-4" />
                   </Link>
                 </Button>
               </CardFooter>
@@ -914,16 +880,16 @@ export default function PricingClient() {
             <h2 className="text-3xl font-bold mb-2">Frequently Asked Questions</h2>
           </div>
           <Accordion type="single" collapsible className="space-y-2">
-            {FAQS.map((faq, i) => (
+            {PRICING_FAQS.map((faq, i) => (
               <AccordionItem
                 key={i}
                 value={`faq-${i}`}
                 className="bg-card border rounded-lg px-4"
               >
                 <AccordionTrigger className="text-left font-medium py-4 hover:no-underline">
-                  {faq.q}
+                  {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-4">{faq.a}</AccordionContent>
+                <AccordionContent className="text-muted-foreground pb-4">{faq.answer}</AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

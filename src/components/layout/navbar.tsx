@@ -332,6 +332,12 @@ export const NAV_LINKS: NavLink[] = [
  icon: Library,
  },
  {
+ label: 'Webhooks & Events',
+ href: '/developers/webhooks',
+ description: 'Subscribe to order, dispatch, and fleet events with secure webhook delivery.',
+ icon: Webhook,
+ },
+ {
  label: 'Build an Extension',
  href: '/developers/extensions',
  description: 'Create custom extensions and publish them to the marketplace.',
@@ -373,16 +379,22 @@ export const NAV_LINKS: NavLink[] = [
  icon: Handshake,
  },
  {
- label: 'Commercial License',
- href: '/licensing/commercial',
- description: 'Build proprietary on Fleetbase — pricing, terms, and FAQ.',
- icon: Shield,
- },
- {
  label: 'Changelog',
  href: '/changelog',
  description: 'Stay updated with the latest features, fixes, and improvements.',
  icon: FileText,
+ },
+ {
+ label: 'Compare Alternatives',
+ href: '/compare',
+ description: 'See how Fleetbase compares to Onfleet, Tookan, Route4Me, and other platforms.',
+ icon: BarChart3,
+ },
+ {
+ label: 'Commercial License',
+ href: '/licensing/commercial',
+ description: 'Build proprietary on Fleetbase — pricing, terms, and FAQ.',
+ icon: Shield,
  },
  ],
  },

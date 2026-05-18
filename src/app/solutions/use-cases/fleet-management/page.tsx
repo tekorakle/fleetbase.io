@@ -3,6 +3,7 @@ import { Truck, Wrench, MapPin, BarChart3, Shield, Smartphone, Bell, FileCheck, 
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/fleet-management' },
   title: 'Fleet Management Software | Fleetbase',
   description: 'Monitor vehicle health, driver performance, and fleet utilization from one dashboard. Open-source fleet management with real-time tracking, maintenance scheduling, and compliance tools.',
   keywords: ['fleet management software', 'vehicle tracking system', 'fleet maintenance software', 'driver management platform', 'fleet compliance software', 'vehicle health monitoring'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Fleet Management Software | Fleetbase',
     description: 'Your entire fleet — every vehicle, every driver, every job — visible and under control.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Fleet Management Software | Fleetbase`,
+    description: `Your entire fleet — every vehicle, every driver, every job — visible and under control.`,
+  },
 };
 
 export default function FleetManagementPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Fleet Management', href: '/solutions/use-cases/fleet-management' },
+      ]}
       badge="Use Case — Fleet Management"
       title={<>Every Vehicle. Every Driver.<br /><span className="text-gradient">Complete Control.</span></>}
       description="Fleet management without visibility is just expensive guesswork. Breakdowns you didn't see coming. Drivers you can't locate. Compliance documents that are somewhere in a filing cabinet. Fleetbase gives you a single operations platform for real-time fleet tracking, preventive maintenance, driver management, and compliance documentation — so nothing slips through the cracks."

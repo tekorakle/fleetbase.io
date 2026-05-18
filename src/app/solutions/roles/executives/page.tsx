@@ -3,12 +3,18 @@ import { TrendingUp, DollarSign, BarChart3, Shield, Zap, Globe, Users, Bell, Fil
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/roles/executives' },
   title: 'Logistics Platform for Executives & Business Leaders | Fleetbase',
   description: 'Give leadership real-time visibility into logistics performance, cost efficiency, and growth metrics. Open-source logistics infrastructure that scales without vendor lock-in.',
   keywords: ['logistics software for executives', 'logistics ROI platform', 'logistics cost reduction', 'supply chain executive dashboard', 'logistics business intelligence', 'fleet cost management'],
   openGraph: {
     title: 'Logistics Platform for Executives | Fleetbase',
     description: 'The logistics infrastructure that delivers ROI, not just functionality.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Platform for Executives | Fleetbase`,
+    description: `The logistics infrastructure that delivers ROI, not just functionality.`,
   },
 };
 

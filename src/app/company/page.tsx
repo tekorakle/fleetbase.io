@@ -4,12 +4,18 @@ import { ArrowRight, Globe, Heart, Code2, Users, BookOpen, Handshake, LineChart 
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/company' },
  title: 'Company | Fleetbase',
  description:
  'Fleetbase is the open-source logistics platform built to democratize logistics technology. Learn about our mission, team, open-source commitment, and how to get involved.',
  openGraph: {
  title: 'Company | Fleetbase',
  description: 'Open-source logistics infrastructure built to democratize logistics technology.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Company | Fleetbase`,
+   description: `Open-source logistics infrastructure built to democratize logistics technology.`,
  },
 };
 

@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     title: 'Managed Installation Service | Fleetbase',
     description: 'Fleetbase deployed on your infrastructure in 7 days. Everything included — $2,500 one-time.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Managed Installation Service | Fleetbase`,
+    description: `Fleetbase deployed on your infrastructure in 7 days. Everything included — $2,500 one-time.`,
+  },
 };
 
 // ─── Deliverables ─────────────────────────────────────────────────────────────

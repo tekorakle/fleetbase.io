@@ -3,6 +3,7 @@ import { ShoppingCart, Package, Zap, BarChart3, RefreshCw, Bell, MapPin, Code, C
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/ecommerce' },
   title: 'E-commerce & Retail Delivery Management Software | Fleetbase',
   description: 'Power same-day and next-day delivery for your e-commerce or retail operation. Open-source delivery management with headless API, real-time tracking, and returns logistics.',
   keywords: ['ecommerce delivery software', 'retail logistics platform', 'same-day delivery', 'last mile ecommerce', 'headless delivery API', 'returns management'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'E-commerce & Retail Delivery Software | Fleetbase',
     description: 'Give your customers the delivery experience they expect — and keep the margins that make it worth it.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `E-commerce & Retail Delivery Software | Fleetbase`,
+    description: `Give your customers the delivery experience they expect — and keep the margins that make it worth it.`,
+  },
 };
 
 export default function EcommercePage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'E-commerce & Retail', href: '/solutions/ecommerce' },
+      ]}
       badge="E-commerce & Retail"
       title={<>Own Your Last Mile.<br /><span className="text-gradient">Stop Paying Carrier Fees.</span></>}
       description="Carrier dependency is costing your e-commerce business more than you think — in fees, in brand experience, and in customer loyalty. Fleetbase gives you a complete owned-delivery platform: headless API, real-time customer tracking, same-day dispatch, and returns management — built to plug into your existing stack."

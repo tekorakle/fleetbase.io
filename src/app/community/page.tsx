@@ -4,6 +4,7 @@ import { ArrowRight, Github, MessageSquare, BookOpen, Users, Code2, Rss } from '
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/community' },
  title: 'Community | Fleetbase',
  description:
  'Join the Fleetbase community — thousands of logistics operators, developers, and contributors on Discord, GitHub, and our developer forums. Get help, share ideas, and shape the platform.',
@@ -11,6 +12,11 @@ export const metadata: Metadata = {
  openGraph: {
  title: 'Community | Fleetbase',
  description: 'Join thousands of logistics operators and developers in the Fleetbase community.',
+ },
+ twitter: {
+   card: 'summary_large_image',
+   title: `Community | Fleetbase`,
+   description: `Join thousands of logistics operators and developers in the Fleetbase community.`,
  },
 };
 

@@ -3,12 +3,18 @@ import { Code2, Webhook, Puzzle, Shield, GitBranch, Zap, BarChart3, Globe, Setti
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/roles/developers' },
   title: 'Logistics Platform for Developers & Engineering Teams | Fleetbase',
   description: 'Open-source, API-first logistics platform built for developers. Full REST API, real-time webhooks, Extensions SDK, self-hosted deployment, and complete source code access.',
   keywords: ['logistics API for developers', 'open source logistics platform', 'fleet management API', 'logistics developer tools', 'self-hosted logistics software', 'logistics SDK'],
   openGraph: {
     title: 'Logistics Platform for Developers | Fleetbase',
     description: 'Open source, API-first, and built to be extended. The logistics platform developers actually want to work with.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Platform for Developers | Fleetbase`,
+    description: `Open source, API-first, and built to be extended. The logistics platform developers actually want to work with.`,
   },
 };
 

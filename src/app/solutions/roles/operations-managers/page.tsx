@@ -3,12 +3,18 @@ import { LayoutDashboard, Zap, BarChart3, Bell, Settings, Users, MapPin, FileChe
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/roles/operations-managers' },
   title: 'Logistics Software for Operations Managers | Fleetbase',
   description: 'Give operations managers a single dashboard to oversee dispatch, monitor SLAs, manage exceptions, and report on performance — without switching between systems.',
   keywords: ['logistics software for operations managers', 'operations management platform', 'logistics operations dashboard', 'dispatch management software', 'SLA monitoring software'],
   openGraph: {
     title: 'Logistics Software for Operations Managers | Fleetbase',
     description: 'Everything you need to run your operation in one place — live, accurate, and actionable.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Software for Operations Managers | Fleetbase`,
+    description: `Everything you need to run your operation in one place — live, accurate, and actionable.`,
   },
 };
 

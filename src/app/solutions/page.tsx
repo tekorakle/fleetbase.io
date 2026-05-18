@@ -22,12 +22,18 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions' },
   title: 'Logistics Solutions by Industry, Use Case & Role | Fleetbase',
   description: 'Open-source logistics platform for every operation — trucking, food delivery, healthcare, container logistics, government, and more. Explore solutions by industry, use case, and role.',
   keywords: ['logistics software solutions', 'fleet management platform', 'delivery management software', 'open source logistics', 'logistics by industry'],
   openGraph: {
     title: 'Logistics Solutions by Industry, Use Case & Role | Fleetbase',
     description: 'The open-source logistics platform that adapts to your operation — not the other way around.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Logistics Solutions by Industry, Use Case & Role | Fleetbase`,
+    description: `The open-source logistics platform that adapts to your operation — not the other way around.`,
   },
 };
 
@@ -181,7 +187,7 @@ function SolutionCard({ label, href, description, icon: Icon }: SolutionCardProp
       </div>
       <p className="text-xs leading-relaxed text-muted-foreground flex-1">{description}</p>
       <div className="flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
-        Learn more <ArrowRight className="size-3" />
+        Explore {label} <ArrowRight className="size-3" />
       </div>
     </Link>
   );

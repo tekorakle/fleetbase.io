@@ -3,6 +3,7 @@ import { ClipboardList, Zap, FileCheck, BarChart3, Settings, Bell, MapPin, Users
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/order-management' },
   title: 'Order Management Software | Fleetbase',
   description: 'Configure, track, and fulfill any order type with custom workflows, statuses, and fields. Open-source order management that adapts to your logistics operation — not the other way around.',
   keywords: ['order management software', 'logistics order management', 'custom order workflows', 'order fulfillment platform', 'order tracking system', 'delivery order management'],
@@ -10,11 +11,20 @@ export const metadata: Metadata = {
     title: 'Order Management Software | Fleetbase',
     description: 'Every order type. Every workflow. One platform that bends to your operation.',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Order Management Software | Fleetbase`,
+    description: `Every order type. Every workflow. One platform that bends to your operation.`,
+  },
 };
 
 export default function OrderManagementPage() {
   return (
     <SolutionPageLayout
+      breadcrumbs={[
+        { label: 'Solutions', href: '/solutions' },
+        { label: 'Order Management', href: '/solutions/use-cases/order-management' },
+      ]}
       badge="Use Case — Order Management"
       title={<>One Platform for<br /><span className="text-gradient">Every Order Type You Run.</span></>}
       description="Most order management software was built for one workflow and bolted onto everything else. Your operation is more complex than that — different order types, different SLAs, different proof requirements, different customer expectations. Fleetbase gives you a fully configurable order management platform that works the way you work, with custom fields, statuses, workflows, and automation built for real logistics operations."

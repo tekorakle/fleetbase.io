@@ -3,12 +3,18 @@ import { Headphones, MapPin, Bell, FileCheck, BarChart3, MessageSquare, Clock, U
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/roles/customer-success' },
   title: 'Customer Support Tools for Logistics | Fleetbase',
   description: 'Give customer success teams real-time order visibility, live tracking links, and instant proof of delivery — so they can resolve customer queries in seconds, not hours.',
   keywords: ['customer support logistics software', 'delivery tracking for support teams', 'order visibility customer service', 'proof of delivery customer support', 'logistics customer portal'],
   openGraph: {
     title: 'Customer Support Tools for Logistics | Fleetbase',
     description: 'Resolve customer delivery queries in seconds. Every answer is already in the platform.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `Customer Support Tools for Logistics | Fleetbase`,
+    description: `Resolve customer delivery queries in seconds. Every answer is already in the platform.`,
   },
 };
 
