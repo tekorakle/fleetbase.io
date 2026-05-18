@@ -3,6 +3,7 @@ import { Recycle, MapPin, BarChart3, Truck, ClipboardList, Zap, Bell, Clock, Shi
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/waste-management' },
   title: 'Waste & Recycling Fleet Management Software | Fleetbase',
   description: 'Optimize waste collection routes, reduce fuel costs, track containers, and generate compliance reports automatically. Open-source fleet management built for waste and recycling operations.',
   keywords: ['waste management software', 'recycling fleet management', 'waste collection routing', 'bin tracking software', 'refuse logistics platform'],

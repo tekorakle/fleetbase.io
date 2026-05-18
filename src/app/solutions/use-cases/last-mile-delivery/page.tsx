@@ -3,6 +3,7 @@ import { MapPin, Zap, Smartphone, BarChart3, FileCheck, Users, Bell, Clock, Refr
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/last-mile-delivery' },
   title: 'Last-Mile Delivery Software | Fleetbase',
   description: 'Cut failed deliveries, automate dispatch, and give customers real-time tracking. Open-source last-mile logistics platform with smart routing, digital POD, and branded tracking pages.',
   keywords: ['last mile delivery software', 'last mile logistics platform', 'delivery management system', 'final mile delivery', 'delivery dispatch software', 'proof of delivery'],

@@ -3,6 +3,7 @@ import { Ship, MapPin, ClipboardList, BarChart3, Zap, Shield, FileCheck, Clock, 
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/container-operations' },
   title: 'Container & Port Logistics Software | Fleetbase',
   description: 'Full container visibility from port to door. Track containers across multi-modal journeys, manage documentation, coordinate yard operations, and integrate with existing port systems.',
   keywords: ['container logistics software', 'port logistics management', 'container tracking', 'intermodal logistics', 'yard management software', 'freight forwarding'],

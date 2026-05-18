@@ -3,6 +3,7 @@ import { Navigation, Truck, BarChart3, Zap, MapPin, Clock, RefreshCw, Bell, Shie
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/route-optimization' },
   title: 'Route Optimization Software | Fleetbase',
   description: 'Cut fuel costs by 28% and improve on-time rates with intelligent multi-stop route optimization. Real-time traffic, time windows, vehicle capacity — all factored in automatically.',
   keywords: ['route optimization software', 'delivery route planner', 'multi-stop route optimization', 'fleet route planning', 'dynamic route optimization', 'last mile routing'],

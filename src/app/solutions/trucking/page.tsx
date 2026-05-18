@@ -3,6 +3,7 @@ import { Truck, MapPin, Wrench, BarChart3, FileCheck, Smartphone, Clock, Shield,
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/trucking' },
   title: 'Fleet Management Software for Trucking & Haulage | Fleetbase',
   description: 'Replace your legacy TMS with open-source fleet management built for trucking and haulage. Real-time tracking, route optimization, digital POD, and compliance tools — on infrastructure you own.',
   keywords: ['trucking software', 'haulage management', 'fleet management TMS', 'freight tracking', 'route optimization trucking', 'open source TMS'],

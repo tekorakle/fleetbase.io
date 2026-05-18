@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import DeveloperConsolePageContent from './console-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/developer-console' },
   title: 'Developer Console — API Keys, Webhooks & Monitoring | Fleetbase',
   description:
     'Manage API keys, configure webhooks, inspect request logs, and monitor real-time socket channels from the Fleetbase Developer Console.',
@@ -29,5 +33,15 @@ export const metadata: Metadata = {
 };
 
 export default function DeveloperConsolePage() {
-  return <DeveloperConsolePageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Developer Console"
+        url="https://fleetbase.io/platform/developer-console"
+        description="Manage API keys, configure webhooks, inspect request logs, and monitor real-time socket channels from the Fleetbase Developer Console."
+        applicationCategory="DeveloperApplication"
+      />
+      <DeveloperConsolePageContent />
+    </>
+  );
 }

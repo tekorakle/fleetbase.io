@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { BlogPostTracker } from '@/components/analytics/BlogPostTracker';
+import { BlogPostingSchema } from '@/components/seo/json-ld';
 import { Button } from '@/components/ui/button';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/ghost';
 
@@ -83,8 +84,19 @@ export default async function BlogPostPage(props: {
     notFound();
   }
 
+  const canonicalUrl = `${BASE_URL}/blog/${post.slug}`;
+
   return (
     <div className="flex flex-col">
+      <BlogPostingSchema
+        url={canonicalUrl}
+        headline={post.title}
+        description={post.excerpt}
+        image={post.featureImage}
+        datePublished={post.publishedAt}
+        authors={post.authors.map((author) => ({ name: author.name }))}
+        tags={post.tags.map((tag) => tag.name)}
+      />
       <BlogPostTracker
         slug={post.slug}
         tags={post.tags.map((t) => t.name)}

@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/licensing' },
  title: 'Licensing | Fleetbase',
  description:
  'Fleetbase is released under AGPL-3.0. If you deploy on a network and make changes, those changes must remain AGPL — or you need a commercial licence to keep them proprietary.',

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getGitHubStars } from '@/lib/github-stars';
-import { OrganizationSchema, SoftwareApplicationSchema } from '@/components/seo/json-ld';
+import { OrganizationSchema, SoftwareApplicationSchema, WebSiteSchema } from '@/components/seo/json-ld';
 import DeploymentOptions from '@/components/sections/deployment-options';
 import FeaturesTabsSection from '@/components/sections/features-tabs';
 import FinalCTA from '@/components/sections/final-cta';
@@ -36,6 +36,7 @@ export default async function Home() {
   return (
     <>
       <OrganizationSchema />
+      <WebSiteSchema />
       <SoftwareApplicationSchema />
       <Hero />
       <StatsBar />

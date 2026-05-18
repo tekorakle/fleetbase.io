@@ -46,7 +46,7 @@ const FOOTER_LINKS = [
  { label: 'Pallet', href: '/platform/pallet' },
  { label: 'Ledger', href: '/platform/ledger' },
  { label: 'Mobile Apps', href: '/platform/mobile' },
- { label: 'Extensions Marketplace', href: '/extensions' },
+ { label: 'Extensions Marketplace', href: '/platform/extensions' },
  { label: 'Logistics AI', href: '/platform/ai' },
  { label: 'Security & Compliance', href: '/platform/security' },
  ],
@@ -54,6 +54,7 @@ const FOOTER_LINKS = [
  {
  title: 'Solutions',
  links: [
+ { label: 'All Solutions', href: '/solutions' },
  { label: 'Trucking & Haulage', href: '/solutions/trucking' },
  { label: 'Food & Grocery Delivery', href: '/solutions/food-delivery' },
  { label: 'Courier & Parcel Services', href: '/solutions/courier-services' },
@@ -65,12 +66,23 @@ const FOOTER_LINKS = [
  ],
  },
  {
+ title: 'Compare',
+ links: [
+ { label: 'All Comparisons', href: '/compare' },
+ { label: 'Fleetbase vs Onfleet', href: '/compare/vs-onfleet' },
+ { label: 'Fleetbase vs Tookan', href: '/compare/vs-tookan' },
+ { label: 'Fleetbase vs Route4Me', href: '/compare/vs-route4me' },
+ ],
+ },
+ {
  title: 'Developers',
  links: [
+ { label: 'Developer Hub', href: '/developers' },
  { label: 'API Documentation', href: '/docs/api' },
+ { label: 'API & Integrations', href: '/developers/api' },
  { label: 'SDKs & Libraries', href: '/developers/sdks' },
  { label: 'Developer Console', href: '/platform/developer-console' },
- { label: 'Webhooks & Events', href: '/docs/webhooks' },
+ { label: 'Webhooks & Events', href: '/developers/webhooks' },
  { label: 'Build an Extension', href: '/developers/extensions' },
  { label: 'GitHub Repository', href: 'https://github.com/fleetbase/fleetbase', external: true },
  ],
@@ -80,10 +92,14 @@ const FOOTER_LINKS = [
  links: [
  { label: 'Documentation', href: '/docs' },
       { label: 'Blog', href: '/blog' },
+ { label: 'Changelog', href: '/changelog' },
  { label: 'Community (Discord)', href: '/community' },
  { label: 'Services', href: '/services' },
- { label: 'Commercial License', href: '/licensing/commercial' },
- { label: 'Changelog', href: '/changelog' },
+ { label: 'Installation Service', href: '/services/installation' },
+ { label: 'Navigator Publishing', href: '/services/navigator-publishing' },
+ { label: 'Storefront Publishing', href: '/services/storefront-publishing' },
+ { label: 'Customer Story: OLI Max', href: '/oli-max' },
+ { label: 'Customer Story: True Vegan', href: '/true-vegan' },
  ],
  },
  {
@@ -94,8 +110,11 @@ const FOOTER_LINKS = [
  { label: 'Partners', href: '/partners' },
  { label: 'Investors', href: '/company/investors' },
  { label: 'Licensing Options', href: '/licensing' },
+ { label: 'Commercial License', href: '/licensing/commercial' },
  { label: 'Contact Sales', href: '/contact/sales' },
  { label: 'Pricing', href: '/pricing' },
+ { label: 'Start Free Trial', href: '/trial' },
+ { label: 'Download', href: '/download' },
  { label: 'Terms of Service', href: '/terms' },
  { label: 'Privacy Policy', href: '/privacy' },
  ],
@@ -157,7 +176,7 @@ const Footer = () => {
 
  {/* Footer Navigation Links */}
  <div className="container mt-20 lg:mt-30">
- <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-5 text-left">
+ <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6 text-left">
  {FOOTER_LINKS.map((section, index) => (
  <div key={index}>
  <h3 className="font-semibold text-sm mb-4 text-foreground">

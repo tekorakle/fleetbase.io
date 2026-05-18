@@ -78,9 +78,9 @@ export default async function Hero() {
               src="/images/screenshots/fleet-ops/fleet-ops-multi-waypoint-order.webp"
               alt="Fleetbase console showing a multi-waypoint Fleet-Ops order with optimized route, driver assignment, and live status timeline"
               fill
+              sizes="(min-width: 1280px) 1152px, 100vw"
               className="object-contain object-top"
               priority
-              unoptimized
             />
           </div>
           {/* Bottom fade */}

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import ExtensionsMarketplacePageContent from './extensions-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/extensions' },
   title: 'Extensions Marketplace — Build, Install & Monetize | Fleetbase',
   description:
     'Browse and install extensions from Fleetbase and the open-source community, or publish your own and monetize it to reach thousands of logistics operators worldwide.',
@@ -29,5 +33,14 @@ export const metadata: Metadata = {
 };
 
 export default function ExtensionsMarketplacePage() {
-  return <ExtensionsMarketplacePageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Extensions Marketplace"
+        url="https://fleetbase.io/platform/extensions"
+        description="Browse and install Fleetbase extensions in one click, or publish your own and earn from thousands of logistics operators."
+      />
+      <ExtensionsMarketplacePageContent />
+    </>
+  );
 }

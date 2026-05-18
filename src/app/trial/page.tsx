@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PlaceholderPage from '@/components/placeholder-page';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/trial' },
   title: 'Start Your Free Trial | Fleetbase',
   description: 'Start a 7-day free trial of Fleetbase Cloud with a 50 resource unit cap. Billing begins when either limit is reached first.',
   keywords: 'fleetbase free trial, try fleetbase, logistics platform trial, fleet management free trial',

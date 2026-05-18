@@ -3,6 +3,7 @@ import { Truck, Wrench, MapPin, BarChart3, Shield, Smartphone, Bell, FileCheck, 
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/fleet-management' },
   title: 'Fleet Management Software | Fleetbase',
   description: 'Monitor vehicle health, driver performance, and fleet utilization from one dashboard. Open-source fleet management with real-time tracking, maintenance scheduling, and compliance tools.',
   keywords: ['fleet management software', 'vehicle tracking system', 'fleet maintenance software', 'driver management platform', 'fleet compliance software', 'vehicle health monitoring'],

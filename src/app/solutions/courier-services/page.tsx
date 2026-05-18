@@ -3,6 +3,7 @@ import { Package, MapPin, FileCheck, BarChart3, Smartphone, Zap, Bell, Clock, Us
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/courier-services' },
   title: 'Courier & Parcel Delivery Management Software | Fleetbase',
   description: 'Maximize first-attempt delivery rates, automate dispatch, and give customers real-time parcel tracking. Open-source courier management software built for scale.',
   keywords: ['courier management software', 'parcel delivery platform', 'last mile courier', 'proof of delivery software', 'delivery management system'],

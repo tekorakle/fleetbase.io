@@ -3,6 +3,7 @@ import { ClipboardList, Zap, FileCheck, BarChart3, Settings, Bell, MapPin, Users
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/use-cases/order-management' },
   title: 'Order Management Software | Fleetbase',
   description: 'Configure, track, and fulfill any order type with custom workflows, statuses, and fields. Open-source order management that adapts to your logistics operation — not the other way around.',
   keywords: ['order management software', 'logistics order management', 'custom order workflows', 'order fulfillment platform', 'order tracking system', 'delivery order management'],

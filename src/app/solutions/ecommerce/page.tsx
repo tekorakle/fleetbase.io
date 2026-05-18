@@ -3,6 +3,7 @@ import { ShoppingCart, Package, Zap, BarChart3, RefreshCw, Bell, MapPin, Code, C
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/ecommerce' },
   title: 'E-commerce & Retail Delivery Management Software | Fleetbase',
   description: 'Power same-day and next-day delivery for your e-commerce or retail operation. Open-source delivery management with headless API, real-time tracking, and returns logistics.',
   keywords: ['ecommerce delivery software', 'retail logistics platform', 'same-day delivery', 'last mile ecommerce', 'headless delivery API', 'returns management'],

@@ -3,6 +3,7 @@ import { Heart, Shield, FileCheck, MapPin, ClipboardList, Lock, Bell, BarChart3,
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/healthcare' },
   title: 'Healthcare & Pharmacy Logistics Software | Fleetbase',
   description: 'HIPAA-conscious logistics management for healthcare and pharmacy delivery. Chain-of-custody tracking, temperature monitoring, priority dispatch, and encrypted audit trails.',
   keywords: ['healthcare logistics software', 'pharmacy delivery management', 'medical courier software', 'HIPAA logistics', 'chain of custody tracking', 'cold chain delivery'],

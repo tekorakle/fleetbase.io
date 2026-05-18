@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ChangelogPageContent from './changelog-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/changelog' },
   title: 'Changelog | Fleetbase',
   description: 'See the latest updates, new features, and improvements to the Fleetbase platform.',
   keywords: 'fleetbase changelog, platform updates, new features, release notes',

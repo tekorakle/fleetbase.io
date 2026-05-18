@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import PlaceholderPage from '@/components/placeholder-page';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/developers' },
   title: 'Developer Platform | Fleetbase',
   description: 'Fleetbase is built for developers. REST API, webhooks, SDKs, and an open extension framework to build any logistics workflow.',
   keywords: 'fleetbase developer platform, logistics API, fleet management SDK, open source logistics developer',

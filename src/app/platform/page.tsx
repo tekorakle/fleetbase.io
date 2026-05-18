@@ -5,6 +5,7 @@ import { getGitHubStars } from '@/lib/github-stars';
 import PlatformPageContent from './platform-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform' },
   title: 'Platform Overview — Open-Source Logistics OS | Fleetbase',
   description:
     'Explore the full Fleetbase platform — Fleet-Ops, Storefront, Ledger, Pallet, Navigator, and more. One modular, open-source logistics OS. Self-host or cloud.',

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import SecurityCompliancePageContent from './security-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/security' },
   title: 'Security & Compliance — RBAC, Encryption & Audit Logs | Fleetbase',
   description:
     'Enterprise-grade security for logistics operations. End-to-end encryption, granular RBAC, MFA, comprehensive audit logs, GDPR compliance, and full self-hosting for data sovereignty.',
@@ -34,5 +38,15 @@ export const metadata: Metadata = {
 };
 
 export default function SecurityCompliancePage() {
-  return <SecurityCompliancePageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Security & Compliance"
+        url="https://fleetbase.io/platform/security"
+        description="Enterprise-grade security for logistics operations — end-to-end encryption, granular RBAC, MFA, comprehensive audit logs, GDPR compliance, and self-hosting for full data sovereignty."
+        applicationCategory="SecurityApplication"
+      />
+      <SecurityCompliancePageContent />
+    </>
+  );
 }

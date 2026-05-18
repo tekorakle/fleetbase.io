@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions' },
   title: 'Logistics Solutions by Industry, Use Case & Role | Fleetbase',
   description: 'Open-source logistics platform for every operation — trucking, food delivery, healthcare, container logistics, government, and more. Explore solutions by industry, use case, and role.',
   keywords: ['logistics software solutions', 'fleet management platform', 'delivery management software', 'open source logistics', 'logistics by industry'],

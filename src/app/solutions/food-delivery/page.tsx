@@ -3,6 +3,7 @@ import { Utensils, MapPin, Zap, Star, Smartphone, BarChart3, Clock, Bell, Users,
 import SolutionPageLayout from '@/components/solutions/solution-page-layout';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/solutions/food-delivery' },
   title: 'Food & Grocery Delivery Management Software | Fleetbase',
   description: 'Power on-demand food and grocery delivery with real-time dispatch, live customer tracking, and automated notifications. Built for speed, scale, and customer satisfaction.',
   keywords: ['food delivery software', 'grocery delivery platform', 'on-demand delivery management', 'restaurant delivery dispatch', 'last mile food delivery'],

@@ -1,7 +1,11 @@
 import type { Metadata } from 'next';
+
+import { SoftwareApplicationSchema } from '@/components/seo/json-ld';
+
 import NavigatorPageContent from './navigator-page-content';
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://fleetbase.io/platform/navigator' },
   title: 'Navigator — Open-Source Driver App | Fleetbase',
   description:
     'Navigator is Fleetbase\'s open-source mobile app for drivers. Real-time dispatch, turn-by-turn navigation, proof of delivery, and offline support — available on iOS and Android.',
@@ -30,5 +34,16 @@ export const metadata: Metadata = {
 };
 
 export default function NavigatorPage() {
-  return <NavigatorPageContent />;
+  return (
+    <>
+      <SoftwareApplicationSchema
+        name="Fleetbase Navigator"
+        url="https://fleetbase.io/platform/navigator"
+        description="Open-source iOS and Android driver app with real-time dispatch, turn-by-turn navigation, proof of delivery, and offline-first operation."
+        applicationCategory="MobileApplication"
+        operatingSystem="iOS, Android"
+      />
+      <NavigatorPageContent />
+    </>
+  );
 }

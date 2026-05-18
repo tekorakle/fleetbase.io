@@ -332,6 +332,12 @@ export const NAV_LINKS: NavLink[] = [
  icon: Library,
  },
  {
+ label: 'Webhooks & Events',
+ href: '/developers/webhooks',
+ description: 'Subscribe to order, dispatch, and fleet events with secure webhook delivery.',
+ icon: Webhook,
+ },
+ {
  label: 'Build an Extension',
  href: '/developers/extensions',
  description: 'Create custom extensions and publish them to the marketplace.',
@@ -353,6 +359,7 @@ export const NAV_LINKS: NavLink[] = [
  {
  label: 'Resources',
  href: '/resources',
+ megaMenu: true,
  subitems: [
       {
         label: 'Blog',
@@ -361,10 +368,22 @@ export const NAV_LINKS: NavLink[] = [
  icon: FileText,
  },
  {
+ label: 'Compare Alternatives',
+ href: '/compare',
+ description: 'See how Fleetbase compares to Onfleet, Tookan, Route4Me, and other platforms.',
+ icon: BarChart3,
+ },
+ {
  label: 'Community (Discord)',
  href: '/community',
  description: 'Join our Discord server and connect with other Fleetbase users.',
  icon: MessageSquare,
+ },
+ {
+ label: 'Customer Stories',
+ href: '/oli-max',
+ description: 'See how operators like OLI Max and True Vegan run on Fleetbase in production.',
+ icon: Heart,
  },
  {
  label: 'Services',

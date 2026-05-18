@@ -1,98 +1,131 @@
+import { statSync } from 'node:fs';
+import { join } from 'node:path';
+
 import type { MetadataRoute } from 'next';
 
 import { getAllBlogPosts } from '@/lib/ghost';
 
 const BASE_URL = 'https://fleetbase.io';
 
+// Conservative fallback when a route can't be mapped to a single page file
+// (or when fs reads fail in a sandboxed build). Update on major content
+// reorganizations; per-page mtime is preferred where available.
+const FALLBACK_DATE = new Date('2026-05-01');
+
+const APP_DIR = join(process.cwd(), 'src', 'app');
+
+function lastModifiedFor(routePath: string): Date {
+  // routePath is the URL-style path under the App Router, e.g. "/platform/ledger".
+  // It maps to src/app<routePath>/page.tsx.
+  const relative = routePath === '/' ? 'page.tsx' : `${routePath.slice(1)}/page.tsx`;
+  try {
+    const stat = statSync(join(APP_DIR, relative));
+    return stat.mtime;
+  } catch {
+    return FALLBACK_DATE;
+  }
+}
+
+type StaticEntry = {
+  path: string;
+  changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
+  priority: number;
+};
+
+const STATIC_ROUTES: StaticEntry[] = [
+  // Core
+  { path: '/', changeFrequency: 'weekly', priority: 1.0 },
+  { path: '/product', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/pricing', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/download', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/trial', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/changelog', changeFrequency: 'weekly', priority: 0.6 },
+  { path: '/blog', changeFrequency: 'weekly', priority: 0.7 },
+  { path: '/partners', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/services', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/services/installation', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/services/navigator-publishing', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/services/storefront-publishing', changeFrequency: 'monthly', priority: 0.8 },
+
+  // Customer stories
+  { path: '/oli-max', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/true-vegan', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/community', changeFrequency: 'monthly', priority: 0.6 },
+
+  // Platform
+  { path: '/platform', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/platform/fleetops', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/platform/storefront', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/ledger', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/pallet', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/navigator', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/mobile', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/extensions', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/platform/ai', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/security', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Solutions — Verticals
+  { path: '/solutions', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/courier-services', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/food-delivery', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/ecommerce', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/trucking', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/container-operations', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/healthcare', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/government', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/waste-management', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Solutions — Use Cases
+  { path: '/solutions/use-cases/order-management', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/use-cases/fleet-management', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/solutions/use-cases/last-mile-delivery', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/solutions/use-cases/route-optimization', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/solutions/use-cases/analytics', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/use-cases/integrations', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Solutions — Roles
+  { path: '/solutions/roles/fleet-managers', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/roles/operations-managers', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/roles/executives', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/roles/developers', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/roles/warehouse-managers', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/solutions/roles/customer-success', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Developers
+  { path: '/developers', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/developers/api', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/platform/developer-console', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/developers/extensions', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/developers/sdks', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/developers/webhooks', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Compare
+  { path: '/compare', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/compare/vs-onfleet', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/compare/vs-route4me', changeFrequency: 'monthly', priority: 0.8 },
+  { path: '/compare/vs-tookan', changeFrequency: 'monthly', priority: 0.9 },
+
+  // Company
+  { path: '/company', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/company/about', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/company/open-source', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/company/investors', changeFrequency: 'monthly', priority: 0.6 },
+  { path: '/licensing', changeFrequency: 'monthly', priority: 0.7 },
+  { path: '/licensing/commercial', changeFrequency: 'monthly', priority: 0.85 },
+  { path: '/contact/sales', changeFrequency: 'monthly', priority: 0.7 },
+
+  // Legal
+  { path: '/privacy', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/terms', changeFrequency: 'yearly', priority: 0.3 },
+];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const now = new Date();
-
-  const staticRoutes: MetadataRoute.Sitemap = [
-    // Core
-    { url: `${BASE_URL}/`, lastModified: now, changeFrequency: 'weekly', priority: 1.0 },
-    { url: `${BASE_URL}/product`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/pricing`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/download`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/trial`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/changelog`, lastModified: now, changeFrequency: 'weekly', priority: 0.6 },
-    { url: `${BASE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7 },
-    { url: `${BASE_URL}/partners`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/services`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/services/installation`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/services/navigator-publishing`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/services/storefront-publishing`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-
-    // Customer stories
-    { url: `${BASE_URL}/oli-max`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/true-vegan`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/community`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-
-    // Platform
-    { url: `${BASE_URL}/platform`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/platform/fleetops`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/platform/storefront`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/ledger`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/pallet`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/navigator`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/mobile`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/extensions`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/platform/ai`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/security`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Solutions — Verticals
-    { url: `${BASE_URL}/solutions`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/courier-services`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/food-delivery`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/ecommerce`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/trucking`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/container-operations`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/healthcare`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/government`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/waste-management`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Solutions — Use Cases
-    { url: `${BASE_URL}/solutions/use-cases/order-management`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/use-cases/fleet-management`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/solutions/use-cases/last-mile-delivery`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/solutions/use-cases/route-optimization`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/solutions/use-cases/analytics`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/use-cases/integrations`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Solutions — Roles
-    { url: `${BASE_URL}/solutions/roles/fleet-managers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/roles/operations-managers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/roles/executives`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/roles/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/roles/warehouse-managers`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/solutions/roles/customer-success`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Developers
-    { url: `${BASE_URL}/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/developers/api`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/platform/developer-console`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/developers/extensions`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/developers/sdks`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/developers/webhooks`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Compare
-    { url: `${BASE_URL}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/compare/vs-onfleet`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE_URL}/compare/vs-route4me`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE_URL}/compare/vs-tookan`, lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
-
-    // Company
-    { url: `${BASE_URL}/company`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/company/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/company/open-source`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/company/investors`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${BASE_URL}/licensing`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE_URL}/licensing/commercial`, lastModified: now, changeFrequency: 'monthly', priority: 0.85 },
-    { url: `${BASE_URL}/contact/sales`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-
-    // Legal
-    { url: `${BASE_URL}/privacy`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE_URL}/terms`, lastModified: now, changeFrequency: 'yearly', priority: 0.3 },
-  ];
+  const staticRoutes: MetadataRoute.Sitemap = STATIC_ROUTES.map((entry) => ({
+    url: `${BASE_URL}${entry.path}`,
+    lastModified: lastModifiedFor(entry.path),
+    changeFrequency: entry.changeFrequency,
+    priority: entry.priority,
+  }));
 
   let blogRoutes: MetadataRoute.Sitemap = [];
   try {
