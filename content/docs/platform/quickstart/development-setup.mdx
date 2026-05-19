@@ -128,13 +128,23 @@ package-linker doctor
 
 `doctor` verifies the installed symlinks and reports duplicate Fleetbase package versions in the pnpm lockfile.
 
-Disable links when you are done:
+If you only want to undo specific links, disable them by name:
 
 ```bash
 package-linker disable fleetops pallet
 package-linker disable-shared ember-core ember-ui fleetops-data core-api
 package-linker install fleetops pallet core-api
 ```
+
+To fully clear every development link managed by the linker, use `reset`:
+
+```bash
+package-linker reset --dry-run
+package-linker reset
+package-linker install
+```
+
+The dry run previews the manifest changes first. The real reset restores linked extensions and shared packages back to their saved registry ranges, removes Composer path repositories, removes local pnpm workspace entries and overrides, and deletes `.fleetbase-dev-links.json` once it is empty.
 
 The linker stores original dependency ranges in `.fleetbase-dev-links.json` so the changes are reversible. That file is for local development state and should stay out of commits.
 
