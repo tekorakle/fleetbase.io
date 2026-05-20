@@ -48,12 +48,12 @@ Install it once from the Fleetbase repository root:
 npm link
 ```
 
-After linking, the `package-linker` command is available globally:
+After linking, the `flb-package-linker` command is available globally:
 
 ```bash
-package-linker --help
-package-linker list
-package-linker status
+flb-package-linker --help
+flb-package-linker list
+flb-package-linker status
 ```
 
 If you do not want to install the command globally, run it directly:
@@ -67,8 +67,8 @@ node scripts/package-linker.mjs status
 FleetOps development usually needs the FleetOps extension plus the shared Ember packages it depends on. From the repository root:
 
 ```bash
-package-linker enable fleetops --shared ember-core ember-ui fleetops-data
-package-linker install fleetops
+flb-package-linker enable fleetops --shared ember-core ember-ui fleetops-data
+flb-package-linker install fleetops
 ```
 
 This updates the local manifests and prints the install commands it would run:
@@ -81,7 +81,7 @@ cd api && composer update fleetbase/fleetops-api --with-dependencies
 Use `--install` if you want the linker to run those commands immediately:
 
 ```bash
-package-linker enable fleetops --shared ember-core ember-ui fleetops-data --install
+flb-package-linker enable fleetops --shared ember-core ember-ui fleetops-data --install
 ```
 
 ### Link Multiple Extensions
@@ -89,8 +89,8 @@ package-linker enable fleetops --shared ember-core ember-ui fleetops-data --inst
 Pass more than one extension name to enable or disable them together:
 
 ```bash
-package-linker enable fleetops pallet --shared ember-core ember-ui fleetops-data
-package-linker install fleetops pallet
+flb-package-linker enable fleetops pallet --shared ember-core ember-ui fleetops-data
+flb-package-linker install fleetops pallet
 ```
 
 The install command combines backend Composer packages into one update:
@@ -104,8 +104,8 @@ cd api && composer update fleetbase/fleetops-api fleetbase/pallet-api --with-dep
 When working on shared Ember packages, link them through the root Console workspace instead of editing every extension manually:
 
 ```bash
-package-linker enable-shared ember-core ember-ui fleetops-data
-package-linker install
+flb-package-linker enable-shared ember-core ember-ui fleetops-data
+flb-package-linker install
 ```
 
 The linker adds those packages to `console/pnpm-workspace.yaml`, sets `linkWorkspacePackages: deep`, enables workspace preference, and writes pnpm workspace overrides. This matters because Ember engines can otherwise resolve their own nested copy of a shared package, which makes local changes appear to be ignored.
@@ -113,8 +113,8 @@ The linker adds those packages to `console/pnpm-workspace.yaml`, sets `linkWorks
 For backend-only package work, link Core API the same way:
 
 ```bash
-package-linker enable-shared core-api
-package-linker install core-api
+flb-package-linker enable-shared core-api
+flb-package-linker install core-api
 ```
 
 ### Inspect and Undo Links
@@ -122,8 +122,8 @@ package-linker install core-api
 Check the current local-link state:
 
 ```bash
-package-linker status
-package-linker doctor
+flb-package-linker status
+flb-package-linker doctor
 ```
 
 `doctor` verifies the installed symlinks and reports duplicate Fleetbase package versions in the pnpm lockfile.
@@ -131,17 +131,17 @@ package-linker doctor
 If you only want to undo specific links, disable them by name:
 
 ```bash
-package-linker disable fleetops pallet
-package-linker disable-shared ember-core ember-ui fleetops-data core-api
-package-linker install fleetops pallet core-api
+flb-package-linker disable fleetops pallet
+flb-package-linker disable-shared ember-core ember-ui fleetops-data core-api
+flb-package-linker install fleetops pallet core-api
 ```
 
 To fully clear every development link managed by the linker, use `reset`:
 
 ```bash
-package-linker reset --dry-run
-package-linker reset
-package-linker install
+flb-package-linker reset --dry-run
+flb-package-linker reset
+flb-package-linker install
 ```
 
 The dry run previews the manifest changes first. The real reset restores linked extensions and shared packages back to their saved registry ranges, removes Composer path repositories, removes local pnpm workspace entries and overrides, and deletes `.fleetbase-dev-links.json` once it is empty.
@@ -149,7 +149,7 @@ The dry run previews the manifest changes first. The real reset restores linked 
 The linker stores original dependency ranges in `.fleetbase-dev-links.json` so the changes are reversible. That file is for local development state and should stay out of commits.
 
 <Callout type="info">
-The commands above expect the current monorepo layout where `console/`, `api/`, and `packages/` sit beside each other. Run `package-linker list` to see which packages are recognized as extensions and which shared development dependencies can be linked.
+The commands above expect the current monorepo layout where `console/`, `api/`, and `packages/` sit beside each other. Run `flb-package-linker list` to see which packages are recognized as extensions and which shared development dependencies can be linked.
 </Callout>
 
 ## Backend Development
@@ -278,7 +278,7 @@ The package linker is the recommended workflow for frontend packages too. If you
 }
 ```
 
-When working on shared packages such as `@fleetbase/ember-ui`, `@fleetbase/ember-core`, or `@fleetbase/fleetops-data`, prefer `package-linker enable-shared` instead of manual `link:` entries. The linker configures pnpm workspace overrides and deep workspace linking so extension dependencies also resolve to the local package.
+When working on shared packages such as `@fleetbase/ember-ui`, `@fleetbase/ember-core`, or `@fleetbase/fleetops-data`, prefer `flb-package-linker enable-shared` instead of manual `link:` entries. The linker configures pnpm workspace overrides and deep workspace linking so extension dependencies also resolve to the local package.
 
 Then install dependencies in the console to resolve the links. Inside the console container (Path A):
 
