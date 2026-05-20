@@ -31,6 +31,127 @@ This populates `packages/` with the source for all first-party extensions (Fleet
 | `addon/` | Ember.js frontend addon code |
 | `server/` | Laravel backend package (service provider, models, routes, migrations) |
 
+## Package Linking
+
+Fleetbase includes a development linker in the repository so you do not have to hand-edit `console/package.json`, `api/composer.json`, and `console/pnpm-workspace.yaml` every time you switch extension work. Use it when you want a local package under `packages/` to replace the published registry package.
+
+The linker manages both sides of an extension:
+
+- the Ember engine used by Console
+- the Laravel package used by the API
+- shared frontend packages such as `ember-core`, `ember-ui`, and `fleetops-data`
+- backend-only shared packages such as `core-api`
+
+Install it once from the Fleetbase repository root:
+
+```bash
+npm link
+```
+
+After linking, the `flb-package-linker` command is available globally:
+
+```bash
+flb-package-linker --help
+flb-package-linker list
+flb-package-linker status
+```
+
+If you do not want to install the command globally, run it directly:
+
+```bash
+node scripts/package-linker.mjs status
+```
+
+### Link FleetOps for Development
+
+FleetOps development usually needs the FleetOps extension plus the shared Ember packages it depends on. From the repository root:
+
+```bash
+flb-package-linker enable fleetops --shared ember-core ember-ui fleetops-data
+flb-package-linker install fleetops
+```
+
+This updates the local manifests and prints the install commands it would run:
+
+```bash
+cd console && pnpm install
+cd api && composer update fleetbase/fleetops-api --with-dependencies
+```
+
+Use `--install` if you want the linker to run those commands immediately:
+
+```bash
+flb-package-linker enable fleetops --shared ember-core ember-ui fleetops-data --install
+```
+
+### Link Multiple Extensions
+
+Pass more than one extension name to enable or disable them together:
+
+```bash
+flb-package-linker enable fleetops pallet --shared ember-core ember-ui fleetops-data
+flb-package-linker install fleetops pallet
+```
+
+The install command combines backend Composer packages into one update:
+
+```bash
+cd api && composer update fleetbase/fleetops-api fleetbase/pallet-api --with-dependencies
+```
+
+### Link Shared Packages
+
+When working on shared Ember packages, link them through the root Console workspace instead of editing every extension manually:
+
+```bash
+flb-package-linker enable-shared ember-core ember-ui fleetops-data
+flb-package-linker install
+```
+
+The linker adds those packages to `console/pnpm-workspace.yaml`, sets `linkWorkspacePackages: deep`, enables workspace preference, and writes pnpm workspace overrides. This matters because Ember engines can otherwise resolve their own nested copy of a shared package, which makes local changes appear to be ignored.
+
+For backend-only package work, link Core API the same way:
+
+```bash
+flb-package-linker enable-shared core-api
+flb-package-linker install core-api
+```
+
+### Inspect and Undo Links
+
+Check the current local-link state:
+
+```bash
+flb-package-linker status
+flb-package-linker doctor
+```
+
+`doctor` verifies the installed symlinks and reports duplicate Fleetbase package versions in the pnpm lockfile.
+
+If you only want to undo specific links, disable them by name:
+
+```bash
+flb-package-linker disable fleetops pallet
+flb-package-linker disable-shared ember-core ember-ui fleetops-data core-api
+flb-package-linker install fleetops pallet core-api
+```
+
+To fully clear every development link managed by the linker, use `reset`:
+
+```bash
+flb-package-linker reset --dry-run
+flb-package-linker reset
+flb-package-linker install
+```
+
+The dry run previews the manifest changes first. The real reset restores linked extensions and shared packages back to their saved registry ranges, removes Composer path repositories, removes local pnpm workspace entries and overrides, and deletes `.fleetbase-dev-links.json` once it is empty.
+
+The linker stores original dependency ranges in `.fleetbase-dev-links.json` so the changes are reversible. That file is for local development state and should stay out of commits.
+
+<Callout type="info">
+The commands above expect the current monorepo layout where `console/`, `api/`, and `packages/` sit beside each other. Run `flb-package-linker list` to see which packages are recognized as extensions and which shared development dependencies can be linked.
+</Callout>
+
 ## Backend Development
 
 ### Mount Source into Docker
@@ -54,16 +175,16 @@ After updating the override file, restart the stack:
 docker compose up -d
 ```
 
-### Link Backend Packages
+### Manual Backend Package Links
 
-To develop a backend package locally, add a `path` repository entry in `api/composer.json` for each package. Composer will symlink the local directory into the vendor tree:
+The package linker is the recommended workflow, but the underlying Composer setup is simple. To develop a backend package locally by hand, add a `path` repository entry in `api/composer.json` for each package. Composer will symlink the local directory into the vendor tree:
 
 ```json
 {
   "repositories": [
-    { "type": "path", "url": "../packages/fleetops/server" },
-    { "type": "path", "url": "../packages/pallet/server" },
-    { "type": "path", "url": "../packages/core-api" }
+    { "type": "path", "url": "../packages/fleetops", "options": { "symlink": true } },
+    { "type": "path", "url": "../packages/pallet", "options": { "symlink": true } },
+    { "type": "path", "url": "../packages/core-api", "options": { "symlink": true } }
   ]
 }
 ```
@@ -144,9 +265,9 @@ Make sure `console/environments/.env.development` has `API_HOST` pointing at you
 API_HOST=http://localhost:8000
 ```
 
-### Link Frontend Packages
+### Manual Frontend Package Links
 
-To develop a frontend addon locally, open `console/package.json` and add a `link:` entry pointing to the package's root directory. The `link:` protocol tells the package manager to use your local filesystem copy instead of the published version:
+The package linker is the recommended workflow for frontend packages too. If you need to make the change manually, open `console/package.json` and add a `link:` entry pointing to the package's root directory. The `link:` protocol tells the package manager to use your local filesystem copy instead of the published version:
 
 ```json
 {
@@ -157,19 +278,7 @@ To develop a frontend addon locally, open `console/package.json` and add a `link
 }
 ```
 
-<Callout type="warn">
-**Each linked package needs its own `pnpm install` first.** Before the console can resolve a `link:` dependency, the linked package must have its own `node_modules` populated. If you skip this, `pnpm install` and `pnpm build` in the console will fail with missing-module errors.
-
-```bash
-cd packages/fleetops
-pnpm install
-
-cd ../pallet
-pnpm install
-```
-
-Repeat for every package you've linked.
-</Callout>
+When working on shared packages such as `@fleetbase/ember-ui`, `@fleetbase/ember-core`, or `@fleetbase/fleetops-data`, prefer `flb-package-linker enable-shared` instead of manual `link:` entries. The linker configures pnpm workspace overrides and deep workspace linking so extension dependencies also resolve to the local package.
 
 Then install dependencies in the console to resolve the links. Inside the console container (Path A):
 
