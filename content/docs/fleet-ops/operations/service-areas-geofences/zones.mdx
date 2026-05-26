@@ -53,7 +53,7 @@ See [Service Areas → Managing Service Areas on the Map](/docs/fleet-ops/operat
     **Pick a parent service area.** A zone must belong to exactly one service area — if you find yourself wanting a "freestanding" zone, model it as a service area instead. The "Create Zone" entry on either the toolbar panel or the right-click context menu carries the parent through for you.
   </Step>
   <Step>
-    **Draw the boundary** using the polygon tool, drop a pin and provide a radius, or paste GeoJSON. Radius-based zones default to a 500 m circle around the pin.
+    **Draw the boundary on the map.** Fleet-Ops switches into draw mode with the polygon tool active. Click each vertex, then double-click (or click the first vertex again) to close the polygon. The creation modal opens with the boundary you just drew.
   </Step>
   <Step>
     **Name and describe.** A short `name` plus optional `description` showing dispatchers what the zone is for (e.g. *Zone B — Express delivery only*).
@@ -70,6 +70,8 @@ See [Service Areas → Managing Service Areas on the Map](/docs/fleet-ops/operat
 </Steps>
 
 To reshape a zone after it's been created, right-click it on the map and pick **Edit Boundaries** — the polygon switches to a dashed outline with draggable handles at every vertex, exactly like service-area boundary editing.
+
+If you need to create zones programmatically — from a radius around a point, or from a pre-drawn GeoJSON polygon — use the [API](#api) instead. Those options are not exposed in the UI.
 
 ## Zone-Based Pricing
 

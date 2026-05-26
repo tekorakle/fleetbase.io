@@ -74,19 +74,7 @@ Click outside the polygon or press the in-map **cancel** affordance to discard t
 
 ## Creating a Service Area
 
-From the toolbar's **Create new Service Area** entry (or the right-click context menu), you have three ways to define the border:
-
-<Steps>
-  <Step>
-    **Draw on the map.** Use the polygon tool in the map toolbar to outline the area. Click each vertex, then double-click to close the polygon. This is the most common workflow for non-administrative boundaries (delivery footprints, custom regions).
-  </Step>
-  <Step>
-    **Point + radius.** Drop a pin and provide a radius in meters (defaults to `500`). Fleet-Ops generates a circular MultiPolygon centered on the point — useful for service areas around a depot or warehouse.
-  </Step>
-  <Step>
-    **GeoJSON / WKT upload.** Paste or upload a pre-existing boundary. For country-level service areas, sourcing from [Natural Earth](https://www.naturalearthdata.com/) or your local government's open-data portal gives you accurate administrative polygons.
-  </Step>
-</Steps>
+From the toolbar's **Create new Service Area** entry (or the right-click context menu), Fleet-Ops switches the map into draw mode. Use the polygon tool in the draw controls to outline the area — click each vertex, then double-click (or click the first vertex again) to close the polygon. After you close the polygon, the creation modal opens with the boundary you just drew.
 
 The creation modal asks for:
 
@@ -96,6 +84,8 @@ The creation modal asks for:
 - **Border color** and **Fill color**
 
 After saving, the new service area appears on the map and in the toolbar's service-area list. From there you can focus, hide, edit, edit boundaries, add zones, or delete it.
+
+If you need to create service areas programmatically — from a radius around a point, or from a pre-drawn GeoJSON boundary — use the [API](#api) instead. Those options are not exposed in the UI.
 
 ## Hierarchies
 
