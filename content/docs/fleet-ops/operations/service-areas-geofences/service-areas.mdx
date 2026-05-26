@@ -30,15 +30,55 @@ Service areas are the foundation for:
 
 Service areas have stable public IDs prefixed with `sa_`.
 
+## Managing Service Areas on the Map
+
+Service areas (and the zones inside them) are managed from **Fleet-Ops → Dashboard → Map** tab. The map provider used to render tiles is governed by [Map Settings](/docs/fleet-ops/settings/map).
+
+There are two ways to drive service-area management from the map:
+
+- **The map toolbar** — the icon strip on the left of the map. The service-areas icon opens a panel with creation, visual-control, and per-area action items.
+- **The right-click context menu** — right-click anywhere on the map for a "Create new Service Area" entry, or right-click on an existing service-area polygon to get its contextual action menu (edit, edit boundaries, hide, delete, create zone inside, etc.).
+
+![Service area toolbar panel and the right-click context menu showing per-area actions](/images/screenshots/fleet-ops/fleet-ops-service-area-controls.webp)
+
+### Toolbar Panel
+
+Click the service-areas icon in the map toolbar to open the panel. From the top:
+
+| Action | What it does |
+| :--- | :--- |
+| **Create new Service Area** | Opens the creation modal anchored at the current map center. |
+| **Show all Service Areas** | Reveals every service area on the map (undoes any hides). |
+| **Hide all Service Areas** | Hides every service-area polygon without deleting them — useful to declutter the map. |
+| *(list of existing service areas)* | Click an entry to focus the map on that area. Each entry has its own visibility toggle. |
+
+### Per-Area Context Menu
+
+Right-click on a service-area polygon (or click its entry in the toolbar list) to get its actions menu:
+
+| Action | What it does |
+| :--- | :--- |
+| **Hide** | Blur the polygon from the map. The data is untouched — toggle visibility back from the toolbar. |
+| **Create Zone** | Opens the zone-creation modal pre-scoped to this service area. See [Zones](/docs/fleet-ops/operations/service-areas-geofences/zones). |
+| **Edit** | Opens the service-area edit modal — name, type, country, colors, geofence triggers. |
+| **Edit Boundaries** | Switches the polygon into edit mode with draggable vertex handles. |
+| **Delete** | Soft-deletes the service area (and detaches its zones from this parent). |
+
+### Editing Boundaries
+
+Choosing **Edit Boundaries** turns the polygon into a dashed outline with square handles at every vertex and midpoint. Drag a handle to reshape the boundary in place — no separate dialog, the change is committed on save.
+
+![Service area in edit-boundaries mode — dashed outline with draggable handles and an in-map cancel/save tooltip](/images/screenshots/fleet-ops/fleet-ops-service-area-edit-boundary.webp)
+
+Click outside the polygon or press the in-map **cancel** affordance to discard the change.
+
 ## Creating a Service Area
 
-In the console, navigate to **Fleet-Ops → Settings → Map** (or open the **Service Areas** panel from any map view). The map provider is governed by [Map Settings](/docs/fleet-ops/settings/map).
-
-You have three ways to define the border:
+From the toolbar's **Create new Service Area** entry (or the right-click context menu), you have three ways to define the border:
 
 <Steps>
   <Step>
-    **Draw on the map.** Use the polygon tool in the map toolbar to outline the area. Double-click to close the polygon. This is the most common workflow for non-administrative boundaries (delivery footprints, custom regions).
+    **Draw on the map.** Use the polygon tool in the map toolbar to outline the area. Click each vertex, then double-click to close the polygon. This is the most common workflow for non-administrative boundaries (delivery footprints, custom regions).
   </Step>
   <Step>
     **Point + radius.** Drop a pin and provide a radius in meters (defaults to `500`). Fleet-Ops generates a circular MultiPolygon centered on the point — useful for service areas around a depot or warehouse.
@@ -55,7 +95,7 @@ The creation modal asks for:
 - **Country** (selected from the country dropdown)
 - **Border color** and **Fill color**
 
-After saving, the new service area appears on the map and in the **Service Areas** list. Click it to edit the border, manage child zones, or configure geofence triggers.
+After saving, the new service area appears on the map and in the toolbar's service-area list. From there you can focus, hide, edit, edit boundaries, add zones, or delete it.
 
 ## Hierarchies
 

@@ -36,13 +36,21 @@ Use a **zone** when the boundary represents a subdivision of that area — typic
 
 Zones have stable public IDs prefixed with `zone_`. The API exposes a virtual `type` attribute that always returns `zone` — that's how downstream consumers (geofence handlers, pricing) distinguish zones from service areas without having to inspect the model class.
 
-## Creating a Zone
+## Managing Zones on the Map
 
-In the console, open the parent service area in the map view and click **Add Zone**, or use the **Zones** panel in the map toolbar.
+Zones are managed from the same place as their parent service areas: **Fleet-Ops → Dashboard → Map** tab. Zones are always created in the context of a service area, so the entry points are:
+
+- **Toolbar service-area panel** — open the panel, click a service area in the list, then **Create Zone** from its action menu.
+- **Right-click an existing service-area polygon** on the map and pick **Create Zone** from the contextual menu.
+- **Right-click an existing zone** to get its own action menu (edit, edit boundaries, hide, delete) — the same pattern as service areas.
+
+See [Service Areas → Managing Service Areas on the Map](/docs/fleet-ops/operations/service-areas-geofences/service-areas#managing-service-areas-on-the-map) for the toolbar and context-menu screenshots — zones use the same panels and the same edit-boundaries handles.
+
+## Creating a Zone
 
 <Steps>
   <Step>
-    **Pick a parent service area.** A zone must belong to exactly one service area — if you find yourself wanting a "freestanding" zone, model it as a service area instead.
+    **Pick a parent service area.** A zone must belong to exactly one service area — if you find yourself wanting a "freestanding" zone, model it as a service area instead. The "Create Zone" entry on either the toolbar panel or the right-click context menu carries the parent through for you.
   </Step>
   <Step>
     **Draw the boundary** using the polygon tool, drop a pin and provide a radius, or paste GeoJSON. Radius-based zones default to a 500 m circle around the pin.
@@ -57,9 +65,11 @@ In the console, open the parent service area in the map view and click **Add Zon
     **Configure geofence triggers** (optional). Toggle entry/exit events, set a dwell threshold, or record a speed limit. See [Geofences](/docs/fleet-ops/operations/service-areas-geofences/geofences) for what each option controls.
   </Step>
   <Step>
-    **Save.** The zone appears in the parent service area's zone list and on the live map.
+    **Save.** The zone appears nested under the parent in the toolbar list and on the live map.
   </Step>
 </Steps>
+
+To reshape a zone after it's been created, right-click it on the map and pick **Edit Boundaries** — the polygon switches to a dashed outline with draggable handles at every vertex, exactly like service-area boundary editing.
 
 ## Zone-Based Pricing
 

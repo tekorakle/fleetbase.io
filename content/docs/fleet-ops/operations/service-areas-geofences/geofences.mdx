@@ -90,11 +90,11 @@ All three power the geofence widgets on the FleetOps **Analytics → Reports** d
 
 ## Configuration Workflow
 
-In the console, geofence triggers are part of the service area / zone edit modal — there is no separate "Geofences" page in the UI. To turn an existing polygon into a geofence:
+In the console, geofence triggers are part of the service-area / zone edit modal — there is no separate "Geofences" page in the UI. To turn an existing polygon into a geofence, go to **Fleet-Ops → Dashboard → Map** tab and:
 
-1. Open the service area or zone in the map view.
-2. Click **Edit**.
-3. In the **Geofence Triggers** section, toggle entry / exit and set the dwell or speed-limit value.
+1. Right-click the service-area or zone polygon on the map (or open the map toolbar's service-areas panel and pick the area from the list).
+2. Choose **Edit** from the contextual menu.
+3. In the **Geofence Triggers** section of the modal, toggle entry / exit and set the dwell or speed-limit value.
 4. Save. Subsequent location updates immediately respect the new configuration — there's no separate deploy step.
 
 To remove a geofence, clear the trigger fields. The polygon stays in place for pricing and visualization, but no new events fire.
