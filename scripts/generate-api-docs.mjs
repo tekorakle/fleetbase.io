@@ -914,7 +914,11 @@ function renderParam(field, indent) {
 
   const lines = [head];
   if (desc) {
-    lines.push(`${indent}  ${escapeJsxText(desc)}`);
+    const escaped = escapeJsxText(desc);
+    const descLines = escaped.split('\n');
+    for (const dl of descLines) {
+      lines.push(dl.length ? `${indent}  ${dl}` : '');
+    }
   }
 
   if (Array.isArray(nested) && nested.length > 0) {
