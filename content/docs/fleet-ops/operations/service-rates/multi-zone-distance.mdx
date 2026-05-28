@@ -6,7 +6,7 @@ description: Charge different per-distance rates in different geographies — de
 
 # Multi-zone Distance
 
-When `rate_calculation_method` is set to **`multi_zone_distance`**, the route's distance is **split across geographic rules** — each rule covers a zone or service area and has its own per-distance rate. The route's distance through each rule's geography is priced with that rule's rate; an optional **fallback rule** picks up any distance that doesn't match a defined geography.
+**Multi-zone Distance** splits the route's distance across **geographic rules** — each rule covers a Zone or Service Area and has its own per-distance rate. The portion of the route inside each rule's geography is priced with that rule's rate; an optional **fallback rule** picks up any distance that falls outside every defined geography. (In the API this method is identified as `multi_zone_distance`.)
 
 This unlocks pricing models like:
 
@@ -22,44 +22,40 @@ If you only need one rate everywhere, use [Per Meter](/docs/fleet-ops/operations
 
 ## How it works
 
-A Multi-zone Distance rate is configured as a list of **geographic rules**. Each rule is one of:
+A Multi-zone Distance rate is a list of **geographic rules**. Each rule is one of:
 
-- A **Zone rule** — links to a [Zone](/docs/fleet-ops/resources/places/overview) via `zone_uuid`. The rule's rate applies to whatever portion of the route runs through that zone.
-- A **Service Area rule** — links to a Service Area via `service_area_uuid`. Same behavior, scoped to a service area boundary.
-- A **Fallback rule** — flagged with `is_fallback = true`. Applies to any segment of the route that doesn't fall inside any defined zone or service area.
+- A **Zone rule** — applies to the portion of the route that runs through a chosen [Zone](/docs/fleet-ops/resources/places/overview).
+- A **Service Area rule** — applies to the portion of the route that runs through a chosen Service Area.
+- A **Fallback rule** — applies to any part of the route that doesn't fall inside any of the rules' geographies.
 
 At quote time:
 
-1. Fleet-Ops loads every rule and orders them by `priority` (highest first). Where geographies overlap, the higher-priority rule wins.
-2. The route is walked from waypoint to waypoint, segment by segment.
-3. For each segment, Fleet-Ops checks which rule's geography contains it and assigns that segment's distance to that rule. Segments outside every defined geography are assigned to the fallback rule (if one is defined).
-4. For each rule that accumulated distance, the fee is calculated as:
-   ```
-   rule_fee = distance_in_rule × rule_rate (in the rule's distance_unit)
-   ```
-5. The rule fees are summed and added to the **Base Fee** to produce the service fee.
+1. Fleet-Ops ranks the rules by priority (highest first). Where two geographies overlap, the higher-priority rule wins.
+2. Fleet-Ops walks the route and, for each segment, checks which rule's geography contains it.
+3. The distance inside each rule's geography is added up. Anything that doesn't fall inside a defined geography goes to the fallback rule, if you've added one.
+4. Each rule's fee is **its distance × its rate** (in that rule's distance unit).
+5. All the rule fees are summed and added to the **Base Fee** to produce the service fee.
 
-The quote's line items include one entry per rule that contributed distance, labeled with the zone or service area name, so customers and dispatchers can see exactly how the total was assembled.
+The quote's line items include one entry per rule that contributed distance, labeled with the Zone or Service Area name, so customers and dispatchers can see exactly how the total was assembled.
 
 <Callout type="info">
-  **Need to know.** Fleet-Ops samples the route between waypoints to figure out which segments fall inside each geography, so as long as your zones and service areas have accurate borders, the split is computed automatically. You do not need to manually break up the order or pre-assign distance to zones.
+  **Need to know.** Fleet-Ops figures out which segments fall inside each geography automatically — as long as your Zones and Service Areas have accurate boundaries drawn on the map, the split happens at quote time. You do not need to manually break up the order or pre-assign distance to zones.
 </Callout>
 
-## Configuration
+## Rule settings
 
-Each row in the rules table is a `ServiceRateFee` record with the following fields:
+Each row in the rules table has the following settings:
 
-| Field | Required | Description |
+| Setting | Required | Description |
 | :--- | :--- | :--- |
-| `label` | optional | A human-readable name for the rule (e.g. "Downtown", "Rural fallback"). Shown on quote line items if the zone/service area name isn't available. |
-| `zone_uuid` | conditional | UUID of the [Zone](/docs/fleet-ops/resources/places/overview) this rule prices. Required when the rule's **Geography Type** is `zone`. |
-| `service_area_uuid` | conditional | UUID of the Service Area this rule prices. Required when the rule's **Geography Type** is `service_area`. |
-| `is_fallback` | optional | When `true`, this rule applies to any route distance that didn't match a zone or service area. Use **+ Add Fallback** in the form to create one. |
-| `priority` | optional | Integer. Higher priority rules are evaluated first when geographies overlap. Defaults to `0`. |
-| `fee` | yes | The per-distance rate for this rule, in the service rate's currency. |
-| `distance_unit` | yes | The unit the rate is denominated in for this specific rule. One of: `m`, `km`, `ft`, `yd`, `mi`. Each rule can use a different unit. |
+| **Label** | optional | A human-readable name for the rule (e.g. "Downtown", "Rural fallback"). Shown on quote line items if the Zone or Service Area name isn't available. |
+| **Geography Type** | yes | Choose **Zone** or **Service Area** (or **Fallback** for unmatched route distance). |
+| **Geography** | conditional | The specific Zone or Service Area this rule prices. Required for Zone or Service Area rules. |
+| **Priority** | optional | A whole number. When geographies overlap, higher priority wins. Defaults to 0. |
+| **Rate** | yes | The per-distance rate for this rule, in the service rate's currency. |
+| **Unit** | yes | The distance unit the rate is denominated in (km, mi, m, ft, or yd). Each rule can use a different unit. |
 
-A rate can have **at most one fallback rule**. If you want a flat charge for out-of-zone distance, set the fallback rule's rate; if you'd rather refuse out-of-zone orders entirely, omit the fallback and they'll be priced at $0 for the unmatched segment.
+A rate can have **at most one fallback rule**. If you want a flat charge for out-of-zone distance, set the fallback rule's rate; if you'd rather refuse out-of-zone orders entirely, omit the fallback and that distance will be priced at $0.
 
 ## Worked example
 
@@ -69,10 +65,10 @@ This is the configuration shown in the screenshots above — a service rate call
 
 | Label | Geography Type | Geography | Priority | Rate | Unit |
 | :--- | :--- | :--- | :---: | :--- | :--- |
-| Downtown Singapore | Zone | Downtown Singapore Zone | 10 | $2.00 | `km` |
-| Singapore | Service Area | Singapore Service Area | 5 | $1.25 | `km` |
+| Downtown Singapore | Zone | Downtown Singapore Zone | 10 | $2.00 | km |
+| Singapore | Service Area | Singapore Service Area | 5 | $1.25 | km |
 
-Consider a route with four waypoints that starts and ends inside the broader Singapore Service Area but passes through the Downtown Singapore Zone partway. Fleet-Ops samples the route and assigns each segment to whichever rule's geography contains it; the Downtown rule wins inside the downtown polygon because of its higher priority.
+Consider a route with four waypoints that starts and ends inside the broader Singapore Service Area but passes through the Downtown Singapore Zone partway. The Downtown rule wins inside the downtown boundary because it has a higher priority; the Service Area rule prices everything else.
 
 For an order whose route distance breaks down as **12.41 km inside Downtown** and **15.99 km inside the rest of the Singapore Service Area**:
 
@@ -97,7 +93,7 @@ If you wanted to charge for distance that goes **outside the Singapore Service A
 
 <Steps>
   <Step>
-    Make sure the [Zones](/docs/fleet-ops/resources/places/overview) and/or Service Areas you want to price by already exist and have valid borders. The rules reference them by UUID.
+    Make sure the [Zones](/docs/fleet-ops/resources/places/overview) and/or Service Areas you want to price by already exist and have valid boundaries drawn on the map.
   </Step>
   <Step>
     Create or open a service rate in **Fleet-Ops → Operations → Service Rates**.
@@ -106,9 +102,9 @@ If you wanted to charge for distance that goes **outside the Singapore Service A
     Set **Rate Calculation Method** to **Multi-zone Distance**.
   </Step>
   <Step>
-    Click **Add Rule** for each zone or service area you want to price. For each rule:
+    Click **Add Rule** for each Zone or Service Area you want to price. For each rule:
     - Enter a **Label** (optional but useful on quote line items)
-    - Select the **Geography Type** (`zone` or `service_area`)
+    - Select the **Geography Type** (Zone or Service Area)
     - Pick the specific **Geography** from the dropdown
     - Set the **Priority** if you have overlapping geographies (higher wins)
     - Set the **Rate** and **Unit** for that rule
@@ -129,25 +125,25 @@ If you wanted to charge for distance that goes **outside the Singapore Service A
 
 ## How priority resolves overlaps
 
-If two zones overlap, the higher-priority rule wins for the overlapping region — the other rule does not get any distance from that area. This is useful for:
+If two geographies overlap, the higher-priority rule wins for the overlapping region — the other rule does not get any distance from that area. This is useful for:
 
-- **Carve-outs**: a city-wide rate at priority `0`, plus a high-priority Downtown rule at priority `10` that takes precedence within the downtown polygon.
-- **Express zones**: a base service area at priority `0`, with a "fast lane" zone at priority `10` priced higher.
-- **Promotional zones**: a low-rate promo zone at high priority temporarily layered over your normal pricing.
+- **Carve-outs**: a city-wide rate at priority 0, plus a high-priority Downtown rule at priority 10 that takes precedence inside the downtown boundary.
+- **Express zones**: a base Service Area at priority 0, with a "fast lane" Zone at priority 10 priced higher.
+- **Promotional zones**: a low-rate promo Zone at high priority temporarily layered over your normal pricing.
 
-The fallback rule's priority is not used for matching — it only applies to distance that no priority-ordered rule matched.
+The fallback rule's priority is not used for matching — it only applies to distance that no other rule matched.
 
 ## Limitations
 
-- **Borders must be valid.** Each zone or service area you reference must have a defined `border` (a GeoJSON polygon or multipolygon). Rules pointing at geographies without borders are skipped.
-- **No mixing with `per_meter`.** A rate uses one calculation method only. To layer a flat-per-km charge under multi-zone pricing, set the same flat amount as the **fallback rule's** rate.
+- **Boundaries must be drawn.** Each Zone or Service Area you reference must have a boundary drawn on the map. Rules pointing at geographies without boundaries are skipped.
+- **One calculation method per rate.** A rate uses one calculation method only. To layer a flat-per-km charge under multi-zone pricing, set the same flat amount as the **fallback rule's** rate.
 - **One fallback rule per rate.** Multi-zone rates support exactly one fallback. If you need multiple "outside" tiers (e.g. by distance from city), combine multi-zone pricing with an [Algorithm](/docs/fleet-ops/operations/service-rates/algorithm-rates) rate via separate quotes.
-- **Geographies must exist on the order route.** If you scope a rate to a Zone but the order's route doesn't actually cross that zone, the rule contributes $0 and a fallback (if defined) picks up the entire distance.
+- **Geographies must actually be on the route.** If you add a rule for a Zone but the order's route doesn't actually pass through it, that rule contributes $0 and a fallback (if defined) picks up the entire distance.
 
 ## Related Pages
 
 - [Service Rates Overview](/docs/fleet-ops/operations/service-rates/overview) — all calculation methods and rate scoping
-- [Service Areas & Zones](/docs/fleet-ops/resources/places/overview) — how to define the geographies referenced by multi-zone rules
+- [Service Areas & Zones](/docs/fleet-ops/resources/places/overview) — how to define the geographies used by multi-zone rules
 - [Per Meter](/docs/fleet-ops/operations/service-rates/per-meter) — single-rate linear distance pricing
 - [Algorithm Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates) — combine with other surcharges in a custom expression
 - [Service Quotes](/docs/fleet-ops/operations/service-quotes/overview) — how the calculated rate becomes a quote on an order

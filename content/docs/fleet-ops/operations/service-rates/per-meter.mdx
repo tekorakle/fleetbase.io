@@ -6,7 +6,7 @@ description: Charge a flat rate per unit of distance — meters, kilometers, fee
 
 # Per Meter
 
-When `rate_calculation_method` is set to **`per_meter`**, the service fee scales **linearly with distance**. You set a fee per unit of distance (e.g. `$0.80 per km`), pick the unit, and Fleet-Ops multiplies it by the actual route distance at quote time.
+**Per Meter** scales the service fee **linearly with distance**. You set a fee per unit of distance (e.g. $0.80 per km), pick the unit, and Fleet-Ops multiplies it by the actual route distance at quote time. (In the API this method is identified as `per_meter`.)
 
 Use this for taxi-style or urban-delivery pricing where every additional unit of distance adds a predictable, constant amount. If your pricing curve changes at certain distances, use [Fixed Rate](/docs/fleet-ops/operations/service-rates/fixed-rate) instead; if it needs to vary by region, use [Multi-zone Distance](/docs/fleet-ops/operations/service-rates/multi-zone-distance).
 
@@ -14,28 +14,24 @@ Use this for taxi-style or urban-delivery pricing where every additional unit of
 
 ## How it works
 
-The formula is:
-
-```
-service_fee = base_fee + (per_meter_flat_rate_fee × distance_in_unit)
-```
+> **Service fee = Base Fee + (Per-Meter Rate × distance in the selected unit)**
 
 At quote time:
 
-1. The route's total distance (in meters) is normalized into the unit you selected via `per_meter_unit`.
-2. The normalized distance is multiplied by `per_meter_flat_rate_fee`.
-3. The result is added to `base_fee` to produce the service fee.
+1. The route's total distance is converted into the unit you selected (kilometers, miles, meters, feet, or yards).
+2. That distance is multiplied by your per-unit rate.
+3. The result is added to the Base Fee to produce the service fee.
 
 Distance is **not capped** — pricing keeps scaling linearly however far the route goes. If you need a cap, use the [Algorithm](/docs/fleet-ops/operations/service-rates/algorithm-rates) method with a `min()` expression.
 
-## Configuration
+## API reference
 
 | Field | Required | Description |
 | :--- | :--- | :--- |
 | `rate_calculation_method` | yes | Set to `per_meter`. |
 | `per_meter_flat_rate_fee` | yes | The fee charged per unit of distance, in the rate's currency. |
 | `per_meter_unit` | yes | The unit the rate is denominated in. One of: `m`, `km`, `ft`, `yd`, `mi`. |
-| `base_fee` | optional | Added to the distance-scaled fee. Useful for a flag-fall / pickup fee. |
+| `base_fee` | optional | Added to the distance-scaled fee. Useful as a flag-fall or pickup fee. |
 | `currency` | yes | Currency for the fee. |
 
 ## Worked examples
@@ -44,38 +40,38 @@ Distance is **not capped** — pricing keeps scaling linearly however far the ro
 
 > *"$2 pickup fee + $0.80 per km."*
 
-| Field | Value |
+| Setting | Value |
 | :--- | :--- |
-| `base_fee` | $2.00 |
-| `per_meter_flat_rate_fee` | $0.80 |
-| `per_meter_unit` | `km` |
+| Base Fee | $2.00 |
+| Per-Meter Rate | $0.80 |
+| Distance Unit | km |
 
-For a **12 km** route: `2 + (0.80 × 12)` = **$11.60**.
+For a **12 km** route: 2 + (0.80 × 12) = **$11.60**.
 
-For a **3 km** route: `2 + (0.80 × 3)` = **$4.40**.
+For a **3 km** route: 2 + (0.80 × 3) = **$4.40**.
 
 ### 2. Per mile
 
 > *"$1.50 per mile, no pickup fee."*
 
-| Field | Value |
+| Setting | Value |
 | :--- | :--- |
-| `base_fee` | $0.00 |
-| `per_meter_flat_rate_fee` | $1.50 |
-| `per_meter_unit` | `mi` |
+| Base Fee | $0.00 |
+| Per-Meter Rate | $1.50 |
+| Distance Unit | mi |
 
-For an **8 mi** route: `0 + (1.50 × 8)` = **$12.00**.
+For an **8 mi** route: 0 + (1.50 × 8) = **$12.00**.
 
 ### 3. Per meter (very short hops)
 
 > *"$0.01 per meter — for indoor or campus deliveries."*
 
-| Field | Value |
+| Setting | Value |
 | :--- | :--- |
-| `per_meter_flat_rate_fee` | $0.01 |
-| `per_meter_unit` | `m` |
+| Per-Meter Rate | $0.01 |
+| Distance Unit | m |
 
-For a **350 m** route: `0.01 × 350` = **$3.50**.
+For a **350 m** route: 0.01 × 350 = **$3.50**.
 
 ## Configuration workflow
 
@@ -87,7 +83,7 @@ For a **350 m** route: `0.01 × 350` = **$3.50**.
     Set **Rate Calculation Method** to **Per Meter**.
   </Step>
   <Step>
-    Set the **Per-Meter Rate Fee** (`per_meter_flat_rate_fee`) and **Distance Unit** (`per_meter_unit`). The form will preview the formula as `(rate × {distance} unit) + base_fee`.
+    Set the **Per-Meter Rate Fee** and **Distance Unit**. The form previews the formula live as you change the values.
   </Step>
   <Step>
     *Optional:* Set a **Base Fee** (the flag-fall amount added before the distance calculation).
