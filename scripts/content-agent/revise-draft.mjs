@@ -18,6 +18,8 @@ function parseArgs(argv) {
     promptFile: process.env.REVISION_PROMPT_FILE || '',
     dryRun: process.env.APPLY_GHOST_REVISION !== 'true',
     allowPublished: process.env.ALLOW_PUBLISHED_REVISION === 'true',
+    ruleRepairAttempts: Number(process.env.REVISION_RULE_REPAIR_ATTEMPTS || 2),
+    bypassContentRules: process.env.BYPASS_CONTENT_RULES === 'true',
     outputDir:
       process.env.CONTENT_AGENT_OUTPUT_DIR ||
       path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'fleetbase-content-agent-revision'),
@@ -32,6 +34,10 @@ function parseArgs(argv) {
     if (arg === '--dry-run') args.dryRun = true;
     if (arg === '--apply') args.dryRun = false;
     if (arg === '--allow-published') args.allowPublished = true;
+    if (arg === '--bypass-content-rules') args.bypassContentRules = true;
+    if (arg === '--rule-repair-attempts') {
+      args.ruleRepairAttempts = Number(argv[index + 1] || args.ruleRepairAttempts);
+    }
     if (arg === '--output-dir') args.outputDir = argv[index + 1] || args.outputDir;
   }
 
@@ -70,18 +76,25 @@ function toArticleInput(post) {
   };
 }
 
-async function reviseWithClaude({ post, revisionPrompt }) {
+async function reviseWithClaude({ post, revisionPrompt, previousRevision = null, ruleIssues = [] }) {
   const system =
     'You revise Fleetbase Ghost blog drafts. Preserve factual accuracy, keep the article specific to Fleetbase, and output clean semantic HTML. Do not include scripts, styles, iframes, markdown fences, or comments.';
   const prompt = JSON.stringify(
     {
-      task: 'Revise this Ghost blog post according to the editor prompt.',
+      task: previousRevision
+        ? 'Repair the revised Ghost blog post so it satisfies all Fleetbase content rules.'
+        : 'Revise this Ghost blog post according to the editor prompt.',
       editorPrompt: revisionPrompt,
       fleetbaseEditorialRules: contentAgentConfig.contentStrategy.editorialRules,
+      blockingRuleIssues: ruleIssues,
       article: toArticleInput(post),
+      previousRevision,
       requirements: [
         'Preserve accurate Fleetbase product and API claims.',
         `Use ${contentAgentConfig.siteUrl} for all Fleetbase website links and ${contentAgentConfig.siteUrl}/docs for all documentation links. Never use fleetbase.ghost.io for docs or website links.`,
+        'If blockingRuleIssues are present, remove or rewrite the violating language instead of explaining the issue.',
+        'For ad hoc order flows, say the order is broadcast to nearby drivers who accept or decline in Navigator. Do not mention orchestrator, manual dispatch, or driver assignment for that flow.',
+        'Do not mention platform-level activity definitions; activity is defined by the order config.',
         'Keep or improve SEO metadata.',
         'Keep semantic HTML suitable for Ghost.',
         'Do not publish or schedule the post.',
@@ -111,6 +124,28 @@ async function reviseWithClaude({ post, revisionPrompt }) {
   return normalizeFleetbaseArticle(revised);
 }
 
+async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts }) {
+  let revised = await reviseWithClaude({ post, revisionPrompt });
+  let ruleCheck = validateFleetbaseArticle(revised);
+  await writeOutput(outputDir, `rule-check-${revised.slug}-attempt-1.json`, ruleCheck);
+
+  for (let attempt = 1; ruleCheck.blockingIssues.length > 0 && attempt <= maxAttempts; attempt += 1) {
+    console.warn(
+      `[content-agent:revise] Fleetbase content rules blocked attempt ${attempt}. Asking Claude to repair: ${ruleCheck.blockingIssues.join('; ')}`,
+    );
+    revised = await reviseWithClaude({
+      post,
+      revisionPrompt,
+      previousRevision: revised,
+      ruleIssues: ruleCheck.blockingIssues,
+    });
+    ruleCheck = validateFleetbaseArticle(revised);
+    await writeOutput(outputDir, `rule-check-${revised.slug}-attempt-${attempt + 1}.json`, ruleCheck);
+  }
+
+  return { revised, ruleCheck };
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const revisionPrompt = (await readPrompt(args)).trim();
@@ -136,13 +171,23 @@ async function main() {
   await writeOutput(args.outputDir, `original-${post.slug}.json`, toArticleInput(post));
   await writeOutput(args.outputDir, `original-${post.slug}.html`, post.html || '');
 
-  const revised = await reviseWithClaude({ post, revisionPrompt });
-  const ruleCheck = validateFleetbaseArticle(revised);
+  const { revised, ruleCheck } = await reviseUntilRulesPass({
+    post,
+    revisionPrompt,
+    outputDir: args.outputDir,
+    maxAttempts: args.ruleRepairAttempts,
+  });
   await writeOutput(args.outputDir, `rule-check-${revised.slug}.json`, ruleCheck);
 
-  if (ruleCheck.blockingIssues.length > 0) {
+  if (ruleCheck.blockingIssues.length > 0 && !args.bypassContentRules) {
     throw new Error(
       `Fleetbase content rules blocked revision "${revised.title}": ${ruleCheck.blockingIssues.join('; ')}`,
+    );
+  }
+
+  if (ruleCheck.blockingIssues.length > 0 && args.bypassContentRules) {
+    console.warn(
+      `[content-agent:revise] Bypassing Fleetbase content rule warnings for "${revised.title}": ${ruleCheck.blockingIssues.join('; ')}`,
     );
   }
 
@@ -164,6 +209,13 @@ async function main() {
 - Revised title: ${revised.title}
 - Revised slug: ${revised.slug}
 - Revision summary: ${revised.revisionSummary.join('; ') || 'No summary returned'}
+- Content rule status: ${
+    ruleCheck.blockingIssues.length > 0
+      ? args.bypassContentRules
+        ? `Bypassed warnings: ${ruleCheck.blockingIssues.join('; ')}`
+        : `Blocked: ${ruleCheck.blockingIssues.join('; ')}`
+      : 'Passed'
+  }
 - Ghost status: ${updatedPost?.status || post.status}
 - Artifacts: ${args.outputDir}
 `);
