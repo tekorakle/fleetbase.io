@@ -99,6 +99,7 @@ export async function scoreTopics({ opportunities, context, config, contentFocus
       task: 'Score SEO content opportunities for Fleetbase.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       hardRules: [
         'Reject generic keywords that cannot be tied directly to Fleetbase logistics software, supply chain software, fleet operations, delivery management, warehouse/inventory workflows, or Fleetbase API tutorials.',
         'For fleetbase-api-tutorial focus, prefer build/use/tutorial topics over comparison or generic definition posts.',
@@ -162,6 +163,7 @@ export async function generateBrief({ topic, context, config, contentFocus, fetc
       task: 'Create a detailed content brief for one Fleetbase blog article.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       topic,
       siteUrl: config.siteUrl,
       fleetbaseContext: context.summary,
@@ -171,6 +173,7 @@ export async function generateBrief({ topic, context, config, contentFocus, fetc
         `Use ${config.siteUrl} for all Fleetbase website links and ${config.siteUrl}/docs for all documentation links. Never use fleetbase.ghost.io for docs or website links.`,
         'If this is a tutorial focus, define what the reader will build or configure with Fleetbase.',
         'Avoid generic SaaS content that could apply to any logistics vendor.',
+        'Use the Fleetbase editorial rules as hard product facts. Do not contradict them.',
       ],
       requiredJsonShape: {
         title: 'string',
@@ -205,6 +208,7 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
       task: 'Write the article draft from the approved brief.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       brief,
       fleetbaseContext: context.summary,
       requirements: [
@@ -215,6 +219,7 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
         'For Fleetbase API tutorials, include a practical build/configure/use flow with code or request examples only when supported by context.',
         'For software SEO articles, connect the topic to Fleetbase modules and logistics/supply-chain operating workflows.',
         'No publication language such as "in this AI-generated draft".',
+        'Use the Fleetbase editorial rules as hard product facts. Do not contradict them.',
       ],
       requiredJsonShape: {
         title: 'string',
@@ -290,6 +295,7 @@ export async function qaArticle({ brief, draft, context, config, contentFocus, f
       task: 'QA this Fleetbase blog draft.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       brief,
       draft,
       fleetbaseContext: context.summary,
@@ -303,6 +309,7 @@ export async function qaArticle({ brief, draft, context, config, contentFocus, f
         'Contains useful internal links.',
         'No publish/schedule action requested.',
         'Ready for human review in Ghost.',
+        'Block drafts that contradict any Fleetbase editorial rule.',
       ],
       requiredJsonShape: {
         publishReady: true,

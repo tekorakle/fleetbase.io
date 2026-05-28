@@ -6,8 +6,8 @@ import path from 'node:path';
 
 import { callClaudeJson } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
+import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
 import { getGhostPost, updateGhostPost } from './ghost-admin.mjs';
-import { normalizeArticleLinks } from './links.mjs';
 import { RevisedArticleSchema } from './schemas.mjs';
 
 function parseArgs(argv) {
@@ -77,6 +77,7 @@ async function reviseWithClaude({ post, revisionPrompt }) {
     {
       task: 'Revise this Ghost blog post according to the editor prompt.',
       editorPrompt: revisionPrompt,
+      fleetbaseEditorialRules: contentAgentConfig.contentStrategy.editorialRules,
       article: toArticleInput(post),
       requirements: [
         'Preserve accurate Fleetbase product and API claims.',
@@ -107,7 +108,7 @@ async function reviseWithClaude({ post, revisionPrompt }) {
     maxTokens: 8192,
   });
 
-  return normalizeArticleLinks(revised);
+  return normalizeFleetbaseArticle(revised);
 }
 
 async function main() {
@@ -136,6 +137,15 @@ async function main() {
   await writeOutput(args.outputDir, `original-${post.slug}.html`, post.html || '');
 
   const revised = await reviseWithClaude({ post, revisionPrompt });
+  const ruleCheck = validateFleetbaseArticle(revised);
+  await writeOutput(args.outputDir, `rule-check-${revised.slug}.json`, ruleCheck);
+
+  if (ruleCheck.blockingIssues.length > 0) {
+    throw new Error(
+      `Fleetbase content rules blocked revision "${revised.title}": ${ruleCheck.blockingIssues.join('; ')}`,
+    );
+  }
+
   await writeOutput(args.outputDir, `revised-${revised.slug}.json`, revised);
   await writeOutput(args.outputDir, `revised-${revised.slug}.html`, revised.html);
 

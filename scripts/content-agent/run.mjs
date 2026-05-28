@@ -13,9 +13,9 @@ import {
   scoreTopics,
 } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
+import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
 import { buildContextManifest, buildFleetbaseContext } from './context.mjs';
 import { createGhostDraft, uploadGhostImage } from './ghost-admin.mjs';
-import { normalizeArticleLinks } from './links.mjs';
 import { generateFeatureImage, shouldGenerateFeatureImage } from './openai-image.mjs';
 
 function parseArgs(argv) {
@@ -199,7 +199,7 @@ async function main() {
     await writeOutput(outputDir, `brief-${brief.slug}.json`, brief);
 
     console.log(`[content-agent] Generating draft for "${brief.title}".`);
-    const draft = normalizeArticleLinks(await generateArticle({
+    const draft = normalizeFleetbaseArticle(await generateArticle({
       brief,
       context: topicContext,
       config: contentAgentConfig,
@@ -207,6 +207,8 @@ async function main() {
     }));
     await writeOutput(outputDir, `draft-${draft.slug}.json`, draft);
     await writeOutput(outputDir, `draft-${draft.slug}.html`, draft.html);
+    const ruleCheck = validateFleetbaseArticle(draft);
+    await writeOutput(outputDir, `rule-check-${draft.slug}.json`, ruleCheck);
 
     let featureImage = null;
     const imageBrief = args.generateFeatureImage
@@ -230,13 +232,21 @@ async function main() {
       config: contentAgentConfig,
       contentFocus,
     });
-    await writeOutput(outputDir, `qa-${draft.slug}.json`, qa);
+    const blockingIssues = [...ruleCheck.blockingIssues, ...qa.blockingIssues];
+    const qaWarnings = [...ruleCheck.warnings, ...qa.warnings];
+    const combinedQa = {
+      ...qa,
+      blockingIssues,
+      warnings: qaWarnings,
+    };
 
-    generated.push({ topic, brief, draft, qa, sourceCitations: topicContext.sourceCitations });
+    await writeOutput(outputDir, `qa-${draft.slug}.json`, combinedQa);
 
-    if (!qa.publishReady && qa.blockingIssues.length > 0) {
+    generated.push({ topic, brief, draft, qa: combinedQa, sourceCitations: topicContext.sourceCitations });
+
+    if (blockingIssues.length > 0) {
       throw new Error(
-        `QA blocked draft "${draft.title}": ${qa.blockingIssues.join('; ') || 'No details returned.'}`,
+        `QA blocked draft "${draft.title}": ${blockingIssues.join('; ') || 'No details returned.'}`,
       );
     }
 

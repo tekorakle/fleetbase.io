@@ -8,6 +8,7 @@ import path from 'node:path';
 import { buildAhrefsKeywordUrl, normalizeAhrefsKeyword } from './ahrefs.mjs';
 import { callClaudeJson, generateFeatureImageBrief } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
+import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
 import { buildContextManifest, selectContextSources } from './context.mjs';
 import {
   buildGhostDraftPayload,
@@ -354,6 +355,41 @@ function testFleetbaseLinkNormalization() {
   assert.equal(article.metaDescription, 'Visit https://fleetbase.io/docs');
 }
 
+function testFleetbaseContentRules() {
+  const normalized = normalizeFleetbaseArticle({
+    title: 'FleetOps Order Configurations Guide',
+    excerpt: 'See https://fleetbase.ghost.io/docs for FleetOps help.',
+    html: '<p>FleetOps extension docs at https://fleetbase.ghost.io/docs/api.</p>',
+    metaTitle: 'FleetOps Guide',
+    metaDescription: 'FleetOps and Order Configurations.',
+  });
+
+  assert.equal(normalized.title, 'Fleet-Ops Order Config Guide');
+  assert.equal(normalized.excerpt, 'See https://fleetbase.io/docs for Fleet-Ops help.');
+  assert.equal(normalized.html, '<p>Fleet-Ops docs at https://fleetbase.io/docs/api.</p>');
+  assert.equal(normalized.metaDescription, 'Fleet-Ops and Order Config.');
+
+  const invalid = validateFleetbaseArticle({
+    title: 'API-first ride hailing app',
+    excerpt: 'Use order_config for quotes.',
+    html: '<p>Create an adhoc order and then run orchestrator for manual dispatch.</p>',
+    metaTitle: 'API-first guide',
+    metaDescription: 'Uses platform-level activity.',
+  });
+
+  assert.equal(invalid.blockingIssues.length >= 4, true);
+
+  const warning = validateFleetbaseArticle({
+    title: 'Build proof of delivery in Fleetbase',
+    excerpt: 'A proof of delivery guide.',
+    html: '<p>Capture delivery proof for an order.</p>',
+    metaTitle: 'Proof of delivery',
+    metaDescription: 'Proof of delivery guide.',
+  });
+
+  assert.equal(warning.warnings.some((item) => item.includes('/v1/orders/:id/proofs')), true);
+}
+
 function testSourceTruthRepoConfig() {
   const expectedRepos = [
     'fleetbase/core-api',
@@ -446,6 +482,7 @@ await testGhostImageUpload();
 await testGhostAdminReadAndUpdate();
 testParseJsonObject();
 testFleetbaseLinkNormalization();
+testFleetbaseContentRules();
 testSourceTruthRepoConfig();
 await testContextManifestAndSelection();
 
