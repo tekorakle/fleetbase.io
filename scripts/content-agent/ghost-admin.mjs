@@ -79,6 +79,10 @@ function toGhostTags(publicTags, internalTags) {
     .map((name) => ({ name }));
 }
 
+function toImageBlob(image) {
+  return new Blob([image.bytes], { type: image.mimeType || 'image/png' });
+}
+
 export function buildGhostDraftPayload(draft, config) {
   return {
     posts: [
@@ -90,6 +94,8 @@ export function buildGhostDraftPayload(draft, config) {
         custom_excerpt: draft.excerpt,
         meta_title: draft.metaTitle,
         meta_description: draft.metaDescription,
+        feature_image: draft.featureImage || null,
+        feature_image_alt: draft.featureImageAlt || null,
         tags: toGhostTags(draft.publicTags, config.ghost.internalTags),
       },
     ],
@@ -122,6 +128,42 @@ export async function createGhostDraft(draft, config, options = {}) {
     url: post.url || null,
     status: post.status,
   });
+}
+
+export async function uploadGhostImage(image, filename, config, options = {}) {
+  const { adminApiUrl, adminApiKey } = getGhostAdminConfig(options);
+  const token = createGhostAdminToken(adminApiKey);
+  const url = new URL(`${adminApiUrl}/ghost/api/admin/images/upload/`);
+  const form = new FormData();
+
+  form.append('file', toImageBlob(image), filename);
+  form.append('ref', filename);
+
+  const response = await (options.fetchImpl || fetch)(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Ghost ${token}`,
+      Accept: 'application/json',
+      'Accept-Version': process.env.GHOST_API_VERSION || config.ghost.apiVersion,
+    },
+    body: form,
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `Ghost Admin API image upload failed with status ${response.status}: ${body.slice(0, 500)}`,
+    );
+  }
+
+  const payload = await response.json();
+  const uploaded = payload.images?.[0];
+
+  if (!uploaded?.url) {
+    throw new Error('Ghost image upload response did not include an image URL.');
+  }
+
+  return uploaded;
 }
 
 export async function getGhostPost(identifier, config, options = {}) {

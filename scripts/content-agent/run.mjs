@@ -5,10 +5,17 @@ import os from 'node:os';
 import path from 'node:path';
 
 import { fetchAhrefsKeywordIdeas } from './ahrefs.mjs';
-import { generateArticle, generateBrief, qaArticle, scoreTopics } from './claude.mjs';
+import {
+  generateArticle,
+  generateBrief,
+  generateFeatureImageBrief,
+  qaArticle,
+  scoreTopics,
+} from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { buildContextManifest, buildFleetbaseContext } from './context.mjs';
-import { createGhostDraft } from './ghost-admin.mjs';
+import { createGhostDraft, uploadGhostImage } from './ghost-admin.mjs';
+import { generateFeatureImage, shouldGenerateFeatureImage } from './openai-image.mjs';
 
 function parseArgs(argv) {
   const args = {
@@ -17,6 +24,7 @@ function parseArgs(argv) {
     keyword: process.env.CONTENT_AGENT_KEYWORD || '',
     focus: process.env.CONTENT_AGENT_FOCUS || 'auto',
     maxDrafts: Number(process.env.CONTENT_AGENT_MAX_DRAFTS || contentAgentConfig.maxDraftsPerRun),
+    generateFeatureImage: process.env.GENERATE_FEATURE_IMAGE !== 'false',
   };
 
   for (let index = 0; index < argv.length; index += 1) {
@@ -27,6 +35,7 @@ function parseArgs(argv) {
     if (arg === '--keyword') args.keyword = argv[index + 1] || '';
     if (arg === '--focus') args.focus = argv[index + 1] || 'auto';
     if (arg === '--max-drafts') args.maxDrafts = Number(argv[index + 1] || args.maxDrafts);
+    if (arg === '--no-feature-image') args.generateFeatureImage = false;
   }
 
   args.maxDrafts = Math.max(1, Math.min(args.maxDrafts || 1, contentAgentConfig.maxDraftsPerRun));
@@ -80,7 +89,14 @@ function formatJson(value) {
 
 async function writeOutput(outputDir, name, value) {
   await fs.mkdir(outputDir, { recursive: true });
-  await fs.writeFile(path.join(outputDir, name), typeof value === 'string' ? value : formatJson(value));
+  const outputPath = path.join(outputDir, name);
+
+  if (typeof value === 'string' || value instanceof Uint8Array) {
+    await fs.writeFile(outputPath, value);
+    return;
+  }
+
+  await fs.writeFile(outputPath, formatJson(value));
 }
 
 async function appendStepSummary(markdown) {
@@ -118,6 +134,11 @@ async function main() {
 
   if (!args.dryRun) {
     requireEnv(['GHOST_ADMIN_API_URL', 'GHOST_ADMIN_API_KEY']);
+    if (args.generateFeatureImage) {
+      requireEnv(['OPENAI_API_KEY']);
+    }
+  } else if (process.env.GENERATE_FEATURE_IMAGE_IN_DRY_RUN === 'true') {
+    requireEnv(['OPENAI_API_KEY']);
   }
 
   console.log(
@@ -186,6 +207,20 @@ async function main() {
     await writeOutput(outputDir, `draft-${draft.slug}.json`, draft);
     await writeOutput(outputDir, `draft-${draft.slug}.html`, draft.html);
 
+    let featureImage = null;
+    const imageBrief = args.generateFeatureImage
+      ? await generateFeatureImageBrief({
+          brief,
+          draft,
+          config: contentAgentConfig,
+          contentFocus,
+        })
+      : null;
+
+    if (imageBrief) {
+      await writeOutput(outputDir, `feature-image-brief-${draft.slug}.json`, imageBrief);
+    }
+
     console.log(`[content-agent] Running QA for "${draft.title}".`);
     const qa = await qaArticle({
       brief,
@@ -205,11 +240,43 @@ async function main() {
     }
 
     if (args.dryRun) {
+      if (shouldGenerateFeatureImage({ dryRun: true, config: contentAgentConfig }) && imageBrief) {
+        const generatedImage = await generateFeatureImage(imageBrief, contentAgentConfig);
+        await writeOutput(outputDir, imageBrief.filename, generatedImage.bytes);
+        await writeOutput(outputDir, `feature-image-${draft.slug}.json`, {
+          filename: imageBrief.filename,
+          altText: imageBrief.altText,
+          revisedPrompt: generatedImage.revisedPrompt,
+        });
+      }
       console.log('[content-agent] Dry-run enabled. Skipping Ghost draft creation.');
       continue;
     }
 
-    const ghostDraft = await createGhostDraft(draft, contentAgentConfig);
+    if (shouldGenerateFeatureImage({ dryRun: false, config: contentAgentConfig }) && imageBrief) {
+      const generatedImage = await generateFeatureImage(imageBrief, contentAgentConfig);
+      await writeOutput(outputDir, imageBrief.filename, generatedImage.bytes);
+      const uploadedImage = await uploadGhostImage(
+        generatedImage,
+        imageBrief.filename,
+        contentAgentConfig,
+      );
+      featureImage = {
+        url: uploadedImage.url,
+        altText: imageBrief.altText,
+        revisedPrompt: generatedImage.revisedPrompt,
+      };
+      await writeOutput(outputDir, `feature-image-${draft.slug}.json`, featureImage);
+    }
+
+    const ghostDraft = await createGhostDraft(
+      {
+        ...draft,
+        featureImage: featureImage?.url || null,
+        featureImageAlt: featureImage?.altText || null,
+      },
+      contentAgentConfig,
+    );
     createdDrafts.push(ghostDraft);
     await writeOutput(outputDir, `ghost-draft-${draft.slug}.json`, ghostDraft);
   }

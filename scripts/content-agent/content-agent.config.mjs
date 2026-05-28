@@ -6,6 +6,15 @@ export const contentAgentConfig = {
   maxShortlistedTopics: 5,
   maxDraftsPerRun: 1,
   requireExplicitDraftCreation: true,
+  featureImage: {
+    enabledByDefault: true,
+    model: 'gpt-image-1.5',
+    size: '1536x1024',
+    quality: 'auto',
+    outputFormat: 'png',
+    styleGuide:
+      'Create clean editorial logistics software imagery. Use abstract dashboards, delivery routes, warehouse or fleet operations, and modern supply-chain UI motifs. Avoid text, logos, brand marks, distorted UI labels, people close-ups, and generic stock-photo compositions.',
+  },
   contentStrategy: {
     defaultFocusByUtcDay: {
       1: 'logistics-software',

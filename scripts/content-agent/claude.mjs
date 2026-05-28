@@ -237,6 +237,48 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
   });
 }
 
+export async function generateFeatureImageBrief({ brief, draft, config, contentFocus, fetchImpl }) {
+  const { FeatureImageBriefSchema } = await import('./schemas.mjs');
+  const system =
+    'You write image-generation prompts for Fleetbase blog feature images. Create precise visual direction for an image model. Avoid text, logos, trademarked marks, and UI labels.';
+  const prompt = JSON.stringify(
+    {
+      task: 'Create a feature image prompt for this Fleetbase blog article.',
+      contentFocus,
+      styleGuide: config.featureImage.styleGuide,
+      brief,
+      draft: {
+        title: draft.title,
+        excerpt: draft.excerpt,
+        metaTitle: draft.metaTitle,
+        metaDescription: draft.metaDescription,
+        tags: draft.publicTags,
+      },
+      requirements: [
+        'Use a landscape editorial composition suitable for a blog hero image.',
+        'Represent logistics software, fleet operations, supply chain workflows, APIs, dashboards, maps, routes, inventory, or dispatch depending on the article.',
+        'Do not request visible text, letters, logos, brand marks, UI labels, or watermarks.',
+        'Return a short filename stem ending in .png using lowercase kebab-case.',
+      ],
+      requiredJsonShape: {
+        prompt: 'string',
+        altText: 'string <= 160 chars',
+        filename: 'kebab-case.png',
+      },
+    },
+    null,
+    2,
+  );
+
+  return callClaudeJson({
+    system,
+    prompt,
+    fetchImpl,
+    schema: FeatureImageBriefSchema,
+    maxTokens: 1200,
+  });
+}
+
 export async function qaArticle({ brief, draft, context, config, contentFocus, fetchImpl }) {
   const { QaResultSchema } = await import('./schemas.mjs');
   const system =

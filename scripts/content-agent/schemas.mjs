@@ -70,6 +70,12 @@ export const RevisedArticleSchema = z.object({
   revisionSummary: z.array(z.string()).default([]),
 });
 
+export const FeatureImageBriefSchema = z.object({
+  prompt: z.string().min(40),
+  altText: z.string().min(20).max(160),
+  filename: z.string().min(3),
+});
+
 export const GhostDraftResultSchema = z.object({
   id: z.string(),
   title: z.string(),

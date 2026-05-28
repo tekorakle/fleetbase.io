@@ -6,15 +6,17 @@ import os from 'node:os';
 import path from 'node:path';
 
 import { buildAhrefsKeywordUrl, normalizeAhrefsKeyword } from './ahrefs.mjs';
-import { callClaudeJson } from './claude.mjs';
+import { callClaudeJson, generateFeatureImageBrief } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { buildContextManifest, selectContextSources } from './context.mjs';
 import {
   buildGhostDraftPayload,
   createGhostAdminToken,
   getGhostPost,
+  uploadGhostImage,
   updateGhostPost,
 } from './ghost-admin.mjs';
+import { generateFeatureImage } from './openai-image.mjs';
 import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
 async function testAhrefsUrl() {
@@ -68,11 +70,15 @@ function testGhostTokenAndPayload() {
       metaTitle: 'Route Optimization API Guide',
       metaDescription: 'Learn how route optimization APIs help logistics teams.',
       publicTags: ['Route Optimization'],
+      featureImage: 'https://ghost.example/content/images/feature.png',
+      featureImageAlt: 'Abstract logistics dashboard with route planning cards.',
     },
     contentAgentConfig,
   );
 
   assert.equal(payload.posts[0].status, 'draft');
+  assert.equal(payload.posts[0].feature_image, 'https://ghost.example/content/images/feature.png');
+  assert.equal(payload.posts[0].feature_image_alt, 'Abstract logistics dashboard with route planning cards.');
   assert.equal(payload.posts[0].tags.some((tag) => tag.name === '#needs-review'), true);
   assert.equal(payload.posts[0].tags.some((tag) => tag.name === 'Route Optimization'), true);
 }
@@ -145,6 +151,112 @@ async function testRevisedArticleJsonParsing() {
 
   assert.equal(draft.slug, 'updated-fleetbase-api-tutorial');
   assert.equal(draft.revisionSummary.length, 2);
+}
+
+async function testFeatureImageBriefGeneration() {
+  const previousApiKey = process.env.ANTHROPIC_API_KEY;
+  process.env.ANTHROPIC_API_KEY = 'test-key';
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify({
+            prompt:
+              'Landscape editorial image of a modern logistics software dashboard with route lines, dispatch cards, and warehouse workflow panels. No text or logos.',
+            altText: 'Modern logistics software dashboard with route and dispatch visuals.',
+            filename: 'fleetbase-logistics-dashboard.png',
+          }),
+        },
+      ],
+    }),
+  });
+
+  const brief = await generateFeatureImageBrief({
+    brief: {
+      title: 'Fleetbase API Tutorial',
+      targetKeyword: 'fleetbase api tutorial',
+    },
+    draft: {
+      title: 'Fleetbase API Tutorial',
+      excerpt: 'Build logistics workflows with Fleetbase.',
+      metaTitle: 'Fleetbase API Tutorial',
+      metaDescription: 'Build logistics workflows with Fleetbase.',
+      publicTags: ['API'],
+    },
+    config: contentAgentConfig,
+    contentFocus: 'fleetbase-api-tutorial',
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(brief.filename, 'fleetbase-logistics-dashboard.png');
+
+  if (previousApiKey === undefined) {
+    delete process.env.ANTHROPIC_API_KEY;
+  } else {
+    process.env.ANTHROPIC_API_KEY = previousApiKey;
+  }
+}
+
+async function testOpenAiImageGeneration() {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      data: [
+        {
+          b64_json: Buffer.from('image-bytes').toString('base64'),
+          revised_prompt: 'Revised prompt',
+        },
+      ],
+    }),
+  });
+
+  const image = await generateFeatureImage(
+    {
+      prompt:
+        'Landscape editorial image of a logistics software dashboard with map routes and dispatch panels.',
+    },
+    contentAgentConfig,
+    {
+      apiKey: 'test-openai-key',
+      fetchImpl: fakeFetch,
+    },
+  );
+
+  assert.equal(image.bytes.toString(), 'image-bytes');
+  assert.equal(image.revisedPrompt, 'Revised prompt');
+}
+
+async function testGhostImageUpload() {
+  const fakeFetch = async (url, options) => {
+    assert.equal(String(url), 'https://ghost.example/ghost/api/admin/images/upload/');
+    assert.equal(options.method, 'POST');
+    assert.equal(options.body instanceof FormData, true);
+
+    return {
+      ok: true,
+      json: async () => ({
+        images: [{ url: 'https://ghost.example/content/images/fleetbase.png' }],
+      }),
+    };
+  };
+
+  const image = await uploadGhostImage(
+    {
+      bytes: Buffer.from('image-bytes'),
+      mimeType: 'image/png',
+    },
+    'fleetbase.png',
+    contentAgentConfig,
+    {
+      adminApiUrl: 'https://ghost.example',
+      adminApiKey: 'abc123:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+      fetchImpl: fakeFetch,
+    },
+  );
+
+  assert.equal(image.url, 'https://ghost.example/content/images/fleetbase.png');
 }
 
 async function testGhostAdminReadAndUpdate() {
@@ -306,6 +418,9 @@ testAhrefsNormalize();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testRevisedArticleJsonParsing();
+await testFeatureImageBriefGeneration();
+await testOpenAiImageGeneration();
+await testGhostImageUpload();
 await testGhostAdminReadAndUpdate();
 testParseJsonObject();
 testSourceTruthRepoConfig();
