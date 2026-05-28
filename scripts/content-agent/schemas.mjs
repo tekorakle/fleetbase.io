@@ -84,11 +84,77 @@ export const GhostDraftResultSchema = z.object({
   status: z.literal('draft'),
 });
 
+function escapeJsonStringControlCharacters(json) {
+  let output = '';
+  let inString = false;
+  let escaped = false;
+
+  for (const char of json) {
+    if (escaped) {
+      output += char;
+      escaped = false;
+      continue;
+    }
+
+    if (char === '\\') {
+      output += char;
+      escaped = true;
+      continue;
+    }
+
+    if (char === '"') {
+      output += char;
+      inString = !inString;
+      continue;
+    }
+
+    if (inString) {
+      if (char === '\n') {
+        output += '\\n';
+        continue;
+      }
+
+      if (char === '\r') {
+        output += '\\r';
+        continue;
+      }
+
+      if (char === '\t') {
+        output += '\\t';
+        continue;
+      }
+
+      const codePoint = char.codePointAt(0);
+
+      if (codePoint < 0x20) {
+        output += `\\u${codePoint.toString(16).padStart(4, '0')}`;
+        continue;
+      }
+    }
+
+    output += char;
+  }
+
+  return output;
+}
+
+function parseJsonLeniently(json) {
+  try {
+    return JSON.parse(json);
+  } catch (error) {
+    try {
+      return JSON.parse(escapeJsonStringControlCharacters(json));
+    } catch {
+      throw error;
+    }
+  }
+}
+
 export function parseJsonObject(text) {
   const trimmed = text.trim();
 
   try {
-    return JSON.parse(trimmed);
+    return parseJsonLeniently(trimmed);
   } catch {
     const start = trimmed.indexOf('{');
     const end = trimmed.lastIndexOf('}');
@@ -97,6 +163,6 @@ export function parseJsonObject(text) {
       throw new Error('Model response did not contain a JSON object.');
     }
 
-    return JSON.parse(trimmed.slice(start, end + 1));
+    return parseJsonLeniently(trimmed.slice(start, end + 1));
   }
 }

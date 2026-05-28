@@ -332,6 +332,9 @@ async function testGhostAdminReadAndUpdate() {
 
 function testParseJsonObject() {
   assert.deepEqual(parseJsonObject('prefix {"ok": true} suffix'), { ok: true });
+  assert.deepEqual(parseJsonObject('{"html": "<p>Line one\nLine two</p>"}'), {
+    html: '<p>Line one\nLine two</p>',
+  });
 }
 
 function testFleetbaseLinkNormalization() {
