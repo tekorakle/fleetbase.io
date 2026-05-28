@@ -19,6 +19,7 @@ function parseArgs(argv) {
     dryRun: process.env.APPLY_GHOST_REVISION !== 'true',
     allowPublished: process.env.ALLOW_PUBLISHED_REVISION === 'true',
     ruleRepairAttempts: Number(process.env.REVISION_RULE_REPAIR_ATTEMPTS || 2),
+    bypassContentRules: process.env.BYPASS_CONTENT_RULES === 'true',
     outputDir:
       process.env.CONTENT_AGENT_OUTPUT_DIR ||
       path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'fleetbase-content-agent-revision'),
@@ -33,6 +34,7 @@ function parseArgs(argv) {
     if (arg === '--dry-run') args.dryRun = true;
     if (arg === '--apply') args.dryRun = false;
     if (arg === '--allow-published') args.allowPublished = true;
+    if (arg === '--bypass-content-rules') args.bypassContentRules = true;
     if (arg === '--rule-repair-attempts') {
       args.ruleRepairAttempts = Number(argv[index + 1] || args.ruleRepairAttempts);
     }
@@ -177,9 +179,15 @@ async function main() {
   });
   await writeOutput(args.outputDir, `rule-check-${revised.slug}.json`, ruleCheck);
 
-  if (ruleCheck.blockingIssues.length > 0) {
+  if (ruleCheck.blockingIssues.length > 0 && !args.bypassContentRules) {
     throw new Error(
       `Fleetbase content rules blocked revision "${revised.title}": ${ruleCheck.blockingIssues.join('; ')}`,
+    );
+  }
+
+  if (ruleCheck.blockingIssues.length > 0 && args.bypassContentRules) {
+    console.warn(
+      `[content-agent:revise] Bypassing Fleetbase content rule warnings for "${revised.title}": ${ruleCheck.blockingIssues.join('; ')}`,
     );
   }
 
@@ -201,6 +209,13 @@ async function main() {
 - Revised title: ${revised.title}
 - Revised slug: ${revised.slug}
 - Revision summary: ${revised.revisionSummary.join('; ') || 'No summary returned'}
+- Content rule status: ${
+    ruleCheck.blockingIssues.length > 0
+      ? args.bypassContentRules
+        ? `Bypassed warnings: ${ruleCheck.blockingIssues.join('; ')}`
+        : `Blocked: ${ruleCheck.blockingIssues.join('; ')}`
+      : 'Passed'
+  }
 - Ghost status: ${updatedPost?.status || post.status}
 - Artifacts: ${args.outputDir}
 `);

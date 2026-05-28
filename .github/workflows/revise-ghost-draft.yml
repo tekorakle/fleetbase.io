@@ -35,6 +35,11 @@ on:
           - '1'
           - '2'
           - '3'
+      bypass_content_rules:
+        description: Apply the revision even if Fleetbase content rules still warn
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -55,6 +60,7 @@ jobs:
       APPLY_GHOST_REVISION: ${{ inputs.dry_run == false }}
       ALLOW_PUBLISHED_REVISION: ${{ inputs.allow_published }}
       REVISION_RULE_REPAIR_ATTEMPTS: ${{ inputs.rule_repair_attempts }}
+      BYPASS_CONTENT_RULES: ${{ inputs.bypass_content_rules }}
       CONTENT_AGENT_OUTPUT_DIR: ghost-draft-revision-output
     steps:
       - name: Checkout
