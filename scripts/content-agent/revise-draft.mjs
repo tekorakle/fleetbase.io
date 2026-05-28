@@ -124,7 +124,7 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
   return normalizeFleetbaseArticle(revised);
 }
 
-async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts }) {
+async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts, bypassContentRules }) {
   console.log('[content-agent:revise] Requesting initial Claude revision.');
   let revised = await reviseWithClaude({ post, revisionPrompt });
   let ruleCheck = validateFleetbaseArticle(revised);
@@ -132,6 +132,13 @@ async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttemp
   console.log(
     `[content-agent:revise] Initial revision returned with ${ruleCheck.blockingIssues.length} blocking rule issue(s).`,
   );
+
+  if (ruleCheck.blockingIssues.length > 0 && bypassContentRules) {
+    console.warn(
+      `[content-agent:revise] Content rule bypass is enabled; skipping Claude repair attempts and applying the revision with warnings: ${ruleCheck.blockingIssues.join('; ')}`,
+    );
+    return { revised, ruleCheck };
+  }
 
   for (let attempt = 1; ruleCheck.blockingIssues.length > 0 && attempt <= maxAttempts; attempt += 1) {
     console.warn(
@@ -185,6 +192,7 @@ async function main() {
     revisionPrompt,
     outputDir: args.outputDir,
     maxAttempts: args.ruleRepairAttempts,
+    bypassContentRules: args.bypassContentRules,
   });
   await writeOutput(args.outputDir, `rule-check-${revised.slug}.json`, ruleCheck);
 
