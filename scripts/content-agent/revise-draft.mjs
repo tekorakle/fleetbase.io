@@ -63,17 +63,40 @@ async function appendStepSummary(markdown) {
 }
 
 function toArticleInput(post) {
+  const html = post.html || '';
+  const wordCount = countWords(html);
+
   return {
     title: post.title,
     slug: post.slug,
     excerpt: post.custom_excerpt || post.excerpt || '',
-    html: post.html || '',
+    html,
+    wordCount,
     metaTitle: post.meta_title || post.title,
     metaDescription: post.meta_description || post.custom_excerpt || post.excerpt || '',
     status: post.status,
     updatedAt: post.updated_at,
     tags: (post.tags || []).map((tag) => tag.name),
   };
+}
+
+function htmlToText(html) {
+  return String(html || '')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function countWords(html) {
+  const text = htmlToText(html);
+
+  if (!text) return 0;
+
+  return text.split(/\s+/).filter(Boolean).length;
 }
 
 function decodeHtmlBase64(value) {
@@ -96,10 +119,11 @@ function chooseMetadataValue(...values) {
 
 function normalizeRevisedArticle(revised, post) {
   const existing = toArticleInput(post);
+  const html = revised.html || decodeHtmlBase64(revised.htmlBase64);
 
   return normalizeFleetbaseArticle({
     ...revised,
-    html: revised.html || decodeHtmlBase64(revised.htmlBase64),
+    html,
     metaTitle: truncateText(
       chooseMetadataValue(revised.metaTitle, revised.title, existing.metaTitle, existing.title),
       80,
@@ -116,7 +140,27 @@ function normalizeRevisedArticle(revised, post) {
   });
 }
 
+function validateRevisionLength({ post, revised }) {
+  const originalWordCount = countWords(post.html || post.plaintext || '');
+  const revisedWordCount = countWords(revised.html);
+
+  if (originalWordCount < 600) {
+    return { originalWordCount, revisedWordCount, minimumWordCount: 0, passed: true };
+  }
+
+  const minimumWordCount = Math.floor(originalWordCount * 0.7);
+
+  if (revisedWordCount < minimumWordCount) {
+    throw new Error(
+      `Revised article appears truncated: ${revisedWordCount} words vs ${originalWordCount} original words. Expected at least ${minimumWordCount} words.`,
+    );
+  }
+
+  return { originalWordCount, revisedWordCount, minimumWordCount, passed: true };
+}
+
 async function reviseWithClaude({ post, revisionPrompt, previousRevision = null, ruleIssues = [] }) {
+  const article = toArticleInput(post);
   const system =
     'You revise Fleetbase Ghost blog drafts. Preserve factual accuracy, keep the article specific to Fleetbase, and output clean semantic HTML. Do not include scripts, styles, iframes, markdown fences, or comments.';
   const prompt = JSON.stringify(
@@ -127,7 +171,7 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
       editorPrompt: revisionPrompt,
       fleetbaseEditorialRules: contentAgentConfig.contentStrategy.editorialRules,
       blockingRuleIssues: ruleIssues,
-      article: toArticleInput(post),
+      article,
       previousRevision,
       requirements: [
         'Preserve accurate Fleetbase product and API claims.',
@@ -139,14 +183,14 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
         'Keep semantic HTML suitable for Ghost.',
         'Do not publish or schedule the post.',
         'Return a concise revisionSummary of material changes.',
-        'Return the revised article body in htmlBase64 only. htmlBase64 must be a single-line base64-encoded UTF-8 string of the complete semantic HTML.',
-        'Do not return an html field. Do not put raw HTML in JSON.',
+        `Do not summarize, shorten, or truncate the article. Preserve the original depth and target at least ${Math.max(article.wordCount, 1200)} words unless the original is shorter.`,
+        'Return the complete revised article body in the html field as semantic HTML.',
       ],
       requiredJsonShape: {
         title: 'string',
         slug: 'string',
         excerpt: 'string <= 300 chars',
-        htmlBase64: 'single-line base64-encoded UTF-8 string of the complete revised HTML article body',
+        html: 'complete revised semantic HTML article body',
         metaTitle: 'string <= 80 chars',
         metaDescription: 'string <= 180 chars',
         revisionSummary: ['string'],
@@ -160,7 +204,7 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
     system,
     prompt,
     schema: RevisedArticleSchema,
-    maxTokens: 8192,
+    maxTokens: 12000,
   });
 
   return normalizeRevisedArticle(revised, post);
@@ -236,7 +280,9 @@ async function main() {
     maxAttempts: args.ruleRepairAttempts,
     bypassContentRules: args.bypassContentRules,
   });
+  const lengthCheck = validateRevisionLength({ post, revised });
   await writeOutput(args.outputDir, `rule-check-${revised.slug}.json`, ruleCheck);
+  await writeOutput(args.outputDir, `length-check-${revised.slug}.json`, lengthCheck);
 
   if (ruleCheck.blockingIssues.length > 0 && !args.bypassContentRules) {
     throw new Error(
@@ -272,6 +318,7 @@ async function main() {
 - Revised title: ${revised.title}
 - Revised slug: ${revised.slug}
 - Revision summary: ${revised.revisionSummary.join('; ') || 'No summary returned'}
+- Length check: ${lengthCheck.revisedWordCount} revised words from ${lengthCheck.originalWordCount} original words
 - Content rule status: ${
     ruleCheck.blockingIssues.length > 0
       ? args.bypassContentRules
