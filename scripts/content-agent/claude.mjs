@@ -186,6 +186,22 @@ export async function callClaudeJson({
     let parsedResponse = toolInput;
     console.log(`[content-agent:claude] Anthropic response received for attempt ${attempt + 1}.`);
 
+    if (message.stop_reason === 'max_tokens') {
+      const error = new Error(
+        `Anthropic response hit max_tokens (${maxTokens}) before completion; response may be truncated.`,
+      );
+      lastError = error;
+      await writeClaudeFailureArtifact({
+        model,
+        attempt: attempt + 1,
+        parsedResponse,
+        rawText: text,
+        error,
+      });
+      console.warn(`[content-agent:claude] ${error.message}`);
+      continue;
+    }
+
     try {
       parsedResponse ||= parseJsonObject(text);
       return schema.parse(parsedResponse);

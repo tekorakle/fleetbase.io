@@ -154,6 +154,44 @@ async function testClaudeToolJsonParsing() {
   assert.equal(draft.slug, 'route-optimization-api-guide');
 }
 
+async function testClaudeMaxTokensResponseFails() {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      stop_reason: 'max_tokens',
+      content: [
+        {
+          type: 'tool_use',
+          name: 'submit_json',
+          input: {
+            title: 'Route Optimization API Guide',
+            slug: 'route-optimization-api-guide',
+            excerpt:
+              'A practical guide to route optimization APIs for logistics operators evaluating Fleetbase.',
+            html: `<h2>${'Guide'.repeat(130)}</h2><p>Truncated response`,
+            metaTitle: 'Route Optimization API Guide',
+            metaDescription: 'Learn how route optimization APIs help logistics teams plan better deliveries.',
+            publicTags: ['Route Optimization'],
+          },
+        },
+      ],
+    }),
+  });
+
+  await assert.rejects(
+    callClaudeJson({
+      apiKey: 'test-key',
+      model: 'test-model',
+      system: 'test',
+      prompt: 'test',
+      schema: ArticleDraftSchema,
+      fetchImpl: fakeFetch,
+      retries: 0,
+    }),
+    /max_tokens/,
+  );
+}
+
 async function testRevisedArticleJsonParsing() {
   const fakeFetch = async () => ({
     ok: true,
@@ -553,6 +591,7 @@ testAhrefsNormalize();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testClaudeToolJsonParsing();
+await testClaudeMaxTokensResponseFails();
 await testRevisedArticleJsonParsing();
 await testRevisedArticleMetadataFallbackParsing();
 await testFeatureImageBriefGeneration();
