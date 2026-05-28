@@ -11,18 +11,18 @@ description: Define pricing rules and rate structures used to calculate order co
 
 ## Rate Calculation Methods
 
-The `rate_calculation_method` field on a service rate accepts one of six values:
+The `rate_calculation_method` field on a service rate accepts one of six values. Each has its own deep-dive page covering formula, configuration fields, worked examples, and limitations:
 
-| Value | How it works |
-| :--- | :--- |
-| `fixed_rate` | A single flat fee charged regardless of distance |
-| `fixed_meter` | A flat per-meter rate — `per_meter_flat_rate_fee` × normalized distance |
-| `per_meter` | Per-distance rate using a tiered fee table — fees are looked up against `ServiceRateFee` brackets keyed by distance |
-| `per_drop` | Charged per delivery stop in the order |
-| `parcel` | Parcel-based pricing — fees are looked up against `ServiceRateParcelFee` brackets keyed by parcel size or weight |
-| `algo` (or `algorithm`) | Algorithmic pricing — formula resolved at quote time, typically combining distance, time, weight, and surcharges. See [Algorithm-Based Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates). |
+| Value | Method | How it works |
+| :--- | :--- | :--- |
+| `per_meter` | [Per Meter](/docs/fleet-ops/operations/service-rates/per-meter) | Linear per-unit-of-distance pricing — `per_meter_flat_rate_fee` × distance in the selected unit |
+| `fixed_meter` | [Fixed Rate](/docs/fleet-ops/operations/service-rates/fixed-rate) | Banded distance pricing — auto-generated `ServiceRateFee` rows, one per integer unit, each with its own flat fee. `fixed_rate` is accepted as a legacy alias. |
+| `per_drop` | [Per Drop-off](/docs/fleet-ops/operations/service-rates/per-drop) | Tiered by stop count — `ServiceRateFee` rows with `min`/`max` ranges and a flat fee per range |
+| `multi_zone_distance` | [Multi-zone Distance](/docs/fleet-ops/operations/service-rates/multi-zone-distance) | Geography-aware per-distance pricing — one rate per Zone or Service Area, plus an optional fallback for unmatched route segments |
+| `parcel` | [Parcel Rate](/docs/fleet-ops/operations/service-rates/parcel) | Per-parcel pricing — `ServiceRateParcelFee` size tiers matched against each parcel's dimensions and weight |
+| `algo` (alias: `algorithm`) | [Algorithm Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates) | Custom math expression resolved at quote time, combining distance, time, stops, parcels, and other variables |
 
-Zone-based and order-config-based pricing are **scopes**, not calculation methods — see [Rate Scoping](#rate-scoping) below.
+Zone-based and order-config-based pricing are **scopes** that apply to *any* method — see [Rate Scoping](#rate-scoping) below. (Note: this is distinct from `multi_zone_distance`, which uses zones as a pricing input rather than as a scope.)
 
 ## Rate Components
 
@@ -46,11 +46,17 @@ Additional charge during high-demand periods:
 - **Start/end time** — when peak hours apply
 - **Flat peak fee** or **peak percentage** — the surcharge amount
 
-### Tiered Distance Fees (`per_meter`)
-For `per_meter` rates, **`ServiceRateFee`** entries define the fee table. Each entry has a `min`/`max` distance band, a `unit`, a `fee` amount, and a `currency`. The lookup picks the entry whose band the order's distance falls into.
+### Banded Distance Fees (`fixed_meter`)
+For [Fixed Rate](/docs/fleet-ops/operations/service-rates/fixed-rate) rates, **`ServiceRateFee`** entries define the fee table. Fleet-Ops auto-generates one row per integer unit of distance up to `max_distance`, and each row has its own flat fee. The lookup picks the row whose band the order's distance falls into.
+
+### Per-Drop Tiered Fees (`per_drop`)
+For [Per Drop-off](/docs/fleet-ops/operations/service-rates/per-drop) rates, **`ServiceRateFee`** entries define a tier table with `min`/`max` ranges. Each row's fee is charged when the order's stop count falls into that range.
+
+### Geographic Rules (`multi_zone_distance`)
+For [Multi-zone Distance](/docs/fleet-ops/operations/service-rates/multi-zone-distance) rates, **`ServiceRateFee`** entries define geographic rules. Each row references a Zone (`zone_uuid`) or Service Area (`service_area_uuid`), has a per-distance `fee` in its own `distance_unit`, and supports `priority` (for overlap resolution) and `is_fallback` (for unmatched route segments).
 
 ### Parcel Fees (`parcel`)
-For `parcel` rates, **`ServiceRateParcelFee`** entries define a fee table keyed by parcel attributes — `size`, `length`/`width`/`height`/`dimensions_unit`, and `weight`/`weight_unit`. Each entry has a `fee` and `currency`. The lookup picks the entry that matches the parcel's measurements.
+For [Parcel Rate](/docs/fleet-ops/operations/service-rates/parcel) rates, **`ServiceRateParcelFee`** entries define a fee table keyed by parcel attributes — `size`, `length`/`width`/`height`/`dimensions_unit`, and `weight`/`weight_unit`. Each entry has a `fee` and `currency`. The lookup picks the entry that matches the parcel's measurements.
 
 ## Creating a Service Rate
 

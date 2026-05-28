@@ -1,0 +1,92 @@
+---
+title: Per Drop-off
+sidebarTitle: Per Drop-off
+description: Price an order by the number of stops on the route. Define min/max ranges and a flat fee for each band — ideal for multi-stop courier and batch deliveries.
+---
+
+# Per Drop-off
+
+When `rate_calculation_method` is set to **`per_drop`**, the service fee is determined by the **number of stops** on the order. You define a tier table — each tier is a `min`/`max` range with a flat fee — and the tier the stop count falls into is charged.
+
+Use this for multi-stop courier work, batch deliveries, and any pricing model where each additional stop is what really drives cost. If you want distance-based pricing on top, layer this against an [Algorithm](/docs/fleet-ops/operations/service-rates/algorithm-rates) rate instead.
+
+![Per Drop-off form — min/max ranges and fee table](/images/screenshots/fleet-ops/fleet-ops-service-rate-per-drop.webp)
+
+## How it works
+
+1. The total stop count for the order is `count(waypoints)` — the pickup plus every dropoff and intermediate waypoint.
+2. The list of `ServiceRateFee` tiers is iterated in order. The first tier whose `min`/`max` range contains the stop count wins.
+3. If no tier matches (e.g. the stop count exceeds every defined `max`), the tier with the highest `max` is used as the fallback.
+4. The matched tier's fee is added to the **Base Fee** to produce the service fee.
+
+```
+service_fee = base_fee + fee_for_matched_tier
+```
+
+Tiers don't have to be contiguous and you can define as many as you like. Each tier is a `ServiceRateFee` row with `min`, `max`, `fee`, and `currency`.
+
+## Configuration
+
+| Field | Required | Description |
+| :--- | :--- | :--- |
+| `rate_calculation_method` | yes | Set to `per_drop`. |
+| `rateFees[]` | yes | The tier table. Each row has a `min` (inclusive lower bound), a `max` (inclusive upper bound), and a `fee` in the rate's currency. |
+| `base_fee` | optional | Added to the matched tier's fee. |
+| `currency` | yes | Currency for all fees on the rate. |
+
+Add tiers from the **+ Add Drop-off** button in the form.
+
+## Worked example
+
+> *"1–3 stops: $10. 4–6 stops: $15. 7+ stops: $20."*
+
+| Tier | `min` | `max` | `fee` |
+| :--- | :---: | :---: | :--- |
+| 1 | 1 | 3 | $10.00 |
+| 2 | 4 | 6 | $15.00 |
+| 3 | 7 | 99 | $20.00 |
+
+For an order with:
+- **Pickup + 1 dropoff** (2 stops) → matches Tier 1 → service fee = `base_fee + $10`.
+- **Pickup + 4 dropoffs** (5 stops) → matches Tier 2 → service fee = `base_fee + $15`.
+- **Pickup + 9 dropoffs** (10 stops) → matches Tier 3 → service fee = `base_fee + $20`.
+
+If you submitted a 150-stop order (beyond the largest tier's `max` of 99), the fee from Tier 3 — the highest-`max` tier — would still apply as the fallback.
+
+## Configuration workflow
+
+<Steps>
+  <Step>
+    Create or open a service rate in **Fleet-Ops → Operations → Service Rates**.
+  </Step>
+  <Step>
+    Set **Rate Calculation Method** to **Per Drop-off**.
+  </Step>
+  <Step>
+    Click **+ Add Drop-off** to add a tier row. Set the **Min**, **Max**, and **Fee** for that range.
+  </Step>
+  <Step>
+    Repeat until you've covered every drop count you want to support. Set the last tier's `max` high enough to act as a catch-all (e.g. `99` or `999`).
+  </Step>
+  <Step>
+    *Optional:* Set a **Base Fee** that adds on top of the matched tier's fee.
+  </Step>
+  <Step>
+    *Optional:* Configure **COD Fees** and **Peak Hours** — these surcharges apply on top of the service fee.
+  </Step>
+  <Step>
+    Save and test by generating a quote for a sample multi-stop order. Check the **Quote** section on the order detail to see the matched tier.
+  </Step>
+</Steps>
+
+## Limitations
+
+- **Stop count includes pickup.** A "delivery with 3 dropoffs" is **4 stops**, not 3. Define your tiers accordingly.
+- **No distance component.** Per Drop-off ignores route distance entirely. If you need both stop-count and distance pricing, use [Algorithm](/docs/fleet-ops/operations/service-rates/algorithm-rates) with `{stops}` and `{distance_km}` in the same formula.
+- **Tier order matters.** Tiers are evaluated in the order they were created. Don't overlap ranges — the first match wins and overlap will produce unpredictable results.
+
+## Related Pages
+
+- [Service Rates Overview](/docs/fleet-ops/operations/service-rates/overview) — all calculation methods and rate scoping
+- [Algorithm Rates](/docs/fleet-ops/operations/service-rates/algorithm-rates) — combine stop count with distance, time, or parcel surcharges
+- [Service Quotes](/docs/fleet-ops/operations/service-quotes/overview) — how the calculated rate becomes a quote on an order
