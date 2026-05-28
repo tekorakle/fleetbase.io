@@ -6,6 +6,15 @@ export const contentAgentConfig = {
   maxShortlistedTopics: 5,
   maxDraftsPerRun: 1,
   requireExplicitDraftCreation: true,
+  featureImage: {
+    enabledByDefault: true,
+    model: 'gpt-image-1.5',
+    size: '1536x1024',
+    quality: 'auto',
+    outputFormat: 'png',
+    styleGuide:
+      'Create clean editorial logistics software imagery. Use abstract dashboards, delivery routes, warehouse or fleet operations, and modern supply-chain UI motifs. Avoid text, logos, brand marks, distorted UI labels, people close-ups, and generic stock-photo compositions.',
+  },
   contentStrategy: {
     defaultFocusByUtcDay: {
       1: 'logistics-software',
@@ -27,6 +36,20 @@ export const contentAgentConfig = {
       'connect Fleetbase webhooks to an order management system',
       'build a dispatch dashboard with Fleetbase APIs',
       'set up route planning and driver assignment in Fleetbase',
+    ],
+    editorialRules: [
+      'Fleetbase should be positioned as serious logistics, fleet operations, and last-mile delivery software for SMB and enterprise teams. Do not use outdated "API-first" positioning.',
+      'Spell Fleet-Ops exactly as "Fleet-Ops". Do not write "FleetOps".',
+      'Refer to Fleet-Ops as Fleet-Ops, not "Fleet-Ops extension".',
+      'The Fleetbase website is https://fleetbase.io and the documentation URL is https://fleetbase.io/docs.',
+      'Manage order configs at Fleet-Ops -> Operations -> Order Config. Do not call this screen "Order Configurations".',
+      'Activity definitions are configured by the order config; do not invent platform-level activity definitions.',
+      'For Uber-like or ad hoc order flows, create orders with adhoc: true and use adhoc_distance to set the driver broadcast radius in meters.',
+      'Ad hoc orders are broadcast to drivers near the pickup. Drivers accept or decline in Navigator; do not require manual dispatch, manual driver assignment, or orchestrator allocation for that flow.',
+      'For service quote queries, do not use an order_config parameter. Use service for the service rate ID, defaulting to all, and serviceType for the order config type derived from the order_config key.',
+      'Proof of delivery for an order is available at /v1/orders/:id/proofs.',
+      'For realtime driver location, subscribe to the Fleetbase SocketCluster instance using the accepted driver channel.',
+      'When writing API tutorials, verify endpoint names, request parameters, and resource names against the indexed API docs or cloned source context.',
     ],
   },
   ahrefs: {

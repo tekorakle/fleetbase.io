@@ -1,0 +1,78 @@
+name: Revise Ghost Draft
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Ghost post slug to revise
+        required: false
+        type: string
+      post_id:
+        description: Ghost post ID to revise, used when slug is not supplied
+        required: false
+        type: string
+      revision_prompt:
+        description: Editor instructions for Claude
+        required: true
+        type: string
+      dry_run:
+        description: Generate revision artifacts without updating Ghost
+        required: true
+        default: true
+        type: boolean
+      allow_published:
+        description: Allow updating a non-draft post
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  revise:
+    name: Revise Ghost draft
+    runs-on: ubuntu-latest
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || secrets.ANTHROPIC_MODEL }}
+      GHOST_ADMIN_API_URL: ${{ secrets.GHOST_ADMIN_API_URL }}
+      GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+      GHOST_API_VERSION: ${{ vars.GHOST_API_VERSION || 'v5.0' }}
+      GHOST_POST_SLUG: ${{ inputs.slug || '' }}
+      GHOST_POST_ID: ${{ inputs.post_id || '' }}
+      REVISION_PROMPT: ${{ inputs.revision_prompt }}
+      APPLY_GHOST_REVISION: ${{ inputs.dry_run == false }}
+      ALLOW_PUBLISHED_REVISION: ${{ inputs.allow_published }}
+      CONTENT_AGENT_OUTPUT_DIR: ghost-draft-revision-output
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run content agent self-tests
+        run: pnpm content-agent:test
+
+      - name: Revise Ghost draft
+        run: pnpm content-agent:revise
+
+      - name: Upload revision artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ghost-draft-revision-output
+          path: ghost-draft-revision-output
+          if-no-files-found: ignore

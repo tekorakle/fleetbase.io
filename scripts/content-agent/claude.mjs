@@ -99,6 +99,7 @@ export async function scoreTopics({ opportunities, context, config, contentFocus
       task: 'Score SEO content opportunities for Fleetbase.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       hardRules: [
         'Reject generic keywords that cannot be tied directly to Fleetbase logistics software, supply chain software, fleet operations, delivery management, warehouse/inventory workflows, or Fleetbase API tutorials.',
         'For fleetbase-api-tutorial focus, prefer build/use/tutorial topics over comparison or generic definition posts.',
@@ -162,14 +163,17 @@ export async function generateBrief({ topic, context, config, contentFocus, fetc
       task: 'Create a detailed content brief for one Fleetbase blog article.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       topic,
       siteUrl: config.siteUrl,
       fleetbaseContext: context.summary,
       requirements: [
         'The article must be specific to Fleetbase logistics software, supply chain software, or a practical Fleetbase API/tutorial workflow.',
         'Include Fleetbase-specific internal links from the provided context.',
+        `Use ${config.siteUrl} for all Fleetbase website links and ${config.siteUrl}/docs for all documentation links. Never use fleetbase.ghost.io for docs or website links.`,
         'If this is a tutorial focus, define what the reader will build or configure with Fleetbase.',
         'Avoid generic SaaS content that could apply to any logistics vendor.',
+        'Use the Fleetbase editorial rules as hard product facts. Do not contradict them.',
       ],
       requiredJsonShape: {
         title: 'string',
@@ -204,15 +208,18 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
       task: 'Write the article draft from the approved brief.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       brief,
       fleetbaseContext: context.summary,
       requirements: [
         'Use semantic HTML: h2, h3, p, ul, ol, pre, code, table when useful.',
         'Include practical Fleetbase-specific guidance and internal links.',
+        `Use ${config.siteUrl} for all Fleetbase website links and ${config.siteUrl}/docs for all documentation links. Never link to fleetbase.ghost.io/docs or fleetbase.ghost.io website paths.`,
         'Keep the article useful even if the reader is evaluating open-source logistics software.',
         'For Fleetbase API tutorials, include a practical build/configure/use flow with code or request examples only when supported by context.',
         'For software SEO articles, connect the topic to Fleetbase modules and logistics/supply-chain operating workflows.',
         'No publication language such as "in this AI-generated draft".',
+        'Use the Fleetbase editorial rules as hard product facts. Do not contradict them.',
       ],
       requiredJsonShape: {
         title: 'string',
@@ -237,6 +244,48 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
   });
 }
 
+export async function generateFeatureImageBrief({ brief, draft, config, contentFocus, fetchImpl }) {
+  const { FeatureImageBriefSchema } = await import('./schemas.mjs');
+  const system =
+    'You write image-generation prompts for Fleetbase blog feature images. Create precise visual direction for an image model. Avoid text, logos, trademarked marks, and UI labels.';
+  const prompt = JSON.stringify(
+    {
+      task: 'Create a feature image prompt for this Fleetbase blog article.',
+      contentFocus,
+      styleGuide: config.featureImage.styleGuide,
+      brief,
+      draft: {
+        title: draft.title,
+        excerpt: draft.excerpt,
+        metaTitle: draft.metaTitle,
+        metaDescription: draft.metaDescription,
+        tags: draft.publicTags,
+      },
+      requirements: [
+        'Use a landscape editorial composition suitable for a blog hero image.',
+        'Represent logistics software, fleet operations, supply chain workflows, APIs, dashboards, maps, routes, inventory, or dispatch depending on the article.',
+        'Do not request visible text, letters, logos, brand marks, UI labels, or watermarks.',
+        'Return a short filename stem ending in .png using lowercase kebab-case.',
+      ],
+      requiredJsonShape: {
+        prompt: 'string',
+        altText: 'string <= 160 chars',
+        filename: 'kebab-case.png',
+      },
+    },
+    null,
+    2,
+  );
+
+  return callClaudeJson({
+    system,
+    prompt,
+    fetchImpl,
+    schema: FeatureImageBriefSchema,
+    maxTokens: 1200,
+  });
+}
+
 export async function qaArticle({ brief, draft, context, config, contentFocus, fetchImpl }) {
   const { QaResultSchema } = await import('./schemas.mjs');
   const system =
@@ -246,6 +295,7 @@ export async function qaArticle({ brief, draft, context, config, contentFocus, f
       task: 'QA this Fleetbase blog draft.',
       contentFocus,
       contentStrategy: config.contentStrategy,
+      fleetbaseEditorialRules: config.contentStrategy.editorialRules,
       brief,
       draft,
       fleetbaseContext: context.summary,
@@ -259,6 +309,7 @@ export async function qaArticle({ brief, draft, context, config, contentFocus, f
         'Contains useful internal links.',
         'No publish/schedule action requested.',
         'Ready for human review in Ghost.',
+        'Block drafts that contradict any Fleetbase editorial rule.',
       ],
       requiredJsonShape: {
         publishReady: true,
