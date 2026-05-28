@@ -25,6 +25,16 @@ on:
         required: true
         default: false
         type: boolean
+      rule_repair_attempts:
+        description: Number of Claude repair attempts when Fleetbase content rules block a revision
+        required: true
+        default: '2'
+        type: choice
+        options:
+          - '0'
+          - '1'
+          - '2'
+          - '3'
 
 permissions:
   contents: read
@@ -44,6 +54,7 @@ jobs:
       REVISION_PROMPT: ${{ inputs.revision_prompt }}
       APPLY_GHOST_REVISION: ${{ inputs.dry_run == false }}
       ALLOW_PUBLISHED_REVISION: ${{ inputs.allow_published }}
+      REVISION_RULE_REPAIR_ATTEMPTS: ${{ inputs.rule_repair_attempts }}
       CONTENT_AGENT_OUTPUT_DIR: ghost-draft-revision-output
     steps:
       - name: Checkout
