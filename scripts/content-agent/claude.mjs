@@ -8,6 +8,14 @@ function extractTextFromMessage(message) {
     .trim();
 }
 
+function extractToolInputFromMessage(message) {
+  const toolUse = (message.content || []).find(
+    (block) => block.type === 'tool_use' && block.name === 'submit_json',
+  );
+
+  return toolUse?.input || null;
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -79,10 +87,23 @@ export async function callClaudeJson({
           max_tokens: maxTokens,
           temperature,
           system,
+          tools: [
+            {
+              name: 'submit_json',
+              description: 'Submit the complete structured response object.',
+              input_schema: {
+                type: 'object',
+                additionalProperties: true,
+              },
+            },
+          ],
+          tool_choice: { type: 'tool', name: 'submit_json' },
           messages: [
             {
               role: 'user',
-              content: `${prompt}\n\nReturn only one valid JSON object. Do not include markdown fences.`,
+              content:
+                `${prompt}\n\nUse the submit_json tool exactly once with the complete response object. ` +
+                'Do not return the response as plain text.',
             },
           ],
         }),
@@ -116,11 +137,12 @@ export async function callClaudeJson({
     }
 
     const message = await response.json();
-    const text = extractTextFromMessage(message);
+    const toolInput = extractToolInputFromMessage(message);
+    const text = toolInput ? '' : extractTextFromMessage(message);
     console.log(`[content-agent:claude] Anthropic response received for attempt ${attempt + 1}.`);
 
     try {
-      return schema.parse(parseJsonObject(text));
+      return schema.parse(toolInput || parseJsonObject(text));
     } catch (error) {
       lastError = error;
       console.warn(
