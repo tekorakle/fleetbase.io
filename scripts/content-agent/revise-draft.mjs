@@ -125,9 +125,13 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
 }
 
 async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts }) {
+  console.log('[content-agent:revise] Requesting initial Claude revision.');
   let revised = await reviseWithClaude({ post, revisionPrompt });
   let ruleCheck = validateFleetbaseArticle(revised);
   await writeOutput(outputDir, `rule-check-${revised.slug}-attempt-1.json`, ruleCheck);
+  console.log(
+    `[content-agent:revise] Initial revision returned with ${ruleCheck.blockingIssues.length} blocking rule issue(s).`,
+  );
 
   for (let attempt = 1; ruleCheck.blockingIssues.length > 0 && attempt <= maxAttempts; attempt += 1) {
     console.warn(
@@ -141,6 +145,9 @@ async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttemp
     });
     ruleCheck = validateFleetbaseArticle(revised);
     await writeOutput(outputDir, `rule-check-${revised.slug}-attempt-${attempt + 1}.json`, ruleCheck);
+    console.log(
+      `[content-agent:revise] Repair attempt ${attempt} returned with ${ruleCheck.blockingIssues.length} blocking rule issue(s).`,
+    );
   }
 
   return { revised, ruleCheck };
@@ -160,7 +167,9 @@ async function main() {
     throw new Error('Provide --prompt, --prompt-file, REVISION_PROMPT, or REVISION_PROMPT_FILE.');
   }
 
+  console.log(`[content-agent:revise] Fetching Ghost post by ${identifierType}: ${identifier}`);
   const post = await getGhostPost(identifier, contentAgentConfig, { identifierType });
+  console.log(`[content-agent:revise] Loaded Ghost post "${post.title}" (${post.status}).`);
 
   if (post.status !== 'draft' && !args.allowPublished) {
     throw new Error(
@@ -197,8 +206,12 @@ async function main() {
   let updatedPost = null;
 
   if (!args.dryRun) {
+    console.log(`[content-agent:revise] Applying revision to Ghost post "${post.slug}".`);
     updatedPost = await updateGhostPost(post, revised, contentAgentConfig);
     await writeOutput(args.outputDir, `updated-${updatedPost.slug}.json`, updatedPost);
+    console.log(`[content-agent:revise] Ghost update returned status "${updatedPost.status}".`);
+  } else {
+    console.log('[content-agent:revise] Dry run enabled; Ghost update skipped.');
   }
 
   await appendStepSummary(`

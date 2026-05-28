@@ -22,6 +22,15 @@ function getRetryDelayMs(response) {
   return 65000;
 }
 
+function getNumberEnv(name, fallback) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? value : fallback;
+}
+
+function formatSeconds(ms) {
+  return Math.ceil(ms / 1000);
+}
+
 export async function callClaudeJson({
   apiKey = process.env.ANTHROPIC_API_KEY,
   model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
@@ -32,6 +41,8 @@ export async function callClaudeJson({
   temperature = 0.2,
   fetchImpl = fetch,
   retries = 2,
+  timeoutMs = getNumberEnv('ANTHROPIC_TIMEOUT_MS', 600000),
+  heartbeatMs = getNumberEnv('ANTHROPIC_HEARTBEAT_MS', 60000),
 }) {
   if (!apiKey) {
     throw new Error('Missing ANTHROPIC_API_KEY. Add it as a GitHub Actions secret.');
@@ -40,26 +51,52 @@ export async function callClaudeJson({
   let lastError;
 
   for (let attempt = 0; attempt <= retries; attempt += 1) {
-    const response = await fetchImpl('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model,
-        max_tokens: maxTokens,
-        temperature,
-        system,
-        messages: [
-          {
-            role: 'user',
-            content: `${prompt}\n\nReturn only one valid JSON object. Do not include markdown fences.`,
-          },
-        ],
-      }),
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
+    const startedAt = Date.now();
+    const heartbeat = setInterval(() => {
+      console.log(
+        `[content-agent:claude] Still waiting for Anthropic ${model} attempt ${attempt + 1}; elapsed=${formatSeconds(Date.now() - startedAt)}s.`,
+      );
+    }, heartbeatMs);
+    let response;
+
+    console.log(
+      `[content-agent:claude] Calling Anthropic ${model} (attempt ${attempt + 1}/${retries + 1}, max_tokens=${maxTokens}, timeout=${formatSeconds(timeoutMs)}s).`,
+    );
+
+    try {
+      response = await fetchImpl('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        signal: controller.signal,
+        headers: {
+          'content-type': 'application/json',
+          'x-api-key': apiKey,
+          'anthropic-version': '2023-06-01',
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: maxTokens,
+          temperature,
+          system,
+          messages: [
+            {
+              role: 'user',
+              content: `${prompt}\n\nReturn only one valid JSON object. Do not include markdown fences.`,
+            },
+          ],
+        }),
+      });
+    } catch (error) {
+      if (error.name === 'AbortError') {
+        throw new Error(`Anthropic request timed out after ${formatSeconds(timeoutMs)} seconds.`);
+      }
+
+      throw error;
+    } finally {
+      clearTimeout(timeout);
+      clearInterval(heartbeat);
+    }
 
     if (!response.ok) {
       const body = await response.text();
@@ -80,11 +117,15 @@ export async function callClaudeJson({
 
     const message = await response.json();
     const text = extractTextFromMessage(message);
+    console.log(`[content-agent:claude] Anthropic response received for attempt ${attempt + 1}.`);
 
     try {
       return schema.parse(parseJsonObject(text));
     } catch (error) {
       lastError = error;
+      console.warn(
+        `[content-agent:claude] Claude response failed schema validation on attempt ${attempt + 1}.`,
+      );
     }
   }
 
