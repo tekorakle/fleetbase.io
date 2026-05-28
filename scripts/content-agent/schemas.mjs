@@ -66,8 +66,8 @@ export const RevisedArticleSchema = z.object({
   excerpt: z.string().min(30).max(300),
   html: z.string().min(500).optional(),
   htmlBase64: z.string().min(20).optional(),
-  metaTitle: z.string().min(10).max(80),
-  metaDescription: z.string().min(30).max(180),
+  metaTitle: z.string().min(10).max(80).optional(),
+  metaDescription: z.string().min(30).max(180).optional(),
   revisionSummary: z.array(z.string()).default([]),
 }).refine((value) => value.html || value.htmlBase64, {
   message: 'Either html or htmlBase64 is required.',

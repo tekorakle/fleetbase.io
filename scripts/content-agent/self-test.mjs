@@ -193,6 +193,42 @@ async function testRevisedArticleJsonParsing() {
   assert.equal(draft.revisionSummary.length, 2);
 }
 
+async function testRevisedArticleMetadataFallbackParsing() {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [
+        {
+          type: 'tool_use',
+          name: 'submit_json',
+          input: {
+            title: 'Updated Fleetbase API Tutorial',
+            slug: 'updated-fleetbase-api-tutorial',
+            excerpt:
+              'A revised Fleetbase API tutorial for logistics teams building order workflows.',
+            htmlBase64: Buffer.from(
+              `<h2>${'Updated'.repeat(130)}</h2><p>${'Useful revised content. '.repeat(80)}</p>`,
+            ).toString('base64'),
+            revisionSummary: ['Tightened intro', 'Kept metadata fallback compatible'],
+          },
+        },
+      ],
+    }),
+  });
+
+  const draft = await callClaudeJson({
+    apiKey: 'test-key',
+    model: 'test-model',
+    system: 'test',
+    prompt: 'test',
+    schema: RevisedArticleSchema,
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(draft.metaTitle, undefined);
+  assert.equal(draft.metaDescription, undefined);
+}
+
 async function testFeatureImageBriefGeneration() {
   const previousApiKey = process.env.ANTHROPIC_API_KEY;
   process.env.ANTHROPIC_API_KEY = 'test-key';
@@ -518,6 +554,7 @@ testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testClaudeToolJsonParsing();
 await testRevisedArticleJsonParsing();
+await testRevisedArticleMetadataFallbackParsing();
 await testFeatureImageBriefGeneration();
 await testOpenAiImageGeneration();
 await testGhostImageUpload();
