@@ -1,7 +1,4 @@
 {
   "title": "Navigator App",
-  "pages": [
-    "configure-navigator-app",
-    "publish-navigator-app"
-  ]
+  "pages": ["quickstart", "configuration", "theming", "build-and-release"]
 }
