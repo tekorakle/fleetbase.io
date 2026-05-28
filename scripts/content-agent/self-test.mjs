@@ -131,7 +131,9 @@ async function testRevisedArticleJsonParsing() {
             slug: 'updated-fleetbase-api-tutorial',
             excerpt:
               'A revised Fleetbase API tutorial for logistics teams building order workflows.',
-            html: `<h2>${'Updated'.repeat(130)}</h2><p>${'Useful revised content. '.repeat(80)}</p>`,
+            htmlBase64: Buffer.from(
+              `<h2>${'Updated'.repeat(130)}</h2><p>${'Useful revised content. '.repeat(80)}</p>`,
+            ).toString('base64'),
             metaTitle: 'Updated Fleetbase API Tutorial',
             metaDescription:
               'Revise a Fleetbase API tutorial for logistics and supply chain operators.',
@@ -152,6 +154,7 @@ async function testRevisedArticleJsonParsing() {
   });
 
   assert.equal(draft.slug, 'updated-fleetbase-api-tutorial');
+  assert.equal(Boolean(draft.htmlBase64), true);
   assert.equal(draft.revisionSummary.length, 2);
 }
 

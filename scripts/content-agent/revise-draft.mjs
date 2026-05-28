@@ -76,6 +76,19 @@ function toArticleInput(post) {
   };
 }
 
+function decodeHtmlBase64(value) {
+  if (!value) return '';
+
+  return Buffer.from(value.replace(/\s+/g, ''), 'base64').toString('utf8');
+}
+
+function normalizeRevisedArticle(revised) {
+  return normalizeFleetbaseArticle({
+    ...revised,
+    html: revised.html || decodeHtmlBase64(revised.htmlBase64),
+  });
+}
+
 async function reviseWithClaude({ post, revisionPrompt, previousRevision = null, ruleIssues = [] }) {
   const system =
     'You revise Fleetbase Ghost blog drafts. Preserve factual accuracy, keep the article specific to Fleetbase, and output clean semantic HTML. Do not include scripts, styles, iframes, markdown fences, or comments.';
@@ -99,12 +112,14 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
         'Keep semantic HTML suitable for Ghost.',
         'Do not publish or schedule the post.',
         'Return a concise revisionSummary of material changes.',
+        'Return the revised article body in htmlBase64 only. htmlBase64 must be a single-line base64-encoded UTF-8 string of the complete semantic HTML.',
+        'Do not return an html field. Do not put raw HTML in JSON.',
       ],
       requiredJsonShape: {
         title: 'string',
         slug: 'string',
         excerpt: 'string <= 300 chars',
-        html: 'string',
+        htmlBase64: 'single-line base64-encoded UTF-8 string of the complete revised HTML article body',
         metaTitle: 'string <= 80 chars',
         metaDescription: 'string <= 180 chars',
         revisionSummary: ['string'],
@@ -121,7 +136,7 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
     maxTokens: 8192,
   });
 
-  return normalizeFleetbaseArticle(revised);
+  return normalizeRevisedArticle(revised);
 }
 
 async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts, bypassContentRules }) {
