@@ -73,8 +73,20 @@ export const contentAgentConfig = {
     'samsara.com',
   ],
   context: {
-    maxSelectedFiles: 48,
-    maxCharsPerFile: 5200,
+    maxSelectedFiles: 24,
+    maxCharsPerFile: 1800,
+    budgets: {
+      scoring: {
+        maxSelectedFiles: 12,
+        maxCharsPerSource: 900,
+        maxTotalChars: 12000,
+      },
+      drafting: {
+        maxSelectedFiles: 18,
+        maxCharsPerSource: 1200,
+        maxTotalChars: 18000,
+      },
+    },
     includeGlobs: [
       'src/app/**/page.tsx',
       'src/app/**/*page-content.tsx',
