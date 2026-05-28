@@ -38,6 +38,41 @@ function normalizeAdminUrl(value) {
   return apiUrl;
 }
 
+function getGhostAdminConfig(options = {}) {
+  const adminApiUrl = normalizeAdminUrl(options.adminApiUrl || process.env.GHOST_ADMIN_API_URL);
+  const adminApiKey = options.adminApiKey || process.env.GHOST_ADMIN_API_KEY;
+
+  if (!adminApiKey) {
+    throw new Error('Missing GHOST_ADMIN_API_KEY. Add it as a GitHub Actions secret.');
+  }
+
+  return { adminApiUrl, adminApiKey };
+}
+
+async function ghostAdminFetch(pathname, options = {}) {
+  const { adminApiUrl, adminApiKey } = getGhostAdminConfig(options);
+  const token = createGhostAdminToken(adminApiKey);
+  const url = new URL(`${adminApiUrl}/ghost/api/admin/${pathname.replace(/^\/+/, '')}`);
+
+  for (const [key, value] of Object.entries(options.searchParams || {})) {
+    if (value !== undefined && value !== null && value !== '') {
+      url.searchParams.set(key, value);
+    }
+  }
+
+  return (options.fetchImpl || fetch)(url, {
+    method: options.method || 'GET',
+    headers: {
+      Authorization: `Ghost ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Accept-Version': process.env.GHOST_API_VERSION || options.apiVersion || 'v5.0',
+      ...(options.headers || {}),
+    },
+    body: options.body ? JSON.stringify(options.body) : undefined,
+  });
+}
+
 function toGhostTags(publicTags, internalTags) {
   return [...new Set([...(publicTags || []), ...internalTags])]
     .filter(Boolean)
@@ -62,26 +97,12 @@ export function buildGhostDraftPayload(draft, config) {
 }
 
 export async function createGhostDraft(draft, config, options = {}) {
-  const adminApiUrl = normalizeAdminUrl(options.adminApiUrl || process.env.GHOST_ADMIN_API_URL);
-  const adminApiKey = options.adminApiKey || process.env.GHOST_ADMIN_API_KEY;
-
-  if (!adminApiKey) {
-    throw new Error('Missing GHOST_ADMIN_API_KEY. Add it as a GitHub Actions secret.');
-  }
-
-  const token = createGhostAdminToken(adminApiKey);
-  const url = new URL(`${adminApiUrl}/ghost/api/admin/posts/`);
-  url.searchParams.set('source', 'html');
-
-  const response = await (options.fetchImpl || fetch)(url, {
+  const response = await ghostAdminFetch('posts/', {
+    ...options,
     method: 'POST',
-    headers: {
-      Authorization: `Ghost ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      'Accept-Version': process.env.GHOST_API_VERSION || config.ghost.apiVersion,
-    },
-    body: JSON.stringify(buildGhostDraftPayload(draft, config)),
+    apiVersion: config.ghost.apiVersion,
+    searchParams: { source: 'html' },
+    body: buildGhostDraftPayload(draft, config),
   });
 
   if (!response.ok) {
@@ -101,4 +122,69 @@ export async function createGhostDraft(draft, config, options = {}) {
     url: post.url || null,
     status: post.status,
   });
+}
+
+export async function getGhostPost(identifier, config, options = {}) {
+  const isId = options.identifierType === 'id';
+  const pathname = isId
+    ? `posts/${encodeURIComponent(identifier)}/`
+    : `posts/slug/${encodeURIComponent(identifier)}/`;
+  const response = await ghostAdminFetch(pathname, {
+    ...options,
+    apiVersion: config.ghost.apiVersion,
+    searchParams: {
+      formats: 'html,plaintext',
+      include: 'tags,authors',
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `Ghost Admin API post lookup failed with status ${response.status}: ${body.slice(0, 500)}`,
+    );
+  }
+
+  const payload = await response.json();
+  const post = payload.posts?.[0];
+
+  if (!post) {
+    throw new Error(`No Ghost post found for ${options.identifierType || 'slug'} "${identifier}".`);
+  }
+
+  return post;
+}
+
+export async function updateGhostPost(post, updates, config, options = {}) {
+  const response = await ghostAdminFetch(`posts/${encodeURIComponent(post.id)}/`, {
+    ...options,
+    method: 'PUT',
+    apiVersion: config.ghost.apiVersion,
+    searchParams: { source: 'html' },
+    body: {
+      posts: [
+        {
+          id: post.id,
+          updated_at: post.updated_at,
+          title: updates.title,
+          slug: updates.slug,
+          status: post.status,
+          html: updates.html,
+          custom_excerpt: updates.excerpt,
+          meta_title: updates.metaTitle,
+          meta_description: updates.metaDescription,
+        },
+      ],
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `Ghost Admin API post update failed with status ${response.status}: ${body.slice(0, 500)}`,
+    );
+  }
+
+  const payload = await response.json();
+  return payload.posts?.[0];
 }

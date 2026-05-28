@@ -9,8 +9,13 @@ import { buildAhrefsKeywordUrl, normalizeAhrefsKeyword } from './ahrefs.mjs';
 import { callClaudeJson } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { buildContextManifest, selectContextSources } from './context.mjs';
-import { buildGhostDraftPayload, createGhostAdminToken } from './ghost-admin.mjs';
-import { ArticleDraftSchema, parseJsonObject } from './schemas.mjs';
+import {
+  buildGhostDraftPayload,
+  createGhostAdminToken,
+  getGhostPost,
+  updateGhostPost,
+} from './ghost-admin.mjs';
+import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
 async function testAhrefsUrl() {
   const url = buildAhrefsKeywordUrl(contentAgentConfig, 'route optimization API', {
@@ -106,6 +111,111 @@ async function testClaudeJsonParsing() {
   assert.equal(draft.slug, 'route-optimization-api-guide');
 }
 
+async function testRevisedArticleJsonParsing() {
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify({
+            title: 'Updated Fleetbase API Tutorial',
+            slug: 'updated-fleetbase-api-tutorial',
+            excerpt:
+              'A revised Fleetbase API tutorial for logistics teams building order workflows.',
+            html: `<h2>${'Updated'.repeat(130)}</h2><p>${'Useful revised content. '.repeat(80)}</p>`,
+            metaTitle: 'Updated Fleetbase API Tutorial',
+            metaDescription:
+              'Revise a Fleetbase API tutorial for logistics and supply chain operators.',
+            revisionSummary: ['Tightened intro', 'Added API workflow emphasis'],
+          }),
+        },
+      ],
+    }),
+  });
+
+  const draft = await callClaudeJson({
+    apiKey: 'test-key',
+    model: 'test-model',
+    system: 'test',
+    prompt: 'test',
+    schema: RevisedArticleSchema,
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(draft.slug, 'updated-fleetbase-api-tutorial');
+  assert.equal(draft.revisionSummary.length, 2);
+}
+
+async function testGhostAdminReadAndUpdate() {
+  const calls = [];
+  const fakeFetch = async (url, options) => {
+    calls.push({ url: String(url), options });
+
+    if (options.method === 'PUT') {
+      const body = JSON.parse(options.body);
+      assert.equal(body.posts[0].status, 'draft');
+      assert.equal(body.posts[0].updated_at, '2026-05-28T00:00:00.000Z');
+
+      return {
+        ok: true,
+        json: async () => ({
+          posts: [
+            {
+              id: 'post-id',
+              title: body.posts[0].title,
+              slug: body.posts[0].slug,
+              status: 'draft',
+            },
+          ],
+        }),
+      };
+    }
+
+    return {
+      ok: true,
+      json: async () => ({
+        posts: [
+          {
+            id: 'post-id',
+            title: 'Original title',
+            slug: 'original-title',
+            status: 'draft',
+            html: '<p>Original content</p>',
+            updated_at: '2026-05-28T00:00:00.000Z',
+          },
+        ],
+      }),
+    };
+  };
+
+  const post = await getGhostPost('original-title', contentAgentConfig, {
+    adminApiUrl: 'https://ghost.example',
+    adminApiKey: 'abc123:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+    fetchImpl: fakeFetch,
+  });
+  const updated = await updateGhostPost(
+    post,
+    {
+      title: 'Revised title',
+      slug: 'revised-title',
+      html: '<p>Revised content</p>',
+      excerpt: 'Revised excerpt for the post.',
+      metaTitle: 'Revised title',
+      metaDescription: 'Revised meta description for the post.',
+    },
+    contentAgentConfig,
+    {
+      adminApiUrl: 'https://ghost.example',
+      adminApiKey: 'abc123:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+      fetchImpl: fakeFetch,
+    },
+  );
+
+  assert.equal(calls.length, 2);
+  assert.equal(updated.slug, 'revised-title');
+}
+
 function testParseJsonObject() {
   assert.deepEqual(parseJsonObject('prefix {"ok": true} suffix'), { ok: true });
 }
@@ -195,6 +305,8 @@ await testAhrefsUrl();
 testAhrefsNormalize();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
+await testRevisedArticleJsonParsing();
+await testGhostAdminReadAndUpdate();
 testParseJsonObject();
 testSourceTruthRepoConfig();
 await testContextManifestAndSelection();

@@ -60,6 +60,16 @@ export const QaResultSchema = z.object({
   recommendedFixes: z.array(z.string()).default([]),
 });
 
+export const RevisedArticleSchema = z.object({
+  title: z.string().min(8),
+  slug: z.string().min(3),
+  excerpt: z.string().min(30).max(300),
+  html: z.string().min(500),
+  metaTitle: z.string().min(10).max(80),
+  metaDescription: z.string().min(30).max(180),
+  revisionSummary: z.array(z.string()).default([]),
+});
+
 export const GhostDraftResultSchema = z.object({
   id: z.string(),
   title: z.string(),
