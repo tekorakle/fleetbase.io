@@ -1,0 +1,148 @@
+name: SEO Content Agent
+
+on:
+  schedule:
+    - cron: '0 14 * * 1,3,5'
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: Optional topic override for a manual run
+        required: false
+        type: string
+      keyword:
+        description: Optional target keyword override for a manual run
+        required: false
+        type: string
+      dry_run:
+        description: Generate artifacts without creating a Ghost draft
+        required: true
+        default: true
+        type: boolean
+      max_drafts:
+        description: Maximum Ghost drafts to create
+        required: true
+        default: '1'
+        type: choice
+        options:
+          - '1'
+      content_focus:
+        description: Optional content focus override
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - logistics-software
+          - supply-chain-software
+          - fleetbase-api-tutorial
+
+permissions:
+  contents: read
+
+jobs:
+  generate:
+    name: Generate SEO content draft
+    runs-on: ubuntu-latest
+    env:
+      AHREFS_API_TOKEN: ${{ secrets.AHREFS_API_TOKEN }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL || secrets.ANTHROPIC_MODEL }}
+      GHOST_ADMIN_API_URL: ${{ secrets.GHOST_ADMIN_API_URL }}
+      GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
+      GHOST_API_URL: ${{ secrets.GHOST_API_URL }}
+      GHOST_CONTENT_API_KEY: ${{ secrets.GHOST_CONTENT_API_KEY }}
+      GHOST_API_VERSION: ${{ vars.GHOST_API_VERSION || 'v5.0' }}
+      CONTENT_AGENT_NOTIFY_WEBHOOK_URL: ${{ secrets.CONTENT_AGENT_NOTIFY_WEBHOOK_URL }}
+      CONTENT_AGENT_TOPIC: ${{ inputs.topic || '' }}
+      CONTENT_AGENT_KEYWORD: ${{ inputs.keyword || '' }}
+      CONTENT_AGENT_FOCUS: ${{ inputs.content_focus || 'auto' }}
+      CONTENT_AGENT_MAX_DRAFTS: ${{ inputs.max_drafts || '1' }}
+      CONTENT_AGENT_OUTPUT_DIR: content-agent-output
+      CREATE_GHOST_DRAFT: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Checkout core-api source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/core-api
+          path: source-truth/core-api
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout fleetops source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/fleetops
+          path: source-truth/fleetops
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout ledger source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/ledger
+          path: source-truth/ledger
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout storefront source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/storefront
+          path: source-truth/storefront
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout dev-engine source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/dev-engine
+          path: source-truth/dev-engine
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout iam-engine source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/iam-engine
+          path: source-truth/iam-engine
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout ember-core source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/ember-core
+          path: source-truth/ember-core
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Checkout pallet source truth
+        uses: actions/checkout@v4
+        with:
+          repository: fleetbase/pallet
+          path: source-truth/pallet
+          token: ${{ secrets.FLEETBASE_SOURCE_READ_TOKEN || github.token }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run content agent self-tests
+        run: pnpm content-agent:test
+
+      - name: Generate content draft
+        run: pnpm content-agent:generate
+
+      - name: Upload content agent artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-agent-output
+          path: content-agent-output
+          if-no-files-found: ignore
