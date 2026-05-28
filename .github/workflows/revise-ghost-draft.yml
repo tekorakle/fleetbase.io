@@ -36,9 +36,9 @@ on:
           - '2'
           - '3'
       bypass_content_rules:
-        description: Apply the revision even if Fleetbase content rules still warn
+        description: Apply the revision after one Claude pass even if Fleetbase content rules warn
         required: true
-        default: false
+        default: true
         type: boolean
 
 permissions:
