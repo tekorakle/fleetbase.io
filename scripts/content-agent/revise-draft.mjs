@@ -82,10 +82,37 @@ function decodeHtmlBase64(value) {
   return Buffer.from(value.replace(/\s+/g, ''), 'base64').toString('utf8');
 }
 
-function normalizeRevisedArticle(revised) {
+function truncateText(value, maxLength) {
+  const normalized = String(value || '').replace(/\s+/g, ' ').trim();
+
+  if (normalized.length <= maxLength) return normalized;
+
+  return normalized.slice(0, maxLength - 1).trimEnd();
+}
+
+function chooseMetadataValue(...values) {
+  return values.find((value) => String(value || '').trim().length > 0) || '';
+}
+
+function normalizeRevisedArticle(revised, post) {
+  const existing = toArticleInput(post);
+
   return normalizeFleetbaseArticle({
     ...revised,
     html: revised.html || decodeHtmlBase64(revised.htmlBase64),
+    metaTitle: truncateText(
+      chooseMetadataValue(revised.metaTitle, revised.title, existing.metaTitle, existing.title),
+      80,
+    ),
+    metaDescription: truncateText(
+      chooseMetadataValue(
+        revised.metaDescription,
+        revised.excerpt,
+        existing.metaDescription,
+        existing.excerpt,
+      ),
+      180,
+    ),
   });
 }
 
@@ -136,7 +163,7 @@ async function reviseWithClaude({ post, revisionPrompt, previousRevision = null,
     maxTokens: 8192,
   });
 
-  return normalizeRevisedArticle(revised);
+  return normalizeRevisedArticle(revised, post);
 }
 
 async function reviseUntilRulesPass({ post, revisionPrompt, outputDir, maxAttempts, bypassContentRules }) {
