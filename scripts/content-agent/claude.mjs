@@ -1,3 +1,7 @@
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+
 import { parseJsonObject } from './schemas.mjs';
 
 function extractTextFromMessage(message) {
@@ -37,6 +41,46 @@ function getNumberEnv(name, fallback) {
 
 function formatSeconds(ms) {
   return Math.ceil(ms / 1000);
+}
+
+function getOutputDir() {
+  return process.env.CONTENT_AGENT_OUTPUT_DIR || process.env.RUNNER_TEMP || os.tmpdir();
+}
+
+function summarizeValidationError(error) {
+  if (Array.isArray(error.issues) && error.issues.length > 0) {
+    return error.issues
+      .map((issue) => {
+        const field = issue.path?.length ? issue.path.join('.') : '(root)';
+        return `${field}: ${issue.message}`;
+      })
+      .join('; ');
+  }
+
+  return error.message;
+}
+
+async function writeClaudeFailureArtifact({ model, attempt, parsedResponse, rawText, error }) {
+  const outputDir = getOutputDir();
+
+  if (!outputDir) return;
+
+  await fs.mkdir(outputDir, { recursive: true });
+  await fs.writeFile(
+    path.join(outputDir, `claude-schema-failure-attempt-${attempt}.json`),
+    `${JSON.stringify(
+      {
+        model,
+        attempt,
+        validationError: summarizeValidationError(error),
+        issues: error.issues || null,
+        parsedResponse,
+        rawText: rawText || null,
+      },
+      null,
+      2,
+    )}\n`,
+  );
 }
 
 export async function callClaudeJson({
@@ -139,19 +183,28 @@ export async function callClaudeJson({
     const message = await response.json();
     const toolInput = extractToolInputFromMessage(message);
     const text = toolInput ? '' : extractTextFromMessage(message);
+    let parsedResponse = toolInput;
     console.log(`[content-agent:claude] Anthropic response received for attempt ${attempt + 1}.`);
 
     try {
-      return schema.parse(toolInput || parseJsonObject(text));
+      parsedResponse ||= parseJsonObject(text);
+      return schema.parse(parsedResponse);
     } catch (error) {
       lastError = error;
+      await writeClaudeFailureArtifact({
+        model,
+        attempt: attempt + 1,
+        parsedResponse,
+        rawText: text,
+        error,
+      });
       console.warn(
-        `[content-agent:claude] Claude response failed schema validation on attempt ${attempt + 1}.`,
+        `[content-agent:claude] Claude response failed schema validation on attempt ${attempt + 1}: ${summarizeValidationError(error)}`,
       );
     }
   }
 
-  throw new Error(`Claude response failed schema validation: ${lastError.message}`);
+  throw new Error(`Claude response failed schema validation: ${summarizeValidationError(lastError)}`);
 }
 
 export async function scoreTopics({ opportunities, context, config, contentFocus, fetchImpl }) {
