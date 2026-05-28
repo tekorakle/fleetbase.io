@@ -1,4 +1,4 @@
 {
   "title": "Service Rates",
-  "pages": ["overview", "algorithm-rates"]
+  "pages": ["overview", "per-meter", "fixed-rate", "per-drop", "multi-zone-distance", "parcel", "algorithm-rates"]
 }

@@ -10,17 +10,19 @@ When `rate_calculation_method` is set to **`algo`** (or `algorithm`), the rate i
 
 The expression is stored on the rate's `algorithm` field as a string. At quote time, Fleet-Ops substitutes the live values for placeholders like `{distance_km}` and `{stops}`, evaluates the math, and uses the result as the service fee.
 
+![Algorithm form — formula field with the list of available variables and worked examples](/images/screenshots/fleet-ops/fleet-ops-service-rate-algorithm.webp)
+
 ## How an Algorithm Rate Is Evaluated
 
-The evaluation pipeline lives in `Fleetbase\FleetOps\Support\Algo`:
+When an order is quoted against an algorithm rate:
 
 1. The order is summarised into a set of **variables** (distance, time, stop count, parcel count, etc. — see below)
-2. Each `{variable}` placeholder in your `algorithm` string is replaced with its numeric value
+2. Each `{variable}` placeholder in your formula is replaced with its numeric value
 3. Any supported function calls (`max`, `min`, `ceil`, `floor`, `round`) are resolved
-4. The remaining math is evaluated by an embedded expression engine
+4. The remaining math is evaluated
 5. The result is rounded to 2 decimal places (typical for currency) and added to the quote's base fee
 
-Result types are always numeric. If the expression fails to evaluate (bad syntax, unknown variable, division by zero), the rate returns `null` and falls back to whatever else is on the rate (base fee, parcel fees).
+Results are always numeric. If the expression fails to evaluate (bad syntax, unknown variable, division by zero), the rate falls back to whatever else is on the rate (base fee, parcel fees).
 
 ## Available Variables
 
@@ -142,7 +144,7 @@ min(80, 4 + 0.5 * {distance_km} + max(0, {parcels} - 3))
 
 ## Validating an Expression
 
-Before saving, Fleet-Ops can validate that an expression is **computable** — it runs the expression against a fixture of representative values to confirm the result is numeric. Internally this corresponds to `Algo::isComputable()`, which evaluates against:
+Before saving, Fleet-Ops can validate that an expression is **computable** — it runs the expression against a set of representative values to confirm the result is numeric. The validator evaluates your formula against:
 
 ```
 distance_m = 25000   stops    = 4   parcels  = 3   base_fee = 100
