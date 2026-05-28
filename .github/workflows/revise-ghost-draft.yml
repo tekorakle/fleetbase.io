@@ -18,7 +18,7 @@ on:
       dry_run:
         description: Generate revision artifacts without updating Ghost
         required: true
-        default: true
+        default: false
         type: boolean
       allow_published:
         description: Allow updating a non-draft post
