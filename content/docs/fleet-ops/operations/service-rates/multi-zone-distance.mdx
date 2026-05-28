@@ -10,7 +10,7 @@ When `rate_calculation_method` is set to **`multi_zone_distance`**, the route's 
 
 This unlocks pricing models like:
 
-- *"Downtown: $2.50/km. Suburbs: $3.50/km. Rural fallback: $5.00/km."*
+- *"Downtown Singapore Zone: $2.00/km. Singapore Service Area: $1.25/km."*
 - *"Within service area: $1.20/km. Anywhere else: $3.00/km."*
 - *"Zone A and Zone B priced separately, with Zone A taking priority where they overlap."*
 
@@ -63,24 +63,33 @@ A rate can have **at most one fallback rule**. If you want a flat charge for out
 
 ## Worked example
 
-> *"Downtown: $2.50/km. Suburbs: $3.50/km. Anywhere outside both zones: $5.00/km."*
+> *"Singapore Zonal rate — $2.00 base fee, Downtown Singapore Zone: $2.00/km, Singapore Service Area: $1.25/km elsewhere."*
 
-| Label | Geography Type | Geography | Priority | Rate | Unit | Fallback |
-| :--- | :--- | :--- | :---: | :--- | :--- | :---: |
-| Downtown | Zone | Downtown Zone | 10 | $2.50 | `km` | — |
-| Suburbs | Zone | Suburbs Zone | 5 | $3.50 | `km` | — |
-| Out-of-zone | Fallback | *(unmatched route distance)* | 0 | $5.00 | `km` | ✓ |
+This is the configuration shown in the screenshots above — a service rate called "Singapore Zonal" with one Zone rule for downtown and one Service Area rule covering greater Singapore.
 
-Consider a route that runs **3 km through Downtown**, **7 km through the Suburbs**, then **2 km outside both zones**:
+| Label | Geography Type | Geography | Priority | Rate | Unit |
+| :--- | :--- | :--- | :---: | :--- | :--- |
+| Downtown Singapore | Zone | Downtown Singapore Zone | 10 | $2.00 | `km` |
+| Singapore | Service Area | Singapore Service Area | 5 | $1.25 | `km` |
+
+Consider a route with four waypoints that starts and ends inside the broader Singapore Service Area but passes through the Downtown Singapore Zone partway. Fleet-Ops samples the route and assigns each segment to whichever rule's geography contains it; the Downtown rule wins inside the downtown polygon because of its higher priority.
+
+For an order whose route distance breaks down as **12.41 km inside Downtown** and **15.99 km inside the rest of the Singapore Service Area**:
 
 | Segment | Matched rule | Distance | Rate | Line item |
 | :--- | :--- | :---: | :--- | :--- |
-| Downtown leg | Downtown | 3 km | $2.50 | **$7.50** |
-| Suburbs leg | Suburbs | 7 km | $3.50 | **$24.50** |
-| Unmatched | Out-of-zone fallback | 2 km | $5.00 | **$10.00** |
-| **Service fee** | | | | **$42.00** + base fee |
+| Downtown leg | Downtown Singapore | 12.41 km | $2.00 | **$24.81** |
+| Singapore leg | Singapore | 15.99 km | $1.25 | **$19.98** |
+| **Subtotal** | | | | **$44.79** |
+| Base Fee | | | | **$2.00** |
+| **Total** | | | | **$46.79** |
 
-If the Downtown and Suburbs zones overlapped, the Downtown rule (priority `10`) would win in the overlap region because its priority is higher than Suburbs' priority of `5`.
+The quote breakdown matches what you see on the order detail in Fleet-Ops:
+
+- *Downtown Singapore distance charge (12.41 km × $2.00)* — $24.81
+- *Singapore distance charge (15.99 km × $1.25)* — $19.98
+
+If you wanted to charge for distance that goes **outside the Singapore Service Area entirely** (e.g. into neighbouring regions), you would add a **fallback rule** with its own rate; any unmatched segments would then accumulate against that rule instead of being priced at $0.
 
 ![Quote breakdown showing the route split across zones with one line item per matched rule](/images/screenshots/fleet-ops/fleet-ops-service-rate-multi-zone-distance-example.webp)
 
