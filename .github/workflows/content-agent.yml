@@ -16,7 +16,7 @@ on:
       dry_run:
         description: Generate artifacts without creating a Ghost draft
         required: true
-        default: true
+        default: false
         type: boolean
       max_drafts:
         description: Maximum Ghost drafts to create
