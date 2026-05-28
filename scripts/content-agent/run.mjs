@@ -126,7 +126,11 @@ async function main() {
   const manifest = await buildContextManifest(contentAgentConfig);
   await writeOutput(outputDir, 'context-manifest.json', manifest);
 
-  const context = await buildFleetbaseContext(contentAgentConfig, { manifest, contentFocus });
+  const context = await buildFleetbaseContext(contentAgentConfig, {
+    manifest,
+    contentFocus,
+    ...contentAgentConfig.context.budgets.scoring,
+  });
   await writeOutput(outputDir, 'selected-context.json', context.selectedContext);
   await writeOutput(outputDir, 'source-citations.json', context.sourceCitations);
   await writeOutput(outputDir, 'fleetbase-context-sources.json', {
@@ -156,6 +160,7 @@ async function main() {
       contentFocus,
       topic,
       keyword: topic.keyword,
+      ...contentAgentConfig.context.budgets.drafting,
     });
     await writeOutput(outputDir, `selected-context-${topic.keyword.replace(/[^a-z0-9]+/gi, '-')}.json`, {
       sources: topicContext.selectedContext,

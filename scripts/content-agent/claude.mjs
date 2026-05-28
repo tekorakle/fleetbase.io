@@ -8,6 +8,20 @@ function extractTextFromMessage(message) {
     .trim();
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getRetryDelayMs(response) {
+  const retryAfter = Number(response.headers?.get?.('retry-after'));
+
+  if (Number.isFinite(retryAfter) && retryAfter > 0) {
+    return retryAfter * 1000;
+  }
+
+  return 65000;
+}
+
 export async function callClaudeJson({
   apiKey = process.env.ANTHROPIC_API_KEY,
   model = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6',
@@ -17,7 +31,7 @@ export async function callClaudeJson({
   maxTokens = 4096,
   temperature = 0.2,
   fetchImpl = fetch,
-  retries = 1,
+  retries = 2,
 }) {
   if (!apiKey) {
     throw new Error('Missing ANTHROPIC_API_KEY. Add it as a GitHub Actions secret.');
@@ -49,6 +63,16 @@ export async function callClaudeJson({
 
     if (!response.ok) {
       const body = await response.text();
+
+      if (response.status === 429 && attempt < retries) {
+        const delayMs = getRetryDelayMs(response);
+        console.warn(
+          `Anthropic rate limit hit. Waiting ${Math.ceil(delayMs / 1000)} seconds before retrying.`,
+        );
+        await sleep(delayMs);
+        continue;
+      }
+
       throw new Error(
         `Anthropic request failed with status ${response.status}: ${body.slice(0, 500)}`,
       );
@@ -89,7 +113,7 @@ export async function scoreTopics({ opportunities, context, config, contentFocus
       },
       maxResults: config.maxShortlistedTopics,
       competitorDomains: config.competitorDomains,
-      opportunities: opportunities.slice(0, 80),
+      opportunities: opportunities.slice(0, 40),
       fleetbaseContext: context.summary,
       existingBlogPosts: context.existingBlogPosts,
       requiredJsonShape: {

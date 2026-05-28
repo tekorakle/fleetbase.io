@@ -234,7 +234,26 @@ export function selectContextSources(manifest, config, options = {}) {
     }))
     .filter((item) => item.score > 0)
     .sort((a, b) => b.score - a.score || a.path.localeCompare(b.path))
-    .slice(0, config.context.maxSelectedFiles);
+    .slice(0, options.maxSelectedFiles || config.context.maxSelectedFiles);
+}
+
+function summarizeContext(selectedContext, options = {}) {
+  const maxCharsPerSource = options.maxCharsPerSource || Number.POSITIVE_INFINITY;
+  const maxTotalChars = options.maxTotalChars || Number.POSITIVE_INFINITY;
+  const chunks = [];
+  let totalChars = 0;
+
+  for (const item of selectedContext) {
+    const excerpt = item.excerpt.slice(0, maxCharsPerSource);
+    const chunk = `Source: ${item.path}\nRepo: ${item.repo}\nCategory: ${item.category}\nTitle: ${item.title}\n${excerpt}`;
+
+    if (totalChars + chunk.length > maxTotalChars) break;
+
+    chunks.push(chunk);
+    totalChars += chunk.length;
+  }
+
+  return chunks.join('\n\n---\n\n');
 }
 
 export async function fetchExistingGhostPosts(config, options = {}) {
@@ -277,12 +296,7 @@ export async function buildFleetbaseContext(config, options = {}) {
     contentStrategy: config.contentStrategy,
   });
   const existingBlogPosts = await fetchExistingGhostPosts(config, options);
-  const summary = selectedContext
-    .map(
-      (item) =>
-        `Source: ${item.path}\nRepo: ${item.repo}\nCategory: ${item.category}\nTitle: ${item.title}\n${item.excerpt}`,
-    )
-    .join('\n\n---\n\n');
+  const summary = summarizeContext(selectedContext, options);
 
   return {
     summary,
