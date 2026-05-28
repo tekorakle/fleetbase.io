@@ -15,6 +15,7 @@ import {
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { buildContextManifest, buildFleetbaseContext } from './context.mjs';
 import { createGhostDraft, uploadGhostImage } from './ghost-admin.mjs';
+import { normalizeArticleLinks } from './links.mjs';
 import { generateFeatureImage, shouldGenerateFeatureImage } from './openai-image.mjs';
 
 function parseArgs(argv) {
@@ -198,12 +199,12 @@ async function main() {
     await writeOutput(outputDir, `brief-${brief.slug}.json`, brief);
 
     console.log(`[content-agent] Generating draft for "${brief.title}".`);
-    const draft = await generateArticle({
+    const draft = normalizeArticleLinks(await generateArticle({
       brief,
       context: topicContext,
       config: contentAgentConfig,
       contentFocus,
-    });
+    }));
     await writeOutput(outputDir, `draft-${draft.slug}.json`, draft);
     await writeOutput(outputDir, `draft-${draft.slug}.html`, draft.html);
 

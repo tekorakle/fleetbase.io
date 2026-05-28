@@ -7,6 +7,7 @@ import path from 'node:path';
 import { callClaudeJson } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { getGhostPost, updateGhostPost } from './ghost-admin.mjs';
+import { normalizeArticleLinks } from './links.mjs';
 import { RevisedArticleSchema } from './schemas.mjs';
 
 function parseArgs(argv) {
@@ -79,6 +80,7 @@ async function reviseWithClaude({ post, revisionPrompt }) {
       article: toArticleInput(post),
       requirements: [
         'Preserve accurate Fleetbase product and API claims.',
+        `Use ${contentAgentConfig.siteUrl} for all Fleetbase website links and ${contentAgentConfig.siteUrl}/docs for all documentation links. Never use fleetbase.ghost.io for docs or website links.`,
         'Keep or improve SEO metadata.',
         'Keep semantic HTML suitable for Ghost.',
         'Do not publish or schedule the post.',
@@ -98,12 +100,14 @@ async function reviseWithClaude({ post, revisionPrompt }) {
     2,
   );
 
-  return callClaudeJson({
+  const revised = await callClaudeJson({
     system,
     prompt,
     schema: RevisedArticleSchema,
     maxTokens: 8192,
   });
+
+  return normalizeArticleLinks(revised);
 }
 
 async function main() {

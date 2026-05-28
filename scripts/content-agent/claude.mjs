@@ -168,6 +168,7 @@ export async function generateBrief({ topic, context, config, contentFocus, fetc
       requirements: [
         'The article must be specific to Fleetbase logistics software, supply chain software, or a practical Fleetbase API/tutorial workflow.',
         'Include Fleetbase-specific internal links from the provided context.',
+        `Use ${config.siteUrl} for all Fleetbase website links and ${config.siteUrl}/docs for all documentation links. Never use fleetbase.ghost.io for docs or website links.`,
         'If this is a tutorial focus, define what the reader will build or configure with Fleetbase.',
         'Avoid generic SaaS content that could apply to any logistics vendor.',
       ],
@@ -209,6 +210,7 @@ export async function generateArticle({ brief, context, config, contentFocus, fe
       requirements: [
         'Use semantic HTML: h2, h3, p, ul, ol, pre, code, table when useful.',
         'Include practical Fleetbase-specific guidance and internal links.',
+        `Use ${config.siteUrl} for all Fleetbase website links and ${config.siteUrl}/docs for all documentation links. Never link to fleetbase.ghost.io/docs or fleetbase.ghost.io website paths.`,
         'Keep the article useful even if the reader is evaluating open-source logistics software.',
         'For Fleetbase API tutorials, include a practical build/configure/use flow with code or request examples only when supported by context.',
         'For software SEO articles, connect the topic to Fleetbase modules and logistics/supply-chain operating workflows.',

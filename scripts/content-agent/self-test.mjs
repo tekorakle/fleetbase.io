@@ -16,6 +16,7 @@ import {
   uploadGhostImage,
   updateGhostPost,
 } from './ghost-admin.mjs';
+import { normalizeArticleLinks, normalizeFleetbaseLinks } from './links.mjs';
 import { generateFeatureImage } from './openai-image.mjs';
 import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
@@ -332,6 +333,27 @@ function testParseJsonObject() {
   assert.deepEqual(parseJsonObject('prefix {"ok": true} suffix'), { ok: true });
 }
 
+function testFleetbaseLinkNormalization() {
+  assert.equal(
+    normalizeFleetbaseLinks('Read https://fleetbase.ghost.io/docs/api/fleetbase/orders now.'),
+    'Read https://fleetbase.io/docs/api/fleetbase/orders now.',
+  );
+  assert.equal(
+    normalizeFleetbaseLinks('<a href="https://www.fleetbase.io/docs">Docs</a>'),
+    '<a href="https://fleetbase.io/docs">Docs</a>',
+  );
+
+  const article = normalizeArticleLinks({
+    excerpt: 'See https://fleetbase.ghost.io/docs',
+    html: '<a href="https://fleetbase.ghost.io/docs/platform">Platform docs</a>',
+    metaDescription: 'Visit https://www.fleetbase.io/docs',
+  });
+
+  assert.equal(article.excerpt, 'See https://fleetbase.io/docs');
+  assert.equal(article.html, '<a href="https://fleetbase.io/docs/platform">Platform docs</a>');
+  assert.equal(article.metaDescription, 'Visit https://fleetbase.io/docs');
+}
+
 function testSourceTruthRepoConfig() {
   const expectedRepos = [
     'fleetbase/core-api',
@@ -423,6 +445,7 @@ await testOpenAiImageGeneration();
 await testGhostImageUpload();
 await testGhostAdminReadAndUpdate();
 testParseJsonObject();
+testFleetbaseLinkNormalization();
 testSourceTruthRepoConfig();
 await testContextManifestAndSelection();
 
