@@ -86,7 +86,7 @@ const stackParts = [
  title: 'Storefront — branded customer app',
  description:
  'A white-label Storefront fork shipped as the True Vegan iOS and Android apps. Catalog, cart, account, and ordering all driven by the Storefront API.',
- docs: '/docs/apps/storefront-app',
+ docs: '/docs/storefront/app/overview',
  },
  {
  icon: Truck,

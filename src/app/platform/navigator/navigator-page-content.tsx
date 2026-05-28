@@ -465,7 +465,7 @@ export default function NavigatorPageContent() {
                     Fork on GitHub
                   </Button>
                 </Link>
-                <Link href="/docs/apps/navigator-app/customization">
+                <Link href="/docs/fleet-ops/navigator-app/theming">
                   <Button variant="outline">
                     Customization guide
                   </Button>

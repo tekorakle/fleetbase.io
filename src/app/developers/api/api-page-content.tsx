@@ -479,7 +479,7 @@ export default function ApiIntegrationsPageContent() {
                 {
                   q: 'Can I use the API to build a custom mobile app?',
                   a: 'Absolutely. The Fleetbase API is the foundation for our own open-source Navigator and Storefront mobile apps. You can use the same API to build custom driver apps, customer-facing apps, or any other mobile experience on top of Fleetbase.',
-                  learnMore: { href: '/docs/apps', label: 'Navigator & Storefront app docs →' },
+                  learnMore: { href: '/docs/storefront/app/overview', label: 'Storefront & Navigator app docs →' },
                 },
                 {
                   q: 'Where can I find the full API reference?',

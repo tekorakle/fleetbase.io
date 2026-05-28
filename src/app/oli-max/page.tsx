@@ -88,7 +88,7 @@ const stackParts = [
  title: 'Storefront — open-source customer app',
  description:
  'A white-label Storefront fork that ships branded as Oli Max on iOS and Android. Catalog, search, cart, and checkout are all driven by the Storefront API.',
- docs: '/docs/apps/storefront-app',
+ docs: '/docs/storefront/app/overview',
  },
  {
  icon: Truck,

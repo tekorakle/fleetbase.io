@@ -171,7 +171,7 @@ export default function MobileAppsPageContent() {
                   <Link href="https://github.com/fleetbase/navigator-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
                   </Link>
-                  <Link href="/docs/apps/navigator-app">
+                  <Link href="/docs/fleet-ops/navigator-app/quickstart">
                     <Button size="sm" variant="outline">Docs</Button>
                   </Link>
                   <Button size="sm" variant="outline"><FaApple className="mr-1.5 h-3.5 w-3.5" />App Store</Button>
@@ -201,7 +201,7 @@ export default function MobileAppsPageContent() {
                   <Link href="https://github.com/fleetbase/storefront-app" target="_blank" rel="noopener noreferrer">
                     <Button size="sm" variant="outline"><FaGithub className="mr-1.5 h-3.5 w-3.5" />Source</Button>
                   </Link>
-                  <Link href="/docs/apps/storefront-app">
+                  <Link href="/docs/storefront/app/overview">
                     <Button size="sm" variant="outline">Docs</Button>
                   </Link>
                   <Button size="sm" variant="outline"><FaApple className="mr-1.5 h-3.5 w-3.5" />App Store</Button>

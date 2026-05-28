@@ -1,14 +1,16 @@
 ---
-title: Configure Navigator App
-sidebarTitle: Configure
-description: Fork, brand, and configure the open-source Fleetbase Navigator app for your own deployment — env variables, API connection, maps, push, geolocation, and theming.
+title: Configuration
+sidebarTitle: Configuration
+description: Full env-var reference for the open-source Fleetbase Navigator app — Fleetbase connection, maps, driver UI, push notifications, geolocation, localization, and deep linking.
 ---
 
-# Configure Navigator App
+# Configuration
 
-This guide is for developers and operators who want to **fork, brand, and self-publish** the Fleetbase Navigator driver app. If your drivers will use the public Fleetbase Navigator app from the App Store / Google Play, see [Navigator App Setup](/docs/fleet-ops/getting-started/navigator-app-setup) instead — that page covers installing the public app and connecting it to your instance via the console-generated deep link.
+This guide is the full env-var reference for developers and operators who **fork, brand, and self-publish** the Fleetbase Navigator driver app. If your drivers will use the public Fleetbase Navigator app from the App Store / Google Play, see [Navigator App Setup](/docs/fleet-ops/getting-started/navigator-app-setup) instead — that page covers installing the public app and connecting it to your instance via the console-generated deep link.
 
 The Navigator source lives at [github.com/fleetbase/navigator-app](https://github.com/fleetbase/navigator-app). It's a React Native 0.77 app, Expo-free, with Tamagui for styling and Fastlane for release automation.
+
+To get the app running locally for the first time, see [Quickstart](/docs/fleet-ops/navigator-app/quickstart). For colors, themes, and other visual branding, see [Theming & Branding](/docs/fleet-ops/navigator-app/theming).
 
 ## Prerequisites
 
@@ -26,18 +28,6 @@ The Navigator source lives at [github.com/fleetbase/navigator-app](https://githu
 <Callout type="warn">
 Publishing release builds for iOS or Android requires a **paid commercial license** for `react-native-background-geolocation` (Transistor Soft). Debug builds work without it, but you cannot ship without a per-platform license. See the [purchase page](https://docs.transistorsoft.com/purchase/?platform=react-native) and the [setup guide](https://docs.transistorsoft.com/react-native/setup/).
 </Callout>
-
-## Clone and Install
-
-```bash
-git clone git@github.com:fleetbase/navigator-app.git
-cd navigator-app
-yarn
-yarn pod:install
-touch .env
-```
-
-`yarn pod:install` runs `bundle exec pod install --repo-update` with `RCT_NEW_ARCH_ENABLED=1` so the new React Native architecture is wired up correctly.
 
 ## Environment Variables
 
@@ -98,7 +88,7 @@ The Android `release` signing config in [android/app/build.gradle](https://githu
 | `ANDROID_NAVIGATOR_APP_UPLOAD_KEY_ALIAS` | Key alias inside the keystore. |
 | `ANDROID_NAVIGATOR_APP_UPLOAD_KEY_PASSWORD` | Key password. |
 
-See [Publish Navigator App](/docs/fleet-ops/navigator-app/publish-navigator-app) for keystore generation.
+See [Build & Release](/docs/fleet-ops/navigator-app/build-and-release) for keystore generation.
 
 ## Minimal `.env`
 
@@ -170,35 +160,7 @@ Without a license, release builds (Android `bundleRelease` / iOS Archive) will l
 
 ## Branding
 
-### App Name and Bundle ID
-
-Set `APP_NAME` and `APP_IDENTIFIER` in `.env` — both are interpolated into native build configs at compile time. For iOS, `APP_NAME` is read from `Info.plist` as `$(APP_NAME)`. For Android, `APP_IDENTIFIER` becomes the `applicationId` in `android/app/build.gradle`.
-
-### App Icon
-
-Replace `assets/app-icon.png` (1024×1024 PNG, no transparency, no rounded corners — the stores round it themselves) with your icon, then regenerate the per-density assets:
-
-```bash
-yarn generate:app-icon
-```
-
-This invokes `npx app-icon generate` and writes all required sizes into `ios/NavigatorApp/Images.xcassets/AppIcon.appiconset` and `android/app/src/main/res/mipmap-*`.
-
-### Splash / Launch Screen
-
-Replace `assets/splash-screen.png` with your logo (we recommend a 1024×1024 transparent PNG with the logo centered), then:
-
-```bash
-yarn generate:launch-screen
-```
-
-The default invocation uses `--background=#111827 --logo-width=100`. Tweak the `generate:launch-screen` script in `package.json` if you want a different background color or logo width.
-
-### Theme Colors
-
-Set `APP_THEME` to a Tamagui base theme (e.g. `blue`, `green`, `red`, `purple`). The active theme drives accent colors throughout the app. The theme system lives in [src/hooks/use-app-theme.ts](https://github.com/fleetbase/navigator-app/blob/main/src/hooks/use-app-theme.ts) and supports both light and dark variants.
-
-For finer-grained control, edit the Tamagui config directly or fork [config/default.js](https://github.com/fleetbase/navigator-app/blob/main/config/default.js).
+For app icon, splash screen, theme colors, custom color overrides, named themes, and native display names, see [Theming & Branding](/docs/fleet-ops/navigator-app/theming).
 
 ## Localization
 
@@ -224,16 +186,6 @@ When the Fleetbase console emits an **App Link** for drivers to scan, the URL is
 
 If you change `APP_LINK_PREFIX`, also change the matching value in your Fleetbase instance's `fleetops.navigator.link_prefix` config so the console emits a link the app will respond to.
 
-## Run Locally
-
-```bash
-yarn start          # start the Metro bundler
-yarn ios            # build and launch in the iOS simulator
-yarn android        # build and launch in the Android emulator
-```
-
-For physical-device debugging, see the [React Native CLI docs](https://reactnative.dev/docs/running-on-device).
-
 ## Next
 
-When you're ready to build release artifacts and ship to the stores, continue to [Publish Navigator App](/docs/fleet-ops/navigator-app/publish-navigator-app).
+For running the app locally on iOS, Android, or web, see [Quickstart](/docs/fleet-ops/navigator-app/quickstart). When you're ready to build release artifacts and ship to the stores, continue to [Build & Release](/docs/fleet-ops/navigator-app/build-and-release).
