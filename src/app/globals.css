@@ -398,9 +398,16 @@ html.theme-transition::view-transition-old(root) {
 .blog-content pre {
   overflow-x: auto;
   border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--card) 86%, black 14%);
+  border: 1px solid color-mix(in oklab, var(--border) 76%, var(--primary) 24%);
+  background: oklch(0.965 0.012 254);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.75);
   padding: 1rem 1.25rem;
+}
+
+.dark .blog-content pre {
+  border-color: color-mix(in oklab, var(--border) 72%, var(--primary) 28%);
+  background: oklch(0.105 0.025 254);
+  box-shadow: inset 0 1px 0 oklch(1 0 0 / 0.06);
 }
 
 .blog-content code {
