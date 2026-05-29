@@ -55,6 +55,8 @@ export const contentAgentConfig = {
   ahrefs: {
     apiBaseUrl: 'https://api.ahrefs.com/v3',
     keywordEndpoint: '/keywords-explorer/matching-terms',
+    matchMode: 'terms',
+    terms: 'all',
     keywordSelectFields: [
       'keyword',
       'volume',
