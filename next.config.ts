@@ -74,6 +74,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'storage.ghost.io',
+      },
+      {
+        protocol: 'https',
         hostname: '*.manus.computer',
       },
       ...(ghostImageHostname
