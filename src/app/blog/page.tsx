@@ -68,35 +68,40 @@ export default async function BlogPage() {
             <div className="overflow-hidden rounded-3xl border bg-card">
               <div className="grid gap-0 lg:grid-cols-[1.1fr_0.9fr]">
                 <div className="p-8 md:p-12">
-                  <div className="mb-3 flex flex-wrap items-center gap-3">
-                    <span className="rounded-full border bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                      {featuredPost.isFeatured ? 'Featured' : 'Latest'} article
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {formatPublishedDate(featuredPost.publishedAt)}
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      {featuredPost.readingTime}
-                    </span>
-                  </div>
-                  <h2 className="mb-4 max-w-3xl text-3xl font-bold tracking-tight text-balance md:text-4xl">
-                    {featuredPost.title}
-                  </h2>
-                  <p className="mb-6 max-w-3xl leading-relaxed text-muted-foreground">
-                    {featuredPost.excerpt}
-                  </p>
-                  {featuredPost.tags.length > 0 && (
-                    <div className="mb-8 flex flex-wrap gap-2">
-                      {featuredPost.tags.slice(0, 3).map((tag) => (
-                        <span
-                          key={tag.slug}
-                          className="rounded-full border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
-                        >
-                          {tag.name}
-                        </span>
-                      ))}
+                  <Link
+                    href={`/blog/${featuredPost.slug}`}
+                    className="group block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4"
+                  >
+                    <div className="mb-3 flex flex-wrap items-center gap-3">
+                      <span className="rounded-full border bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                        {featuredPost.isFeatured ? 'Featured' : 'Latest'} article
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {formatPublishedDate(featuredPost.publishedAt)}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {featuredPost.readingTime}
+                      </span>
                     </div>
-                  )}
+                    <h2 className="mb-4 max-w-3xl text-3xl font-bold tracking-tight text-balance transition-colors group-hover:text-primary md:text-4xl">
+                      {featuredPost.title}
+                    </h2>
+                    <p className="mb-6 max-w-3xl leading-relaxed text-muted-foreground">
+                      {featuredPost.excerpt}
+                    </p>
+                    {featuredPost.tags.length > 0 && (
+                      <div className="mb-8 flex flex-wrap gap-2">
+                        {featuredPost.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag.slug}
+                            className="rounded-full border bg-muted/40 px-2.5 py-1 text-xs text-muted-foreground"
+                          >
+                            {tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </Link>
                   <Button asChild>
                     <Link href={`/blog/${featuredPost.slug}`}>
                       Read article <ArrowRight className="ml-2 size-4" />
@@ -105,16 +110,19 @@ export default async function BlogPage() {
                 </div>
 
                 {featuredPost.featureImage && (
-                  <div className="border-t lg:border-t-0 lg:border-l">
+                  <Link
+                    href={`/blog/${featuredPost.slug}`}
+                    className="group block border-t outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-4 lg:border-t-0 lg:border-l"
+                  >
                     <Image
                       src={featuredPost.featureImage}
                       alt={featuredPost.featureImageAlt || featuredPost.title}
                       width={1600}
                       height={900}
                       sizes="(min-width: 1024px) 40vw, 100vw"
-                      className="h-full min-h-72 w-full object-cover"
+                      className="h-full min-h-72 w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                     />
-                  </div>
+                  </Link>
                 )}
               </div>
             </div>
