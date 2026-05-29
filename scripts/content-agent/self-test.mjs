@@ -30,7 +30,9 @@ async function testAhrefsUrl() {
 
   assert.equal(url.origin, 'https://example.test');
   assert.equal(url.pathname, '/v3/keywords-explorer/matching-terms');
-  assert.equal(url.searchParams.get('matching'), 'route optimization API');
+  assert.equal(url.searchParams.get('keywords'), 'route optimization API');
+  assert.equal(url.searchParams.get('match_mode'), 'terms');
+  assert.equal(url.searchParams.get('terms'), 'all');
   assert.equal(url.searchParams.get('limit'), '25');
   assert.ok(url.searchParams.get('select').includes('keyword'));
   assert.ok(url.searchParams.get('select').includes('volume'));

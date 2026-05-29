@@ -26,7 +26,9 @@ export function buildAhrefsKeywordUrl(config, cluster, options = {}) {
   url.searchParams.set('country', options.country || config.defaultCountry);
   url.searchParams.set('limit', String(options.limit || config.maxAhrefsRowsPerRequest));
   url.searchParams.set('select', select);
-  url.searchParams.set('matching', cluster);
+  url.searchParams.set('keywords', cluster);
+  url.searchParams.set('match_mode', options.matchMode || config.ahrefs.matchMode || 'terms');
+  url.searchParams.set('terms', options.terms || config.ahrefs.terms || 'all');
 
   return url;
 }
