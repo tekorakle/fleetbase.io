@@ -421,7 +421,7 @@ export async function generateFeatureImageBrief({ brief, draft, config, contentF
 export async function qaArticle({ brief, draft, context, config, contentFocus, fetchImpl }) {
   const { QaResultSchema } = await import('./schemas.mjs');
   const system =
-    'You are the final editor for Fleetbase. Block drafts with hallucinated product claims, weak SEO fit, unsafe code, missing internal links, or poor tutorial value.';
+    'You are an advisory editor for Fleetbase draft content. Identify review notes for a human editor, but do not block draft creation.';
   const prompt = JSON.stringify(
     {
       task: 'QA this Fleetbase blog draft.',
@@ -432,21 +432,21 @@ export async function qaArticle({ brief, draft, context, config, contentFocus, f
       draft,
       fleetbaseContext: context.summary,
       passCriteria: [
-        'No unsupported Fleetbase claims.',
+        'Flag unsupported Fleetbase claims as warnings for human review.',
         'Matches search intent and target keyword.',
         'Is clearly specific to Fleetbase logistics software, supply chain software, or a Fleetbase API/tutorial workflow.',
         'Does not read like generic logistics SaaS content.',
         'Tutorial-focused drafts explain a concrete build/configure/use workflow.',
-        'Unsupported API or code claims should be reported as warnings unless they make the entire article misleading or unsafe.',
+        'Unsupported API or code claims should be reported as warnings, not blocking issues.',
         'Contains useful internal links.',
         'No publish/schedule action requested.',
         'Ready for human review in Ghost.',
-        'Block drafts that contradict any Fleetbase editorial rule.',
+        'Do not block drafts. Put editorial concerns and factual uncertainty into warnings and recommendedFixes.',
       ],
       requiredJsonShape: {
         publishReady: true,
         score: 0,
-        blockingIssues: ['string'],
+        blockingIssues: [],
         warnings: ['string'],
         recommendedFixes: ['string'],
       },

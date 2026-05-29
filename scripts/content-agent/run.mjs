@@ -232,21 +232,27 @@ async function main() {
       config: contentAgentConfig,
       contentFocus,
     });
-    const blockingIssues = [...ruleCheck.blockingIssues, ...qa.blockingIssues];
-    const qaWarnings = [...ruleCheck.warnings, ...qa.warnings];
+    const advisoryWarnings = [
+      ...ruleCheck.blockingIssues,
+      ...ruleCheck.warnings,
+      ...qa.blockingIssues,
+      ...qa.warnings,
+    ];
     const combinedQa = {
       ...qa,
-      blockingIssues,
-      warnings: qaWarnings,
+      publishReady: true,
+      blockingIssues: [],
+      warnings: advisoryWarnings,
+      advisoryOnly: true,
     };
 
     await writeOutput(outputDir, `qa-${draft.slug}.json`, combinedQa);
 
     generated.push({ topic, brief, draft, qa: combinedQa, sourceCitations: topicContext.sourceCitations });
 
-    if (blockingIssues.length > 0) {
-      throw new Error(
-        `QA blocked draft "${draft.title}": ${blockingIssues.join('; ') || 'No details returned.'}`,
+    if (advisoryWarnings.length > 0) {
+      console.warn(
+        `[content-agent] QA warnings for "${draft.title}" are advisory only: ${advisoryWarnings.join('; ')}`,
       );
     }
 

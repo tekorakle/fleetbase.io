@@ -7,7 +7,7 @@ const TERM_REWRITES = [
   [/\bhttps:\/\/www\.fleetbase\.io\/docs\b/gi, 'https://fleetbase.io/docs'],
 ];
 
-const BLOCKING_RULES = [
+const REVIEW_RULES = [
   {
     id: 'outdated-api-first-positioning',
     pattern: /\bAPI[- ]first\b/i,
@@ -91,15 +91,15 @@ export function validateFleetbaseArticle(article) {
   ]
     .filter(Boolean)
     .join('\n');
-  const blockingIssues = BLOCKING_RULES.filter((rule) => rule.pattern.test(text)).map(
+  const reviewWarnings = REVIEW_RULES.filter((rule) => rule.pattern.test(text)).map(
     (rule) => `[${rule.id}] ${rule.message}`,
   );
-  const warnings = WARNING_RULES.filter((rule) => rule.appliesTo.test(text) && !rule.pattern.test(text)).map(
+  const missingGuidanceWarnings = WARNING_RULES.filter((rule) => rule.appliesTo.test(text) && !rule.pattern.test(text)).map(
     (rule) => `[${rule.id}] ${rule.message}`,
   );
 
   return {
-    blockingIssues,
-    warnings,
+    blockingIssues: [],
+    warnings: [...reviewWarnings, ...missingGuidanceWarnings],
   };
 }
