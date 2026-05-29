@@ -346,6 +346,55 @@ html.theme-transition::view-transition-old(root) {
   padding-left: 1rem;
 }
 
+.blog-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--card);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.blog-content thead {
+  background: color-mix(in oklab, var(--muted) 55%, var(--card) 45%);
+}
+
+.blog-content th,
+.blog-content td {
+  min-width: 14rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 0.875rem 1rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-content th:last-child,
+.blog-content td:last-child {
+  border-right: 0;
+}
+
+.blog-content tr:last-child td {
+  border-bottom: 0;
+}
+
+.blog-content th {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.blog-content td {
+  color: var(--muted-foreground);
+}
+
+.blog-content td code {
+  white-space: nowrap;
+}
+
 .blog-content pre {
   overflow-x: auto;
   border-radius: 1rem;
@@ -364,6 +413,20 @@ html.theme-transition::view-transition-old(root) {
 .blog-content pre code {
   background: transparent;
   padding: 0;
+}
+
+.blog-content .shiki,
+.blog-content .shiki span {
+  background-color: transparent !important;
+}
+
+.blog-content .shiki {
+  margin: 0;
+}
+
+.dark .blog-content .shiki,
+.dark .blog-content .shiki span {
+  color: var(--shiki-dark) !important;
 }
 
 .blog-content hr {

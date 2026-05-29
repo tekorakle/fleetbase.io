@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { BlogPostTracker } from '@/components/analytics/BlogPostTracker';
 import { BlogPostingSchema } from '@/components/seo/json-ld';
 import { Button } from '@/components/ui/button';
+import { formatBlogHtml } from '@/lib/blog-html';
 import { getAllBlogSlugs, getBlogPostBySlug } from '@/lib/ghost';
 
 const BASE_URL = 'https://fleetbase.io';
@@ -90,6 +91,7 @@ export default async function BlogPostPage(props: {
   }
 
   const canonicalUrl = `${BASE_URL}/blog/${post.slug}`;
+  const contentHtml = await formatBlogHtml(post.html);
 
   return (
     <div className="flex flex-col">
@@ -173,7 +175,7 @@ export default async function BlogPostPage(props: {
 
           <article
             className="blog-content mx-auto mt-12 max-w-3xl"
-            dangerouslySetInnerHTML={{ __html: post.html }}
+            dangerouslySetInnerHTML={{ __html: contentHtml }}
           />
         </div>
       </section>
