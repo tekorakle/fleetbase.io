@@ -492,7 +492,8 @@ function testFleetbaseContentRules() {
     metaDescription: 'Uses platform-level activity.',
   });
 
-  assert.equal(invalid.blockingIssues.length >= 4, true);
+  assert.equal(invalid.blockingIssues.length, 0);
+  assert.equal(invalid.warnings.length >= 4, true);
 
   const warning = validateFleetbaseArticle({
     title: 'Build proof of delivery in Fleetbase',
