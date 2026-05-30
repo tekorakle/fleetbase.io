@@ -5,20 +5,24 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { buildAhrefsKeywordUrl, normalizeAhrefsKeyword } from './ahrefs.mjs';
+import { buildAhrefsKeywordUrl, fetchAhrefsResearch, normalizeAhrefsKeyword } from './ahrefs.mjs';
+import { readAgentArtifacts } from './artifacts.mjs';
 import { callClaudeJson, generateFeatureImageBrief } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
 import { buildContextManifest, selectContextSources } from './context.mjs';
+import { assertNoDuplicateContent, findDuplicateContent } from './dedupe.mjs';
 import {
   buildGhostDraftPayload,
   createGhostAdminToken,
   getGhostPost,
+  listGhostPosts,
   uploadGhostImage,
   updateGhostPost,
 } from './ghost-admin.mjs';
 import { normalizeArticleLinks, normalizeFleetbaseLinks } from './links.mjs';
 import { generateFeatureImage } from './openai-image.mjs';
+import { buildManualResearch } from './research.mjs';
 import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
 async function testAhrefsUrl() {
@@ -54,6 +58,66 @@ function testAhrefsNormalize() {
   assert.equal(row.volume, 1200);
   assert.equal(row.difficulty, 18);
   assert.deepEqual(row.intents, ['commercial', 'informational']);
+}
+
+async function testAhrefsResearchFailsOnZeroRows() {
+  const fakeFetch = async () => ({
+    ok: true,
+    status: 200,
+    json: async () => ({ keywords: [] }),
+  });
+
+  await assert.rejects(
+    fetchAhrefsResearch(contentAgentConfig, {
+      token: 'test-token',
+      fetchImpl: fakeFetch,
+      clusters: ['fleet management software'],
+    }),
+    /zero valid keyword opportunities/,
+  );
+}
+
+async function testAhrefsResearchArtifacts() {
+  const fakeFetch = async () => ({
+    ok: true,
+    status: 200,
+    json: async () => ({
+      keywords: [
+        {
+          keyword: 'open source fleet management software',
+          volume: 100,
+          difficulty: 12,
+          traffic_potential: 300,
+        },
+        {
+          volume: 10,
+        },
+      ],
+    }),
+  });
+
+  const research = await fetchAhrefsResearch(contentAgentConfig, {
+    token: 'test-token',
+    fetchImpl: fakeFetch,
+    clusters: ['fleet management software'],
+  });
+
+  assert.equal(research.opportunities.length, 1);
+  assert.equal(research.requests[0].rowCount, 2);
+  assert.equal(research.requests[0].validRowCount, 1);
+  assert.equal(research.requests[0].malformedRowCount, 1);
+  assert.equal(research.summary.validOpportunityCount, 1);
+}
+
+function testManualResearchBypass() {
+  const research = buildManualResearch({
+    topic: 'Build a delivery tracking workflow with Fleetbase',
+    keyword: 'fleetbase delivery tracking workflow',
+  });
+
+  assert.equal(research.bypassedAhrefs, true);
+  assert.equal(research.opportunities[0].source, 'manual');
+  assert.equal(research.summary.bypassedReason.includes('Manual topic'), true);
 }
 
 function testGhostTokenAndPayload() {
@@ -444,6 +508,168 @@ async function testGhostAdminReadAndUpdate() {
   assert.equal(updated.slug, 'revised-title');
 }
 
+async function testGhostAdminListPosts() {
+  const fakeFetch = async (url) => {
+    assert.equal(String(url).includes('/ghost/api/admin/posts/'), true);
+    assert.equal(String(url).includes('limit=all'), true);
+
+    return {
+      ok: true,
+      json: async () => ({
+        posts: [
+          {
+            id: 'post-id',
+            title: 'Existing Fleetbase API Tutorial',
+            slug: 'existing-fleetbase-api-tutorial',
+            status: 'draft',
+          },
+        ],
+      }),
+    };
+  };
+
+  const posts = await listGhostPosts(contentAgentConfig, {
+    adminApiUrl: 'https://ghost.example',
+    adminApiKey: 'abc123:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef',
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(posts.length, 1);
+  assert.equal(posts[0].status, 'draft');
+}
+
+function testDuplicateDetection() {
+  const posts = [
+    {
+      title: 'Building Delivery Tracking with Fleetbase',
+      slug: 'building-delivery-tracking-with-fleetbase',
+      status: 'draft',
+      custom_excerpt: 'A Fleetbase delivery tracking workflow guide.',
+    },
+  ];
+  const duplicates = findDuplicateContent(
+    {
+      title: 'Building Delivery Tracking with Fleetbase',
+      slug: 'building-delivery-tracking-with-fleetbase',
+      targetKeyword: 'Fleetbase delivery tracking workflow',
+    },
+    posts,
+  );
+
+  assert.equal(duplicates.length > 0, true);
+  assert.throws(
+    () =>
+      assertNoDuplicateContent(
+        {
+          title: 'Building Delivery Tracking with Fleetbase',
+          slug: 'building-delivery-tracking-with-fleetbase',
+          targetKeyword: 'Fleetbase delivery tracking workflow',
+        },
+        posts,
+      ),
+    /Duplicate content blocked/,
+  );
+}
+
+async function testAgentArtifactValidation() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-artifacts-'));
+  const longHtml = `<h2>${'Fleetbase '.repeat(70)}</h2><p>${'Useful logistics content. '.repeat(80)}</p>`;
+
+  await fs.writeFile(
+    path.join(root, 'topic.json'),
+    JSON.stringify({
+      keyword: 'fleetbase delivery tracking workflow',
+      cluster: 'fleetbase api tutorial',
+      title: 'Build Delivery Tracking with Fleetbase',
+      score: 88,
+      searchIntent: 'Tutorial',
+      businessFit: 10,
+      opportunity: 8,
+      competitorWeakness: 6,
+      cannibalizationRisk: 'low',
+      rationale: 'Strong Fleetbase tutorial fit for delivery tracking workflows.',
+      suggestedInternalLinks: ['/docs/api/fleetbase/orders'],
+    }),
+  );
+  await fs.writeFile(
+    path.join(root, 'brief.json'),
+    JSON.stringify({
+      title: 'Build Delivery Tracking with Fleetbase',
+      slug: 'build-delivery-tracking-with-fleetbase',
+      targetKeyword: 'fleetbase delivery tracking workflow',
+      secondaryKeywords: ['delivery tracking api'],
+      audience: 'Developers building logistics apps',
+      searchIntent: 'Tutorial',
+      thesis: 'Fleetbase provides source-backed logistics primitives for delivery tracking workflows.',
+      outline: ['Intro', 'Create order', 'Track driver', 'Review proof'],
+      internalLinks: ['/docs/api/fleetbase/orders'],
+      cta: 'Explore Fleetbase docs to build the workflow.',
+      metaTitle: 'Build Delivery Tracking with Fleetbase',
+      metaDescription: 'Learn how to build delivery tracking workflows with Fleetbase.',
+      publicTags: ['API'],
+      sourceNotes: ['Verified with source files.'],
+    }),
+  );
+  await fs.writeFile(
+    path.join(root, 'draft.json'),
+    JSON.stringify({
+      title: 'Build Delivery Tracking with Fleetbase',
+      slug: 'build-delivery-tracking-with-fleetbase',
+      excerpt: 'Learn how to build a delivery tracking workflow with Fleetbase and verified API sources.',
+      html: longHtml,
+      metaTitle: 'Build Delivery Tracking with Fleetbase',
+      metaDescription: 'Learn how to build delivery tracking workflows with Fleetbase.',
+      publicTags: ['API'],
+      targetKeyword: 'fleetbase delivery tracking workflow',
+      ahrefsOpportunity: {
+        keyword: 'fleetbase delivery tracking workflow',
+        cluster: 'fleetbase api tutorial',
+        volume: null,
+        difficulty: null,
+        trafficPotential: null,
+        parentTopic: null,
+        intents: [],
+        source: 'manual',
+      },
+      sourceCitations: [
+        {
+          repo: 'fleetbase/core-api',
+          path: 'source-truth/core-api/routes/api.php',
+          title: 'Routes',
+          claim: 'Fleetbase exposes order API routes.',
+          evidence: 'Route definition inspected.',
+        },
+      ],
+    }),
+  );
+  await fs.writeFile(
+    path.join(root, 'source-citations.json'),
+    JSON.stringify([
+      {
+        repo: 'fleetbase/core-api',
+        path: 'source-truth/core-api/routes/api.php',
+        title: 'Routes',
+        claim: 'Fleetbase exposes order API routes.',
+        evidence: 'Route definition inspected.',
+      },
+    ]),
+  );
+  await fs.writeFile(
+    path.join(root, 'qa.json'),
+    JSON.stringify({
+      publishReady: true,
+      score: 88,
+      blockingIssues: [],
+      warnings: [],
+      recommendedFixes: [],
+    }),
+  );
+
+  const artifacts = await readAgentArtifacts(root);
+  assert.equal(artifacts.draft.targetKeyword, 'fleetbase delivery tracking workflow');
+  assert.equal(artifacts.sourceCitations.length, 1);
+}
+
 function testParseJsonObject() {
   assert.deepEqual(parseJsonObject('prefix {"ok": true} suffix'), { ok: true });
   assert.deepEqual(parseJsonObject('{"html": "<p>Line one\nLine two</p>"}'), {
@@ -521,6 +747,7 @@ function testSourceTruthRepoConfig() {
     'fleetbase/iam-engine',
     'fleetbase/ember-core',
     'fleetbase/pallet',
+    'fleetbase/postman',
   ];
 
   assert.deepEqual(
@@ -528,7 +755,9 @@ function testSourceTruthRepoConfig() {
     expectedRepos,
   );
   assert.equal(
-    contentAgentConfig.sourceTruthRepos.every((repo) => repo.path.startsWith('source-truth/')),
+    contentAgentConfig.sourceTruthRepos.every(
+      (repo) => repo.path.startsWith('source-truth/') || repo.path === 'vendor/postman',
+    ),
     true,
   );
 }
@@ -594,6 +823,9 @@ async function testContextManifestAndSelection() {
 
 await testAhrefsUrl();
 testAhrefsNormalize();
+await testAhrefsResearchFailsOnZeroRows();
+await testAhrefsResearchArtifacts();
+testManualResearchBypass();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testClaudeToolJsonParsing();
@@ -604,6 +836,9 @@ await testFeatureImageBriefGeneration();
 await testOpenAiImageGeneration();
 await testGhostImageUpload();
 await testGhostAdminReadAndUpdate();
+await testGhostAdminListPosts();
+testDuplicateDetection();
+await testAgentArtifactValidation();
 testParseJsonObject();
 testFleetbaseLinkNormalization();
 testFleetbaseContentRules();

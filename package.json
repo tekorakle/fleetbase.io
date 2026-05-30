@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "postinstall": "fumadocs-mdx && node scripts/generate-api-docs.mjs",
+    "content-agent:prepare": "node scripts/content-agent/prepare.mjs",
     "content-agent:generate": "node scripts/content-agent/run.mjs",
     "content-agent:revise": "node scripts/content-agent/revise-draft.mjs",
     "content-agent:test": "node scripts/content-agent/self-test.mjs",

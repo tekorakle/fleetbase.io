@@ -4,27 +4,19 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { fetchAhrefsKeywordIdeas } from './ahrefs.mjs';
-import {
-  generateArticle,
-  generateBrief,
-  generateFeatureImageBrief,
-  qaArticle,
-  scoreTopics,
-} from './claude.mjs';
+import { readAgentArtifacts, writeJsonFile } from './artifacts.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
 import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
-import { buildContextManifest, buildFleetbaseContext } from './context.mjs';
-import { createGhostDraft, uploadGhostImage } from './ghost-admin.mjs';
+import { assertNoDuplicateContent } from './dedupe.mjs';
+import { createGhostDraft, listGhostPosts, uploadGhostImage } from './ghost-admin.mjs';
 import { generateFeatureImage, shouldGenerateFeatureImage } from './openai-image.mjs';
 
 function parseArgs(argv) {
   const args = {
     dryRun: process.env.CREATE_GHOST_DRAFT !== 'true',
-    topic: process.env.CONTENT_AGENT_TOPIC || '',
-    keyword: process.env.CONTENT_AGENT_KEYWORD || '',
-    focus: process.env.CONTENT_AGENT_FOCUS || 'auto',
-    maxDrafts: Number(process.env.CONTENT_AGENT_MAX_DRAFTS || contentAgentConfig.maxDraftsPerRun),
+    outputDir:
+      process.env.CONTENT_AGENT_OUTPUT_DIR ||
+      path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'fleetbase-content-agent'),
     generateFeatureImage: process.env.GENERATE_FEATURE_IMAGE !== 'false',
   };
 
@@ -32,14 +24,10 @@ function parseArgs(argv) {
     const arg = argv[index];
     if (arg === '--dry-run') args.dryRun = true;
     if (arg === '--create-ghost-draft') args.dryRun = false;
-    if (arg === '--topic') args.topic = argv[index + 1] || '';
-    if (arg === '--keyword') args.keyword = argv[index + 1] || '';
-    if (arg === '--focus') args.focus = argv[index + 1] || 'auto';
-    if (arg === '--max-drafts') args.maxDrafts = Number(argv[index + 1] || args.maxDrafts);
+    if (arg === '--output-dir') args.outputDir = argv[index + 1] || args.outputDir;
     if (arg === '--no-feature-image') args.generateFeatureImage = false;
   }
 
-  args.maxDrafts = Math.max(1, Math.min(args.maxDrafts || 1, contentAgentConfig.maxDraftsPerRun));
   return args;
 }
 
@@ -49,55 +37,6 @@ function requireEnv(names) {
   if (missing.length > 0) {
     throw new Error(`Missing required environment variable(s): ${missing.join(', ')}.`);
   }
-}
-
-function manualTopic(topic, keyword) {
-  const targetKeyword = keyword || topic;
-
-  return {
-    keyword: targetKeyword,
-    cluster: 'manual',
-    title: topic,
-    score: 100,
-    searchIntent: 'Manual content request',
-    businessFit: 10,
-    opportunity: 8,
-    competitorWeakness: 5,
-    cannibalizationRisk: 'low',
-    rationale: 'Manual topic override supplied through workflow_dispatch.',
-    suggestedInternalLinks: ['/docs', '/product', '/platform'],
-  };
-}
-
-function resolveContentFocus(config, requestedFocus) {
-  if (requestedFocus && requestedFocus !== 'auto') {
-    if (!config.contentStrategy.allowedFocuses.includes(requestedFocus)) {
-      throw new Error(
-        `Invalid CONTENT_AGENT_FOCUS "${requestedFocus}". Expected one of: auto, ${config.contentStrategy.allowedFocuses.join(', ')}.`,
-      );
-    }
-
-    return requestedFocus;
-  }
-
-  const utcDay = new Date().getUTCDay();
-  return config.contentStrategy.defaultFocusByUtcDay[utcDay] || 'logistics-software';
-}
-
-function formatJson(value) {
-  return `${JSON.stringify(value, null, 2)}\n`;
-}
-
-async function writeOutput(outputDir, name, value) {
-  await fs.mkdir(outputDir, { recursive: true });
-  const outputPath = path.join(outputDir, name);
-
-  if (typeof value === 'string' || value instanceof Uint8Array) {
-    await fs.writeFile(outputPath, value);
-    return;
-  }
-
-  await fs.writeFile(outputPath, formatJson(value));
 }
 
 async function appendStepSummary(markdown) {
@@ -122,170 +61,84 @@ async function notifyIfConfigured(summary) {
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
-  const contentFocus = resolveContentFocus(contentAgentConfig, args.focus);
-  const outputDir =
-    process.env.CONTENT_AGENT_OUTPUT_DIR ||
-    path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'fleetbase-content-agent');
 
-  requireEnv(['ANTHROPIC_API_KEY']);
-
-  if (!args.topic) {
-    requireEnv(['AHREFS_API_TOKEN']);
-  }
-
-  if (!args.dryRun) {
-    requireEnv(['GHOST_ADMIN_API_URL', 'GHOST_ADMIN_API_KEY']);
-    if (args.generateFeatureImage) {
-      requireEnv(['OPENAI_API_KEY']);
-    }
-  } else if (process.env.GENERATE_FEATURE_IMAGE_IN_DRY_RUN === 'true') {
+  requireEnv(['GHOST_ADMIN_API_URL', 'GHOST_ADMIN_API_KEY']);
+  if (!args.dryRun && args.generateFeatureImage && shouldGenerateFeatureImage({ dryRun: false, config: contentAgentConfig })) {
     requireEnv(['OPENAI_API_KEY']);
   }
 
-  console.log(
-    `[content-agent] Starting SEO content agent. dryRun=${args.dryRun} focus=${contentFocus}`,
+  console.log(`[content-agent] Publishing Claude Code artifacts. dryRun=${args.dryRun}`);
+
+  const artifacts = await readAgentArtifacts(args.outputDir);
+  const draft = normalizeFleetbaseArticle({
+    ...artifacts.draft,
+    sourceCitations: artifacts.sourceCitations,
+  });
+  const ghostPosts = await listGhostPosts(contentAgentConfig);
+  const duplicateCheck = assertNoDuplicateContent(
+    {
+      title: draft.title,
+      slug: draft.slug,
+      targetKeyword: draft.targetKeyword,
+      topic: artifacts.topic.title,
+    },
+    ghostPosts,
   );
-  const manifest = await buildContextManifest(contentAgentConfig);
-  await writeOutput(outputDir, 'context-manifest.json', manifest);
-
-  const context = await buildFleetbaseContext(contentAgentConfig, {
-    manifest,
-    contentFocus,
-    ...contentAgentConfig.context.budgets.scoring,
-  });
-  await writeOutput(outputDir, 'selected-context.json', context.selectedContext);
-  await writeOutput(outputDir, 'source-citations.json', context.sourceCitations);
-  await writeOutput(outputDir, 'fleetbase-context-sources.json', {
-    sources: context.selectedContext.map((item) => item.path),
-    manifestCount: manifest.length,
-    selectedCount: context.selectedContext.length,
-    existingBlogPosts: context.existingBlogPosts,
-  });
-
-  const topics = args.topic
-    ? [manualTopic(args.topic, args.keyword)]
-    : await scoreTopics({
-        opportunities: await fetchAhrefsKeywordIdeas(contentAgentConfig),
-        context,
-        config: contentAgentConfig,
-        contentFocus,
-      });
-
-  await writeOutput(outputDir, 'topic-scores.json', { topics });
-
-  const createdDrafts = [];
-  const generated = [];
-
-  for (const topic of topics.slice(0, args.maxDrafts)) {
-    const topicContext = await buildFleetbaseContext(contentAgentConfig, {
-      manifest,
-      contentFocus,
-      topic,
-      keyword: topic.keyword,
-      ...contentAgentConfig.context.budgets.drafting,
-    });
-    await writeOutput(outputDir, `selected-context-${topic.keyword.replace(/[^a-z0-9]+/gi, '-')}.json`, {
-      sources: topicContext.selectedContext,
-      citations: topicContext.sourceCitations,
-    });
-
-    console.log(`[content-agent] Generating brief for "${topic.title}".`);
-    const brief = await generateBrief({
-      topic,
-      context: topicContext,
-      config: contentAgentConfig,
-      contentFocus,
-    });
-    await writeOutput(outputDir, `brief-${brief.slug}.json`, brief);
-
-    console.log(`[content-agent] Generating draft for "${brief.title}".`);
-    const draft = normalizeFleetbaseArticle(await generateArticle({
-      brief,
-      context: topicContext,
-      config: contentAgentConfig,
-      contentFocus,
-    }));
-    await writeOutput(outputDir, `draft-${draft.slug}.json`, draft);
-    await writeOutput(outputDir, `draft-${draft.slug}.html`, draft.html);
-    const ruleCheck = validateFleetbaseArticle(draft);
-    await writeOutput(outputDir, `rule-check-${draft.slug}.json`, ruleCheck);
-
-    let featureImage = null;
-    const imageBrief = args.generateFeatureImage
-      ? await generateFeatureImageBrief({
-          brief,
-          draft,
-          config: contentAgentConfig,
-          contentFocus,
-        })
-      : null;
-
-    if (imageBrief) {
-      await writeOutput(outputDir, `feature-image-brief-${draft.slug}.json`, imageBrief);
-    }
-
-    console.log(`[content-agent] Running QA for "${draft.title}".`);
-    const qa = await qaArticle({
-      brief,
-      draft,
-      context: topicContext,
-      config: contentAgentConfig,
-      contentFocus,
-    });
-    const advisoryWarnings = [
+  const ruleCheck = validateFleetbaseArticle(draft);
+  const qa = {
+    ...artifacts.qa,
+    publishReady: true,
+    blockingIssues: [],
+    warnings: [
+      ...(artifacts.qa.blockingIssues || []),
+      ...(artifacts.qa.warnings || []),
       ...ruleCheck.blockingIssues,
       ...ruleCheck.warnings,
-      ...qa.blockingIssues,
-      ...qa.warnings,
-    ];
-    const combinedQa = {
-      ...qa,
-      publishReady: true,
-      blockingIssues: [],
-      warnings: advisoryWarnings,
-      advisoryOnly: true,
-    };
+    ],
+    advisoryOnly: true,
+  };
+  let featureImage = null;
 
-    await writeOutput(outputDir, `qa-${draft.slug}.json`, combinedQa);
+  await writeJsonFile(path.join(args.outputDir, `draft-${draft.slug}.json`), draft);
+  await fs.writeFile(path.join(args.outputDir, `draft-${draft.slug}.html`), draft.html);
+  await writeJsonFile(path.join(args.outputDir, `rule-check-${draft.slug}.json`), ruleCheck);
+  await writeJsonFile(path.join(args.outputDir, `qa-${draft.slug}.json`), qa);
+  await writeJsonFile(path.join(args.outputDir, 'dedupe-upload-report.json'), duplicateCheck);
 
-    generated.push({ topic, brief, draft, qa: combinedQa, sourceCitations: topicContext.sourceCitations });
+  if (args.generateFeatureImage && artifacts.featureImageBrief) {
+    if (shouldGenerateFeatureImage({ dryRun: args.dryRun, config: contentAgentConfig })) {
+      const generatedImage = await generateFeatureImage(artifacts.featureImageBrief, contentAgentConfig);
+      await fs.writeFile(path.join(args.outputDir, artifacts.featureImageBrief.filename), generatedImage.bytes);
 
-    if (advisoryWarnings.length > 0) {
-      console.warn(
-        `[content-agent] QA warnings for "${draft.title}" are advisory only: ${advisoryWarnings.join('; ')}`,
-      );
-    }
-
-    if (args.dryRun) {
-      if (shouldGenerateFeatureImage({ dryRun: true, config: contentAgentConfig }) && imageBrief) {
-        const generatedImage = await generateFeatureImage(imageBrief, contentAgentConfig);
-        await writeOutput(outputDir, imageBrief.filename, generatedImage.bytes);
-        await writeOutput(outputDir, `feature-image-${draft.slug}.json`, {
-          filename: imageBrief.filename,
-          altText: imageBrief.altText,
+      if (!args.dryRun) {
+        const uploadedImage = await uploadGhostImage(
+          generatedImage,
+          artifacts.featureImageBrief.filename,
+          contentAgentConfig,
+        );
+        featureImage = {
+          url: uploadedImage.url,
+          altText: artifacts.featureImageBrief.altText,
           revisedPrompt: generatedImage.revisedPrompt,
-        });
+        };
       }
-      console.log('[content-agent] Dry-run enabled. Skipping Ghost draft creation.');
-      continue;
-    }
 
-    if (shouldGenerateFeatureImage({ dryRun: false, config: contentAgentConfig }) && imageBrief) {
-      const generatedImage = await generateFeatureImage(imageBrief, contentAgentConfig);
-      await writeOutput(outputDir, imageBrief.filename, generatedImage.bytes);
-      const uploadedImage = await uploadGhostImage(
-        generatedImage,
-        imageBrief.filename,
-        contentAgentConfig,
-      );
-      featureImage = {
-        url: uploadedImage.url,
-        altText: imageBrief.altText,
+      await writeJsonFile(path.join(args.outputDir, `feature-image-${draft.slug}.json`), {
+        filename: artifacts.featureImageBrief.filename,
+        altText: artifacts.featureImageBrief.altText,
         revisedPrompt: generatedImage.revisedPrompt,
-      };
-      await writeOutput(outputDir, `feature-image-${draft.slug}.json`, featureImage);
+        url: featureImage?.url || null,
+      });
     }
+  } else if (args.generateFeatureImage) {
+    console.warn('[content-agent] Feature image generation enabled, but feature-image-brief.json was not provided by Claude Code. Skipping image generation.');
+  }
 
+  const createdDrafts = [];
+
+  if (args.dryRun) {
+    console.log('[content-agent] Dry-run enabled. Skipping Ghost draft creation.');
+  } else {
     const ghostDraft = await createGhostDraft(
       {
         ...draft,
@@ -295,42 +148,37 @@ async function main() {
       contentAgentConfig,
     );
     createdDrafts.push(ghostDraft);
-    await writeOutput(outputDir, `ghost-draft-${draft.slug}.json`, ghostDraft);
+    await writeJsonFile(path.join(args.outputDir, `ghost-draft-${draft.slug}.json`), ghostDraft);
   }
 
-  const selected = generated[0];
   const summary = {
     dryRun: args.dryRun,
-    contentFocus,
-    outputDir,
-    manifestCount: manifest.length,
-    selectedContextCount: selected?.sourceCitations.length || context.selectedContext.length,
-    selectedTopic: selected?.topic || null,
-    draftTitle: selected?.draft?.title || null,
-    qa: selected?.qa || null,
+    selectedTopic: artifacts.topic,
+    draftTitle: draft.title,
+    targetKeyword: draft.targetKeyword,
+    sourceCitationCount: artifacts.sourceCitations.length,
+    qa,
     createdDrafts,
   };
 
-  await writeOutput(outputDir, 'summary.json', summary);
+  await writeJsonFile(path.join(args.outputDir, 'summary.json'), summary);
   await notifyIfConfigured(summary);
   await appendStepSummary(`
 ## Fleetbase SEO Content Agent
 
 - Mode: ${args.dryRun ? 'Dry run, no Ghost draft created' : 'Ghost draft creation enabled'}
-- Content focus: ${contentFocus}
-- Indexed sources: ${manifest.length}
-- Selected keyword: ${selected?.topic.keyword || 'n/a'}
-- Topic score: ${selected?.topic.score ?? 'n/a'}
-- Draft title: ${selected?.draft.title || 'n/a'}
-- QA status: ${selected?.qa.publishReady ? `passed (${selected.qa.score}/100)` : 'not run'}
-- QA warnings: ${selected?.qa.warnings?.length || 0}
+- Selected keyword: ${draft.targetKeyword}
+- Draft title: ${draft.title}
+- Source citations: ${artifacts.sourceCitations.length}
+- QA status: advisory pass (${qa.score}/100)
+- QA warnings: ${qa.warnings.length}
 - Ghost draft: ${createdDrafts[0]?.url || createdDrafts[0]?.slug || 'not created'}
-- Artifacts: ${outputDir}
+- Artifacts: ${args.outputDir}
 
 Next step: review the generated draft artifacts${createdDrafts.length ? ' and the Ghost draft' : ''}; publish or schedule manually from Ghost after editorial approval.
 `);
 
-  console.log(`[content-agent] Complete. Outputs written to ${outputDir}`);
+  console.log(`[content-agent] Complete. Outputs written to ${args.outputDir}`);
 }
 
 main().catch(async (error) => {

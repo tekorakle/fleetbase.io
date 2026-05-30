@@ -45,6 +45,11 @@ on:
         required: true
         default: false
         type: boolean
+      allow_seed_fallback:
+        description: Allow continuing without Ahrefs results
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -70,6 +75,7 @@ jobs:
       CONTENT_AGENT_FOCUS: ${{ inputs.content_focus || 'auto' }}
       CONTENT_AGENT_MAX_DRAFTS: ${{ inputs.max_drafts || '1' }}
       CONTENT_AGENT_OUTPUT_DIR: content-agent-output
+      CONTENT_AGENT_ALLOW_SEED_FALLBACK: ${{ inputs.allow_seed_fallback || false }}
       CREATE_GHOST_DRAFT: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
       GENERATE_FEATURE_IMAGE: ${{ inputs.generate_feature_image }}
       GENERATE_FEATURE_IMAGE_IN_DRY_RUN: ${{ inputs.generate_feature_image_in_dry_run }}
@@ -152,7 +158,40 @@ jobs:
       - name: Run content agent self-tests
         run: pnpm content-agent:test
 
-      - name: Generate content draft
+      - name: Prepare content research
+        run: pnpm content-agent:prepare
+
+      - name: Generate draft with Claude Code
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            You are the Fleetbase SEO content agent. Your only job is to inspect this checked-out workspace and write structured article artifacts for a human-reviewed Ghost draft. Do not commit, push, create issues, create PRs, call external APIs, publish, or schedule anything.
+
+            Read `content-agent-output/research-input.json` first. It contains Ahrefs opportunities, duplicate-filtered existing Ghost content, Fleetbase editorial rules, source-truth repo paths, and the source manifest.
+
+            Select one non-duplicate opportunity that is specific to Fleetbase logistics software, supply chain software, Fleet-Ops, Pallet, Storefront, Ledger, or a practical Fleetbase API/tutorial workflow. Prefer the configured content focus. Do not reuse any existing Ghost title, slug, topic, or target keyword from `existingGhostContent`.
+
+            Inspect relevant source files directly before writing. Use the checked-out `source-truth/core-api`, `source-truth/fleetops`, `source-truth/ledger`, `source-truth/storefront`, `source-truth/dev-engine`, `source-truth/iam-engine`, `source-truth/ember-core`, `source-truth/pallet`, `content/docs`, `src/app`, and `vendor/postman` files. For API/tutorial claims, verify endpoints, request fields, response shape, and UI names against source, docs, or Postman collections.
+
+            Write exactly these JSON files under `content-agent-output/`:
+            - `topic.json`: one object matching keyword, cluster, title, score, searchIntent, businessFit, opportunity, competitorWeakness, cannibalizationRisk, rationale, suggestedInternalLinks.
+            - `brief.json`: one object with title, slug, targetKeyword, secondaryKeywords, audience, searchIntent, thesis, outline, internalLinks, cta, metaTitle, metaDescription, publicTags, sourceNotes.
+            - `draft.json`: one object with title, slug, excerpt, html, metaTitle, metaDescription, publicTags, targetKeyword, ahrefsOpportunity, sourceCitations. The HTML must be semantic Ghost-compatible HTML.
+            - `source-citations.json`: an array of citation objects with repo, path, title, claim, and evidence.
+            - `qa.json`: one object with publishReady, score, blockingIssues, warnings, recommendedFixes. Put factual uncertainties in warnings, not blockingIssues.
+            - `feature-image-brief.json` when feature images are enabled: prompt, altText, filename.
+
+            Hard requirements:
+            - Use `https://fleetbase.io` for the website and `https://fleetbase.io/docs` for docs. Never use `fleetbase.ghost.io`.
+            - Spell Fleet-Ops exactly as `Fleet-Ops`.
+            - Do not use outdated `API-first` positioning.
+            - Do not invent endpoints, parameters, SocketCluster channel formats, hostnames, UI screens, or Fleetbase product behavior.
+            - Cite exact source files for claims. At least one source citation is required.
+            - Keep the article useful for a human editor, but do not publish or schedule anything.
+          claude_args: "--max-turns 16 --model ${{ env.ANTHROPIC_MODEL || 'claude-sonnet-4-6' }}"
+
+      - name: Create Ghost draft from Claude Code artifacts
         run: pnpm content-agent:generate
 
       - name: Upload content agent artifacts
