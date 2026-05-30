@@ -68,6 +68,24 @@ function extractRows(payload) {
   return [];
 }
 
+function getPositiveIntegerEnv(name, fallback) {
+  const value = Number(process.env[name]);
+  return Number.isInteger(value) && value > 0 ? value : fallback;
+}
+
+export function resolveAhrefsClusters(config, options = {}) {
+  const configured =
+    options.clusters ||
+    config.seedClustersByFocus?.[options.contentFocus] ||
+    config.seedClusters;
+  const maxClusters = getPositiveIntegerEnv(
+    'CONTENT_AGENT_MAX_AHREFS_CLUSTERS',
+    options.maxClusters || config.maxAhrefsClustersPerRun || configured.length,
+  );
+
+  return configured.slice(0, maxClusters);
+}
+
 export async function fetchAhrefsResearch(config, options = {}) {
   const token = options.token || process.env.AHREFS_API_TOKEN;
 
@@ -76,13 +94,17 @@ export async function fetchAhrefsResearch(config, options = {}) {
   }
 
   const fetchImpl = options.fetchImpl || fetch;
-  const clusters = options.clusters || config.seedClusters;
+  const clusters = resolveAhrefsClusters(config, options);
+  const limit = getPositiveIntegerEnv(
+    'CONTENT_AGENT_MAX_AHREFS_ROWS',
+    options.limit || config.maxAhrefsRowsPerRequest,
+  );
   const opportunities = [];
   const requests = [];
   const rawResults = [];
 
   for (const cluster of clusters) {
-    const url = buildAhrefsKeywordUrl(config, cluster, options);
+    const url = buildAhrefsKeywordUrl(config, cluster, { ...options, limit });
     const response = await fetchImpl(url, {
       headers: {
         Authorization: `Bearer ${token}`,

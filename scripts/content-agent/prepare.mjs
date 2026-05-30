@@ -96,6 +96,7 @@ async function main() {
   const research = await buildAhrefsOrManualResearch(contentAgentConfig, {
     topic: args.topic,
     keyword: args.keyword,
+    contentFocus,
     allowSeedFallback: args.allowSeedFallback,
   });
 

@@ -5,7 +5,12 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-import { buildAhrefsKeywordUrl, fetchAhrefsResearch, normalizeAhrefsKeyword } from './ahrefs.mjs';
+import {
+  buildAhrefsKeywordUrl,
+  fetchAhrefsResearch,
+  normalizeAhrefsKeyword,
+  resolveAhrefsClusters,
+} from './ahrefs.mjs';
 import { readAgentArtifacts } from './artifacts.mjs';
 import { callClaudeJson, generateFeatureImageBrief } from './claude.mjs';
 import { contentAgentConfig } from './content-agent.config.mjs';
@@ -58,6 +63,23 @@ function testAhrefsNormalize() {
   assert.equal(row.volume, 1200);
   assert.equal(row.difficulty, 18);
   assert.deepEqual(row.intents, ['commercial', 'informational']);
+}
+
+function testAhrefsClusterBudget() {
+  assert.deepEqual(resolveAhrefsClusters(contentAgentConfig, {
+    contentFocus: 'fleetbase-api-tutorial',
+  }), [
+    'route optimization API',
+    'delivery tracking API',
+    'fleet management API tutorial',
+  ]);
+  assert.deepEqual(resolveAhrefsClusters(contentAgentConfig, {
+    contentFocus: 'logistics-software',
+    maxClusters: 2,
+  }), [
+    'fleet management software',
+    'dispatch management software',
+  ]);
 }
 
 async function testAhrefsResearchFailsOnZeroRows() {
@@ -823,6 +845,7 @@ async function testContextManifestAndSelection() {
 
 await testAhrefsUrl();
 testAhrefsNormalize();
+testAhrefsClusterBudget();
 await testAhrefsResearchFailsOnZeroRows();
 await testAhrefsResearchArtifacts();
 testManualResearchBypass();
