@@ -27,7 +27,7 @@ import {
 } from './ghost-admin.mjs';
 import { normalizeArticleLinks, normalizeFleetbaseLinks } from './links.mjs';
 import { generateFeatureImage } from './openai-image.mjs';
-import { buildManualResearch } from './research.mjs';
+import { buildAhrefsOrManualResearch, buildManualResearch } from './research.mjs';
 import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
 async function testAhrefsUrl() {
@@ -140,6 +140,28 @@ function testManualResearchBypass() {
   assert.equal(research.bypassedAhrefs, true);
   assert.equal(research.opportunities[0].source, 'manual');
   assert.equal(research.summary.bypassedReason.includes('Manual topic'), true);
+}
+
+async function testAhrefsUnavailableFallback() {
+  const fakeFetch = async () => ({
+    ok: false,
+    status: 403,
+    text: async () =>
+      JSON.stringify({
+        error: 'API units limit reached. Expected usage: 30, API units left: 0.',
+      }),
+  });
+
+  const research = await buildAhrefsOrManualResearch(contentAgentConfig, {
+    contentFocus: 'logistics-software',
+    allowSeedFallback: true,
+    token: 'test-token',
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(research.ahrefsUnavailable, true);
+  assert.equal(research.opportunities[0].source, 'curated-fallback');
+  assert.equal(research.summary.ahrefsError.includes('API units limit reached'), true);
 }
 
 function testGhostTokenAndPayload() {
@@ -849,6 +871,7 @@ testAhrefsClusterBudget();
 await testAhrefsResearchFailsOnZeroRows();
 await testAhrefsResearchArtifacts();
 testManualResearchBypass();
+await testAhrefsUnavailableFallback();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testClaudeToolJsonParsing();

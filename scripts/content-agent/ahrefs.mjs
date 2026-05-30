@@ -127,9 +127,11 @@ export async function fetchAhrefsResearch(config, options = {}) {
       const body = await response.text();
       request.error = body.slice(0, 500);
       requests.push(request);
-      throw new Error(
+      const error = new Error(
         `Ahrefs request failed for "${cluster}" with status ${response.status}: ${body.slice(0, 500)}`,
       );
+      error.requests = requests;
+      throw error;
     }
 
     const payload = await response.json();
@@ -161,9 +163,11 @@ export async function fetchAhrefsResearch(config, options = {}) {
   };
 
   if (summary.validOpportunityCount === 0 && options.strict !== false) {
-    throw new Error(
+    const error = new Error(
       'Ahrefs returned zero valid keyword opportunities. Check AHREFS_API_TOKEN, plan access, request parameters, and seed clusters before generating content.',
     );
+    error.requests = requests;
+    throw error;
   }
 
   return { opportunities, requests, rawResults, summary };

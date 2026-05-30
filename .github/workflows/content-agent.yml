@@ -75,7 +75,7 @@ jobs:
       CONTENT_AGENT_FOCUS: ${{ inputs.content_focus || 'auto' }}
       CONTENT_AGENT_MAX_DRAFTS: ${{ inputs.max_drafts || '1' }}
       CONTENT_AGENT_OUTPUT_DIR: content-agent-output
-      CONTENT_AGENT_ALLOW_SEED_FALLBACK: ${{ inputs.allow_seed_fallback || false }}
+      CONTENT_AGENT_ALLOW_SEED_FALLBACK: ${{ inputs.allow_seed_fallback != false }}
       CONTENT_AGENT_MAX_AHREFS_CLUSTERS: 3
       CONTENT_AGENT_MAX_AHREFS_ROWS: 10
       CREATE_GHOST_DRAFT: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}

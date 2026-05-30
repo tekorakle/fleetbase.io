@@ -4,6 +4,7 @@ export const contentAgentConfig = {
   scheduleDescription: 'Weekly, Monday UTC',
   maxAhrefsRowsPerRequest: 10,
   maxAhrefsClustersPerRun: 3,
+  allowAhrefsFallbackByDefault: true,
   maxShortlistedTopics: 5,
   maxDraftsPerRun: 1,
   requireExplicitDraftCreation: true,
@@ -102,6 +103,74 @@ export const contentAgentConfig = {
       'delivery tracking API',
       'proof of delivery API',
       'dispatch API',
+    ],
+  },
+  fallbackOpportunitiesByFocus: {
+    'logistics-software': [
+      {
+        keyword: 'onfleet alternatives',
+        cluster: 'competitor-alternatives',
+        parentTopic: 'last mile delivery software',
+        intents: ['commercial', 'comparison'],
+      },
+      {
+        keyword: 'last mile delivery software',
+        cluster: 'last-mile-delivery-software',
+        parentTopic: 'delivery management software',
+        intents: ['commercial'],
+      },
+      {
+        keyword: 'delivery dispatch software',
+        cluster: 'delivery-dispatch-software',
+        parentTopic: 'dispatch software',
+        intents: ['commercial'],
+      },
+      {
+        keyword: 'courier dispatch software',
+        cluster: 'courier-dispatch-software',
+        parentTopic: 'courier management software',
+        intents: ['commercial'],
+      },
+    ],
+    'supply-chain-software': [
+      {
+        keyword: 'detrack alternatives',
+        cluster: 'competitor-alternatives',
+        parentTopic: 'proof of delivery software',
+        intents: ['commercial', 'comparison'],
+      },
+      {
+        keyword: 'proof of delivery software',
+        cluster: 'proof-of-delivery-software',
+        parentTopic: 'delivery management software',
+        intents: ['commercial'],
+      },
+      {
+        keyword: 'delivery route optimization software',
+        cluster: 'route-optimization-software',
+        parentTopic: 'delivery management software',
+        intents: ['commercial'],
+      },
+    ],
+    'fleetbase-api-tutorial': [
+      {
+        keyword: 'delivery tracking API',
+        cluster: 'delivery-api-tutorial',
+        parentTopic: 'delivery tracking API',
+        intents: ['informational', 'developer'],
+      },
+      {
+        keyword: 'proof of delivery API',
+        cluster: 'proof-of-delivery-api',
+        parentTopic: 'proof of delivery API',
+        intents: ['informational', 'developer'],
+      },
+      {
+        keyword: 'dispatch API',
+        cluster: 'dispatch-api',
+        parentTopic: 'dispatch API',
+        intents: ['informational', 'developer'],
+      },
     ],
   },
   competitorDomains: [
