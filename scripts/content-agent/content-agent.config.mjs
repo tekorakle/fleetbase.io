@@ -2,7 +2,8 @@ export const contentAgentConfig = {
   siteUrl: 'https://fleetbase.io',
   defaultCountry: 'us',
   scheduleDescription: 'Weekly, Monday UTC',
-  maxAhrefsRowsPerRequest: 100,
+  maxAhrefsRowsPerRequest: 10,
+  maxAhrefsClustersPerRun: 3,
   maxShortlistedTopics: 5,
   maxDraftsPerRun: 1,
   requireExplicitDraftCreation: true,
@@ -89,6 +90,23 @@ export const contentAgentConfig = {
     'logistics API tutorial',
     'delivery API tutorial',
   ],
+  seedClustersByFocus: {
+    'logistics-software': [
+      'fleet management software',
+      'dispatch management software',
+      'last mile delivery software',
+    ],
+    'supply-chain-software': [
+      'supply chain management software',
+      'warehouse inventory software',
+      'delivery management software',
+    ],
+    'fleetbase-api-tutorial': [
+      'route optimization API',
+      'delivery tracking API',
+      'fleet management API tutorial',
+    ],
+  },
   competitorDomains: [
     'onfleet.com',
     'route4me.com',

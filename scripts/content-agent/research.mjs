@@ -38,6 +38,7 @@ export async function buildAhrefsOrManualResearch(config, options = {}) {
   }
 
   return fetchAhrefsResearch(config, {
+    contentFocus: options.contentFocus,
     strict: options.allowSeedFallback !== true,
   });
 }
