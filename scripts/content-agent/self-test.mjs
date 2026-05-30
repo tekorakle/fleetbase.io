@@ -69,16 +69,16 @@ function testAhrefsClusterBudget() {
   assert.deepEqual(resolveAhrefsClusters(contentAgentConfig, {
     contentFocus: 'fleetbase-api-tutorial',
   }), [
-    'route optimization API',
     'delivery tracking API',
-    'fleet management API tutorial',
+    'proof of delivery API',
+    'dispatch API',
   ]);
   assert.deepEqual(resolveAhrefsClusters(contentAgentConfig, {
     contentFocus: 'logistics-software',
     maxClusters: 2,
   }), [
-    'fleet management software',
-    'dispatch management software',
+    'last mile delivery software',
+    'delivery management software',
   ]);
 }
 
