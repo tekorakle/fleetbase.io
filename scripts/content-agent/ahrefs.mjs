@@ -33,6 +33,13 @@ export function buildAhrefsKeywordUrl(config, cluster, options = {}) {
   return url;
 }
 
+function sanitizeAhrefsUrl(url) {
+  return {
+    pathname: url.pathname,
+    params: Object.fromEntries(url.searchParams.entries()),
+  };
+}
+
 export function normalizeAhrefsKeyword(row, cluster) {
   const keyword = row.keyword || row.query || row.term || row.phrase;
 
@@ -61,7 +68,7 @@ function extractRows(payload) {
   return [];
 }
 
-export async function fetchAhrefsKeywordIdeas(config, options = {}) {
+export async function fetchAhrefsResearch(config, options = {}) {
   const token = options.token || process.env.AHREFS_API_TOKEN;
 
   if (!token) {
@@ -71,6 +78,8 @@ export async function fetchAhrefsKeywordIdeas(config, options = {}) {
   const fetchImpl = options.fetchImpl || fetch;
   const clusters = options.clusters || config.seedClusters;
   const opportunities = [];
+  const requests = [];
+  const rawResults = [];
 
   for (const cluster of clusters) {
     const url = buildAhrefsKeywordUrl(config, cluster, options);
@@ -80,9 +89,21 @@ export async function fetchAhrefsKeywordIdeas(config, options = {}) {
         Accept: 'application/json',
       },
     });
+    const request = {
+      cluster,
+      ...sanitizeAhrefsUrl(url),
+      status: response.status,
+      ok: response.ok,
+      rowCount: 0,
+      validRowCount: 0,
+      malformedRowCount: 0,
+      select: config.ahrefs.keywordSelectFields,
+    };
 
     if (!response.ok) {
       const body = await response.text();
+      request.error = body.slice(0, 500);
+      requests.push(request);
       throw new Error(
         `Ahrefs request failed for "${cluster}" with status ${response.status}: ${body.slice(0, 500)}`,
       );
@@ -90,15 +111,42 @@ export async function fetchAhrefsKeywordIdeas(config, options = {}) {
 
     const payload = await response.json();
     const rows = extractRows(payload).slice(0, config.maxAhrefsRowsPerRequest);
+    request.rowCount = rows.length;
+    rawResults.push({ cluster, rows });
 
     for (const row of rows) {
       try {
         opportunities.push(normalizeAhrefsKeyword(row, cluster));
+        request.validRowCount += 1;
       } catch (error) {
+        request.malformedRowCount += 1;
         console.warn(`[content-agent] Skipping malformed Ahrefs row for "${cluster}": ${error.message}`);
       }
     }
+
+    requests.push(request);
   }
 
-  return opportunities;
+  const summary = {
+    clusterCount: clusters.length,
+    requestCount: requests.length,
+    totalRows: requests.reduce((sum, request) => sum + request.rowCount, 0),
+    validOpportunityCount: opportunities.length,
+    malformedRowCount: requests.reduce((sum, request) => sum + request.malformedRowCount, 0),
+    selectedFields: config.ahrefs.keywordSelectFields,
+    strict: options.strict !== false,
+  };
+
+  if (summary.validOpportunityCount === 0 && options.strict !== false) {
+    throw new Error(
+      'Ahrefs returned zero valid keyword opportunities. Check AHREFS_API_TOKEN, plan access, request parameters, and seed clusters before generating content.',
+    );
+  }
+
+  return { opportunities, requests, rawResults, summary };
+}
+
+export async function fetchAhrefsKeywordIdeas(config, options = {}) {
+  const research = await fetchAhrefsResearch(config, options);
+  return research.opportunities;
 }

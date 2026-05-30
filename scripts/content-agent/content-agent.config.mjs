@@ -232,6 +232,15 @@ export const contentAgentConfig = {
         'docs/**/*.md',
       ],
     },
+    {
+      repo: 'fleetbase/postman',
+      path: 'vendor/postman',
+      category: 'api-collections',
+      includeGlobs: [
+        '**/*.json',
+        '**/*.md',
+      ],
+    },
   ],
   ghost: {
     apiVersion: 'v5.0',

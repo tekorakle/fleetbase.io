@@ -52,6 +52,20 @@ export const ArticleDraftSchema = z.object({
   publicTags: z.array(z.string()).default([]),
 });
 
+export const SourceCitationSchema = z.object({
+  repo: z.string().min(1),
+  path: z.string().min(1),
+  title: z.string().optional().default(''),
+  claim: z.string().min(8),
+  evidence: z.string().optional().default(''),
+});
+
+export const AgentArticleDraftSchema = ArticleDraftSchema.extend({
+  targetKeyword: z.string().min(1),
+  ahrefsOpportunity: KeywordOpportunitySchema.passthrough().nullable(),
+  sourceCitations: z.array(SourceCitationSchema).min(1),
+});
+
 export const QaResultSchema = z.object({
   publishReady: z.boolean(),
   score: z.number().min(0).max(100),

@@ -130,6 +130,41 @@ export async function createGhostDraft(draft, config, options = {}) {
   });
 }
 
+export async function listGhostPosts(config, options = {}) {
+  const response = await ghostAdminFetch('posts/', {
+    ...options,
+    apiVersion: config.ghost.apiVersion,
+    searchParams: {
+      formats: 'plaintext',
+      include: 'tags',
+      limit: options.limit || 'all',
+      order: 'updated_at desc',
+      fields: [
+        'id',
+        'title',
+        'slug',
+        'status',
+        'custom_excerpt',
+        'meta_title',
+        'meta_description',
+        'published_at',
+        'created_at',
+        'updated_at',
+      ].join(','),
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `Ghost Admin API post history failed with status ${response.status}: ${body.slice(0, 500)}`,
+    );
+  }
+
+  const payload = await response.json();
+  return payload.posts || [];
+}
+
 export async function uploadGhostImage(image, filename, config, options = {}) {
   const { adminApiUrl, adminApiKey } = getGhostAdminConfig(options);
   const token = createGhostAdminToken(adminApiKey);
