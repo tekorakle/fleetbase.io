@@ -78,10 +78,12 @@ export function resolveAhrefsClusters(config, options = {}) {
     options.clusters ||
     config.seedClustersByFocus?.[options.contentFocus] ||
     config.seedClusters;
-  const maxClusters = getPositiveIntegerEnv(
-    'CONTENT_AGENT_MAX_AHREFS_CLUSTERS',
-    options.maxClusters || config.maxAhrefsClustersPerRun || configured.length,
-  );
+  const maxClusters =
+    options.maxClusters ||
+    getPositiveIntegerEnv(
+      'CONTENT_AGENT_MAX_AHREFS_CLUSTERS',
+      config.maxAhrefsClustersPerRun || configured.length,
+    );
 
   return configured.slice(0, maxClusters);
 }
@@ -95,10 +97,9 @@ export async function fetchAhrefsResearch(config, options = {}) {
 
   const fetchImpl = options.fetchImpl || fetch;
   const clusters = resolveAhrefsClusters(config, options);
-  const limit = getPositiveIntegerEnv(
-    'CONTENT_AGENT_MAX_AHREFS_ROWS',
-    options.limit || config.maxAhrefsRowsPerRequest,
-  );
+  const limit =
+    options.limit ||
+    getPositiveIntegerEnv('CONTENT_AGENT_MAX_AHREFS_ROWS', config.maxAhrefsRowsPerRequest);
   const opportunities = [];
   const requests = [];
   const rawResults = [];
