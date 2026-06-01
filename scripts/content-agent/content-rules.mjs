@@ -18,6 +18,16 @@ const REVIEW_RULES = [
         pattern: /fleetbase\.ghost\.io\/docs/i,
         message: 'Use https://fleetbase.io/docs, never fleetbase.ghost.io/docs.',
     },
+    {
+        id: 'core-extension-enable-install',
+        pattern: /\b(?:install|enable|activate|add|turn on|set up)\s+(?:the\s+)?(?:Fleet[- ]?Ops|Fleet-Ops|Pallet|Storefront|Ledger)(?:\s+(?:extension|module|plugin|app))?\b/i,
+        message: 'Do not tell readers to install, enable, activate, add, turn on, or set up bundled Fleetbase core extensions. Fleet-Ops and other core extensions are already installed and active by default in Fleetbase Cloud and standard self-hosted Fleetbase.',
+    },
+    {
+        id: 'core-extension-disabled-or-missing',
+        pattern: /\b(?:Fleet[- ]?Ops|Fleet-Ops|Pallet|Storefront|Ledger)\b[^.]{0,80}\b(?:disabled|not enabled|not installed|must be enabled|must be installed|needs to be enabled|needs to be installed)\b/i,
+        message: 'Do not imply bundled Fleetbase core extensions are disabled, missing, or require activation before use.',
+    },
 ];
 
 const WARNING_RULES = [

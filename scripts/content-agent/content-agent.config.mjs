@@ -82,6 +82,7 @@ export const contentAgentConfig = {
       'Fleetbase should be positioned as serious logistics, fleet operations, and last-mile delivery software for SMB and enterprise teams. Do not use outdated "API-first" positioning.',
       'Spell Fleet-Ops exactly as "Fleet-Ops". Do not write "FleetOps".',
       'Refer to Fleet-Ops as Fleet-Ops, not "Fleet-Ops extension".',
+      'Do not tell readers to install, enable, activate, add, or turn on Fleet-Ops, Pallet, Storefront, Ledger, or other core Fleetbase extensions. Core Fleetbase extensions are bundled, installed, and active by default in Fleetbase Cloud and standard self-hosted Fleetbase.',
       'The Fleetbase website is https://fleetbase.io and the documentation URL is https://fleetbase.io/docs.',
       'Manage order configs at Fleet-Ops -> Operations -> Order Config. Do not call this screen "Order Configurations".',
       'Activity definitions are configured by the order config; do not invent platform-level activity definitions.',
@@ -91,6 +92,7 @@ export const contentAgentConfig = {
       'Proof of delivery for an order is available at /v1/orders/:id/proofs.',
       'For realtime driver location, subscribe to the Fleetbase SocketCluster instance using the accepted driver channel.',
       'When writing API tutorials, verify endpoint names, request parameters, and resource names against the indexed API docs or cloned source context.',
+      'Do not name API request fields, query parameters, response properties, webhook fields, or configuration keys unless the exact name appears in sourceContext and is cited in sourceCitations.',
     ],
   },
   ahrefs: {

@@ -1072,6 +1072,32 @@ function testFleetbaseContentRules() {
     true,
   );
 
+  const bundledExtensionWarning = validateFleetbaseArticle({
+    title: 'Fleet-Ops delivery workflow',
+    excerpt: 'Install the Fleet-Ops extension before managing deliveries.',
+    html: '<p>Enable Fleet-Ops in your Fleetbase account, then activate Pallet if you need inventory workflows.</p>',
+    metaTitle: 'Fleet-Ops workflow',
+    metaDescription: 'Fleet-Ops setup guide.',
+  });
+
+  assert.equal(
+    bundledExtensionWarning.warnings.some((item) => item.includes('[core-extension-enable-install]')),
+    true,
+  );
+
+  const missingExtensionWarning = validateFleetbaseArticle({
+    title: 'Fleet-Ops delivery workflow',
+    excerpt: 'Fleet-Ops must be enabled before you can dispatch orders.',
+    html: '<p>Fleet-Ops needs to be installed before dispatchers can use the order board.</p>',
+    metaTitle: 'Fleet-Ops workflow',
+    metaDescription: 'Fleet-Ops setup guide.',
+  });
+
+  assert.equal(
+    missingExtensionWarning.warnings.some((item) => item.includes('[core-extension-disabled-or-missing]')),
+    true,
+  );
+
   const warning = validateFleetbaseArticle({
     title: 'Build proof of delivery in Fleetbase',
     excerpt: 'A proof of delivery guide.',
