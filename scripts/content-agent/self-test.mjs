@@ -17,6 +17,7 @@ import { contentAgentConfig } from './content-agent.config.mjs';
 import { normalizeFleetbaseArticle, validateFleetbaseArticle } from './content-rules.mjs';
 import { buildContextManifest, selectContextSources } from './context.mjs';
 import { assertNoDuplicateContent, findDuplicateContent } from './dedupe.mjs';
+import { generateArtifacts } from './generate-artifacts.mjs';
 import {
   buildGhostDraftPayload,
   createGhostAdminToken,
@@ -27,7 +28,7 @@ import {
 } from './ghost-admin.mjs';
 import { normalizeArticleLinks, normalizeFleetbaseLinks } from './links.mjs';
 import { generateFeatureImage } from './openai-image.mjs';
-import { buildAhrefsOrManualResearch, buildManualResearch } from './research.mjs';
+import { buildAhrefsOrManualResearch, buildAiTopicResearch, buildManualResearch } from './research.mjs';
 import { ArticleDraftSchema, RevisedArticleSchema, parseJsonObject } from './schemas.mjs';
 
 async function testAhrefsUrl() {
@@ -155,6 +156,7 @@ async function testAhrefsUnavailableFallback() {
   const research = await buildAhrefsOrManualResearch(contentAgentConfig, {
     contentFocus: 'logistics-software',
     allowSeedFallback: true,
+    useAhrefs: true,
     token: 'test-token',
     fetchImpl: fakeFetch,
   });
@@ -162,6 +164,40 @@ async function testAhrefsUnavailableFallback() {
   assert.equal(research.ahrefsUnavailable, true);
   assert.equal(research.opportunities[0].source, 'curated-fallback');
   assert.equal(research.summary.ahrefsError.includes('API units limit reached'), true);
+}
+
+async function testAhrefsDisabledUsesAiTopicResearch() {
+  let fetchCalled = false;
+  const fakeFetch = async () => {
+    fetchCalled = true;
+    throw new Error('Ahrefs should not be called when useAhrefs is false.');
+  };
+
+  const research = await buildAhrefsOrManualResearch(contentAgentConfig, {
+    contentFocus: 'logistics-software',
+    topicMode: 'integration',
+    integrationTarget: 'WordPress',
+    useAhrefs: false,
+    token: 'test-token',
+    fetchImpl: fakeFetch,
+  });
+
+  assert.equal(fetchCalled, false);
+  assert.equal(research.bypassedAhrefs, true);
+  assert.equal(research.ahrefsUnavailable, false);
+  assert.equal(research.opportunities.length > 0, true);
+  assert.equal(research.opportunities[0].source, 'ai-topic-idea');
+  assert.equal(
+    research.opportunities.some((opportunity) => opportunity.keyword.includes('WordPress')),
+    true,
+  );
+
+  const directResearch = buildAiTopicResearch(contentAgentConfig, {
+    contentFocus: 'logistics-software',
+    topicMode: 'api-tutorial',
+  });
+
+  assert.equal(directResearch.summary.validOpportunityCount > 0, true);
 }
 
 function testGhostTokenAndPayload() {
@@ -714,6 +750,272 @@ async function testAgentArtifactValidation() {
   assert.equal(artifacts.sourceCitations.length, 1);
 }
 
+async function testStructuredArtifactGeneration() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-structured-'));
+  const longHtml = [
+    '<h2>Connect WordPress orders to Fleetbase delivery operations</h2>',
+    `<p>${'A practical Fleetbase and WordPress integration can keep ecommerce order intake separate from delivery execution while giving dispatch teams a source-backed workflow for orders, tracking, and proof of delivery. '.repeat(4)}</p>`,
+    '<h2>Use Fleetbase as the logistics control layer</h2>',
+    `<p>${'Fleetbase source context supports delivery management, dispatch workflows, driver tracking, and proof-of-delivery content for human editors to refine before publishing. '.repeat(5)}</p>`,
+  ].join('');
+  const responses = [
+    {
+      topics: [
+        {
+          keyword: 'integrate Fleetbase with WordPress',
+          cluster: 'integration',
+          title: 'Integrate Fleetbase with WordPress for Delivery Operations',
+          score: 91,
+          searchIntent: 'Tutorial',
+          businessFit: 10,
+          opportunity: 8,
+          competitorWeakness: 6,
+          cannibalizationRisk: 'low',
+          rationale:
+            'A WordPress integration article is specific, practical, and aligned with Fleetbase delivery operations.',
+          suggestedInternalLinks: ['https://fleetbase.io/docs'],
+        },
+      ],
+    },
+    {
+      title: 'Integrate Fleetbase with WordPress for Delivery Operations',
+      slug: 'integrate-fleetbase-with-wordpress-delivery-operations',
+      targetKeyword: 'integrate Fleetbase with WordPress',
+      secondaryKeywords: ['WordPress delivery integration', 'WooCommerce logistics workflow'],
+      audience: 'Developers and operations teams connecting ecommerce sites to logistics workflows',
+      searchIntent: 'Tutorial',
+      thesis:
+        'Fleetbase can act as the delivery operations layer behind WordPress or WooCommerce order intake.',
+      outline: [
+        'Why connect WordPress to Fleetbase',
+        'Map ecommerce orders to delivery operations',
+        'Use dispatch and tracking workflows',
+        'Prepare proof-of-delivery handoff',
+      ],
+      internalLinks: ['https://fleetbase.io/docs'],
+      cta: 'Review the Fleetbase docs and plan a source-verified integration workflow.',
+      metaTitle: 'Integrate Fleetbase With WordPress',
+      metaDescription:
+        'Learn how a WordPress or WooCommerce store can hand delivery operations to Fleetbase.',
+      publicTags: ['Integrations', 'Delivery Management'],
+      sourceNotes: ['Use provided Fleetbase source context for product claims.'],
+    },
+    {
+      title: 'Integrate Fleetbase with WordPress for Delivery Operations',
+      slug: 'integrate-fleetbase-with-wordpress-delivery-operations',
+      excerpt:
+        'Learn how WordPress or WooCommerce order intake can connect to Fleetbase delivery operations.',
+      html: longHtml,
+      metaTitle: 'Integrate Fleetbase With WordPress',
+      metaDescription:
+        'Learn how a WordPress or WooCommerce store can hand delivery operations to Fleetbase.',
+      publicTags: ['Integrations', 'Delivery Management'],
+      sourceCitations: [
+        {
+          repo: 'fleetbase.io',
+          path: 'src/app/solutions/use-cases/last-mile-delivery/page.tsx',
+          title: 'Last-mile delivery',
+          claim: 'Fleetbase supports last-mile delivery management workflows.',
+          evidence: 'The page describes last-mile delivery, dispatch, and proof-of-delivery workflows.',
+        },
+      ],
+    },
+    {
+      publishReady: true,
+      score: 90,
+      blockingIssues: [],
+      warnings: [],
+      recommendedFixes: ['Human editor should verify integration details before publishing.'],
+    },
+  ];
+  let callCount = 0;
+  const previousApiKey = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = 'test-openai-key';
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      output_text: JSON.stringify(responses[callCount++]),
+    }),
+  });
+
+  try {
+    await fs.writeFile(
+      path.join(root, 'research-input.json'),
+      JSON.stringify({
+        siteUrl: 'https://fleetbase.io',
+        contentFocus: 'logistics-software',
+        topicMode: 'integration',
+        integrationTarget: 'WordPress',
+        ahrefs: {
+          bypassedAhrefs: true,
+          ahrefsUnavailable: false,
+          opportunities: [
+            {
+              keyword: 'integrate Fleetbase with WordPress',
+              cluster: 'integration',
+              volume: null,
+              difficulty: null,
+              trafficPotential: null,
+              parentTopic: 'WordPress logistics integration',
+              intents: ['informational', 'developer'],
+              source: 'ai-topic-idea',
+            },
+          ],
+          requests: [],
+          rawResults: [],
+          summary: {
+            validOpportunityCount: 1,
+            bypassedReason: 'Ahrefs disabled for test.',
+          },
+        },
+        existingGhostContent: [],
+        sourceManifest: [
+          {
+            repo: 'fleetbase.io',
+            category: 'website-page',
+            path: 'src/app/solutions/use-cases/last-mile-delivery/page.tsx',
+            title: 'Last-mile delivery',
+            excerpt:
+              'Fleetbase provides software context for last-mile delivery management, dispatch workflows, driver tracking, and proof of delivery.',
+          },
+          {
+            repo: 'fleetbase/fleetops',
+            category: 'fleetops',
+            path: 'source-truth/fleetops/addon/routes/operations/orders/index.js',
+            title: 'Fleet-Ops orders',
+            excerpt:
+              'Fleet-Ops contains operational order workflows that help dispatchers manage delivery activity.',
+          },
+        ],
+      }),
+    );
+
+    await generateArtifacts({ outputDir: root, fetchImpl: fakeFetch, generateFeatureImage: false });
+
+    const artifacts = await readAgentArtifacts(root);
+    assert.equal(callCount, 4);
+    assert.equal(artifacts.topic.keyword, 'integrate Fleetbase with WordPress');
+    assert.equal(typeof artifacts.topic.businessFit, 'number');
+    assert.equal(artifacts.topic.cannibalizationRisk, 'low');
+    assert.equal(artifacts.draft.targetKeyword, 'integrate Fleetbase with WordPress');
+    assert.equal(artifacts.sourceCitations.length, 1);
+  } finally {
+    if (previousApiKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = previousApiKey;
+    }
+  }
+}
+
+async function testManualTopicWinsStructuredGeneration() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-manual-'));
+  const previousApiKey = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = 'test-openai-key';
+  let callCount = 0;
+  const responses = [
+    {
+      title: 'Build a Fleetbase WordPress Delivery Workflow',
+      slug: 'build-fleetbase-wordpress-delivery-workflow',
+      targetKeyword: 'build a Fleetbase WordPress delivery workflow',
+      secondaryKeywords: ['Fleetbase WordPress integration'],
+      audience: 'Developers connecting WordPress to delivery operations',
+      searchIntent: 'Manual editorial request',
+      thesis:
+        'A manual Fleetbase topic should drive the generated brief without another topic-selection pass.',
+      outline: ['Context', 'Workflow', 'Citations', 'Review'],
+      internalLinks: ['https://fleetbase.io/docs'],
+      cta: 'Use Fleetbase docs to verify the integration workflow.',
+      metaTitle: 'Fleetbase WordPress Delivery Workflow',
+      metaDescription:
+        'Plan a source-backed Fleetbase and WordPress delivery workflow for editorial review.',
+      publicTags: ['Integrations'],
+      sourceNotes: ['Manual topic smoke test.'],
+    },
+    {
+      title: 'Build a Fleetbase WordPress Delivery Workflow',
+      slug: 'build-fleetbase-wordpress-delivery-workflow',
+      excerpt:
+        'Plan a Fleetbase and WordPress delivery workflow with validated content-agent artifacts.',
+      html: `<h2>Manual topics stay fixed</h2><p>${'The manual topic path keeps editorial intent intact while still using structured generation for the brief, article, citations, and QA artifacts. '.repeat(7)}</p>`,
+      metaTitle: 'Fleetbase WordPress Delivery Workflow',
+      metaDescription:
+        'Plan a source-backed Fleetbase and WordPress delivery workflow for editorial review.',
+      publicTags: ['Integrations'],
+      sourceCitations: [
+        {
+          repo: 'fleetbase.io',
+          path: 'content/docs/index.mdx',
+          title: 'Fleetbase docs',
+          claim: 'Fleetbase documentation is the source for integration planning.',
+          evidence: 'Docs source context is passed into the generator.',
+        },
+      ],
+    },
+    {
+      publishReady: true,
+      score: 88,
+      blockingIssues: [],
+      warnings: [],
+      recommendedFixes: [],
+    },
+  ];
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      output_text: JSON.stringify(responses[callCount++]),
+    }),
+  });
+
+  try {
+    await fs.writeFile(
+      path.join(root, 'research-input.json'),
+      JSON.stringify({
+        contentFocus: 'logistics-software',
+        ahrefs: {
+          opportunities: [
+            {
+              keyword: 'build a Fleetbase WordPress delivery workflow',
+              cluster: 'manual',
+              volume: null,
+              difficulty: null,
+              trafficPotential: null,
+              parentTopic: null,
+              intents: [],
+              source: 'manual',
+            },
+          ],
+        },
+        existingGhostContent: [],
+        sourceManifest: [
+          {
+            repo: 'fleetbase.io',
+            category: 'documentation',
+            path: 'content/docs/index.mdx',
+            title: 'Fleetbase docs',
+            excerpt:
+              'Fleetbase documentation supports source-backed planning for logistics workflows.',
+          },
+        ],
+      }),
+    );
+
+    await generateArtifacts({ outputDir: root, fetchImpl: fakeFetch, generateFeatureImage: false });
+
+    const artifacts = await readAgentArtifacts(root);
+    assert.equal(callCount, 3);
+    assert.equal(artifacts.topic.keyword, 'build a Fleetbase WordPress delivery workflow');
+    assert.equal(artifacts.topic.score, 100);
+    assert.equal(artifacts.topic.businessFit, 10);
+  } finally {
+    if (previousApiKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = previousApiKey;
+    }
+  }
+}
+
 function testParseJsonObject() {
   assert.deepEqual(parseJsonObject('prefix {"ok": true} suffix'), { ok: true });
   assert.deepEqual(parseJsonObject('{"html": "<p>Line one\nLine two</p>"}'), {
@@ -872,6 +1174,7 @@ await testAhrefsResearchFailsOnZeroRows();
 await testAhrefsResearchArtifacts();
 testManualResearchBypass();
 await testAhrefsUnavailableFallback();
+await testAhrefsDisabledUsesAiTopicResearch();
 testGhostTokenAndPayload();
 await testClaudeJsonParsing();
 await testClaudeToolJsonParsing();
@@ -885,6 +1188,8 @@ await testGhostAdminReadAndUpdate();
 await testGhostAdminListPosts();
 testDuplicateDetection();
 await testAgentArtifactValidation();
+await testStructuredArtifactGeneration();
+await testManualTopicWinsStructuredGeneration();
 testParseJsonObject();
 testFleetbaseLinkNormalization();
 testFleetbaseContentRules();

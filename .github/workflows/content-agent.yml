@@ -50,6 +50,26 @@ on:
         required: true
         default: false
         type: boolean
+      use_ahrefs:
+        description: Use Ahrefs keyword research for this run
+        required: true
+        default: false
+        type: boolean
+      topic_mode:
+        description: Topic generation mode
+        required: true
+        default: auto
+        type: choice
+        options:
+          - auto
+          - integration
+          - api-tutorial
+          - software-seo
+          - comparison
+      integration_target:
+        description: Optional integration target for integration topics
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -62,6 +82,7 @@ jobs:
     env:
       AHREFS_API_TOKEN: ${{ secrets.AHREFS_API_TOKEN }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENAI_CONTENT_MODEL: ${{ vars.OPENAI_CONTENT_MODEL || 'gpt-4.1' }}
       OPENAI_IMAGE_MODEL: ${{ vars.OPENAI_IMAGE_MODEL || 'gpt-image-1.5' }}
       GHOST_ADMIN_API_URL: ${{ secrets.GHOST_ADMIN_API_URL }}
       GHOST_ADMIN_API_KEY: ${{ secrets.GHOST_ADMIN_API_KEY }}
@@ -72,9 +93,12 @@ jobs:
       CONTENT_AGENT_TOPIC: ${{ inputs.topic || '' }}
       CONTENT_AGENT_KEYWORD: ${{ inputs.keyword || '' }}
       CONTENT_AGENT_FOCUS: ${{ inputs.content_focus || 'auto' }}
+      CONTENT_AGENT_TOPIC_MODE: ${{ inputs.topic_mode || 'auto' }}
+      CONTENT_AGENT_INTEGRATION_TARGET: ${{ inputs.integration_target || '' }}
       CONTENT_AGENT_MAX_DRAFTS: ${{ inputs.max_drafts || '1' }}
       CONTENT_AGENT_OUTPUT_DIR: content-agent-output
       CONTENT_AGENT_ALLOW_SEED_FALLBACK: ${{ inputs.allow_seed_fallback != false }}
+      CONTENT_AGENT_USE_AHREFS: ${{ inputs.use_ahrefs == true }}
       CONTENT_AGENT_MAX_AHREFS_CLUSTERS: 3
       CONTENT_AGENT_MAX_AHREFS_ROWS: 10
       CREATE_GHOST_DRAFT: ${{ github.event_name == 'schedule' || inputs.dry_run == false }}
@@ -162,42 +186,10 @@ jobs:
       - name: Prepare content research
         run: pnpm content-agent:prepare
 
-      - name: Generate draft with Codex
-        uses: openai/codex-action@v1
-        with:
-          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          working-directory: ${{ github.workspace }}
-          sandbox: workspace-write
-          output-file: content-agent-output/codex-last-message.md
-          codex-args: '["-c", "approval_policy=never"]'
-          prompt: |
-            You are the Fleetbase SEO content agent. Your only job is to inspect this checked-out workspace and write structured article artifacts for a human-reviewed Ghost draft. Do not commit, push, create issues, create PRs, call external APIs, publish, schedule, or ask follow-up questions.
+      - name: Generate structured content artifacts
+        run: pnpm content-agent:generate-artifacts
 
-            Read `content-agent-output/research-input.json` first. It contains Ahrefs opportunities, duplicate-filtered existing Ghost content, Fleetbase editorial rules, source-truth repo paths, and the source manifest.
-
-            Select one non-duplicate opportunity from the first 10 `ahrefs.opportunities` entries. Prefer the first opportunity unless it is already covered by `existingGhostContent` or cannot be supported by source files. The topic must be specific to Fleetbase, Fleet-Ops, last-mile delivery software, delivery management, dispatch, proof of delivery, route optimization, driver tracking, or a practical Fleetbase API/tutorial workflow.
-
-            Inspect only the files needed to support the selected article. Start from `sourceManifest` paths that match the selected keyword, then inspect relevant files under `content/docs`, `src/app`, `source-truth/core-api`, `source-truth/fleetops`, and `vendor/postman`. Only inspect Pallet, Storefront, Ledger, dev-engine, iam-engine, or ember-core if the selected opportunity directly needs them. For API/tutorial claims, verify endpoints, request fields, response shape, and UI names against source, docs, or Postman collections.
-
-            Work quickly and write artifacts as soon as the article is source-supported. Do not perform broad repository audits. Do not optimize code. Do not run package installs. Do not run tests.
-
-            Write exactly these JSON files under `content-agent-output/`:
-            - `topic.json`: one object matching keyword, cluster, title, score, searchIntent, businessFit, opportunity, competitorWeakness, cannibalizationRisk, rationale, suggestedInternalLinks.
-            - `brief.json`: one object with title, slug, targetKeyword, secondaryKeywords, audience, searchIntent, thesis, outline, internalLinks, cta, metaTitle, metaDescription, publicTags, sourceNotes.
-            - `draft.json`: one object with title, slug, excerpt, html, metaTitle, metaDescription, publicTags, targetKeyword, ahrefsOpportunity, sourceCitations. The HTML must be semantic Ghost-compatible HTML.
-            - `source-citations.json`: an array of citation objects with repo, path, title, claim, and evidence.
-            - `qa.json`: one object with publishReady, score, blockingIssues, warnings, recommendedFixes. Put factual uncertainties in warnings, not blockingIssues.
-            - `feature-image-brief.json` when feature images are enabled: prompt, altText, filename.
-
-            Hard requirements:
-            - Use `https://fleetbase.io` for the website and `https://fleetbase.io/docs` for docs. Never use `fleetbase.ghost.io`.
-            - Spell Fleet-Ops exactly as `Fleet-Ops`.
-            - Do not use outdated `API-first` positioning.
-            - Do not invent endpoints, parameters, SocketCluster channel formats, hostnames, UI screens, or Fleetbase product behavior.
-            - Cite exact source files for claims. At least one source citation is required.
-            - Keep the article useful for a human editor, but do not publish or schedule anything.
-
-      - name: Create Ghost draft from Codex artifacts
+      - name: Create Ghost draft from structured artifacts
         run: pnpm content-agent:generate
 
       - name: Upload content agent artifacts

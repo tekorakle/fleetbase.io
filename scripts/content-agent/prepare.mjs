@@ -15,6 +15,9 @@ function parseArgs(argv) {
     topic: process.env.CONTENT_AGENT_TOPIC || '',
     keyword: process.env.CONTENT_AGENT_KEYWORD || '',
     focus: process.env.CONTENT_AGENT_FOCUS || 'auto',
+    topicMode: process.env.CONTENT_AGENT_TOPIC_MODE || 'auto',
+    integrationTarget: process.env.CONTENT_AGENT_INTEGRATION_TARGET || '',
+    useAhrefs: process.env.CONTENT_AGENT_USE_AHREFS === 'true',
     outputDir:
       process.env.CONTENT_AGENT_OUTPUT_DIR ||
       path.join(process.env.RUNNER_TEMP || os.tmpdir(), 'fleetbase-content-agent'),
@@ -26,6 +29,9 @@ function parseArgs(argv) {
     if (arg === '--topic') args.topic = argv[index + 1] || '';
     if (arg === '--keyword') args.keyword = argv[index + 1] || '';
     if (arg === '--focus') args.focus = argv[index + 1] || 'auto';
+    if (arg === '--topic-mode') args.topicMode = argv[index + 1] || 'auto';
+    if (arg === '--integration-target') args.integrationTarget = argv[index + 1] || '';
+    if (arg === '--use-ahrefs') args.useAhrefs = true;
     if (arg === '--output-dir') args.outputDir = argv[index + 1] || args.outputDir;
     if (arg === '--allow-seed-fallback') args.allowSeedFallback = true;
   }
@@ -97,6 +103,9 @@ async function main() {
     topic: args.topic,
     keyword: args.keyword,
     contentFocus,
+    topicMode: args.topicMode,
+    integrationTarget: args.integrationTarget,
+    useAhrefs: args.useAhrefs,
     allowSeedFallback: args.allowSeedFallback,
   });
 
@@ -135,10 +144,14 @@ async function main() {
     throw new Error('All Ahrefs opportunities were blocked as duplicates of existing Ghost content.');
   }
 
+  const outputOpportunities = args.topic ? research.opportunities : filteredOpportunities;
+
   const researchInput = {
     generatedAt: new Date().toISOString(),
     siteUrl: contentAgentConfig.siteUrl,
     contentFocus,
+    topicMode: args.topicMode,
+    integrationTarget: args.integrationTarget,
     contentStrategy: contentAgentConfig.contentStrategy,
     editorialRules: contentAgentConfig.contentStrategy.editorialRules,
     ahrefs: {
@@ -148,7 +161,7 @@ async function main() {
         ...research.summary,
         validOpportunityCountAfterDedupe: filteredOpportunities.length,
       },
-      opportunities: filteredOpportunities.slice(0, 60),
+      opportunities: outputOpportunities.slice(0, 60),
     },
     existingGhostContent: ghostPosts,
     duplicateOpportunities,
@@ -179,7 +192,10 @@ async function main() {
 ## Fleetbase SEO Content Agent Research
 
 - Content focus: ${contentFocus}
-- Ahrefs bypassed: ${research.bypassedAhrefs ? 'yes, manual topic supplied' : 'no'}
+- Topic mode: ${args.topicMode}
+- Integration target: ${args.integrationTarget || 'none'}
+- Ahrefs enabled: ${args.useAhrefs ? 'yes' : 'no'}
+- Ahrefs bypassed: ${research.bypassedAhrefs ? 'yes' : 'no'}
 - Ahrefs unavailable fallback: ${research.ahrefsUnavailable ? 'yes' : 'no'}
 - Ahrefs valid opportunities: ${research.summary.validOpportunityCount}
 - Opportunities after duplicate filter: ${filteredOpportunities.length}
