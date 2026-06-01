@@ -753,8 +753,8 @@ async function testAgentArtifactValidation() {
 async function testStructuredArtifactGeneration() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-structured-'));
   const longHtml = [
-    '<h2>Connect WordPress orders to Fleetbase delivery operations</h2>',
-    `<p>${'A practical Fleetbase and WordPress integration can keep ecommerce order intake separate from delivery execution while giving dispatch teams a source-backed workflow for orders, tracking, and proof of delivery. '.repeat(4)}</p>`,
+    '<h2>Connect Square Online orders to Fleetbase delivery operations</h2>',
+    `<p>${'A practical Fleetbase and Square Online integration can keep ecommerce order intake separate from delivery execution while giving dispatch teams a source-backed workflow for orders, tracking, and proof of delivery. '.repeat(4)}</p>`,
     '<h2>Use Fleetbase as the logistics control layer</h2>',
     `<p>${'Fleetbase source context supports delivery management, dispatch workflows, driver tracking, and proof-of-delivery content for human editors to refine before publishing. '.repeat(5)}</p>`,
   ].join('');
@@ -778,37 +778,55 @@ async function testStructuredArtifactGeneration() {
       ],
     },
     {
-      title: 'Integrate Fleetbase with WordPress for Delivery Operations',
-      slug: 'integrate-fleetbase-with-wordpress-delivery-operations',
-      targetKeyword: 'integrate Fleetbase with WordPress',
-      secondaryKeywords: ['WordPress delivery integration', 'WooCommerce logistics workflow'],
+      topics: [
+        {
+          keyword: 'integrate Fleetbase with Square Online',
+          cluster: 'integration',
+          title: 'Integrate Fleetbase with Square Online for Local Delivery',
+          score: 92,
+          searchIntent: 'Tutorial',
+          businessFit: 9,
+          opportunity: 8,
+          competitorWeakness: 7,
+          cannibalizationRisk: 'low',
+          rationale:
+            'A Square Online integration topic expands beyond the static seed list while staying relevant to ecommerce delivery operations.',
+          suggestedInternalLinks: ['https://fleetbase.io/docs'],
+        },
+      ],
+    },
+    {
+      title: 'Integrate Fleetbase with Square Online for Local Delivery',
+      slug: 'integrate-fleetbase-with-square-online-local-delivery',
+      targetKeyword: 'integrate Fleetbase with Square Online',
+      secondaryKeywords: ['Square Online delivery integration', 'local delivery logistics workflow'],
       audience: 'Developers and operations teams connecting ecommerce sites to logistics workflows',
       searchIntent: 'Tutorial',
       thesis:
-        'Fleetbase can act as the delivery operations layer behind WordPress or WooCommerce order intake.',
+        'Fleetbase can act as the delivery operations layer behind Square Online order intake.',
       outline: [
-        'Why connect WordPress to Fleetbase',
+        'Why connect Square Online to Fleetbase',
         'Map ecommerce orders to delivery operations',
         'Use dispatch and tracking workflows',
         'Prepare proof-of-delivery handoff',
       ],
       internalLinks: ['https://fleetbase.io/docs'],
       cta: 'Review the Fleetbase docs and plan a source-verified integration workflow.',
-      metaTitle: 'Integrate Fleetbase With WordPress',
+      metaTitle: 'Integrate Fleetbase With Square Online',
       metaDescription:
-        'Learn how a WordPress or WooCommerce store can hand delivery operations to Fleetbase.',
+        'Learn how a Square Online store can hand local delivery operations to Fleetbase.',
       publicTags: ['Integrations', 'Delivery Management'],
       sourceNotes: ['Use provided Fleetbase source context for product claims.'],
     },
     {
-      title: 'Integrate Fleetbase with WordPress for Delivery Operations',
-      slug: 'integrate-fleetbase-with-wordpress-delivery-operations',
+      title: 'Integrate Fleetbase with Square Online for Local Delivery',
+      slug: 'integrate-fleetbase-with-square-online-local-delivery',
       excerpt:
-        'Learn how WordPress or WooCommerce order intake can connect to Fleetbase delivery operations.',
+        'Learn how Square Online order intake can connect to Fleetbase delivery operations.',
       html: longHtml,
-      metaTitle: 'Integrate Fleetbase With WordPress',
+      metaTitle: 'Integrate Fleetbase With Square Online',
       metaDescription:
-        'Learn how a WordPress or WooCommerce store can hand delivery operations to Fleetbase.',
+        'Learn how a Square Online store can hand local delivery operations to Fleetbase.',
       publicTags: ['Integrations', 'Delivery Management'],
       sourceCitations: [
         {
@@ -893,12 +911,15 @@ async function testStructuredArtifactGeneration() {
     await generateArtifacts({ outputDir: root, fetchImpl: fakeFetch, generateFeatureImage: false });
 
     const artifacts = await readAgentArtifacts(root);
-    assert.equal(callCount, 4);
-    assert.equal(artifacts.topic.keyword, 'integrate Fleetbase with WordPress');
+    const topicCandidates = JSON.parse(await fs.readFile(path.join(root, 'topic-candidates.json'), 'utf8'));
+    assert.equal(callCount, 5);
+    assert.equal(artifacts.topic.keyword, 'integrate Fleetbase with Square Online');
     assert.equal(typeof artifacts.topic.businessFit, 'number');
     assert.equal(artifacts.topic.cannibalizationRisk, 'low');
-    assert.equal(artifacts.draft.targetKeyword, 'integrate Fleetbase with WordPress');
+    assert.equal(artifacts.draft.targetKeyword, 'integrate Fleetbase with Square Online');
     assert.equal(artifacts.sourceCitations.length, 1);
+    assert.equal(topicCandidates.expandedTopics[0].keyword, 'integrate Fleetbase with WordPress');
+    assert.equal(topicCandidates.finalistTopics[0].keyword, 'integrate Fleetbase with Square Online');
   } finally {
     if (previousApiKey === undefined) {
       delete process.env.OPENAI_API_KEY;
