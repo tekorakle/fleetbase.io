@@ -13,6 +13,85 @@ function toFallbackOpportunity(item, contentFocus) {
   };
 }
 
+function toTopicIdeaOpportunity(item, contentFocus) {
+  const keyword = typeof item === 'string' ? item : item.keyword;
+
+  return {
+    keyword,
+    cluster: typeof item === 'string' ? contentFocus || 'ai-topic-idea' : item.cluster || contentFocus || 'ai-topic-idea',
+    volume: null,
+    difficulty: null,
+    trafficPotential: null,
+    parentTopic: typeof item === 'string' ? null : item.parentTopic || null,
+    intents: typeof item === 'string' ? [] : item.intents || [],
+    source: 'ai-topic-idea',
+  };
+}
+
+export function buildAiTopicResearch(config, { contentFocus, topicMode = 'auto', integrationTarget = '' } = {}) {
+  const ideas = [];
+
+  if (integrationTarget) {
+    ideas.push({
+      keyword: `integrate Fleetbase with ${integrationTarget}`,
+      cluster: 'integration',
+      parentTopic: `${integrationTarget} logistics integration`,
+      intents: ['informational', 'developer'],
+    });
+  }
+
+  if (topicMode === 'integration' || topicMode === 'auto') {
+    for (const target of config.topicIdeas?.integrationTargets || []) {
+      ideas.push({
+        keyword: `integrate Fleetbase with ${target}`,
+        cluster: 'integration',
+        parentTopic: `${target} logistics integration`,
+        intents: ['informational', 'developer'],
+      });
+    }
+  }
+
+  for (const example of config.topicIdeas?.examples || []) {
+    ideas.push({
+      keyword: example,
+      cluster: topicMode === 'auto' ? contentFocus || 'ai-topic-idea' : topicMode,
+      parentTopic: null,
+      intents: ['informational'],
+    });
+  }
+
+  for (const pillar of config.topicIdeas?.pillars || []) {
+    ideas.push({
+      keyword: pillar,
+      cluster: topicMode === 'auto' ? contentFocus || 'ai-topic-idea' : topicMode,
+      parentTopic: null,
+      intents: ['commercial', 'informational'],
+    });
+  }
+
+  const opportunities = ideas.map((idea) => toTopicIdeaOpportunity(idea, contentFocus));
+
+  return {
+    bypassedAhrefs: true,
+    ahrefsUnavailable: false,
+    opportunities,
+    requests: [],
+    rawResults: [],
+    summary: {
+      clusterCount: 0,
+      requestCount: 0,
+      totalRows: 0,
+      validOpportunityCount: opportunities.length,
+      malformedRowCount: 0,
+      selectedFields: [],
+      bypassedReason: 'Ahrefs disabled; using AI-first curated Fleetbase topic ideas.',
+      topicMode,
+      integrationTarget,
+      strict: false,
+    },
+  };
+}
+
 export function buildFallbackResearch(config, { contentFocus, reason, error = null } = {}) {
   const fallbackItems =
     config.fallbackOpportunitiesByFocus?.[contentFocus] ||
@@ -75,6 +154,14 @@ export function buildManualResearch({ topic, keyword }) {
 export async function buildAhrefsOrManualResearch(config, options = {}) {
   if (options.topic) {
     return buildManualResearch({ topic: options.topic, keyword: options.keyword });
+  }
+
+  if (!options.useAhrefs) {
+    return buildAiTopicResearch(config, {
+      contentFocus: options.contentFocus,
+      topicMode: options.topicMode,
+      integrationTarget: options.integrationTarget,
+    });
   }
 
   const allowFallback =
