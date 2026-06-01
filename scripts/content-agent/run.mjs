@@ -67,7 +67,7 @@ async function main() {
     requireEnv(['OPENAI_API_KEY']);
   }
 
-  console.log(`[content-agent] Publishing Claude Code artifacts. dryRun=${args.dryRun}`);
+  console.log(`[content-agent] Publishing content agent artifacts. dryRun=${args.dryRun}`);
 
   const artifacts = await readAgentArtifacts(args.outputDir);
   const draft = normalizeFleetbaseArticle({
@@ -131,7 +131,7 @@ async function main() {
       });
     }
   } else if (args.generateFeatureImage) {
-    console.warn('[content-agent] Feature image generation enabled, but feature-image-brief.json was not provided by Claude Code. Skipping image generation.');
+    console.warn('[content-agent] Feature image generation enabled, but feature-image-brief.json was not provided by the content agent. Skipping image generation.');
   }
 
   const createdDrafts = [];
