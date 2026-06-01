@@ -158,9 +158,9 @@ const FEATURE_IMAGE_JSON_SCHEMA = {
   type: 'object',
   additionalProperties: false,
   properties: {
-    prompt: { type: 'string' },
-    altText: { type: 'string' },
-    filename: { type: 'string' },
+    prompt: { type: 'string', minLength: 40 },
+    altText: { type: 'string', minLength: 20, maxLength: 160 },
+    filename: { type: 'string', minLength: 3 },
   },
   required: ['prompt', 'altText', 'filename'],
 };
@@ -243,6 +243,21 @@ function titleizeKeyword(keyword) {
     .filter(Boolean)
     .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
     .join(' ');
+}
+
+function slugifyText(value) {
+  return String(value || 'fleetbase-logistics-article')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 80);
+}
+
+function truncateText(value, maxLength) {
+  const text = String(value || '').replace(/\s+/g, ' ').trim();
+  if (text.length <= maxLength) return text;
+
+  return text.slice(0, maxLength - 1).trimEnd();
 }
 
 function topicFromManualOpportunity(opportunity) {
@@ -440,6 +455,27 @@ async function generateQa({ brief, draft, topic, ruleCheck, researchInput, fetch
   });
 }
 
+function buildFallbackFeatureImageBrief({ brief, draft, config }) {
+  const tags = draft.publicTags?.length ? draft.publicTags.join(', ') : 'logistics software';
+  const prompt = [
+    config.featureImage.styleGuide,
+    `Create a landscape editorial feature image for an article titled "${draft.title || brief.title}".`,
+    `Show modern logistics software, dispatch planning, delivery routes, fleet operations, and workflow panels related to ${tags}.`,
+    'No visible text, logos, brand marks, UI labels, watermarks, or close-up people.',
+  ].join(' ');
+  const altText = truncateText(
+    `Editorial logistics software scene for ${draft.title || brief.title}.`,
+    160,
+  );
+  const fallback = {
+    prompt,
+    altText: altText.length >= 20 ? altText : 'Editorial logistics software scene with delivery routes and dispatch panels.',
+    filename: `${slugifyText(draft.slug || brief.slug || draft.title || brief.title)}.png`,
+  };
+
+  return FeatureImageBriefSchema.parse(fallback);
+}
+
 async function generateFeatureImageBrief({ brief, draft, config, fetchImpl }) {
   const system =
     'You write image-generation prompts for Fleetbase blog feature images. Return only valid JSON matching the schema.';
@@ -456,6 +492,7 @@ async function generateFeatureImageBrief({ brief, draft, config, fetchImpl }) {
       requirements: [
         'Use a landscape editorial composition.',
         'Avoid visible text, logos, brand marks, UI labels, and watermarks.',
+        'Keep altText at 160 characters or fewer.',
         'Use a lowercase kebab-case PNG filename.',
       ],
     },
@@ -528,7 +565,11 @@ export async function generateArtifacts({ outputDir, config = contentAgentConfig
       const featureImageBrief = await generateFeatureImageBrief({ brief, draft, config, fetchImpl });
       await writeJsonFile(path.join(outputDir, 'feature-image-brief.json'), featureImageBrief);
     } catch (error) {
-      console.warn(`[content-agent:generate-artifacts] Feature image brief skipped: ${error.message}`);
+      const fallbackFeatureImageBrief = buildFallbackFeatureImageBrief({ brief, draft, config });
+      await writeJsonFile(path.join(outputDir, 'feature-image-brief.json'), fallbackFeatureImageBrief);
+      console.warn(
+        `[content-agent:generate-artifacts] Feature image brief failed; using fallback brief: ${error.message}`,
+      );
     }
   }
 

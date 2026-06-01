@@ -908,6 +908,143 @@ async function testStructuredArtifactGeneration() {
   }
 }
 
+async function testFeatureImageBriefFallback() {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-feature-image-'));
+  const longHtml = `<h2>Fleetbase delivery imagery</h2><p>${'Fleetbase delivery workflows need source-backed content artifacts and feature image prompts for editorial review. '.repeat(8)}</p>`;
+  const responses = [
+    {
+      topics: [
+        {
+          keyword: 'Fleetbase delivery software feature image fallback',
+          cluster: 'logistics-software',
+          title: 'Fleetbase Delivery Software Feature Image Fallback',
+          score: 87,
+          searchIntent: 'Informational',
+          businessFit: 9,
+          opportunity: 7,
+          competitorWeakness: 5,
+          cannibalizationRisk: 'low',
+          rationale:
+            'A content-agent fallback test topic validates reliable feature image artifact generation.',
+          suggestedInternalLinks: ['https://fleetbase.io/docs'],
+        },
+      ],
+    },
+    {
+      title: 'Fleetbase Delivery Software Feature Image Fallback',
+      slug: 'fleetbase-delivery-software-feature-image-fallback',
+      targetKeyword: 'Fleetbase delivery software feature image fallback',
+      secondaryKeywords: ['Fleetbase feature image'],
+      audience: 'Fleetbase editors',
+      searchIntent: 'Informational',
+      thesis:
+        'Feature image generation should keep working even when the model returns invalid image metadata.',
+      outline: ['Context', 'Artifact generation', 'Fallback brief', 'Editorial review'],
+      internalLinks: ['https://fleetbase.io/docs'],
+      cta: 'Review Fleetbase content artifacts before publishing.',
+      metaTitle: 'Fleetbase Feature Image Fallback',
+      metaDescription:
+        'Validate reliable Fleetbase content-agent feature image brief generation.',
+      publicTags: ['Delivery Management'],
+      sourceNotes: ['Feature image fallback fixture.'],
+    },
+    {
+      title: 'Fleetbase Delivery Software Feature Image Fallback',
+      slug: 'fleetbase-delivery-software-feature-image-fallback',
+      excerpt:
+        'Validate reliable Fleetbase content-agent feature image brief generation.',
+      html: longHtml,
+      metaTitle: 'Fleetbase Feature Image Fallback',
+      metaDescription:
+        'Validate reliable Fleetbase content-agent feature image brief generation.',
+      publicTags: ['Delivery Management'],
+      sourceCitations: [
+        {
+          repo: 'fleetbase.io',
+          path: 'content/docs/index.mdx',
+          title: 'Fleetbase docs',
+          claim: 'Fleetbase documentation supports source-backed article generation.',
+          evidence: 'Docs source context is passed into the generator.',
+        },
+      ],
+    },
+    {
+      publishReady: true,
+      score: 88,
+      blockingIssues: [],
+      warnings: [],
+      recommendedFixes: [],
+    },
+    {
+      prompt:
+        'Landscape editorial image of a modern logistics software dashboard with dispatch panels, delivery route maps, and workflow cards. No text or logos.',
+      altText:
+        'This alternative text is intentionally far longer than the one hundred and sixty character schema limit so the fallback path is used instead of silently skipping feature image generation.',
+      filename: 'fleetbase-invalid-feature-image-brief.png',
+    },
+  ];
+  let callCount = 0;
+  const previousApiKey = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = 'test-openai-key';
+  const fakeFetch = async () => ({
+    ok: true,
+    json: async () => ({
+      output_text: JSON.stringify(responses[callCount++]),
+    }),
+  });
+
+  try {
+    await fs.writeFile(
+      path.join(root, 'research-input.json'),
+      JSON.stringify({
+        contentFocus: 'logistics-software',
+        ahrefs: {
+          opportunities: [
+            {
+              keyword: 'Fleetbase delivery software feature image fallback',
+              cluster: 'logistics-software',
+              volume: null,
+              difficulty: null,
+              trafficPotential: null,
+              parentTopic: null,
+              intents: [],
+              source: 'ai-topic-idea',
+            },
+          ],
+        },
+        existingGhostContent: [],
+        sourceManifest: [
+          {
+            repo: 'fleetbase.io',
+            category: 'documentation',
+            path: 'content/docs/index.mdx',
+            title: 'Fleetbase docs',
+            excerpt:
+              'Fleetbase documentation supports source-backed planning for logistics workflows.',
+          },
+        ],
+      }),
+    );
+
+    await generateArtifacts({ outputDir: root, fetchImpl: fakeFetch, generateFeatureImage: true });
+
+    const artifacts = await readAgentArtifacts(root);
+    assert.equal(callCount, 5);
+    assert.equal(Boolean(artifacts.featureImageBrief), true);
+    assert.equal(artifacts.featureImageBrief.altText.length <= 160, true);
+    assert.equal(
+      artifacts.featureImageBrief.filename,
+      'fleetbase-delivery-software-feature-image-fallback.png',
+    );
+  } finally {
+    if (previousApiKey === undefined) {
+      delete process.env.OPENAI_API_KEY;
+    } else {
+      process.env.OPENAI_API_KEY = previousApiKey;
+    }
+  }
+}
+
 async function testManualTopicWinsStructuredGeneration() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-manual-'));
   const previousApiKey = process.env.OPENAI_API_KEY;
@@ -1189,6 +1326,7 @@ await testGhostAdminListPosts();
 testDuplicateDetection();
 await testAgentArtifactValidation();
 await testStructuredArtifactGeneration();
+await testFeatureImageBriefFallback();
 await testManualTopicWinsStructuredGeneration();
 testParseJsonObject();
 testFleetbaseLinkNormalization();
