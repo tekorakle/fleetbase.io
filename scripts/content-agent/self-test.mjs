@@ -847,14 +847,19 @@ async function testStructuredArtifactGeneration() {
     },
   ];
   let callCount = 0;
+  const schemaRequests = [];
   const previousApiKey = process.env.OPENAI_API_KEY;
   process.env.OPENAI_API_KEY = 'test-openai-key';
-  const fakeFetch = async () => ({
-    ok: true,
-    json: async () => ({
-      output_text: JSON.stringify(responses[callCount++]),
-    }),
-  });
+  const fakeFetch = async (_url, options) => {
+    schemaRequests.push(JSON.parse(options.body).text.format);
+
+    return {
+      ok: true,
+      json: async () => ({
+        output_text: JSON.stringify(responses[callCount++]),
+      }),
+    };
+  };
 
   try {
     await fs.writeFile(
@@ -920,6 +925,11 @@ async function testStructuredArtifactGeneration() {
     assert.equal(artifacts.sourceCitations.length, 1);
     assert.equal(topicCandidates.expandedTopics[0].keyword, 'integrate Fleetbase with WordPress');
     assert.equal(topicCandidates.finalistTopics[0].keyword, 'integrate Fleetbase with Square Online');
+    assert.equal(schemaRequests[2].schema.properties.metaTitle.maxLength, 80);
+    assert.equal(schemaRequests[2].schema.properties.metaDescription.maxLength, 180);
+    assert.equal(schemaRequests[3].schema.properties.excerpt.maxLength, 300);
+    assert.equal(schemaRequests[3].schema.properties.metaTitle.maxLength, 80);
+    assert.equal(schemaRequests[3].schema.properties.sourceCitations.minItems, 1);
   } finally {
     if (previousApiKey === undefined) {
       delete process.env.OPENAI_API_KEY;
@@ -933,6 +943,24 @@ async function testFeatureImageBriefFallback() {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'fleetbase-content-agent-feature-image-'));
   const longHtml = `<h2>Fleetbase delivery imagery</h2><p>${'Fleetbase delivery workflows need source-backed content artifacts and feature image prompts for editorial review. '.repeat(8)}</p>`;
   const responses = [
+    {
+      topics: [
+        {
+          keyword: 'Fleetbase delivery software feature image fallback',
+          cluster: 'logistics-software',
+          title: 'Fleetbase Delivery Software Feature Image Fallback',
+          score: 87,
+          searchIntent: 'Informational',
+          businessFit: 9,
+          opportunity: 7,
+          competitorWeakness: 5,
+          cannibalizationRisk: 'low',
+          rationale:
+            'A content-agent fallback test topic validates reliable feature image artifact generation.',
+          suggestedInternalLinks: ['https://fleetbase.io/docs'],
+        },
+      ],
+    },
     {
       topics: [
         {
@@ -1050,7 +1078,7 @@ async function testFeatureImageBriefFallback() {
     await generateArtifacts({ outputDir: root, fetchImpl: fakeFetch, generateFeatureImage: true });
 
     const artifacts = await readAgentArtifacts(root);
-    assert.equal(callCount, 5);
+    assert.equal(callCount, 6);
     assert.equal(Boolean(artifacts.featureImageBrief), true);
     assert.equal(artifacts.featureImageBrief.altText.length <= 160, true);
     assert.equal(
