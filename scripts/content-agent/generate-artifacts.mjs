@@ -165,6 +165,7 @@ const FEATURE_IMAGE_JSON_SCHEMA = {
   required: ['prompt', 'altText', 'filename'],
 };
 
+const MAX_EXPANDED_TOPICS = 25;
 const TopicListSchema = z.object({ topics: z.array(TopicScoreSchema).min(1) });
 const DraftWithCitationsSchema = ArticleDraftSchema.extend({
   sourceCitations: z.array(SourceCitationSchema).min(1),
@@ -220,6 +221,64 @@ function compactPosts(posts = []) {
     status: post.status || '',
     excerpt: post.excerpt || post.custom_excerpt || '',
   }));
+}
+
+function normalizeKeyword(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function dedupeTopics(topics) {
+  const seen = new Set();
+  const uniqueTopics = [];
+
+  for (const topic of topics) {
+    const key = normalizeKeyword(topic.keyword || topic.title);
+    if (!key || seen.has(key)) continue;
+
+    seen.add(key);
+    uniqueTopics.push(topic);
+  }
+
+  return uniqueTopics;
+}
+
+function summarizeFleetbaseKnowledge(manifest = [], { maxItems = 18, maxExcerptChars = 260 } = {}) {
+  const preferredCategories = new Set(['website-page', 'documentation', 'api-reference', 'fleetops', 'core-api']);
+
+  return manifest
+    .filter((item) => preferredCategories.has(item.category) || ['fleetbase.io', 'fleetops', 'core-api'].includes(item.repo))
+    .slice(0, maxItems)
+    .map((item) => ({
+      repo: item.repo,
+      category: item.category,
+      path: item.path,
+      title: item.title,
+      excerpt: String(item.excerpt || '').slice(0, maxExcerptChars),
+    }));
+}
+
+function topicToOpportunity(topic) {
+  return {
+    keyword: topic.keyword,
+    cluster: topic.cluster,
+    volume: null,
+    difficulty: null,
+    trafficPotential: null,
+    parentTopic: topic.title,
+    intents: [topic.searchIntent].filter(Boolean),
+    source: 'ai-topic-expansion',
+    title: topic.title,
+    score: topic.score,
+    businessFit: topic.businessFit,
+    opportunity: topic.opportunity,
+    competitorWeakness: topic.competitorWeakness,
+    cannibalizationRisk: topic.cannibalizationRisk,
+    rationale: topic.rationale,
+    suggestedInternalLinks: topic.suggestedInternalLinks,
+  };
 }
 
 function findOpportunityForTopic(topic, opportunities) {
@@ -301,6 +360,51 @@ function getContentFocus(researchInput) {
   return researchInput.contentFocus || 'logistics-software';
 }
 
+async function expandTopicCandidates({ researchInput, config, fetchImpl }) {
+  const system =
+    'You are a Fleetbase content strategist. Brainstorm useful, specific article topics with strong logistics, developer, and operations intent. Return only valid JSON matching the schema.';
+  const prompt = JSON.stringify(
+    {
+      task: 'Expand Fleetbase blog topic candidates before final topic selection.',
+      contentFocus: getContentFocus(researchInput),
+      topicMode: researchInput.topicMode || 'auto',
+      integrationTarget: researchInput.integrationTarget || '',
+      siteUrl: config.siteUrl,
+      fleetbasePositioning: config.contentStrategy.requiredRelevance,
+      contentMix: config.contentStrategy.contentMix,
+      editorialRules: config.contentStrategy.editorialRules,
+      curatedTopicIdeas: config.topicIdeas,
+      seedOpportunities: (researchInput.ahrefs?.opportunities || []).slice(0, 60),
+      existingGhostContent: compactPosts(researchInput.existingGhostContent),
+      fleetbaseKnowledge: summarizeFleetbaseKnowledge(researchInput.sourceManifest || []),
+      requirements: [
+        `Return ${MAX_EXPANDED_TOPICS} varied topic candidates.`,
+        'Use your general knowledge of logistics, ecommerce, ERP, CRM, dispatch, delivery operations, and developer integration patterns.',
+        'Do not merely restate the seed topics. Create fresh angles, practical workflows, comparisons, integration guides, and operator pain-point articles.',
+        'Prefer topics Fleetbase can credibly support with website, docs, Fleet-Ops, core API, or source-truth context.',
+        'Include integration ideas beyond the seed list when they are plausible for logistics operations, such as marketplaces, ERPs, CRMs, ecommerce platforms, webhooks, automation tools, and order-management systems.',
+        'Do not invent specific Fleetbase endpoint names, UI screens, SocketCluster channels, parameters, or product behavior.',
+        'Avoid topics already covered by existingGhostContent.',
+        'Numeric score fields must be numbers. cannibalizationRisk must be low, medium, or high.',
+      ],
+    },
+    null,
+    2,
+  );
+  const result = await callOpenAiJson({
+    system,
+    prompt,
+    schemaName: 'fleetbase_topic_expansion',
+    jsonSchema: TOPIC_JSON_SCHEMA,
+    zodSchema: TopicListSchema,
+    maxOutputTokens: 7200,
+    temperature: 0.75,
+    fetchImpl,
+  });
+
+  return dedupeTopics(result.topics).slice(0, MAX_EXPANDED_TOPICS);
+}
+
 async function generateTopic({ researchInput, config, fetchImpl }) {
   const opportunities = researchInput.ahrefs?.opportunities || [];
   const manualOpportunity = opportunities.find((opportunity) => opportunity.source === 'manual');
@@ -309,6 +413,24 @@ async function generateTopic({ researchInput, config, fetchImpl }) {
     const topic = topicFromManualOpportunity(manualOpportunity);
     return { topic, topics: [topic] };
   }
+
+  const expandedTopics = await expandTopicCandidates({ researchInput, config, fetchImpl });
+  const expandedOpportunities = dedupeTopics([
+    ...expandedTopics,
+    ...opportunities.map((opportunity) => ({
+      keyword: opportunity.keyword,
+      cluster: opportunity.cluster,
+      title: opportunity.title || titleizeKeyword(opportunity.keyword),
+      score: opportunity.score || 50,
+      searchIntent: opportunity.intents?.[0] || 'Informational',
+      businessFit: opportunity.businessFit || 7,
+      opportunity: opportunity.opportunity || 6,
+      competitorWeakness: opportunity.competitorWeakness || 5,
+      cannibalizationRisk: opportunity.cannibalizationRisk || 'low',
+      rationale: opportunity.rationale || 'Seed topic candidate from configured topic opportunities.',
+      suggestedInternalLinks: opportunity.suggestedInternalLinks || ['https://fleetbase.io/docs'],
+    })),
+  ]).map(topicToOpportunity);
 
   const system =
     'You are Fleetbase editorial strategist. Choose specific, useful logistics software article topics. Return only valid JSON matching the schema.';
@@ -321,10 +443,12 @@ async function generateTopic({ researchInput, config, fetchImpl }) {
       siteUrl: config.siteUrl,
       editorialRules: config.contentStrategy.editorialRules,
       curatedTopicIdeas: config.topicIdeas,
-      candidateOpportunities: opportunities.slice(0, 40),
+      expandedTopicCandidates: expandedTopics,
+      candidateOpportunities: expandedOpportunities.slice(0, 60),
       existingGhostContent: compactPosts(researchInput.existingGhostContent),
       requirements: [
         'Prefer practical articles a logistics operator or developer would actually read.',
+        'Choose from the expanded candidate pool or synthesize a stronger topic from it.',
         'Use AI-first topic creativity; do not limit yourself to narrow keyword rows.',
         'Integration articles are welcome when they connect Fleetbase to an ERP, CRM, ecommerce, webhook, or automation workflow.',
         'Return at least five candidate topics unless a manual topic is the only candidate.',
@@ -347,6 +471,7 @@ async function generateTopic({ researchInput, config, fetchImpl }) {
   return {
     topic: selectNonDuplicateTopic(result.topics, researchInput.existingGhostContent || []),
     topics: result.topics,
+    expandedTopics,
   };
 }
 
@@ -519,7 +644,7 @@ async function generateFeatureImageBrief({ brief, draft, config, fetchImpl }) {
 
 export async function generateArtifacts({ outputDir, config = contentAgentConfig, fetchImpl = fetch, generateFeatureImage = true } = {}) {
   const researchInput = await readJsonFile(path.join(outputDir, 'research-input.json'));
-  const { topic } = await generateTopic({ researchInput, config, fetchImpl });
+  const { topic, topics, expandedTopics } = await generateTopic({ researchInput, config, fetchImpl });
   const selectedContext = selectContextSources(researchInput.sourceManifest || [], config, {
     contentFocus: getContentFocus(researchInput),
     topic,
@@ -546,7 +671,10 @@ export async function generateArtifacts({ outputDir, config = contentAgentConfig
     config,
     fetchImpl,
   });
-  const opportunity = findOpportunityForTopic(topic, researchInput.ahrefs?.opportunities || []);
+  const opportunity = findOpportunityForTopic(topic, [
+    ...(expandedTopics || []).map(topicToOpportunity),
+    ...(researchInput.ahrefs?.opportunities || []),
+  ]);
   const draft = normalizeFleetbaseArticle({
     ...draftResult,
     targetKeyword: brief.targetKeyword || topic.keyword,
@@ -556,6 +684,11 @@ export async function generateArtifacts({ outputDir, config = contentAgentConfig
   const qa = await generateQa({ brief, draft, topic, ruleCheck, researchInput, fetchImpl });
 
   await writeJsonFile(path.join(outputDir, 'topic.json'), topic);
+  await writeJsonFile(path.join(outputDir, 'topic-candidates.json'), {
+    selectedTopic: topic,
+    expandedTopics: expandedTopics || [],
+    finalistTopics: topics || [topic],
+  });
   await writeJsonFile(path.join(outputDir, 'brief.json'), brief);
   await writeJsonFile(path.join(outputDir, 'draft.json'), draft);
   await writeJsonFile(path.join(outputDir, 'source-citations.json'), draft.sourceCitations);
@@ -580,7 +713,7 @@ export async function generateArtifacts({ outputDir, config = contentAgentConfig
 
   await readAgentArtifacts(outputDir);
 
-  return { topic, brief, draft, qa };
+  return { topic, brief, draft, qa, expandedTopics };
 }
 
 async function main() {
